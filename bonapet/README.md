@@ -58,6 +58,21 @@ Reprodukčný stav sa zatiaľ len ukladá — do logiky receptu nie je zapojený
 4. **Odpovede v FAQ** sú návrh — treba ich odsúhlasiť, najmä tvrdenia
    o výrobcovi a o zložení.
 
+## Scrollová animácia psa
+V spodnej časti viewportu beží pes poháňaný scrollom (`#dogStage`):
+
+- pozícia psa zodpovedá priebehu stránky (0 % = vľavo, 100 % = pri miske vpravo),
+- kĺbová SVG bábka (4 nohy, hlava, ucho, chvost) s cvalovým cyklom viazaným na
+  rýchlosť pohybu; pri scrolle nahor sa otočí a beží späť,
+- v strednej časti stránky naháňa skákajúcu loptičku, v 46 % šírky preskočí
+  kostičku (gaussov oblúk podľa vzdialenosti), pri konci stránky dobehne
+  k miske a žerie (hlava dole, vrtí chvostom),
+- keď scroll zastane, pes zastane a prejde do idle (dýchanie, vrtenie),
+- `prefers-reduced-motion: reduce` animáciu úplne skryje; vrstva má
+  `pointer-events:none`, `aria-hidden` a z-index pod funnelom aj headerom,
+- deterministický hák na testovanie: `window.__dogSettle(p, frames)` +
+  `window.__dogNoLoop`.
+
 ## Ilustrácie
 Všetky ilustrácie sú SVG generované v `<script>` na konci súboru: psy
 (`dog()`, tri plemená), ikony pilierov, ikony surovín a rozdelená miska

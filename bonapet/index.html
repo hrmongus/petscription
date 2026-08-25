@@ -604,6 +604,21 @@ document.getElementById('pack').innerHTML=packSvg('Adult',{compact:true});
 </script>
 
 <style>
+/* ============ bežiaci pes (scroll animácia) ============ */
+#dogStage{position:fixed;left:0;right:0;bottom:0;height:132px;z-index:30;
+  pointer-events:none;overflow:hidden}
+#dogStage .dogWrap{position:absolute;bottom:-6px;width:138px;will-change:transform}
+#dogStage .bowlWrap{position:absolute;bottom:2px;right:22px;width:54px;
+  opacity:0;transition:opacity .5s ease}
+#dogStage.showBowl .bowlWrap{opacity:1}
+#dogStage .ballWrap{position:absolute;bottom:6px;width:26px;opacity:0;will-change:transform}
+#dogStage .boneWrap{position:absolute;bottom:4px;width:44px;opacity:0;
+  transition:opacity .5s ease}
+#dogStage.showBone .boneWrap{opacity:.9}
+@media(max-width:560px){#dogStage{height:100px}#dogStage .dogWrap{width:104px}
+  #dogStage .bowlWrap{width:42px}#dogStage .boneWrap{width:34px}}
+@media (prefers-reduced-motion:reduce){#dogStage{display:none}}
+
 /* ============ kvízový funnel ============ */
 .fn{position:fixed;inset:0;z-index:80;background:rgba(42,33,26,.55);
   display:flex;align-items:flex-start;justify-content:center;padding:24px 16px;overflow-y:auto}
@@ -971,5 +986,151 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!fn.hidden) close(
 /* CTA, ktoré funnel otvárajú */
 document.querySelectorAll('[data-funnel]').forEach(b=>
   b.addEventListener('click',e=>{ e.preventDefault(); open(); }));
+})();
+</script>
+
+<script>
+/* ============ bežiaci pes — scroll-driven animácia ============ */
+(function(){
+'use strict';
+if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+const GREEN='#24503B', DARK='#193A29', CREAM='#F7F2E9';
+function runDogSvg(){
+ return `<svg viewBox="0 0 220 150" style="width:100%;height:auto;display:block">
+ <g fill="${GREEN}" stroke="${CREAM}" stroke-width="2.5" stroke-linejoin="round">
+  <ellipse class="dShadow" cx="105" cy="140" rx="52" ry="5.5" stroke="none" fill="rgba(36,32,26,.16)"/>
+  <g class="dRoot">
+   <g class="leg lh1" fill="${DARK}"><path d="M84 62c-14 2-22 12-22 24 0 8 2 14-2 22l-6 14c-2 5 0 9 5 9h8l6-24 14-30z"/></g>
+   <g class="leg lf1" fill="${DARK}"><path d="M118 60c14 0 22 8 24 18l4 20 8 16c2 5 0 9-5 9h-8l-8-24-18-26z"/></g>
+   <g class="leg lh2"><path d="M90 64c-14 2-22 12-22 24 0 8 2 14-2 22l-6 14c-2 5 0 9 5 9h8l6-24 14-30z"/></g>
+   <g class="leg lf2"><path d="M124 62c14 0 22 8 24 18l4 20 8 16c2 5 0 9-5 9h-8l-8-24-18-26z"/></g>
+   <g class="tail"><path d="M58 68C42 62 30 50 28 36c8 2 22 8 30 18 4 5 6 10 4 14z"/></g>
+   <path d="M52 62c4-14 22-22 46-22 26 0 44 8 52 20 4 7 4 16-2 22-10 10-30 14-50 14-22 0-40-6-46-16-3-6-2-12 0-18z"/>
+   <g class="head">
+     <path d="M138 60c-4-14 2-27 15-31 10-3 21 0 27 7l12 7c4 2 4 6 0 8l-10 3c-1 11-9 18-20 19-11 1-20-4-24-13z"/>
+     <path d="M156 27c-2-6-8-9-14-7-3 1-4 4-2 7 3 6 4 13 3 19-1 4 2 6 5 4 6-4 10-14 8-23z"/>
+     <circle cx="170" cy="41" r="2.6" fill="${CREAM}" stroke="none"/>
+     <circle cx="193" cy="46" r="3.6" stroke="none"/>
+   </g>
+  </g>
+ </g></svg>`;
+}
+const bowlSvg=`<svg viewBox="0 0 60 40" style="width:100%;height:auto;display:block">
+ <ellipse cx="30" cy="37" rx="26" ry="3" fill="rgba(36,32,26,.14)"/>
+ <path d="M6 16h48a24 14 0 0 1-48 0z" fill="${GREEN}" stroke="${CREAM}" stroke-width="2"/>
+ <rect x="3" y="13" width="54" height="6" rx="3" fill="${GREEN}" stroke="${CREAM}" stroke-width="2"/>
+ <g fill="#C89B6A"><circle cx="20" cy="11" r="3"/><circle cx="30" cy="9" r="3"/><circle cx="40" cy="11" r="3"/></g>
+</svg>`;
+const ballSvg=`<svg viewBox="0 0 26 26" style="width:100%;height:auto;display:block">
+ <circle cx="13" cy="13" r="11" fill="#A8552B" stroke="${CREAM}" stroke-width="2"/>
+ <path d="M4 9c6 3 12 3 18 0M4 17c6-3 12-3 18 0" fill="none" stroke="${CREAM}" stroke-width="1.6"/>
+</svg>`;
+const boneSvg=`<svg viewBox="0 0 44 22" style="width:100%;height:auto;display:block">
+ <ellipse cx="22" cy="20" rx="18" ry="2" fill="rgba(36,32,26,.12)"/>
+ <g fill="#EFE7D6" stroke="#CBBFA8" stroke-width="1.5">
+  <rect x="10" y="8" width="24" height="6" rx="3"/>
+  <circle cx="10" cy="8.5" r="4.5"/><circle cx="10" cy="14" r="4.5"/>
+  <circle cx="34" cy="8.5" r="4.5"/><circle cx="34" cy="14" r="4.5"/></g>
+</svg>`;
+
+const stage=document.createElement('div');
+stage.id='dogStage'; stage.setAttribute('aria-hidden','true');
+stage.innerHTML=`<div class="boneWrap">${boneSvg}</div><div class="ballWrap">${ballSvg}</div>
+<div class="bowlWrap">${bowlSvg}</div><div class="dogWrap">${runDogSvg()}</div>`;
+document.body.appendChild(stage);
+
+const dogEl=stage.querySelector('.dogWrap');
+const ballEl=stage.querySelector('.ballWrap');
+const boneEl=stage.querySelector('.boneWrap');
+const q=sel=>dogEl.querySelector(sel);
+const parts={root:q('.dRoot'),lf1:q('.lf1'),lf2:q('.lf2'),lh1:q('.lh1'),lh2:q('.lh2'),
+  tail:q('.tail'),head:q('.head'),shadow:q('.dShadow')};
+
+function pose(t,o){
+ const A=o.amp, s2=Math.sin(t*2*Math.PI);
+ parts.lf1.setAttribute('transform',`rotate(${A*s2} 130 74)`);
+ parts.lf2.setAttribute('transform',`rotate(${A*Math.sin(t*2*Math.PI+0.9)} 130 74)`);
+ parts.lh1.setAttribute('transform',`rotate(${A*Math.sin(t*2*Math.PI+Math.PI)} 76 74)`);
+ parts.lh2.setAttribute('transform',`rotate(${A*Math.sin(t*2*Math.PI+Math.PI+0.9)} 76 74)`);
+ parts.root.setAttribute('transform',
+   `translate(0 ${o.bob}) rotate(${o.pitch} 100 70)`);
+ parts.tail.setAttribute('transform',`rotate(${o.tailA} 54 64)`);
+ parts.head.setAttribute('transform',`rotate(${o.headA} 142 52)`);
+ parts.shadow.setAttribute('transform',`scale(${o.shScale} 1)`);
+ parts.shadow.setAttribute('transform-origin','105 140');
+}
+
+let x=-160, phase=0, dir=1, t0=performance.now();
+let vSm=0, ballA=0;
+const DOGW=()=>dogEl.offsetWidth||138;
+
+function frame(now){
+ const time=(now-t0)/1000;
+ const vw=window.innerWidth, doc=document.documentElement;
+ const maxS=Math.max(1,doc.scrollHeight-window.innerHeight);
+ const sy=window.__dogForceY!=null?window.__dogForceY:window.scrollY;
+ const pRaw=Math.min(1,Math.max(0,sy/maxS));
+ const eating=pRaw>0.965;
+ stage.classList.toggle('showBowl',pRaw>0.55);
+ stage.classList.toggle('showBone',!eating);
+
+ const bowlX=vw-22-54, boneX=vw*0.46;
+ const margin=Math.max(14,vw*0.03);
+ const track=(vw-margin*2-DOGW());
+ let tx=eating? bowlX-DOGW()+34 : margin+track*pRaw;
+
+ const dx=(tx-x)*0.085;
+ x+=dx;
+ vSm+=(dx-vSm)*0.2;
+ const speed=Math.abs(vSm);
+ const running=speed>0.35 && !eating;
+ if(Math.abs(vSm)>0.5) dir=vSm>0?1:-1;
+ phase=(phase+speed*0.016)%1;
+
+ // jump over the bone
+ const dogNose=x+DOGW()*(dir>0?0.86:0.14);
+ const db=(dogNose-boneX)/ (DOGW()*0.55);
+ const jump=running? 30*Math.exp(-db*db*2.2) : 0;
+
+ let o;
+ if(eating){
+   o={amp:0,bob:0,pitch:2,tailA:14*Math.sin(time*7),headA:34+3*Math.sin(time*5),shScale:1};
+ }else if(running){
+   const amp=Math.min(30,8+speed*3.4);
+   o={amp,bob:Math.min(6,speed*0.9)*Math.sin(phase*4*Math.PI)-jump,
+      pitch:3*Math.sin(phase*2*Math.PI+1)-jump*0.25,
+      tailA:10*Math.sin(phase*4*Math.PI),headA:jump*-0.2,
+      shScale:Math.max(.55,1-jump/40)};
+ }else{
+   o={amp:0,bob:1.2*Math.sin(time*2.4),pitch:0,
+      tailA:12*Math.sin(time*5.5),headA:4*Math.sin(time*1.1),shScale:1};
+ }
+ pose(phase,o);
+ dogEl.style.transform=`translateX(${x}px) scaleX(${dir})`;
+
+ // ball bounces ahead while running right in the mid zone
+ const ballZone=running && dir>0 && pRaw>0.12 && pRaw<0.6;
+ ballA+=((ballZone?1:0)-ballA)*0.12;
+ ballEl.style.opacity=ballA.toFixed(3);
+ if(ballA>0.02){
+   const bx=x+DOGW()+18+10*Math.sin(phase*2*Math.PI);
+   const by=-Math.abs(Math.sin(phase*2*Math.PI+0.6))*34;
+   ballEl.style.transform=`translate(${bx}px,${by}px) rotate(${x*2}deg)`;
+ }
+ boneEl.style.transform=`translateX(${boneX-22}px)`;
+
+ if(!document.hidden && !window.__dogNoLoop) requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden) requestAnimationFrame(frame); });
+
+/* deterministic hook for rendering checks */
+window.__dogSettle=function(p,n){
+ const doc=document.documentElement;
+ window.__dogForceY=(doc.scrollHeight-window.innerHeight)*p;
+ for(let i=0;i<(n||400);i++) frame(t0+i*16.7);
+ window.__dogForceY=null;
+};
 })();
 </script>
