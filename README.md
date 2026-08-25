@@ -1,6 +1,16 @@
-<!-- Howl & Oats — brand system -->
+<!-- Petscription — brand work -->
 
-# HOWL & OATS
+# Bonapet
+
+**Aktuálny smer.** Slovenská landing page pre značku granúl **Bonapet** —
+svetlá, teplá a hravá, s kreslenými psami. Všetko v `bonapet/`
+([README](bonapet/README.md), stránka: `bonapet/index.html`).
+
+---
+
+# HOWL & OATS *(zamietnuté — archív)*
+
+> Prvý koncept. Zamietnutý ako príliš hipsterský; ostáva tu len ako archív.
 ### *Dinner you could read out loud.*
 
 A complete brand for a modern, small-batch dog kibble: strategy, name, voice,

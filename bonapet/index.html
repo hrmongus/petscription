@@ -1,0 +1,583 @@
+<title>Bonapet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Figtree:wght@400..800&display=swap">
+
+<style>
+/* Bonapet — deliberately a single, bright, warm look. No dark variant:
+   every colour is painted explicitly so the page holds on any host ground. */
+:root{
+  --cream:#FFF7EC; --cream-2:#FDEFDD; --white:#FFFFFF;
+  --ink:#2A211A; --ink-2:#6E655C; --line:#EADFCD;
+  --green:#1A6B43; --green-2:#E4F0E7; --green-3:#12522F;
+  --orange:#EE6C2B; --orange-2:#FDE7D6; --orange-ink:#C94E0D;
+  --honey:#F5B92E; --honey-2:#FDF0D2;
+  --drab:#9E9A93; --drab-2:#EFEDE9; --bad:#B23A2E;
+  --display:'Bricolage Grotesque','Figtree',system-ui,sans-serif;
+  --body:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --r:22px; --r-lg:34px;
+  --shadow:0 18px 40px -24px rgba(42,33,26,.35);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--body);
+  font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+:focus-visible{outline:3px solid var(--orange-ink);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.025em;
+  line-height:1.06;margin:0;text-wrap:balance}
+h1{font-size:clamp(36px,5.4vw,62px)}
+h2{font-size:clamp(29px,4vw,45px)}
+h3{font-size:clamp(20px,2.2vw,25px);letter-spacing:-.015em;line-height:1.2}
+p{margin:0}
+.eyebrow{font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.14em;
+  color:var(--green);margin-bottom:14px}
+.lead{font-size:clamp(18px,2vw,21px);color:var(--ink-2);max-width:56ch}
+section{padding:clamp(56px,7vw,96px) 0}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-weight:800;
+  font-size:17px;padding:16px 28px;border-radius:999px;border:2px solid transparent;
+  text-decoration:none;cursor:pointer;transition:transform .12s ease,box-shadow .12s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn-1{background:var(--orange);color:var(--ink);box-shadow:0 10px 0 -2px var(--orange-ink)}
+.btn-1:hover{box-shadow:0 13px 0 -2px var(--orange-ink)}
+.btn-2{background:transparent;color:var(--green);border-color:var(--green)}
+.btn-2:hover{background:var(--green-2)}
+.btn-3{background:var(--green);color:#fff;box-shadow:0 10px 0 -2px var(--green-3)}
+.btn-3:hover{box-shadow:0 13px 0 -2px var(--green-3)}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}.btn:hover{transform:none}}
+
+/* ---------- header ---------- */
+header{position:sticky;top:0;z-index:40;background:rgba(255,247,236,.92);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.hd{display:flex;align-items:center;gap:26px;padding:14px 24px;max-width:1160px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;
+  font-size:25px;letter-spacing:-.03em;color:var(--ink);text-decoration:none}
+.logo svg{width:38px;height:38px;flex:none}
+nav{margin-left:auto;display:flex;gap:24px;align-items:center}
+nav a{color:var(--ink);text-decoration:none;font-weight:600;font-size:16px}
+nav a:hover{color:var(--green)}
+.hd .btn{padding:11px 20px;font-size:15px}
+@media(max-width:860px){nav .nl{display:none}}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,60px);align-items:center;
+  padding:clamp(36px,5vw,68px) 0 clamp(48px,6vw,84px)}
+@media(max-width:900px){.hero{grid-template-columns:1fr}}
+.hero .cta{display:flex;flex-wrap:wrap;gap:14px;margin:30px 0 22px}
+.trust{display:flex;align-items:center;gap:10px 16px;flex-wrap:wrap;font-size:15px;
+  color:var(--ink-2);font-weight:600}
+.trust-row{display:inline-flex;align-items:center;gap:9px;white-space:nowrap}
+.trust-sep{width:1px;height:18px;background:var(--line)}
+@media(max-width:520px){.trust-sep{display:none}}
+.stars{display:inline-flex;gap:2px;color:var(--honey)}
+.stars svg{width:18px;height:18px}
+.hero-art{position:relative;background:linear-gradient(160deg,var(--honey-2),var(--orange-2));
+  border-radius:var(--r-lg);padding:26px;aspect-ratio:1/1;display:flex;align-items:center;
+  justify-content:center;box-shadow:var(--shadow)}
+.hero-art .dog{width:min(96%,460px);margin-top:-4%}
+.chip{position:absolute;background:#fff;border-radius:999px;padding:10px 16px;font-weight:800;
+  font-size:14px;box-shadow:0 8px 20px -10px rgba(42,33,26,.45);display:flex;align-items:center;gap:8px}
+.chip i{width:9px;height:9px;border-radius:50%;background:var(--green);display:block}
+.chip.c1{top:6%;left:-16px}
+.chip.c2{top:63%;right:-16px}
+.chip.c3{bottom:6%;left:6%}
+@media(max-width:520px){.chip.c1{left:0}.chip.c2{right:0}}
+
+/* ---------- pillars ---------- */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media(max-width:860px){.grid3{grid-template-columns:1fr}}
+.card{background:var(--white);border-radius:var(--r);padding:30px;border:1px solid var(--line)}
+.card .ico{width:60px;height:60px;margin-bottom:18px}
+.card h3{margin-bottom:10px}
+.card p{color:var(--ink-2);font-size:17px}
+
+/* ---------- ingredients band ---------- */
+.band-green{background:var(--green);color:#fff}
+.band-green .eyebrow{color:var(--honey)}
+.band-green .lead{color:rgba(255,255,255,.86)}
+.ing{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-top:38px}
+.ing li{list-style:none;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);
+  border-radius:18px;padding:20px;display:flex;gap:14px;align-items:flex-start}
+.ing svg{width:40px;height:40px;flex:none;margin-top:1px}
+.ing b{display:block;font-size:17px;margin-bottom:3px}
+.ing span{color:rgba(255,255,255,.82);font-size:15.5px;line-height:1.5}
+
+/* ---------- photo slots ---------- */
+.photo{background:repeating-linear-gradient(135deg,var(--cream-2),var(--cream-2) 14px,var(--honey-2) 14px,var(--honey-2) 28px);
+  border:2px dashed var(--honey);border-radius:var(--r);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:10px;color:var(--ink-2);text-align:center;padding:24px}
+.photo svg{width:52px;height:52px;opacity:.55}
+.photo b{font-family:var(--display);font-size:16px;color:var(--ink)}
+.photo small{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+
+/* ---------- bowl comparison ---------- */
+.bowl-wrap{display:grid;grid-template-columns:1fr minmax(300px,500px) 1fr;
+  gap:0 clamp(10px,2vw,26px);align-items:center;margin-top:44px}
+.bowl{grid-column:2;grid-row:2 / span 5;width:100%}
+.lbl-l{grid-column:1;grid-row:1;justify-self:end}
+.lbl-r{grid-column:3;grid-row:1}
+.bowl-wrap .pt{display:flex;gap:11px;align-items:center;font-size:15.5px;line-height:1.4;
+  padding:9px 0;min-height:76px}
+.pt svg{width:24px;height:24px;flex:none}
+.pt .ln{flex:none;height:1px;background:var(--line);width:clamp(14px,5vw,66px)}
+.pt-l{grid-column:1;flex-direction:row-reverse;text-align:right}
+.pt-r{grid-column:3}
+.pt-l .ln{background:#D8D3CB}
+.pt-r .ln{background:#BFD8C7}
+@media(max-width:980px){
+  .bowl-wrap{grid-template-columns:minmax(0,1fr);justify-items:stretch;max-width:560px;margin-inline:auto}
+  .bowl{grid-column:1;grid-row:auto;width:min(400px,86vw);justify-self:center;margin-bottom:26px}
+  .lbl-l,.lbl-r,.pt-l,.pt-r{grid-column:1;justify-self:start}
+  .pt-l{flex-direction:row;text-align:left}
+  .pt .ln{display:none}
+  .bowl-wrap .pt{min-height:0;padding:7px 0}
+  .lbl-l{order:-1}}
+.lbl{display:inline-flex;align-items:center;gap:9px;font-family:var(--display);font-weight:800;
+  font-size:19px;padding:9px 18px;border-radius:999px}
+.lbl-bad{background:var(--drab-2);color:var(--ink-2)}
+.lbl-good{background:var(--green-2);color:var(--green)}
+
+.health{background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:clamp(30px,4.5vw,60px);display:grid;grid-template-columns:1.15fr .85fr;
+  gap:36px;align-items:center}
+@media(max-width:820px){.health{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- timeline ---------- */
+.tl{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:40px;counter-reset:t}
+@media(max-width:900px){.tl{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.tl{grid-template-columns:1fr}}
+.tl li{list-style:none;background:var(--white);border:1px solid var(--line);border-radius:var(--r);
+  padding:30px 22px 26px;position:relative;overflow:hidden}
+.tl .when{display:inline-block;font-family:var(--display);font-weight:800;font-size:15px;
+  background:var(--honey-2);color:var(--orange-ink);padding:6px 13px;border-radius:999px;margin-bottom:14px}
+.tl p{font-size:17px}
+.tl .bar{position:absolute;left:0;right:0;top:0;height:6px;background:var(--honey)}
+.tl li:nth-child(2) .bar{background:#F0A83C}
+.tl li:nth-child(3) .bar{background:#5FA36C}
+.tl li:nth-child(4) .bar{background:var(--green)}
+
+/* ---------- faq ---------- */
+.faq{margin-top:34px;max-width:820px}
+details{background:var(--white);border:1px solid var(--line);border-radius:18px;margin-bottom:12px}
+summary{cursor:pointer;list-style:none;padding:20px 24px;font-family:var(--display);font-weight:700;
+  font-size:19px;display:flex;align-items:center;gap:14px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"";margin-left:auto;width:13px;height:13px;flex:none;
+  border-right:3px solid var(--green);border-bottom:3px solid var(--green);
+  transform:rotate(45deg);transition:transform .18s ease}
+details[open] summary::after{transform:rotate(-135deg)}
+details p{padding:0 24px 22px;color:var(--ink-2);font-size:17px;max-width:64ch}
+@media (prefers-reduced-motion:reduce){summary::after{transition:none}}
+
+/* ---------- reviews ---------- */
+.rev{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
+@media(max-width:900px){.rev{grid-template-columns:1fr}}
+.rev .card{display:flex;flex-direction:column;gap:14px}
+.avatar{width:64px;height:64px;border-radius:50%;border:2px dashed var(--honey);
+  background:var(--honey-2);display:flex;align-items:center;justify-content:center}
+.avatar svg{width:36px;height:36px;opacity:.6}
+.ph-line{height:11px;border-radius:6px;background:var(--cream-2)}
+.slotnote{font-size:13px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--orange-ink);background:var(--orange-2);border-radius:999px;padding:5px 12px;align-self:flex-start}
+
+/* ---------- newsletter ---------- */
+.news{background:var(--honey);border-radius:var(--r-lg);padding:clamp(34px,5vw,64px);text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:20px}
+.news h2{max-width:16ch}
+.news p{max-width:48ch;color:#5B4412;font-weight:600}
+.nform{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;width:100%;max-width:520px}
+.nform input{flex:1 1 240px;padding:16px 20px;border-radius:999px;border:2px solid rgba(42,33,26,.18);
+  font-family:var(--body);font-size:16px;background:#fff;color:var(--ink)}
+.nform input::placeholder{color:#9A8E7E}
+
+/* ---------- footer ---------- */
+footer{background:var(--ink);color:#E9DFD2;padding:52px 0 40px;margin-top:0}
+.ft{display:flex;flex-wrap:wrap;gap:26px;align-items:center;justify-content:space-between}
+footer a{color:#E9DFD2;text-decoration:none;font-weight:600}
+footer a:hover{color:var(--honey)}
+.ft-links{display:flex;gap:22px;flex-wrap:wrap}
+.ft small{display:block;width:100%;color:#A2968A;font-size:14px;margin-top:24px;
+  border-top:1px solid rgba(255,255,255,.12);padding-top:20px}
+</style>
+
+<div lang="sk">
+<header>
+  <div class="hd">
+    <a class="logo" href="#top"><span id="logoMark"></span>Bonapet</a>
+    <nav>
+      <a class="nl" href="#piliere">O čo nám ide</a>
+      <a class="nl" href="#suroviny">Zloženie</a>
+      <a class="nl" href="#miska">Porovnanie</a>
+      <a class="nl" href="#faq">Časté otázky</a>
+      <a class="btn btn-1" href="#news">Nájsť jedlo</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- 1 · HERO -->
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Granule pre psíkov · Slovensko</p>
+        <h1>Tvoj najlepší kamoš si zaslúži poriadne jedlo.</h1>
+        <p class="lead" style="margin-top:20px">Bonapet robí granule z poctivých surovín, ušité presne
+        na tvojho chlpáča — jeho veľkosť, vek, energiu aj to, čo mu sadne na žalúdok.
+        Bez zbytočnej chémie, bez komplikácií.</p>
+        <div class="cta">
+          <a class="btn btn-1" href="#news">Nájsť jedlo pre môjho chlpáča</a>
+          <a class="btn btn-2" href="#suroviny">Pozrieť, čo je vnútri</a>
+        </div>
+        <div class="trust">
+          <span class="trust-row"><span class="stars" id="stars" aria-hidden="true"></span>
+            <span><strong>4,9/5</strong> od psích rodín</span></span>
+          <span class="trust-sep"></span>
+          <span>Receptúra postavená na overených prírodných surovinách</span>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="dog" id="heroDog"></div>
+        <div class="chip c1"><i></i>Bez sóje a kukurice</div>
+        <div class="chip c2"><i></i>Menované mäso</div>
+        <div class="chip c3"><i></i>Podľa veľkosti a veku</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 · TRI PILIERE -->
+  <section id="piliere">
+    <div class="wrap">
+      <p class="eyebrow">O čo nám ide</p>
+      <h2>Tri veci, na ktorých si zakladáme</h2>
+      <div class="grid3" style="margin-top:38px">
+        <div class="card"><div class="ico" id="ico1"></div>
+          <h3>Poctivé jedlo</h3>
+          <p>Meno a poctivosť suroviny na prvom mieste. Žiadne anonymné „mäsové zvyšky“,
+          žiadna sója či kukurica len na dopchatie vreca.</p></div>
+        <div class="card"><div class="ico" id="ico2"></div>
+          <h3>Ušité na tvojho parťáka</h3>
+          <p>Malý jazvečík a veľký labrador nepotrebujú to isté. Preto máme receptúry podľa
+          veľkosti, veku a toho, čo tvoj chlpáč reálne potrebuje.</p></div>
+        <div class="card"><div class="ico" id="ico3"></div>
+          <h3>Roky navyše spolu</h3>
+          <p>Zloženie, ktoré myslí na kĺby, trávenie a imunitu — aby ste sa spolu tešili
+          z prechádzok čo najdlhšie.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · SUROVINY -->
+  <section id="suroviny" class="band-green">
+    <div class="wrap">
+      <p class="eyebrow">Odkiaľ berieme suroviny</p>
+      <h2>Suroviny, ktoré fungovali už našim predkom</h2>
+      <p class="lead" style="margin-top:20px">Granule Bonapet vyrábame v spolupráci s výrobcom, ktorý sa
+      krmivám venuje od roku 1992 a stavia na prírodných a živočíšnych surovinách namiesto marketingových
+      skratiek. Nehľadáme najlacnejšiu cestu k plnému vreci — hľadáme suroviny, ktoré majú v miske
+      skutočný zmysel.</p>
+      <ul class="ing" id="ingList"></ul>
+      <div style="margin-top:34px"><a class="btn btn-1" href="#miska">Prečítať si celé zloženie →</a></div>
+    </div>
+  </section>
+
+  <!-- 4 · POROVNANIE -->
+  <section id="miska">
+    <div class="wrap">
+      <p class="eyebrow">Porovnanie</p>
+      <h2>Poď sa pozrieť, čo je v miske</h2>
+      <p class="lead" style="margin-top:20px">Nechceme, aby si nám veril len tak. Polož si vedľa seba
+      bežné granule z regálu a Bonapet a rozdiel uvidíš v zložení, nielen v reči predajcu.</p>
+
+      <div class="bowl-wrap">
+        <span class="lbl lbl-bad lbl-l">Bežné granule</span>
+        <span class="lbl lbl-good lbl-r">Bonapet</span>
+        <div class="bowl" id="bowl"></div>
+        <div class="pt pt-l" style="grid-row:2"><span class="ln"></span><span id="x1"></span><span>Sója a kukurica ako lacná výplň objemu</span></div>
+        <div class="pt pt-r" style="grid-row:2"><span class="ln"></span><span id="v1"></span><span>Konkrétne pomenované mäso — hovädzie, morčacie, jahňacie</span></div>
+        <div class="pt pt-l" style="grid-row:3"><span class="ln"></span><span id="x2"></span><span>Pomleté kosti a odpad z mäsovýroby namiesto skutočného mäsa</span></div>
+        <div class="pt pt-r" style="grid-row:3"><span class="ln"></span><span id="v2"></span><span>Prírodné suroviny s reálnym účinkom — pestrec mariánsky, hliva ustricová, humínové látky</span></div>
+        <div class="pt pt-l" style="grid-row:4"><span class="ln"></span><span id="x3"></span><span>Nevýrazný zápach — znak nízkeho podielu mäsa a starých tukov</span></div>
+        <div class="pt pt-r" style="grid-row:4"><span class="ln"></span><span id="v3"></span><span>Prirodzená vôňa a farba, žiadna kozmetika na granule</span></div>
+        <div class="pt pt-l" style="grid-row:5"><span class="ln"></span><span id="x4"></span><span>Umelé farbivá a arómy, aby to aspoň vyzeralo a vonalo „ako jedlo“</span></div>
+        <div class="pt pt-r" style="grid-row:5"><span class="ln"></span><span id="v4"></span><span>Kolagén a tanín pre kĺby a trávenie, nie len „výplň“</span></div>
+        <div class="pt pt-l" style="grid-row:6"><span class="ln"></span><span id="x5"></span><span>Nejasné zloženie typu „mäso a mäsové deriváty“ bez konkrétneho druhu</span></div>
+        <div class="pt pt-r" style="grid-row:6"><span class="ln"></span><span id="v5"></span><span>Zloženie, ktoré si prečítaš a rozumieš mu</span></div>
+      </div>
+
+      <div style="margin-top:44px;text-align:center">
+        <a class="btn btn-1" href="#news">Chcem takéto granule pre svojho parťáka →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · ZDRAVIE -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="health">
+        <div>
+          <p class="eyebrow">Zdravie a dlhovekosť</p>
+          <h2>Chceme, aby ste spolu mali čo najviac času</h2>
+          <p class="lead" style="margin-top:20px">Lacné granule riešia len to, aby chlpáč nemal hlad.
+          Nám ide o to, aby mal o pár rokov zdravé kĺby, dobré trávenie a bol dlho vo forme. Preto
+          v receptoch nechýbajú kolagén, pestrec mariánsky, hliva ustricová a humínové látky —
+          suroviny s overeným účinkom, nie marketingová skratka.</p>
+        </div>
+        <div class="photo" style="aspect-ratio:4/3">
+          <span id="phIco1"></span>
+          <b>Sem príde fotka</b>
+          <small>Starší pes na prechádzke · 4:3</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · ČASOVÁ OS -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <p class="eyebrow">Ako sa to prejaví</p>
+      <h2>Zmenu uvidíš skôr, než čakáš</h2>
+      <ul class="tl">
+        <li><span class="when">1–2 týždne</span><p>Pokojnejšie brucho, pravidelnejšia stolica</p><span class="bar"></span></li>
+        <li><span class="when">3–4 týždne</span><p>Viac energie, chuť do jedla aj do hier</p><span class="bar"></span></li>
+        <li><span class="when">6–8 týždňov</span><p>Krajšia srsť, menej škrabania</p><span class="bar"></span></li>
+        <li><span class="when">3+ mesiace</span><p>Stabilná váha, lepšia kondícia dlhodobo</p><span class="bar"></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7 · FAQ -->
+  <section id="faq" style="padding-top:0">
+    <div class="wrap">
+      <p class="eyebrow">Časté otázky</p>
+      <h2>Na čo sa nás pýtate najčastejšie</h2>
+      <div class="faq" id="faqList"></div>
+    </div>
+  </section>
+
+  <!-- 8 · REFERENCIE -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <p class="eyebrow">Referencie</p>
+      <h2>Viac ako <span style="color:var(--orange-ink)">[X]</span> psích rodín už je na palube</h2>
+      <p class="lead" style="margin-top:18px">Miesto pripravené na skutočné recenzie — meno chlpáča,
+      krátky citát o zlepšení, meno majiteľa a dátum.</p>
+      <div class="rev" id="revList"></div>
+    </div>
+  </section>
+
+  <!-- 9 · NEWSLETTER -->
+  <section id="news" style="padding-top:0">
+    <div class="wrap">
+      <div class="news">
+        <div id="pack" style="width:120px"></div>
+        <h2>Poď do svorky</h2>
+        <p>Prihlás sa na odber a získaj 10 % zľavu na prvú objednávku. Žiadny spam,
+        len novinky a zľavy pre teba a tvojho parťáka.</p>
+        <form class="nform" onsubmit="return false">
+          <label for="mail" style="position:absolute;left:-9999px">E-mail</label>
+          <input id="mail" type="email" placeholder="tvoj@email.sk" required>
+          <button class="btn btn-3" type="submit">Chcem zľavu</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap ft">
+    <a class="logo" href="#top" style="color:#fff"><span id="logoMark2"></span>Bonapet</a>
+    <div class="ft-links">
+      <a href="#suroviny">Zloženie</a><a href="#miska">Porovnanie</a>
+      <a href="#faq">Časté otázky</a><a href="#news">Kontakt</a>
+    </div>
+    <small>© 2026 Bonapet · Granule vyrobené na Slovensku v spolupráci s výrobcom krmív od roku 1992.
+    Údaje o hodnoteniach a recenziách doplníme reálnymi dátami pred spustením.</small>
+  </div>
+</footer>
+</div>
+
+<script>
+/* ============ illustration kit ============ */
+const C={green:'#1A6B43',orange:'#EE6C2B',honey:'#F5B92E',ink:'#2A211A',cream:'#FFF7EC'};
+
+function dog(o){
+  const ears={
+    floppy:`<path d="M62 74C32 62 14 96 22 136c5 25 34 26 42 -2Z" fill="${o.ear}"/>
+            <path d="M138 74C168 62 186 96 178 136c-5 25-34 26-42 -2Z" fill="${o.ear}"/>`,
+    long:`<path d="M60 76C26 68 8 116 18 160c6 27 36 28 44 -6Z" fill="${o.ear}"/>
+          <path d="M140 76C174 68 192 116 182 160c-6 27-36 28-44 -6Z" fill="${o.ear}"/>`,
+    pointy:`<path d="M92 58L42 32C34 28 28 36 33 43L68 84Z" fill="${o.ear}"/>
+            <path d="M108 58l50-26c8-4 14 4 9 11l-35 41Z" fill="${o.ear}"/>`
+  };
+  return `<svg viewBox="0 0 200 200" style="width:100%;height:auto;display:block" role="img" aria-label="${o.alt||'Ilustrácia psa'}">
+  ${ears[o.type]}
+  <ellipse cx="100" cy="104" rx="56" ry="52" fill="${o.coat}"/>
+  ${o.patch?`<ellipse cx="126" cy="78" rx="26" ry="20" fill="${o.coat2}" transform="rotate(-16 126 78)"/>`:''}
+  <ellipse cx="100" cy="132" rx="36" ry="28" fill="${o.muzzle}"/>
+  <ellipse cx="78" cy="100" rx="8" ry="9" fill="#2B1E18"/>
+  <ellipse cx="122" cy="100" rx="8" ry="9" fill="#2B1E18"/>
+  <circle cx="80.5" cy="96.5" r="2.8" fill="#fff"/><circle cx="124.5" cy="96.5" r="2.8" fill="#fff"/>
+  <path d="M100 112c9 0 14 5 14 9 0 5-6 8-14 8s-14-3-14-8c0-4 5-9 14-9z" fill="#3A2A22"/>
+  <path d="M100 129v9M100 138c0 6-6 9-11 6M100 138c0 6 6 9 11 6" fill="none" stroke="#2B1E18"
+    stroke-width="4" stroke-linecap="round"/>
+  ${o.tongue?`<path d="M92 148h16v11a8 8 0 0 1-16 0z" fill="#E4756F"/>`:''}
+  </svg>`;
+}
+const DOGS={
+  labrador:{type:'floppy',coat:'#E9A94D',coat2:'#F3C480',muzzle:'#F8DCAC',ear:'#D2913A',tongue:1,alt:'Ilustrácia zlatého retrívera'},
+  jazvecik:{type:'long',coat:'#7A4A2E',coat2:'#B5793F',muzzle:'#C58C55',ear:'#5E3722',patch:1,alt:'Ilustrácia jazvečíka'},
+  terier:{type:'pointy',coat:'#B9BEC4',coat2:'#D6DADE',muzzle:'#E7EAED',ear:'#9AA1A8',alt:'Ilustrácia teriéra'}
+};
+document.getElementById('heroDog').innerHTML=dog(DOGS.labrador);
+
+/* logo mark: a bowl with a paw */
+const LOGO=`<svg viewBox="0 0 48 48" role="img" aria-label="Bonapet">
+  <path d="M6 24h36a18 18 0 0 1-18 16A18 18 0 0 1 6 24z" fill="${C.green}"/>
+  <rect x="3" y="18" width="42" height="7" rx="3.5" fill="${C.orange}"/>
+  <g fill="${C.honey}"><circle cx="18" cy="10" r="3.4"/><circle cx="27" cy="7.6" r="3.4"/>
+  <circle cx="35" cy="11" r="3.4"/><path d="M27 15c4.4 0 8 2.6 8 5.2 0 1-1 1.8-2.4 1.8H21.4c-1.4 0-2.4-.8-2.4-1.8 0-2.6 3.6-5.2 8-5.2z"/></g>
+</svg>`;
+document.getElementById('logoMark').innerHTML=LOGO;
+document.getElementById('logoMark2').innerHTML=LOGO;
+
+const star=`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>`;
+document.getElementById('stars').innerHTML=star.repeat(5);
+
+/* pillar icons */
+const ICO={
+  meat:`<svg viewBox="0 0 64 64" role="img" aria-label="Mäso">
+    <g fill="#F6EAD6" stroke="#D8C3A0" stroke-width="2">
+      <circle cx="13" cy="23" r="7.5"/><circle cx="13" cy="39" r="7.5"/>
+      <rect x="10" y="23" width="15" height="16"/></g>
+    <path d="M24 13h13c11.5 0 21 8.5 21 19s-9.5 19-21 19H24c-4 0-6.5-2.5-6.5-6.5V19.5C17.5 15.5 20 13 24 13z" fill="#A8442E"/>
+    <path d="M29 22h8c7.5 0 13.5 4.5 13.5 10S44.5 42 37 42h-8c-2.2 0-3.5-1.3-3.5-3.5v-13C25.5 23.3 26.8 22 29 22z" fill="#E08A6A"/>
+    <path d="M33 28c3.5-1.5 7-1 9.5 1.5" fill="none" stroke="#F8D2BF" stroke-width="3" stroke-linecap="round"/></svg>`,
+  paw:`<svg viewBox="0 0 64 64" role="img" aria-label="Labka">
+    <g fill="${C.green}"><ellipse cx="19" cy="20" rx="7" ry="9"/><ellipse cx="32" cy="15" rx="7" ry="9.5"/>
+    <ellipse cx="45" cy="20" rx="7" ry="9"/><ellipse cx="53" cy="33" rx="6.5" ry="8"/>
+    <path d="M32 29c10 0 19 7 19 14 0 5-4 8-10 8-4 0-6-1-9-1s-5 1-9 1c-6 0-10-3-10-8 0-7 9-14 19-14z"/></g></svg>`,
+  heart:`<svg viewBox="0 0 64 64" role="img" aria-label="Srdce">
+    <path d="M32 55S6 40 6 24A14 14 0 0 1 32 16 14 14 0 0 1 58 24c0 16-26 31-26 31z" fill="${C.honey}"/>
+    <path d="M14 30h10l4-8 6 16 4-8h12" fill="none" stroke="${C.ink}" stroke-width="3.4"
+      stroke-linecap="round" stroke-linejoin="round"/></svg>`
+};
+ico1.innerHTML=ICO.meat; ico2.innerHTML=ICO.paw; ico3.innerHTML=ICO.heart;
+
+/* ingredient list */
+const leaf=(f)=>`<svg viewBox="0 0 40 40"><path d="M33 6C16 6 7 15 7 27c0 3 1 5 2 7 8-14 14-18 20-21-6 5-13 9-18 22 2 1 4 2 7 2 12 0 21-10 21-25 0-2 0-4-.5-6z" fill="${f}"/></svg>`;
+const ING=[
+ [leaf('#8ED6A6'),'Pestrec mariánsky','Stará sa o pečeň, silný prírodný antioxidant, pomáha telu zbaviť sa toxínov'],
+ [`<svg viewBox="0 0 40 40"><path d="M20 5c9 0 16 6 16 12 0 3-3 4-7 4H11c-4 0-7-1-7-4 0-6 7-12 16-12z" fill="#E8C9A0"/><path d="M15 21h10v10a5 5 0 0 1-10 0z" fill="#F3E3CB"/></svg>`,'Hliva ustricová','Podporuje imunitu a pomáha organizmu zvládať stres a infekcie'],
+ [`<svg viewBox="0 0 40 40"><path d="M20 8c8 0 13 6 13 13s-6 11-13 11-13-4-13-11S12 8 20 8z" fill="#C08A4E"/><path d="M20 8c3 4 4 9 4 13s-1 8-4 11c-3-3-4-7-4-11s1-9 4-13z" fill="#9A6A38"/></svg>`,'Výťažok z jedlého gaštana (tanín)','Pomáha tráveniu a pôsobí proti baktériám a parazitom v čreve'],
+ [`<svg viewBox="0 0 40 40"><path d="M8 26c4-8 10-12 24-14-6 6-8 10-9 16H8z" fill="#7E6A55"/><circle cx="14" cy="30" r="3" fill="#5C4C3C"/><circle cx="22" cy="29" r="2.4" fill="#5C4C3C"/></svg>`,'Humínové látky','Viažu na seba toxíny a vylučujú ich von z tela, dodávajú minerály a pôsobia protizápalovo'],
+ [leaf('#D9E08A'),'Konopná múka a ľanový olej','Prirodzený zdroj vlákniny a zdravých tukov'],
+ [`<svg viewBox="0 0 40 40"><g fill="#F0E6D6"><rect x="10" y="16.5" width="20" height="7" rx="3.5" transform="rotate(-38 20 20)"/><circle cx="11" cy="27.5" r="5"/><circle cx="15.5" cy="31" r="4.4"/><circle cx="29" cy="12.5" r="5"/><circle cx="24.5" cy="9" r="4.4"/></g></svg>`,'Živočíšny kolagén','Podpora kĺbov a pohyblivosti'],
+ [ICO.meat,'Hovädzie, morčacie a jahňacie mäso','Hlavný zdroj bielkovín, menovaný konkrétne, nie schovaný pod „mäso a mäsové deriváty“']
+];
+document.getElementById('ingList').innerHTML=ING.map(([svg,t,d])=>
+  `<li>${svg}<div><b>${t}</b><span>${d}</span></div></li>`).join('');
+
+/* tick / cross marks */
+const cross=`<svg viewBox="0 0 24 24" role="img" aria-label="Nie"><circle cx="12" cy="12" r="11" fill="#F0E4E2"/>
+  <path d="M8 8l8 8M16 8l-8 8" stroke="#B23A2E" stroke-width="2.6" stroke-linecap="round"/></svg>`;
+const tick=`<svg viewBox="0 0 24 24" role="img" aria-label="Áno"><circle cx="12" cy="12" r="11" fill="#E4F0E7"/>
+  <path d="M7 12.5l3.4 3.5L17 9" fill="none" stroke="#1A6B43" stroke-width="2.8"
+    stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+for(let i=1;i<=5;i++){document.getElementById('x'+i).innerHTML=cross;document.getElementById('v'+i).innerHTML=tick;}
+
+/* ============ the bowl, split down the middle ============ */
+(function(){
+  let s=8172631; const rnd=()=>(s=(s*1103515245+12345)&0x7fffffff)/0x7fffffff;
+  const CX=200, CY=196, R=132;
+  const dull=['#A9A49B','#B7B2A8','#98938B','#C2BCB1','#8E8A83'];
+  const rich=['#C2762F','#E0A03F','#8B5A2B','#D98A33','#A8632A'];
+  const herb=['#4E8A4A','#6FA85C','#8B3A2E'];
+  function kibble(half){
+    let out='';
+    for(let i=0;i<190;i++){
+      const a=rnd()*Math.PI*2, r=Math.sqrt(rnd())*(R-14);
+      const x=CX+Math.cos(a)*r, y=CY+Math.sin(a)*r;
+      if(half==='l'&&x>CX+2) continue;
+      if(half==='r'&&x<CX-2) continue;
+      const w=7+rnd()*4, h=w*(.62+rnd()*.3), rot=rnd()*180;
+      const pal=half==='l'?dull:rich;
+      out+=`<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${w.toFixed(1)}" ry="${h.toFixed(1)}"
+        transform="rotate(${rot.toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})" fill="${pal[(rnd()*pal.length)|0]}"/>`;
+      if(half==='r'&&rnd()>.62){
+        out+=`<ellipse cx="${(x+2).toFixed(1)}" cy="${(y-1).toFixed(1)}" rx="${(w*.34).toFixed(1)}"
+          ry="${(h*.3).toFixed(1)}" transform="rotate(${rot.toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})"
+          fill="${herb[(rnd()*herb.length)|0]}"/>`;
+      }
+    }
+    return out;
+  }
+  document.getElementById('bowl').innerHTML=`
+  <svg viewBox="22 30 356 350" style="width:100%;height:auto;display:block" role="img"
+       aria-label="Miska rozdelená na polovicu: vľavo bežné granule, vpravo Bonapet">
+    <ellipse cx="200" cy="204" rx="176" ry="172" fill="#EFE7DA"/>
+    <ellipse cx="200" cy="196" rx="150" ry="146" fill="#E2D7C4"/>
+    <clipPath id="bowlL"><path d="M200 50a146 146 0 0 0 0 292z"/></clipPath>
+    <clipPath id="bowlR"><path d="M200 50a146 146 0 0 1 0 292z"/></clipPath>
+    <g clip-path="url(#bowlL)"><rect x="40" y="40" width="170" height="320" fill="#DCD7CE"/>${kibble('l')}</g>
+    <g clip-path="url(#bowlR)"><rect x="190" y="40" width="180" height="320" fill="#F6E7CE"/>${kibble('r')}</g>
+    <path d="M200 50c-9 24 9 44 0 68s9 44 0 68 9 44 0 68 9 44 0 60" fill="none"
+      stroke="#FFF7EC" stroke-width="7" stroke-linecap="round"/>
+    <ellipse cx="200" cy="196" rx="150" ry="146" fill="none" stroke="#CFC2AB" stroke-width="6"/>
+  </svg>`;
+})();
+
+/* photo-slot icon */
+const camGlyph=`<svg viewBox="0 0 64 64" role="img" aria-label="Miesto na fotku">
+  <rect x="5" y="17" width="54" height="38" rx="8" fill="none" stroke="${C.ink}" stroke-width="3.4"/>
+  <path d="M22 17l4-7h12l4 7" fill="none" stroke="${C.ink}" stroke-width="3.4" stroke-linejoin="round"/>
+  <circle cx="32" cy="36" r="11" fill="none" stroke="${C.ink}" stroke-width="3.4"/>
+  <circle cx="49" cy="26" r="2.6" fill="${C.ink}"/></svg>`;
+document.getElementById('phIco1').innerHTML=camGlyph;
+
+/* FAQ */
+const FAQ=[
+ ['Je Bonapet vhodný aj pre šteniatka?',
+  'Áno. Máme receptúry podľa veku — šteniatko potrebuje iný pomer bielkovín a menšiu granulu, ktorú zvládne aj malá papuľka. Pri výbere zadaj vek a veľkosť a ukážeme ti ten správny recept.'],
+ ['Ako dlho trvá prechod na Bonapet?',
+  'Počítaj so 7 až 10 dňami. Prvé dni primiešaj asi štvrtinu Bonapetu k pôvodnému krmivu a podiel postupne zvyšuj. Pomalý prechod je najistejšia cesta, ako sa vyhnúť podráždenému bruchu.'],
+ ['Čo presne sú humínové látky a prečo sú v krmive?',
+  'Sú to prírodné látky, ktoré vznikajú rozkladom rastlinnej hmoty. V čreve na seba viažu toxíny a odvádzajú ich von z tela, zároveň dodávajú minerály a pôsobia protizápalovo.'],
+ ['Zvládne to aj chlpáč s citlivým žalúdkom alebo alergiami?',
+  'Práve preto menujeme každú surovinu. Ak vieš, čo tvojmu parťákovi nesadá, vieš si to overiť ešte pred nákupom. Pri diagnostikovanej alergii sa vždy oplatí prebrať zmenu krmiva aj s veterinárom.'],
+ ['Ako zistím, ktorý recept je pre môjho parťáka ten pravý?',
+  'Odpovieš na pár otázok — veľkosť, vek, energia a či má citlivé trávenie — a odporučíme recept. Trvá to necelú minútu a nemusíš nič kupovať.'],
+ ['Odkiaľ berieme suroviny?',
+  'Granule vyrábame v spolupráci s výrobcom, ktorý sa krmivám venuje od roku 1992 a stavia na prírodných a živočíšnych surovinách. Konkrétne mäso menujeme priamo v zložení každého receptu.']
+];
+document.getElementById('faqList').innerHTML=FAQ.map(([q,a],i)=>
+  `<details${i===0?' open':''}><summary>${q}</summary><p>${a}</p></details>`).join('');
+
+/* review placeholders — deliberately empty, no invented testimonials */
+const AV=[DOGS.jazvecik,DOGS.labrador,DOGS.terier];
+document.getElementById('revList').innerHTML=AV.map(d=>`
+  <div class="card">
+    <span class="slotnote">Miesto na reálnu recenziu</span>
+    <div style="display:flex;align-items:center;gap:14px">
+      <div class="avatar">${dog(d)}</div>
+      <div style="flex:1"><div class="ph-line" style="width:60%"></div>
+        <div class="ph-line" style="width:38%;margin-top:8px;height:9px"></div></div>
+    </div>
+    <div><div class="ph-line"></div><div class="ph-line" style="width:92%;margin-top:9px"></div>
+      <div class="ph-line" style="width:70%;margin-top:9px"></div></div>
+  </div>`).join('');
+
+/* newsletter pack illustration */
+document.getElementById('pack').innerHTML=`<svg viewBox="0 0 120 140" style="width:100%;height:auto"
+  role="img" aria-label="Vrece granúl Bonapet">
+  <path d="M14 34h92v92a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10z" fill="${C.green}"/>
+  <path d="M14 34c8-8 18-12 46-12s38 4 46 12z" fill="#12522F"/>
+  <rect x="19" y="58" width="82" height="32" rx="10" fill="#FFF7EC"/>
+  <text x="60" y="79" text-anchor="middle" font-family="'Bricolage Grotesque',sans-serif"
+    font-weight="800" font-size="17" fill="${C.ink}">Bonapet</text>
+  <g fill="${C.honey}"><circle cx="49" cy="105" r="3.6"/><circle cx="60" cy="102" r="3.6"/>
+   <circle cx="71" cy="105" r="3.6"/>
+   <path d="M60 110c4.6 0 8.4 2.8 8.4 5.5 0 1.1-1 1.9-2.5 1.9h-11.8c-1.5 0-2.5-.8-2.5-1.9 0-2.7 3.8-5.5 8.4-5.5z"/></g></svg>`;
+</script>
