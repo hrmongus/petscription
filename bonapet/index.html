@@ -2,22 +2,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Figtree:wght@400..800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
 
 <style>
 /* Bonapet — deliberately a single, bright, warm look. No dark variant:
    every colour is painted explicitly so the page holds on any host ground. */
 :root{
-  --cream:#FFF7EC; --cream-2:#FDEFDD; --white:#FFFFFF;
-  --ink:#2A211A; --ink-2:#6E655C; --line:#EADFCD;
-  --green:#1A6B43; --green-2:#E4F0E7; --green-3:#12522F;
-  --orange:#EE6C2B; --orange-2:#FDE7D6; --orange-ink:#C94E0D;
-  --honey:#F5B92E; --honey-2:#FDF0D2;
-  --drab:#9E9A93; --drab-2:#EFEDE9; --bad:#B23A2E;
-  --display:'Bricolage Grotesque','Figtree',system-ui,sans-serif;
-  --body:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --r:22px; --r-lg:34px;
-  --shadow:0 18px 40px -24px rgba(42,33,26,.35);
+  --cream:#F7F2E9; --cream-2:#EFE7D6; --white:#FFFDF9;
+  --ink:#24201A; --ink-2:#6B6459; --line:#E3DBCC;
+  --green:#24503B; --green-2:#E9EFE7; --green-3:#183828;
+  --orange:#A8552B; --orange-2:#F3E4D6; --orange-ink:#9C5624;
+  --honey:#D9A441; --honey-2:#F3E8CE;
+  --drab:#9E9A93; --drab-2:#EDEAE3; --bad:#A03A2E;
+  --display:'Instrument Serif','Iowan Old Style',Georgia,serif;
+  --body:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --r:14px; --r-lg:20px;
+  --shadow:0 24px 50px -34px rgba(36,32,26,.45);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--body);
@@ -25,41 +26,43 @@ body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--body);
 img{max-width:100%}
 :focus-visible{outline:3px solid var(--orange-ink);outline-offset:3px;border-radius:6px}
 .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
-h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.025em;
-  line-height:1.06;margin:0;text-wrap:balance}
-h1{font-size:clamp(36px,5.4vw,62px)}
-h2{font-size:clamp(29px,4vw,45px)}
-h3{font-size:clamp(20px,2.2vw,25px);letter-spacing:-.015em;line-height:1.2}
+h1,h2{font-family:var(--display);font-weight:400;letter-spacing:-.015em;
+  line-height:1.04;margin:0;text-wrap:balance}
+h1{font-size:clamp(42px,6vw,72px)}
+h2{font-size:clamp(32px,4.4vw,50px)}
+h3{font-family:var(--body);font-weight:700;letter-spacing:-.01em;line-height:1.25;
+  margin:0;font-size:clamp(19px,2vw,22px);text-wrap:balance}
 p{margin:0}
-.eyebrow{font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.14em;
-  color:var(--green);margin-bottom:14px}
+.eyebrow{font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.22em;
+  color:var(--orange-ink);margin-bottom:16px}
 .lead{font-size:clamp(18px,2vw,21px);color:var(--ink-2);max-width:56ch}
 section{padding:clamp(56px,7vw,96px) 0}
 
 /* ---------- buttons ---------- */
-.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-weight:800;
-  font-size:17px;padding:16px 28px;border-radius:999px;border:2px solid transparent;
-  text-decoration:none;cursor:pointer;transition:transform .12s ease,box-shadow .12s ease}
-.btn:hover{transform:translateY(-2px)}
-.btn-1{background:var(--orange);color:var(--ink);box-shadow:0 10px 0 -2px var(--orange-ink)}
-.btn-1:hover{box-shadow:0 13px 0 -2px var(--orange-ink)}
-.btn-2{background:transparent;color:var(--green);border-color:var(--green)}
-.btn-2:hover{background:var(--green-2)}
-.btn-3{background:var(--green);color:#fff;box-shadow:0 10px 0 -2px var(--green-3)}
-.btn-3:hover{box-shadow:0 13px 0 -2px var(--green-3)}
-@media (prefers-reduced-motion:reduce){.btn{transition:none}.btn:hover{transform:none}}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-weight:600;
+  font-size:16px;letter-spacing:.01em;padding:15px 28px;border-radius:10px;
+  border:1px solid transparent;text-decoration:none;cursor:pointer;
+  transition:background .15s ease,border-color .15s ease}
+.btn-1{background:var(--green);color:#fff}
+.btn-1:hover{background:var(--green-3)}
+.btn-2{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn-2:hover{background:var(--cream-2)}
+.btn-3{background:var(--white);color:var(--ink)}
+.btn-3:hover{background:var(--cream-2)}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}}
 
 /* ---------- header ---------- */
-header{position:sticky;top:0;z-index:40;background:rgba(255,247,236,.92);
+header{position:sticky;top:0;z-index:40;background:rgba(247,242,233,.94);
   backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .hd{display:flex;align-items:center;gap:26px;padding:14px 24px;max-width:1160px;margin:0 auto}
-.logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;
-  font-size:25px;letter-spacing:-.03em;color:var(--ink);text-decoration:none}
-.logo svg{width:38px;height:38px;flex:none}
+.logo{display:flex;align-items:center;gap:11px;font-family:var(--display);font-weight:400;
+  font-size:27px;letter-spacing:.01em;color:var(--ink);text-decoration:none}
+.logo svg{width:30px;height:30px;flex:none;color:var(--green)}
+footer .logo svg{color:var(--honey)}
 nav{margin-left:auto;display:flex;gap:24px;align-items:center}
-nav a{color:var(--ink);text-decoration:none;font-weight:600;font-size:16px}
+nav a{color:var(--ink);text-decoration:none;font-weight:500;font-size:15.5px}
 nav a:hover{color:var(--green)}
-.hd .btn{padding:11px 20px;font-size:15px}
+.hd .btn{padding:10px 20px;font-size:14.5px}
 @media(max-width:860px){nav .nl{display:none}}
 
 /* ---------- hero ---------- */
@@ -67,51 +70,49 @@ nav a:hover{color:var(--green)}
   padding:clamp(36px,5vw,68px) 0 clamp(48px,6vw,84px)}
 @media(max-width:900px){.hero{grid-template-columns:1fr}}
 .hero .cta{display:flex;flex-wrap:wrap;gap:14px;margin:30px 0 22px}
-.trust{display:flex;align-items:center;gap:10px 16px;flex-wrap:wrap;font-size:15px;
-  color:var(--ink-2);font-weight:600}
+.trust{display:flex;align-items:center;gap:10px 16px;flex-wrap:wrap;font-size:14.5px;
+  color:var(--ink-2);font-weight:500}
 .trust-row{display:inline-flex;align-items:center;gap:9px;white-space:nowrap}
 .trust-sep{width:1px;height:18px;background:var(--line)}
 @media(max-width:520px){.trust-sep{display:none}}
 .stars{display:inline-flex;gap:2px;color:var(--honey)}
-.stars svg{width:18px;height:18px}
-.hero-art{position:relative;background:linear-gradient(160deg,var(--honey-2),var(--orange-2));
-  border-radius:var(--r-lg);padding:26px;aspect-ratio:1/1;display:flex;align-items:center;
-  justify-content:center;box-shadow:var(--shadow)}
-.hero-art .dog{width:min(96%,460px);margin-top:-4%}
-.chip{position:absolute;background:#fff;border-radius:999px;padding:10px 16px;font-weight:800;
-  font-size:14px;box-shadow:0 8px 20px -10px rgba(42,33,26,.45);display:flex;align-items:center;gap:8px}
-.chip i{width:9px;height:9px;border-radius:50%;background:var(--green);display:block}
-.chip.c1{top:6%;left:-16px}
-.chip.c2{top:63%;right:-16px}
-.chip.c3{bottom:6%;left:6%}
-@media(max-width:520px){.chip.c1{left:0}.chip.c2{right:0}}
+.stars svg{width:15px;height:15px}
+.hero-art{position:relative;background:var(--green);border-radius:var(--r-lg);
+  padding:clamp(26px,3.4vw,44px) clamp(22px,3vw,40px) 0;aspect-ratio:10/11;display:flex;
+  align-items:flex-end;justify-content:center;box-shadow:var(--shadow);overflow:hidden}
+.hero-art .pack-hero{width:min(72%,330px);display:block}
+.hero-chips{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:18px}
+.chip{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:14px;
+  color:var(--ink-2);letter-spacing:.02em}
+.chip i{width:5px;height:5px;border-radius:50%;background:var(--orange-ink);display:block;flex:none}
 
 /* ---------- pillars ---------- */
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 @media(max-width:860px){.grid3{grid-template-columns:1fr}}
-.card{background:var(--white);border-radius:var(--r);padding:30px;border:1px solid var(--line)}
-.card .ico{width:60px;height:60px;margin-bottom:18px}
+.card{background:var(--white);border-radius:var(--r);padding:32px;border:1px solid var(--line)}
+.card .ico{width:46px;height:46px;margin-bottom:20px}
 .card h3{margin-bottom:10px}
-.card p{color:var(--ink-2);font-size:17px}
+.card p{color:var(--ink-2);font-size:16px}
 
 /* ---------- ingredients band ---------- */
 .band-green{background:var(--green);color:#fff}
 .band-green .eyebrow{color:var(--honey)}
+.band-green h2{color:#fff}
 .band-green .lead{color:rgba(255,255,255,.86)}
 .ing{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-top:38px}
-.ing li{list-style:none;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);
-  border-radius:18px;padding:20px;display:flex;gap:14px;align-items:flex-start}
+.ing li{list-style:none;background:rgba(255,253,249,.06);border:1px solid rgba(255,253,249,.16);
+  border-radius:12px;padding:22px;display:flex;gap:14px;align-items:flex-start}
 .ing svg{width:40px;height:40px;flex:none;margin-top:1px}
-.ing b{display:block;font-size:17px;margin-bottom:3px}
-.ing span{color:rgba(255,255,255,.82);font-size:15.5px;line-height:1.5}
+.ing b{display:block;font-size:16.5px;margin-bottom:4px;font-weight:700}
+.ing span{color:rgba(255,253,249,.78);font-size:15px;line-height:1.55}
 
 /* ---------- photo slots ---------- */
-.photo{background:repeating-linear-gradient(135deg,var(--cream-2),var(--cream-2) 14px,var(--honey-2) 14px,var(--honey-2) 28px);
-  border:2px dashed var(--honey);border-radius:var(--r);display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:10px;color:var(--ink-2);text-align:center;padding:24px}
-.photo svg{width:52px;height:52px;opacity:.55}
-.photo b{font-family:var(--display);font-size:16px;color:var(--ink)}
-.photo small{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.photo{background:var(--cream-2);border:1px dashed #CBBFA8;border-radius:var(--r);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  color:var(--ink-2);text-align:center;padding:24px}
+.photo svg{width:44px;height:44px;opacity:.5}
+.photo b{font-family:var(--body);font-weight:700;font-size:15px;color:var(--ink)}
+.photo small{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
 
 /* ---------- bowl comparison ---------- */
 .bowl-wrap{display:grid;grid-template-columns:1fr minmax(300px,500px) 1fr;
@@ -135,10 +136,10 @@ nav a:hover{color:var(--green)}
   .pt .ln{display:none}
   .bowl-wrap .pt{min-height:0;padding:7px 0}
   .lbl-l{order:-1}}
-.lbl{display:inline-flex;align-items:center;gap:9px;font-family:var(--display);font-weight:800;
-  font-size:19px;padding:9px 18px;border-radius:999px}
+.lbl{display:inline-flex;align-items:center;gap:9px;font-family:var(--body);font-weight:600;
+  font-size:13px;letter-spacing:.16em;text-transform:uppercase;padding:9px 16px;border-radius:8px}
 .lbl-bad{background:var(--drab-2);color:var(--ink-2)}
-.lbl-good{background:var(--green-2);color:var(--green)}
+.lbl-good{background:var(--green);color:#fff}
 
 .health{background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);
   padding:clamp(30px,4.5vw,60px);display:grid;grid-template-columns:1.15fr .85fr;
@@ -150,53 +151,53 @@ nav a:hover{color:var(--green)}
 @media(max-width:900px){.tl{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.tl{grid-template-columns:1fr}}
 .tl li{list-style:none;background:var(--white);border:1px solid var(--line);border-radius:var(--r);
-  padding:30px 22px 26px;position:relative;overflow:hidden}
-.tl .when{display:inline-block;font-family:var(--display);font-weight:800;font-size:15px;
-  background:var(--honey-2);color:var(--orange-ink);padding:6px 13px;border-radius:999px;margin-bottom:14px}
-.tl p{font-size:17px}
-.tl .bar{position:absolute;left:0;right:0;top:0;height:6px;background:var(--honey)}
-.tl li:nth-child(2) .bar{background:#F0A83C}
-.tl li:nth-child(3) .bar{background:#5FA36C}
+  padding:26px 24px;position:relative;overflow:hidden}
+.tl .when{display:block;font-family:var(--display);font-size:24px;color:var(--green);margin-bottom:10px}
+.tl p{font-size:16px;color:var(--ink-2)}
+.tl .bar{position:absolute;left:24px;right:24px;top:0;height:3px;background:var(--line)}
+.tl li:nth-child(1) .bar{background:#CBBFA8}
+.tl li:nth-child(2) .bar{background:var(--honey)}
+.tl li:nth-child(3) .bar{background:#6E8F76}
 .tl li:nth-child(4) .bar{background:var(--green)}
 
 /* ---------- faq ---------- */
 .faq{margin-top:34px;max-width:820px}
-details{background:var(--white);border:1px solid var(--line);border-radius:18px;margin-bottom:12px}
-summary{cursor:pointer;list-style:none;padding:20px 24px;font-family:var(--display);font-weight:700;
-  font-size:19px;display:flex;align-items:center;gap:14px}
+details{background:var(--white);border:1px solid var(--line);border-radius:12px;margin-bottom:10px}
+summary{cursor:pointer;list-style:none;padding:20px 24px;font-family:var(--body);font-weight:600;
+  font-size:17px;display:flex;align-items:center;gap:14px}
 summary::-webkit-details-marker{display:none}
 summary::after{content:"";margin-left:auto;width:13px;height:13px;flex:none;
   border-right:3px solid var(--green);border-bottom:3px solid var(--green);
   transform:rotate(45deg);transition:transform .18s ease}
 details[open] summary::after{transform:rotate(-135deg)}
-details p{padding:0 24px 22px;color:var(--ink-2);font-size:17px;max-width:64ch}
+details p{padding:0 24px 22px;color:var(--ink-2);font-size:16px;max-width:64ch}
 @media (prefers-reduced-motion:reduce){summary::after{transition:none}}
 
 /* ---------- reviews ---------- */
 .rev{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
 @media(max-width:900px){.rev{grid-template-columns:1fr}}
 .rev .card{display:flex;flex-direction:column;gap:14px}
-.avatar{width:64px;height:64px;border-radius:50%;border:2px dashed var(--honey);
-  background:var(--honey-2);display:flex;align-items:center;justify-content:center}
+.avatar{width:60px;height:60px;border-radius:50%;border:1px solid var(--line);
+  background:var(--cream-2);display:flex;align-items:center;justify-content:center;overflow:hidden}
 .avatar svg{width:36px;height:36px;opacity:.6}
 .ph-line{height:11px;border-radius:6px;background:var(--cream-2)}
-.slotnote{font-size:13px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
-  color:var(--orange-ink);background:var(--orange-2);border-radius:999px;padding:5px 12px;align-self:flex-start}
+.slotnote{font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-2);border:1px solid var(--line);border-radius:6px;padding:5px 11px;align-self:flex-start}
 
 /* ---------- newsletter ---------- */
-.news{background:var(--honey);border-radius:var(--r-lg);padding:clamp(34px,5vw,64px);text-align:center;
-  display:flex;flex-direction:column;align-items:center;gap:20px}
-.news h2{max-width:16ch}
-.news p{max-width:48ch;color:#5B4412;font-weight:600}
+.news{background:var(--green);border-radius:var(--r-lg);padding:clamp(38px,5vw,68px);text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:20px;color:#fff}
+.news h2{max-width:16ch;color:#fff}
+.news p{max-width:48ch;color:rgba(255,253,249,.82);font-weight:500}
 .nform{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;width:100%;max-width:520px}
-.nform input{flex:1 1 240px;padding:16px 20px;border-radius:999px;border:2px solid rgba(42,33,26,.18);
-  font-family:var(--body);font-size:16px;background:#fff;color:var(--ink)}
+.nform input{flex:1 1 240px;padding:15px 20px;border-radius:10px;border:1px solid rgba(255,253,249,.3);
+  font-family:var(--body);font-size:16px;background:var(--white);color:var(--ink)}
 .nform input::placeholder{color:#9A8E7E}
 
 /* ---------- footer ---------- */
-footer{background:var(--ink);color:#E9DFD2;padding:52px 0 40px;margin-top:0}
+footer{background:#1B1814;color:#DDD5C6;padding:52px 0 40px;margin-top:0}
 .ft{display:flex;flex-wrap:wrap;gap:26px;align-items:center;justify-content:space-between}
-footer a{color:#E9DFD2;text-decoration:none;font-weight:600}
+footer a{color:#DDD5C6;text-decoration:none;font-weight:500}
 footer a:hover{color:var(--honey)}
 .ft-links{display:flex;gap:22px;flex-wrap:wrap}
 .ft small{display:block;width:100%;color:#A2968A;font-size:14px;margin-top:24px;
@@ -238,12 +239,14 @@ footer a:hover{color:var(--honey)}
           <span>Receptúra postavená na overených prírodných surovinách</span>
         </div>
       </div>
-      <div class="hero-art">
-        <div class="dog" id="heroDog"></div>
-        <div class="chip c1"><i></i>Bez sóje a kukurice</div>
-        <div class="chip c2"><i></i>Menované mäso</div>
-        <div class="chip c3"><i></i>Podľa veľkosti a veku</div>
-      </div>
+      <figure style="margin:0">
+        <div class="hero-art"><div class="pack-hero" id="heroPack"></div></div>
+        <div class="hero-chips">
+          <span class="chip"><i></i>Bez sóje a kukurice</span>
+          <span class="chip"><i></i>Menované mäso</span>
+          <span class="chip"><i></i>Podľa veľkosti a veku</span>
+        </div>
+      </figure>
     </div>
   </div>
 
@@ -279,7 +282,7 @@ footer a:hover{color:var(--honey)}
       skratiek. Nehľadáme najlacnejšiu cestu k plnému vreci — hľadáme suroviny, ktoré majú v miske
       skutočný zmysel.</p>
       <ul class="ing" id="ingList"></ul>
-      <div style="margin-top:34px"><a class="btn btn-1" href="#miska">Prečítať si celé zloženie →</a></div>
+      <div style="margin-top:34px"><a class="btn btn-3" href="#miska">Prečítať si celé zloženie →</a></div>
     </div>
   </section>
 
@@ -372,7 +375,7 @@ footer a:hover{color:var(--honey)}
   <section id="news" style="padding-top:0">
     <div class="wrap">
       <div class="news">
-        <div id="pack" style="width:120px"></div>
+        <div id="pack" style="width:132px"></div>
         <h2>Poď do svorky</h2>
         <p>Prihlás sa na odber a získaj 10 % zľavu na prvú objednávku. Žiadny spam,
         len novinky a zľavy pre teba a tvojho parťáka.</p>
@@ -401,81 +404,108 @@ footer a:hover{color:var(--honey)}
 
 <script>
 /* ============ illustration kit ============ */
-const C={green:'#1A6B43',orange:'#EE6C2B',honey:'#F5B92E',ink:'#2A211A',cream:'#FFF7EC'};
+const C={green:'#24503B',orange:'#A8552B',honey:'#D9A441',ink:'#24201A',cream:'#F7F2E9'};
 
 function dog(o){
   const ears={
-    floppy:`<path d="M62 74C32 62 14 96 22 136c5 25 34 26 42 -2Z" fill="${o.ear}"/>
-            <path d="M138 74C168 62 186 96 178 136c-5 25-34 26-42 -2Z" fill="${o.ear}"/>`,
-    long:`<path d="M60 76C26 68 8 116 18 160c6 27 36 28 44 -6Z" fill="${o.ear}"/>
-          <path d="M140 76C174 68 192 116 182 160c-6 27-36 28-44 -6Z" fill="${o.ear}"/>`,
-    pointy:`<path d="M92 58L42 32C34 28 28 36 33 43L68 84Z" fill="${o.ear}"/>
-            <path d="M108 58l50-26c8-4 14 4 9 11l-35 41Z" fill="${o.ear}"/>`
+    floppy:`<path d="M64 76C38 66 24 94 30 128c4 21 28 22 36 0Z" fill="${o.ear}"/>
+            <path d="M136 76C162 66 176 94 170 128c-4 21-28 22-36 0Z" fill="${o.ear}"/>`,
+    long:`<path d="M62 78C34 70 20 108 28 142c5 22 30 23 37 -3Z" fill="${o.ear}"/>
+          <path d="M138 78C166 70 180 108 172 142c-5 22-30 23-37 -3Z" fill="${o.ear}"/>`,
+    pointy:`<path d="M78 68L52 26c-3-5 2-10 7-6l34 32Z" fill="${o.ear}"/>
+            <path d="M122 68l26-42c3-5-2-10-7-6l-34 32Z" fill="${o.ear}"/>`
   };
+  const ring = o.ring===false ? '' :
+    `<circle cx="100" cy="100" r="96" fill="none" stroke="${o.ringColor||'#24503B'}" stroke-width="2"/>`;
   return `<svg viewBox="0 0 200 200" style="width:100%;height:auto;display:block" role="img" aria-label="${o.alt||'Ilustrácia psa'}">
+  ${ring}<g transform="translate(0,6)">
   ${ears[o.type]}
-  <ellipse cx="100" cy="104" rx="56" ry="52" fill="${o.coat}"/>
-  ${o.patch?`<ellipse cx="126" cy="78" rx="26" ry="20" fill="${o.coat2}" transform="rotate(-16 126 78)"/>`:''}
-  <ellipse cx="100" cy="132" rx="36" ry="28" fill="${o.muzzle}"/>
-  <ellipse cx="78" cy="100" rx="8" ry="9" fill="#2B1E18"/>
-  <ellipse cx="122" cy="100" rx="8" ry="9" fill="#2B1E18"/>
-  <circle cx="80.5" cy="96.5" r="2.8" fill="#fff"/><circle cx="124.5" cy="96.5" r="2.8" fill="#fff"/>
-  <path d="M100 112c9 0 14 5 14 9 0 5-6 8-14 8s-14-3-14-8c0-4 5-9 14-9z" fill="#3A2A22"/>
-  <path d="M100 129v9M100 138c0 6-6 9-11 6M100 138c0 6 6 9 11 6" fill="none" stroke="#2B1E18"
-    stroke-width="4" stroke-linecap="round"/>
-  ${o.tongue?`<path d="M92 148h16v11a8 8 0 0 1-16 0z" fill="#E4756F"/>`:''}
-  </svg>`;
+  <ellipse cx="100" cy="102" rx="52" ry="49" fill="${o.coat}"/>
+  <ellipse cx="100" cy="128" rx="32" ry="24" fill="${o.muzzle}"/>
+  <ellipse cx="80" cy="99" rx="5" ry="6" fill="#2A241C"/>
+  <ellipse cx="120" cy="99" rx="5" ry="6" fill="#2A241C"/>
+  <path d="M100 114c7 0 11 4 11 7 0 4-5 6-11 6s-11-2-11-6c0-3 4-7 11-7z" fill="#2A241C"/>
+  <path d="M100 127v7M100 134c0 5-5 7-9 5M100 134c0 5 5 7 9 5" fill="none" stroke="#2A241C" stroke-width="3" stroke-linecap="round"/>
+  </g></svg>`;
 }
 const DOGS={
-  labrador:{type:'floppy',coat:'#E9A94D',coat2:'#F3C480',muzzle:'#F8DCAC',ear:'#D2913A',tongue:1,alt:'Ilustrácia zlatého retrívera'},
-  jazvecik:{type:'long',coat:'#7A4A2E',coat2:'#B5793F',muzzle:'#C58C55',ear:'#5E3722',patch:1,alt:'Ilustrácia jazvečíka'},
-  terier:{type:'pointy',coat:'#B9BEC4',coat2:'#D6DADE',muzzle:'#E7EAED',ear:'#9AA1A8',alt:'Ilustrácia teriéra'}
+  labrador:{type:'floppy',coat:'#C89B6A',muzzle:'#E3C9A4',ear:'#A97F4F',alt:'Ilustrácia retrívera'},
+  jazvecik:{type:'long',coat:'#8A5F3E',muzzle:'#B98F63',ear:'#6D4930',alt:'Ilustrácia jazvečíka'},
+  terier:{type:'pointy',coat:'#A9A49B',muzzle:'#CFC9BE',ear:'#8C877E',alt:'Ilustrácia teriéra'}
 };
-document.getElementById('heroDog').innerHTML=dog(DOGS.labrador);
+function packSvg(recipe,opts={}){
+  const dogArt=dog({...DOGS.labrador,ring:false,alt:''}).replace('style="width:100%;height:auto;display:block"','width="86" height="86" x="0" y="0"');
+  return `<svg viewBox="0 0 240 320" style="width:100%;height:auto;display:block" role="img" aria-label="Balenie Bonapet">
+  <path d="M28 46h184v250a14 14 0 0 1-14 14H42a14 14 0 0 1-14-14z" fill="#F7F2E9"/>
+  <path d="M28 46h184v250a14 14 0 0 1-14 14H42a14 14 0 0 1-14-14z" fill="none" stroke="#DCD2BE" stroke-width="1.5"/>
+  <path d="M28 46c14-12 34-18 92-18s78 6 92 18z" fill="#EFE7D6" stroke="#DCD2BE" stroke-width="1.5"/>
+  <rect x="28" y="46" width="184" height="8" fill="#E3DBCC"/>
+  <text x="120" y="98" text-anchor="middle" font-family="'Instrument Serif',Georgia,serif"
+    font-size="34" fill="#24201A" letter-spacing="1">Bonapet</text>
+  <line x1="76" y1="112" x2="164" y2="112" stroke="#C9BCA0" stroke-width="1"/>
+  <circle cx="120" cy="163" r="44" fill="none" stroke="#24503B" stroke-width="1.6"/>
+  <g transform="translate(77,120) scale(0.43)">${dogArt.replace(/<svg[^>]*>|<\/svg>/g,'')}</g>
+  <rect x="28" y="222" width="184" height="60" fill="#24503B"/>
+  ${opts.compact?`
+  <text x="120" y="257" text-anchor="middle" font-family="'Hanken Grotesk',sans-serif" font-weight="600"
+    font-size="16" letter-spacing="3" fill="#EFE7D6">${recipe.toUpperCase()}</text>`:`
+  <text x="120" y="248" text-anchor="middle" font-family="'Hanken Grotesk',sans-serif" font-weight="600"
+    font-size="12" letter-spacing="3.5" fill="#D9A441">${recipe.toUpperCase()}</text>
+  <text x="120" y="268" text-anchor="middle" font-family="'Hanken Grotesk',sans-serif"
+    font-size="9.5" letter-spacing="0.5" fill="#EFE7D6">GRANULE Z POCTIVÝCH SUROVÍN</text>
+  <text x="120" y="300" text-anchor="middle" font-family="'Hanken Grotesk',sans-serif"
+    font-size="9" letter-spacing="0.4" fill="#8A8072">2 KG · VYROBENÉ NA SLOVENSKU</text>`}
+  </svg>`;
+}
+document.getElementById('heroPack').innerHTML=packSvg('Adult');
 
-/* logo mark: a bowl with a paw */
-const LOGO=`<svg viewBox="0 0 48 48" role="img" aria-label="Bonapet">
-  <path d="M6 24h36a18 18 0 0 1-18 16A18 18 0 0 1 6 24z" fill="${C.green}"/>
-  <rect x="3" y="18" width="42" height="7" rx="3.5" fill="${C.orange}"/>
-  <g fill="${C.honey}"><circle cx="18" cy="10" r="3.4"/><circle cx="27" cy="7.6" r="3.4"/>
-  <circle cx="35" cy="11" r="3.4"/><path d="M27 15c4.4 0 8 2.6 8 5.2 0 1-1 1.8-2.4 1.8H21.4c-1.4 0-2.4-.8-2.4-1.8 0-2.6 3.6-5.2 8-5.2z"/></g>
+/* logo mark: refined bowl */
+const LOGO=`<svg viewBox="0 0 48 48" role="img" aria-label="Bonapet" width="34" height="34">
+  <path d="M8 26h32a16 16 0 0 1-32 0z" fill="none" stroke="currentColor" stroke-width="2.6"/>
+  <line x1="4" y1="26" x2="44" y2="26" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M24 8c4.2 0 7.6 2.6 7.6 5.2 0 1.4-1.2 2.2-2.8 2.2H19.2c-1.6 0-2.8-.8-2.8-2.2C16.4 10.6 19.8 8 24 8z" fill="currentColor"/>
+  <circle cx="14.5" cy="12.5" r="2.6" fill="currentColor"/><circle cx="33.5" cy="12.5" r="2.6" fill="currentColor"/>
 </svg>`;
 document.getElementById('logoMark').innerHTML=LOGO;
 document.getElementById('logoMark2').innerHTML=LOGO;
-
 const star=`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>`;
 document.getElementById('stars').innerHTML=star.repeat(5);
 
-/* pillar icons */
+/* pillar icons — single-weight line */
+const LINE='fill="none" stroke="#24503B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"';
 const ICO={
-  meat:`<svg viewBox="0 0 64 64" role="img" aria-label="Mäso">
-    <g fill="#F6EAD6" stroke="#D8C3A0" stroke-width="2">
-      <circle cx="13" cy="23" r="7.5"/><circle cx="13" cy="39" r="7.5"/>
-      <rect x="10" y="23" width="15" height="16"/></g>
-    <path d="M24 13h13c11.5 0 21 8.5 21 19s-9.5 19-21 19H24c-4 0-6.5-2.5-6.5-6.5V19.5C17.5 15.5 20 13 24 13z" fill="#A8442E"/>
-    <path d="M29 22h8c7.5 0 13.5 4.5 13.5 10S44.5 42 37 42h-8c-2.2 0-3.5-1.3-3.5-3.5v-13C25.5 23.3 26.8 22 29 22z" fill="#E08A6A"/>
-    <path d="M33 28c3.5-1.5 7-1 9.5 1.5" fill="none" stroke="#F8D2BF" stroke-width="3" stroke-linecap="round"/></svg>`,
-  paw:`<svg viewBox="0 0 64 64" role="img" aria-label="Labka">
-    <g fill="${C.green}"><ellipse cx="19" cy="20" rx="7" ry="9"/><ellipse cx="32" cy="15" rx="7" ry="9.5"/>
-    <ellipse cx="45" cy="20" rx="7" ry="9"/><ellipse cx="53" cy="33" rx="6.5" ry="8"/>
-    <path d="M32 29c10 0 19 7 19 14 0 5-4 8-10 8-4 0-6-1-9-1s-5 1-9 1c-6 0-10-3-10-8 0-7 9-14 19-14z"/></g></svg>`,
-  heart:`<svg viewBox="0 0 64 64" role="img" aria-label="Srdce">
-    <path d="M32 55S6 40 6 24A14 14 0 0 1 32 16 14 14 0 0 1 58 24c0 16-26 31-26 31z" fill="${C.honey}"/>
-    <path d="M14 30h10l4-8 6 16 4-8h12" fill="none" stroke="${C.ink}" stroke-width="3.4"
-      stroke-linecap="round" stroke-linejoin="round"/></svg>`
+  meat:`<svg viewBox="0 0 64 64" role="img" aria-label="Mäso"><g ${LINE}>
+    <path d="M20 14h18c12 0 20 9 20 19s-8 19-20 19H20c-3.8 0-6-2.2-6-6V20c0-3.8 2.2-6 6-6z"/>
+    <path d="M26 24h10c6.6 0 11 4 11 9s-4.4 9-11 9H26c-2 0-3-1-3-3V27c0-2 1-3 3-3z"/></g></svg>`,
+  paw:`<svg viewBox="0 0 64 64" role="img" aria-label="Labka"><g ${LINE}>
+    <ellipse cx="19" cy="21" rx="5.5" ry="7"/><ellipse cx="32" cy="17" rx="5.5" ry="7.5"/>
+    <ellipse cx="45" cy="21" rx="5.5" ry="7"/>
+    <path d="M32 31c9 0 17 6.5 17 13 0 4.4-3.4 7-8.6 7-3.4 0-5.2-1-8.4-1s-5 1-8.4 1c-5.2 0-8.6-2.6-8.6-7 0-6.5 8-13 17-13z"/></g></svg>`,
+  heart:`<svg viewBox="0 0 64 64" role="img" aria-label="Srdce"><g ${LINE}>
+    <path d="M32 54S8 40 8 24A13 13 0 0 1 32 17 13 13 0 0 1 56 24c0 16-24 30-24 30z"/>
+    <path d="M17 31h9l4-7 5 14 4-7h9"/></g></svg>`
 };
 ico1.innerHTML=ICO.meat; ico2.innerHTML=ICO.paw; ico3.innerHTML=ICO.heart;
 
 /* ingredient list */
-const leaf=(f)=>`<svg viewBox="0 0 40 40"><path d="M33 6C16 6 7 15 7 27c0 3 1 5 2 7 8-14 14-18 20-21-6 5-13 9-18 22 2 1 4 2 7 2 12 0 21-10 21-25 0-2 0-4-.5-6z" fill="${f}"/></svg>`;
+const ILINE='fill="none" stroke="#D9A441" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"';
+const II={
+ leaf:`<svg viewBox="0 0 40 40"><g ${ILINE}><path d="M32 8C17 8 9 16 9 27c0 2.4.7 4.4 1.6 6"/><path d="M11 33C18 20 24 15 31 11"/><path d="M14 24c3-1 6-1 8 .5M17 17c2.6-.6 5-.4 7 .8"/></g></svg>`,
+ mush:`<svg viewBox="0 0 40 40"><g ${ILINE}><path d="M20 6c8.5 0 15 5.5 15 11 0 2.6-2.6 3.6-6.4 3.6H11.4C7.6 20.6 5 19.6 5 17 5 11.5 11.5 6 20 6z"/><path d="M15 21h10v8.5a5 5 0 0 1-10 0z"/></g></svg>`,
+ chestnut:`<svg viewBox="0 0 40 40"><g ${ILINE}><path d="M20 8c7.6 0 13 6 13 12.6S27 32 20 32 7 27.2 7 20.6 12.4 8 20 8z"/><path d="M20 8c2.8 4 4 8.4 4 12.6S22.8 28.4 20 32"/></g></svg>`,
+ humus:`<svg viewBox="0 0 40 40"><g ${ILINE}><path d="M8 27c4.5-8.5 11-13 24-15-6.5 6-9 10.5-10 16"/><path d="M13 30h.01M20 29h.01"/></g></svg>`,
+ seed:`<svg viewBox="0 0 40 40"><g ${ILINE}><path d="M31 9C19 9 12 16 12 26c0 2 .5 3.6 1.2 5"/><path d="M13 31c5.5-11 11-15 17-18"/><ellipse cx="24" cy="24" rx="2.6" ry="4" transform="rotate(35 24 24)"/></g></svg>`,
+ bone:`<svg viewBox="0 0 40 40"><g ${ILINE}><path d="M13 17.5a3.8 3.8 0 1 1 4.5-4.5l5 5a3.8 3.8 0 1 1 4.5 4.5 3.8 3.8 0 1 1-4.5 4.5l-5-5a3.8 3.8 0 1 1-4.5-4.5z"/></g></svg>`,
+ meat:`<svg viewBox="0 0 40 40"><g ${ILINE}><path d="M13 10h11c7.5 0 12.5 5.6 12.5 12S31.5 34 24 34H13c-2.4 0-3.8-1.4-3.8-3.8V13.8C9.2 11.4 10.6 10 13 10z"/><path d="M16.5 16.5h6c4 0 6.8 2.5 6.8 5.6s-2.8 5.6-6.8 5.6h-6c-1.3 0-1.9-.6-1.9-1.9v-7.4c0-1.3.6-1.9 1.9-1.9z"/></g></svg>`
+};
 const ING=[
- [leaf('#8ED6A6'),'Pestrec mariánsky','Stará sa o pečeň, silný prírodný antioxidant, pomáha telu zbaviť sa toxínov'],
- [`<svg viewBox="0 0 40 40"><path d="M20 5c9 0 16 6 16 12 0 3-3 4-7 4H11c-4 0-7-1-7-4 0-6 7-12 16-12z" fill="#E8C9A0"/><path d="M15 21h10v10a5 5 0 0 1-10 0z" fill="#F3E3CB"/></svg>`,'Hliva ustricová','Podporuje imunitu a pomáha organizmu zvládať stres a infekcie'],
- [`<svg viewBox="0 0 40 40"><path d="M20 8c8 0 13 6 13 13s-6 11-13 11-13-4-13-11S12 8 20 8z" fill="#C08A4E"/><path d="M20 8c3 4 4 9 4 13s-1 8-4 11c-3-3-4-7-4-11s1-9 4-13z" fill="#9A6A38"/></svg>`,'Výťažok z jedlého gaštana (tanín)','Pomáha tráveniu a pôsobí proti baktériám a parazitom v čreve'],
- [`<svg viewBox="0 0 40 40"><path d="M8 26c4-8 10-12 24-14-6 6-8 10-9 16H8z" fill="#7E6A55"/><circle cx="14" cy="30" r="3" fill="#5C4C3C"/><circle cx="22" cy="29" r="2.4" fill="#5C4C3C"/></svg>`,'Humínové látky','Viažu na seba toxíny a vylučujú ich von z tela, dodávajú minerály a pôsobia protizápalovo'],
- [leaf('#D9E08A'),'Konopná múka a ľanový olej','Prirodzený zdroj vlákniny a zdravých tukov'],
- [`<svg viewBox="0 0 40 40"><g fill="#F0E6D6"><rect x="10" y="16.5" width="20" height="7" rx="3.5" transform="rotate(-38 20 20)"/><circle cx="11" cy="27.5" r="5"/><circle cx="15.5" cy="31" r="4.4"/><circle cx="29" cy="12.5" r="5"/><circle cx="24.5" cy="9" r="4.4"/></g></svg>`,'Živočíšny kolagén','Podpora kĺbov a pohyblivosti'],
- [ICO.meat,'Hovädzie, morčacie a jahňacie mäso','Hlavný zdroj bielkovín, menovaný konkrétne, nie schovaný pod „mäso a mäsové deriváty“']
+ [II.leaf,'Pestrec mariánsky','Stará sa o pečeň, silný prírodný antioxidant, pomáha telu zbaviť sa toxínov'],
+ [II.mush,'Hliva ustricová','Podporuje imunitu a pomáha organizmu zvládať stres a infekcie'],
+ [II.chestnut,'Výťažok z jedlého gaštana (tanín)','Pomáha tráveniu a pôsobí proti baktériám a parazitom v čreve'],
+ [II.humus,'Humínové látky','Viažu na seba toxíny a vylučujú ich von z tela, dodávajú minerály a pôsobia protizápalovo'],
+ [II.seed,'Konopná múka a ľanový olej','Prirodzený zdroj vlákniny a zdravých tukov'],
+ [II.bone,'Živočíšny kolagén','Podpora kĺbov a pohyblivosti'],
+ [II.meat,'Hovädzie, morčacie a jahňacie mäso','Hlavný zdroj bielkovín, menovaný konkrétne, nie schovaný pod „mäso a mäsové deriváty“']
 ];
 document.getElementById('ingList').innerHTML=ING.map(([svg,t,d])=>
   `<li>${svg}<div><b>${t}</b><span>${d}</span></div></li>`).join('');
@@ -493,8 +523,8 @@ for(let i=1;i<=5;i++){document.getElementById('x'+i).innerHTML=cross;document.ge
   let s=8172631; const rnd=()=>(s=(s*1103515245+12345)&0x7fffffff)/0x7fffffff;
   const CX=200, CY=196, R=132;
   const dull=['#A9A49B','#B7B2A8','#98938B','#C2BCB1','#8E8A83'];
-  const rich=['#C2762F','#E0A03F','#8B5A2B','#D98A33','#A8632A'];
-  const herb=['#4E8A4A','#6FA85C','#8B3A2E'];
+  const rich=['#A9743B','#C29254','#7E5630','#B78447','#8F6236'];
+  const herb=['#57744F','#6E8F76','#8A4A38'];
   function kibble(half){
     let out='';
     for(let i=0;i<190;i++){
@@ -522,9 +552,9 @@ for(let i=1;i<=5;i++){document.getElementById('x'+i).innerHTML=cross;document.ge
     <clipPath id="bowlL"><path d="M200 50a146 146 0 0 0 0 292z"/></clipPath>
     <clipPath id="bowlR"><path d="M200 50a146 146 0 0 1 0 292z"/></clipPath>
     <g clip-path="url(#bowlL)"><rect x="40" y="40" width="170" height="320" fill="#DCD7CE"/>${kibble('l')}</g>
-    <g clip-path="url(#bowlR)"><rect x="190" y="40" width="180" height="320" fill="#F6E7CE"/>${kibble('r')}</g>
+    <g clip-path="url(#bowlR)"><rect x="190" y="40" width="180" height="320" fill="#EFE3CC"/>${kibble('r')}</g>
     <path d="M200 50c-9 24 9 44 0 68s9 44 0 68 9 44 0 68 9 44 0 60" fill="none"
-      stroke="#FFF7EC" stroke-width="7" stroke-linecap="round"/>
+      stroke="#F7F2E9" stroke-width="7" stroke-linecap="round"/>
     <ellipse cx="200" cy="196" rx="150" ry="146" fill="none" stroke="#CFC2AB" stroke-width="6"/>
   </svg>`;
 })();
@@ -556,7 +586,7 @@ document.getElementById('faqList').innerHTML=FAQ.map(([q,a],i)=>
   `<details${i===0?' open':''}><summary>${q}</summary><p>${a}</p></details>`).join('');
 
 /* review placeholders — deliberately empty, no invented testimonials */
-const AV=[DOGS.jazvecik,DOGS.labrador,DOGS.terier];
+const AV=[{...DOGS.jazvecik,ring:false},{...DOGS.labrador,ring:false},{...DOGS.terier,ring:false}];
 document.getElementById('revList').innerHTML=AV.map(d=>`
   <div class="card">
     <span class="slotnote">Miesto na reálnu recenziu</span>
@@ -570,16 +600,7 @@ document.getElementById('revList').innerHTML=AV.map(d=>`
   </div>`).join('');
 
 /* newsletter pack illustration */
-document.getElementById('pack').innerHTML=`<svg viewBox="0 0 120 140" style="width:100%;height:auto"
-  role="img" aria-label="Vrece granúl Bonapet">
-  <path d="M14 34h92v92a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10z" fill="${C.green}"/>
-  <path d="M14 34c8-8 18-12 46-12s38 4 46 12z" fill="#12522F"/>
-  <rect x="19" y="58" width="82" height="32" rx="10" fill="#FFF7EC"/>
-  <text x="60" y="79" text-anchor="middle" font-family="'Bricolage Grotesque',sans-serif"
-    font-weight="800" font-size="17" fill="${C.ink}">Bonapet</text>
-  <g fill="${C.honey}"><circle cx="49" cy="105" r="3.6"/><circle cx="60" cy="102" r="3.6"/>
-   <circle cx="71" cy="105" r="3.6"/>
-   <path d="M60 110c4.6 0 8.4 2.8 8.4 5.5 0 1.1-1 1.9-2.5 1.9h-11.8c-1.5 0-2.5-.8-2.5-1.9 0-2.7 3.8-5.5 8.4-5.5z"/></g></svg>`;
+document.getElementById('pack').innerHTML=packSvg('Adult',{compact:true});
 </script>
 
 <style>
@@ -595,7 +616,7 @@ document.getElementById('pack').innerHTML=`<svg viewBox="0 0 120 140" style="wid
   line-height:1;cursor:pointer;font-family:var(--body)}
 .fn-close:hover{background:var(--cream-2)}
 .fn-prog{margin-bottom:26px;padding-right:52px}
-.fn-prog .lbl{font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.12em;
+.fn-prog .lbl{font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.2em;
   color:var(--green);margin-bottom:10px;display:block}
 .fn-track{height:8px;border-radius:99px;background:var(--cream-2);overflow:hidden}
 .fn-track span{display:block;height:100%;border-radius:99px;background:var(--green);
@@ -607,38 +628,38 @@ document.getElementById('pack').innerHTML=`<svg viewBox="0 0 120 140" style="wid
 .tiles.n2{grid-template-columns:1fr 1fr}
 .tiles.n3{grid-template-columns:repeat(3,1fr)}
 @media(max-width:560px){.tiles.n3{grid-template-columns:1fr}}
-.tile{background:var(--white);border:2px solid var(--line);border-radius:18px;padding:16px;
-  cursor:pointer;text-align:left;font-family:var(--body);font-size:17px;font-weight:700;
+.tile{background:var(--white);border:1.5px solid var(--line);border-radius:12px;padding:16px;
+  cursor:pointer;text-align:left;font-family:var(--body);font-size:16.5px;font-weight:600;
   color:var(--ink);display:flex;align-items:center;gap:12px;transition:border-color .12s,background .12s}
 .tile:hover{border-color:var(--green)}
 .tile[aria-pressed="true"]{border-color:var(--green);background:var(--green-2)}
 .tile .sub{display:block;font-weight:500;font-size:14.5px;color:var(--ink-2);margin-top:3px}
-.tile .sym{font-size:22px;line-height:1;color:var(--green)}
+.tile .sym{font-size:20px;line-height:1;color:var(--green)}
 .tile svg{flex:none}
 .tile .txt{min-width:0}
 .chips{display:flex;flex-wrap:wrap;gap:10px}
-.chip-b{background:var(--white);border:2px solid var(--line);border-radius:999px;padding:11px 18px;
-  font-family:var(--body);font-weight:700;font-size:16px;color:var(--ink);cursor:pointer}
+.chip-b{background:var(--white);border:1.5px solid var(--line);border-radius:9px;padding:11px 18px;
+  font-family:var(--body);font-weight:600;font-size:15.5px;color:var(--ink);cursor:pointer}
 .chip-b:hover{border-color:var(--green)}
 .chip-b[aria-pressed="true"]{border-color:var(--green);background:var(--green-2);color:var(--green)}
-.fn input[type=text],.fn input[type=number]{width:100%;padding:15px 18px;border-radius:14px;
-  border:2px solid var(--line);font-family:var(--body);font-size:17px;background:var(--white);color:var(--ink)}
+.fn input[type=text],.fn input[type=number]{width:100%;padding:15px 18px;border-radius:10px;
+  border:1.5px solid var(--line);font-family:var(--body);font-size:17px;background:var(--white);color:var(--ink)}
 .fn input::placeholder{color:#A79B8B}
 .fn input:focus{border-color:var(--green);outline:none}
 .row{display:flex;gap:12px;align-items:stretch}
-.unit{display:flex;background:var(--white);border:2px solid var(--line);border-radius:14px;padding:4px;flex:none}
-.unit button{border:0;background:transparent;font-family:var(--body);font-weight:700;font-size:15px;
-  padding:8px 14px;border-radius:10px;cursor:pointer;color:var(--ink-2)}
+.unit{display:flex;background:var(--white);border:1.5px solid var(--line);border-radius:10px;padding:4px;flex:none}
+.unit button{border:0;background:transparent;font-family:var(--body);font-weight:600;font-size:14.5px;
+  padding:8px 14px;border-radius:7px;cursor:pointer;color:var(--ink-2)}
 .unit button[aria-pressed="true"]{background:var(--green);color:#fff}
 .suffix{display:flex;align-items:center;padding:0 18px;background:var(--white);
-  border:2px solid var(--line);border-radius:14px;font-weight:700;color:var(--ink-2);flex:none}
+  border:1.5px solid var(--line);border-radius:10px;font-weight:600;color:var(--ink-2);flex:none}
 .fn-nav{display:flex;gap:12px;align-items:center;margin-top:30px;flex-wrap:wrap}
-.fn-back{background:none;border:0;font-family:var(--body);font-weight:700;font-size:16px;
+.fn-back{background:none;border:0;font-family:var(--body);font-weight:600;font-size:15.5px;
   color:var(--ink-2);cursor:pointer;padding:10px 4px}
 .fn-back:hover{color:var(--green)}
 .fn-nav .btn{margin-left:auto}
 @media(max-width:480px){.fn-nav .btn{margin-left:0;width:100%;justify-content:center}}
-.hint{color:var(--bad);font-weight:700;font-size:14.5px;margin-top:12px}
+.hint{color:var(--bad);font-weight:600;font-size:14.5px;margin-top:12px}
 
 /* načítavanie */
 .fn-load{text-align:center;padding:14px 0 6px}
@@ -656,20 +677,20 @@ document.getElementById('pack').innerHTML=`<svg viewBox="0 0 120 140" style="wid
 
 /* výsledok */
 .fn-res{text-align:center}
-.fn-res .pack{width:136px;margin:6px auto 20px}
+.fn-res .pack{width:150px;margin:6px auto 20px}
 .pills{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin:16px 0 26px}
-.pill{font-weight:800;font-size:14px;padding:8px 15px;border-radius:999px}
+.pill{font-weight:600;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;padding:8px 14px;border-radius:7px}
 .pill-1{background:var(--green-2);color:var(--green)}
 .pill-2{background:var(--honey-2);color:var(--orange-ink)}
 .recipe{background:var(--white);border:1px solid var(--line);border-radius:var(--r);
   padding:22px;text-align:left;margin-bottom:24px}
-.recipe h4{font-family:var(--display);font-weight:800;font-size:17px;margin:0 0 14px}
+.recipe h4{font-family:var(--body);font-weight:700;font-size:16px;margin:0 0 14px}
 .recipe ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}
 @media(max-width:560px){.recipe ul{grid-template-columns:1fr}}
 .recipe li{display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:1.4}
 .recipe li svg{width:20px;height:20px;flex:none;margin-top:2px}
 .recipe li.extra{font-weight:700;color:var(--green)}
-.restart{background:none;border:0;font-family:var(--body);font-weight:700;font-size:15px;
+.restart{background:none;border:0;font-family:var(--body);font-weight:600;font-size:14.5px;
   color:var(--ink-2);text-decoration:underline;cursor:pointer;margin-top:16px}
 .restart:hover{color:var(--green)}
 </style>
@@ -727,7 +748,7 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 /* malý pes v troch veľkostiach — namiesto emoji */
 function pup(size,breed){const px={male:30,stredne:40,velke:52}[size];
   return `<span style="width:56px;display:flex;justify-content:center;flex:none">
-    <span style="width:${px}px;display:block">${dog(DOGS[breed])}</span></span>`;}
+    <span style="width:${px}px;display:block">${dog({...DOGS[breed],ring:false})}</span></span>`;}
 
 function tile(group,val,label,sub,art){
   const on=S[group]===val;
@@ -819,25 +840,25 @@ function step3(){
         value="${esc(S.alergieText)}"></div>`:''}</div>
 
   <div class="fn-nav"><button class="fn-back" type="button" data-go="2">← Späť</button>
-    <button class="btn btn-1" type="button" data-go="load">Zostaviť recept 🐾</button></div>`;
+    <button class="btn btn-1" type="button" data-go="load">Zostaviť recept</button></div>`;
 }
 
 function bagSvg(label,fillAnim){
   return `<svg viewBox="0 0 120 140" style="width:100%;height:auto;display:block" role="img"
-    aria-label="Vrece Bonapet">
+    aria-label="Balenie Bonapet">
     <defs><clipPath id="bagClip"><path d="M14 34h92v92a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10z"/></clipPath></defs>
-    <path d="M14 34h92v92a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10z" fill="#EFE4D0"/>
+    <path d="M14 34h92v92a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10z" fill="#EFE7D6"/>
     <g clip-path="url(#bagClip)"><rect class="${fillAnim?'fillrect':''}" x="14" y="34" width="92" height="102"
-      fill="#1A6B43"${fillAnim?'':' '}/></g>
-    <path d="M14 34c8-8 18-12 46-12s38 4 46 12z" fill="#12522F"/>
-    <rect x="17" y="60" width="86" height="34" rx="10" fill="#FFF7EC"/>
-    <text x="60" y="82" text-anchor="middle" font-family="'Bricolage Grotesque',sans-serif"
-      font-weight="800" font-size="${label.length>10?12:15}" fill="#2A211A">${esc(label)}</text>
+      fill="#24503B"/></g>
+    <path d="M14 34h92v92a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10z" fill="none" stroke="#DCD2BE" stroke-width="1.5"/>
+    <path d="M14 34c8-8 20-12 46-12s38 4 46 12z" fill="#E3DBCC"/>
+    <rect x="20" y="58" width="80" height="30" rx="6" fill="#FFFDF9"/>
+    <text x="60" y="79" text-anchor="middle" font-family="'Instrument Serif',Georgia,serif"
+      font-size="${label.length>9?15:18}" fill="#24201A">${esc(label)}</text>
   </svg>`;
 }
-
 function screenLoad(){
-  const drops=['#E08A6A','#8ED6A6','#E8C9A0','#C08A4E','#D9E08A'];
+  const drops=['#B98F63','#6E8F76','#D9C9A8','#A9743B','#C9C08A'];
   return `<div class="fn-load">
     <div class="bag">${bagSvg('Bonapet',true)}
       ${drops.map((c,i)=>`<span class="drop" style="left:${16+i*22}px;animation-delay:${i*.22}s">
@@ -856,11 +877,11 @@ function screenResult(){
   return `<div class="fn-res">
     <p class="eyebrow" style="margin-bottom:8px">A je to!</p>
     <h3 id="fnHead" style="font-size:clamp(23px,3.4vw,31px);margin-bottom:18px">${esc(menoCap())} má zostavený recept</h3>
-    <div class="pack">${bagSvg(v.n.replace('Bonapet ',''),false)}</div>
+    <div class="pack">${packSvg(v.n.replace('Bonapet ',''),{compact:true})}</div>
     <div class="pills"><span class="pill pill-1">${esc(v.tag)}</span>
       ${S.velkost?`<span class="pill pill-2">${SIZE[S.velkost]}</span>`:''}</div>
     <div class="recipe"><h4>Zloženie tohto receptu</h4><ul>${list}</ul></div>
-    <a class="btn btn-1" href="#news" data-close="1">Chcem tento recept 🐾</a>
+    <a class="btn btn-1" href="#news" data-close="1">Chcem tento recept</a>
     <div><button class="restart" type="button" data-go="restart">Vyplniť dotazník znova</button></div>
   </div>`;
 }

@@ -4,9 +4,10 @@ Slovenská landing page pre značku **Bonapet** (granule pre psov). Jeden
 samostatný súbor: `index.html`.
 
 ## Smerovanie
-Svetlé, teplé a hravé — zámerne opak tmavej „vlčej“ estetiky, ktorú používa
-väčšina prémiových značiek krmív. Vlastná identita: kreslené ilustrácie psov,
-guľaté tvary, sýte farby.
+Prémiové a pokojné, no stále svetlé a priateľské — medzi tmavou „vlčou“
+estetikou kategórie a detskou hravosťou. Serifové titulky, tlmená paleta,
+jemné ilustrácie psov v medailónoch a mockup balenia ako hero vizuál.
+(Prvá, hravejšia verzia bola zamietnutá ako príliš lacná.)
 
 **Predchádzajúci koncept „Howl & Oats“** (priečinok `brand/`) bol zamietnutý ako
 príliš hipsterský. Ostáva v repozitári len ako archív.
@@ -15,15 +16,15 @@ príliš hipsterský. Ostáva v repozitári len ako archív.
 
 | Vrstva | Hodnoty |
 | --- | --- |
-| Podklad | krémová `#FFF7EC`, biele karty `#FFFFFF` |
-| Text | `#2A211A`, tlmený `#6E655C` |
-| Značková zelená | `#1A6B43` (biely text na nej 6,51:1) |
-| CTA oranžová | `#EE6C2B` s tmavým textom `#2A211A` (5,12:1) |
-| Medová | `#F5B92E` — plochy a zvýraznenia, nikdy text na svetlom |
-| Písmo | Bricolage Grotesque (nadpisy) · Figtree (text) |
+| Podklad | slonovina `#F7F2E9`, karty `#FFFDF9`, linky `#E3DBCC` |
+| Text | `#24201A`, tlmený `#6B6459` |
+| Značková zelená | hlboká píniová `#24503B` — primárne tlačidlá, pásy, ilustračné linky |
+| Akcent | medená `#9C5624` (eyebrow texty), okrová `#D9A441` (detaily, hviezdy) |
+| Písmo | Instrument Serif (titulky) · Hanken Grotesk (text, labely) |
 
-Všetky kontrastné pomery sú vypočítané. Biely text na oranžovej má len 3,08:1,
-preto má primárne tlačidlo tmavý text — nie biely.
+Pozn.: v tomto prostredí sa z Google Fonts reálne načítajú len niektoré rodiny —
+Instrument Serif a Hanken Grotesk sú overené vrátane slovenskej diakritiky
+(ľ ĺ ŕ ď ť ň ô ä). Playfair, Lora, Fraunces a ďalšie serify padali na fallback.
 
 Stránka je zámerne **jednotematická (svetlá)**. Nemá tmavý režim, každá farba je
 vypísaná explicitne, takže drží na akomkoľvek podklade.
