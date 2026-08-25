@@ -28,6 +28,25 @@ preto má primárne tlačidlo tmavý text — nie biely.
 Stránka je zámerne **jednotematická (svetlá)**. Nemá tmavý režim, každá farba je
 vypísaná explicitne, takže drží na akomkoľvek podklade.
 
+## Kvízový funnel
+Všetky oranžové CTA („Nájsť jedlo…", „Chcem takéto granule…") otvárajú
+trojkrokový dotazník (`data-funnel`):
+
+1. **Spoznajme sa** — meno, pohlavie (podmienený reprodukčný stav podľa vetvy),
+   vek s prepínačom roky/mesiace, veľkosť plemena.
+2. **Telo a energia** — váha, postavička, aktivita.
+3. **Zdravie a výber** — multi-select priority, alergie (pri „Áno" textové pole).
+
+Po odoslaní beží ~3 s obrazovka „Miešame recept…" (napĺňajúce sa vrece +
+padajúce suroviny) a výsledok priradí variant v poradí pravidiel:
+**Štart** (< 1 rok) → **Senior** (≥ 7 rokov) → **Sensitive** (alergie alebo
+priorita trávenie) → **Active** (športovec alebo priorita energia) → **Adult**.
+Výsledok zobrazí 6 základných surovín + 2 extra podľa variantu; pri Adult
+všetkých 8 základných.
+
+Reprodukčný stav sa zatiaľ len ukladá — do logiky receptu nie je zapojený
+(zámer podľa zadania). Meno má fallback „tvoj parťák" / „Tvoj chlpáč".
+
 ## Čo treba doplniť pred spustením
 1. **Fotky.** Sekcie s prerušovaným rámčekom sú pripravené sloty — pomer strán
    a popis požadovaného záberu sú priamo v nich.

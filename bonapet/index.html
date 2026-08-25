@@ -212,7 +212,7 @@ footer a:hover{color:var(--honey)}
       <a class="nl" href="#suroviny">Zloženie</a>
       <a class="nl" href="#miska">Porovnanie</a>
       <a class="nl" href="#faq">Časté otázky</a>
-      <a class="btn btn-1" href="#news">Nájsť jedlo</a>
+      <a class="btn btn-1" href="#news" data-funnel>Nájsť jedlo</a>
     </nav>
   </div>
 </header>
@@ -228,7 +228,7 @@ footer a:hover{color:var(--honey)}
         na tvojho chlpáča — jeho veľkosť, vek, energiu aj to, čo mu sadne na žalúdok.
         Bez zbytočnej chémie, bez komplikácií.</p>
         <div class="cta">
-          <a class="btn btn-1" href="#news">Nájsť jedlo pre môjho chlpáča</a>
+          <a class="btn btn-1" href="#news" data-funnel>Nájsť jedlo pre môjho chlpáča</a>
           <a class="btn btn-2" href="#suroviny">Pozrieť, čo je vnútri</a>
         </div>
         <div class="trust">
@@ -308,7 +308,7 @@ footer a:hover{color:var(--honey)}
       </div>
 
       <div style="margin-top:44px;text-align:center">
-        <a class="btn btn-1" href="#news">Chcem takéto granule pre svojho parťáka →</a>
+        <a class="btn btn-1" href="#news" data-funnel>Chcem takéto granule pre svojho parťáka →</a>
       </div>
     </div>
   </section>
@@ -580,4 +580,375 @@ document.getElementById('pack').innerHTML=`<svg viewBox="0 0 120 140" style="wid
   <g fill="${C.honey}"><circle cx="49" cy="105" r="3.6"/><circle cx="60" cy="102" r="3.6"/>
    <circle cx="71" cy="105" r="3.6"/>
    <path d="M60 110c4.6 0 8.4 2.8 8.4 5.5 0 1.1-1 1.9-2.5 1.9h-11.8c-1.5 0-2.5-.8-2.5-1.9 0-2.7 3.8-5.5 8.4-5.5z"/></g></svg>`;
+</script>
+
+<style>
+/* ============ kvízový funnel ============ */
+.fn{position:fixed;inset:0;z-index:80;background:rgba(42,33,26,.55);
+  display:flex;align-items:flex-start;justify-content:center;padding:24px 16px;overflow-y:auto}
+.fn[hidden]{display:none}
+.fn-sheet{background:var(--cream);width:min(720px,100%);border-radius:var(--r-lg);
+  padding:clamp(22px,3.4vw,40px);position:relative;box-shadow:0 40px 80px -30px rgba(42,33,26,.6);
+  margin:auto}
+.fn-close{position:absolute;top:16px;right:16px;width:40px;height:40px;border-radius:50%;
+  border:1px solid var(--line);background:var(--white);color:var(--ink);font-size:22px;
+  line-height:1;cursor:pointer;font-family:var(--body)}
+.fn-close:hover{background:var(--cream-2)}
+.fn-prog{margin-bottom:26px;padding-right:52px}
+.fn-prog .lbl{font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.12em;
+  color:var(--green);margin-bottom:10px;display:block}
+.fn-track{height:8px;border-radius:99px;background:var(--cream-2);overflow:hidden}
+.fn-track span{display:block;height:100%;border-radius:99px;background:var(--green);
+  transition:width .35s cubic-bezier(.2,.7,.3,1)}
+.fn h3{font-size:clamp(19px,2.4vw,23px);margin-bottom:14px}
+.fn .q{margin-bottom:26px}
+.fn .q:last-of-type{margin-bottom:0}
+.tiles{display:grid;gap:12px}
+.tiles.n2{grid-template-columns:1fr 1fr}
+.tiles.n3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:560px){.tiles.n3{grid-template-columns:1fr}}
+.tile{background:var(--white);border:2px solid var(--line);border-radius:18px;padding:16px;
+  cursor:pointer;text-align:left;font-family:var(--body);font-size:17px;font-weight:700;
+  color:var(--ink);display:flex;align-items:center;gap:12px;transition:border-color .12s,background .12s}
+.tile:hover{border-color:var(--green)}
+.tile[aria-pressed="true"]{border-color:var(--green);background:var(--green-2)}
+.tile .sub{display:block;font-weight:500;font-size:14.5px;color:var(--ink-2);margin-top:3px}
+.tile .sym{font-size:22px;line-height:1;color:var(--green)}
+.tile svg{flex:none}
+.tile .txt{min-width:0}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip-b{background:var(--white);border:2px solid var(--line);border-radius:999px;padding:11px 18px;
+  font-family:var(--body);font-weight:700;font-size:16px;color:var(--ink);cursor:pointer}
+.chip-b:hover{border-color:var(--green)}
+.chip-b[aria-pressed="true"]{border-color:var(--green);background:var(--green-2);color:var(--green)}
+.fn input[type=text],.fn input[type=number]{width:100%;padding:15px 18px;border-radius:14px;
+  border:2px solid var(--line);font-family:var(--body);font-size:17px;background:var(--white);color:var(--ink)}
+.fn input::placeholder{color:#A79B8B}
+.fn input:focus{border-color:var(--green);outline:none}
+.row{display:flex;gap:12px;align-items:stretch}
+.unit{display:flex;background:var(--white);border:2px solid var(--line);border-radius:14px;padding:4px;flex:none}
+.unit button{border:0;background:transparent;font-family:var(--body);font-weight:700;font-size:15px;
+  padding:8px 14px;border-radius:10px;cursor:pointer;color:var(--ink-2)}
+.unit button[aria-pressed="true"]{background:var(--green);color:#fff}
+.suffix{display:flex;align-items:center;padding:0 18px;background:var(--white);
+  border:2px solid var(--line);border-radius:14px;font-weight:700;color:var(--ink-2);flex:none}
+.fn-nav{display:flex;gap:12px;align-items:center;margin-top:30px;flex-wrap:wrap}
+.fn-back{background:none;border:0;font-family:var(--body);font-weight:700;font-size:16px;
+  color:var(--ink-2);cursor:pointer;padding:10px 4px}
+.fn-back:hover{color:var(--green)}
+.fn-nav .btn{margin-left:auto}
+@media(max-width:480px){.fn-nav .btn{margin-left:0;width:100%;justify-content:center}}
+.hint{color:var(--bad);font-weight:700;font-size:14.5px;margin-top:12px}
+
+/* načítavanie */
+.fn-load{text-align:center;padding:14px 0 6px}
+.fn-load .bag{width:132px;margin:0 auto 24px;position:relative}
+.fn-load h3{margin-bottom:8px}
+.fn-load .msg{color:var(--ink-2);font-weight:700;min-height:1.6em}
+.fillrect{transform-origin:0 136px;animation:fillup 3s cubic-bezier(.4,0,.5,1) forwards}
+@keyframes fillup{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.drop{position:absolute;top:-8px;animation:drop 1.2s linear infinite}
+@keyframes drop{0%{transform:translateY(-14px) rotate(0);opacity:0}
+  20%{opacity:1}70%{opacity:1}100%{transform:translateY(96px) rotate(140deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){
+  .fillrect{animation:none;transform:scaleY(1)}.drop{animation:none;opacity:.5}
+  .fn-track span{transition:none}}
+
+/* výsledok */
+.fn-res{text-align:center}
+.fn-res .pack{width:136px;margin:6px auto 20px}
+.pills{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin:16px 0 26px}
+.pill{font-weight:800;font-size:14px;padding:8px 15px;border-radius:999px}
+.pill-1{background:var(--green-2);color:var(--green)}
+.pill-2{background:var(--honey-2);color:var(--orange-ink)}
+.recipe{background:var(--white);border:1px solid var(--line);border-radius:var(--r);
+  padding:22px;text-align:left;margin-bottom:24px}
+.recipe h4{font-family:var(--display);font-weight:800;font-size:17px;margin:0 0 14px}
+.recipe ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}
+@media(max-width:560px){.recipe ul{grid-template-columns:1fr}}
+.recipe li{display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:1.4}
+.recipe li svg{width:20px;height:20px;flex:none;margin-top:2px}
+.recipe li.extra{font-weight:700;color:var(--green)}
+.restart{background:none;border:0;font-family:var(--body);font-weight:700;font-size:15px;
+  color:var(--ink-2);text-decoration:underline;cursor:pointer;margin-top:16px}
+.restart:hover{color:var(--green)}
+</style>
+
+<div class="fn" id="fn" hidden>
+  <div class="fn-sheet" role="dialog" aria-modal="true" aria-labelledby="fnHead" lang="sk">
+    <button class="fn-close" id="fnClose" aria-label="Zavrieť dotazník">&times;</button>
+    <div class="fn-prog" id="fnProg">
+      <span class="lbl" id="fnStepLbl"></span>
+      <div class="fn-track"><span id="fnFill" style="width:33%"></span></div>
+    </div>
+    <div id="fnBody"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+const fn=document.getElementById('fn'), body=document.getElementById('fnBody'),
+      prog=document.getElementById('fnProg'), lbl=document.getElementById('fnStepLbl'),
+      fill=document.getElementById('fnFill');
+let lastFocus=null, timers=[];
+
+const S={meno:'',pohlavie:'',stav:'',vek:'',jednotka:'roky',velkost:'',vaha:'',
+         postava:'',aktivita:'',priority:[],alergie:'nie',alergieText:'',screen:1};
+
+const VAR={
+ start:{n:'Bonapet Štart',tag:'Pre rastúce šteniatko',extras:['Vaječné škrupiny (vápnik)','DHA z lososového oleja']},
+ senior:{n:'Bonapet Senior',tag:'Podpora kĺbov a pohyblivosti',extras:['Extra kolagén a chondroitín','Kurkuma']},
+ sensitive:{n:'Bonapet Sensitive',tag:'Pre citlivé bruško',extras:['Extra hliva ustricová','Zázvor pre pokojné bruško']},
+ active:{n:'Bonapet Active',tag:'Pre nabité dni',extras:['Vyšší podiel mäsa a tuku','Spirulina']},
+ adult:{n:'Bonapet Adult',tag:'Vyvážený každodenný recept',extras:[]}
+};
+const BASE=['Hovädzie a morčacie mäso','Pestrec mariánsky','Hliva ustricová','Tanín z jedlého gaštana',
+            'Humínové látky','Konopná múka','Ľanový olej','Živočíšny kolagén'];
+const SIZE={male:'Malé plemeno',stredne:'Stredné plemeno',velke:'Veľké plemeno'};
+const LOADMSG=['Naberáme čerstvé mäso','Pridávame pestrec mariánsky','Miešame hlivu ustricovú',
+               'Dopĺňame humínové látky','Balíme s láskou do vreca'];
+const STEPS=['1/3 · Spoznajme sa','2/3 · Telo a energia','3/3 · Zdravie a výber'];
+
+const meno=()=>S.meno.trim()||'tvoj parťák';
+const menoCap=()=>S.meno.trim()||'Tvoj chlpáč';
+const rokov=()=>{const v=parseFloat(String(S.vek).replace(',','.'));
+  if(!isFinite(v))return null; return S.jednotka==='mesiace'?v/12:v;};
+
+function variant(){
+  const r=rokov();
+  if(r!==null&&r<1) return VAR.start;
+  if(r!==null&&r>=7) return VAR.senior;
+  if(S.alergie==='ano'||S.priority.includes('travenie')) return VAR.sensitive;
+  if(S.aktivita==='sportovec'||S.priority.includes('energia')) return VAR.active;
+  return VAR.adult;
+}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* malý pes v troch veľkostiach — namiesto emoji */
+function pup(size,breed){const px={male:30,stredne:40,velke:52}[size];
+  return `<span style="width:56px;display:flex;justify-content:center;flex:none">
+    <span style="width:${px}px;display:block">${dog(DOGS[breed])}</span></span>`;}
+
+function tile(group,val,label,sub,art){
+  const on=S[group]===val;
+  return `<button type="button" class="tile" role="button" aria-pressed="${on}"
+    data-g="${group}" data-v="${val}">${art||''}<span class="txt">${esc(label)}
+    ${sub?`<span class="sub">${esc(sub)}</span>`:''}</span></button>`;
+}
+function chip(val,label){
+  const on=S.priority.includes(val);
+  return `<button type="button" class="chip-b" aria-pressed="${on}" data-p="${val}">${esc(label)}</button>`;
+}
+
+function step1(){
+  const stavy = S.pohlavie==='fenka'
+    ? [['nekastrovana','Nekastrovaná'],['kastrovana','Kastrovaná'],['brezia','Brezia'],['dojciaca','Dojčiaca']]
+    : [['nekastrovany','Nekastrovaný'],['kastrovany','Kastrovaný']];
+  return `
+  <h3 id="fnHead">Ako sa volá tvoj chlpáč?</h3>
+  <div class="q"><input type="text" id="fMeno" placeholder="napr. Rex, Bella, Fíha..."
+    value="${esc(S.meno)}" autocomplete="off"></div>
+
+  <div class="q"><h3>Psík alebo fenka?</h3>
+    <div class="tiles n2">
+      ${tile('pohlavie','psik','Psík',null,'<span class="sym">♂</span>')}
+      ${tile('pohlavie','fenka','Fenka',null,'<span class="sym">♀</span>')}
+    </div></div>
+
+  ${S.pohlavie?`<div class="q"><h3>Reprodukčný stav</h3>
+    <div class="tiles n2">${stavy.map(([v,l])=>tile('stav',v,l)).join('')}</div></div>`:''}
+
+  <div class="q"><h3>Koľko má rokov / mesiacov?</h3>
+    <div class="row">
+      <input type="number" id="fVek" min="0" step="0.5" placeholder="napr. 3" value="${esc(S.vek)}">
+      <div class="unit">
+        <button type="button" data-u="roky" aria-pressed="${S.jednotka==='roky'}">roky</button>
+        <button type="button" data-u="mesiace" aria-pressed="${S.jednotka==='mesiace'}">mesiace</button>
+      </div>
+    </div></div>
+
+  <div class="q"><h3>Aké je jeho plemeno / veľkosť?</h3>
+    <div class="tiles n3">
+      ${tile('velkost','male','Malé',null,pup('male','terier'))}
+      ${tile('velkost','stredne','Stredné',null,pup('stredne','jazvecik'))}
+      ${tile('velkost','velke','Veľké',null,pup('velke','labrador'))}
+    </div></div>
+
+  <div class="fn-nav"><span class="hint" id="fnHint" hidden></span>
+    <button class="btn btn-1" type="button" data-go="2">Ďalší krok →</button></div>`;
+}
+
+function step2(){
+  return `
+  <h3 id="fnHead">Koľko váži ${esc(meno())}?</h3>
+  <div class="q"><div class="row">
+    <input type="number" id="fVaha" min="0" step="0.1" placeholder="napr. 12" value="${esc(S.vaha)}">
+    <span class="suffix">kg</span></div></div>
+
+  <div class="q"><h3>Aká je jeho postavička?</h3>
+    <div class="tiles n3">
+      ${tile('postava','chudy','Chudší','Rebrá vidno')}
+      ${tile('postava','ideal','Ideál','Bruško v kondícii')}
+      ${tile('postava','baculy','Bacuľka','Trochu navyše')}
+    </div></div>
+
+  <div class="q"><h3>Koľko sa nabehá?</h3>
+    <div class="tiles">
+      ${tile('aktivita','pohodar','Pohodár','Gauč, krátke prechádzky okolo domu')}
+      ${tile('aktivita','bezny','Bežný režim','Prechádzky, hádzanie loptičky, záhrada')}
+      ${tile('aktivita','sportovec','Športovec','Behanie, agility, celodenné výlety')}
+    </div></div>
+
+  <div class="fn-nav"><button class="fn-back" type="button" data-go="1">← Späť</button>
+    <span class="hint" id="fnHint" hidden></span>
+    <button class="btn btn-1" type="button" data-go="3">Ďalší krok →</button></div>`;
+}
+
+function step3(){
+  return `
+  <h3 id="fnHead">Čo je pre teba dôležité?</h3>
+  <div class="q"><div class="chips">
+    ${chip('chut','Aby mu to hlavne chutilo')}${chip('srst','Kvalita srsti')}
+    ${chip('travenie','Citlivé trávenie')}${chip('energia','Veľa energie')}
+    ${chip('klby','Zdravie kĺbov')}</div></div>
+
+  <div class="q"><h3>Má alergie alebo mu niečo nesadne?</h3>
+    <div class="tiles n2">${tile('alergie','nie','Nie')}${tile('alergie','ano','Áno')}</div>
+    ${S.alergie==='ano'?`<div style="margin-top:12px">
+      <input type="text" id="fAlerg" placeholder="Napíš na čo (napr. kura, obilniny...)"
+        value="${esc(S.alergieText)}"></div>`:''}</div>
+
+  <div class="fn-nav"><button class="fn-back" type="button" data-go="2">← Späť</button>
+    <button class="btn btn-1" type="button" data-go="load">Zostaviť recept 🐾</button></div>`;
+}
+
+function bagSvg(label,fillAnim){
+  return `<svg viewBox="0 0 120 140" style="width:100%;height:auto;display:block" role="img"
+    aria-label="Vrece Bonapet">
+    <defs><clipPath id="bagClip"><path d="M14 34h92v92a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10z"/></clipPath></defs>
+    <path d="M14 34h92v92a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10z" fill="#EFE4D0"/>
+    <g clip-path="url(#bagClip)"><rect class="${fillAnim?'fillrect':''}" x="14" y="34" width="92" height="102"
+      fill="#1A6B43"${fillAnim?'':' '}/></g>
+    <path d="M14 34c8-8 18-12 46-12s38 4 46 12z" fill="#12522F"/>
+    <rect x="17" y="60" width="86" height="34" rx="10" fill="#FFF7EC"/>
+    <text x="60" y="82" text-anchor="middle" font-family="'Bricolage Grotesque',sans-serif"
+      font-weight="800" font-size="${label.length>10?12:15}" fill="#2A211A">${esc(label)}</text>
+  </svg>`;
+}
+
+function screenLoad(){
+  const drops=['#E08A6A','#8ED6A6','#E8C9A0','#C08A4E','#D9E08A'];
+  return `<div class="fn-load">
+    <div class="bag">${bagSvg('Bonapet',true)}
+      ${drops.map((c,i)=>`<span class="drop" style="left:${16+i*22}px;animation-delay:${i*.22}s">
+        <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="${c}"/></svg>
+      </span>`).join('')}
+    </div>
+    <h3 id="fnHead">Miešame recept pre ${esc(meno())}...</h3>
+    <p class="msg" id="fnMsg">${LOADMSG[0]}</p></div>`;
+}
+
+function screenResult(){
+  const v=variant();
+  const items=v.extras.length?BASE.slice(0,6):BASE.slice();
+  const list=items.map(t=>`<li>${TICK}<span>${esc(t)}</span></li>`).join('')
+    + v.extras.map(t=>`<li class="extra">${TICK}<span>${esc(t)}</span></li>`).join('');
+  return `<div class="fn-res">
+    <p class="eyebrow" style="margin-bottom:8px">A je to!</p>
+    <h3 id="fnHead" style="font-size:clamp(23px,3.4vw,31px);margin-bottom:18px">${esc(menoCap())} má zostavený recept</h3>
+    <div class="pack">${bagSvg(v.n.replace('Bonapet ',''),false)}</div>
+    <div class="pills"><span class="pill pill-1">${esc(v.tag)}</span>
+      ${S.velkost?`<span class="pill pill-2">${SIZE[S.velkost]}</span>`:''}</div>
+    <div class="recipe"><h4>Zloženie tohto receptu</h4><ul>${list}</ul></div>
+    <a class="btn btn-1" href="#news" data-close="1">Chcem tento recept 🐾</a>
+    <div><button class="restart" type="button" data-go="restart">Vyplniť dotazník znova</button></div>
+  </div>`;
+}
+const TICK=`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#E4F0E7"/>
+  <path d="M7 12.5l3.4 3.5L17 9" fill="none" stroke="#1A6B43" stroke-width="2.8"
+  stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+function render(){
+  timers.forEach(clearInterval); timers.forEach(clearTimeout); timers=[];
+  const n=S.screen;
+  const showProg = n===1||n===2||n===3;
+  prog.hidden=!showProg;
+  if(showProg){ lbl.textContent=STEPS[n-1]; fill.style.width=(n*33.34)+'%'; }
+  body.innerHTML = n===1?step1() : n===2?step2() : n===3?step3()
+                 : n==='load'?screenLoad() : screenResult();
+
+  if(n==='load'){
+    let i=0; const msg=document.getElementById('fnMsg');
+    timers.push(setInterval(()=>{i=(i+1)%LOADMSG.length; if(msg)msg.textContent=LOADMSG[i];},600));
+    timers.push(setTimeout(()=>{S.screen='result'; render();},3000));
+  }
+  const first=body.querySelector('input,button');
+  if(first&&n!=='load') first.focus({preventScroll:true});
+}
+
+/* vstupy */
+body.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.id==='fMeno') S.meno=t.value;
+  if(t.id==='fVek') S.vek=t.value;
+  if(t.id==='fVaha') S.vaha=t.value;
+  if(t.id==='fAlerg') S.alergieText=t.value;
+});
+
+body.addEventListener('click',e=>{
+  const t=e.target.closest('button,a[data-close]');
+  if(!t) return;
+
+  if(t.dataset.u){ S.jednotka=t.dataset.u; render(); return; }
+
+  if(t.dataset.p){
+    const p=t.dataset.p, i=S.priority.indexOf(p);
+    i<0?S.priority.push(p):S.priority.splice(i,1);
+    t.setAttribute('aria-pressed', i<0); return;
+  }
+
+  if(t.dataset.g){
+    const g=t.dataset.g, v=t.dataset.v;
+    if(g==='pohlavie'&&S.pohlavie!==v){ S.pohlavie=v; S.stav=v==='fenka'?'nekastrovana':'nekastrovany'; }
+    else S[g]=v;
+    render(); return;
+  }
+
+  if(t.dataset.close){ close(); return; }
+
+  const go=t.dataset.go;
+  if(!go) return;
+  if(go==='restart'){ Object.assign(S,{meno:'',pohlavie:'',stav:'',vek:'',jednotka:'roky',velkost:'',
+    vaha:'',postava:'',aktivita:'',priority:[],alergie:'nie',alergieText:'',screen:1}); render(); return; }
+  if(go==='1'||go==='2'&&S.screen===3){ S.screen=parseInt(go,10); render(); return; }
+
+  const hint=document.getElementById('fnHint');
+  const fail=m=>{ if(hint){hint.textContent=m; hint.hidden=false;} };
+  if(S.screen===1&&go==='2'){
+    if(!S.pohlavie) return fail('Vyber, či je to psík alebo fenka.');
+    if(rokov()===null) return fail('Doplň vek — podľa neho vyberáme recept.');
+    if(!S.velkost) return fail('Vyber veľkosť plemena.');
+  }
+  if(S.screen===2&&go==='3'){
+    if(!S.postava) return fail('Vyber postavičku.');
+    if(!S.aktivita) return fail('Vyber, koľko sa nabehá.');
+  }
+  S.screen = go==='load'?'load':parseInt(go,10);
+  render();
+});
+
+function open(){ lastFocus=document.activeElement; fn.hidden=false;
+  document.documentElement.style.overflow='hidden'; if(S.screen==='load')S.screen=3; render(); }
+function close(){ timers.forEach(clearInterval); timers.forEach(clearTimeout); timers=[];
+  fn.hidden=true; document.documentElement.style.overflow='';
+  if(lastFocus&&lastFocus.focus) lastFocus.focus(); }
+
+document.getElementById('fnClose').addEventListener('click',close);
+fn.addEventListener('click',e=>{ if(e.target===fn) close(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!fn.hidden) close(); });
+
+/* CTA, ktoré funnel otvárajú */
+document.querySelectorAll('[data-funnel]').forEach(b=>
+  b.addEventListener('click',e=>{ e.preventDefault(); open(); }));
+})();
 </script>
