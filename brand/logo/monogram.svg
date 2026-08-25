@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="H&amp;O">
+  <title>Howl &amp; Oats — monogram</title>
+  <rect x="2" y="2" width="116" height="116" rx="2" fill="none" stroke="currentColor" stroke-width="4"/>
+  <text x="60" y="77" text-anchor="middle"
+        font-family="'Instrument Serif','Iowan Old Style',Georgia,serif" font-size="50"
+        fill="currentColor">H<tspan font-style="italic" font-size="43">&amp;</tspan>O</text>
+</svg>

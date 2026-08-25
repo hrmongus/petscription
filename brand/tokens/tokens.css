@@ -1,0 +1,89 @@
+/* ============================================================
+   HOWL & OATS — design tokens
+   Contrast ratios in comments are WCAG 2.1, computed, not eyeballed.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  /* --- Grounds ------------------------------------------------ */
+  --ho-bone:      #FBF8F2;  /* paper white — digital ground        */
+  --ho-oatmilk:   #F4EBDC;  /* primary ground — the brand's "white" */
+  --ho-kraft:     #D9C3A5;  /* secondary ground — packaging stock   */
+
+  /* --- Ink ---------------------------------------------------- */
+  --ho-ink:       #17150F;  /* primary type. 15.44 on oatmilk       */
+  --ho-ink-soft:  #5A5445;  /* secondary type. 6.9 on oatmilk       */
+
+  /* --- House color -------------------------------------------- */
+  --ho-loden:     #37503F;  /* 7.46 on oatmilk · 5.16 on kraft      */
+
+  /* --- Accents ------------------------------------------------ */
+  --ho-ember:      #C25A2B; /* SPOT/DISPLAY ONLY. 3.71 on oatmilk   */
+  --ho-ember-ink:  #9E4420; /* text-safe ember. 5.38 on oatmilk     */
+  --ho-turmeric:   #E3A83C; /* highlight/fill only, never type on light */
+  --ho-dusk:       #455565; /* cool balance. 6.48 on oatmilk        */
+
+  /* --- Semantic ----------------------------------------------- */
+  --ho-bg:        var(--ho-oatmilk);
+  --ho-surface:   var(--ho-bone);
+  --ho-text:      var(--ho-ink);
+  --ho-text-mute: var(--ho-ink-soft);
+  --ho-accent:    var(--ho-loden);
+  --ho-rule:      #C9BBA4;   /* hairline, 1px                       */
+
+  /* --- Type --------------------------------------------------- */
+  --ho-display: 'Instrument Serif', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --ho-text-face: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ho-mono:    'Space Mono', 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* Scale — 1.333 (perfect fourth), 18px base */
+  --ho-t-xs:   0.694rem;   /* 12.5px — mono specs                   */
+  --ho-t-sm:   0.833rem;   /* 15px   — captions                     */
+  --ho-t-base: 1rem;       /* 18px   — body                         */
+  --ho-t-md:   1.333rem;   /* 24px   — lede                         */
+  --ho-t-lg:   2.369rem;   /* 42.6px — section heads                */
+  --ho-t-xl:   4.209rem;   /* 75.8px — display                      */
+  --ho-t-2xl:  7.478rem;   /* 134.6px — hero wordmark               */
+
+  --ho-track-mono: 0.09em; /* mono is ALWAYS uppercase + tracked    */
+  --ho-track-display: -0.02em;
+  --ho-leading-body: 1.55;
+  --ho-measure: 68ch;
+
+  /* --- Space — 4px base, doubling ----------------------------- */
+  --ho-s1: 4px;  --ho-s2: 8px;   --ho-s3: 16px;  --ho-s4: 24px;
+  --ho-s5: 40px; --ho-s6: 64px;  --ho-s7: 104px; --ho-s8: 168px;
+
+  /* --- Form --------------------------------------------------- */
+  --ho-radius: 2px;         /* near-square. Letterpress, not app.   */
+  --ho-radius-pill: 999px;  /* stamps and batch chips only          */
+  --ho-border: 1px solid var(--ho-rule);
+  --ho-border-heavy: 2px solid var(--ho-ink);
+}
+
+/* Dark: the mill at night. Not an inversion — a different room. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ho-bg:        #17150F;
+    --ho-surface:   #26221A;
+    --ho-text:      #F4EBDC;
+    --ho-text-mute: #B9AF9C;   /* 8.41 on ink   */
+    --ho-accent:    #8FAE96;   /* loden, lifted. 7.53 on ink */
+    --ho-ember-ink: #E0794A;   /* 6.09 on ink   */
+    --ho-rule:      #3A352A;
+  }
+}
+:root[data-theme="dark"] {
+  --ho-bg: #17150F; --ho-surface: #26221A; --ho-text: #F4EBDC;
+  --ho-text-mute: #B9AF9C; --ho-accent: #8FAE96; --ho-ember-ink: #E0794A;
+  --ho-rule: #3A352A;
+}
+
+/* ---- Three type recipes. Everything else is a variation. ---- */
+.ho-display { font-family: var(--ho-display); font-size: var(--ho-t-xl);
+  line-height: 0.95; letter-spacing: var(--ho-track-display); }
+.ho-body { font-family: var(--ho-text-face); font-size: var(--ho-t-base);
+  line-height: var(--ho-leading-body); max-width: var(--ho-measure); }
+.ho-spec { font-family: var(--ho-mono); font-size: var(--ho-t-xs);
+  text-transform: uppercase; letter-spacing: var(--ho-track-mono); }

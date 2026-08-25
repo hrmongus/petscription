@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 120" width="560" height="120" role="img" aria-label="Howl &amp; Oats">
+  <title>Howl &amp; Oats — primary wordmark</title>
+  <text x="0" y="78" font-family="'Instrument Serif','Iowan Old Style',Georgia,serif"
+        font-size="84" letter-spacing="-1" fill="currentColor">HOWL<tspan
+        font-style="italic" font-size="96" dx="10" dy="4">&amp;</tspan><tspan
+        font-style="normal" font-size="84" dx="10" dy="-4">OATS</tspan></text>
+  <text x="2" y="106" font-family="'Space Mono','IBM Plex Mono',ui-monospace,monospace"
+        font-size="12" letter-spacing="3.4" fill="currentColor">COLD-PRESSED KIBBLE · SMALL BATCH · GRAIN-POSITIVE</text>
+</svg>
