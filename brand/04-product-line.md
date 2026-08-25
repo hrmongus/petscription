@@ -8,7 +8,7 @@ the bag. Never one without the other.
 `HOWL & OATS · NO. 03 · COLD FRONT`
 
 The job the recipe does — sensitive stomach, senior joints, small breeds — is
-printed in Space Mono under the name, plainly. The poetry is in the name; the
+printed in Archivo Narrow under the name, plainly. The poetry is in the name; the
 information is never in the name.
 
 ## The core six

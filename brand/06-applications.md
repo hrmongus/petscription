@@ -12,7 +12,7 @@ A shop that reads like a mill's noticeboard.
   size, every farm in that run, and the note from the mill floor. Permanent,
   crawlable, linkable. Print the URL on the bag and honour it for years.
 - **Type on screen:** Space Grotesk for text, Instrument Serif reserved for
-  headlines and numbers, Space Mono for every spec, price, and button label.
+  headlines and numbers, Archivo Narrow for labels, buttons and specs, and Courier Prime for batch data only.
 - **Motion:** 120 ms, ease-out, opacity and 4px translate. Nothing bounces.
 
 ## Retail
@@ -34,12 +34,12 @@ Never: reels set to trending audio, "tag a friend whose dog…", dog-in-sunglass
 anything with a countdown sticker.
 
 ## Email
-Plain-text-feeling HTML: one column, hairline rules, Space Mono headers, no
+Plain-text-feeling HTML: one column, hairline rules, Archivo Narrow headers, no
 buttons wider than the text. The batch card lands in the inbox the day the run
 is milled. Two sends a month, maximum.
 
 ## Vet and breeder channel
-Same bag, different sheet: a one-page spec in Space Mono with the full analysis,
+Same bag, different sheet: a one-page spec with the full analysis,
 kcal/kg, and the cold-press temperature curve. No brand poetry — this audience is
 buying the numbers, and giving them the numbers *is* the brand behaving consistently.
 

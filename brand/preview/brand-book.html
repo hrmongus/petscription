@@ -1,0 +1,564 @@
+<title>Howl &amp; Oats</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Narrow:wght@400;600&family=Courier+Prime:wght@400;700&family=Instrument+Serif:ital@0;1&display=swap">
+
+<style>
+:root{
+  --bg:#F4EBDC; --surface:#FBF8F2; --kraft:#D9C3A5; --kraft-deep:#C9B08D;
+  --ink:#17150F; --ink-soft:#5A5445; --rule:#C9BBA4; --rule-soft:#DCCFB8;
+  --loden:#37503F; --ember:#C25A2B; --ember-ink:#9E4420; --turmeric:#E3A83C; --dusk:#455565;
+  --window:#1E1B14;
+  --display:'Instrument Serif','Iowan Old Style',Georgia,serif;
+  --text:'Archivo',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif;
+  --label:'Archivo Narrow','Archivo',Helvetica,sans-serif;
+  --data:'Courier Prime','Courier New',ui-monospace,monospace;
+  --measure:66ch;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#17150F; --surface:#211E17; --kraft:#3A3327; --kraft-deep:#4A4131;
+    --ink:#F4EBDC; --ink-soft:#B9AF9C; --rule:#3A352A; --rule-soft:#2C281F;
+    --loden:#8FAE96; --ember:#E0794A; --ember-ink:#E0794A; --turmeric:#E3A83C; --dusk:#93A6B6;
+    --window:#0D0C08;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17150F; --surface:#211E17; --kraft:#3A3327; --kraft-deep:#4A4131;
+  --ink:#F4EBDC; --ink-soft:#B9AF9C; --rule:#3A352A; --rule-soft:#2C281F;
+  --loden:#8FAE96; --ember:#E0794A; --ember-ink:#E0794A; --turmeric:#E3A83C; --dusk:#93A6B6;
+  --window:#0D0C08;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--text);
+  font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--ember-ink);outline-offset:3px}
+
+.shell{display:grid;grid-template-columns:196px minmax(0,1fr);gap:0;
+  max-width:1180px;margin:0 auto;padding:0 28px}
+@media(max-width:920px){.shell{grid-template-columns:minmax(0,1fr);padding:0 20px}}
+
+/* ---------- left rail: the job ticket ---------- */
+.rail{border-right:1px solid var(--rule);padding:44px 28px 80px 0}
+.rail-inner{position:sticky;top:44px;display:flex;flex-direction:column;gap:30px}
+@media(max-width:920px){.rail{border-right:0;border-bottom:1px solid var(--rule);padding:28px 0 26px}
+  .rail-inner{position:static;flex-direction:row;flex-wrap:wrap;gap:20px 40px;align-items:flex-start}}
+.stamp{border:1.5px solid var(--ink);padding:12px 14px;font-family:var(--data);
+  font-size:10.5px;white-space:nowrap;line-height:1.85;letter-spacing:.02em;text-transform:uppercase;
+  font-variant-numeric:tabular-nums;color:var(--ink)}
+.stamp b{font-weight:400;color:var(--ink-soft);display:inline-block;width:58px}
+.idx{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.idx a{font-family:var(--label);font-size:12px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.12em;color:var(--ink-soft);text-decoration:none;display:flex;gap:9px}
+.idx a:hover{color:var(--ember-ink)}
+.idx a span{color:var(--rule);font-variant-numeric:tabular-nums}
+@media(max-width:920px){.idx{flex-direction:row;flex-wrap:wrap;gap:8px 18px}}
+
+/* ---------- content ---------- */
+main{padding:0 0 120px 44px;min-width:0}
+@media(max-width:920px){main{padding:0 0 88px}}
+section{padding:64px 0;border-bottom:1px solid var(--rule-soft)}
+section:first-of-type{padding-top:44px}
+section:last-of-type{border-bottom:0}
+.eyebrow{font-family:var(--label);font-size:12px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.14em;color:var(--ink-soft);margin:0 0 22px;display:flex;align-items:baseline;gap:12px}
+.eyebrow em{font-style:normal;font-family:var(--data);color:var(--rule);font-size:12px}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(30px,4.2vw,46px);line-height:1.05;
+  letter-spacing:-.02em;margin:0 0 20px;text-wrap:balance}
+h3{font-family:var(--label);font-size:13px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.12em;margin:0 0 10px;color:var(--ink-soft)}
+p{margin:0 0 18px;max-width:var(--measure)}
+a{color:var(--ember-ink)}
+.lede{font-family:var(--display);font-size:clamp(20px,2.5vw,26px);line-height:1.42;
+  letter-spacing:-.01em;max-width:34ch}
+.small{font-size:14.5px;color:var(--ink-soft)}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:1fr 320px;gap:56px;align-items:start;
+  padding-top:52px;padding-bottom:72px;border-bottom:1px solid var(--rule-soft)}
+@media(max-width:840px){.hero{grid-template-columns:minmax(0,1fr);gap:44px}}
+.hero-mark{width:96px;height:96px;color:var(--loden);margin-bottom:26px}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(38px,5.6vw,64px);
+  line-height:.94;letter-spacing:-.025em;margin:0 0 14px}
+.hero h1 i{font-style:italic;font-size:1.1em;padding:0 .04em}
+.hero-desc{font-family:var(--label);font-size:12.5px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.2em;color:var(--ink-soft);margin:0 0 30px}
+.hero-line{font-family:var(--display);font-size:clamp(21px,2.6vw,28px);line-height:1.35;
+  max-width:22ch;margin:0 0 26px}
+
+/* ---------- the bag ---------- */
+.bag{width:320px;max-width:100%;background:#D9C3A5;color:#17150F;
+  border:1px solid #C0A886;border-radius:2px 2px 4px 4px;
+  padding:22px 20px 18px;display:flex;flex-direction:column;align-items:center;gap:0;
+  box-shadow:0 18px 40px -28px rgba(23,21,15,.7)}
+.bag-tie{width:calc(100% + 42px);margin:-22px -21px 20px;height:26px;background:#C0A886;
+  border-bottom:1px solid rgba(23,21,15,.18);border-radius:2px 2px 0 0}
+.bag-roundel{width:96px;height:96px;color:#455565}
+.bag-word{width:104px;margin:12px 0 20px;color:#17150F}
+.bag-no{font-family:var(--label);font-size:12px;font-weight:600;letter-spacing:.22em;color:#455565}
+.bag-name{font-family:var(--display);font-size:34px;line-height:1;letter-spacing:-.01em;margin:5px 0 9px}
+.bag-deck{font-family:var(--label);font-size:9.5px;font-weight:600;letter-spacing:.13em;
+  text-transform:uppercase;color:#4A4436;text-align:center}
+.bag-job{font-family:var(--label);font-size:9.5px;font-weight:600;letter-spacing:.13em;
+  text-transform:uppercase;color:#455565;margin-top:5px}
+.bag-win{margin:20px 0 16px;position:relative;line-height:0}
+.bag-win canvas{display:block;border-radius:2px}
+.bag-foot{font-family:var(--label);font-size:9px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:#4A4436;border-top:1px solid rgba(23,21,15,.2);
+  padding-top:11px;width:100%;text-align:center}
+.bag-stamp{align-self:stretch;margin-top:12px;border:1.4px solid rgba(23,21,15,.75);
+  padding:8px 10px;font-family:var(--data);font-size:10px;line-height:1.75;
+  text-transform:uppercase;color:#17150F;font-variant-numeric:tabular-nums}
+.bag-stamp b{font-weight:400;color:#5A5445;display:inline-block;width:56px}
+.bag-cap{font-family:var(--label);font-size:11px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-soft);margin-top:14px;text-align:center;max-width:320px}
+
+/* ---------- two-up ---------- */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+@media(max-width:760px){.two{grid-template-columns:minmax(0,1fr);gap:30px}}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:2px;padding:24px}
+.card h4{font-family:var(--label);font-size:12px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.12em;margin:0 0 12px;color:var(--ink-soft)}
+.card p{margin:0;font-size:15.5px}
+
+/* ---------- manifesto ---------- */
+.manifesto{background:var(--kraft);border-radius:2px;padding:clamp(30px,5vw,54px);
+  font-family:var(--display);font-size:clamp(20px,2.6vw,27px);line-height:1.45;
+  color:var(--ink);max-width:none}
+.manifesto span{display:block;margin-bottom:1.1em}
+.manifesto span:last-of-type{margin-bottom:0}
+.manifesto .sig{font-family:var(--label);font-size:12px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;margin-top:1.6em;opacity:.75}
+
+/* ---------- marks ---------- */
+.marks{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.mark{background:var(--surface);border:1px solid var(--rule);border-radius:2px;
+  padding:28px 16px;margin:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:space-between;gap:22px;min-height:190px}
+.mark .art{display:flex;align-items:center;justify-content:center;flex:1}
+.mark figcaption{font-family:var(--label);font-size:10.5px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.11em;color:var(--ink-soft);text-align:center}
+
+/* ---------- palette ---------- */
+.pal{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:14px}
+.sw{border:1px solid var(--rule);border-radius:2px;overflow:hidden;background:var(--surface)}
+.sw .chip{height:74px}
+.sw .meta{padding:11px 13px 13px;display:flex;flex-direction:column;gap:3px}
+.sw .nm{font-family:var(--label);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+.sw .hx,.sw .cr{font-family:var(--data);font-size:11px;color:var(--ink-soft);
+  text-transform:uppercase;font-variant-numeric:tabular-nums}
+.sw .cr b{font-weight:700;color:var(--ink)}
+
+/* ---------- type specimens ---------- */
+.spec{border-top:1px solid var(--rule-soft);padding:22px 0;display:grid;
+  grid-template-columns:150px minmax(0,1fr);gap:26px;align-items:baseline}
+@media(max-width:700px){.spec{grid-template-columns:minmax(0,1fr);gap:8px}}
+.spec .role{font-family:var(--label);font-size:11.5px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.12em;color:var(--ink-soft)}
+.spec .role em{display:block;font-style:normal;font-family:var(--data);font-size:11px;
+  text-transform:none;letter-spacing:0;margin-top:4px;color:var(--rule)}
+.sp-display{font-family:var(--display);font-size:clamp(28px,4vw,40px);line-height:1.1;letter-spacing:-.02em}
+.sp-text{font-family:var(--text);font-size:16px;line-height:1.55;max-width:50ch}
+.sp-label{font-family:var(--label);font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.12em}
+.sp-data{font-family:var(--data);font-size:16px;text-transform:uppercase;letter-spacing:.03em;
+  font-variant-numeric:tabular-nums}
+
+/* ---------- recipes ---------- */
+.rec{display:grid;grid-template-columns:66px 1fr 150px;gap:22px;align-items:baseline;
+  padding:19px 0;border-top:1px solid var(--rule-soft)}
+.rec:last-child{border-bottom:1px solid var(--rule-soft)}
+@media(max-width:700px){.rec{grid-template-columns:56px minmax(0,1fr);gap:6px 16px}
+  .rec .job{grid-column:2}}
+.rec .no{font-family:var(--display);font-size:34px;line-height:.9;font-variant-numeric:tabular-nums}
+.rec .nm{font-family:var(--display);font-size:24px;line-height:1.1;letter-spacing:-.01em}
+.rec .deck{font-family:var(--label);font-size:11px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.11em;color:var(--ink-soft);margin-top:5px}
+.rec .job{font-family:var(--text);font-size:14.5px;color:var(--ink-soft)}
+
+/* ---------- pillars ---------- */
+.pil{display:grid;grid-template-columns:1fr 320px;gap:26px;align-items:baseline;
+  padding:19px 0;border-top:1px solid var(--rule-soft)}
+.pil:last-of-type{border-bottom:1px solid var(--rule-soft)}
+@media(max-width:760px){.pil{grid-template-columns:minmax(0,1fr);gap:8px}}
+.pil .nm{font-family:var(--display);font-size:25px;line-height:1.1;letter-spacing:-.01em}
+.pil .deck{font-family:var(--label);font-size:11px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.11em;color:var(--ink-soft);margin-top:5px}
+.pil .job{font-family:var(--text);font-size:15px;color:var(--ink-soft);margin:0;max-width:none}
+
+/* ---------- say / never ---------- */
+.words{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule);border-radius:2px}
+@media(max-width:640px){.words{grid-template-columns:minmax(0,1fr)}}
+.words>div{padding:24px}
+.words>div:first-child{border-right:1px solid var(--rule)}
+@media(max-width:640px){.words>div:first-child{border-right:0;border-bottom:1px solid var(--rule)}}
+.words ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px}
+.words li{font-family:var(--label);font-size:12px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.09em;border:1px solid var(--rule);border-radius:999px;padding:4px 11px;color:var(--ink-soft)}
+.words .yes li{color:var(--loden);border-color:var(--loden)}
+.words .no li{text-decoration:line-through;text-decoration-thickness:1px;opacity:.85}
+
+/* ---------- phases ---------- */
+.ph{display:grid;grid-template-columns:44px 1fr;gap:20px;padding:18px 0;border-top:1px solid var(--rule-soft)}
+.ph:last-child{border-bottom:1px solid var(--rule-soft)}
+.ph .n{font-family:var(--data);font-size:13px;color:var(--ember-ink);padding-top:3px;font-variant-numeric:tabular-nums}
+.ph .t{font-family:var(--display);font-size:22px;line-height:1.2;margin-bottom:3px}
+.ph .m{font-family:var(--label);font-size:11px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-soft);margin-bottom:7px}
+.ph p{margin:0;font-size:15.5px}
+
+footer{padding:44px 0 0;border-top:1px solid var(--rule);
+  font-family:var(--label);font-size:11.5px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.13em;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:8px 22px}
+
+.rise{opacity:0;transform:translateY(9px);animation:rise .6s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.rise{animation:none;opacity:1;transform:none}}
+</style>
+
+<div class="shell">
+<div class="rail">
+  <div class="rail-inner">
+    <div class="stamp">
+      <div><b>Batch</b>0412</div>
+      <div><b>Milled</b>08 · 04 · 26</div>
+      <div><b>Run</b>400 KG</div>
+      <div><b>Doc</b>Brand v1</div>
+    </div>
+    <ul class="idx">
+      <li><a href="#fight"><span>01</span>The fight</a></li>
+      <li><a href="#voice"><span>02</span>Name &amp; voice</a></li>
+      <li><a href="#marks"><span>03</span>Marks</a></li>
+      <li><a href="#colour"><span>04</span>Colour</a></li>
+      <li><a href="#type"><span>05</span>Type</a></li>
+      <li><a href="#line"><span>06</span>The line</a></li>
+      <li><a href="#bag"><span>07</span>The bag</a></li>
+      <li><a href="#roll"><span>08</span>Rollout</a></li>
+    </ul>
+  </div>
+</div>
+
+<main>
+  <div class="hero">
+    <div>
+      <div class="hero-mark rise" style="animation-delay:.05s" id="heroMark"></div>
+      <h1 class="rise" style="animation-delay:.12s">HOWL <i>&amp;</i> OATS</h1>
+      <div class="hero-desc rise" style="animation-delay:.18s">Cold-pressed kibble · Small batch · Grain-positive</div>
+      <p class="hero-line rise" style="animation-delay:.24s">Dinner you could read out loud.</p>
+      <p class="rise" style="animation-delay:.3s">Kibble sold the way good coffee and good bread are sold: milled
+      in runs of 400 kilos, dated on every bag, with the farm named on the front. Not a
+      clinical white bag, not a wolf on a black one — a thing you'd leave out on the counter.</p>
+    </div>
+    <figure style="margin:0" class="rise" style="animation-delay:.36s">
+      <div class="bag">
+        <div class="bag-tie"></div>
+        <div class="bag-roundel" id="bagRoundel"></div>
+        <div class="bag-word" id="bagWord"></div>
+        <div class="bag-no">NO. 03</div>
+        <div class="bag-name">COLD FRONT</div>
+        <div class="bag-deck">Salmon · Kelp · Flax · Barley</div>
+        <div class="bag-job">For skin &amp; coat</div>
+        <div class="bag-win"><canvas id="kib" width="264" height="142" aria-label="Die-cut crescent window showing the kibble"></canvas></div>
+        <div class="bag-stamp">
+          <div><b>Batch</b>0412</div>
+          <div><b>Milled</b>08 · 04 · 26</div>
+          <div><b>Best by</b>08 · 10 · 27</div>
+        </div>
+        <div class="bag-foot">5 kg · Cold-pressed · Milled in Vermont</div>
+      </div>
+      <figcaption class="bag-cap">5 kg front panel · two spot inks on kraft</figcaption>
+    </figure>
+  </div>
+
+  <section id="fight">
+    <p class="eyebrow"><em>01</em> The fight</p>
+    <h2>The category only sells two stories, and both of them are tired.</h2>
+    <p>Premium dog food is either a white bag that reads like medication, or a black bag with a
+    mountain on it selling an ancestral fantasy the buyer knows is a fantasy. Nobody is selling
+    dog food by naming the farm, dating the batch, and then shutting up.</p>
+    <div class="two" style="margin-top:30px">
+      <div class="card">
+        <h4>The contrarian bet</h4>
+        <p>The category ran to <em>grain-free</em> and stayed there. We run the other way and say so
+        on the front of the bag: named heritage grains, named farms. Rolled oats, hulled barley,
+        whole rye — not "ancient grains," but <em>these</em> grains, from <em>that</em> mill.
+        It gives us the name, the palette, and a fight to pick.</p>
+      </div>
+      <div class="card">
+        <h4>The brand idea</h4>
+        <p><em>Someone in this relationship should be paying attention.</em> The dog does not care.
+        The dog would eat a shoe. Enormous care aimed at an entirely indifferent audience — that
+        tension is the whole brand, and it's why the tone is dry instead of sentimental.</p>
+      </div>
+    </div>
+    <h3 style="margin-top:40px">Four pillars — each one cashed out in something physical</h3>
+    <div class="pil"><div><div class="nm">Milled, not manufactured</div><div class="deck">Runs of 400 kg · cold-pressed at 55&nbsp;°C</div></div><p class="job">Run size is printed on the bag. Mill day is Tuesday, and we say so.</p></div>
+    <div class="pil"><div><div class="nm">A paper trail</div><div class="deck">Batch · mill date · best-by, inked per run</div></div><p class="job">Every batch number resolves to a page listing every farm in that run.</p></div>
+    <div class="pil"><div><div class="nm">Grain-positive</div><div class="deck">Oats · barley · rye, credited like a menu</div></div><p class="job">The grain supplier is named on the front of the bag, not the back.</p></div>
+    <div class="pil"><div><div class="nm">Dry, not cute</div><div class="deck">No fur babies · no exclamation points</div></div><p class="job">The back-of-bag manifesto is the ad. Nothing else needs to be.</p></div>
+  </section>
+
+  <section id="voice">
+    <p class="eyebrow"><em>02</em> Name &amp; voice</p>
+    <h2>A pun that earns its keep.</h2>
+    <p><strong>HOWL &amp; OATS</strong> carries the wild half and the pantry half in three syllables,
+    and it commits us to the grain fight before a single line of copy is written. It reads as a
+    partnership — a shop name, not a laboratory. Set it in caps, with the ampersand italic; that
+    ampersand is the only decorated character in the entire system.</p>
+
+    <div class="manifesto" style="margin:34px 0">
+      <span>We mill in runs of 400 kilos, which is not efficient. We put a date on every bag,
+      which is not required. We name the farm that rolled the oats, which nobody asked us to do.</span>
+      <span>Your dog does not care about any of this. Your dog would eat a shoe.</span>
+      <span>We do it anyway. Someone in this relationship should be paying attention.</span>
+      <span class="sig">Back of bag · milled Tuesdays, in Vermont</span>
+    </div>
+
+    <div class="words">
+      <div><h3>Say</h3><ul class="yes">
+        <li>milled</li><li>run</li><li>batch</li><li>cold-pressed</li><li>rolled oats</li>
+        <li>hulled barley</li><li>named</li><li>dated</li><li>supper</li><li>Tuesday</li></ul></div>
+      <div><h3>Never say</h3><ul class="no">
+        <li>fur baby</li><li>pawsome</li><li>doggo</li><li>premium</li><li>holistic</li>
+        <li>superfood</li><li>artisanal</li><li>journey</li><li>wellness solution</li><li>toxins</li></ul></div>
+    </div>
+    <p class="small" style="margin-top:18px">We <em>are</em> artisanal. We don't say it. And the joke is always on
+    us — never on the customer, never on the dog.</p>
+  </section>
+
+  <section id="marks">
+    <p class="eyebrow"><em>03</em> Marks</p>
+    <h2>A moon and a grain. Deliberately, no dog.</h2>
+    <p>The category is full of dog silhouettes and wolf heads. A crescent with an oat sprig rising
+    into it says the same thing with more restraint — and it survives being shrunk, which a dog's
+    face never does. Built on a 200-unit circle: moon at (134,&nbsp;66) r28, sprig on a 63° axis
+    rising from the lower left into the crescent's hollow.</p>
+    <div class="marks" id="markGrid" style="margin-top:30px"></div>
+    <div class="two" style="margin-top:30px">
+      <div class="card"><h4>Clear space &amp; minimums</h4><p>Clear space is the cap-height of the
+      <em>H</em> on all four sides. Wordmark 120px, roundel 96px, sprig mark 40px, monogram 24px —
+      the monogram is the favicon, because ring text turns to mud below 96px.</p></div>
+      <div class="card"><h4>Never</h4><p>No outline, emboss, gradient or drop shadow. No recolour
+      outside the palette. No rotating the roundel to make it playful. No mark inside another
+      shape. And no paw print — ever.</p></div>
+    </div>
+  </section>
+
+  <section id="colour">
+    <p class="eyebrow"><em>04</em> Colour</p>
+    <h2>Kraft paper, loden green, and one loud accent held in reserve.</h2>
+    <p>Grounds do the heavy lifting and accents are rationed to roughly one per surface. Every
+    ratio below is computed against Oat Milk, not estimated — which is why Ember ships in two
+    values: the beautiful one for display and spot ink, and a darker one for anything a person
+    actually has to read.</p>
+    <div class="pal" id="pal" style="margin-top:28px"></div>
+  </section>
+
+  <section id="type">
+    <p class="eyebrow"><em>05</em> Type</p>
+    <h2>Three faces, four jobs, no overlap.</h2>
+    <p>The typographic idea of the system is the last row: the typewriter face is reserved for data
+    that changes from one run to the next. It's the tell that a human inked something for
+    <em>this</em> batch. Spend it on a section heading and it stops meaning anything.</p>
+    <div style="margin-top:26px">
+      <div class="spec"><div class="role">Display<em>Instrument Serif</em></div>
+        <div class="sp-display">Dinner you could read out loud.</div></div>
+      <div class="spec"><div class="role">Text<em>Archivo</em></div>
+        <div class="sp-text">Cold-pressed at 55&nbsp;°C, so the fat and the enzymes get to live. Nine
+        ingredients. All of them named.</div></div>
+      <div class="spec"><div class="role">Label<em>Archivo Narrow 600</em></div>
+        <div class="sp-label">Salmon · Kelp · Flax · Barley</div></div>
+      <div class="spec"><div class="role">Variable data<em>Courier Prime</em></div>
+        <div class="sp-data">Batch 0412 · Milled 08 · 04 · 26</div></div>
+    </div>
+  </section>
+
+  <section id="line">
+    <p class="eyebrow"><em>06</em> The line</p>
+    <h2>Numbered recipes, named for the dog — never the benefit.</h2>
+    <p>A senior dog is an elder statesman. A small dog is small talk. A dog with a bad gut is
+    rummaging around in the understory. The number is how staff and repeat buyers talk; the name is
+    what makes someone pick the bag up. The job is printed plainly underneath, in a label face, and
+    never smuggled into the name.</p>
+    <p class="small">Each recipe owns one accent, and it is the only accent on that bag. Six kraft
+    bags in six notes read as one system on a shelf of competitors shouting in full colour.</p>
+    <div id="recs" style="margin-top:26px"></div>
+  </section>
+
+  <section id="bag">
+    <p class="eyebrow"><em>07</em> The bag</p>
+    <h2>It has to survive being left out on the counter.</h2>
+    <p>A flat-bottom kraft stand-up pouch with a tin tie — a coffee bag built for 5 kg, not a plastic
+    sack with a retriever printed on it. Matte uncoated kraft, two spot inks maximum per SKU, no
+    gradients and no varnish. If a bag needs a third ink to work, the layout is wrong.</p>
+    <div class="two" style="margin-top:30px">
+      <div class="card"><h4>The crescent window</h4><p>The die-cut repeats the mark, shows the actual
+      kibble, and means we can never quietly make the product uglier. 60&nbsp;mm, registered ±1&nbsp;mm,
+      matte anti-scuff film behind it.</p></div>
+      <div class="card"><h4>The stamp block</h4><p>The most important asset we own: genuinely variable
+      data, inked per run, linking to the batch page. It never gets prettified, shrunk below 7&nbsp;pt,
+      or moved to the back. It is the proof behind every claim in the strategy.</p></div>
+    </div>
+    <p class="small" style="margin-top:26px">The rest of the kit follows from the bag: an embossed tin
+    tie, a 40&nbsp;mm gummed roundel that closes the shipper and ends up on a laptop, a plain carton
+    with the manifesto printed inside the lid, and a batch card in every shipment carrying one
+    paragraph about what went right or wrong at the mill that week.</p>
+  </section>
+
+  <section id="roll">
+    <p class="eyebrow"><em>08</em> Rollout</p>
+    <h2>Prove the trail before widening the range.</h2>
+    <div style="margin-top:22px">
+      <div class="ph"><div class="n">M0–3</div><div><div class="t">Proof</div>
+        <div class="m">Two recipes · one city</div>
+        <p>No. 01 and No. 03 only, 5 kg only, direct to consumer. Batch pages live from day one —
+        if the trail isn't real at ten customers it will never be real at ten thousand.</p></div></div>
+      <div class="ph"><div class="n">M3–6</div><div><div class="t">Range</div>
+        <div class="m">Core six · three sizes · subscription</div>
+        <p>Add 02, 04, 05, 06. Add 1 kg and 12 kg. The Standing Order opens: six weeks by default,
+        cancellable from the card, no retention offer.</p></div></div>
+      <div class="ph"><div class="n">M6–9</div><div><div class="t">Shelf</div>
+        <div class="m">Independents · one regional chain</div>
+        <p>Counter unit, shelf talkers, and 60 g sampling sachets carrying the stamp block and no
+        recipe name. If someone has to ask what it is, that's the conversation working.</p></div></div>
+      <div class="ph"><div class="n">M9–12</div><div><div class="t">Extras</div>
+        <div class="m">Toppers · broth · the first limited run</div>
+        <p>The Garnish, House Broth, the stamped steel scoop, and No. 07 Late Harvest as the autumn
+        moment — venison, squash, rye, roughly 2,000 bags, gone when it's gone.</p></div></div>
+    </div>
+    <div class="two" style="margin-top:34px">
+      <div class="card"><h4>What proves it worked</h4><p>Repeat rate above 55% on The Standing Order,
+      and customers quoting <em>batch numbers</em> back at us — "0412", not "the oat one". If people
+      are citing the paper trail, the paper trail is doing the branding.</p></div>
+      <div class="card"><h4>What would kill it</h4><p>A supply story we can't name — an unnamed grain
+      broker, a protein of unclear origin — that we ship anyway. The moment the trail has a gap and
+      we paper over it, there's no brand left. Only a nice-looking kraft bag.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Howl &amp; Oats</span><span>Brand system v1</span><span>Batch 0412</span><span>Milled Tuesdays</span>
+  </footer>
+</main>
+</div>
+
+<script>
+/* ---------- the marks, drawn once and reused ---------- */
+const ROUNDEL = (id) => `<svg viewBox="0 0 200 200" style="width:100%;height:100%" role="img" aria-label="Howl and Oats roundel">
+<defs><path id="rg${id}" d="M100 100 m0 90 a90 90 0 1 1 0 -180 a90 90 0 1 1 0 180" fill="none"/>
+<mask id="cr${id}"><circle cx="41" cy="23" r="19" fill="#fff"/><circle cx="36" cy="28" r="17.5" fill="#000"/></mask></defs>
+<g fill="none" stroke="currentColor"><circle cx="100" cy="100" r="98" stroke-width="2.5"/><circle cx="100" cy="100" r="81" stroke-width="1"/></g>
+<text font-family="'Archivo Narrow','Archivo',sans-serif" font-size="12" font-weight="600" letter-spacing="3.4" fill="currentColor">
+<textPath href="#rg${id}" startOffset="50%" text-anchor="middle">SMALL BATCH · COLD-PRESSED · MILLED TUESDAYS</textPath></text>
+<path d="M100 183l4.5 6.5-4.5 6.5-4.5-6.5z" fill="currentColor"/>
+<g transform="translate(27,27) scale(2.2)">${SPRIG('a'+id)}</g></svg>`;
+
+function SPRIG(id){return `<circle cx="41" cy="23" r="19" fill="currentColor" mask="url(#cr${id.replace('a','')})"/>
+<path d="M12 58L30 26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+<g fill="currentColor">
+<ellipse cx="15.4" cy="40.5" rx="2.8" ry="5.8" transform="rotate(-9 15.4 40.5)"/>
+<ellipse cx="18.9" cy="34.4" rx="2.8" ry="5.8" transform="rotate(-9 18.9 34.4)"/>
+<ellipse cx="22.3" cy="28.3" rx="2.8" ry="5.8" transform="rotate(-9 22.3 28.3)"/>
+<ellipse cx="25.2" cy="45.9" rx="2.8" ry="5.8" transform="rotate(67 25.2 45.9)"/>
+<ellipse cx="28.7" cy="39.8" rx="2.8" ry="5.8" transform="rotate(67 28.7 39.8)"/>
+<ellipse cx="32.0" cy="22.5" rx="2.8" ry="5.8" transform="rotate(29 32 22.5)"/></g>`;}
+
+const MARK = (id,w) => `<svg viewBox="0 0 64 64" style="width:${w}px;height:${w}px" role="img" aria-label="Moon and oat mark">
+<defs><mask id="cr${id}"><circle cx="41" cy="23" r="19" fill="#fff"/><circle cx="36" cy="28" r="17.5" fill="#000"/></mask></defs>
+${SPRIG('a'+id)}</svg>`;
+
+const WORD = `<svg viewBox="0 0 560 120" style="width:100%;height:auto" role="img" aria-label="Howl and Oats">
+<text x="280" y="78" text-anchor="middle" font-family="'Instrument Serif',Georgia,serif" font-size="84" letter-spacing="-1" fill="currentColor">HOWL<tspan font-style="italic" font-size="96" dx="10" dy="4">&amp;</tspan><tspan font-size="84" dx="10" dy="-4">OATS</tspan></text></svg>`;
+
+const STACK = `<svg viewBox="0 0 320 240" style="width:96px;height:auto" role="img" aria-label="Howl and Oats stacked">
+<text x="160" y="86" text-anchor="middle" font-family="'Instrument Serif',Georgia,serif" font-size="86" letter-spacing="-1" fill="currentColor">HOWL</text>
+<text x="160" y="146" text-anchor="middle" font-family="'Instrument Serif',Georgia,serif" font-style="italic" font-size="72" fill="currentColor">&amp;</text>
+<text x="160" y="212" text-anchor="middle" font-family="'Instrument Serif',Georgia,serif" font-size="86" letter-spacing="-1" fill="currentColor">OATS</text>
+<g stroke="currentColor" stroke-width="1"><path d="M40 122h74M206 122h74"/></g></svg>`;
+
+const MONO = `<svg viewBox="0 0 120 120" style="width:72px;height:72px" role="img" aria-label="H and O monogram">
+<rect x="2" y="2" width="116" height="116" rx="2" fill="none" stroke="currentColor" stroke-width="4"/>
+<text x="60" y="77" text-anchor="middle" font-family="'Instrument Serif',Georgia,serif" font-size="50" fill="currentColor">H<tspan font-style="italic" font-size="43">&amp;</tspan>O</text></svg>`;
+
+document.getElementById('heroMark').innerHTML = MARK('h', 96);
+document.getElementById('bagRoundel').innerHTML = ROUNDEL('b');
+document.getElementById('bagWord').innerHTML = STACK;
+
+const marks = [
+  ['Roundel', ROUNDEL('m'), 'width:104px;height:104px;color:var(--loden)'],
+  ['Wordmark', WORD, 'width:100%;color:var(--ink)'],
+  ['Stacked', STACK, 'color:var(--ink)'],
+  ['Sprig mark', MARK('g', 62), 'color:var(--ember)'],
+  ['Monogram', MONO, 'color:var(--dusk)'],
+];
+document.getElementById('markGrid').innerHTML = marks.map(([c, s, st, extra]) =>
+  `<figure class="mark" style="${extra || ''}"><div class="art" style="${st}">${s}</div><figcaption>${c}</figcaption></figure>`).join('');
+
+/* ---------- palette, with real measured ratios ---------- */
+const PAL = [
+  ['Oat Milk','#F4EBDC','Primary ground',''],
+  ['Kraft','#D9C3A5','Packaging stock',''],
+  ['Ink','#17150F','All primary type','15.44'],
+  ['Loden','#37503F','House colour','7.46'],
+  ['Ember','#C25A2B','Display &amp; spot ink only','3.71'],
+  ['Ember Ink','#9E4420','The text-safe ember','5.38'],
+  ['Turmeric','#E3A83C','Fills, never type on light','1.79'],
+  ['Dusk','#455565','Cool counterweight','6.48'],
+];
+document.getElementById('pal').innerHTML = PAL.map(([n,h,u,r]) =>
+  `<div class="sw"><div class="chip" style="background:${h}"></div><div class="meta">
+   <span class="nm">${n}</span><span class="hx">${h}</span>
+   <span class="cr">${r ? `<b>${r}:1</b> on oat milk` : 'ground'}</span>
+   <span class="hx" style="text-transform:none;font-family:var(--text);font-size:12.5px">${u}</span>
+   </div></div>`).join('');
+
+/* ---------- the six ---------- */
+const RECS = [
+  ['01','Morning Person','Chicken · rolled oats · egg','Everyday adult. The default bag.','var(--loden)'],
+  ['02','The Understory','Turkey · pumpkin · chestnut mushroom','Sensitive stomach, easy digestion','var(--ember)'],
+  ['03','Cold Front','Salmon · kelp · flax · barley','Skin and coat, dry-weather months','var(--dusk)'],
+  ['04','Elder Statesman','Lamb · hulled barley · green-lipped mussel','Senior, joint support','var(--turmeric)'],
+  ['05','Small Talk','Duck · millet · oats. Micro-kibble','Small breeds, small mouths','var(--ember-ink)'],
+  ['06','Understudy','Chicken · goat milk · oats','Puppy, eight weeks to a year','var(--loden)'],
+];
+document.getElementById('recs').innerHTML = RECS.map(([n,nm,d,j,c]) =>
+  `<div class="rec"><div class="no" style="color:${c}">${n}</div>
+   <div><div class="nm">${nm}</div><div class="deck">${d}</div></div>
+   <div class="job">${j}</div></div>`).join('');
+
+/* ---------- kibble behind a die-cut crescent ---------- */
+(function kibble(){
+  const c = document.getElementById('kib'); if(!c) return;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const W = 264, H = 142;
+  c.style.width = W + 'px'; c.style.height = H + 'px';
+  c.width = W * dpr; c.height = H * dpr;
+  const x = c.getContext('2d'); x.scale(dpr, dpr);
+
+  // deterministic scatter so the window looks the same on every load
+  let s = 20260408;
+  const rnd = () => (s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
+
+  x.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--window').trim() || '#1E1B14';
+  x.fillRect(0, 0, W, H);
+  const tones = ['#6B4A2E','#7C5836','#5A3E27','#8A6440','#4E3620'];
+  for (let i = 0; i < 340; i++){
+    const px = rnd() * W, py = rnd() * H;
+    const r = 3.1 + rnd() * 2.6, sq = .62 + rnd() * .34, rot = rnd() * Math.PI;
+    x.save(); x.translate(px, py); x.rotate(rot);
+    x.fillStyle = tones[(rnd() * tones.length) | 0];
+    x.globalAlpha = .82 + rnd() * .18;
+    x.beginPath(); x.ellipse(0, 0, r, r * sq, 0, 0, Math.PI * 2); x.fill();
+    x.globalAlpha = .22; x.fillStyle = '#E7D3B4';
+    x.beginPath(); x.ellipse(-r * .28, -r * sq * .3, r * .34, r * sq * .3, 0, 0, Math.PI * 2); x.fill();
+    x.restore();
+  }
+  // cut the crescent: keep only the moon shape
+  x.globalCompositeOperation = 'destination-in';
+  x.beginPath(); x.arc(132, 71, 56, 0, Math.PI * 2); x.fill();
+  x.globalCompositeOperation = 'destination-out';
+  x.beginPath(); x.arc(120, 82, 51, 0, Math.PI * 2); x.fill();
+  x.globalCompositeOperation = 'source-over';
+})();
+</script>

@@ -32,7 +32,8 @@ wolf-on-a-black-bag fantasy.
 ```
 brand/logo/     roundel · wordmark · wordmark-stacked · monogram · mark-moon   (SVG)
 brand/tokens/   tokens.css (custom properties, light + dark) · tokens.json
-brand/preview/  contact-sheet.html + build.py — regenerates the sheet from the SVGs
+brand/preview/  brand-book.html — the whole system as one page, light and dark
+                contact-sheet.html + build.py — regenerates the sheet from the SVGs
 ```
 
 **Color** — Oat Milk `#F4EBDC` · Kraft `#D9C3A5` · Ink `#17150F` ·
@@ -41,7 +42,10 @@ Every contrast ratio quoted in the docs is computed, not estimated; Ember ships
 in two values because the beautiful one fails body-text contrast and the darker
 one doesn't.
 
-**Type** — Instrument Serif (display) · Space Grotesk (text) · Space Mono (spec).
+**Type** — Instrument Serif (display) · Archivo + Archivo Narrow (text and labels) ·
+Courier Prime, reserved for per-run data. That last reservation is the
+typographic idea of the system: the typewriter face is the tell that a human
+inked something for *this* batch, so it never appears on a heading.
 All three are open-licence and available from Google Fonts.
 
 ## Working with the SVGs

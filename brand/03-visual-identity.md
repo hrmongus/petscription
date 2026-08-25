@@ -50,7 +50,7 @@ type to outlines before sending anything to print.
 3. Don't outline, emboss, drop-shadow, or gradient any mark.
 4. Don't put the wordmark on a photo without a flat panel behind it.
 5. Don't recolor outside the palette. Ember, loden, ink, oatmilk, kraft. That's it.
-6. Don't put the descriptor line in anything but Space Mono, uppercase, tracked.
+6. Don't put the descriptor line in anything but Archivo Narrow, uppercase, tracked.
 7. Don't rotate the roundel to "make it playful."
 8. Don't add a paw print. Ever.
 9. Don't lock the wordmark to a photo of a dog looking soulful into the middle distance.
@@ -86,11 +86,16 @@ Each recipe owns one accent, which is the *only* accent on that bag.
 | Role | Face | Rules |
 | --- | --- | --- |
 | Display | **Instrument Serif** (roman + italic) | Never below 24px. Tracking −0.02em. Sentence case for headlines; the wordmark is the only all-caps display setting. |
-| Text | **Space Grotesk** 400/500/700 | Body 18px/1.55, measure capped at 68 characters. |
-| Spec | **Space Mono** 400/700 | ALWAYS uppercase, +0.09em tracking. Batch numbers, weights, ingredient decks, nav, buttons, legal. |
+| Text | **Archivo** 400/500/600/700 | Body 18px/1.55, measure capped at 68 characters. A grotesque built for print — it holds up at 8pt on kraft, which is where most of our type lives. |
+| Label | **Archivo Narrow** 600 | ALWAYS uppercase, +0.12em tracking. Nav, buttons, table heads, ingredient decks, legal. |
+| Variable data | **Courier Prime** | **Reserved.** Batch numbers, mill dates, run sizes, best-by — anything that changes from one run to the next, and nothing else. |
 
-Three faces, three jobs, no overlap. If a piece of type doesn't obviously belong
-to one of the three, it's decoration — cut it.
+That last rule is the typographic idea of the whole system: the typewriter face
+is the tell that a human inked something for *this* run. Spend it on a section
+heading and it stops meaning anything.
+
+Three faces plus one narrow cut, four jobs, no overlap. If a piece of type
+doesn't obviously belong to one of the four, it's decoration — cut it.
 
 Scale: 1.333 from an 18px base — 12.5 · 15 · 18 · 24 · 42.6 · 75.8 · 134.6.
 Skipping a step is fine. Inventing one is not.

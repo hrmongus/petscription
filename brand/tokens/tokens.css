@@ -3,7 +3,7 @@
    Contrast ratios in comments are WCAG 2.1, computed, not eyeballed.
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Narrow:wght@400;600&family=Courier+Prime:wght@400;700&family=Instrument+Serif:ital@0;1&display=swap');
 
 :root {
   /* --- Grounds ------------------------------------------------ */
@@ -34,11 +34,12 @@
 
   /* --- Type --------------------------------------------------- */
   --ho-display: 'Instrument Serif', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
-  --ho-text-face: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --ho-mono:    'Space Mono', 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --ho-text-face: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif;
+  --ho-label:   'Archivo Narrow', 'Archivo', 'Helvetica Neue', sans-serif;
+  --ho-mono:    'Courier Prime', 'Courier New', ui-monospace, monospace;
 
   /* Scale — 1.333 (perfect fourth), 18px base */
-  --ho-t-xs:   0.694rem;   /* 12.5px — mono specs                   */
+  --ho-t-xs:   0.694rem;   /* 12.5px — fine print                   */
   --ho-t-sm:   0.833rem;   /* 15px   — captions                     */
   --ho-t-base: 1rem;       /* 18px   — body                         */
   --ho-t-md:   1.333rem;   /* 24px   — lede                         */
@@ -46,7 +47,7 @@
   --ho-t-xl:   4.209rem;   /* 75.8px — display                      */
   --ho-t-2xl:  7.478rem;   /* 134.6px — hero wordmark               */
 
-  --ho-track-mono: 0.09em; /* mono is ALWAYS uppercase + tracked    */
+  --ho-track-label: 0.12em; /* labels are ALWAYS uppercase + tracked */
   --ho-track-display: -0.02em;
   --ho-leading-body: 1.55;
   --ho-measure: 68ch;
@@ -85,5 +86,8 @@
   line-height: 0.95; letter-spacing: var(--ho-track-display); }
 .ho-body { font-family: var(--ho-text-face); font-size: var(--ho-t-base);
   line-height: var(--ho-leading-body); max-width: var(--ho-measure); }
-.ho-spec { font-family: var(--ho-mono); font-size: var(--ho-t-xs);
-  text-transform: uppercase; letter-spacing: var(--ho-track-mono); }
+.ho-label { font-family: var(--ho-label); font-weight: 600; font-size: var(--ho-t-sm);
+  text-transform: uppercase; letter-spacing: var(--ho-track-label); }
+/* Courier is reserved for data that changes per run. Never for labels. */
+.ho-stamp { font-family: var(--ho-mono); font-size: var(--ho-t-sm);
+  text-transform: uppercase; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }

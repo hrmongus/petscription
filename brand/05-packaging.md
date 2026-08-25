@@ -14,10 +14,10 @@ which is the whole packaging strategy: **the bag must not need to live in a cupb
 | Top, centred | Roundel, one color, 48 mm | Recipe accent |
 | Upper third | `HOWL & OATS` stacked wordmark | Ink |
 | Middle | `NO. 03` over `COLD FRONT` | Instrument Serif, 42 mm cap |
-| Under name | `SALMON · KELP · FLAX · BARLEY` | Space Mono, 8 pt, +0.09 em |
-| Under that | The job, one line: `FOR SKIN & COAT` | Space Mono, 7 pt |
+| Under name | `SALMON · KELP · FLAX · BARLEY` | Archivo Narrow, 8 pt, +0.12 em |
+| Under that | The job, one line: `FOR SKIN & COAT` | Archivo Narrow, 7 pt |
 | Lower third | Die-cut **crescent window**, 60 mm, showing the actual kibble | — |
-| Foot | `5 KG (11 LB) · COLD-PRESSED · MILLED IN VERMONT` | Space Mono, 7 pt |
+| Foot | `5 KG (11 LB) · COLD-PRESSED · MILLED IN VERMONT` | Archivo Narrow, 7 pt |
 
 The window is the crescent from the roundel, cut through the kraft. It shows the
 product, it repeats the mark, and it means we can never quietly make the kibble
@@ -45,7 +45,7 @@ back.
 ## Back panel
 Reading order, top to bottom, with a hairline rule between each:
 1. **The manifesto** (see `02-verbal-identity.md`). Instrument Serif, 14 pt, ragged right.
-2. **The full ingredient deck** — Space Mono, 8 pt, every ingredient named, farm
+2. **The full ingredient deck** — Archivo Narrow, 8 pt, every ingredient named, farm
    named where we have it. No "meat meal", no "animal by-product", no "natural flavour".
 3. **Guaranteed analysis** — plain table, hairline rules, no shading.
 4. **Feeding guide** — by weight, in a two-column grid, plus one honest line:
