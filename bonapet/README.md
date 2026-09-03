@@ -4,13 +4,11 @@ Slovenská landing page pre značku **Bonapet** (granule pre psov). Jeden
 samostatný súbor: `index.html`.
 
 ## Smerovanie
-Prémiové a pokojné, no stále svetlé a priateľské — medzi tmavou „vlčou“
-estetikou kategórie a detskou hravosťou. Serifové titulky, tlmená paleta,
-jemné ilustrácie psov v medailónoch a mockup balenia ako hero vizuál.
-(Prvá, hravejšia verzia bola zamietnutá ako príliš lacná.)
-
-**Predchádzajúci koncept „Howl & Oats“** (priečinok `brand/`) bol zamietnutý ako
-príliš hipsterský. Ostáva v repozitári len ako archív.
+Prémiová, pokojná stránka v štýle dizajnového štúdia: serifová typografia,
+veľa priestoru, produktové vizuály renderované v canvase (makro granúl
+s hĺbkou ostrosti a filmovým zrnom), realistický mockup balenia a jemný,
+plynulý pohyb. Žiadne kreslené ilustrácie psov — predchádzajúce hravé aj
+„bežiaci pes“ verzie boli zamietnuté ako lacné.
 
 ## Systém
 
@@ -58,22 +56,18 @@ Reprodukčný stav sa zatiaľ len ukladá — do logiky receptu nie je zapojený
 4. **Odpovede v FAQ** sú návrh — treba ich odsúhlasiť, najmä tvrdenia
    o výrobcovi a o zložení.
 
-## Scrollová animácia psa
-V spodnej časti viewportu beží pes poháňaný scrollom (`#dogStage`):
+## Pohyb a interakcie
+- scroll-reveal cez IntersectionObserver (`[data-reveal]`, stagger cez `--d`),
+- hero: slovo po slove odkrývaný titulok, plávajúce balenie s parallax tiltom
+  podľa kurzora (len desktop s hover), header sa po scrolle zhutní a rozmaže pozadie,
+- nekonečné marquee surovín (pauza na hover), sticky ľavý stĺpec v sekcii Zloženie,
+- porovnanie „čo je v miske“ ako before/after slider v kruhu (drag, klávesy ←→,
+  jemný úvodný sweep pri objavení),
+- časová os s dokresľujúcou sa linkou, FAQ akordeón cez `grid-template-rows`,
+- všetko rešpektuje `prefers-reduced-motion`.
 
-- pozícia psa zodpovedá priebehu stránky (0 % = vľavo, 100 % = pri miske vpravo),
-- kĺbová SVG bábka (4 nohy, hlava, ucho, chvost) s cvalovým cyklom viazaným na
-  rýchlosť pohybu; pri scrolle nahor sa otočí a beží späť,
-- v strednej časti stránky naháňa skákajúcu loptičku, v 46 % šírky preskočí
-  kostičku (gaussov oblúk podľa vzdialenosti), pri konci stránky dobehne
-  k miske a žerie (hlava dole, vrtí chvostom),
-- keď scroll zastane, pes zastane a prejde do idle (dýchanie, vrtenie),
-- `prefers-reduced-motion: reduce` animáciu úplne skryje; vrstva má
-  `pointer-events:none`, `aria-hidden` a z-index pod funnelom aj headerom,
-- deterministický hák na testovanie: `window.__dogSettle(p, frames)` +
-  `window.__dogNoLoop`.
-
-## Ilustrácie
-Všetky ilustrácie sú SVG generované v `<script>` na konci súboru: psy
-(`dog()`, tri plemená), ikony pilierov, ikony surovín a rozdelená miska
-(`#bowl`). Miska sa kreslí deterministicky — rovnaké granule pri každom načítaní.
+## Vizuály
+Všetky sú generované v `<script>`: `kibble()` renderuje makro granúl (tienené
+matné elipsoidy v troch vrstvách hĺbky ostrosti, kontaktné tiene, zrno) v dvoch
+paletách — bohatá Bonapet a fádna „bežné granule“; `packSvg()` kreslí balenie
+s gradientovým tvarom, monogramom B a receptúrou (aj kompaktný variant pre kvíz).

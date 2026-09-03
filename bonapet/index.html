@@ -6,208 +6,263 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
 
 <style>
-/* Bonapet — deliberately a single, bright, warm look. No dark variant:
-   every colour is painted explicitly so the page holds on any host ground. */
+/* Bonapet — single deliberate light look; every colour painted explicitly. */
 :root{
-  --cream:#F7F2E9; --cream-2:#EFE7D6; --white:#FFFDF9;
-  --ink:#24201A; --ink-2:#6B6459; --line:#E3DBCC;
-  --green:#24503B; --green-2:#E9EFE7; --green-3:#183828;
-  --orange:#A8552B; --orange-2:#F3E4D6; --orange-ink:#9C5624;
-  --honey:#D9A441; --honey-2:#F3E8CE;
-  --drab:#9E9A93; --drab-2:#EDEAE3; --bad:#A03A2E;
+  --bg:#F4EFE6; --bg-2:#EDE6D9; --surface:#FBF8F2; --line:#DDD4C4; --line-2:#E9E2D5;
+  --ink:#1F1B16; --ink-2:#655E54; --ink-3:#8C847A;
+  --green:#22493A; --green-d:#173328; --green-l:#2E5D4A; --green-t:#E7EEE9;
+  --copper:#9C5624; --copper-t:#F2E6DA; --ochre:#C9A24A; --drab:#8E877C;
   --display:'Instrument Serif','Iowan Old Style',Georgia,serif;
   --body:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --r:14px; --r-lg:20px;
-  --shadow:0 24px 50px -34px rgba(36,32,26,.45);
+  --ease:cubic-bezier(.22,1,.36,1); --ease-io:cubic-bezier(.65,0,.35,1);
+  --r:16px; --r-lg:24px;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--body);
-  font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
-img{max-width:100%}
-:focus-visible{outline:3px solid var(--orange-ink);outline-offset:3px;border-radius:6px}
-.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
-h1,h2{font-family:var(--display);font-weight:400;letter-spacing:-.015em;
-  line-height:1.04;margin:0;text-wrap:balance}
-h1{font-size:clamp(42px,6vw,72px)}
-h2{font-size:clamp(32px,4.4vw,50px)}
-h3{font-family:var(--body);font-weight:700;letter-spacing:-.01em;line-height:1.25;
-  margin:0;font-size:clamp(19px,2vw,22px);text-wrap:balance}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;
+  line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,canvas,svg{max-width:100%}
+:focus-visible{outline:2px solid var(--copper);outline-offset:3px;border-radius:6px}
+::selection{background:var(--green);color:#fff}
+.wrap{max-width:1200px;margin:0 auto;padding:0 clamp(20px,4vw,48px)}
+h1,h2,.serif{font-family:var(--display);font-weight:400;letter-spacing:-.018em;line-height:1.02;margin:0;text-wrap:balance}
+h1{font-size:clamp(44px,6.6vw,86px)}
+h2{font-size:clamp(34px,4.6vw,58px)}
+h3{font-family:var(--body);font-weight:600;font-size:clamp(18px,1.9vw,21px);letter-spacing:-.01em;line-height:1.3;margin:0}
 p{margin:0}
-.eyebrow{font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.22em;
-  color:var(--orange-ink);margin-bottom:16px}
-.lead{font-size:clamp(18px,2vw,21px);color:var(--ink-2);max-width:56ch}
-section{padding:clamp(56px,7vw,96px) 0}
+.eyebrow{font-weight:600;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--copper);
+  display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--copper)}
+.lead{font-size:clamp(17px,1.5vw,20px);line-height:1.62;color:var(--ink-2);max-width:56ch}
+section{padding:clamp(72px,9vw,128px) 0;position:relative}
+
+/* ---------- reveal system ---------- */
+[data-reveal]{opacity:0;transform:translateY(26px);
+  transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s)}
+[data-reveal].in{opacity:1;transform:none}
+[data-reveal="fade"]{transform:none}
+[data-reveal="scale"]{transform:scale(.96)}
+@media (prefers-reduced-motion:reduce){
+  [data-reveal]{opacity:1;transform:none;transition:none}
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important}
+  html{scroll-behavior:auto}}
 
 /* ---------- buttons ---------- */
-.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-weight:600;
-  font-size:16px;letter-spacing:.01em;padding:15px 28px;border-radius:10px;
-  border:1px solid transparent;text-decoration:none;cursor:pointer;
-  transition:background .15s ease,border-color .15s ease}
-.btn-1{background:var(--green);color:#fff}
-.btn-1:hover{background:var(--green-3)}
-.btn-2{background:transparent;color:var(--ink);border-color:var(--ink)}
-.btn-2:hover{background:var(--cream-2)}
-.btn-3{background:var(--white);color:var(--ink)}
-.btn-3:hover{background:var(--cream-2)}
-@media (prefers-reduced-motion:reduce){.btn{transition:none}}
+.btn{display:inline-flex;align-items:center;gap:12px;font-family:var(--body);font-weight:600;font-size:15.5px;
+  padding:16px 26px;border-radius:999px;border:1px solid transparent;text-decoration:none;cursor:pointer;
+  position:relative;transition:background .35s var(--ease),color .35s var(--ease),border-color .35s var(--ease),
+  transform .35s var(--ease)}
+.btn .ar{width:16px;height:16px;transition:transform .35s var(--ease)}
+.btn:hover .ar{transform:translateX(4px)}
+.btn-1{background:var(--ink);color:#fff}
+.btn-1:hover{background:var(--green)}
+.btn-2{background:transparent;color:var(--ink);border-color:rgba(31,27,22,.25)}
+.btn-2:hover{border-color:var(--ink);background:rgba(31,27,22,.04)}
+.btn-3{background:#fff;color:var(--ink)}
+.btn-3:hover{background:var(--bg)}
+.btn-g{background:var(--green);color:#fff}
+.btn-g:hover{background:var(--green-d)}
 
 /* ---------- header ---------- */
-header{position:sticky;top:0;z-index:40;background:rgba(247,242,233,.94);
-  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.hd{display:flex;align-items:center;gap:26px;padding:14px 24px;max-width:1160px;margin:0 auto}
-.logo{display:flex;align-items:center;gap:11px;font-family:var(--display);font-weight:400;
-  font-size:27px;letter-spacing:.01em;color:var(--ink);text-decoration:none}
-.logo svg{width:30px;height:30px;flex:none;color:var(--green)}
-footer .logo svg{color:var(--honey)}
-nav{margin-left:auto;display:flex;gap:24px;align-items:center}
-nav a{color:var(--ink);text-decoration:none;font-weight:500;font-size:15.5px}
-nav a:hover{color:var(--green)}
-.hd .btn{padding:10px 20px;font-size:14.5px}
+header{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .5s var(--ease),
+  box-shadow .5s var(--ease),padding .5s var(--ease)}
+header.on{background:rgba(244,239,230,.86);backdrop-filter:blur(14px) saturate(1.2);
+  box-shadow:0 1px 0 var(--line)}
+.hd{display:flex;align-items:center;gap:30px;padding:22px clamp(20px,4vw,48px);max-width:1200px;margin:0 auto;
+  transition:padding .5s var(--ease)}
+header.on .hd{padding-top:14px;padding-bottom:14px}
+.logo{font-family:var(--display);font-size:29px;letter-spacing:.005em;color:var(--ink);text-decoration:none;
+  display:inline-flex;align-items:baseline;gap:6px}
+.logo i{width:6px;height:6px;border-radius:50%;background:var(--copper);display:block;transform:translateY(-3px)}
+nav{margin-left:auto;display:flex;gap:30px;align-items:center}
+nav a.nl{color:var(--ink);text-decoration:none;font-weight:500;font-size:15px;position:relative;padding:4px 0}
+nav a.nl::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--ink);
+  transform:scaleX(0);transform-origin:right;transition:transform .45s var(--ease)}
+nav a.nl:hover::after{transform:scaleX(1);transform-origin:left}
+.hd .btn{padding:11px 20px;font-size:14px}
 @media(max-width:860px){nav .nl{display:none}}
 
 /* ---------- hero ---------- */
-.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,60px);align-items:center;
-  padding:clamp(36px,5vw,68px) 0 clamp(48px,6vw,84px)}
-@media(max-width:900px){.hero{grid-template-columns:1fr}}
-.hero .cta{display:flex;flex-wrap:wrap;gap:14px;margin:30px 0 22px}
-.trust{display:flex;align-items:center;gap:10px 16px;flex-wrap:wrap;font-size:14.5px;
-  color:var(--ink-2);font-weight:500}
-.trust-row{display:inline-flex;align-items:center;gap:9px;white-space:nowrap}
-.trust-sep{width:1px;height:18px;background:var(--line)}
-@media(max-width:520px){.trust-sep{display:none}}
-.stars{display:inline-flex;gap:2px;color:var(--honey)}
-.stars svg{width:15px;height:15px}
-.hero-art{position:relative;background:var(--green);border-radius:var(--r-lg);
-  padding:clamp(26px,3.4vw,44px) clamp(22px,3vw,40px) 0;aspect-ratio:10/11;display:flex;
-  align-items:flex-end;justify-content:center;box-shadow:var(--shadow);overflow:hidden}
-.hero-art .pack-hero{width:min(72%,330px);display:block}
-.hero-chips{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:18px}
-.chip{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:14px;
-  color:var(--ink-2);letter-spacing:.02em}
-.chip i{width:5px;height:5px;border-radius:50%;background:var(--orange-ink);display:block;flex:none}
+.hero{min-height:100svh;display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(30px,5vw,72px);
+  align-items:center;padding:clamp(120px,15vh,160px) 0 clamp(60px,7vw,96px)}
+@media(max-width:940px){.hero{grid-template-columns:1fr;min-height:0;padding-top:120px}}
+.hero .eyebrow{margin-bottom:28px}
+.hero h1 .w{display:inline-block;overflow:hidden;vertical-align:bottom}
+.hero h1 .w span{display:inline-block;transform:translateY(110%);
+  transition:transform 1.1s var(--ease);transition-delay:calc(var(--i)*.06s + .15s)}
+.hero.go h1 .w span{transform:none}
+.hero .lead{margin-top:28px}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:38px}
+.trust{display:flex;align-items:center;flex-wrap:wrap;gap:12px 18px;margin-top:34px;font-size:14px;color:var(--ink-2);font-weight:500}
+.stars{display:inline-flex;gap:3px;color:var(--ochre)}
+.stars svg{width:13px;height:13px}
+.trust .sep{width:1px;height:16px;background:var(--line)}
+
+.stage{position:relative;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:.86;
+  background:#1A3529;box-shadow:0 40px 80px -40px rgba(31,27,22,.55)}
+@media(max-width:940px){.stage{aspect-ratio:1.05;max-width:560px}}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;
+  transition:opacity 1.4s var(--ease)}
+.stage.ready canvas{opacity:.92}
+.stage::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 90% at 50% 100%,rgba(23,51,40,.5),transparent 60%),
+             linear-gradient(180deg,rgba(23,51,40,.04),rgba(23,51,40,.4))}
+.stage .pack{position:absolute;left:50%;top:50%;width:min(58%,300px);
+  transform:translate(-50%,-46%);will-change:transform;z-index:2;
+  filter:drop-shadow(0 40px 34px rgba(0,0,0,.42));
+  transition:transform .12s linear}
+.stage .pack svg{display:block;width:100%;height:auto;animation:float 7s var(--ease-io) infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.stage .tag{position:absolute;z-index:3;left:22px;bottom:22px;color:#fff;font-size:12px;letter-spacing:.2em;
+  text-transform:uppercase;font-weight:600;opacity:.75}
+.stage .tag b{display:block;font-family:var(--display);font-weight:400;font-size:26px;letter-spacing:0;
+  text-transform:none;margin-top:4px;opacity:1}
+@media(max-width:940px){.stage .pack{width:min(44%,240px);transform:translate(-50%,-56%)}.stage .tag{left:18px;bottom:16px}}
+
+/* ---------- marquee ---------- */
+.marq{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:20px 0;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.marq .track{display:flex;gap:0;width:max-content;animation:mq 60s linear infinite}
+.marq:hover .track{animation-play-state:paused}
+.marq span{font-family:var(--display);font-size:clamp(22px,2.4vw,30px);color:var(--ink);white-space:nowrap;
+  padding:0 30px;display:inline-flex;align-items:center;gap:30px}
+.marq span::after{content:"";width:5px;height:5px;border-radius:50%;background:var(--copper)}
+.marq em{font-style:italic;color:var(--ink-3)}
+@keyframes mq{to{transform:translateX(-50%)}}
 
 /* ---------- pillars ---------- */
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-@media(max-width:860px){.grid3{grid-template-columns:1fr}}
-.card{background:var(--white);border-radius:var(--r);padding:32px;border:1px solid var(--line)}
-.card .ico{width:46px;height:46px;margin-bottom:20px}
-.card h3{margin-bottom:10px}
-.card p{color:var(--ink-2);font-size:16px}
+.pil{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,44px);margin-top:56px}
+@media(max-width:860px){.pil{grid-template-columns:1fr}}
+.pil > div{border-top:1px solid var(--ink);padding-top:26px}
+.pil .k{font-family:var(--display);font-size:15px;letter-spacing:.06em;color:var(--copper);margin-bottom:22px;display:block}
+.pil h3{margin-bottom:12px;font-size:clamp(22px,2.2vw,26px);font-family:var(--display);font-weight:400;letter-spacing:-.01em}
+.pil p{color:var(--ink-2);font-size:16px;max-width:38ch}
 
-/* ---------- ingredients band ---------- */
-.band-green{background:var(--green);color:#fff}
-.band-green .eyebrow{color:var(--honey)}
-.band-green h2{color:#fff}
-.band-green .lead{color:rgba(255,255,255,.86)}
-.ing{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-top:38px}
-.ing li{list-style:none;background:rgba(255,253,249,.06);border:1px solid rgba(255,253,249,.16);
-  border-radius:12px;padding:22px;display:flex;gap:14px;align-items:flex-start}
-.ing svg{width:40px;height:40px;flex:none;margin-top:1px}
-.ing b{display:block;font-size:16.5px;margin-bottom:4px;font-weight:700}
-.ing span{color:rgba(255,253,249,.78);font-size:15px;line-height:1.55}
+/* ---------- ingredients (dark band) ---------- */
+.band{background:var(--green);color:#fff}
+.band .eyebrow{color:var(--ochre)}.band .eyebrow::before{background:var(--ochre)}
+.band h2{color:#fff}
+.band .lead{color:rgba(255,255,255,.72)}
+.ing-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(36px,6vw,96px);align-items:start}
+@media(max-width:900px){.ing-grid{grid-template-columns:1fr}}
+.ing-grid .sticky{position:sticky;top:110px}
+.ing{list-style:none;margin:0;padding:0}
+.ing li{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;
+  border-top:1px solid rgba(255,255,255,.16)}
+.ing li:last-child{border-bottom:1px solid rgba(255,255,255,.16)}
+.ing .n{font-family:var(--display);font-size:18px;color:var(--ochre);padding-top:2px}
+.ing b{display:block;font-size:18px;font-weight:600;margin-bottom:5px}
+.ing span{color:rgba(255,255,255,.7);font-size:15.5px;line-height:1.55}
 
-/* ---------- photo slots ---------- */
-.photo{background:var(--cream-2);border:1px dashed #CBBFA8;border-radius:var(--r);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
-  color:var(--ink-2);text-align:center;padding:24px}
-.photo svg{width:44px;height:44px;opacity:.5}
-.photo b{font-family:var(--body);font-weight:700;font-size:15px;color:var(--ink)}
-.photo small{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+/* ---------- comparison slider ---------- */
+.cmp-wrap{display:grid;grid-template-columns:1fr minmax(300px,520px) 1fr;gap:clamp(18px,3vw,44px);
+  align-items:center;margin-top:56px}
+@media(max-width:980px){.cmp-wrap{grid-template-columns:1fr;justify-items:center}}
+.cmp{position:relative;width:100%;aspect-ratio:1;border-radius:50%;overflow:hidden;
+  box-shadow:0 40px 80px -40px rgba(31,27,22,.5),inset 0 0 0 1px rgba(31,27,22,.08);
+  touch-action:none;cursor:ew-resize;user-select:none;background:#2A2724}
+.cmp canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.cmp .r{position:absolute;inset:0;clip-path:inset(0 0 0 var(--x,50%))}
+.cmp .div{position:absolute;top:0;bottom:0;left:var(--x,50%);width:2px;background:rgba(255,255,255,.85);
+  transform:translateX(-1px);box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+.cmp .knob{position:absolute;top:50%;left:var(--x,50%);width:52px;height:52px;border-radius:50%;
+  background:#fff;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 10px 30px -8px rgba(0,0,0,.45);color:var(--ink)}
+.cmp .knob svg{width:22px;height:22px}
+.cmp .lab{position:absolute;top:22px;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;
+  padding:8px 13px;border-radius:999px;backdrop-filter:blur(6px)}
+.cmp .lab-l{left:50%;transform:translateX(calc(-100% - 14px));background:rgba(255,255,255,.14);color:rgba(255,255,255,.9)}
+.cmp .lab-r{left:50%;transform:translateX(14px);background:rgba(255,255,255,.92);color:var(--green)}
+.cl{display:flex;flex-direction:column;gap:10px}
+.cl h4{font-family:var(--body);font-weight:600;font-size:12px;letter-spacing:.22em;text-transform:uppercase;margin:0 0 12px}
+.cl.bad h4{color:var(--drab)}.cl.good h4{color:var(--green)}
+.cl .it{display:flex;gap:12px;align-items:flex-start;font-size:15.5px;line-height:1.45;color:var(--ink-2);
+  padding:12px 0;border-top:1px solid var(--line-2)}
+.cl .it svg{width:20px;height:20px;flex:none;margin-top:2px}
+.cl.bad{text-align:right}.cl.bad .it{flex-direction:row-reverse}
+@media(max-width:980px){.cl{width:100%;max-width:560px}.cl.bad{text-align:left}.cl.bad .it{flex-direction:row}}
+.cl.good .it{color:var(--ink)}
 
-/* ---------- bowl comparison ---------- */
-.bowl-wrap{display:grid;grid-template-columns:1fr minmax(300px,500px) 1fr;
-  gap:0 clamp(10px,2vw,26px);align-items:center;margin-top:44px}
-.bowl{grid-column:2;grid-row:2 / span 5;width:100%}
-.lbl-l{grid-column:1;grid-row:1;justify-self:end}
-.lbl-r{grid-column:3;grid-row:1}
-.bowl-wrap .pt{display:flex;gap:11px;align-items:center;font-size:15.5px;line-height:1.4;
-  padding:9px 0;min-height:76px}
-.pt svg{width:24px;height:24px;flex:none}
-.pt .ln{flex:none;height:1px;background:var(--line);width:clamp(14px,5vw,66px)}
-.pt-l{grid-column:1;flex-direction:row-reverse;text-align:right}
-.pt-r{grid-column:3}
-.pt-l .ln{background:#D8D3CB}
-.pt-r .ln{background:#BFD8C7}
-@media(max-width:980px){
-  .bowl-wrap{grid-template-columns:minmax(0,1fr);justify-items:stretch;max-width:560px;margin-inline:auto}
-  .bowl{grid-column:1;grid-row:auto;width:min(400px,86vw);justify-self:center;margin-bottom:26px}
-  .lbl-l,.lbl-r,.pt-l,.pt-r{grid-column:1;justify-self:start}
-  .pt-l{flex-direction:row;text-align:left}
-  .pt .ln{display:none}
-  .bowl-wrap .pt{min-height:0;padding:7px 0}
-  .lbl-l{order:-1}}
-.lbl{display:inline-flex;align-items:center;gap:9px;font-family:var(--body);font-weight:600;
-  font-size:13px;letter-spacing:.16em;text-transform:uppercase;padding:9px 16px;border-radius:8px}
-.lbl-bad{background:var(--drab-2);color:var(--ink-2)}
-.lbl-good{background:var(--green);color:#fff}
-
-.health{background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);
-  padding:clamp(30px,4.5vw,60px);display:grid;grid-template-columns:1.15fr .85fr;
-  gap:36px;align-items:center}
-@media(max-width:820px){.health{grid-template-columns:minmax(0,1fr)}}
+/* ---------- health ---------- */
+.health{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,72px);align-items:center}
+@media(max-width:900px){.health{grid-template-columns:1fr}}
+.pic{position:relative;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:4/3;background:#3B2A18;
+  box-shadow:0 40px 80px -40px rgba(31,27,22,.5)}
+.pic canvas{position:absolute;inset:0;width:100%;height:100%}
+.pic .cap{position:absolute;left:22px;bottom:20px;color:#fff;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;opacity:.8}
 
 /* ---------- timeline ---------- */
-.tl{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:40px;counter-reset:t}
+.tl{position:relative;margin:64px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
 @media(max-width:900px){.tl{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.tl{grid-template-columns:1fr}}
-.tl li{list-style:none;background:var(--white);border:1px solid var(--line);border-radius:var(--r);
-  padding:26px 24px;position:relative;overflow:hidden}
-.tl .when{display:block;font-family:var(--display);font-size:24px;color:var(--green);margin-bottom:10px}
-.tl p{font-size:16px;color:var(--ink-2)}
-.tl .bar{position:absolute;left:24px;right:24px;top:0;height:3px;background:var(--line)}
-.tl li:nth-child(1) .bar{background:#CBBFA8}
-.tl li:nth-child(2) .bar{background:var(--honey)}
-.tl li:nth-child(3) .bar{background:#6E8F76}
-.tl li:nth-child(4) .bar{background:var(--green)}
+.tl::before{content:"";position:absolute;left:0;right:0;top:6px;height:1px;background:var(--line)}
+.tl .line{position:absolute;left:0;top:6px;height:1px;background:var(--green);width:0;transition:width 1.6s var(--ease)}
+.tl.in .line{width:100%}
+.tl li{list-style:none;position:relative;padding-top:34px}
+.tl li::before{content:"";position:absolute;left:0;top:0;width:13px;height:13px;border-radius:50%;background:var(--bg);
+  border:1px solid var(--green);transition:background .6s var(--ease);transition-delay:calc(var(--i)*.35s)}
+.tl.in li::before{background:var(--green)}
+.tl .when{font-family:var(--display);font-size:clamp(26px,2.6vw,32px);color:var(--ink);display:block;margin-bottom:10px}
+.tl p{color:var(--ink-2);font-size:16px;max-width:26ch}
 
 /* ---------- faq ---------- */
-.faq{margin-top:34px;max-width:820px}
-details{background:var(--white);border:1px solid var(--line);border-radius:12px;margin-bottom:10px}
-summary{cursor:pointer;list-style:none;padding:20px 24px;font-family:var(--body);font-weight:600;
-  font-size:17px;display:flex;align-items:center;gap:14px}
-summary::-webkit-details-marker{display:none}
-summary::after{content:"";margin-left:auto;width:13px;height:13px;flex:none;
-  border-right:3px solid var(--green);border-bottom:3px solid var(--green);
-  transform:rotate(45deg);transition:transform .18s ease}
-details[open] summary::after{transform:rotate(-135deg)}
-details p{padding:0 24px 22px;color:var(--ink-2);font-size:16px;max-width:64ch}
-@media (prefers-reduced-motion:reduce){summary::after{transition:none}}
+.faq{margin-top:48px;max-width:840px}
+.faq .q{border-top:1px solid var(--line)}
+.faq .q:last-child{border-bottom:1px solid var(--line)}
+.faq .q button{all:unset;display:flex;width:100%;align-items:center;justify-content:space-between;gap:20px;
+  padding:26px 0;cursor:pointer;font-family:var(--display);font-size:clamp(20px,2.2vw,26px);color:var(--ink);letter-spacing:-.01em}
+.faq .q button .pm{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;flex:none;
+  transition:transform .5s var(--ease),background .5s var(--ease),border-color .5s var(--ease)}
+.faq .q button .pm::before,.q button .pm::after{content:"";position:absolute;width:12px;height:1.4px;background:currentColor}
+.faq .q button .pm::after{transform:rotate(90deg);transition:transform .5s var(--ease)}
+.faq .q button .pm{position:relative}
+.faq .q.open button .pm{background:var(--ink);color:#fff;border-color:var(--ink)}
+.faq .q.open button .pm::after{transform:rotate(0)}
+.faq .q .a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s var(--ease)}
+.faq .q.open .a{grid-template-rows:1fr}
+.faq .q .a > div{overflow:hidden}
+.faq .q .a p{padding:0 60px 28px 0;color:var(--ink-2);font-size:16.5px;max-width:64ch}
 
 /* ---------- reviews ---------- */
-.rev{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
+.rev{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:52px}
 @media(max-width:900px){.rev{grid-template-columns:1fr}}
-.rev .card{display:flex;flex-direction:column;gap:14px}
-.avatar{width:60px;height:60px;border-radius:50%;border:1px solid var(--line);
-  background:var(--cream-2);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.avatar svg{width:36px;height:36px;opacity:.6}
-.ph-line{height:11px;border-radius:6px;background:var(--cream-2)}
-.slotnote{font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ink-2);border:1px solid var(--line);border-radius:6px;padding:5px 11px;align-self:flex-start}
+.rc{background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r);padding:30px;display:flex;flex-direction:column;gap:18px;min-height:230px}
+.rc .qm{font-family:var(--display);font-size:56px;line-height:.6;color:var(--copper);height:26px}
+.rc .ph{height:11px;border-radius:6px;background:var(--bg-2)}
+.rc .who{display:flex;align-items:center;gap:12px;margin-top:auto}
+.rc .av{width:42px;height:42px;border-radius:50%;background:var(--green-t);color:var(--green);display:grid;place-items:center;
+  font-family:var(--display);font-size:20px}
+.rc .note{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
 
 /* ---------- newsletter ---------- */
-.news{background:var(--green);border-radius:var(--r-lg);padding:clamp(38px,5vw,68px);text-align:center;
-  display:flex;flex-direction:column;align-items:center;gap:20px;color:#fff}
-.news h2{max-width:16ch;color:#fff}
-.news p{max-width:48ch;color:rgba(255,253,249,.82);font-weight:500}
-.nform{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;width:100%;max-width:520px}
-.nform input{flex:1 1 240px;padding:15px 20px;border-radius:10px;border:1px solid rgba(255,253,249,.3);
-  font-family:var(--body);font-size:16px;background:var(--white);color:var(--ink)}
-.nform input::placeholder{color:#9A8E7E}
+.news{background:var(--green);color:#fff;border-radius:var(--r-lg);padding:clamp(44px,6vw,88px) clamp(24px,5vw,80px);
+  display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(30px,5vw,70px);align-items:center;position:relative;overflow:hidden}
+@media(max-width:900px){.news{grid-template-columns:1fr}}
+.news h2{color:#fff}
+.news p{color:rgba(255,255,255,.72);margin-top:18px;max-width:44ch}
+.nform{display:flex;gap:10px;flex-wrap:wrap;margin-top:32px}
+.nform input{flex:1 1 220px;padding:16px 20px;border-radius:999px;border:1px solid rgba(255,255,255,.22);
+  font-family:var(--body);font-size:16px;background:rgba(255,255,255,.08);color:#fff}
+.nform input::placeholder{color:rgba(255,255,255,.5)}
+.nform input:focus{outline:2px solid var(--ochre);outline-offset:2px}
+.news .pk{width:min(100%,240px);margin:0 auto;filter:drop-shadow(0 34px 30px rgba(0,0,0,.45))}
+.news .pk svg{animation:float 7s var(--ease-io) infinite;animation-delay:-3s;display:block}
 
 /* ---------- footer ---------- */
-footer{background:#1B1814;color:#DDD5C6;padding:52px 0 40px;margin-top:0}
-.ft{display:flex;flex-wrap:wrap;gap:26px;align-items:center;justify-content:space-between}
-footer a{color:#DDD5C6;text-decoration:none;font-weight:500}
-footer a:hover{color:var(--honey)}
-.ft-links{display:flex;gap:22px;flex-wrap:wrap}
-.ft small{display:block;width:100%;color:#A2968A;font-size:14px;margin-top:24px;
-  border-top:1px solid rgba(255,255,255,.12);padding-top:20px}
+footer{padding:64px 0 44px;color:var(--ink-2);font-size:14.5px}
+.ft{display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--line);padding-top:36px}
+footer a{color:var(--ink);text-decoration:none;font-weight:500}
+footer a:hover{color:var(--copper)}
+.ft-links{display:flex;gap:26px;flex-wrap:wrap}
+.ft small{display:block;width:100%;color:var(--ink-3);font-size:13.5px;margin-top:8px;max-width:70ch}
 </style>
 
 <div lang="sk">
-<header>
+<header id="hdr">
   <div class="hd">
-    <a class="logo" href="#top"><span id="logoMark"></span>Bonapet</a>
+    <a class="logo" href="#top">Bonapet<i></i></a>
     <nav>
       <a class="nl" href="#piliere">O čo nám ide</a>
       <a class="nl" href="#suroviny">Zloženie</a>
@@ -219,171 +274,156 @@ footer a:hover{color:var(--honey)}
 </header>
 
 <main id="top">
-  <!-- 1 · HERO -->
+  <!-- HERO -->
   <div class="wrap">
-    <div class="hero">
+    <div class="hero" id="hero">
       <div>
-        <p class="eyebrow">Granule pre psíkov · Slovensko</p>
-        <h1>Tvoj najlepší kamoš si zaslúži poriadne jedlo.</h1>
-        <p class="lead" style="margin-top:20px">Bonapet robí granule z poctivých surovín, ušité presne
-        na tvojho chlpáča — jeho veľkosť, vek, energiu aj to, čo mu sadne na žalúdok.
-        Bez zbytočnej chémie, bez komplikácií.</p>
-        <div class="cta">
-          <a class="btn btn-1" href="#news" data-funnel>Nájsť jedlo pre môjho chlpáča</a>
+        <p class="eyebrow" data-reveal="fade">Granule pre psov · Slovensko</p>
+        <h1 id="h1"><span class="w"><span style="--i:0">Tvoj</span></span> <span class="w"><span style="--i:1">najlepší</span></span>
+          <span class="w"><span style="--i:2">kamoš</span></span> <span class="w"><span style="--i:3">si</span></span>
+          <span class="w"><span style="--i:4">zaslúži</span></span> <span class="w"><span style="--i:5">poriadne</span></span>
+          <span class="w"><span style="--i:6">jedlo.</span></span></h1>
+        <p class="lead" data-reveal style="--d:.5s">Bonapet robí granule z poctivých surovín, ušité presne na tvojho chlpáča —
+        jeho veľkosť, vek, energiu aj to, čo mu sadne na žalúdok. Bez zbytočnej chémie, bez komplikácií.</p>
+        <div class="cta" data-reveal style="--d:.62s">
+          <a class="btn btn-1" href="#news" data-funnel>Nájsť jedlo pre môjho chlpáča <svg class="ar" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 3.5 13.5 8 9 12.5"/></svg></a>
           <a class="btn btn-2" href="#suroviny">Pozrieť, čo je vnútri</a>
         </div>
-        <div class="trust">
-          <span class="trust-row"><span class="stars" id="stars" aria-hidden="true"></span>
-            <span><strong>4,9/5</strong> od psích rodín</span></span>
-          <span class="trust-sep"></span>
+        <div class="trust" data-reveal style="--d:.74s">
+          <span class="stars" id="stars" aria-hidden="true"></span>
+          <span><strong style="color:var(--ink)">4,9/5</strong> od psích rodín</span>
+          <span class="sep"></span>
           <span>Receptúra postavená na overených prírodných surovinách</span>
         </div>
       </div>
-      <figure style="margin:0">
-        <div class="hero-art"><div class="pack-hero" id="heroPack"></div></div>
-        <div class="hero-chips">
-          <span class="chip"><i></i>Bez sóje a kukurice</span>
-          <span class="chip"><i></i>Menované mäso</span>
-          <span class="chip"><i></i>Podľa veľkosti a veku</span>
-        </div>
-      </figure>
+      <div class="stage" id="stage" data-reveal="scale" style="--d:.2s">
+        <canvas id="cvHero"></canvas>
+        <div class="pack" id="heroPack"></div>
+        <div class="tag">Receptúra<b>Bonapet Adult</b></div>
+      </div>
     </div>
   </div>
 
-  <!-- 2 · TRI PILIERE -->
+  <!-- MARQUEE -->
+  <div class="marq" aria-hidden="true"><div class="track" id="marq"></div></div>
+
+  <!-- PILIERE -->
   <section id="piliere">
     <div class="wrap">
-      <p class="eyebrow">O čo nám ide</p>
-      <h2>Tri veci, na ktorých si zakladáme</h2>
-      <div class="grid3" style="margin-top:38px">
-        <div class="card"><div class="ico" id="ico1"></div>
-          <h3>Poctivé jedlo</h3>
-          <p>Meno a poctivosť suroviny na prvom mieste. Žiadne anonymné „mäsové zvyšky“,
-          žiadna sója či kukurica len na dopchatie vreca.</p></div>
-        <div class="card"><div class="ico" id="ico2"></div>
-          <h3>Ušité na tvojho parťáka</h3>
-          <p>Malý jazvečík a veľký labrador nepotrebujú to isté. Preto máme receptúry podľa
-          veľkosti, veku a toho, čo tvoj chlpáč reálne potrebuje.</p></div>
-        <div class="card"><div class="ico" id="ico3"></div>
-          <h3>Roky navyše spolu</h3>
-          <p>Zloženie, ktoré myslí na kĺby, trávenie a imunitu — aby ste sa spolu tešili
-          z prechádzok čo najdlhšie.</p></div>
+      <p class="eyebrow" data-reveal="fade">O čo nám ide</p>
+      <h2 data-reveal style="max-width:18ch">Tri veci, na ktorých si zakladáme</h2>
+      <div class="pil">
+        <div data-reveal style="--d:.05s"><span class="k">Poctivosť</span><h3>Poctivé jedlo</h3>
+          <p>Meno a poctivosť suroviny na prvom mieste. Žiadne anonymné „mäsové zvyšky“, žiadna sója či kukurica len na dopchatie vreca.</p></div>
+        <div data-reveal style="--d:.15s"><span class="k">Na mieru</span><h3>Ušité na tvojho parťáka</h3>
+          <p>Malý jazvečík a veľký labrador nepotrebujú to isté. Preto máme receptúry podľa veľkosti, veku a toho, čo tvoj chlpáč reálne potrebuje.</p></div>
+        <div data-reveal style="--d:.25s"><span class="k">Dlhovekosť</span><h3>Roky navyše spolu</h3>
+          <p>Zloženie, ktoré myslí na kĺby, trávenie a imunitu — aby ste sa spolu tešili z prechádzok čo najdlhšie.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- 3 · SUROVINY -->
-  <section id="suroviny" class="band-green">
-    <div class="wrap">
-      <p class="eyebrow">Odkiaľ berieme suroviny</p>
-      <h2>Suroviny, ktoré fungovali už našim predkom</h2>
-      <p class="lead" style="margin-top:20px">Granule Bonapet vyrábame v spolupráci s výrobcom, ktorý sa
-      krmivám venuje od roku 1992 a stavia na prírodných a živočíšnych surovinách namiesto marketingových
-      skratiek. Nehľadáme najlacnejšiu cestu k plnému vreci — hľadáme suroviny, ktoré majú v miske
-      skutočný zmysel.</p>
+  <!-- SUROVINY -->
+  <section id="suroviny" class="band">
+    <div class="wrap ing-grid">
+      <div class="sticky">
+        <p class="eyebrow" data-reveal="fade">Odkiaľ berieme suroviny</p>
+        <h2 data-reveal>Suroviny, ktoré fungovali už našim predkom</h2>
+        <p class="lead" data-reveal style="--d:.1s;margin-top:24px">Granule Bonapet vyrábame v spolupráci s výrobcom, ktorý sa krmivám
+        venuje od roku 1992 a stavia na prírodných a živočíšnych surovinách namiesto marketingových skratiek. Nehľadáme
+        najlacnejšiu cestu k plnému vreci — hľadáme suroviny, ktoré majú v miske skutočný zmysel.</p>
+        <div data-reveal style="--d:.2s;margin-top:34px"><a class="btn btn-3" href="#miska">Prečítať si celé zloženie <svg class="ar" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 3.5 13.5 8 9 12.5"/></svg></a></div>
+      </div>
       <ul class="ing" id="ingList"></ul>
-      <div style="margin-top:34px"><a class="btn btn-3" href="#miska">Prečítať si celé zloženie →</a></div>
     </div>
   </section>
 
-  <!-- 4 · POROVNANIE -->
+  <!-- POROVNANIE -->
   <section id="miska">
     <div class="wrap">
-      <p class="eyebrow">Porovnanie</p>
-      <h2>Poď sa pozrieť, čo je v miske</h2>
-      <p class="lead" style="margin-top:20px">Nechceme, aby si nám veril len tak. Polož si vedľa seba
-      bežné granule z regálu a Bonapet a rozdiel uvidíš v zložení, nielen v reči predajcu.</p>
-
-      <div class="bowl-wrap">
-        <span class="lbl lbl-bad lbl-l">Bežné granule</span>
-        <span class="lbl lbl-good lbl-r">Bonapet</span>
-        <div class="bowl" id="bowl"></div>
-        <div class="pt pt-l" style="grid-row:2"><span class="ln"></span><span id="x1"></span><span>Sója a kukurica ako lacná výplň objemu</span></div>
-        <div class="pt pt-r" style="grid-row:2"><span class="ln"></span><span id="v1"></span><span>Konkrétne pomenované mäso — hovädzie, morčacie, jahňacie</span></div>
-        <div class="pt pt-l" style="grid-row:3"><span class="ln"></span><span id="x2"></span><span>Pomleté kosti a odpad z mäsovýroby namiesto skutočného mäsa</span></div>
-        <div class="pt pt-r" style="grid-row:3"><span class="ln"></span><span id="v2"></span><span>Prírodné suroviny s reálnym účinkom — pestrec mariánsky, hliva ustricová, humínové látky</span></div>
-        <div class="pt pt-l" style="grid-row:4"><span class="ln"></span><span id="x3"></span><span>Nevýrazný zápach — znak nízkeho podielu mäsa a starých tukov</span></div>
-        <div class="pt pt-r" style="grid-row:4"><span class="ln"></span><span id="v3"></span><span>Prirodzená vôňa a farba, žiadna kozmetika na granule</span></div>
-        <div class="pt pt-l" style="grid-row:5"><span class="ln"></span><span id="x4"></span><span>Umelé farbivá a arómy, aby to aspoň vyzeralo a vonalo „ako jedlo“</span></div>
-        <div class="pt pt-r" style="grid-row:5"><span class="ln"></span><span id="v4"></span><span>Kolagén a tanín pre kĺby a trávenie, nie len „výplň“</span></div>
-        <div class="pt pt-l" style="grid-row:6"><span class="ln"></span><span id="x5"></span><span>Nejasné zloženie typu „mäso a mäsové deriváty“ bez konkrétneho druhu</span></div>
-        <div class="pt pt-r" style="grid-row:6"><span class="ln"></span><span id="v5"></span><span>Zloženie, ktoré si prečítaš a rozumieš mu</span></div>
+      <p class="eyebrow" data-reveal="fade">Porovnanie</p>
+      <h2 data-reveal style="max-width:16ch">Poď sa pozrieť, čo je v miske</h2>
+      <p class="lead" data-reveal style="--d:.1s;margin-top:24px">Nechceme, aby si nám veril len tak. Polož si vedľa seba bežné granule
+      z regálu a Bonapet a rozdiel uvidíš v zložení, nielen v reči predajcu.</p>
+      <div class="cmp-wrap">
+        <div class="cl bad" data-reveal style="--d:.15s"><h4>Bežné granule</h4><div id="badList"></div></div>
+        <div class="cmp" id="cmp" data-reveal="scale" style="--d:.1s" aria-label="Porovnanie: potiahni a porovnaj bežné granule s Bonapet">
+          <canvas id="cvDrab"></canvas>
+          <div class="r"><canvas id="cvRich"></canvas></div>
+          <div class="div"></div>
+          <div class="knob"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6 4 12l5 6M15 6l5 6-5 6"/></svg></div>
+          <span class="lab lab-l">Bežné</span><span class="lab lab-r">Bonapet</span>
+        </div>
+        <div class="cl good" data-reveal style="--d:.25s"><h4>Bonapet</h4><div id="goodList"></div></div>
       </div>
-
-      <div style="margin-top:44px;text-align:center">
-        <a class="btn btn-1" href="#news" data-funnel>Chcem takéto granule pre svojho parťáka →</a>
+      <div style="margin-top:52px;text-align:center" data-reveal>
+        <a class="btn btn-1" href="#news" data-funnel>Chcem takéto granule pre svojho parťáka <svg class="ar" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 3.5 13.5 8 9 12.5"/></svg></a>
       </div>
     </div>
   </section>
 
-  <!-- 5 · ZDRAVIE -->
+  <!-- ZDRAVIE -->
   <section style="padding-top:0">
-    <div class="wrap">
-      <div class="health">
-        <div>
-          <p class="eyebrow">Zdravie a dlhovekosť</p>
-          <h2>Chceme, aby ste spolu mali čo najviac času</h2>
-          <p class="lead" style="margin-top:20px">Lacné granule riešia len to, aby chlpáč nemal hlad.
-          Nám ide o to, aby mal o pár rokov zdravé kĺby, dobré trávenie a bol dlho vo forme. Preto
-          v receptoch nechýbajú kolagén, pestrec mariánsky, hliva ustricová a humínové látky —
-          suroviny s overeným účinkom, nie marketingová skratka.</p>
-        </div>
-        <div class="photo" style="aspect-ratio:4/3">
-          <span id="phIco1"></span>
-          <b>Sem príde fotka</b>
-          <small>Starší pes na prechádzke · 4:3</small>
-        </div>
+    <div class="wrap health">
+      <div class="pic" data-reveal="scale"><canvas id="cvHealth"></canvas><span class="cap">Bonapet Adult · makro</span></div>
+      <div>
+        <p class="eyebrow" data-reveal="fade">Zdravie a dlhovekosť</p>
+        <h2 data-reveal>Chceme, aby ste spolu mali čo najviac času</h2>
+        <p class="lead" data-reveal style="--d:.1s;margin-top:24px">Lacné granule riešia len to, aby chlpáč nemal hlad. Nám ide o to, aby mal
+        o pár rokov zdravé kĺby, dobré trávenie a bol dlho vo forme. Preto v receptoch nechýbajú kolagén, pestrec mariánsky,
+        hliva ustricová a humínové látky — suroviny s overeným účinkom, nie marketingová skratka.</p>
       </div>
     </div>
   </section>
 
-  <!-- 6 · ČASOVÁ OS -->
+  <!-- ČASOVÁ OS -->
   <section style="padding-top:0">
     <div class="wrap">
-      <p class="eyebrow">Ako sa to prejaví</p>
-      <h2>Zmenu uvidíš skôr, než čakáš</h2>
-      <ul class="tl">
-        <li><span class="when">1–2 týždne</span><p>Pokojnejšie brucho, pravidelnejšia stolica</p><span class="bar"></span></li>
-        <li><span class="when">3–4 týždne</span><p>Viac energie, chuť do jedla aj do hier</p><span class="bar"></span></li>
-        <li><span class="when">6–8 týždňov</span><p>Krajšia srsť, menej škrabania</p><span class="bar"></span></li>
-        <li><span class="when">3+ mesiace</span><p>Stabilná váha, lepšia kondícia dlhodobo</p><span class="bar"></span></li>
+      <p class="eyebrow" data-reveal="fade">Ako sa to prejaví</p>
+      <h2 data-reveal style="max-width:16ch">Zmenu uvidíš skôr, než čakáš</h2>
+      <ul class="tl" id="tl"><span class="line"></span>
+        <li style="--i:0"><span class="when">1–2 týždne</span><p>Pokojnejšie brucho, pravidelnejšia stolica</p></li>
+        <li style="--i:1"><span class="when">3–4 týždne</span><p>Viac energie, chuť do jedla aj do hier</p></li>
+        <li style="--i:2"><span class="when">6–8 týždňov</span><p>Krajšia srsť, menej škrabania</p></li>
+        <li style="--i:3"><span class="when">3+ mesiace</span><p>Stabilná váha, lepšia kondícia dlhodobo</p></li>
       </ul>
     </div>
   </section>
 
-  <!-- 7 · FAQ -->
+  <!-- FAQ -->
   <section id="faq" style="padding-top:0">
     <div class="wrap">
-      <p class="eyebrow">Časté otázky</p>
-      <h2>Na čo sa nás pýtate najčastejšie</h2>
-      <div class="faq" id="faqList"></div>
+      <p class="eyebrow" data-reveal="fade">Časté otázky</p>
+      <h2 data-reveal style="max-width:16ch">Na čo sa nás pýtate najčastejšie</h2>
+      <div class="faq" id="faqList" data-reveal style="--d:.1s"></div>
     </div>
   </section>
 
-  <!-- 8 · REFERENCIE -->
+  <!-- REFERENCIE -->
   <section style="padding-top:0">
     <div class="wrap">
-      <p class="eyebrow">Referencie</p>
-      <h2>Viac ako <span style="color:var(--orange-ink)">[X]</span> psích rodín už je na palube</h2>
-      <p class="lead" style="margin-top:18px">Miesto pripravené na skutočné recenzie — meno chlpáča,
-      krátky citát o zlepšení, meno majiteľa a dátum.</p>
+      <p class="eyebrow" data-reveal="fade">Referencie</p>
+      <h2 data-reveal>Viac ako <em style="color:var(--copper);font-style:italic">[X]</em> psích rodín už je na palube</h2>
+      <p class="lead" data-reveal style="--d:.1s;margin-top:20px">Miesto pripravené na skutočné recenzie — meno chlpáča, krátky citát o zlepšení, meno majiteľa a dátum.</p>
       <div class="rev" id="revList"></div>
     </div>
   </section>
 
-  <!-- 9 · NEWSLETTER -->
+  <!-- NEWSLETTER -->
   <section id="news" style="padding-top:0">
     <div class="wrap">
-      <div class="news">
-        <div id="pack" style="width:132px"></div>
-        <h2>Poď do svorky</h2>
-        <p>Prihlás sa na odber a získaj 10 % zľavu na prvú objednávku. Žiadny spam,
-        len novinky a zľavy pre teba a tvojho parťáka.</p>
-        <form class="nform" onsubmit="return false">
-          <label for="mail" style="position:absolute;left:-9999px">E-mail</label>
-          <input id="mail" type="email" placeholder="tvoj@email.sk" required>
-          <button class="btn btn-3" type="submit">Chcem zľavu</button>
-        </form>
+      <div class="news" data-reveal="scale">
+        <div>
+          <p class="eyebrow" style="color:var(--ochre)">Newsletter</p>
+          <h2>Poď do svorky</h2>
+          <p>Prihlás sa na odber a získaj 10 % zľavu na prvú objednávku. Žiadny spam, len novinky a zľavy pre teba a tvojho parťáka.</p>
+          <form class="nform" onsubmit="return false">
+            <label for="mail" style="position:absolute;left:-9999px">E-mail</label>
+            <input id="mail" type="email" placeholder="tvoj@email.sk" required>
+            <button class="btn btn-3" type="submit">Chcem zľavu</button>
+          </form>
+        </div>
+        <div class="pk" id="newsPack"></div>
       </div>
     </div>
   </section>
@@ -391,249 +431,203 @@ footer a:hover{color:var(--honey)}
 
 <footer>
   <div class="wrap ft">
-    <a class="logo" href="#top" style="color:#fff"><span id="logoMark2"></span>Bonapet</a>
-    <div class="ft-links">
-      <a href="#suroviny">Zloženie</a><a href="#miska">Porovnanie</a>
-      <a href="#faq">Časté otázky</a><a href="#news">Kontakt</a>
-    </div>
-    <small>© 2026 Bonapet · Granule vyrobené na Slovensku v spolupráci s výrobcom krmív od roku 1992.
-    Údaje o hodnoteniach a recenziách doplníme reálnymi dátami pred spustením.</small>
+    <a class="logo" href="#top">Bonapet<i></i></a>
+    <div class="ft-links"><a href="#suroviny">Zloženie</a><a href="#miska">Porovnanie</a><a href="#faq">Časté otázky</a><a href="#news">Kontakt</a></div>
+    <small>© 2026 Bonapet · Granule vyrobené na Slovensku v spolupráci s výrobcom krmív od roku 1992. Údaje o hodnoteniach a recenziách doplníme reálnymi dátami pred spustením.</small>
   </div>
 </footer>
 </div>
 
 <script>
-/* ============ illustration kit ============ */
-const C={green:'#24503B',orange:'#A8552B',honey:'#D9A441',ink:'#24201A',cream:'#F7F2E9'};
+/* ================= visuals ================= */
+const REDUCED=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function dog(o){
-  const ears={
-    floppy:`<path d="M64 76C38 66 24 94 30 128c4 21 28 22 36 0Z" fill="${o.ear}"/>
-            <path d="M136 76C162 66 176 94 170 128c-4 21-28 22-36 0Z" fill="${o.ear}"/>`,
-    long:`<path d="M62 78C34 70 20 108 28 142c5 22 30 23 37 -3Z" fill="${o.ear}"/>
-          <path d="M138 78C166 70 180 108 172 142c-5 22-30 23-37 -3Z" fill="${o.ear}"/>`,
-    pointy:`<path d="M78 68L52 26c-3-5 2-10 7-6l34 32Z" fill="${o.ear}"/>
-            <path d="M122 68l26-42c3-5-2-10-7-6l-34 32Z" fill="${o.ear}"/>`
-  };
-  const ring = o.ring===false ? '' :
-    `<circle cx="100" cy="100" r="96" fill="none" stroke="${o.ringColor||'#24503B'}" stroke-width="2"/>`;
-  return `<svg viewBox="0 0 200 200" style="width:100%;height:auto;display:block" role="img" aria-label="${o.alt||'Ilustrácia psa'}">
-  ${ring}<g transform="translate(0,6)">
-  ${ears[o.type]}
-  <ellipse cx="100" cy="102" rx="52" ry="49" fill="${o.coat}"/>
-  <ellipse cx="100" cy="128" rx="32" ry="24" fill="${o.muzzle}"/>
-  <ellipse cx="80" cy="99" rx="5" ry="6" fill="#2A241C"/>
-  <ellipse cx="120" cy="99" rx="5" ry="6" fill="#2A241C"/>
-  <path d="M100 114c7 0 11 4 11 7 0 4-5 6-11 6s-11-2-11-6c0-3 4-7 11-7z" fill="#2A241C"/>
-  <path d="M100 127v7M100 134c0 5-5 7-9 5M100 134c0 5 5 7 9 5" fill="none" stroke="#2A241C" stroke-width="3" stroke-linecap="round"/>
-  </g></svg>`;
-}
-const DOGS={
-  labrador:{type:'floppy',coat:'#C89B6A',muzzle:'#E3C9A4',ear:'#A97F4F',alt:'Ilustrácia retrívera'},
-  jazvecik:{type:'long',coat:'#8A5F3E',muzzle:'#B98F63',ear:'#6D4930',alt:'Ilustrácia jazvečíka'},
-  terier:{type:'pointy',coat:'#A9A49B',muzzle:'#CFC9BE',ear:'#8C877E',alt:'Ilustrácia teriéra'}
+/* premium pack mock — also used by the quiz */
+window.packSvg=function(recipe,opts={}){
+  const id='p'+Math.random().toString(36).slice(2,7);
+  return `<svg viewBox="0 0 300 420" style="width:100%;height:auto;display:block" role="img" aria-label="Balenie Bonapet ${recipe}">
+  <defs>
+   <linearGradient id="${id}b" x1="0" x2="1"><stop offset="0" stop-color="#E4DBCB"/><stop offset=".13" stop-color="#F8F4EC"/><stop offset=".62" stop-color="#F3EDE2"/><stop offset="1" stop-color="#D5CAB8"/></linearGradient>
+   <linearGradient id="${id}g" x1="0" x2="1"><stop offset="0" stop-color="#183328"/><stop offset=".15" stop-color="#25503C"/><stop offset=".65" stop-color="#22493A"/><stop offset="1" stop-color="#132D22"/></linearGradient>
+   <linearGradient id="${id}t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EAE2D3"/><stop offset="1" stop-color="#CFC4AF"/></linearGradient>
+  </defs>
+  <path d="M42 70 Q150 44 258 70 L258 380 Q258 396 242 396 L58 396 Q42 396 42 380 Z" fill="url(#${id}b)"/>
+  <path d="M42 70 Q150 44 258 70 L258 90 Q150 66 42 90 Z" fill="url(#${id}t)"/>
+  <path d="M42 292 L258 292 L258 380 Q258 396 242 396 L58 396 Q42 396 42 380 Z" fill="url(#${id}g)"/>
+  <path d="M42 70 Q150 44 258 70 L258 380 Q258 396 242 396 L58 396 Q42 396 42 380 Z" fill="none" stroke="rgba(0,0,0,.07)"/>
+  <text x="150" y="152" text-anchor="middle" font-family="'Instrument Serif',Georgia,serif" font-size="46" fill="#1F1B16" letter-spacing="1">Bonapet</text>
+  <line x1="104" y1="170" x2="196" y2="170" stroke="#C8B99A" stroke-width="1"/>
+  <circle cx="150" cy="228" r="42" fill="none" stroke="#22493A" stroke-width="1.4"/>
+  <text x="150" y="246" text-anchor="middle" font-family="'Instrument Serif',Georgia,serif" font-style="italic" font-size="54" fill="#22493A">B</text>
+  <text x="150" y="${opts.compact?338:330}" text-anchor="middle" font-family="'Hanken Grotesk',sans-serif" font-weight="600" font-size="${opts.compact?18:15}" letter-spacing="5" fill="#C9A24A">${String(recipe).toUpperCase()}</text>
+  ${opts.compact?'':`<text x="150" y="352" text-anchor="middle" font-family="'Hanken Grotesk',sans-serif" font-size="10.5" letter-spacing="1.8" fill="#DCD3C2">GRANULE Z POCTIVÝCH SUROVÍN</text>
+  <text x="150" y="380" text-anchor="middle" font-family="'Hanken Grotesk',sans-serif" font-size="9.5" letter-spacing="1.4" fill="#8FA695">2 KG · VYROBENÉ NA SLOVENSKU</text>`}
+ </svg>`;
 };
-function packSvg(recipe,opts={}){
-  const dogArt=dog({...DOGS.labrador,ring:false,alt:''}).replace('style="width:100%;height:auto;display:block"','width="86" height="86" x="0" y="0"');
-  return `<svg viewBox="0 0 240 320" style="width:100%;height:auto;display:block" role="img" aria-label="Balenie Bonapet">
-  <path d="M28 46h184v250a14 14 0 0 1-14 14H42a14 14 0 0 1-14-14z" fill="#F7F2E9"/>
-  <path d="M28 46h184v250a14 14 0 0 1-14 14H42a14 14 0 0 1-14-14z" fill="none" stroke="#DCD2BE" stroke-width="1.5"/>
-  <path d="M28 46c14-12 34-18 92-18s78 6 92 18z" fill="#EFE7D6" stroke="#DCD2BE" stroke-width="1.5"/>
-  <rect x="28" y="46" width="184" height="8" fill="#E3DBCC"/>
-  <text x="120" y="98" text-anchor="middle" font-family="'Instrument Serif',Georgia,serif"
-    font-size="34" fill="#24201A" letter-spacing="1">Bonapet</text>
-  <line x1="76" y1="112" x2="164" y2="112" stroke="#C9BCA0" stroke-width="1"/>
-  <circle cx="120" cy="163" r="44" fill="none" stroke="#24503B" stroke-width="1.6"/>
-  <g transform="translate(77,120) scale(0.43)">${dogArt.replace(/<svg[^>]*>|<\/svg>/g,'')}</g>
-  <rect x="28" y="222" width="184" height="60" fill="#24503B"/>
-  ${opts.compact?`
-  <text x="120" y="257" text-anchor="middle" font-family="'Hanken Grotesk',sans-serif" font-weight="600"
-    font-size="16" letter-spacing="3" fill="#EFE7D6">${recipe.toUpperCase()}</text>`:`
-  <text x="120" y="248" text-anchor="middle" font-family="'Hanken Grotesk',sans-serif" font-weight="600"
-    font-size="12" letter-spacing="3.5" fill="#D9A441">${recipe.toUpperCase()}</text>
-  <text x="120" y="268" text-anchor="middle" font-family="'Hanken Grotesk',sans-serif"
-    font-size="9.5" letter-spacing="0.5" fill="#EFE7D6">GRANULE Z POCTIVÝCH SUROVÍN</text>
-  <text x="120" y="300" text-anchor="middle" font-family="'Hanken Grotesk',sans-serif"
-    font-size="9" letter-spacing="0.4" fill="#8A8072">2 KG · VYROBENÉ NA SLOVENSKU</text>`}
-  </svg>`;
-}
 document.getElementById('heroPack').innerHTML=packSvg('Adult');
+document.getElementById('newsPack').innerHTML=packSvg('Adult');
 
-/* logo mark: refined bowl */
-const LOGO=`<svg viewBox="0 0 48 48" role="img" aria-label="Bonapet" width="34" height="34">
-  <path d="M8 26h32a16 16 0 0 1-32 0z" fill="none" stroke="currentColor" stroke-width="2.6"/>
-  <line x1="4" y1="26" x2="44" y2="26" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
-  <path d="M24 8c4.2 0 7.6 2.6 7.6 5.2 0 1.4-1.2 2.2-2.8 2.2H19.2c-1.6 0-2.8-.8-2.8-2.2C16.4 10.6 19.8 8 24 8z" fill="currentColor"/>
-  <circle cx="14.5" cy="12.5" r="2.6" fill="currentColor"/><circle cx="33.5" cy="12.5" r="2.6" fill="currentColor"/>
-</svg>`;
-document.getElementById('logoMark').innerHTML=LOGO;
-document.getElementById('logoMark2').innerHTML=LOGO;
-const star=`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>`;
-document.getElementById('stars').innerHTML=star.repeat(5);
-
-/* pillar icons — single-weight line */
-const LINE='fill="none" stroke="#24503B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"';
-const ICO={
-  meat:`<svg viewBox="0 0 64 64" role="img" aria-label="Mäso"><g ${LINE}>
-    <path d="M20 14h18c12 0 20 9 20 19s-8 19-20 19H20c-3.8 0-6-2.2-6-6V20c0-3.8 2.2-6 6-6z"/>
-    <path d="M26 24h10c6.6 0 11 4 11 9s-4.4 9-11 9H26c-2 0-3-1-3-3V27c0-2 1-3 3-3z"/></g></svg>`,
-  paw:`<svg viewBox="0 0 64 64" role="img" aria-label="Labka"><g ${LINE}>
-    <ellipse cx="19" cy="21" rx="5.5" ry="7"/><ellipse cx="32" cy="17" rx="5.5" ry="7.5"/>
-    <ellipse cx="45" cy="21" rx="5.5" ry="7"/>
-    <path d="M32 31c9 0 17 6.5 17 13 0 4.4-3.4 7-8.6 7-3.4 0-5.2-1-8.4-1s-5 1-8.4 1c-5.2 0-8.6-2.6-8.6-7 0-6.5 8-13 17-13z"/></g></svg>`,
-  heart:`<svg viewBox="0 0 64 64" role="img" aria-label="Srdce"><g ${LINE}>
-    <path d="M32 54S8 40 8 24A13 13 0 0 1 32 17 13 13 0 0 1 56 24c0 16-24 30-24 30z"/>
-    <path d="M17 31h9l4-7 5 14 4-7h9"/></g></svg>`
-};
-ico1.innerHTML=ICO.meat; ico2.innerHTML=ICO.paw; ico3.innerHTML=ICO.heart;
-
-/* ingredient list */
-const ILINE='fill="none" stroke="#D9A441" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"';
-const II={
- leaf:`<svg viewBox="0 0 40 40"><g ${ILINE}><path d="M32 8C17 8 9 16 9 27c0 2.4.7 4.4 1.6 6"/><path d="M11 33C18 20 24 15 31 11"/><path d="M14 24c3-1 6-1 8 .5M17 17c2.6-.6 5-.4 7 .8"/></g></svg>`,
- mush:`<svg viewBox="0 0 40 40"><g ${ILINE}><path d="M20 6c8.5 0 15 5.5 15 11 0 2.6-2.6 3.6-6.4 3.6H11.4C7.6 20.6 5 19.6 5 17 5 11.5 11.5 6 20 6z"/><path d="M15 21h10v8.5a5 5 0 0 1-10 0z"/></g></svg>`,
- chestnut:`<svg viewBox="0 0 40 40"><g ${ILINE}><path d="M20 8c7.6 0 13 6 13 12.6S27 32 20 32 7 27.2 7 20.6 12.4 8 20 8z"/><path d="M20 8c2.8 4 4 8.4 4 12.6S22.8 28.4 20 32"/></g></svg>`,
- humus:`<svg viewBox="0 0 40 40"><g ${ILINE}><path d="M8 27c4.5-8.5 11-13 24-15-6.5 6-9 10.5-10 16"/><path d="M13 30h.01M20 29h.01"/></g></svg>`,
- seed:`<svg viewBox="0 0 40 40"><g ${ILINE}><path d="M31 9C19 9 12 16 12 26c0 2 .5 3.6 1.2 5"/><path d="M13 31c5.5-11 11-15 17-18"/><ellipse cx="24" cy="24" rx="2.6" ry="4" transform="rotate(35 24 24)"/></g></svg>`,
- bone:`<svg viewBox="0 0 40 40"><g ${ILINE}><path d="M13 17.5a3.8 3.8 0 1 1 4.5-4.5l5 5a3.8 3.8 0 1 1 4.5 4.5 3.8 3.8 0 1 1-4.5 4.5l-5-5a3.8 3.8 0 1 1-4.5-4.5z"/></g></svg>`,
- meat:`<svg viewBox="0 0 40 40"><g ${ILINE}><path d="M13 10h11c7.5 0 12.5 5.6 12.5 12S31.5 34 24 34H13c-2.4 0-3.8-1.4-3.8-3.8V13.8C9.2 11.4 10.6 10 13 10z"/><path d="M16.5 16.5h6c4 0 6.8 2.5 6.8 5.6s-2.8 5.6-6.8 5.6h-6c-1.3 0-1.9-.6-1.9-1.9v-7.4c0-1.3.6-1.9 1.9-1.9z"/></g></svg>`
-};
-const ING=[
- [II.leaf,'Pestrec mariánsky','Stará sa o pečeň, silný prírodný antioxidant, pomáha telu zbaviť sa toxínov'],
- [II.mush,'Hliva ustricová','Podporuje imunitu a pomáha organizmu zvládať stres a infekcie'],
- [II.chestnut,'Výťažok z jedlého gaštana (tanín)','Pomáha tráveniu a pôsobí proti baktériám a parazitom v čreve'],
- [II.humus,'Humínové látky','Viažu na seba toxíny a vylučujú ich von z tela, dodávajú minerály a pôsobia protizápalovo'],
- [II.seed,'Konopná múka a ľanový olej','Prirodzený zdroj vlákniny a zdravých tukov'],
- [II.bone,'Živočíšny kolagén','Podpora kĺbov a pohyblivosti'],
- [II.meat,'Hovädzie, morčacie a jahňacie mäso','Hlavný zdroj bielkovín, menovaný konkrétne, nie schovaný pod „mäso a mäsové deriváty“']
-];
-document.getElementById('ingList').innerHTML=ING.map(([svg,t,d])=>
-  `<li>${svg}<div><b>${t}</b><span>${d}</span></div></li>`).join('');
-
-/* tick / cross marks */
-const cross=`<svg viewBox="0 0 24 24" role="img" aria-label="Nie"><circle cx="12" cy="12" r="11" fill="#F0E4E2"/>
-  <path d="M8 8l8 8M16 8l-8 8" stroke="#B23A2E" stroke-width="2.6" stroke-linecap="round"/></svg>`;
-const tick=`<svg viewBox="0 0 24 24" role="img" aria-label="Áno"><circle cx="12" cy="12" r="11" fill="#E4F0E7"/>
-  <path d="M7 12.5l3.4 3.5L17 9" fill="none" stroke="#1A6B43" stroke-width="2.8"
-    stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-for(let i=1;i<=5;i++){document.getElementById('x'+i).innerHTML=cross;document.getElementById('v'+i).innerHTML=tick;}
-
-/* ============ the bowl, split down the middle ============ */
-(function(){
-  let s=8172631; const rnd=()=>(s=(s*1103515245+12345)&0x7fffffff)/0x7fffffff;
-  const CX=200, CY=196, R=132;
-  const dull=['#A9A49B','#B7B2A8','#98938B','#C2BCB1','#8E8A83'];
-  const rich=['#A9743B','#C29254','#7E5630','#B78447','#8F6236'];
-  const herb=['#57744F','#6E8F76','#8A4A38'];
-  function kibble(half){
-    let out='';
-    for(let i=0;i<190;i++){
-      const a=rnd()*Math.PI*2, r=Math.sqrt(rnd())*(R-14);
-      const x=CX+Math.cos(a)*r, y=CY+Math.sin(a)*r;
-      if(half==='l'&&x>CX+2) continue;
-      if(half==='r'&&x<CX-2) continue;
-      const w=7+rnd()*4, h=w*(.62+rnd()*.3), rot=rnd()*180;
-      const pal=half==='l'?dull:rich;
-      out+=`<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${w.toFixed(1)}" ry="${h.toFixed(1)}"
-        transform="rotate(${rot.toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})" fill="${pal[(rnd()*pal.length)|0]}"/>`;
-      if(half==='r'&&rnd()>.62){
-        out+=`<ellipse cx="${(x+2).toFixed(1)}" cy="${(y-1).toFixed(1)}" rx="${(w*.34).toFixed(1)}"
-          ry="${(h*.3).toFixed(1)}" transform="rotate(${rot.toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})"
-          fill="${herb[(rnd()*herb.length)|0]}"/>`;
-      }
+/* macro kibble renderer — shaded matte ellipsoids with depth of field and grain */
+function kibble(cv, pal, bg, density=1){
+  const dpr=Math.min(window.devicePixelRatio||1,1.5);
+  const rect=cv.getBoundingClientRect();
+  const W=Math.max(320,Math.round(rect.width*dpr)), H=Math.max(240,Math.round(rect.height*dpr));
+  cv.width=W; cv.height=H;
+  const x=cv.getContext('2d');
+  let s=pal.seed; const r=()=>(s=(s*1103515245+12345)&0x7fffffff)/0x7fffffff;
+  const g=x.createRadialGradient(W*.5,H*.45,W*.05,W*.5,H*.5,W*.8);
+  g.addColorStop(0,bg[0]); g.addColorStop(1,bg[1]); x.fillStyle=g; x.fillRect(0,0,W,H);
+  const area=(W*H)/(800*600)*density;
+  const layers=[{n:70*area,scale:.62,blur:7,alpha:.55},{n:60*area,scale:.85,blur:2.4,alpha:.85},{n:40*area,scale:1.06,blur:0,alpha:1}];
+  const k=W/800;
+  for(const L of layers){
+    x.save(); x.filter=L.blur?`blur(${L.blur*k}px)`:'none'; x.globalAlpha=L.alpha;
+    for(let i=0;i<L.n;i++){
+      const px=r()*W, py=r()*H, R=(24+r()*18)*L.scale*k, sq=.58+r()*.3, rot=r()*Math.PI;
+      const base=pal.tones[(r()*pal.tones.length)|0];
+      x.save(); x.translate(px,py); x.rotate(rot);
+      x.save(); x.filter=`blur(${(L.blur+5)*k}px)`; x.fillStyle='rgba(20,14,8,.32)';
+      x.beginPath(); x.ellipse(4*k,8*k,R*1.02,R*sq*1.02,0,0,7); x.fill(); x.restore();
+      const lg=x.createRadialGradient(-R*.32,-R*sq*.38,R*.08,0,0,R*1.15);
+      lg.addColorStop(0,base.hi); lg.addColorStop(.5,base.mid); lg.addColorStop(1,base.lo);
+      x.fillStyle=lg; x.beginPath(); x.ellipse(0,0,R,R*sq,0,0,7); x.fill();
+      x.fillStyle='rgba(255,250,240,.13)'; x.beginPath(); x.ellipse(-R*.36,-R*sq*.4,R*.26,R*sq*.16,-.5,0,7); x.fill();
+      if(pal.flecks) for(let f=0;f<3;f++){ if(r()>.45) continue;
+        x.fillStyle=pal.flecks[(r()*pal.flecks.length)|0];
+        x.beginPath(); x.ellipse((r()-.5)*R*1.2,(r()-.5)*R*sq*1.2,R*.09,R*.06,r()*3,0,7); x.fill(); }
+      x.restore();
     }
-    return out;
+    x.restore();
   }
-  document.getElementById('bowl').innerHTML=`
-  <svg viewBox="22 30 356 350" style="width:100%;height:auto;display:block" role="img"
-       aria-label="Miska rozdelená na polovicu: vľavo bežné granule, vpravo Bonapet">
-    <ellipse cx="200" cy="204" rx="176" ry="172" fill="#EFE7DA"/>
-    <ellipse cx="200" cy="196" rx="150" ry="146" fill="#E2D7C4"/>
-    <clipPath id="bowlL"><path d="M200 50a146 146 0 0 0 0 292z"/></clipPath>
-    <clipPath id="bowlR"><path d="M200 50a146 146 0 0 1 0 292z"/></clipPath>
-    <g clip-path="url(#bowlL)"><rect x="40" y="40" width="170" height="320" fill="#DCD7CE"/>${kibble('l')}</g>
-    <g clip-path="url(#bowlR)"><rect x="190" y="40" width="180" height="320" fill="#EFE3CC"/>${kibble('r')}</g>
-    <path d="M200 50c-9 24 9 44 0 68s9 44 0 68 9 44 0 68 9 44 0 60" fill="none"
-      stroke="#F7F2E9" stroke-width="7" stroke-linecap="round"/>
-    <ellipse cx="200" cy="196" rx="150" ry="146" fill="none" stroke="#CFC2AB" stroke-width="6"/>
-  </svg>`;
-})();
+  const id=x.getImageData(0,0,W,H), d=id.data;
+  for(let i=0;i<d.length;i+=4){ const n=(r()-.5)*12; d[i]+=n; d[i+1]+=n; d[i+2]+=n; }
+  x.putImageData(id,0,0);
+}
+const RICH={seed:4242,tones:[
+  {hi:'#D6A268',mid:'#A3653A',lo:'#5A3418'},{hi:'#C58D57',mid:'#8B522E',lo:'#4A2A13'},
+  {hi:'#DDB079',mid:'#AE7448',lo:'#673C1D'},{hi:'#B47B49',mid:'#7A4A28',lo:'#42230F'}],
+  flecks:['#3E5B36','#6E8A54','#7A2E22','#E8D2A6']};
+const DRAB={seed:777,tones:[
+  {hi:'#C4BDB0',mid:'#98918A',lo:'#5A554E'},{hi:'#BBB2A3',mid:'#8A8175',lo:'#4F4840'},
+  {hi:'#CCC7BE',mid:'#9F998F',lo:'#615C56'}],flecks:null};
 
-/* photo-slot icon */
-const camGlyph=`<svg viewBox="0 0 64 64" role="img" aria-label="Miesto na fotku">
-  <rect x="5" y="17" width="54" height="38" rx="8" fill="none" stroke="${C.ink}" stroke-width="3.4"/>
-  <path d="M22 17l4-7h12l4 7" fill="none" stroke="${C.ink}" stroke-width="3.4" stroke-linejoin="round"/>
-  <circle cx="32" cy="36" r="11" fill="none" stroke="${C.ink}" stroke-width="3.4"/>
-  <circle cx="49" cy="26" r="2.6" fill="${C.ink}"/></svg>`;
-document.getElementById('phIco1').innerHTML=camGlyph;
+function renderVisuals(){
+  kibble(document.getElementById('cvHero'),RICH,['#3A2A18','#120D07'],.9);
+  document.getElementById('stage').classList.add('ready');
+  kibble(document.getElementById('cvDrab'),DRAB,['#5C5751','#2A2724'],1.2);
+  kibble(document.getElementById('cvRich'),{...RICH,seed:9191},['#3B2A18','#17110A'],1.2);
+  kibble(document.getElementById('cvHealth'),{...RICH,seed:31337},['#4A3620','#1B1309'],1);
+}
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(renderVisuals); else renderVisuals();
+
+/* stars */
+document.getElementById('stars').innerHTML=`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>`.repeat(5);
+
+/* marquee */
+const MQ=['Hovädzie a morčacie mäso','<em>Pestrec mariánsky</em>','Hliva ustricová','<em>Tanín z jedlého gaštana</em>','Humínové látky','<em>Konopná múka</em>','Ľanový olej','<em>Živočíšny kolagén</em>'];
+document.getElementById('marq').innerHTML=(MQ.map(t=>`<span>${t}</span>`).join('')).repeat(2);
+
+/* ingredients */
+const ING=[
+ ['Pestrec mariánsky','Stará sa o pečeň, silný prírodný antioxidant, pomáha telu zbaviť sa toxínov'],
+ ['Hliva ustricová','Podporuje imunitu a pomáha organizmu zvládať stres a infekcie'],
+ ['Výťažok z jedlého gaštana (tanín)','Pomáha tráveniu a pôsobí proti baktériám a parazitom v čreve'],
+ ['Humínové látky','Viažu na seba toxíny a vylučujú ich von z tela, dodávajú minerály a pôsobia protizápalovo'],
+ ['Konopná múka a ľanový olej','Prirodzený zdroj vlákniny a zdravých tukov'],
+ ['Živočíšny kolagén','Podpora kĺbov a pohyblivosti'],
+ ['Hovädzie, morčacie a jahňacie mäso','Hlavný zdroj bielkovín, menovaný konkrétne, nie schovaný pod „mäso a mäsové deriváty“']
+];
+document.getElementById('ingList').innerHTML=ING.map(([t,d],i)=>
+  `<li data-reveal style="--d:${i*.06}s"><span class="n">${String(i+1).padStart(2,'0')}</span><div><b>${t}</b><span>${d}</span></div></li>`).join('');
+
+/* comparison lists */
+const cross=`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#EFE6E1"/><path d="M8 8l8 8M16 8l-8 8" stroke="#A03A2E" stroke-width="2.2" stroke-linecap="round"/></svg>`;
+const tick=`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#E7EEE9"/><path d="M7 12.5l3.4 3.5L17 9" fill="none" stroke="#22493A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const BAD=['Sója a kukurica ako lacná výplň objemu','Pomleté kosti a odpad z mäsovýroby namiesto skutočného mäsa',
+ 'Nevýrazný zápach — znak nízkeho podielu mäsa a starých tukov','Umelé farbivá a arómy, aby to aspoň vyzeralo a vonalo „ako jedlo“',
+ 'Nejasné zloženie typu „mäso a mäsové deriváty“ bez konkrétneho druhu'];
+const GOOD=['Konkrétne pomenované mäso — hovädzie, morčacie, jahňacie','Prírodné suroviny s reálnym účinkom — pestrec mariánsky, hliva ustricová, humínové látky',
+ 'Prirodzená vôňa a farba, žiadna kozmetika na granule','Kolagén a tanín pre kĺby a trávenie, nie len „výplň“','Zloženie, ktoré si prečítaš a rozumieš mu'];
+document.getElementById('badList').innerHTML=BAD.map(t=>`<div class="it">${cross}<span>${t}</span></div>`).join('');
+document.getElementById('goodList').innerHTML=GOOD.map(t=>`<div class="it">${tick}<span>${t}</span></div>`).join('');
+
+/* comparison slider */
+(function(){
+  const el=document.getElementById('cmp'); let x=50, drag=false, intro=true;
+  const set=v=>{x=Math.max(4,Math.min(96,v)); el.style.setProperty('--x',x+'%');};
+  const pos=e=>{const r=el.getBoundingClientRect(); return ((e.clientX-r.left)/r.width)*100;};
+  el.addEventListener('pointerdown',e=>{drag=true;intro=false;el.setPointerCapture(e.pointerId);set(pos(e));});
+  el.addEventListener('pointermove',e=>{if(drag)set(pos(e));});
+  el.addEventListener('pointerup',()=>drag=false); el.addEventListener('pointercancel',()=>drag=false);
+  el.tabIndex=0; el.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')set(x-4);if(e.key==='ArrowRight')set(x+4);});
+  // gentle intro sweep once visible
+  const io=new IntersectionObserver(en=>{ if(!en[0].isIntersecting||REDUCED) return; io.disconnect();
+    const t0=performance.now(); (function sw(now){ if(!intro) return; const t=(now-t0)/1800;
+      if(t>=1){set(50);return;} set(50+16*Math.sin(t*Math.PI*2)*(1-t)); requestAnimationFrame(sw); })(t0); },{threshold:.5});
+  io.observe(el);
+})();
 
 /* FAQ */
 const FAQ=[
- ['Je Bonapet vhodný aj pre šteniatka?',
-  'Áno. Máme receptúry podľa veku — šteniatko potrebuje iný pomer bielkovín a menšiu granulu, ktorú zvládne aj malá papuľka. Pri výbere zadaj vek a veľkosť a ukážeme ti ten správny recept.'],
- ['Ako dlho trvá prechod na Bonapet?',
-  'Počítaj so 7 až 10 dňami. Prvé dni primiešaj asi štvrtinu Bonapetu k pôvodnému krmivu a podiel postupne zvyšuj. Pomalý prechod je najistejšia cesta, ako sa vyhnúť podráždenému bruchu.'],
- ['Čo presne sú humínové látky a prečo sú v krmive?',
-  'Sú to prírodné látky, ktoré vznikajú rozkladom rastlinnej hmoty. V čreve na seba viažu toxíny a odvádzajú ich von z tela, zároveň dodávajú minerály a pôsobia protizápalovo.'],
- ['Zvládne to aj chlpáč s citlivým žalúdkom alebo alergiami?',
-  'Práve preto menujeme každú surovinu. Ak vieš, čo tvojmu parťákovi nesadá, vieš si to overiť ešte pred nákupom. Pri diagnostikovanej alergii sa vždy oplatí prebrať zmenu krmiva aj s veterinárom.'],
- ['Ako zistím, ktorý recept je pre môjho parťáka ten pravý?',
-  'Odpovieš na pár otázok — veľkosť, vek, energia a či má citlivé trávenie — a odporučíme recept. Trvá to necelú minútu a nemusíš nič kupovať.'],
- ['Odkiaľ berieme suroviny?',
-  'Granule vyrábame v spolupráci s výrobcom, ktorý sa krmivám venuje od roku 1992 a stavia na prírodných a živočíšnych surovinách. Konkrétne mäso menujeme priamo v zložení každého receptu.']
+ ['Je Bonapet vhodný aj pre šteniatka?','Áno. Máme receptúry podľa veku — šteniatko potrebuje iný pomer bielkovín a menšiu granulu, ktorú zvládne aj malá papuľka. Pri výbere zadaj vek a veľkosť a ukážeme ti ten správny recept.'],
+ ['Ako dlho trvá prechod na Bonapet?','Počítaj so 7 až 10 dňami. Prvé dni primiešaj asi štvrtinu Bonapetu k pôvodnému krmivu a podiel postupne zvyšuj. Pomalý prechod je najistejšia cesta, ako sa vyhnúť podráždenému bruchu.'],
+ ['Čo presne sú humínové látky a prečo sú v krmive?','Sú to prírodné látky, ktoré vznikajú rozkladom rastlinnej hmoty. V čreve na seba viažu toxíny a odvádzajú ich von z tela, zároveň dodávajú minerály a pôsobia protizápalovo.'],
+ ['Zvládne to aj chlpáč s citlivým žalúdkom alebo alergiami?','Práve preto menujeme každú surovinu. Ak vieš, čo tvojmu parťákovi nesadá, vieš si to overiť ešte pred nákupom. Pri diagnostikovanej alergii sa vždy oplatí prebrať zmenu krmiva aj s veterinárom.'],
+ ['Ako zistím, ktorý recept je pre môjho parťáka ten pravý?','Odpovieš na pár otázok — veľkosť, vek, energia a či má citlivé trávenie — a odporučíme recept. Trvá to necelú minútu a nemusíš nič kupovať.'],
+ ['Odkiaľ berieme suroviny?','Granule vyrábame v spolupráci s výrobcom, ktorý sa krmivám venuje od roku 1992 a stavia na prírodných a živočíšnych surovinách. Konkrétne mäso menujeme priamo v zložení každého receptu.']
 ];
-document.getElementById('faqList').innerHTML=FAQ.map(([q,a],i)=>
-  `<details${i===0?' open':''}><summary>${q}</summary><p>${a}</p></details>`).join('');
+const faqEl=document.getElementById('faqList');
+faqEl.innerHTML=FAQ.map(([q,a],i)=>`<div class="q${i===0?' open':''}"><button type="button" aria-expanded="${i===0}"><span>${q}</span><span class="pm" aria-hidden="true"></span></button><div class="a"><div><p>${a}</p></div></div></div>`).join('');
+faqEl.addEventListener('click',e=>{const b=e.target.closest('button'); if(!b) return; const q=b.parentElement;
+  const open=q.classList.toggle('open'); b.setAttribute('aria-expanded',open);});
 
-/* review placeholders — deliberately empty, no invented testimonials */
-const AV=[{...DOGS.jazvecik,ring:false},{...DOGS.labrador,ring:false},{...DOGS.terier,ring:false}];
-document.getElementById('revList').innerHTML=AV.map(d=>`
-  <div class="card">
-    <span class="slotnote">Miesto na reálnu recenziu</span>
-    <div style="display:flex;align-items:center;gap:14px">
-      <div class="avatar">${dog(d)}</div>
-      <div style="flex:1"><div class="ph-line" style="width:60%"></div>
-        <div class="ph-line" style="width:38%;margin-top:8px;height:9px"></div></div>
-    </div>
-    <div><div class="ph-line"></div><div class="ph-line" style="width:92%;margin-top:9px"></div>
-      <div class="ph-line" style="width:70%;margin-top:9px"></div></div>
-  </div>`).join('');
+/* reviews — honest placeholders, no invented testimonials */
+document.getElementById('revList').innerHTML=['B','R','M'].map((l,i)=>`<div class="rc" data-reveal style="--d:${i*.1}s">
+  <div class="qm">“</div><div class="ph" style="width:92%"></div><div class="ph" style="width:78%"></div><div class="ph" style="width:60%"></div>
+  <div class="who"><div class="av">${l}</div><div><div class="ph" style="width:110px"></div><div class="ph" style="width:70px;margin-top:6px;height:8px"></div></div></div>
+  <span class="note">Miesto na reálnu recenziu</span></div>`).join('');
 
-/* newsletter pack illustration */
-document.getElementById('pack').innerHTML=packSvg('Adult',{compact:true});
+/* ================= motion ================= */
+const hdr=document.getElementById('hdr');
+const onScroll=()=>hdr.classList.toggle('on',window.scrollY>24);
+onScroll(); addEventListener('scroll',onScroll,{passive:true});
+
+requestAnimationFrame(()=>requestAnimationFrame(()=>document.getElementById('hero').classList.add('go')));
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }),
+  {threshold:.14,rootMargin:'0px 0px -6% 0px'});
+document.querySelectorAll('[data-reveal],.tl').forEach(el=>io.observe(el));
+
+/* hero pack tilt */
+(function(){
+  if(REDUCED||!window.matchMedia('(min-width:941px) and (hover:hover)').matches) return;
+  const st=document.getElementById('stage'), pk=document.getElementById('heroPack');
+  let tx=0,ty=0,cx=0,cy=0;
+  st.addEventListener('pointermove',e=>{const r=st.getBoundingClientRect();
+    tx=((e.clientX-r.left)/r.width-.5)*14; ty=((e.clientY-r.top)/r.height-.5)*-10;});
+  st.addEventListener('pointerleave',()=>{tx=0;ty=0;});
+  (function loop(){ cx+=(tx-cx)*.08; cy+=(ty-cy)*.08;
+    pk.style.transform=`translate(-50%,-46%) perspective(900px) rotateY(${cx}deg) rotateX(${cy}deg)`;
+    requestAnimationFrame(loop); })();
+})();
 </script>
 
 <style>
-/* ============ bežiaci pes (scroll animácia) ============ */
-#dogStage{position:fixed;left:0;right:0;bottom:0;height:132px;z-index:30;
-  pointer-events:none;overflow:hidden}
-#dogStage .dogWrap{position:absolute;bottom:-6px;width:138px;will-change:transform}
-#dogStage .bowlWrap{position:absolute;bottom:2px;right:22px;width:54px;
-  opacity:0;transition:opacity .5s ease}
-#dogStage.showBowl .bowlWrap{opacity:1}
-#dogStage .ballWrap{position:absolute;bottom:6px;width:26px;opacity:0;will-change:transform}
-#dogStage .boneWrap{position:absolute;bottom:4px;width:44px;opacity:0;
-  transition:opacity .5s ease}
-#dogStage.showBone .boneWrap{opacity:.9}
-@media(max-width:560px){#dogStage{height:100px}#dogStage .dogWrap{width:104px}
-  #dogStage .bowlWrap{width:42px}#dogStage .boneWrap{width:34px}}
-@media (prefers-reduced-motion:reduce){#dogStage{display:none}}
-
 /* ============ kvízový funnel ============ */
-.fn{position:fixed;inset:0;z-index:80;background:rgba(42,33,26,.55);
+.fn{position:fixed;inset:0;z-index:80;background:rgba(31,27,22,.62);backdrop-filter:blur(6px);
   display:flex;align-items:flex-start;justify-content:center;padding:24px 16px;overflow-y:auto}
 .fn[hidden]{display:none}
-.fn-sheet{background:var(--cream);width:min(720px,100%);border-radius:var(--r-lg);
+.fn-sheet{background:var(--bg);width:min(720px,100%);border-radius:var(--r-lg);
   padding:clamp(22px,3.4vw,40px);position:relative;box-shadow:0 40px 80px -30px rgba(42,33,26,.6);
   margin:auto}
 .fn-close{position:absolute;top:16px;right:16px;width:40px;height:40px;border-radius:50%;
-  border:1px solid var(--line);background:var(--white);color:var(--ink);font-size:22px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:22px;
   line-height:1;cursor:pointer;font-family:var(--body)}
-.fn-close:hover{background:var(--cream-2)}
+.fn-close:hover{background:var(--bg-2)}
 .fn-prog{margin-bottom:26px;padding-right:52px}
 .fn-prog .lbl{font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.2em;
   color:var(--green);margin-bottom:10px;display:block}
-.fn-track{height:8px;border-radius:99px;background:var(--cream-2);overflow:hidden}
+.fn-track{height:8px;border-radius:99px;background:var(--bg-2);overflow:hidden}
 .fn-track span{display:block;height:100%;border-radius:99px;background:var(--green);
   transition:width .35s cubic-bezier(.2,.7,.3,1)}
 .fn h3{font-size:clamp(19px,2.4vw,23px);margin-bottom:14px}
@@ -643,30 +637,30 @@ document.getElementById('pack').innerHTML=packSvg('Adult',{compact:true});
 .tiles.n2{grid-template-columns:1fr 1fr}
 .tiles.n3{grid-template-columns:repeat(3,1fr)}
 @media(max-width:560px){.tiles.n3{grid-template-columns:1fr}}
-.tile{background:var(--white);border:1.5px solid var(--line);border-radius:12px;padding:16px;
+.tile{background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:16px;
   cursor:pointer;text-align:left;font-family:var(--body);font-size:16.5px;font-weight:600;
   color:var(--ink);display:flex;align-items:center;gap:12px;transition:border-color .12s,background .12s}
 .tile:hover{border-color:var(--green)}
-.tile[aria-pressed="true"]{border-color:var(--green);background:var(--green-2)}
+.tile[aria-pressed="true"]{border-color:var(--green);background:var(--green-t)}
 .tile .sub{display:block;font-weight:500;font-size:14.5px;color:var(--ink-2);margin-top:3px}
 .tile .sym{font-size:20px;line-height:1;color:var(--green)}
 .tile svg{flex:none}
 .tile .txt{min-width:0}
 .chips{display:flex;flex-wrap:wrap;gap:10px}
-.chip-b{background:var(--white);border:1.5px solid var(--line);border-radius:9px;padding:11px 18px;
+.chip-b{background:var(--surface);border:1.5px solid var(--line);border-radius:9px;padding:11px 18px;
   font-family:var(--body);font-weight:600;font-size:15.5px;color:var(--ink);cursor:pointer}
 .chip-b:hover{border-color:var(--green)}
-.chip-b[aria-pressed="true"]{border-color:var(--green);background:var(--green-2);color:var(--green)}
+.chip-b[aria-pressed="true"]{border-color:var(--green);background:var(--green-t);color:var(--green)}
 .fn input[type=text],.fn input[type=number]{width:100%;padding:15px 18px;border-radius:10px;
-  border:1.5px solid var(--line);font-family:var(--body);font-size:17px;background:var(--white);color:var(--ink)}
+  border:1.5px solid var(--line);font-family:var(--body);font-size:17px;background:var(--surface);color:var(--ink)}
 .fn input::placeholder{color:#A79B8B}
 .fn input:focus{border-color:var(--green);outline:none}
 .row{display:flex;gap:12px;align-items:stretch}
-.unit{display:flex;background:var(--white);border:1.5px solid var(--line);border-radius:10px;padding:4px;flex:none}
+.unit{display:flex;background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:4px;flex:none}
 .unit button{border:0;background:transparent;font-family:var(--body);font-weight:600;font-size:14.5px;
   padding:8px 14px;border-radius:7px;cursor:pointer;color:var(--ink-2)}
 .unit button[aria-pressed="true"]{background:var(--green);color:#fff}
-.suffix{display:flex;align-items:center;padding:0 18px;background:var(--white);
+.suffix{display:flex;align-items:center;padding:0 18px;background:var(--surface);
   border:1.5px solid var(--line);border-radius:10px;font-weight:600;color:var(--ink-2);flex:none}
 .fn-nav{display:flex;gap:12px;align-items:center;margin-top:30px;flex-wrap:wrap}
 .fn-back{background:none;border:0;font-family:var(--body);font-weight:600;font-size:15.5px;
@@ -674,14 +668,15 @@ document.getElementById('pack').innerHTML=packSvg('Adult',{compact:true});
 .fn-back:hover{color:var(--green)}
 .fn-nav .btn{margin-left:auto}
 @media(max-width:480px){.fn-nav .btn{margin-left:0;width:100%;justify-content:center}}
-.hint{color:var(--bad);font-weight:600;font-size:14.5px;margin-top:12px}
+.hint{color:#A03A2E;font-weight:600;font-size:14.5px;margin-top:12px}
 
 /* načítavanie */
 .fn-load{text-align:center;padding:14px 0 6px}
-.fn-load .bag{width:132px;margin:0 auto 24px;position:relative}
+.fn-load .bag{width:150px;margin:0 auto 26px;position:relative;filter:drop-shadow(0 26px 24px rgba(0,0,0,.28))}
+.fn-load .bag svg{animation:float 4s cubic-bezier(.65,0,.35,1) infinite}
 .fn-load h3{margin-bottom:8px}
 .fn-load .msg{color:var(--ink-2);font-weight:700;min-height:1.6em}
-.fillrect{transform-origin:0 136px;animation:fillup 3s cubic-bezier(.4,0,.5,1) forwards}
+
 @keyframes fillup{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 .drop{position:absolute;top:-8px;animation:drop 1.2s linear infinite}
 @keyframes drop{0%{transform:translateY(-14px) rotate(0);opacity:0}
@@ -695,9 +690,9 @@ document.getElementById('pack').innerHTML=packSvg('Adult',{compact:true});
 .fn-res .pack{width:150px;margin:6px auto 20px}
 .pills{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin:16px 0 26px}
 .pill{font-weight:600;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;padding:8px 14px;border-radius:7px}
-.pill-1{background:var(--green-2);color:var(--green)}
-.pill-2{background:var(--honey-2);color:var(--orange-ink)}
-.recipe{background:var(--white);border:1px solid var(--line);border-radius:var(--r);
+.pill-1{background:var(--green-t);color:var(--green)}
+.pill-2{background:var(--copper-t);color:var(--copper)}
+.recipe{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
   padding:22px;text-align:left;margin-bottom:24px}
 .recipe h4{font-family:var(--body);font-weight:700;font-size:16px;margin:0 0 14px}
 .recipe ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}
@@ -708,8 +703,15 @@ document.getElementById('pack').innerHTML=packSvg('Adult',{compact:true});
 .restart{background:none;border:0;font-family:var(--body);font-weight:600;font-size:14.5px;
   color:var(--ink-2);text-decoration:underline;cursor:pointer;margin-top:16px}
 .restart:hover{color:var(--green)}
-</style>
 
+.fn h3,.fn .fn-title{font-family:var(--display);font-weight:400;letter-spacing:-.015em}
+.fn .fn-sheet{border-radius:var(--r-lg)}
+.fn .tile{transition:border-color .3s var(--ease),background .3s var(--ease),transform .3s var(--ease)}
+.fn .tile:hover{transform:translateY(-1px)}
+.szg{width:56px;height:40px;display:flex;align-items:flex-end;justify-content:center;gap:0;flex:none}
+.szg i{display:block;border-radius:50%;background:var(--green);opacity:.9}
+
+</style>
 <div class="fn" id="fn" hidden>
   <div class="fn-sheet" role="dialog" aria-modal="true" aria-labelledby="fnHead" lang="sk">
     <button class="fn-close" id="fnClose" aria-label="Zavrieť dotazník">&times;</button>
@@ -720,6 +722,7 @@ document.getElementById('pack').innerHTML=packSvg('Adult',{compact:true});
     <div id="fnBody"></div>
   </div>
 </div>
+
 
 <script>
 (function(){
@@ -760,10 +763,9 @@ function variant(){
 }
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-/* malý pes v troch veľkostiach — namiesto emoji */
-function pup(size,breed){const px={male:30,stredne:40,velke:52}[size];
-  return `<span style="width:56px;display:flex;justify-content:center;flex:none">
-    <span style="width:${px}px;display:block">${dog({...DOGS[breed],ring:false})}</span></span>`;}
+/* veľkosť plemena — abstraktný glyf namiesto ilustrácie */
+function pup(size){const d={male:14,stredne:22,velke:32}[size];
+  return `<span class="szg" aria-hidden="true"><i style="width:${d}px;height:${d}px"></i></span>`;}
 
 function tile(group,val,label,sub,art){
   const on=S[group]===val;
@@ -805,9 +807,9 @@ function step1(){
 
   <div class="q"><h3>Aké je jeho plemeno / veľkosť?</h3>
     <div class="tiles n3">
-      ${tile('velkost','male','Malé',null,pup('male','terier'))}
-      ${tile('velkost','stredne','Stredné',null,pup('stredne','jazvecik'))}
-      ${tile('velkost','velke','Veľké',null,pup('velke','labrador'))}
+      ${tile('velkost','male','Malé',null,pup('male'))}
+      ${tile('velkost','stredne','Stredné',null,pup('stredne'))}
+      ${tile('velkost','velke','Veľké',null,pup('velke'))}
     </div></div>
 
   <div class="fn-nav"><span class="hint" id="fnHint" hidden></span>
@@ -858,20 +860,7 @@ function step3(){
     <button class="btn btn-1" type="button" data-go="load">Zostaviť recept</button></div>`;
 }
 
-function bagSvg(label,fillAnim){
-  return `<svg viewBox="0 0 120 140" style="width:100%;height:auto;display:block" role="img"
-    aria-label="Balenie Bonapet">
-    <defs><clipPath id="bagClip"><path d="M14 34h92v92a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10z"/></clipPath></defs>
-    <path d="M14 34h92v92a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10z" fill="#EFE7D6"/>
-    <g clip-path="url(#bagClip)"><rect class="${fillAnim?'fillrect':''}" x="14" y="34" width="92" height="102"
-      fill="#24503B"/></g>
-    <path d="M14 34h92v92a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10z" fill="none" stroke="#DCD2BE" stroke-width="1.5"/>
-    <path d="M14 34c8-8 20-12 46-12s38 4 46 12z" fill="#E3DBCC"/>
-    <rect x="20" y="58" width="80" height="30" rx="6" fill="#FFFDF9"/>
-    <text x="60" y="79" text-anchor="middle" font-family="'Instrument Serif',Georgia,serif"
-      font-size="${label.length>9?15:18}" fill="#24201A">${esc(label)}</text>
-  </svg>`;
-}
+function bagSvg(label){ return packSvg(label,{compact:true}); }
 function screenLoad(){
   const drops=['#B98F63','#6E8F76','#D9C9A8','#A9743B','#C9C08A'];
   return `<div class="fn-load">
@@ -986,151 +975,5 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!fn.hidden) close(
 /* CTA, ktoré funnel otvárajú */
 document.querySelectorAll('[data-funnel]').forEach(b=>
   b.addEventListener('click',e=>{ e.preventDefault(); open(); }));
-})();
-</script>
-
-<script>
-/* ============ bežiaci pes — scroll-driven animácia ============ */
-(function(){
-'use strict';
-if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-const GREEN='#24503B', DARK='#193A29', CREAM='#F7F2E9';
-function runDogSvg(){
- return `<svg viewBox="0 0 220 150" style="width:100%;height:auto;display:block">
- <g fill="${GREEN}" stroke="${CREAM}" stroke-width="2.5" stroke-linejoin="round">
-  <ellipse class="dShadow" cx="105" cy="140" rx="52" ry="5.5" stroke="none" fill="rgba(36,32,26,.16)"/>
-  <g class="dRoot">
-   <g class="leg lh1" fill="${DARK}"><path d="M84 62c-14 2-22 12-22 24 0 8 2 14-2 22l-6 14c-2 5 0 9 5 9h8l6-24 14-30z"/></g>
-   <g class="leg lf1" fill="${DARK}"><path d="M118 60c14 0 22 8 24 18l4 20 8 16c2 5 0 9-5 9h-8l-8-24-18-26z"/></g>
-   <g class="leg lh2"><path d="M90 64c-14 2-22 12-22 24 0 8 2 14-2 22l-6 14c-2 5 0 9 5 9h8l6-24 14-30z"/></g>
-   <g class="leg lf2"><path d="M124 62c14 0 22 8 24 18l4 20 8 16c2 5 0 9-5 9h-8l-8-24-18-26z"/></g>
-   <g class="tail"><path d="M58 68C42 62 30 50 28 36c8 2 22 8 30 18 4 5 6 10 4 14z"/></g>
-   <path d="M52 62c4-14 22-22 46-22 26 0 44 8 52 20 4 7 4 16-2 22-10 10-30 14-50 14-22 0-40-6-46-16-3-6-2-12 0-18z"/>
-   <g class="head">
-     <path d="M138 60c-4-14 2-27 15-31 10-3 21 0 27 7l12 7c4 2 4 6 0 8l-10 3c-1 11-9 18-20 19-11 1-20-4-24-13z"/>
-     <path d="M156 27c-2-6-8-9-14-7-3 1-4 4-2 7 3 6 4 13 3 19-1 4 2 6 5 4 6-4 10-14 8-23z"/>
-     <circle cx="170" cy="41" r="2.6" fill="${CREAM}" stroke="none"/>
-     <circle cx="193" cy="46" r="3.6" stroke="none"/>
-   </g>
-  </g>
- </g></svg>`;
-}
-const bowlSvg=`<svg viewBox="0 0 60 40" style="width:100%;height:auto;display:block">
- <ellipse cx="30" cy="37" rx="26" ry="3" fill="rgba(36,32,26,.14)"/>
- <path d="M6 16h48a24 14 0 0 1-48 0z" fill="${GREEN}" stroke="${CREAM}" stroke-width="2"/>
- <rect x="3" y="13" width="54" height="6" rx="3" fill="${GREEN}" stroke="${CREAM}" stroke-width="2"/>
- <g fill="#C89B6A"><circle cx="20" cy="11" r="3"/><circle cx="30" cy="9" r="3"/><circle cx="40" cy="11" r="3"/></g>
-</svg>`;
-const ballSvg=`<svg viewBox="0 0 26 26" style="width:100%;height:auto;display:block">
- <circle cx="13" cy="13" r="11" fill="#A8552B" stroke="${CREAM}" stroke-width="2"/>
- <path d="M4 9c6 3 12 3 18 0M4 17c6-3 12-3 18 0" fill="none" stroke="${CREAM}" stroke-width="1.6"/>
-</svg>`;
-const boneSvg=`<svg viewBox="0 0 44 22" style="width:100%;height:auto;display:block">
- <ellipse cx="22" cy="20" rx="18" ry="2" fill="rgba(36,32,26,.12)"/>
- <g fill="#EFE7D6" stroke="#CBBFA8" stroke-width="1.5">
-  <rect x="10" y="8" width="24" height="6" rx="3"/>
-  <circle cx="10" cy="8.5" r="4.5"/><circle cx="10" cy="14" r="4.5"/>
-  <circle cx="34" cy="8.5" r="4.5"/><circle cx="34" cy="14" r="4.5"/></g>
-</svg>`;
-
-const stage=document.createElement('div');
-stage.id='dogStage'; stage.setAttribute('aria-hidden','true');
-stage.innerHTML=`<div class="boneWrap">${boneSvg}</div><div class="ballWrap">${ballSvg}</div>
-<div class="bowlWrap">${bowlSvg}</div><div class="dogWrap">${runDogSvg()}</div>`;
-document.body.appendChild(stage);
-
-const dogEl=stage.querySelector('.dogWrap');
-const ballEl=stage.querySelector('.ballWrap');
-const boneEl=stage.querySelector('.boneWrap');
-const q=sel=>dogEl.querySelector(sel);
-const parts={root:q('.dRoot'),lf1:q('.lf1'),lf2:q('.lf2'),lh1:q('.lh1'),lh2:q('.lh2'),
-  tail:q('.tail'),head:q('.head'),shadow:q('.dShadow')};
-
-function pose(t,o){
- const A=o.amp, s2=Math.sin(t*2*Math.PI);
- parts.lf1.setAttribute('transform',`rotate(${A*s2} 130 74)`);
- parts.lf2.setAttribute('transform',`rotate(${A*Math.sin(t*2*Math.PI+0.9)} 130 74)`);
- parts.lh1.setAttribute('transform',`rotate(${A*Math.sin(t*2*Math.PI+Math.PI)} 76 74)`);
- parts.lh2.setAttribute('transform',`rotate(${A*Math.sin(t*2*Math.PI+Math.PI+0.9)} 76 74)`);
- parts.root.setAttribute('transform',
-   `translate(0 ${o.bob}) rotate(${o.pitch} 100 70)`);
- parts.tail.setAttribute('transform',`rotate(${o.tailA} 54 64)`);
- parts.head.setAttribute('transform',`rotate(${o.headA} 142 52)`);
- parts.shadow.setAttribute('transform',`scale(${o.shScale} 1)`);
- parts.shadow.setAttribute('transform-origin','105 140');
-}
-
-let x=-160, phase=0, dir=1, t0=performance.now();
-let vSm=0, ballA=0;
-const DOGW=()=>dogEl.offsetWidth||138;
-
-function frame(now){
- const time=(now-t0)/1000;
- const vw=window.innerWidth, doc=document.documentElement;
- const maxS=Math.max(1,doc.scrollHeight-window.innerHeight);
- const sy=window.__dogForceY!=null?window.__dogForceY:window.scrollY;
- const pRaw=Math.min(1,Math.max(0,sy/maxS));
- const eating=pRaw>0.965;
- stage.classList.toggle('showBowl',pRaw>0.55);
- stage.classList.toggle('showBone',!eating);
-
- const bowlX=vw-22-54, boneX=vw*0.46;
- const margin=Math.max(14,vw*0.03);
- const track=(vw-margin*2-DOGW());
- let tx=eating? bowlX-DOGW()+34 : margin+track*pRaw;
-
- const dx=(tx-x)*0.085;
- x+=dx;
- vSm+=(dx-vSm)*0.2;
- const speed=Math.abs(vSm);
- const running=speed>0.35 && !eating;
- if(Math.abs(vSm)>0.5) dir=vSm>0?1:-1;
- phase=(phase+speed*0.016)%1;
-
- // jump over the bone
- const dogNose=x+DOGW()*(dir>0?0.86:0.14);
- const db=(dogNose-boneX)/ (DOGW()*0.55);
- const jump=running? 30*Math.exp(-db*db*2.2) : 0;
-
- let o;
- if(eating){
-   o={amp:0,bob:0,pitch:2,tailA:14*Math.sin(time*7),headA:34+3*Math.sin(time*5),shScale:1};
- }else if(running){
-   const amp=Math.min(30,8+speed*3.4);
-   o={amp,bob:Math.min(6,speed*0.9)*Math.sin(phase*4*Math.PI)-jump,
-      pitch:3*Math.sin(phase*2*Math.PI+1)-jump*0.25,
-      tailA:10*Math.sin(phase*4*Math.PI),headA:jump*-0.2,
-      shScale:Math.max(.55,1-jump/40)};
- }else{
-   o={amp:0,bob:1.2*Math.sin(time*2.4),pitch:0,
-      tailA:12*Math.sin(time*5.5),headA:4*Math.sin(time*1.1),shScale:1};
- }
- pose(phase,o);
- dogEl.style.transform=`translateX(${x}px) scaleX(${dir})`;
-
- // ball bounces ahead while running right in the mid zone
- const ballZone=running && dir>0 && pRaw>0.12 && pRaw<0.6;
- ballA+=((ballZone?1:0)-ballA)*0.12;
- ballEl.style.opacity=ballA.toFixed(3);
- if(ballA>0.02){
-   const bx=x+DOGW()+18+10*Math.sin(phase*2*Math.PI);
-   const by=-Math.abs(Math.sin(phase*2*Math.PI+0.6))*34;
-   ballEl.style.transform=`translate(${bx}px,${by}px) rotate(${x*2}deg)`;
- }
- boneEl.style.transform=`translateX(${boneX-22}px)`;
-
- if(!document.hidden && !window.__dogNoLoop) requestAnimationFrame(frame);
-}
-requestAnimationFrame(frame);
-document.addEventListener('visibilitychange',()=>{ if(!document.hidden) requestAnimationFrame(frame); });
-
-/* deterministic hook for rendering checks */
-window.__dogSettle=function(p,n){
- const doc=document.documentElement;
- window.__dogForceY=(doc.scrollHeight-window.innerHeight)*p;
- for(let i=0;i<(n||400);i++) frame(t0+i*16.7);
- window.__dogForceY=null;
-};
 })();
 </script>
