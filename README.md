@@ -1,9 +1,17 @@
 <!-- Petscription — brand work -->
 
-# Bonapet
+# Granula!
 
-**Aktuálny smer.** Slovenská landing page pre značku granúl **Bonapet** —
-svetlá, teplá a hravá, s kreslenými psami. Všetko v `bonapet/`
+**Aktuálny smer.** Slovenský web pre granule na mieru **Granula!**: kobalt,
+oranž, Montserrat a pootočené nálepky. Úvodná stránka, Suroviny a funkčný
+dotazník až po objednávku. Všetko v `granula/` ([README](granula/README.md),
+stránka: `granula/index.html`).
+
+---
+
+# Bonapet *(predchádzajúci smer)*
+
+Slovenská landing page pre značku granúl **Bonapet**. Všetko v `bonapet/`
 ([README](bonapet/README.md), stránka: `bonapet/index.html`).
 
 ---

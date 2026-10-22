@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<title>Granula — jedlo, čo drží krok</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Prémiové granule z diviny a slovenského hovädzieho, vybrané podľa veku, váhy a temperamentu tvojho psa. Dávka na gramy, vrecko príde samo.">
+<script>document.documentElement.classList.add("js")</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,800;1,900&display=swap">
+<link rel="stylesheet" href="granula.css">
+<style>
+/* ---------- hero ---------- */
+.hero .wrap{padding-top:72px;padding-bottom:96px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:64px;align-items:center}
+.hero .copy{display:flex;flex-direction:column;gap:30px}
+.hero h1{font-size:clamp(52px,6.6vw,100px)}
+.hero h1 span{color:var(--k)}
+.hero .copy p{font-size:20px;line-height:1.55;max-width:560px}
+.hero .ctas{display:flex;flex-wrap:wrap;align-items:center;gap:22px}
+.hero .note{font-size:14px;font-weight:700;color:var(--i2)}
+.hero .visual{position:relative}
+.hero .frame{height:600px}
+.hero .frame img{object-position:62% center}
+.hero .s-vet{position:absolute;left:-36px;top:48px;background:var(--r);font-size:26px}
+.badge-62{position:absolute;right:-14px;bottom:-22px;background:var(--l);padding:24px 24px 18px;transform:rotate(-5deg);text-align:center}
+.badge-62 .v{font-size:60px}
+.badge-62 .u{font-size:15px;font-weight:800;letter-spacing:.12em;margin-top:6px}
+
+/* ---------- čísla ---------- */
+.stats,.faq{overflow-x:clip}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.stat{padding:40px 32px;display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+.stat + .stat{border-left:2px solid var(--n)}
+.stat .sticker{padding:10px 14px 8px;font-size:clamp(34px,3.4vw,50px)}
+.stat span:last-child{font-size:16px;font-weight:700;line-height:1.4;max-width:220px}
+
+/* ---------- 01 piliere ---------- */
+.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px}
+.pillar{display:flex;flex-direction:column;gap:22px}
+.pillar .frame{--off:16px;height:420px}
+.pillar .kicker{position:absolute;left:-10px;top:22px;font-size:18px;padding:8px 12px 7px}
+.pillar h3{margin-top:8px;font-size:30px}
+.pillar p{font-size:17px;line-height:1.55;color:var(--i2)}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tags span{border:2px solid var(--n);padding:7px 12px;font-size:13px;font-weight:800}
+
+/* ---------- 02 dlhovekosť ---------- */
+.longevity{background:var(--k);color:var(--m)}
+.longevity .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:center}
+.longevity .num{font-size:clamp(150px,19vw,280px);color:var(--l);letter-spacing:-.04em}
+.longevity .unit{font-size:clamp(32px,3.4vw,52px)}
+.longevity .txt{display:flex;flex-direction:column;gap:24px;border-left:2px solid var(--m);padding-left:48px}
+.longevity .txt .big{font-size:clamp(22px,2vw,28px);line-height:1.4;font-weight:700}
+.longevity .src{font-size:13px;line-height:1.5;color:#C9D6F0}
+.longevity .txt p:not(.big):not(.src){font-size:18px;line-height:1.55;max-width:560px}
+
+/* ---------- 05 porovnanie ---------- */
+.compare{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border:2px solid var(--n);position:relative}
+.compare .col{padding:40px 48px 32px;display:flex;flex-direction:column}
+.compare .bad{background:var(--m2)}
+.compare .good{background:var(--o);border-left:2px solid var(--n)}
+.compare .bad .title{font-size:28px;color:#6F665D;margin-bottom:20px}
+.compare .good .logo{background:var(--n);color:var(--o);font-size:26px;padding:5px 9px 4px;align-self:flex-start;margin-bottom:20px}
+.row-bad{display:flex;align-items:center;gap:18px;border-top:2px solid #B9AFA4;padding:20px 0;color:#6F665D}
+.row-bad .x{width:44px;height:44px;flex:none;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900}
+.row-bad s{font-size:22px;text-decoration-thickness:3px}
+.row-bad small,.row-good small{display:block;font-size:14px;font-weight:600;margin-top:4px}
+.row-good{display:flex;align-items:center;gap:18px;border-top:2px solid var(--n);padding:16px 0}
+.row-good .tile{width:84px;height:84px;flex:none;border:2px solid var(--n);display:grid;grid-template-columns:repeat(2,30px);
+  gap:4px;align-content:center;justify-content:center}
+.row-good b,.row-bad s{display:block}
+.row-good b{font-size:22px}
+.vs{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-6deg);width:96px;height:96px;border-radius:50%;
+  background:var(--n);color:var(--m);display:flex;align-items:center;justify-content:center;font-size:26px}
+
+/* ---------- 06 ako to funguje ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:2px solid var(--n)}
+.step{padding:40px 36px;display:flex;flex-direction:column;gap:18px;background:var(--m)}
+.step + .step{border-left:2px solid var(--n)}
+.step.blue{background:var(--k);color:var(--m)}
+.step .no{align-self:flex-start;color:var(--n);padding:8px 12px 6px;font-size:40px}
+.step h3{font-size:26px}
+.step p{font-size:17px;line-height:1.55}
+.bagpanel{display:grid;grid-template-columns:300px minmax(0,1fr);gap:64px;align-items:center;background:var(--m2);border:2px solid var(--n);padding:48px 56px}
+.bagpanel .copy{display:flex;flex-direction:column;gap:22px}
+.bagpanel .h2{font-size:clamp(28px,3vw,44px)}
+.bagpanel p{font-size:18px;line-height:1.55;color:var(--i2);max-width:600px}
+.bag{width:260px;height:360px;background:var(--k);color:var(--m);border:2px solid var(--n);box-shadow:14px 14px 0 var(--o);
+  display:flex;flex-direction:column;align-items:center;gap:10px;padding:26px 16px 16px;position:relative}
+.bag .kind{font-size:9px;font-weight:800;letter-spacing:.16em;margin-top:4px}
+.bag .win{width:150px;height:120px;background:var(--m);border:2px solid var(--n);margin-top:8px;display:flex;align-items:center;justify-content:center;gap:4px;position:relative;color:var(--m)}
+.bag .meatpct{position:absolute;right:-26px;top:-16px;background:var(--r);color:var(--n);padding:6px 8px 5px;transform:rotate(6deg);text-align:center}
+.bag .meatpct b{display:block;font-size:20px}
+.bag .meatpct small{display:block;font-size:8px;font-weight:800;letter-spacing:.1em}
+.bag .name{font-size:26px;text-align:center;margin-top:10px}
+.bag .foot-line{margin-top:auto;width:100%;display:flex;justify-content:space-between;align-items:flex-end;font-size:9px;font-weight:700}
+.bag .foot-line b{font-size:15px;font-weight:900}
+
+/* ---------- Granula = nula ---------- */
+.nula h2{font-size:clamp(56px,7.6vw,116px)}
+.nula-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:2px solid var(--n);border-left:2px solid var(--n)}
+.nula-grid > *{border-right:2px solid var(--n);border-bottom:2px solid var(--n)}
+.z{padding:26px 24px;display:flex;flex-direction:column;gap:16px;align-items:flex-start;min-height:170px}
+.z .ico{width:76px;height:76px;background:var(--n);color:var(--n);display:flex;align-items:center;justify-content:center;transform:rotate(var(--t))}
+.z b{font-size:20px;line-height:1.1}
+.z b span{font-weight:300}
+.z-end{grid-column:span 3;background:var(--n);color:var(--m);padding:26px 32px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px}
+.z-end .display{font-size:clamp(22px,2.2vw,32px)}
+
+/* ---------- recenzie ---------- */
+.arrows{display:flex;gap:10px}
+.arrow{width:58px;height:58px;border:2px solid var(--n);background:transparent;color:var(--n);font:900 22px/1 var(--font);cursor:pointer;
+  display:flex;align-items:center;justify-content:center}
+.arrow.dark{background:var(--n);color:var(--o)}
+.arrow:hover:not(:disabled){background:var(--k);color:var(--m);border-color:var(--k)}
+.arrow:disabled{opacity:.35;cursor:default}
+.is-static .arrow:disabled{opacity:1}
+.reviews{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
+.reviews::-webkit-scrollbar{display:none}
+.review{flex:0 0 calc((100% - 72px) / 4);scroll-snap-align:start;background:var(--paper);border:2px solid var(--n);display:flex;flex-direction:column}
+.review .pic{height:300px;position:relative;border-bottom:2px solid var(--n);overflow:hidden}
+.review .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.review .stars{position:absolute;left:14px;top:14px;padding:6px 10px 5px;transform:rotate(var(--t));font-size:15px;font-weight:900;letter-spacing:.08em}
+.review .body{padding:22px 22px 26px;display:flex;flex-direction:column;gap:16px;flex:1}
+.review blockquote{margin:0;font-size:17px;line-height:1.5;font-weight:600}
+.review .by{margin-top:auto;border-top:2px solid var(--n);padding-top:12px}
+.review .by b{font-size:15px;display:block}
+.review .by span{display:block;font-size:13px;font-weight:600;color:var(--i3);margin-top:4px}
+
+/* ---------- odborníci ---------- */
+.experts{background:var(--n);color:var(--m)}
+.experts-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.expert{border:2px solid var(--m);padding:32px;display:flex;flex-direction:column;gap:26px}
+.expert .who{display:flex;align-items:center;gap:20px}
+.expert .frame{--off:10px;width:112px;height:112px;flex:none}
+.expert .frame .ph{border-color:var(--m);display:flex;align-items:center;justify-content:center;text-align:center;font-size:10px;font-weight:700;padding:8px}
+.expert .who b{font-size:18px;display:block}
+.expert .who span{display:block;font-size:13px;font-weight:700;color:var(--o);margin-top:6px}
+.expert blockquote{margin:0;font-size:20px;line-height:1.45;font-weight:600}
+
+/* ---------- otázky ---------- */
+.faq .wrap{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:64px;align-items:start}
+.faq .h2{font-size:clamp(40px,4.4vw,64px)}
+.qa{border-bottom:2px solid var(--n)}
+.qa details{border-top:2px solid var(--n);padding:24px 0}
+.qa summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:24px;font-weight:800;font-size:20px;line-height:1.35}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary:hover{color:var(--k)}
+.qa summary i{font-style:normal;font-weight:900;font-size:26px;line-height:1;transition:transform .2s ease}
+.qa details[open] summary i{transform:rotate(45deg)}
+.qa p{margin-top:14px;font-size:17px;line-height:1.55;color:var(--i2);max-width:720px}
+
+/* ---------- výzva ---------- */
+.final{background:var(--o)}
+.final .wrap{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:64px;align-items:center}
+.final .copy{display:flex;flex-direction:column;gap:28px}
+.final h2{font-size:clamp(52px,6.4vw,96px)}
+.final h2 span{color:var(--m)}
+.final p{font-size:20px;line-height:1.55;max-width:560px;font-weight:500}
+.final .btn{font-size:18px}
+.final .visual{position:relative}
+.final .frame{--off:22px;height:500px}
+.final .frame img{object-position:center 25%}
+.final .sticker{position:absolute;left:-24px;bottom:40px;background:var(--l);font-size:22px}
+
+/* ---------- menšie obrazovky ---------- */
+@media (max-width:1100px){
+  .review{flex-basis:calc((100% - 24px) / 2)}
+}
+@media (max-width:960px){
+  .hero .wrap,.longevity .wrap,.faq .wrap,.final .wrap{grid-template-columns:minmax(0,1fr)}
+  .hero .wrap{gap:56px;padding-top:48px}
+  .hero .frame{height:min(600px,110vw)}
+  .hero .s-vet{left:-8px}
+  .stats .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stat:nth-child(3){border-left:0}
+  .stat:nth-child(n+3){border-top:2px solid var(--n)}
+  .pillars,.experts-grid{grid-template-columns:minmax(0,1fr)}
+  .longevity .txt{border-left:0;padding-left:0;border-top:2px solid var(--m);padding-top:32px}
+  .steps{grid-template-columns:minmax(0,1fr)}
+  .step + .step{border-left:0;border-top:2px solid var(--n)}
+  .bagpanel{grid-template-columns:minmax(0,1fr);justify-items:center;padding:40px 24px}
+  .compare{grid-template-columns:minmax(0,1fr)}
+  .compare .good{border-left:0;border-top:2px solid var(--n);padding-top:64px}
+  .vs{top:auto;bottom:auto;position:relative;left:auto;transform:rotate(-6deg);margin:-48px auto -48px;z-index:1}
+  .compare .bad{order:0}.vs{order:1}.compare .good{order:2}
+  .nula-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .z-end{grid-column:span 1}
+  .final .frame{height:min(500px,100vw)}
+  .final .sticker{left:-8px}
+}
+@media (max-width:640px){
+  .review{flex-basis:86%}
+  .compare .col{padding:32px 20px 24px}
+  .z{padding:20px 16px;min-height:150px}
+  .z .ico{width:60px;height:60px}
+  .badge-62{right:0}
+  .stat{padding:28px 14px}
+  .stat .sticker{font-size:28px}
+  .badge-62 .v{font-size:44px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">Granule na mieru ✱ Recept od MVDr. ✱ Doma skôr, než dôjdu</div>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
+    <nav class="menu" aria-label="Hlavné menu">
+      <a href="suroviny.html">Suroviny</a>
+      <a href="#ako">Ako to funguje</a>
+      <a href="#recenzie">Recenzie</a>
+      <a href="#otazky">Otázky</a>
+    </nav>
+    <a class="btn btn-k btn-sm btn-head" href="granule-na-mieru.html">Môj pes →</a>
+  </div>
+</header>
+
+<main>
+<!-- hero -->
+<section class="hero">
+  <div class="wrap">
+    <div class="copy">
+      <h1 class="display">Jedlo, čo drží krok <span>s tvojím psom.</span></h1>
+      <p>Prémiové granule z diviny a slovenského hovädzieho, vybrané presne podľa veku, váhy a temperamentu tvojho psa. Pre dlhý a nabehaný život.</p>
+      <div class="ctas">
+        <a class="btn btn-o" href="granule-na-mieru.html">Nájdi granule pre svojho psa</a>
+        <span class="note">2 minúty ✱ bez registrácie</span>
+      </div>
+    </div>
+    <div class="visual">
+      <div class="frame"><div class="ph"><img src="img/hero-jack-russell.jpg" alt="Jack russell na tenisovom kurte" width="880" height="1168" fetchpriority="high"></div></div>
+      <span class="sticker s-vet">Recept od MVDr.</span>
+      <div class="badge-62"><div class="display v">62 %</div><div class="u">MÄSA</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="tapes" aria-hidden="true">
+  <div class="back"><div class="tape rev" style="--rot:2.5deg;background:var(--n);color:var(--m)"><div class="track">
+    <span>Granule na mieru</span><span>✱</span><span>Recept od MVDr.</span><span>✱</span><span>Mäso zo Slovenska</span><span>✱</span><span>Zdravý pes</span><span>✱</span>
+    <span>Granule na mieru</span><span>✱</span><span>Recept od MVDr.</span><span>✱</span><span>Mäso zo Slovenska</span><span>✱</span><span>Zdravý pes</span><span>✱</span>
+    <span>Granule na mieru</span><span>✱</span><span>Recept od MVDr.</span><span>✱</span><span>Mäso zo Slovenska</span><span>✱</span><span>Zdravý pes</span><span>✱</span>
+    <span>Granule na mieru</span><span>✱</span><span>Recept od MVDr.</span><span>✱</span><span>Mäso zo Slovenska</span><span>✱</span><span>Zdravý pes</span><span>✱</span>
+  </div></div></div>
+  <div class="front"><div class="tape" style="--rot:-2.5deg;background:var(--o);color:var(--n)"><div class="track">
+    <span>Jeleň</span><span>✱</span><span>Diviak</span><span>✱</span><span>Hovädzie zo Slovenska</span><span>✱</span><span>Čerstvá zelenina</span><span>✱</span><span>Bez pšenice</span><span>✱</span>
+    <span>Jeleň</span><span>✱</span><span>Diviak</span><span>✱</span><span>Hovädzie zo Slovenska</span><span>✱</span><span>Čerstvá zelenina</span><span>✱</span><span>Bez pšenice</span><span>✱</span>
+    <span>Jeleň</span><span>✱</span><span>Diviak</span><span>✱</span><span>Hovädzie zo Slovenska</span><span>✱</span><span>Čerstvá zelenina</span><span>✱</span><span>Bez pšenice</span><span>✱</span>
+    <span>Jeleň</span><span>✱</span><span>Diviak</span><span>✱</span><span>Hovädzie zo Slovenska</span><span>✱</span><span>Čerstvá zelenina</span><span>✱</span><span>Bez pšenice</span><span>✱</span>
+  </div></div></div>
+</div>
+
+<!-- čísla -->
+<section class="stats bb">
+  <div class="wrap">
+    <div class="stat" data-reveal><span class="sticker display" style="--t:-3deg;background:var(--l)">62 %</span><span>mäsa v každom vrecku</span></div>
+    <div class="stat" data-reveal style="--d:.06s"><span class="sticker display" style="--t:2deg;background:var(--n);color:var(--m)">0 %</span><span>pšenice, kukurice a sóje</span></div>
+    <div class="stat" data-reveal style="--d:.12s"><span class="sticker display" style="--t:-2deg;background:var(--k);color:var(--m)">na mieru</span><span>granule pre jedného konkrétneho psa</span></div>
+    <div class="stat" data-reveal style="--d:.18s"><span class="sticker display" style="--t:3deg;background:var(--o)">na gramy</span><span>denná dávka, nie odhad z vreca</span></div>
+  </div>
+</section>
+
+<!-- 01 prečo -->
+<section class="sec">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:56px">
+    <div class="head" style="max-width:900px">
+      <div class="eyebrow">01. Prečo Granula</div>
+      <h2 class="h2"><span class="lt">Energia. Pohoda.</span> Roky navyše.</h2>
+    </div>
+    <div class="pillars">
+      <article class="pillar" data-reveal>
+        <div style="position:relative">
+          <div class="frame" style="--field:var(--o)"><div class="ph"><img src="img/energia-frisbee.jpg" alt="Pes chytá frisbee vo výskoku" width="736" height="1104" loading="lazy"></div></div>
+          <span class="sticker kicker" style="background:var(--l)">Energia</span>
+        </div>
+        <h3 class="display">Chuť na loptičku. Každý deň.</h3>
+        <p>Konkrétne mäso ako hlavný zdroj bielkovín, 24 až 32 % podľa veku a pohybu. Aby mal tvoj pes z čoho stavať svaly.</p>
+        <div class="tags"><span>Konkrétne mäso</span><span>Až 32 % bielkovín</span></div>
+      </article>
+      <article class="pillar" data-reveal style="--d:.08s">
+        <div style="position:relative">
+          <div class="frame" style="--field:var(--k)"><div class="ph"><img src="img/pohoda-retrievery.jpg" alt="Dva zlaté retrievery na lúke" width="736" height="736" loading="lazy"></div></div>
+          <span class="sticker kicker" style="background:var(--r)">Pohoda</span>
+        </div>
+        <h3 class="display">Pokojné brucho. Lesklá srsť.</h3>
+        <p>Hliva ustricová, tanín z jedlého gaštana, ľanový olej a konopná múka. Suroviny, ktoré na bežnej etikete nenájdeš.</p>
+        <div class="tags"><span>Hliva ustricová</span><span>Ľanový olej</span></div>
+      </article>
+      <article class="pillar" data-reveal style="--d:.16s">
+        <div style="position:relative">
+          <div class="frame" style="--field:var(--l)"><div class="ph"><img src="img/dlhovekost-objatie.jpg" alt="Pes v objatí s majiteľom" width="848" height="1200" loading="lazy"></div></div>
+          <span class="sticker kicker" style="background:var(--n);color:var(--o)">Dlhovekosť</span>
+        </div>
+        <h3 class="display">Roky navyše spolu.</h3>
+        <p>Kolagén, chondroitín a glukozamín pre kĺby a dávka presne na váhu tvojho psa. Aby ste spolu chodili čo najdlhšie.</p>
+        <div class="tags"><span>Kolagén</span><span>Kĺby</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 02 dlhovekosť -->
+<section id="dlhovekost" class="sec longevity bt bb">
+  <div class="wrap">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="eyebrow" style="color:var(--l)">02. Roky navyše spolu</div>
+      <div class="display num">1,8</div>
+      <div class="display unit">roka navyše</div>
+    </div>
+    <div class="txt">
+      <p class="big">Toľko dlhšie žijú psy, ktoré držia ideálnu váhu.</p>
+      <p class="src">Kealy a kol., JAVMA, 2002</p>
+      <p>Preto dávku nerátame od oka, ale na gramy.</p>
+      <div><a class="btn btn-o" href="granule-na-mieru.html">Spočítať dávku</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 mäso -->
+<section class="sec" style="padding-bottom:96px">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:48px">
+    <div class="head-row">
+      <div class="head" style="max-width:820px">
+        <div class="eyebrow">03. Suroviny</div>
+        <h2 class="h2"><span class="lt">Mäso</span> s papiermi.</h2>
+        <p class="lead" style="max-width:600px">Žiadne „mäso a mäsové deriváty“. Ktoré mäso dostane tvoj pes, vyberieme podľa toho, kto je.</p>
+      </div>
+      <a class="link-under" href="suroviny.html">Všetky suroviny →</a>
+    </div>
+    <div class="meats">
+      <article class="meat" data-reveal><div class="pic" style="background:#1C1C1C"><img src="img/maso-jelen.jpg" alt="Jeleň" width="1000" height="667" loading="lazy"><span class="who">Z lesa</span><span class="ico" style="--t:-5deg" data-icon="jelen" data-ink="#F4EBE2"></span></div><div class="body"><h3 class="display">Jeleň</h3><p>Divina z lesa. Chudé, výrazné mäso s jediným zdrojom bielkovín.</p></div></article>
+      <article class="meat" data-reveal style="--d:.06s"><div class="pic" style="background:#2F68CC"><img src="img/maso-kralik.jpg" alt="Králik" width="1000" height="750" loading="lazy"><span class="who">Z lúky</span><span class="ico" style="--t:4deg" data-icon="kralik" data-ink="#F4EBE2"></span></div><div class="body"><h3 class="display">Králik</h3><p>Jemné, ľahké biele mäso pre citlivé bruchá.</p></div></article>
+      <article class="meat" data-reveal style="--d:.12s"><div class="pic" style="background:#E55E00"><img src="img/maso-morka.jpg" alt="Morka" width="1000" height="667" loading="lazy"><span class="who">Z dvora</span><span class="ico" style="--t:-3deg" data-icon="morka" data-ink="#F4EBE2"></span></div><div class="body"><h3 class="display">Morka</h3><p>Chudá hydina plná bielkovín.</p></div></article>
+      <article class="meat" data-reveal><div class="pic" style="background:#0047BB"><img src="img/maso-hus-kacica.jpg" alt="Hus a kačica" width="750" height="1000" loading="lazy" style="object-position:center 12%"><span class="who">Z dvora</span><span class="ico" style="--t:6deg" data-icon="hus" data-ink="#F4EBE2"></span></div><div class="body"><h3 class="display">Hus &amp; kačica</h3><p>Plnšia chuť hydiny, ktorú psy milujú.</p></div></article>
+      <article class="meat" data-reveal style="--d:.06s"><div class="pic" style="background:#3A70D0"><img src="img/maso-jahna.jpg" alt="Jahňa" width="1000" height="667" loading="lazy"><span class="who">Z pastvy</span><span class="ico" style="--t:-6deg" data-icon="jahna" data-ink="#F4EBE2"></span></div><div class="body"><h3 class="display">Jahňa</h3><p>Pre psov, ktorým nesedí každé mäso.</p></div></article>
+      <article class="meat" data-reveal style="--d:.12s"><div class="pic" style="background:#003A99"><img src="img/maso-hovadzie.jpg" alt="Hovädzie" width="1000" height="750" loading="lazy"><span class="who">Zo Slovenska</span><span class="ico" style="--t:3deg" data-icon="krava" data-ink="#F4EBE2"></span></div><div class="body"><h3 class="display">Hovädzie</h3><p>Slovenské hovädzie. Klasika plná bielkovín.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- 04 a k mäsu -->
+<section class="sec extras bt">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">04. A k mäsu</div>
+      <h2 class="h2"><span class="lt">Z lesa, z poľa,</span> zo zeme.</h2>
+      <p style="font-size:17px;line-height:1.55;color:var(--i2)">Suroviny, ktoré na bežnej etikete nenájdeš.</p>
+      <div style="margin-top:12px"><span class="sticker" style="--t:3deg;background:var(--l)">Bez GMO</span></div>
+    </div>
+    <div class="ing-list">
+      <div class="ing"><span class="n">01</span><span class="ico" style="--t:-5deg;background:var(--l);color:var(--l)" data-icon="pestrec"></span><span class="display nm">Pestrec mariánsky</span><span class="tag">Z lúky</span><span class="d">Tradičná bylina bohatá na silymarín.</span></div>
+      <div class="ing"><span class="n">02</span><span class="ico" style="--t:4deg;background:var(--l);color:var(--l)" data-icon="hliva"></span><span class="display nm">Hliva ustricová</span><span class="tag">Z lesa</span><span class="d">Jedlá huba, prirodzený zdroj betaglukánov.</span></div>
+      <div class="ing"><span class="n">03</span><span class="ico" style="--t:-3deg;background:var(--r);color:var(--r)" data-icon="gastany"></span><span class="display nm">Tanín z gaštana</span><span class="tag">Zo stromu</span><span class="d">Prírodné triesloviny z dreva jedlého gaštana.</span></div>
+      <div class="ing"><span class="n">04</span><span class="ico" style="--t:6deg;background:var(--m);color:var(--m)" data-icon="humin"></span><span class="display nm">Humínové látky</span><span class="tag">Zo zeme</span><span class="d">Prírodné látky z humusu, zdroj minerálov.</span></div>
+      <div class="ing"><span class="n">05</span><span class="ico" style="--t:-6deg;background:var(--l);color:var(--l)" data-icon="lan"></span><span class="display nm">Konope a ľan</span><span class="tag">Z poľa</span><span class="d">Konopná múka a ľanový olej: vláknina a omega-3.</span></div>
+      <div class="ing"><span class="n">06</span><span class="ico" style="--t:3deg;background:var(--r);color:var(--r)" data-icon="kolagen"></span><span class="display nm">Kolagén</span><span class="tag">Zo zvierat</span><span class="d">Živočíšny kolagén, bielkovina chrupaviek a šliach.</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="tape-solo" aria-hidden="true"><div class="tape" style="--rot:2deg;background:var(--n);color:var(--o)"><div class="track">
+  <span>Šach mat, miska</span><span>✱</span><span>Zdravý pes</span><span>✱</span><span>Hravý chvost</span><span>✱</span><span>Jedlo, čo drží krok</span><span>✱</span><span>Ingrediencie, čo budete závidieť</span><span>✱</span>
+  <span>Šach mat, miska</span><span>✱</span><span>Zdravý pes</span><span>✱</span><span>Hravý chvost</span><span>✱</span><span>Jedlo, čo drží krok</span><span>✱</span><span>Ingrediencie, čo budete závidieť</span><span>✱</span>
+</div></div></div>
+
+<!-- 05 porovnanie -->
+<section class="sec">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:48px">
+    <div class="head" style="align-items:center;text-align:center">
+      <div class="eyebrow">05. Porovnanie</div>
+      <h2 class="h2"><span class="lt">Čo ide</span> do misky?</h2>
+    </div>
+    <div class="compare">
+      <div class="col bad">
+        <h3 class="display title">Bežné granule</h3>
+        <div class="row-bad"><span class="x" aria-hidden="true">✕</span><div><s class="display">Mäsové deriváty</s><small>bez mena, bez pôvodu</small></div></div>
+        <div class="row-bad"><span class="x" aria-hidden="true">✕</span><div><s class="display">Kukurica</s><small>lacná výplň</small></div></div>
+        <div class="row-bad"><span class="x" aria-hidden="true">✕</span><div><s class="display">Pšeničná múka</s><small>lacná výplň namiesto mäsa</small></div></div>
+        <div class="row-bad"><span class="x" aria-hidden="true">✕</span><div><s class="display">Sója</s><small>rastlinná bielkovina</small></div></div>
+        <div class="row-bad"><span class="x" aria-hidden="true">✕</span><div><s class="display">Cukry</s><small>sladidlo, ktoré pes nepotrebuje</small></div></div>
+        <div class="row-bad"><span class="x" aria-hidden="true">✕</span><div><s class="display">Farbivá a arómy</s><small>aby granule lepšie vyzerali a voňali</small></div></div>
+        <div class="row-bad"><span class="x" aria-hidden="true">✕</span><div><s class="display">Lacné oleje</s><small>neznámy pôvod, slabá kvalita</small></div></div>
+      </div>
+      <div class="vs display" aria-hidden="true">vs</div>
+      <div class="col good">
+        <span class="logo">Granula!</span>
+        <div class="row-good"><span class="tile" style="background:var(--k);color:var(--k)"><span data-icon="jelen" data-ink="#F4EBE2"></span><span data-icon="kralik" data-ink="#F4EBE2"></span><span data-icon="krava" data-ink="#F4EBE2"></span><span data-icon="morka" data-ink="#F4EBE2"></span></span><div><b class="display">Čerstvé mäso</b><small>lokálne, v humánnej kvalite</small></div></div>
+        <div class="row-good"><span class="tile" style="background:var(--l);color:var(--l)"><span data-icon="tekvica"></span><span data-icon="mrkva"></span><span data-icon="bataty"></span><span data-icon="spenat"></span></span><div><b class="display">Kvalitná zelenina</b><small>tekvica, mrkva, batáty, špenát</small></div></div>
+        <div class="row-good"><span class="tile" style="background:var(--r);color:var(--r)"><span data-icon="lan"></span><span data-icon="konope"></span></span><div><b class="display">Semienka</b><small>ľan a konope</small></div></div>
+        <div class="row-good"><span class="tile" style="background:var(--m);color:var(--m)"><span data-icon="pestrec" data-ink="#0047BB"></span><span data-icon="harmancek" data-ink="#0047BB"></span><span data-icon="rozmarin" data-ink="#0047BB"></span><span data-icon="petrzlen" data-ink="#0047BB"></span></span><div><b class="display">Bylinky</b><small>pestrec, harmanček, rozmarín, petržlen</small></div></div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:center"><a class="btn btn-k" href="granule-na-mieru.html">Chcem takúto misku</a></div>
+  </div>
+</section>
+
+<!-- 06 ako to funguje -->
+<section id="ako" class="sec bt" style="padding-bottom:120px">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:48px">
+    <div class="head">
+      <div class="eyebrow">06. Ako to funguje</div>
+      <h2 class="h2"><span class="lt">Ty venčíš.</span> My vozíme.</h2>
+    </div>
+    <ol class="steps" style="list-style:none;margin:0;padding:0">
+      <li class="step"><span class="sticker display no" style="background:var(--l)">01</span><h3 class="display">Povieš nám o svojom psovi</h3><p>Plemeno, vek, váha, postava a koľko sa hýbe. Dve minúty.</p></li>
+      <li class="step"><span class="sticker display no" style="background:var(--r)">02</span><h3 class="display">Vyberieme granule</h3><p>Granule s mäsom, ktoré tvojmu psovi sedí, a dávku spočítame na gramy.</p></li>
+      <li class="step blue"><span class="sticker display no" style="background:var(--o)">03</span><h3 class="display">Vrecko príde samo</h3><p>Až k tebe domov. Skôr, než sa to staré minie.</p></li>
+    </ol>
+    <div class="bagpanel">
+      <div class="bag" role="img" aria-label="Vrecko Granula: granule na mieru, 2,4 kg">
+        <span class="logo">Granula!</span>
+        <div class="kind">GRANULE NA MIERU · DOSPELÝ</div>
+        <div class="win"><span data-icon="jelen" data-size="44"></span><span data-icon="tekvica" data-size="44"></span>
+          <div class="meatpct display"><b>62 %</b><small>MÄSA</small></div></div>
+        <div class="name display">Granule<br>na mieru</div>
+        <div class="foot-line"><span>Kompletné krmivo pre psov</span><b>2,4 kg</b></div>
+      </div>
+      <div class="copy">
+        <h2 class="h2"><span class="lt">Granule na mieru. Dávka na gramy.</span> Vrecko príde samo.</h2>
+        <p>Granule aj dávku vyberieme pre jedného konkrétneho psa. A keďže vieme, koľko denne zje, ďalšie vrecko pošleme skôr, než miska zostane prázdna.</p>
+        <div><a class="btn btn-o" href="granule-na-mieru.html">Nájdi granule</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Granula = nula -->
+<section id="nula" class="sec nula bt">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:48px">
+    <div class="head-row">
+      <div class="head">
+        <div class="eyebrow">Čo tam nenájdeš</div>
+        <h2 class="display">Granula <span style="color:var(--o)">=</span> <span style="color:var(--k)">nula.</span></h2>
+      </div>
+      <p class="lead" style="max-width:440px">Trinásť vecí, ktoré bežne nájdeš na etikete granúl. V našich ani jednu.</p>
+    </div>
+    <ul class="nula-grid" style="list-style:none;margin:0;padding:0">
+      <li class="z"><span class="ico" style="--t:-4deg" data-icon="psenica" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> pšenice</b></li>
+      <li class="z"><span class="ico" style="--t:3deg" data-icon="kukurica" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> kukurice</b></li>
+      <li class="z"><span class="ico" style="--t:-2deg" data-icon="soja" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> sóje</b></li>
+      <li class="z"><span class="ico" style="--t:4deg" data-icon="hrach" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> hrachu a strukovín</b></li>
+      <li class="z"><span class="ico" style="--t:-3deg" data-icon="kuramaso" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> kuracieho mäsa</b></li>
+      <li class="z"><span class="ico" style="--t:2deg" data-icon="kuratuk" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> kuracieho tuku</b></li>
+      <li class="z"><span class="ico" style="--t:-4deg" data-icon="mucka" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> mäsovej múčky</b></li>
+      <li class="z"><span class="ico" style="--t:3deg" data-icon="cukor" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> pridaného cukru</b></li>
+      <li class="z"><span class="ico" style="--t:-2deg" data-icon="palma" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> palmového oleja</b></li>
+      <li class="z"><span class="ico" style="--t:4deg" data-icon="farbiva" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> umelých farbív</b></li>
+      <li class="z"><span class="ico" style="--t:-3deg" data-icon="konzervanty" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> umelých konzervantov</b></li>
+      <li class="z"><span class="ico" style="--t:2deg" data-icon="aromy" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> umelých aróm</b></li>
+      <li class="z"><span class="ico" style="--t:-4deg" data-icon="gmo" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> GMO</b></li>
+      <li class="z-end"><span class="display">Len to, čo do misky <span style="color:var(--o)">patrí.</span></span><span class="logo">Granula!</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- recenzie -->
+<section id="recenzie" class="sec" data-carousel>
+  <div class="wrap" style="display:flex;flex-direction:column;gap:48px">
+    <div class="head-row">
+      <div class="head">
+        <div class="eyebrow">#granulapsy</div>
+        <h2 class="h2"><span class="lt">Miska plná.</span> Chvost v pohybe.</h2>
+      </div>
+      <div class="arrows">
+        <button type="button" class="arrow" aria-label="Predchádzajúce recenzie" data-carousel-prev>←</button>
+        <button type="button" class="arrow dark" aria-label="Ďalšie recenzie" data-carousel-next>→</button>
+      </div>
+    </div>
+    <div class="reviews" data-carousel-row tabindex="0" aria-label="Recenzie zákazníkov">
+      <article class="review"><div class="pic"><img src="img/recenzia-bruno.jpg" alt="" width="736" height="981" loading="lazy"><span class="stars" style="--t:-4deg;background:var(--o)" aria-label="5 z 5 hviezdičiek">★★★★★</span></div><div class="body"><blockquote>„Prvé granule, pri ktorých nevyberá. Miska je prázdna skôr, než si stihnem obuť topánky.“</blockquote><div class="by"><b class="display">Bruno, kokršpaniel</b><span>Tomáš, Bratislava</span></div></div></article>
+      <article class="review"><div class="pic"><img src="img/recenzia-fifi.jpg" alt="" width="736" height="920" loading="lazy"><span class="stars" style="--t:3deg;background:var(--l)" aria-label="5 z 5 hviezdičiek">★★★★★</span></div><div class="body"><blockquote>„Pri jazvečíkovi sledujeme každý gram. Dávka na gramy konečne sedí a váha sa ustálila.“</blockquote><div class="by"><b class="display">Fifi, jazvečík</b><span>Lucia, Košice</span></div></div></article>
+      <article class="review"><div class="pic"><img src="img/recenzia-aja-bady.jpg" alt="" width="1080" height="1350" loading="lazy"><span class="stars" style="--t:-3deg;background:var(--r)" aria-label="5 z 5 hviezdičiek">★★★★★</span></div><div class="body"><blockquote>„Dva psy, dvoje granule, jedno doručenie. Srsť sa leskne a vrecko nestrážim.“</blockquote><div class="by"><b class="display">Ája a Bady, retrievery</b><span>Zuzana, Žilina</span></div></div></article>
+      <article class="review"><div class="pic"><img src="img/recenzia-kakao.jpg" alt="" width="736" height="1104" loading="lazy"><span class="stars" style="--t:4deg;background:var(--o)" aria-label="5 z 5 hviezdičiek">★★★★★</span></div><div class="body"><blockquote>„Citlivé brucho a roky skúšania. S jahňacími granulami máme pokoj už tretí mesiac.“</blockquote><div class="by"><b class="display">Kakao, kokršpaniel</b><span>Martin, Trnava</span></div></div></article>
+    </div>
+  </div>
+</section>
+
+<div class="tape-solo" aria-hidden="true"><div class="tape rev" style="--rot:-2deg;background:var(--o);color:var(--n)"><div class="track">
+  <span>Šach mat, miska</span><span>✱</span><span>Recept od MVDr.</span><span>✱</span><span>Zdravý pes</span><span>✱</span><span>Hravý chvost</span><span>✱</span><span>Ingrediencie, čo budete závidieť</span><span>✱</span>
+  <span>Šach mat, miska</span><span>✱</span><span>Recept od MVDr.</span><span>✱</span><span>Zdravý pes</span><span>✱</span><span>Hravý chvost</span><span>✱</span><span>Ingrediencie, čo budete závidieť</span><span>✱</span>
+</div></div></div>
+
+<!-- odborníci -->
+<section class="sec experts">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:48px">
+    <div class="head">
+      <div class="eyebrow" style="color:var(--o)">Odborníci</div>
+      <h2 class="h2"><span class="lt">Čo hovoria tí,</span> čo psom rozumejú.</h2>
+    </div>
+    <div class="experts-grid">
+      <article class="expert" data-reveal><div class="who"><div class="frame" style="--field:var(--o)"><div class="ph">Foto: veterinárka</div></div><div><b class="display">MVDr. Katarína Holubová</b><span>Veterinárka, výživa psov</span></div></div><blockquote>„Najčastejšia chyba, ktorú vidím v ambulancii, je dávka od oka. Krmivo odvážené na konkrétneho psa je najjednoduchšia prevencia nadváhy.“</blockquote></article>
+      <article class="expert" data-reveal style="--d:.08s"><div class="who"><div class="frame" style="--field:var(--l)"><div class="ph">Foto: cvičiteľ</div></div><div><b class="display">Peter Malík</b><span>Cvičiteľ psov</span></div></div><blockquote>„Pes, ktorý má energiu na celý tréning a pritom nie je ťažký, sa učí rýchlejšie. Na tom, čo je v miske, sa to pozná.“</blockquote></article>
+      <article class="expert" data-reveal style="--d:.16s"><div class="who"><div class="frame" style="--field:var(--r)"><div class="ph">Foto: chovateľka</div></div><div><b class="display">Ivana Šimková</b><span>Chovateľka border kólií, agility</span></div></div><blockquote>„Pri športových psoch riešim každú surovinu. Konkrétne mäso namiesto mäsových derivátov je pre mňa základ.“</blockquote></article>
+    </div>
+  </div>
+</section>
+
+<!-- otázky -->
+<section id="otazky" class="sec faq">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Otázky</div>
+      <h2 class="h2"><span class="lt">Čo sa</span> pýtate.</h2>
+    </div>
+    <div class="qa">
+      <details open><summary>Ako viete, čo je pre môjho psa najlepšie?<i aria-hidden="true">+</i></summary><p>Z plemena, veku, váhy, postavy a pohybu tvojho psa. Granule vyberieme podľa odporúčaní, ktoré vznikli s veterinármi, a dávku spočítame na gramy.</p></details>
+      <details><summary>Čím sú granule na mieru iné?<i aria-hidden="true">+</i></summary><p>Granule aj dávka sedia konkrétnemu psovi, nie „priemernému psovi“ z tabuľky na vrecku.</p></details>
+      <details><summary>Ako často mi príde nové vrecko?<i aria-hidden="true">+</i></summary><p>Podľa toho, koľko denne zje. Ďalšie pošleme tak, aby prišlo skôr, než sa to staré minie.</p></details>
+      <details><summary>Ako prejsť na nové granule?<i aria-hidden="true">+</i></summary><p>Postupne. Približne 7 až 10 dní pridávaj do starého krmiva čoraz viac Granuly, kým nezostane len ona.</p></details>
+      <details><summary>Kto granule vyrába?<i aria-hidden="true">+</i></summary><p>Slovenský výrobca krmív, ktorý sa im venuje od roku 1992. Receptúry navrhli veterinári so zameraním na výživu psov.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- výzva -->
+<section class="sec final bt">
+  <div class="wrap">
+    <div class="copy">
+      <h2 class="display">Ako sa volá <span>tvoj pes?</span></h2>
+      <p>Povedz nám o ňom za dve minúty. Granule aj dávku vyberieme my a vrecko príde samo.</p>
+      <div><a class="btn btn-n" href="granule-na-mieru.html">Nájdi granule pre svojho psa</a></div>
+    </div>
+    <div class="visual">
+      <div class="frame" style="--field:var(--k)"><div class="ph"><img src="img/cta-dalmatin.jpg" alt="Dalmatín pozerá do kamery" width="666" height="1000" loading="lazy"></div></div>
+      <span class="sticker">Večera o 18:00.<br>Hlad od 17:58.</span>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap top">
+    <div class="about">
+      <span class="logo">Granula!</span>
+      <p>Granule na mieru pre jedného konkrétneho psa. Recept od veterinárov, dávka na gramy, vrecko až k dverám.</p>
+    </div>
+    <div class="cols">
+      <nav aria-label="Granula"><span class="t">GRANULA</span><a href="suroviny.html">Suroviny</a><a href="#ako">Ako to funguje</a><a href="granule-na-mieru.html">Granule na mieru</a></nav>
+      <nav aria-label="Pomoc"><span class="t">POMOC</span><a href="#otazky">Otázky</a><a href="#">Doprava</a><a href="#">Kontakt</a></nav>
+      <nav aria-label="Právne"><span class="t">PRÁVNE</span><a href="#">Obchodné podmienky</a><a href="#">Ochrana údajov</a></nav>
+    </div>
+  </div>
+  <div class="wrap bottom"><span>[Firma s.r.o.] · IČO [—]</span><span>granula.sk</span></div>
+</footer>
+
+<script src="icons.js"></script>
+<script src="site.js"></script>
+</body>
+</html>

@@ -1,0 +1,912 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<title>Granule na mieru — Granula</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Päť otázok o tvojom psovi. Vyberieme granule, spočítame dennú dávku na gramy a vrecko príde samo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,800;1,900&display=swap">
+<link rel="stylesheet" href="granula.css">
+<style>
+/* ---------- obrazovky ---------- */
+.screen{display:none;min-height:100vh;min-height:100svh}
+.screen.on{display:flex}
+.split{background:var(--m)}
+.split > .pane{flex:1;min-width:0;padding:36px 80px 44px;display:flex;flex-direction:column}
+.split > aside{width:520px;flex:none;padding:56px 56px 48px;display:flex;flex-direction:column;justify-content:space-between;gap:24px}
+.split .logo{font-size:26px;padding:5px 9px 4px}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.progress{display:flex;align-items:center;gap:14px;font-size:12px;font-weight:800;letter-spacing:.12em}
+.progress .bars{display:flex;gap:6px}
+.progress .bars i{width:40px;height:6px;border-radius:3px;background:var(--line)}
+.progress .bars i.on{background:var(--o)}
+.q-body{flex:1;display:flex;flex-direction:column;justify-content:center;gap:24px;max-width:680px;padding:40px 0}
+.q-body.narrow{max-width:640px}
+.kicker{font-size:13px;font-weight:800;letter-spacing:.14em;color:var(--k);text-transform:uppercase}
+.q-title{font-size:clamp(38px,4.2vw,57.6px);text-wrap:balance}
+.q-title span{color:var(--k)}
+.q-title:focus{outline:none}
+.q-lead{font-size:19px;line-height:1.5;color:var(--i2)}
+.q-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;max-width:680px}
+.back{font:800 16px/1 var(--font);color:var(--n);text-decoration:none;padding:12px 0;background:none;border:0;cursor:pointer}
+.back:hover{color:var(--k)}
+.next{min-height:56px;padding:18px 30px}
+.err{margin:0;font-size:15px;font-weight:700;color:#B3261E}
+.err[hidden]{display:none}
+
+/* ---------- polia ---------- */
+.card{background:var(--white);padding:26px;display:flex;flex-direction:column;gap:18px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field > span{font-weight:700;font-size:15px}
+.input,.select{width:100%;font:600 18px/1.3 var(--font);color:var(--n);background:var(--white);border:2px solid var(--n);border-radius:0;padding:16px 18px}
+.input::placeholder{color:var(--i3);font-weight:500}
+.input:focus,.select:focus{outline:3px solid var(--o);outline-offset:0}
+.select-wrap{position:relative}
+.select{appearance:none;-webkit-appearance:none;padding-right:48px;cursor:pointer}
+.select-wrap::after{content:"▾";position:absolute;right:18px;top:50%;transform:translateY(-50%);font-weight:900;pointer-events:none}
+.row2{display:flex;gap:16px}
+.row2 > *{flex:1}
+
+/* váha */
+.weight{background:var(--k);color:var(--m);padding:26px 28px;display:flex;flex-direction:column;gap:12px}
+.weight output{display:block;font-weight:900;letter-spacing:-.015em;font-size:clamp(72px,8vw,110px);line-height:1;color:var(--o)}
+.range{-webkit-appearance:none;appearance:none;width:100%;height:34px;margin:0;background:transparent;cursor:pointer;--p:30%}
+.range::-webkit-slider-runnable-track{height:10px;border-radius:5px;background:linear-gradient(to right,var(--o) 0 var(--p),var(--k-soft) var(--p) 100%)}
+.range::-webkit-slider-thumb{-webkit-appearance:none;width:34px;height:34px;margin-top:-12px;border-radius:50%;background:var(--m);border:4px solid var(--o);box-sizing:border-box}
+.range::-moz-range-track{height:10px;border-radius:5px;background:var(--k-soft)}
+.range::-moz-range-progress{height:10px;border-radius:5px;background:var(--o)}
+.range::-moz-range-thumb{width:34px;height:34px;border-radius:50%;background:var(--m);border:4px solid var(--o);box-sizing:border-box}
+.range:focus-visible{outline:3px solid var(--m);outline-offset:6px}
+.weight .ends{display:flex;justify-content:space-between;font-size:13px;font-weight:700}
+
+/* voľby: radio/checkbox schované, štýl nesie label */
+.opts{display:grid;gap:12px}
+.opts.c2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.opts.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.opt{position:relative;cursor:pointer;padding:22px 24px;background:var(--white);color:var(--n);border:2px solid var(--n);display:flex;flex-direction:column;gap:6px;min-height:104px}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt b{font-weight:900;font-size:19.2px;line-height:1;text-transform:uppercase}
+.opt small{font-size:15px;font-weight:600;opacity:.85}
+.opt:hover{border-color:var(--k)}
+.opt:has(input:checked){background:var(--k);color:var(--m);border-color:var(--k)}
+.opt:has(input:focus-visible){outline:3px solid var(--o);outline-offset:2px}
+.opt.body{align-items:center;text-align:center;gap:14px;padding:20px}
+.opt.body b{font-size:16.8px}
+.opt.body small{font-size:14px}
+.opt.body .shape{height:56px;display:flex;align-items:center;justify-content:center}
+.opt.body .shape i{height:34px;border-radius:999px;background:currentColor;opacity:.85}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{position:relative;cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:12px 18px;background:var(--m);color:var(--n);border:2px solid var(--n);font-size:15px;font-weight:700}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip:hover{border-color:var(--k)}
+.chip:has(input:checked){background:var(--k);color:var(--m);border-color:var(--k)}
+.chip:has(input:checked)::before{content:"✓"}
+.chip:has(input:focus-visible){outline:3px solid var(--o);outline-offset:2px}
+.card-label{font-weight:700;font-size:16px}
+.card-label span{font-weight:500;color:var(--i3)}
+
+/* ---------- bočné panely ---------- */
+.side-blue{background:var(--k);color:var(--m)}
+.side-dark{background:var(--n);color:var(--m);justify-content:center !important}
+.side-orange{background:var(--o);color:var(--n);justify-content:center !important}
+.split aside .frame{--off:22px;--field:var(--o);height:400px}
+.tip{background:var(--k-deep);padding:24px 26px;display:flex;flex-direction:column;gap:10px}
+.tip .h{display:flex;align-items:center;gap:12px}
+.tip .g{display:inline-block;background:var(--o);color:var(--n);font-weight:900;font-style:italic;font-size:15px;line-height:1;padding:5px 7px 4px;transform:rotate(-4deg)}
+.tip .t{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--o);text-transform:uppercase}
+.tip p{font-size:17px;line-height:1.45;font-weight:600}
+.fact{display:flex;flex-direction:column;gap:18px}
+.fact .t{font-size:12px;font-weight:800;letter-spacing:.12em}
+.fact .n{font-weight:900;line-height:1;font-size:clamp(88px,9vw,132px)}
+.fact .u{font-size:26.4px}
+.fact p{font-size:18px;line-height:1.45;font-weight:600}
+.fact .src{font-size:13px;line-height:1.45;font-weight:500}
+
+/* ---------- miešanie a hotovo ---------- */
+.full{background:var(--k);color:var(--m);flex-direction:column;padding:36px 80px 56px}
+.full a{color:var(--m)}
+.full a:hover{color:var(--o)}
+.full .logo{font-size:26px;padding:5px 9px 4px;align-self:flex-start}
+.mix-body{flex:1;display:flex;align-items:center;gap:96px;padding:40px 0}
+.bowl{position:relative;width:460px;height:460px;flex:none}
+.bowl .rim{position:absolute;inset:0;border-radius:50%;background:var(--m);box-shadow:0 40px 50px -30px rgba(11,14,42,.7)}
+.bowl .fill{position:absolute;inset:8%;border-radius:50%;background-color:var(--o);
+  background-image:radial-gradient(circle,#7A3200 0 10px,transparent 11px),radial-gradient(circle,#000 0 5px,transparent 6px),radial-gradient(circle,#C9F04D 0 4px,transparent 5px);
+  background-size:40px 36px,56px 50px,70px 64px;background-position:0 0,20px 16px,34px 8px;animation:stir 9s linear infinite}
+@keyframes stir{to{transform:rotate(360deg)}}
+.bowl .sticker{position:absolute;right:-30px;top:-10px;background:var(--l);color:var(--n);font-size:28px;line-height:1.05;padding:9px 16px}
+.mix-copy{flex:1;display:flex;flex-direction:column;gap:28px}
+.mix-copy .pct{font-weight:900;line-height:1;font-size:clamp(80px,9vw,120px);color:var(--o);font-variant-numeric:tabular-nums}
+.mix-copy h1{font-size:clamp(32px,3.4vw,48px)}
+.mix-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;font-size:19px;font-weight:700}
+.mix-list li{opacity:.55}
+.mix-list li::before{content:"\00a0\00a0\00a0"}
+.mix-list li.done{opacity:1}
+.mix-list li.done::before{content:"✓ "}
+.mix-list li.now{opacity:1;color:var(--o)}
+.mix-list li.now::before{content:"→ "}
+.skiplink{font-size:14px;font-weight:700;opacity:.7}
+
+.done-body{flex:1;display:flex;align-items:center;gap:80px;padding:40px 0}
+.done-copy{flex:1;display:flex;flex-direction:column;gap:28px}
+.done-copy .kicker{color:var(--o)}
+.done-copy h1{font-size:clamp(44px,5vw,72px)}
+.done-copy h1 span{color:var(--o)}
+.done-copy p{font-size:20px;line-height:1.5;max-width:620px}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:680px}
+.tiles > div{background:var(--k-deep);padding:18px 20px}
+.tiles .t{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--o)}
+.tiles .v{font-weight:900;font-size:26.4px;line-height:1;margin-top:8px}
+.home-link{font-weight:800;font-size:16px;border-bottom:2px solid var(--o);padding-bottom:2px;text-decoration:none;align-self:flex-start}
+.done-pic{flex:0 0 440px;position:relative}
+.done-pic .frame{--off:24px;--field:var(--o);height:440px}
+.done-pic .sticker{position:absolute;left:-20px;bottom:40px;background:var(--l);color:var(--n);font-size:30px;line-height:1.05;padding:10px 17px;--t:-6deg}
+
+/* ---------- výsledok ---------- */
+.res .pane{padding:36px 64px 40px 80px;gap:22px}
+.res h1{font-size:clamp(32px,3.2vw,43.2px)}
+.res h1 span{color:var(--k)}
+.res .why{font-size:18px;line-height:1.5;color:var(--i2);max-width:640px}
+.edit{font-weight:800;font-size:15px;color:var(--k);border-bottom:2px solid var(--o);padding-bottom:2px;text-decoration:none}
+.recipe{display:flex;align-items:center;gap:14px;flex-wrap:wrap;list-style:none;margin:0;padding:0}
+.recipe .lbl{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--i3)}
+.recipe .it{display:inline-flex;align-items:center;gap:8px;background:var(--white);padding:5px 14px 5px 5px;border:2px solid var(--n);font-size:14px;font-weight:800}
+.recipe .it span{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.kpis > div{background:var(--white);padding:18px 20px}
+.kpis > div:first-child{background:var(--k);color:var(--m)}
+.kpis > div:first-child b{color:var(--o)}
+.kpis b{display:block;font-weight:900;font-size:31.2px;line-height:1}
+.kpis span{display:block;font-size:13px;font-weight:700;margin-top:6px}
+.sub-lbl{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--i3)}
+.opt.bagopt{flex-direction:row;justify-content:space-between;align-items:center;gap:10px;padding:16px 18px;min-height:0}
+.opt.bagopt b{font-size:18px}
+.opt.bagopt small{display:block;font-size:13px;margin-top:4px;opacity:1}
+.opt.bagopt .price{font-weight:900;font-size:18px}
+.rec{position:absolute;right:10px;top:-14px;background:var(--l);color:var(--n);padding:4px 10px;transform:rotate(3deg);font-weight:900;font-size:14px;text-transform:uppercase}
+.paybar{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:auto;border-top:1.5px solid var(--n);padding-top:18px}
+.paybar b{display:block;font-weight:900;font-size:24px;line-height:1}
+.paybar span{display:block;font-size:14px;font-weight:600;color:var(--i2);margin-top:4px}
+.res aside{width:500px;align-items:center;justify-content:center;position:relative}
+.bigbag{width:320px;height:480px;background:var(--o);color:var(--n);border-radius:0 16px 8px 8px;box-shadow:0 40px 50px -30px rgba(11,14,42,.7);
+  display:flex;flex-direction:column;align-items:center;gap:12px;padding:32px 22px 20px;position:relative;overflow:hidden}
+.bigbag::before{content:"";position:absolute;top:0;left:0;right:0;height:14px;background:rgba(0,0,0,.12)}
+.bigbag .logo{background:var(--k);color:var(--m);font-size:37px;padding:7px 13px 6px}
+.bigbag .kind{font-weight:800;font-size:10px;letter-spacing:.14em}
+.bigbag .circle{width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.3);margin-top:6px;display:flex;align-items:center;justify-content:center;gap:6px;color:var(--o)}
+.bigbag .name{font-size:28.8px;text-align:center}
+.bigbag .bottom{margin-top:auto;width:100%;display:flex;justify-content:space-between;align-items:baseline;font-size:11px;font-weight:700}
+.bigbag .bottom b{font-weight:900;font-size:14px}
+.res aside .sticker{position:absolute;left:40px;top:110px;background:var(--l);color:var(--n);font-size:24px;line-height:1.05;padding:8px 14px;--t:-8deg}
+
+/* ---------- objednávka ---------- */
+.co .pane{padding:32px 64px 32px 80px;gap:18px}
+.co h1{font-size:clamp(30px,3vw,38.4px);margin-top:4px}
+.co h1 span{color:var(--k)}
+.co .opt{min-height:0;padding:16px 18px}
+.co .opt b{font-size:16.8px}
+.co .opt small{font-size:13px;line-height:1.35;opacity:.9}
+.co .opt .price{font-weight:900;font-size:17px;margin-top:4px}
+.co .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.box{background:var(--white);padding:20px;display:flex;flex-direction:column;gap:12px}
+.box > .t{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--k)}
+.box .input{font-size:15px;font-weight:500;padding:12px 16px}
+.box .chip{background:var(--m)}
+.pick{display:flex;justify-content:space-between;width:100%;font:600 15px/1.3 var(--font);color:var(--n);background:var(--white);border:2px solid var(--n);padding:13px 16px;cursor:pointer;text-align:left}
+.pick:hover{border-color:var(--k)}
+.box #ship-addr:not([hidden]){display:flex}
+.box .note{font-size:13px;line-height:1.4;color:var(--i2)}
+.cardrow{display:flex;gap:10px}
+.cardrow > :first-child{flex:2}.cardrow > *{flex:1;min-width:0}
+.co aside{width:480px;padding:48px 48px 40px;justify-content:flex-start;gap:18px}
+.sum-t{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--o)}
+.sum-item{display:flex;gap:16px;align-items:center}
+.sum-item .mini{width:72px;height:104px;flex:none;background:var(--o);border-radius:8px 8px 4px 4px}
+.sum-item b{display:block;font-weight:900;font-size:18px;line-height:1;text-transform:uppercase}
+.sum-item span{display:block;font-size:14px;color:var(--muted-dark);margin-top:4px}
+.lines{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--n2);padding-top:16px;font-size:16px}
+.lines div{display:flex;justify-content:space-between;gap:12px}
+.lines .disc{color:var(--l)}
+.total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--n2);padding-top:16px}
+.total span{font-weight:800;font-size:16px}
+.total b{font-weight:900;font-size:33.6px;line-height:1;color:var(--o)}
+.co aside .btn{width:100%;min-height:60px;font-size:18px;margin-top:4px}
+.co aside .btn:hover{background:var(--m);color:var(--n);border-color:var(--m)}
+.co aside p{font-size:14px;line-height:1.5;color:var(--muted-dark)}
+
+/* ---------- mobil ---------- */
+@media (max-width:1100px){
+  .split > .pane,.res .pane,.co .pane{padding:28px 32px 36px}
+  .split > aside{width:420px;padding:40px 36px}
+  .res aside,.co aside{width:400px}
+  .mix-body,.done-body{gap:48px}
+  .bowl{width:340px;height:340px}
+  .done-pic{flex-basis:340px}.done-pic .frame{height:340px}
+}
+@media (max-width:900px){
+  .screen.on.split{flex-direction:column}
+  .split > aside,.res aside,.co aside{width:auto;padding:36px 16px 40px}
+  .split > .pane,.res .pane,.co .pane{padding:20px 16px 32px}
+  .full{padding:24px 16px 40px}
+  .split aside .frame{height:min(400px,80vw)}
+  .q-body{padding:32px 0;gap:20px}
+  .progress .bars i{width:22px}
+  .opts.c2,.opts.c3,.kpis,.tiles,.co .grid2{grid-template-columns:minmax(0,1fr)}
+  .mix-body,.done-body{flex-direction:column;align-items:flex-start;gap:40px}
+  .bowl{width:min(300px,70vw);height:min(300px,70vw);align-self:center}
+  .bowl .sticker{right:-8px;font-size:22px}
+  .done-pic{flex-basis:auto;width:100%}.done-pic .frame{height:min(440px,90vw)}
+  .done-pic .sticker{left:-6px}
+  .bigbag{width:260px;height:390px}
+  .res aside .sticker{left:16px;top:24px}
+  .row2{flex-direction:column}
+  .cardrow{flex-wrap:wrap}.cardrow > :first-child{flex-basis:100%}
+}
+@media (prefers-reduced-motion:reduce){.bowl .fill{animation:none}}
+</style>
+</head>
+<body>
+
+<!-- ============ KROK 1 ============ -->
+<form id="quiz" novalidate>
+<section class="screen split" data-screen="krok-1" data-title="Granule na mieru — krok 1">
+  <div class="pane">
+    <div class="topline">
+      <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
+      <div class="progress" aria-label="Krok 1 z 5"><span aria-hidden="true">KROK 1 / 5</span><div class="bars" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div></div>
+    </div>
+    <div class="q-body narrow">
+      <div class="kicker">Granule na mieru</div>
+      <h1 class="display q-title" tabindex="-1" style="font-size:clamp(40px,4.6vw,62.4px)">Kto je <span>tvoj pes?</span></h1>
+      <p class="q-lead">Granule vyberieme presne na mieru. Začnime plemenom.</p>
+      <div class="card">
+        <label class="field"><span>Plemeno</span>
+          <span class="select-wrap"><select class="select" name="breed" id="breed"></select></span>
+        </label>
+      </div>
+    </div>
+    <div class="q-nav" style="max-width:640px">
+      <a class="back" href="index.html">← Späť</a>
+      <button type="button" class="btn btn-o next" data-next>Ďalej →</button>
+    </div>
+  </div>
+  <aside class="side-blue">
+    <div class="frame"><div class="ph"><img src="img/hero-jack-russell.jpg" alt="Pes na tenisovom kurte" width="880" height="1168"></div></div>
+    <div class="tip"><div class="h"><span class="g" aria-hidden="true">G!</span><span class="t">Vedel si?</span></div>
+      <p>Hrsť granúl je pre jorkšíra skoro celá denná dávka. Pre labradora je to asi šestina. Preto sa pýtame na plemeno.</p></div>
+  </aside>
+</section>
+
+<!-- ============ KROK 2 ============ -->
+<section class="screen split" data-screen="krok-2" data-title="Granule na mieru — krok 2">
+  <div class="pane">
+    <div class="topline">
+      <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
+      <div class="progress" aria-label="Krok 2 z 5"><span aria-hidden="true">KROK 2 / 5</span><div class="bars" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div></div>
+    </div>
+    <div class="q-body narrow">
+      <div class="kicker">Granule na mieru</div>
+      <h1 class="display q-title" tabindex="-1">Koľko váži <span>a koľko má rokov?</span></h1>
+      <p class="q-lead">Z toho spočítame dennú dávku a životnú fázu: šteňa, dospelý alebo senior.</p>
+      <div class="weight">
+        <label for="kg" class="sr-only">Hmotnosť v kilogramoch</label>
+        <output for="kg" id="kg-out">18 kg</output>
+        <input class="range" type="range" id="kg" name="kg" min="1" max="70" step="1" value="18">
+        <div class="ends" aria-hidden="true"><span>1 kg</span><span>70 kg</span></div>
+      </div>
+      <div class="row2">
+        <label class="field"><span>Roky</span><input class="input" type="number" name="years" inputmode="numeric" min="0" max="25" placeholder="napr. 4"></label>
+        <label class="field"><span>Mesiace</span><input class="input" type="number" name="months" inputmode="numeric" min="0" max="11" placeholder="0"></label>
+      </div>
+      <p class="err" role="alert" hidden data-err="krok-2">Doplň vek: aspoň roky alebo mesiace.</p>
+    </div>
+    <div class="q-nav" style="max-width:640px">
+      <button type="button" class="back" data-prev>← Späť</button>
+      <button type="button" class="btn btn-o next" data-next>Ďalej →</button>
+    </div>
+  </div>
+  <aside class="side-dark">
+    <div class="fact">
+      <div class="t" style="color:var(--o)">VEDEL SI?</div>
+      <div class="n" style="color:var(--o)">1,8</div>
+      <div class="display u">roka navyše</div>
+      <p>Toľko dlhšie žili labradory, ktoré celý život držali ideálnu váhu, oproti súrodencom, ktorí jedli o štvrtinu viac.</p>
+      <p class="src" style="color:var(--muted-dark)">14-ročná štúdia, Kealy a kol., JAVMA, 2002</p>
+    </div>
+  </aside>
+</section>
+
+<!-- ============ KROK 3 ============ -->
+<section class="screen split" data-screen="krok-3" data-title="Granule na mieru — krok 3">
+  <div class="pane">
+    <div class="topline">
+      <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
+      <div class="progress" aria-label="Krok 3 z 5"><span aria-hidden="true">KROK 3 / 5</span><div class="bars" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div></div>
+    </div>
+    <div class="q-body">
+      <div class="kicker">Granule na mieru</div>
+      <h1 class="display q-title" tabindex="-1" id="t-activity">Ako vyzerá <span>bežný deň?</span></h1>
+      <p class="q-lead">Na gauči potrebuje inú dávku než pri behu v lese.</p>
+      <div class="opts c2" role="radiogroup" aria-labelledby="t-activity">
+        <label class="opt"><input type="radio" name="activity" value="doma"><b>Prevažne doma</b><small>krátke vychádzky</small></label>
+        <label class="opt"><input type="radio" name="activity" value="mesto"><b>1–2 prechádzky denne</b><small>bežný mestský pes</small></label>
+        <label class="opt"><input type="radio" name="activity" value="sport"><b>Beh, túry, šport</b><small>pravidelne a intenzívne</small></label>
+        <label class="opt"><input type="radio" name="activity" value="praca"><b>Pracovný pes</b><small>služobný, pastiersky</small></label>
+      </div>
+      <p class="err" role="alert" hidden data-err="krok-3">Vyber, ako vyzerá bežný deň tvojho psa.</p>
+    </div>
+    <div class="q-nav">
+      <button type="button" class="back" data-prev>← Späť</button>
+      <button type="button" class="btn btn-o next" data-next>Ďalej →</button>
+    </div>
+  </div>
+  <aside class="side-blue">
+    <div class="frame"><div class="ph"><img src="img/kviz-beh-hory.jpg" alt="Pes beží s majiteľkou po horskom chodníku" width="882" height="588" loading="lazy"></div></div>
+    <div class="tip"><div class="h"><span class="g" aria-hidden="true">G!</span><span class="t">Vedel si?</span></div>
+      <p>Pes, ktorý celý deň behá, môže potrebovať o polovicu viac energie než rovnako veľký gaučák. Dávku preto rátame podľa bežného dňa tvojho psa, nie podľa vreca.</p></div>
+  </aside>
+</section>
+
+<!-- ============ KROK 4 ============ -->
+<section class="screen split" data-screen="krok-4" data-title="Granule na mieru — krok 4">
+  <div class="pane">
+    <div class="topline">
+      <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
+      <div class="progress" aria-label="Krok 4 z 5"><span aria-hidden="true">KROK 4 / 5</span><div class="bars" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div></div>
+    </div>
+    <div class="q-body" style="gap:22px">
+      <div class="kicker">Granule na mieru</div>
+      <h1 class="display q-title" tabindex="-1">Ešte <span>dve veci.</span></h1>
+      <p class="q-lead">Obe menia, koľko energie denne spáli.</p>
+      <div class="card" style="padding:24px;gap:14px">
+        <div class="card-label" id="t-neut">Je kastrovaný? <span>Sterilizovaná fenka sem patrí tiež.</span></div>
+        <div class="chips" role="radiogroup" aria-labelledby="t-neut">
+          <label class="chip"><input type="radio" name="neutered" value="ano">Áno</label>
+          <label class="chip"><input type="radio" name="neutered" value="nie">Nie</label>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="card-label" id="t-body">Postava</div>
+        <div class="opts c3" role="radiogroup" aria-labelledby="t-body">
+          <label class="opt body"><input type="radio" name="body" value="chudsi"><span class="shape" aria-hidden="true"><i style="width:70px"></i></span><b>Chudší</b><small>rebrá vidno</small></label>
+          <label class="opt body"><input type="radio" name="body" value="akurat"><span class="shape" aria-hidden="true"><i style="width:96px"></i></span><b>Akurát</b><small>rebrá nahmatáš</small></label>
+          <label class="opt body"><input type="radio" name="body" value="navyse"><span class="shape" aria-hidden="true"><i style="width:124px"></i></span><b>Kilo navyše</b><small>rebrá ťažko nahmatáš</small></label>
+        </div>
+      </div>
+      <p class="err" role="alert" hidden data-err="krok-4">Odpovedz na kastráciu aj postavu.</p>
+    </div>
+    <div class="q-nav">
+      <button type="button" class="back" data-prev>← Späť</button>
+      <button type="button" class="btn btn-o next" data-next>Ďalej →</button>
+    </div>
+  </div>
+  <aside class="side-orange">
+    <div class="fact">
+      <div class="t">VEDEL SI?</div>
+      <div class="n">2,5</div>
+      <div class="display u">roka života</div>
+      <p>Až o toľko môže nadváha v strednom veku skrátiť psovi život. Pri menších plemenách je rozdiel najväčší.</p>
+      <p class="src">50 787 psov, Salt a kol., University of Liverpool, 2019</p>
+    </div>
+  </aside>
+</section>
+
+<!-- ============ KROK 5 ============ -->
+<section class="screen split" data-screen="krok-5" data-title="Granule na mieru — krok 5">
+  <div class="pane">
+    <div class="topline">
+      <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
+      <div class="progress" aria-label="Krok 5 z 5"><span aria-hidden="true">KROK 5 / 5</span><div class="bars" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div></div>
+    </div>
+    <div class="q-body">
+      <div class="kicker">Granule na mieru</div>
+      <h1 class="display q-title" tabindex="-1" id="t-focus">Na čo sa <span>máme zamerať?</span></h1>
+      <p class="q-lead">Vyber všetko, čo platí. Podľa toho vyberieme mäso a ďalšie suroviny.</p>
+      <div class="card chips" role="group" aria-labelledby="t-focus" style="flex-direction:row;gap:12px">
+        <label class="chip"><input type="checkbox" name="focus" value="travenie">Citlivé trávenie</label>
+        <label class="chip"><input type="checkbox" name="focus" value="kby">Kĺby a pohyb</label>
+        <label class="chip"><input type="checkbox" name="focus" value="srst">Srsť a koža</label>
+        <label class="chip"><input type="checkbox" name="focus" value="vaha">Váha</label>
+        <label class="chip"><input type="checkbox" name="focus" value="vyberavy">Vyberavý jedák</label>
+        <label class="chip"><input type="checkbox" name="focus" value="nic">Nič konkrétne</label>
+      </div>
+      <p class="err" role="alert" hidden data-err="krok-5">Vyber aspoň jednu možnosť. Ak nič nerieši, daj „Nič konkrétne“.</p>
+    </div>
+    <div class="q-nav">
+      <button type="button" class="back" data-prev>← Späť</button>
+      <button type="button" class="btn btn-o next" data-next>Vybrať granule →</button>
+    </div>
+  </div>
+  <aside class="side-blue">
+    <div class="frame"><div class="ph"><img src="img/kviz-beh-trava.jpg" alt="Pes v plnom behu cez trávu" width="572" height="1024" loading="lazy"></div></div>
+    <div class="tip" aria-live="polite"><div class="h"><span class="g" aria-hidden="true">G!</span><span class="t" id="focus-tip-t">Na mieru</span></div>
+      <p id="focus-tip">Vyber, čo tvojho psa trápi, a granule prispôsobíme.</p></div>
+  </aside>
+</section>
+</form>
+
+<!-- ============ MIEŠANIE ============ -->
+<section class="screen full" data-screen="miesame" data-title="Vyberáme granule — Granula">
+  <span class="logo">Granula!</span>
+  <div class="mix-body">
+    <div class="bowl" aria-hidden="true"><div class="rim"></div><div class="fill"></div><span class="sticker" style="--t:8deg">Na mieru</span></div>
+    <div class="mix-copy">
+      <div class="pct" id="mix-pct" aria-hidden="true">0 %</div>
+      <h1 class="display q-title" tabindex="-1">Vyberáme granule na mieru…</h1>
+      <ul class="mix-list" id="mix-list" aria-live="polite">
+        <li>Plemeno, vek a hmotnosť</li>
+        <li>Denná potreba energie</li>
+        <li>Vyberáme mäso a suroviny</li>
+        <li>Veľkosť vreca a termín doručenia</li>
+      </ul>
+      <a class="skiplink" href="#vysledok">Pokračovať na výsledok →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VÝSLEDOK ============ -->
+<section class="screen split res" data-screen="vysledok" data-title="Tvoje granule na mieru — Granula">
+  <div class="pane">
+    <div class="topline">
+      <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
+      <a class="edit" href="#krok-1">Upraviť odpovede</a>
+    </div>
+    <div class="kicker" style="margin-top:8px">Tvoje granule na mieru</div>
+    <h1 class="display q-title" tabindex="-1">Hotovo. <span>Granule sú vybrané.</span></h1>
+    <p class="why" id="r-why"></p>
+    <ul class="recipe" id="r-recipe" aria-label="V granulách"></ul>
+    <div class="kpis">
+      <div><b id="r-dose"></b><span>denná dávka</span></div>
+      <div><b id="r-macro"></b><span>bielkoviny / tuk</span></div>
+      <div><b id="r-month"></b><span>za mesiac</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="sub-lbl" id="t-bag">VRECE · POŠLEME HO SKÔR, NEŽ SA MINIE</div>
+      <div class="opts c3" role="radiogroup" aria-labelledby="t-bag" id="r-bags" style="padding-top:12px"></div>
+    </div>
+    <div class="paybar">
+      <div><b id="r-perday"></b><span>s mesačným predplatným · prvé vrece aj každé ďalšie</span></div>
+      <a class="btn btn-o next" href="#objednavka">Nastaviť predplatné →</a>
+    </div>
+  </div>
+  <aside class="side-blue">
+    <div class="bigbag" role="img" id="r-bag-img">
+      <span class="logo">Granula!</span>
+      <div class="kind" id="r-stage">GRANULE NA MIERU</div>
+      <div class="circle" id="r-circle"></div>
+      <div class="name display">Granule na mieru</div>
+      <div class="bottom"><span>Kompletné krmivo pre psov</span><b id="r-bag-kg">9 kg</b></div>
+    </div>
+    <span class="sticker" aria-hidden="true">Na mieru</span>
+  </aside>
+</section>
+
+<!-- ============ OBJEDNÁVKA ============ -->
+<form class="screen split co" data-screen="objednavka" data-title="Objednávka — Granula" id="order" novalidate>
+  <div class="pane">
+    <div class="topline">
+      <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
+      <a class="back" href="#vysledok">← Späť na výsledok</a>
+    </div>
+    <h1 class="display q-title" tabindex="-1" id="t-plan">Ako to chceš <span>dostávať?</span></h1>
+    <div class="opts c3" role="radiogroup" aria-labelledby="t-plan" style="padding-top:8px">
+      <label class="opt"><input type="radio" name="plan" value="mesiac"><b>Každý mesiac</b><small>Vrece príde samo podľa dennej dávky.</small><span class="price" data-plan-price="mesiac"></span><span class="rec">−10 %</span></label>
+      <label class="opt"><input type="radio" name="plan" value="kvartal"><b>Na 3 mesiace</b><small>Platíš mesačne, najväčšia zľava.</small><span class="price" data-plan-price="kvartal"></span><span class="rec">−20 %</span></label>
+      <label class="opt"><input type="radio" name="plan" value="raz"><b>Jednorazovo</b><small>Jedno vrece, bez záväzku.</small><span class="price" data-plan-price="raz"></span></label>
+    </div>
+    <div class="grid2">
+      <fieldset class="box" style="border:0;margin:0">
+        <legend class="t" style="padding:0;float:left;width:100%">DORUČENIE</legend>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="ship" value="sps" checked>SPS výdajné miesto</label>
+          <label class="chip"><input type="radio" name="ship" value="packeta">Packeta Z-BOX</label>
+          <label class="chip"><input type="radio" name="ship" value="adresa">Na adresu</label>
+        </div>
+        <div id="ship-point">
+          <button type="button" class="pick" id="pick-btn" aria-expanded="false" aria-controls="point">Vyber výdajné miesto na mape <span aria-hidden="true">→</span></button>
+          <label class="sr-only" for="point">Výdajné miesto</label>
+          <input class="input" id="point" name="point" autocomplete="off" placeholder="Mesto alebo PSČ výdajného miesta" hidden style="margin-top:8px">
+        </div>
+        <div id="ship-addr" hidden style="flex-direction:column;gap:10px">
+          <label class="sr-only" for="street">Ulica a číslo</label><input class="input" id="street" name="street" autocomplete="street-address" placeholder="Ulica a číslo">
+          <div class="row2" style="gap:10px">
+            <span><label class="sr-only" for="zip">PSČ</label><input class="input" id="zip" name="zip" autocomplete="postal-code" inputmode="numeric" placeholder="PSČ"></span>
+            <span><label class="sr-only" for="city">Mesto</label><input class="input" id="city" name="city" autocomplete="address-level2" placeholder="Mesto"></span>
+          </div>
+        </div>
+        <div class="note">Doprava 4,90 € za každé doručenie.</div>
+      </fieldset>
+      <div class="box">
+        <div class="t">KONTAKT</div>
+        <label class="sr-only" for="email">E-mail</label><input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="E-mail" required>
+        <label class="sr-only" for="fullname">Meno a priezvisko</label><input class="input" id="fullname" name="fullname" autocomplete="name" placeholder="Meno a priezvisko" required>
+        <label class="sr-only" for="tel">Telefón (pre kuriéra)</label><input class="input" id="tel" name="tel" type="tel" autocomplete="tel" placeholder="Telefón (pre kuriéra)" required>
+      </div>
+    </div>
+    <div class="box">
+      <div class="t">PLATBA</div>
+      <div class="cardrow">
+        <span><label class="sr-only" for="cc">Číslo karty</label><input class="input" id="cc" name="cc" autocomplete="cc-number" inputmode="numeric" placeholder="Číslo karty" required></span>
+        <span><label class="sr-only" for="exp">Platnosť MM / RR</label><input class="input" id="exp" name="exp" autocomplete="cc-exp" inputmode="numeric" placeholder="MM / RR" required></span>
+        <span><label class="sr-only" for="cvc">CVC</label><input class="input" id="cvc" name="cvc" autocomplete="cc-csc" inputmode="numeric" placeholder="CVC" required></span>
+      </div>
+    </div>
+    <p class="err" role="alert" hidden data-err="objednavka">Doplň zvýraznené polia.</p>
+  </div>
+  <aside style="background:var(--n);color:var(--m)">
+    <div class="sum-t">ZHRNUTIE</div>
+    <div class="sum-item"><div class="mini" aria-hidden="true"></div><div><b>Granule na mieru</b><span id="s-meta"></span></div></div>
+    <div class="lines">
+      <div><span id="s-bag-l"></span><span id="s-bag"></span></div>
+      <div class="disc" id="s-disc-row"><span id="s-disc-l"></span><span id="s-disc"></span></div>
+      <div><span>Doprava</span><span>4,90 €</span></div>
+    </div>
+    <div class="total"><span>Spolu za doručenie</span><b id="s-total"></b></div>
+    <button type="submit" class="btn btn-o" id="s-submit">Objednať predplatné</button>
+    <p id="s-note"></p>
+  </aside>
+</form>
+
+<!-- ============ HOTOVO ============ -->
+<section class="screen full" data-screen="hotovo" data-title="Objednávka prijatá — Granula">
+  <span class="logo">Granula!</span>
+  <div class="done-body">
+    <div class="done-copy">
+      <div class="kicker">Objednávka prijatá</div>
+      <h1 class="display q-title" tabindex="-1">Hotovo. <span>Večera je vybavená.</span></h1>
+      <p id="d-text"></p>
+      <div class="tiles">
+        <div><div class="t">DÁVKA</div><div class="v" id="d-dose"></div></div>
+        <div><div class="t">VRECE</div><div class="v" id="d-bag"></div></div>
+        <div><div class="t">ĎALŠIE</div><div class="v" id="d-next"></div></div>
+      </div>
+      <a class="home-link" href="index.html">Späť na úvod</a>
+    </div>
+    <div class="done-pic">
+      <div class="frame"><div class="ph"><img src="img/kviz-lopticka.jpg" alt="Pes beží za loptičkou" width="736" height="736" loading="lazy"></div></div>
+      <span class="sticker" aria-hidden="true">Miska plná!</span>
+    </div>
+  </div>
+</section>
+
+<script src="icons.js"></script>
+<script>
+(function () {
+  /* ---------------- dáta ---------------- */
+  // typická hmotnosť dospelého psa: iba predvyplní posuvník v kroku 2
+  var BREEDS = [
+    ["krizenec", "Kríženec — hmotnosť zadám sám", null],
+    ["civava", "Čivava", 2.5], ["jorksir", "Jorkšírsky teriér", 3], ["maltezsky", "Maltézsky psík", 4],
+    ["jack-russell", "Jack russell teriér", 7], ["jazvecik", "Jazvečík", 9], ["francuzsky-buldocek", "Francúzsky buldoček", 12],
+    ["bigl", "Bígl", 13], ["kokrspaniel", "Anglický kokršpaniel", 14], ["border-kolia", "Border kólia", 18],
+    ["zlaty-retriever", "Zlatý retriever", 30], ["labrador", "Labradorský retriever", 32],
+    ["nemecky-ovciak", "Nemecký ovčiak", 34], ["bernsky-salasnicky", "Bernský salašnícky pes", 45]
+  ];
+  var BAGS = [
+    { id: "4", kg: 4, label: "4 kg", price: 37 },
+    { id: "9", kg: 9, label: "9 kg", price: 69 },
+    { id: "18", kg: 18, label: "2 × 9 kg", price: 119 }
+  ];
+  var PLANS = { mesiac: 0.10, kvartal: 0.20, raz: 0 };
+  var SHIPPING = 4.90;
+  var KCAL_PER_G = 3.45; // ZÁSTUPNÁ hodnota — nahradiť energiou z reálnej receptúry
+  var FOCUS_TIP = {
+    nic: ["Na mieru", "Granule vyberieme podľa veku, váhy a pohybu tvojho psa."],
+    travenie: ["Citlivé trávenie", "Vyberieme granule s jediným zdrojom mäsa a hlivou ustricovou."],
+    kby: ["Kĺby a pohyb", "Vyberieme granule s vyšším obsahom chondroitínu a glukozamínu."],
+    srst: ["Srsť a koža", "Pridáme konopnú múku a ľanový olej, zdroj omega-3."],
+    vaha: ["Váha", "Dávku spočítame tak, aby sa váha dostala tam, kam patrí."],
+    vyberavy: ["Vyberavý jedák", "Vyberieme hus a kačicu, plnšiu chuť hydiny, ktorú psy milujú."]
+  };
+  var ACT = {
+    doma: [1.3, "pokojný domáci režim"], mesto: [1.6, "bežný mestský režim"],
+    sport: [2.0, "veľa behu a športu"], praca: [2.5, "pracovný režim"]
+  };
+
+  /* ---------------- stav ---------------- */
+  var KEY = "granula-quiz";
+  var state = { breed: "krizenec", kg: 18, years: "", months: "", activity: "", neutered: "", body: "", focus: [], bag: "", plan: "mesiac", ordered: false };
+  try { Object.assign(state, JSON.parse(sessionStorage.getItem(KEY)) || {}); } catch (e) {}
+  function save() {
+    try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  var quiz = document.getElementById("quiz");
+  var order = document.getElementById("order");
+  var $ = function (id) { return document.getElementById(id); };
+  var eur = function (n) { return n.toFixed(2).replace(".", ",") + " €"; };
+  var num = function (n, d) { return (d ? n.toFixed(d) : String(Math.round(n))).replace(".", ","); };
+  function plural(n, one, few, many) { return n === 1 ? one : (n >= 2 && n <= 4 ? few : many); }
+
+  /* ---------------- výpočet ---------------- */
+  function ageMonths() { return (parseInt(state.years, 10) || 0) * 12 + (parseInt(state.months, 10) || 0); }
+  function stage() { var m = ageMonths(); return m < 12 ? "stena" : m >= 84 ? "senior" : "dospely"; }
+  function has(f) { return state.focus.indexOf(f) !== -1; }
+
+  // RER = 70 × kg^0,75; násobky sú orientačné a pred spustením ich má potvrdiť veterinár
+  function plan() {
+    var st = stage(), m = ageMonths(), kg = state.kg;
+    var f = st === "stena" ? (m < 4 ? 3.0 : 2.0) : ACT[state.activity][0];
+    if (st !== "stena") {
+      if (state.neutered === "ano") f *= 0.9;
+      if (st === "senior") f *= 0.9;
+    }
+    f *= { chudsi: 1.1, akurat: 1, navyse: 0.85 }[state.body];
+    if (has("vaha") && state.body !== "chudsi") f *= 0.95;
+    var grams = Math.max(10, Math.round(70 * Math.pow(kg, 0.75) * f / KCAL_PER_G / 5) * 5);
+
+    var active = state.activity === "sport" || state.activity === "praca";
+    var protein = active ? 32 : st === "stena" ? 30 : state.body === "navyse" ? 24 : 26;
+    var fat = active ? 20 : st === "stena" ? 18 : state.body === "navyse" ? 12 : 16;
+
+    var meats, meatTxt;
+    if (has("travenie")) { meats = [["jelen", "Jeleň"]]; meatTxt = "jeleň ako jediný zdroj mäsa"; }
+    else if (active) { meats = [["krava", "Hovädzie"], ["jelen", "Jeleň"]]; meatTxt = "hovädzie s jeleňom"; }
+    else if (has("vyberavy")) { meats = [["hus", "Hus"], ["kacka", "Kačica"]]; meatTxt = "hus a kačica"; }
+    else { meats = [["morka", "Morka"], ["hus", "Hus"], ["kacka", "Kačica"]]; meatTxt = "hydina"; }
+    var veg = active ? ["bataty", "Batáty", "batátmi"] : (state.body === "navyse" || has("vaha")) ? ["mrkva", "Mrkva", "mrkvou"] : ["tekvica", "Tekvica", "tekvicou"];
+
+    var extras = [], why = [];
+    if (has("kby")) { extras.push(["chondroitin", "Chondroitín"], ["glukosamin", "Glukozamín"]); why.push("viac chondroitínu a glukozamínu pre kĺby"); }
+    else if (st === "senior") { extras.push(["kolagen", "Kolagén"]); why.push("kolagén pre kĺby"); }
+    if (has("travenie")) { extras.push(["hliva", "Hliva ustricová"]); why.push("hliva ustricová pre pokojné brucho"); }
+    if (has("srst")) { extras.push(["lan", "Konope a ľan"]); why.push("konope a ľan pre srsť"); }
+
+    var days = BAGS.map(function (b) { return Math.floor(b.kg * 1000 / grams); });
+    var rec = BAGS[BAGS.length - 1].id;
+    for (var i = 0; i < BAGS.length; i++) if (days[i] >= 28) { rec = BAGS[i].id; break; }
+
+    return { stage: st, grams: grams, protein: protein, fat: fat, meats: meats, meatTxt: meatTxt, veg: veg,
+      extras: extras, why: why, days: days, rec: rec };
+  }
+
+  function ageText() {
+    var y = parseInt(state.years, 10) || 0, m = parseInt(state.months, 10) || 0;
+    if (y >= 1) return y + " " + plural(y, "rok", "roky", "rokov");
+    return m + " " + plural(m, "mesiac", "mesiace", "mesiacov");
+  }
+
+  /* ---------------- krok 1 a 2: plemeno a váha ---------------- */
+  var sel = $("breed");
+  BREEDS.forEach(function (b) { sel.add(new Option(b[1], b[0])); });
+  var kg = $("kg"), kgOut = $("kg-out");
+  function paintKg() {
+    kgOut.textContent = kg.value + " kg";
+    kg.style.setProperty("--p", ((kg.value - kg.min) / (kg.max - kg.min) * 100) + "%");
+  }
+  sel.addEventListener("change", function () {
+    var b = BREEDS.filter(function (x) { return x[0] === sel.value; })[0];
+    if (b && b[2]) { state.kg = Math.round(b[2]); kg.value = state.kg; paintKg(); }
+  });
+  kg.addEventListener("input", paintKg);
+
+  /* ---------------- krok 5: tip a exkluzívne „Nič konkrétne“ ---------------- */
+  quiz.addEventListener("change", function (e) {
+    var t = e.target;
+    if (t.name === "focus") {
+      var boxes = quiz.querySelectorAll('input[name="focus"]');
+      if (t.value === "nic" && t.checked) boxes.forEach(function (b) { if (b !== t) b.checked = false; });
+      if (t.value !== "nic" && t.checked) quiz.querySelector('input[value="nic"]').checked = false;
+      var key = t.checked ? t.value : (Array.prototype.filter.call(boxes, function (b) { return b.checked; })[0] || {}).value || "nic";
+      $("focus-tip-t").textContent = FOCUS_TIP[key][0];
+      $("focus-tip").textContent = FOCUS_TIP[key][1];
+    }
+    read();
+  });
+
+  // formulár → stav
+  function read() {
+    var fd = new FormData(quiz);
+    state.breed = fd.get("breed");
+    state.kg = +fd.get("kg");
+    state.years = fd.get("years");
+    state.months = fd.get("months");
+    state.activity = fd.get("activity") || "";
+    state.neutered = fd.get("neutered") || "";
+    state.body = fd.get("body") || "";
+    state.focus = fd.getAll("focus");
+    save();
+    var err = quiz.querySelector('[data-err="' + current + '"]');
+    if (err && valid(current)) err.hidden = true;
+  }
+  // stav → formulár
+  function fill() {
+    sel.value = state.breed;
+    kg.value = state.kg; paintKg();
+    quiz.years.value = state.years; quiz.months.value = state.months;
+    ["activity", "neutered", "body"].forEach(function (n) {
+      quiz.querySelectorAll('input[name="' + n + '"]').forEach(function (r) { r.checked = r.value === state[n]; });
+    });
+    quiz.querySelectorAll('input[name="focus"]').forEach(function (c) { c.checked = has(c.value); });
+    order.querySelectorAll('input[name="plan"]').forEach(function (r) { r.checked = r.value === state.plan; });
+    var key = state.focus[0] || "nic";
+    $("focus-tip-t").textContent = FOCUS_TIP[key][0];
+    $("focus-tip").textContent = FOCUS_TIP[key][1];
+  }
+  quiz.addEventListener("input", read);
+
+  function valid(step) {
+    switch (step) {
+      case "krok-2":
+        var y = state.years === "" ? 0 : +state.years, m = state.months === "" ? 0 : +state.months;
+        return (state.years !== "" || state.months !== "") && y >= 0 && y <= 25 && m >= 0 && m <= 11 && y * 12 + m > 0;
+      case "krok-3": return !!state.activity;
+      case "krok-4": return !!state.neutered && !!state.body;
+      case "krok-5": return state.focus.length > 0;
+      default: return true;
+    }
+  }
+  var STEPS = ["krok-1", "krok-2", "krok-3", "krok-4", "krok-5"];
+  function firstInvalid() {
+    for (var i = 0; i < STEPS.length; i++) if (!valid(STEPS[i])) return STEPS[i];
+    return null;
+  }
+
+  quiz.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-next],[data-prev]");
+    if (!btn) return;
+    var cur = current, i = STEPS.indexOf(cur);
+    if (btn.hasAttribute("data-prev")) { go(STEPS[i - 1]); return; }
+    read();
+    var err = quiz.querySelector('[data-err="' + cur + '"]');
+    if (!valid(cur)) { if (err) err.hidden = false; return; }
+    if (err) err.hidden = true;
+    go(i < STEPS.length - 1 ? STEPS[i + 1] : "miesame");
+  });
+
+  /* ---------------- miešanie ---------------- */
+  var mixRaf = 0;
+  function runMix() {
+    var items = $("mix-list").children, pct = $("mix-pct");
+    var dur = matchMedia("(prefers-reduced-motion: reduce)").matches ? 600 : 3200, t0 = performance.now();
+    cancelAnimationFrame(mixRaf);
+    (function tick(t) {
+      var p = Math.min(1, (t - t0) / dur), v = Math.round(p * 100);
+      pct.textContent = v + " %";
+      for (var i = 0; i < items.length; i++) {
+        var done = v >= (i + 1) * 25, now = !done && v >= i * 25;
+        items[i].className = done ? "done" : now ? "now" : "";
+      }
+      if (p < 1) mixRaf = requestAnimationFrame(tick);
+      else setTimeout(function () { if (current === "miesame") location.hash = "vysledok"; }, 450);
+    })(t0);
+  }
+
+  /* ---------------- výsledok ---------------- */
+  function renderResult() {
+    var p = plan();
+    if (!state.bag) state.bag = p.rec;
+    var I = GranulaIcons.svg;
+    $("r-why").textContent = ageText() + ", " + state.kg + " kg a " + ACT[state.activity][1] + ". Preto " + p.meatTxt +
+      " s " + p.veg[2] + ", " + (p.why.length ? p.why.join(", ") + " a " : "") + "dávka presne na váhu tvojho psa.";
+    var chips = '<li class="lbl">V GRANULÁCH</li>';
+    p.meats.forEach(function (x) { chips += '<li class="it"><span style="background:var(--o);color:var(--o)">' + I(x[0], 30, "#000000") + "</span>" + x[1] + "</li>"; });
+    chips += '<li class="it"><span style="background:var(--l);color:var(--l)">' + I(p.veg[0], 30, "#000000") + "</span>" + p.veg[1] + "</li>";
+    p.extras.forEach(function (x) { chips += '<li class="it"><span style="background:var(--m);color:var(--m)">' + I(x[0], 30, "#0047BB") + "</span>" + x[1] + "</li>"; });
+    $("r-recipe").innerHTML = chips;
+    $("r-dose").textContent = p.grams + " g";
+    $("r-macro").textContent = p.protein + " / " + p.fat + " %";
+    var month = p.grams * 30 / 1000;
+    $("r-month").textContent = "~" + (month >= 3 ? num(month) : num(month, 1)) + " kg";
+
+    var html = "";
+    BAGS.forEach(function (b, i) {
+      html += '<label class="opt bagopt"><input type="radio" name="bag" value="' + b.id + '"' + (b.id === state.bag ? " checked" : "") + ">" +
+        "<span><b>" + b.label + "</b><small>vydrží " + p.days[i] + " " + plural(p.days[i], "deň", "dni", "dní") + "</small></span>" +
+        '<span class="price">' + b.price + " €</span>" + (b.id === p.rec ? '<span class="rec">Odporúčame</span>' : "") + "</label>";
+    });
+    $("r-bags").innerHTML = html;
+    $("r-stage").textContent = "GRANULE NA MIERU · " + { stena: "ŠTEŇA", dospely: "DOSPELÝ", senior: "SENIOR" }[p.stage];
+    $("r-circle").innerHTML = I(p.meats[0][0], 52, "#000000") + I(p.veg[0], 52, "#000000");
+    paintBag(p);
+  }
+  function paintBag(p) {
+    var b = bag(), i = BAGS.indexOf(b);
+    $("r-perday").textContent = eur(b.price * (1 - PLANS.mesiac) / p.days[i]) + " na deň";
+    $("r-bag-kg").textContent = b.label;
+    $("r-bag-img").setAttribute("aria-label", "Vrece Granula, granule na mieru, " + b.label);
+  }
+  function bag() { return BAGS.filter(function (b) { return b.id === state.bag; })[0] || BAGS[1]; }
+  $("r-bags").addEventListener("change", function (e) {
+    state.bag = e.target.value; save(); paintBag(plan());
+  });
+
+  /* ---------------- objednávka ---------------- */
+  function renderOrder() {
+    var p = plan(), b = bag(), i = BAGS.indexOf(b), d = PLANS[state.plan];
+    Object.keys(PLANS).forEach(function (k) {
+      order.querySelector('[data-plan-price="' + k + '"]').textContent = eur(b.price * (1 - PLANS[k])) + (k === "raz" ? "" : " / vrece");
+    });
+    $("s-meta").textContent = b.label + " · " + p.grams + " g denne · vydrží " + p.days[i] + " " + plural(p.days[i], "deň", "dni", "dní");
+    $("s-bag-l").textContent = "Vrece " + b.label;
+    $("s-bag").textContent = eur(b.price);
+    $("s-disc-row").hidden = !d;
+    $("s-disc-l").textContent = "Zľava predplatného −" + Math.round(d * 100) + " %";
+    $("s-disc").textContent = "−" + eur(b.price * d);
+    $("s-total").textContent = eur(Math.round((b.price * (1 - d) + SHIPPING) * 100) / 100);
+    $("s-submit").textContent = d ? "Objednať predplatné" : "Objednať";
+    $("s-note").textContent = d
+      ? "Platíš pri každom doručení. Ďalšie vrece pošleme okolo " + nextDay(p.days[i]) + ". dňa, skôr než sa to staré minie."
+      : "Platíš raz. Ďalšie vrece si objednáš, keď budeš chcieť.";
+  }
+  function nextDay(days) { return Math.max(1, days - 4); }
+  function shipUI() {
+    var v = order.ship.value;
+    $("ship-point").hidden = v === "adresa";
+    $("ship-addr").hidden = v !== "adresa";
+  }
+  $("pick-btn").addEventListener("click", function () {
+    // sem príde widget dopravcu (SPS / Packeta); dovtedy textové pole
+    var f = $("point"); f.hidden = false; this.setAttribute("aria-expanded", "true"); f.focus();
+  });
+  order.addEventListener("change", function (e) {
+    if (e.target.name === "plan") { state.plan = e.target.value; save(); renderOrder(); }
+    if (e.target.name === "ship") shipUI();
+  });
+  order.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var addr = order.ship.value === "adresa";
+    var need = ["email", "fullname", "tel", "cc", "exp", "cvc"].concat(addr ? ["street", "zip", "city"] : ["point"]);
+    var bad = need.filter(function (n) {
+      var f = order.elements[n];
+      return !f.value.trim() || (f.type === "email" && !f.checkValidity());
+    });
+    order.querySelectorAll(".input").forEach(function (f) { f.style.borderColor = ""; f.removeAttribute("aria-invalid"); });
+    bad.forEach(function (n) { var f = order.elements[n]; f.style.borderColor = "#B3261E"; f.setAttribute("aria-invalid", "true"); });
+    if (bad.length && bad.indexOf("point") !== -1) { $("point").hidden = false; }
+    order.querySelector('[data-err="objednavka"]').hidden = !bad.length;
+    if (bad.length) { order.elements[bad[0]].focus(); return; }
+    // Žiadne dáta sa nikam neposielajú: platba sa napojí cez platobnú bránu (pozri README).
+    order.querySelectorAll("#cc,#exp,#cvc").forEach(function (f) { f.value = ""; });
+    state.ordered = true; save();
+    location.hash = "hotovo";
+  });
+
+  /* ---------------- hotovo ---------------- */
+  function renderDone() {
+    var p = plan(), b = bag(), i = BAGS.indexOf(b), sub = PLANS[state.plan] > 0;
+    $("d-text").textContent = "Prvé vrece sa chystá na cestu. Keď odíde, pošleme ti e-mail. " +
+      (sub ? "Ďalšie príde samo okolo " + nextDay(p.days[i]) + ". dňa, skôr než miska zostane prázdna." : "Ďalšie si objednáš, keď budeš chcieť.");
+    $("d-dose").textContent = p.grams + " g";
+    $("d-bag").textContent = b.label;
+    $("d-next").textContent = sub ? "~" + nextDay(p.days[i]) + ". deň" : "podľa teba";
+  }
+
+  /* ---------------- smerovanie cez #hash ---------------- */
+  var current = null;
+  var screens = {};
+  document.querySelectorAll("[data-screen]").forEach(function (s) { screens[s.dataset.screen] = s; });
+  function go(id) { location.hash = id; }
+  function route() {
+    var id = location.hash.slice(1);
+    if (!screens[id]) id = "krok-1";
+    var bad = firstInvalid();
+    var after = ["miesame", "vysledok", "objednavka", "hotovo"];
+    if (STEPS.indexOf(id) > STEPS.indexOf(bad) && bad && STEPS.indexOf(id) !== -1) id = bad;
+    if (after.indexOf(id) !== -1 && bad) id = bad;
+    if (id === "hotovo" && !state.ordered) id = "objednavka";
+    if (id !== location.hash.slice(1)) { history.replaceState(null, "", "#" + id); }
+    if (current === id) return;
+    if (id !== "hotovo") state.ordered = false;
+    current = id;
+    Object.keys(screens).forEach(function (k) { screens[k].classList.toggle("on", k === id); });
+    document.title = screens[id].dataset.title;
+    if (id === "miesame") runMix(); else cancelAnimationFrame(mixRaf);
+    if (id === "vysledok") renderResult();
+    if (id === "objednavka") { renderOrder(); shipUI(); }
+    if (id === "hotovo") renderDone();
+    window.scrollTo(0, 0);
+    var h = screens[id].querySelector(".q-title");
+    if (h) h.focus({ preventScroll: true });
+    save();
+  }
+
+  fill();
+  window.addEventListener("hashchange", route);
+  route();
+})();
+</script>
+</body>
+</html>
