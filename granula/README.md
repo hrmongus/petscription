@@ -8,7 +8,7 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 | --- | --- | --- |
 | `index.html` | úvodná stránka: hero, čísla, piliere, 1,8 roka, mäso, suroviny, porovnanie, ako to funguje, Granula = nula, recenzie, odborníci, otázky, výzva, pätička | Homepage + Homepage — pokračovanie |
 | `suroviny.html` | podstránka Suroviny | Suroviny |
-| `granule-na-mieru.html` | funkčný dotazník: 5 krokov → miešanie → výsledok → objednávka → hotovo (smerovanie cez `#krok-1` … `#hotovo`) | Formulár 1–5, Vyberáme granule, Výsledok, Checkout, Hotovo |
+| `granule-na-mieru.html` | funkčný dotazník: 6 krokov (meno a pohlavie, plemeno, váha a vek, deň, kastrácia a postava, zameranie) → miešanie → výsledok → objednávka → hotovo (smerovanie cez `#krok-1` … `#hotovo`) | Formulár 1–5 + nový krok s menom, Vyberáme granule, Výsledok, Checkout, Hotovo |
 | `granula.css` | spoločné tokeny a komponenty (logo-nálepka, tlačidlá, foto s posunutým farebným poľom, pásky, karty mäsa, pätička) | |
 | `icons.js` | ikony surovín z návrhu; `<span data-icon="jelen" data-ink="#F4EBE2">` | |
 | `site.js` | objavovanie pri scrolle, karusel recenzií | |
