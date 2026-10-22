@@ -16,7 +16,7 @@
   /* ---------------- stav ---------------- */
   var KEY = "granula-quiz";
   var state = { dogname: "", sex: "", breed: "krizenec-stredny", kg: 17, years: "", months: "", weeks: "",
-    activity: "", neutered: "", pregnant: "", body: "", focus: [], bag: "", plan: "mesiac", ordered: false, recipe: "", recipeFor: "" };
+    activity: "", neutered: "", pregnant: "", body: "", focus: [], bag: "", plan: "mesiac", ordered: false, recipe: "", recipeFor: "", bagKey: "" };
   try { Object.assign(state, JSON.parse(sessionStorage.getItem(KEY)) || {}); } catch (e) {}
   function save() {
     try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
@@ -182,7 +182,9 @@
     // vysvetľujúci text sa ukazuje len vtedy, keď pre psa nemáme vhodné granule
     $("r-why").hidden = !!p;
     if (!p) { $("r-swap").hidden = true; $("r-name").textContent = "Pre tohto psa nemáme vhodné granule"; $("r-why").textContent = "Napíš nám, poradíme osobne."; return; }
-    if (!r.bags.some(function (x) { return x.bag.id === state.bag; })) state.bag = r.recBag;
+    // odporúčané vrece je predvolené; vlastný výber platí, kým sa nezmení receptúra alebo dávka
+    var bagKey = p.id + "|" + r.dose.grams;
+    if (state.bagKey !== bagKey || !r.bags.some(function (x) { return x.bag.id === state.bag; })) { state.bag = r.recBag; state.bagKey = bagKey; save(); }
     var I = GranulaIcons.svg;
     $("r-kicker").textContent = "Tvoje granule na mieru · " + state.dogname;
     $("r-name").textContent = p.name;
