@@ -292,7 +292,11 @@
   .split aside .frame{height:min(400px,80vw)}
   .q-body{padding:32px 0;gap:20px}
   .progress .bars i{width:22px}
-  .opts.c2,.opts.c3,.kpis,.tiles,.co .grid2{grid-template-columns:minmax(0,1fr)}
+  .opts.c2,.opts.c3,.tiles,.co .grid2{grid-template-columns:minmax(0,1fr)}
+  .kpis{gap:8px}
+  .kpis > div{padding:12px 10px}
+  .kpis b{font-size:clamp(17px,5.4vw,22px);white-space:nowrap}
+  .kpis span{font-size:11.5px;margin-top:5px}
   .mix-body,.done-body{flex-direction:column;align-items:flex-start;gap:40px}
   .bowl{width:min(300px,70vw);height:min(300px,70vw);align-self:center}
   .bowl .sticker{right:-8px;font-size:22px}
@@ -578,6 +582,8 @@
     <div class="kicker" style="margin-top:8px" id="r-kicker">Tvoje granule na mieru</div>
     <h1 class="display q-title" tabindex="-1">Hotovo. <span>Granule sú vybrané.</span></h1>
     <div class="plabel"><span class="t">Receptúra:</span><h2 class="display pname" id="r-name"></h2></div>
+    <!-- vrece len na mobile (na desktope je v bočnom paneli), suroviny pod ním -->
+    <div class="pack-inline" aria-hidden="true"><div class="pack-stage"><img class="pack" id="r-pack-m" src="" alt="" width="896" height="1200"></div><span class="sticker" id="r-stage-m">Na mieru</span></div>
     <div class="pack-chips" id="r-chips" aria-hidden="true"></div>
     <div class="swap" id="r-swap">
       <p class="swap-note" id="swap-note" hidden></p>
@@ -587,7 +593,6 @@
         <div class="swap-cmp" id="swap-cmp" hidden></div>
       </div>
     </div>
-    <div class="pack-inline" aria-hidden="true"><div class="pack-stage"><img class="pack" id="r-pack-m" src="" alt="" width="896" height="1200"></div><span class="sticker" id="r-stage-m">Na mieru</span></div>
     <p class="why" id="r-why"></p>
     <ul class="sr-only" id="r-recipe" aria-label="Hlavné suroviny"></ul>
     <div class="kpis">
