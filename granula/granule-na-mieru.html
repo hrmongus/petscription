@@ -309,6 +309,7 @@
       <div class="card">
         <label class="field"><span>Plemeno</span>
           <span class="select-wrap"><select class="select" name="breed" id="breed"></select></span>
+          <small style="font-size:14px;color:var(--i3)">Plemeno nie je v zozname? Vyber kríženca podľa veľkosti.</small>
         </label>
       </div>
     </div>
@@ -338,23 +339,15 @@
       <div class="weight">
         <label for="kg" class="sr-only">Hmotnosť v kilogramoch</label>
         <output for="kg" id="kg-out">18 kg</output>
-        <input class="range" type="range" id="kg" name="kg" min="0.5" max="70" step="0.5" value="18">
-        <div class="ends" aria-hidden="true"><span>0,5 kg</span><span>70 kg</span></div>
+        <input class="range" type="range" id="kg" name="kg" min="0.5" max="90" step="0.5" value="17">
+        <div class="ends" aria-hidden="true"><span>0,5 kg</span><span>90 kg</span></div>
       </div>
       <div class="row2">
         <label class="field"><span>Roky</span><input class="input" type="number" name="years" inputmode="numeric" min="0" max="25" placeholder="napr. 4"></label>
         <label class="field"><span>Mesiace</span><input class="input" type="number" name="months" inputmode="numeric" min="0" max="11" placeholder="0"></label>
       </div>
       <label class="field" id="weeks-field" hidden><span>Presnejšie: koľko má týždňov?</span><input class="input" type="number" name="weeks" inputmode="numeric" min="1" max="13" placeholder="napr. 7"></label>
-      <label class="field" id="size-field" hidden><span>Aký veľký bude v dospelosti?</span>
-        <span class="select-wrap"><select class="select" name="adultSize">
-          <option value="">Vyber veľkosť</option>
-          <option value="male">Malý (do 10 kg)</option>
-          <option value="stredne">Stredný (10–25 kg)</option>
-          <option value="velke">Veľký (25–45 kg)</option>
-          <option value="obrie">Obrí (nad 45 kg)</option>
-        </select></span></label>
-      <p class="err" role="alert" hidden data-err="krok-3">Doplň vek (aspoň roky alebo mesiace) a pri šteniatku kríženca aj veľkosť v dospelosti.</p>
+      <p class="err" role="alert" hidden data-err="krok-3">Doplň vek: aspoň roky alebo mesiace.</p>
     </div>
     <div class="q-nav" style="max-width:640px">
       <button type="button" class="back" data-prev>← Späť</button>

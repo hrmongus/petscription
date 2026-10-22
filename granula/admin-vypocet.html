@@ -82,15 +82,14 @@ code{font-size:12px;background:var(--m2);padding:1px 4px}
   <form class="inputs" id="in" autocomplete="off">
     <h2>Odpovede z dotazníka</h2>
     <div class="f"><span>Pohlavie</span><div class="radios"><label><input type="radio" name="sex" value="pes" checked>Pes</label><label><input type="radio" name="sex" value="fenka">Fenka</label></div></div>
-    <label class="f"><span>Plemeno</span><select name="breed" id="breed"></select><small>Plemeno určuje veľkosť v dospelosti. Kríženec: podľa poľa nižšie alebo podľa aktuálnej hmotnosti.</small></label>
-    <label class="f"><span>Aktuálna hmotnosť (kg)</span><input type="number" name="kg" min="0.5" max="90" step="0.5" value="18"></label>
+    <label class="f"><span>Plemeno</span><select name="breed" id="breed"></select><small>Plemeno určuje veľkostnú kategóriu (tabuľka plemien v sekcii 12). Výber predvyplní priemernú hmotnosť.</small></label>
+    <label class="f"><span>Aktuálna hmotnosť (kg)</span><input type="number" name="kg" min="0.5" max="120" step="0.5" value="17"></label>
     <div class="row">
       <label class="f"><span>Roky</span><input type="number" name="years" min="0" max="25" value="4"></label>
       <label class="f"><span>Mesiace</span><input type="number" name="months" min="0" max="11" value="0"></label>
       <label class="f"><span>Týždne</span><input type="number" name="weeks" min="0" max="13" value=""></label>
     </div>
     <p style="font-size:11px;color:var(--i3);margin:-6px 0 12px">Týždne sa použijú, len ak roky = 0 a mesiace ≤ 2 (v dotazníku sa vtedy pole zobrazí).</p>
-    <label class="f"><span>Veľkosť v dospelosti (kríženec)</span><select name="adultSize"><option value="">nezadaná</option><option value="male">malý (do 10 kg)</option><option value="stredne">stredný (10–25 kg)</option><option value="velke">veľký (25–45 kg)</option><option value="obrie">obrí (nad 45 kg)</option></select><small>V dotazníku sa pýtame len pri krížencovi mladšom ako 24 mesiacov.</small></label>
     <div class="f"><span>Bežný deň</span><div class="radios">
       <label><input type="radio" name="activity" value="doma">Prevažne doma</label>
       <label><input type="radio" name="activity" value="mesto" checked>1–2 prechádzky</label>
@@ -155,13 +154,17 @@ code{font-size:12px;background:var(--m2);padding:1px 4px}
         <li><b>Dávka vs. výrobca</b>: model (WSAVA násobky × ME podľa NRC) dáva pri Hovädzom s ryžou o ~25–45 % viac než tabuľka výrobcu. Tabuľka zodpovedá ~1,2 × RER, čo je hodnota pre málo aktívneho / kastrovaného psa. Rozhodnúť: nechať model, alebo znížiť parameter <code>kalibrácia</code> (sekcia 6 ukazuje, aká hodnota by sedela).</li>
         <li><b>Ceny</b>: v podkladoch sú ceny „€/kg bez DPH“. Nie je jasné, či sú predajné alebo nákupné. Web ich zatiaľ zobrazuje ako predajné × (1 + DPH 23 %), bez marže. Zľavy predplatného (−10 / −20 %) sú z pôvodného návrhu.</li>
         <li><b>Veľkosti vriec</b>: obal ukazuje len 9 kg; ponúkame 9 kg a 2 × 9 kg.</li>
-        <li><b>Hranice veku a veľkosti</b> (šteňa do 10/12/18/24 mesiacov, senior od 9/8/7/6 rokov, veľkosti 10/25/45 kg) sú bežné orientačné hodnoty, nie údaj výrobcu. Treba potvrdiť s veterinárom.</li>
+        <li><b>Hranice veku</b> (šteňa do 10/10/12/18/24 mesiacov, senior od 9/9/8/7/6 rokov pre trpasličie/malé/stredné/veľké/obrie) sú bežné orientačné hodnoty, nie údaj výrobcu. Treba potvrdiť s veterinárom.</li>
+        <li><b>Plemená</b>: kategóriu berieme z tabuľky plemien (sekcia 12). „Trpasličie“ sa pri výbere granúl ráta ako malé, lebo výrobca rozlišuje len malé, stredné, veľké a obrie. Kríženci majú len malý, stredný a veľký; obrieho kríženca zatiaľ nemáme.</li>
         <li><b>„Zdravý senior“</b> pri Morka, hus & kačica = bez pankreasu, intolerancie a nadváhy. Iné choroby sa v dotazníku nezisťujú.</li>
         <li><b>„Kilo navyše“</b> = odhad 10 % nad ideálom (parameter). Presnejšie by bolo pýtať sa na ideálnu hmotnosť alebo BCS 1–9.</li>
         <li><b>Gravidita</b>: výrobca uvádza len „gravidné feny“ pri Hovädzom s ryžou. Laktácia (dojčenie) sa nepýta; dávka pri nej je 4–8 × RER a patrí k veterinárovi.</li>
         <li><b>Texty z podkladov</b> sú na webe s opravenými preklepmi (chontroitín → chondroitín, maso → mäso, peržlen → petržlen, pantotenaén → pantotenan, šteňátá → šteňatá, ostropestrec → pestrec). Pri medi bol v podkladoch omylom aj kód mangánu (3b502); ponechaný je len 3b405. Pred tlačou overiť s výrobcom.</li>
         
       </ol></section>
+    <section class="panel"><h2>12 · Plemená</h2>
+      <p class="lead2">Kategória, rozpätie a priemer hmotnosti dospelého psa (pes aj suka spolu; psy bývajú o 10–25 % ťažšie ako suky). Kategória rozhoduje o fáze života a výbere granúl; priemer len predvyplní hmotnosť v dotazníku. Zvýraznené = aktuálne zvolené plemeno.</p>
+      <div class="scroll" id="o-breeds"></div></section>
   </div>
 </div>
 
@@ -175,18 +178,29 @@ code{font-size:12px;background:var(--m2);padding:1px 4px}
   var yes = '<span class="ok">✓</span>', no = '<span class="no">✗</span>';
   var byId = {}; E.PRODUCTS.forEach(function (p) { byId[p.id] = p; });
 
-  E.BREEDS.forEach(function (b) { $("breed").add(new Option(b[1] + (b[2] ? " — " + String(b[2]).replace(".", ",") + " kg" : ""), b[0])); });
+  [["Kríženec", function (b) { return b.mix; }]].concat(["trpaslicie", "male", "stredne", "velke", "obrie"].map(function (k) {
+    return [E.SIZE_TEXT[k] + " plemená", function (b) { return !b.mix && b.size === k; }];
+  })).forEach(function (g) {
+    var og = document.createElement("optgroup"); og.label = g[0];
+    E.BREEDS.filter(g[1]).forEach(function (b) { og.appendChild(new Option(b.name + " — " + fmt(b.avg, 1).replace(",0", "") + " kg", b.id)); });
+    $("breed").appendChild(og);
+  });
+  $("breed").value = "krizenec-stredny";
+  $("breed").addEventListener("change", function () {
+    var b = E.BREEDS.filter(function (x) { return x.id === $("breed").value; })[0];
+    if (b) form.kg.value = b.avg;
+  });
 
   /* ---------- parametre ---------- */
   var override = {};
   try { override = JSON.parse(localStorage.getItem(E.OVERRIDE_KEY)) || {}; $("b-apply").checked = !!localStorage.getItem(E.OVERRIDE_KEY); } catch (e) {}
   var LABELS = {
-    sizeMax: "Veľkosť: hranica hmotnosti v dospelosti (kg, „menej než“)", sizeMid: "Kríženec: odhad hmotnosti v dospelosti podľa kategórie (kg)",
+    sizeMax: "Záloha mimo zoznamu: kategória z aktuálnej hmotnosti (kg, „menej než“)",
     puppyUntilMonths: "Šteňa do (mesiace)", seniorFromYears: "Senior od (roky)", factor: "Násobky RER (WSAVA / AAHA)", plans: "Zľavy predplatného (podiel)",
     starterWeeks: "Štartér do (týždne)", overweightFraction: "„Kilo navyše“ = nad ideálom (podiel)", underweightBonus: "„Chudší“ = energia navyše (podiel)",
     calibration: "Kalibrácia (× energia)", roundTo: "Zaokrúhlenie dávky (g)", vat: "DPH (podiel)", shipping: "Doprava (€)", minBagDays: "Odporúčané vrece aspoň (dní)",
     reorderLeadDays: "Ďalšie vrece skôr o (dni)",
-    male: "malé", stredne: "stredné", velke: "veľké", obrie: "obrie", mesiac: "každý mesiac", kvartal: "na 3 mesiace", raz: "jednorazovo",
+    trpaslicie: "trpasličie", male: "malé", stredne: "stredné", velke: "veľké", obrie: "obrie", mesiac: "každý mesiac", kvartal: "na 3 mesiace", raz: "jednorazovo",
     puppyUnder4m: "šteňa 0–4 mes.", puppyOver4m: "šteňa 4 mes.–dospelosť", adultNeutered: "dospelý kastrovaný", adultIntact: "dospelý nekastrovaný",
     inactive: "prevažne doma / senior", lightWork: "šport (ľahká práca)", moderateWork: "pracovný (stredná práca)", weightLoss: "nadváha (× RER ideálu)",
     gestationEarly: "gravidita 1.–6. týž.", gestationTop: "", gestationLate: "gravidita posl. 3 týž."
@@ -261,7 +275,8 @@ code{font-size:12px;background:var(--m2);padding:1px 4px}
     // 2 odvodené
     var rows = [
       ["Vek", d.useWeeks ? d.ageWeeks + " týždňov (zadané v týždňoch)" : fmt(d.ageMonths, 1) + " mesiacov = " + d.ageWeeks + " týždňov"],
-      ["Veľkosť v dospelosti", E.SIZE_TEXT[d.size] + " — zdroj: " + d.sizeSource + "; hranice: malé < " + P.sizeMax.male + " kg, stredné < " + P.sizeMax.stredne + " kg, veľké < " + P.sizeMax.velke + " kg, inak obrie"],
+      ["Veľkostná kategória", E.SIZE_TEXT[d.size] + (d.size === "trpaslicie" ? " (pri výbere granúl sa ráta ako malé)" : "") + " — zdroj: " + d.sizeSource],
+      ["Hmotnosť pre dávku", "aktuálna zadaná hmotnosť " + fmt(d.kg, 1) + " kg (priemer plemena slúži len na predvyplnenie)"],
       ["Životná fáza", E.STAGE_TEXT[d.stage] + " — štartér < " + P.starterWeeks + " týž., šteňa < " + d.puppyMonths + " mes., senior ≥ " + d.seniorYears + " r. (pre " + E.SIZE_TEXT[d.size] + " plemeno)"],
       ["Nadváha", d.obese ? "áno (postava „kilo navyše“)" : "nie"],
       ["Pankreas", d.pancreas ? "áno" : "nie"],
@@ -328,6 +343,13 @@ code{font-size:12px;background:var(--m2);padding:1px 4px}
       }).join("") + "</table>" +
       '<p style="font-size:13px;margin-top:10px">Cena = ' + (p.pricePerKgExVat == null ? "?" : fmt(p.pricePerKgExVat, 2)) + " €/kg bez DPH × kg × (1 + " + fmt(P.vat, 2) +
       "). Výdrž = kg × 1000 / dávka, nadol. Odporúčané = najmenšie vrece, ktoré vydrží aspoň " + P.minBagDays + " dní. Doprava " + fmt(P.shipping, 2) + " € za doručenie.</p>";
+
+    // 12 plemená
+    $("o-breeds").innerHTML = "<table><tr><th>Plemeno</th><th>Kategória</th><th class=n>Rozpätie (kg)</th><th class=n>Priemer (kg)</th><th class=n>Šteňa do</th><th class=n>Senior od</th></tr>" +
+      E.BREEDS.map(function (b) {
+        return "<tr" + (b.id === a.breed ? ' class="win"' : "") + "><td>" + esc(b.name) + "</td><td>" + (b.mix ? "kríženec → " : "") + E.SIZE_TEXT[b.size] +
+          "</td><td class=n>" + esc(b.range) + "</td><td class=n>" + fmt(b.avg, 1).replace(",0", "") + "</td><td class=n>" + P.puppyUntilMonths[b.size] + " mes.</td><td class=n>" + P.seniorFromYears[b.size] + " r.</td></tr>";
+      }).join("") + "</table>";
 
     // 8 poznámky
     $("o-notes").innerHTML = r.notes.length ? "<ul>" + r.notes.map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("") + "</ul>" : "<p>—</p>";

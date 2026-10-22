@@ -15,7 +15,7 @@
 
   /* ---------------- stav ---------------- */
   var KEY = "granula-quiz";
-  var state = { dogname: "", sex: "", breed: "krizenec", kg: 18, years: "", months: "", weeks: "", adultSize: "",
+  var state = { dogname: "", sex: "", breed: "krizenec-stredny", kg: 17, years: "", months: "", weeks: "",
     activity: "", neutered: "", pregnant: "", body: "", focus: [], bag: "", plan: "mesiac", ordered: false };
   try { Object.assign(state, JSON.parse(sessionStorage.getItem(KEY)) || {}); } catch (e) {}
   function save() {
@@ -39,24 +39,29 @@
 
   /* ---------------- plemeno, váha, vek ---------------- */
   var sel = $("breed");
-  E.BREEDS.forEach(function (b) { sel.add(new Option(b[1], b[0])); });
+  // plemená v skupinách: kríženci, potom od najmenších
+  var GROUPS = [["Kríženec", function (b) { return b.mix; }]].concat(["trpaslicie", "male", "stredne", "velke", "obrie"].map(function (s) {
+    return [E.SIZE_TEXT[s].charAt(0).toUpperCase() + E.SIZE_TEXT[s].slice(1) + " plemená", function (b) { return !b.mix && b.size === s; }];
+  }));
+  GROUPS.forEach(function (g) {
+    var og = document.createElement("optgroup"); og.label = g[0];
+    E.BREEDS.filter(g[1]).forEach(function (b) { og.appendChild(new Option(b.name, b.id)); });
+    sel.appendChild(og);
+  });
+  function breedOf(id) { return E.BREEDS.filter(function (x) { return x.id === id; })[0]; }
   var kg = $("kg"), kgOut = $("kg-out");
   function paintKg() {
     kgOut.textContent = String(kg.value).replace(".", ",") + " kg";
     kg.style.setProperty("--p", ((kg.value - kg.min) / (kg.max - kg.min) * 100) + "%");
   }
   sel.addEventListener("change", function () {
-    var b = E.BREEDS.filter(function (x) { return x[0] === sel.value; })[0];
-    if (b && b[2]) { state.kg = b[2]; kg.value = b[2]; paintKg(); }
+    var b = breedOf(sel.value);
+    if (b) { state.kg = b.avg; kg.value = b.avg; paintKg(); }
   });
   kg.addEventListener("input", paintKg);
 
-  // podmienené otázky: týždne pri veľmi mladom šteniatku, veľkosť v dospelosti pri mladom krížencovi, gravidita pri nekastrovanej fenke
+  // podmienené otázky: týždne pri veľmi mladom šteniatku, gravidita pri nekastrovanej fenke
   function needWeeks() { return (parseInt(state.years, 10) || 0) === 0 && state.months !== "" && (parseInt(state.months, 10) || 0) <= 2; }
-  function needSize() {
-    var months = (parseInt(state.years, 10) || 0) * 12 + (parseInt(state.months, 10) || 0);
-    return state.breed === "krizenec" && (state.years !== "" || state.months !== "") && months < 24;
-  }
   // gravidita sa pýta len pri nekastrovanej fenke od 6 mesiacov
   function needPreg() {
     var months = (parseInt(state.years, 10) || 0) * 12 + (parseInt(state.months, 10) || 0);
@@ -64,7 +69,6 @@
   }
   function paintConditional() {
     $("weeks-field").hidden = !needWeeks();
-    $("size-field").hidden = !needSize();
     $("preg-field").hidden = !needPreg();
   }
 
@@ -89,7 +93,6 @@
     state.years = fd.get("years");
     state.months = fd.get("months");
     state.weeks = fd.get("weeks") || "";
-    state.adultSize = fd.get("adultSize") || "";
     state.activity = fd.get("activity") || "";
     state.neutered = fd.get("neutered") || "";
     state.pregnant = fd.get("pregnant") || "";
@@ -103,11 +106,11 @@
   }
   // stav → formulár
   function fill() {
+    if (!breedOf(state.breed)) state.breed = "krizenec-stredny";
     quiz.dogname.value = state.dogname;
     sel.value = state.breed;
     kg.value = state.kg; paintKg();
     quiz.years.value = state.years; quiz.months.value = state.months; quiz.weeks.value = state.weeks;
-    quiz.adultSize.value = state.adultSize;
     ["sex", "activity", "neutered", "pregnant", "body"].forEach(function (n) {
       quiz.querySelectorAll('input[name="' + n + '"]').forEach(function (r) { r.checked = r.value === state[n]; });
     });
@@ -132,7 +135,7 @@
         var y = state.years === "" ? 0 : +state.years, m = state.months === "" ? 0 : +state.months;
         var w = state.weeks === "" ? 0 : +state.weeks;
         var age = (state.years !== "" || state.months !== "") && y >= 0 && y <= 25 && m >= 0 && m <= 11 && (y * 12 + m > 0 || (needWeeks() && w > 0));
-        return age && state.kg > 0 && (!needSize() || !!state.adultSize);
+        return age && state.kg > 0;
       case "krok-4": return !!state.activity;
       case "krok-5": return !!state.neutered && !!state.body && (!needPreg() || !!state.pregnant);
       case "krok-6": return state.focus.length > 0;
@@ -188,7 +191,8 @@
     $("r-kicker").textContent = "Tvoje granule na mieru · " + state.dogname;
     $("r-name").textContent = p.name;
     var who = d.isPuppy ? "šteňa" : d.stage === "senior" ? "senior" : "dospelý pes";
-    $("r-why").textContent = ageText(d) + ", " + num(state.kg, state.kg % 1 ? 1 : 0) + " kg, " + E.SIZE_TEXT[d.size] + " plemeno, " + who +
+    var lead = d.breed ? (d.breed.mix ? "Kríženec" : d.breed.name) : "Pes";
+    $("r-why").textContent = lead + " (" + E.SIZE_TEXT[d.size] + " plemeno), " + ageText(d) + ", " + num(state.kg, state.kg % 1 ? 1 : 0) + " kg, " + who +
       ". Vybrali sme ich, pretože " + r.winner.rule.why + ". Dávku sme spočítali z energie týchto granúl, hmotnosti a bežného dňa tvojho psa.";
     var ICON_BG = ["var(--o)", "var(--l)", "var(--r)", "var(--m)"];
     $("r-recipe").innerHTML = '<li class="lbl">HLAVNÉ SUROVINY</li>' + p.highlights.map(function (h, i) {

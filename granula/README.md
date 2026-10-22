@@ -43,8 +43,8 @@ Morka, hus & kačica s tekvicou · Hovädzie s ryžou · Jahňa s batátmi & ču
 Jeleň & králik s batátmi.
 
 **Výber granúl** v troch krokoch:
-1. *Odvodené vstupy*: veľkosť v dospelosti (z plemena, pri krížencovi zo zadanej
-   kategórie alebo z hmotnosti), životná fáza (štartér < 9 týž., šteňa, dospelý,
+1. *Odvodené vstupy*: veľkostná kategória z tabuľky 86 plemien a krížencov
+   (`BREEDS`; trpasličie / malé / stredné / veľké / obrie), životná fáza (štartér < 9 týž., šteňa, dospelý,
    senior; hranice podľa veľkosti), nadváha, pankreas, intolerancia, aktivita, gravidita.
 2. *Vhodnosť*: každý produkt má kritériá „vhodné pre“ a „nevhodné pre“ prepísané
    z popisu výrobcu (`ELIGIBILITY`).

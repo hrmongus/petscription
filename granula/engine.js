@@ -21,14 +21,12 @@
         stránke sa dajú meniť naživo; tu sú predvolené hodnoty.
      ====================================================================== */
   var PARAMS = {
-    // veľkostné kategórie podľa hmotnosti v dospelosti (kg): < male = malé, < stredne = stredné, < velke = veľké, inak obrie
-    sizeMax: { male: 10, stredne: 25, velke: 45 },
-    // odhad hmotnosti v dospelosti, keď ju zadá majiteľ kríženca len kategóriou (kg)
-    sizeMid: { male: 6, stredne: 17, velke: 33, obrie: 55 },
-    // šteňa do tohto veku (mesiace), podľa veľkosti v dospelosti
-    puppyUntilMonths: { male: 10, stredne: 12, velke: 18, obrie: 24 },
-    // senior od tohto veku (roky), podľa veľkosti
-    seniorFromYears: { male: 9, stredne: 8, velke: 7, obrie: 6 },
+    // záloha, keď plemeno nie je v zozname: kategória z aktuálnej hmotnosti (kg, „menej než“)
+    sizeMax: { trpaslicie: 5, male: 10, stredne: 25, velke: 45 },
+    // šteňa do tohto veku (mesiace), podľa veľkostnej kategórie plemena
+    puppyUntilMonths: { trpaslicie: 10, male: 10, stredne: 12, velke: 18, obrie: 24 },
+    // senior od tohto veku (roky), podľa veľkostnej kategórie
+    seniorFromYears: { trpaslicie: 9, male: 9, stredne: 8, velke: 7, obrie: 6 },
     // „štartér pre šteňatá všetkých plemien – cca do 9. týždňa“
     starterWeeks: 9,
 
@@ -58,16 +56,97 @@
   };
 
   /* ======================================================================
-     2. PLEMENÁ — typická hmotnosť dospelého psa (kg), z nej veľkostná kategória.
+     2. PLEMENÁ — kategória, rozpätie a priemerná hmotnosť dospelého psa (pes aj suka).
+        Kategóriu berieme priamo z tabuľky; „trpasličie“ sa pri výbere granúl ráta ako malé.
+        Priemer predvyplní hmotnosť v dotazníku. Psy bývajú o 10–25 % ťažšie ako suky.
      ====================================================================== */
   var BREEDS = [
-    ["krizenec", "Kríženec / iné plemeno", null],
-    ["civava", "Čivava", 2.5], ["jorksir", "Jorkšírsky teriér", 3], ["maltezsky", "Maltézsky psík", 4],
-    ["jack-russell", "Jack russell teriér", 7], ["jazvecik", "Jazvečík", 9], ["francuzsky-buldocek", "Francúzsky buldoček", 12],
-    ["bigl", "Bígl", 13], ["kokrspaniel", "Anglický kokršpaniel", 14], ["border-kolia", "Border kólia", 18],
-    ["vyzla", "Maďarský krátkosrstý stavač (vyžla)", 24],
-    ["zlaty-retriever", "Zlatý retriever", 30], ["labrador", "Labradorský retriever", 32],
-    ["nemecky-ovciak", "Nemecký ovčiak", 34], ["bernsky-salasnicky", "Bernský salašnícky pes", 45]
+    { id: "krizenec-maly", name: "Kríženec – malý", size: "male", mix: true, range: "do 10", avg: 7 },
+    { id: "krizenec-stredny", name: "Kríženec – stredný", size: "stredne", mix: true, range: "10–25", avg: 17 },
+    { id: "krizenec-velky", name: "Kríženec – veľký", size: "velke", mix: true, range: "25+", avg: 32 },
+    { id: "civava", name: "Čivava", size: "trpaslicie", mix: false, range: "1,5–3", avg: 2.3 },
+    { id: "prazsky-krysarik", name: "Pražský krysárik", size: "trpaslicie", mix: false, range: "1,5–3,5", avg: 2.5 },
+    { id: "nemecky-spic-trpaslici-pomeranian", name: "Nemecký špic trpasličí (pomeranian)", size: "trpaslicie", mix: false, range: "1,8–3,5", avg: 2.5 },
+    { id: "yorkshirsky-terier", name: "Yorkshirský teriér", size: "trpaslicie", mix: false, range: "2–3,2", avg: 2.8 },
+    { id: "papillon", name: "Papillon", size: "trpaslicie", mix: false, range: "1,5–5", avg: 3 },
+    { id: "bolonsky-psik", name: "Bolonský psík", size: "trpaslicie", mix: false, range: "2,5–4", avg: 3.2 },
+    { id: "maltezsky-psik", name: "Maltézsky psík", size: "trpaslicie", mix: false, range: "3–4", avg: 3.5 },
+    { id: "pekinez", name: "Pekinéz", size: "trpaslicie", mix: false, range: "3–5,5", avg: 4.5 },
+    { id: "coton-de-tulear", name: "Coton de Tuléar", size: "trpaslicie", mix: false, range: "3,5–6", avg: 4.5 },
+    { id: "bisonik", name: "Bišonik", size: "trpaslicie", mix: false, range: "3–6", avg: 5 },
+    { id: "havansky-psik", name: "Havanský psík", size: "trpaslicie", mix: false, range: "4,5–6", avg: 5 },
+    { id: "trpaslici-pinc", name: "Trpasličí pinč", size: "trpaslicie", mix: false, range: "4–6", avg: 5 },
+    { id: "pudel-maly-trpaslici", name: "Pudel (malý / trpasličí)", size: "trpaslicie", mix: false, range: "3–8", avg: 5.5 },
+    { id: "shih-tzu", name: "Shih-tzu", size: "male", mix: false, range: "4,5–8", avg: 6 },
+    { id: "jack-russell-terier", name: "Jack Russell teriér", size: "male", mix: false, range: "5–6", avg: 6 },
+    { id: "maly-snaucer", name: "Malý šnaucer", size: "male", mix: false, range: "4,5–7", avg: 6 },
+    { id: "lhasa-apso", name: "Lhasa apso", size: "male", mix: false, range: "5–8", avg: 6.5 },
+    { id: "cavalier-king-charles-spaniel", name: "Cavalier King Charles španiel", size: "male", mix: false, range: "5,5–8", avg: 7 },
+    { id: "cairn-terier", name: "Cairn teriér", size: "male", mix: false, range: "6–7,5", avg: 7 },
+    { id: "mops", name: "Mops", size: "male", mix: false, range: "6–8", avg: 7.5 },
+    { id: "west-highland-white-terier", name: "West highland white teriér", size: "male", mix: false, range: "6–10", avg: 8 },
+    { id: "bostonsky-terier", name: "Bostonský teriér", size: "male", mix: false, range: "5–11", avg: 8 },
+    { id: "foxterier", name: "Foxteriér", size: "male", mix: false, range: "7–8,5", avg: 8 },
+    { id: "setlandsky-ovciak-sheltie", name: "Šetlandský ovčiak (sheltie)", size: "male", mix: false, range: "6–12", avg: 8 },
+    { id: "jazvecik", name: "Jazvečík", size: "male", mix: false, range: "7–12", avg: 9 },
+    { id: "nemecky-polovny-terier-jagdterier", name: "Nemecký poľovný teriér (jagdteriér)", size: "male", mix: false, range: "7,5–10", avg: 9 },
+    { id: "skotsky-terier", name: "Škótsky teriér", size: "male", mix: false, range: "8,5–10,5", avg: 9.5 },
+    { id: "shiba-inu", name: "Shiba inu", size: "male", mix: false, range: "8–11", avg: 9.5 },
+    { id: "basenji", name: "Basenji", size: "male", mix: false, range: "9,5–11", avg: 10 },
+    { id: "francuzsky-buldog", name: "Francúzsky buldog", size: "male", mix: false, range: "8–14", avg: 11 },
+    { id: "mudi", name: "Mudi", size: "male", mix: false, range: "8–13", avg: 11 },
+    { id: "welsh-corgi-pembroke", name: "Welsh corgi pembroke", size: "male", mix: false, range: "10–12", avg: 11 },
+    { id: "bigl", name: "Bígl", size: "stredne", mix: false, range: "9–14", avg: 12 },
+    { id: "whippet", name: "Whippet", size: "stredne", mix: false, range: "10–15", avg: 13 },
+    { id: "anglicky-kokerspaniel", name: "Anglický kokeršpaniel", size: "stredne", mix: false, range: "12–15", avg: 13.5 },
+    { id: "stafordsirsky-bulterier", name: "Stafordšírsky bulteriér", size: "stredne", mix: false, range: "11–17", avg: 14 },
+    { id: "border-kolia", name: "Border kólia", size: "stredne", mix: false, range: "14–20", avg: 17 },
+    { id: "stredny-snaucer", name: "Stredný šnaucer", size: "stredne", mix: false, range: "14–20", avg: 17 },
+    { id: "slovensky-kopov", name: "Slovenský kopov", size: "stredne", mix: false, range: "15–20", avg: 18 },
+    { id: "sarpej", name: "Šarpej", size: "stredne", mix: false, range: "18–25", avg: 21 },
+    { id: "sibirsky-husky", name: "Sibírsky husky", size: "stredne", mix: false, range: "16–28", avg: 22 },
+    { id: "anglicky-springerspaniel", name: "Anglický špringeršpaniel", size: "stredne", mix: false, range: "18–25", avg: 22 },
+    { id: "americky-pitbulterier", name: "Americký pitbulteriér", size: "stredne", mix: false, range: "14–30", avg: 22 },
+    { id: "samojed", name: "Samojed", size: "stredne", mix: false, range: "17–30", avg: 23 },
+    { id: "australsky-ovciak", name: "Austrálsky ovčiak", size: "stredne", mix: false, range: "16–32", avg: 24 },
+    { id: "anglicky-buldog", name: "Anglický buldog", size: "stredne", mix: false, range: "22–25", avg: 24 },
+    { id: "madarsky-stavac-vizla", name: "Maďarský stavač (vižla)", size: "stredne", mix: false, range: "20–30", avg: 25 },
+    { id: "basset-hound", name: "Basset hound", size: "stredne", mix: false, range: "20–30", avg: 25 },
+    { id: "bulterier", name: "Bulteriér", size: "stredne", mix: false, range: "20–30", avg: 25 },
+    { id: "cau-cau", name: "Čau-čau", size: "stredne", mix: false, range: "20–32", avg: 25 },
+    { id: "belgicky-ovciak-malinois", name: "Belgický ovčiak (malinois)", size: "velke", mix: false, range: "20–30", avg: 26 },
+    { id: "ceskoslovensky-vlciak", name: "Československý vlčiak", size: "velke", mix: false, range: "20–32", avg: 26 },
+    { id: "americky-stafordsirsky-terier", name: "Americký stafordšírsky teriér", size: "velke", mix: false, range: "18–32", avg: 27 },
+    { id: "bavorsky-barvar", name: "Bavorský barvár", size: "velke", mix: false, range: "20–35", avg: 27 },
+    { id: "nemecky-kratkosrsty-stavac", name: "Nemecký krátkosrstý stavač", size: "velke", mix: false, range: "25–32", avg: 28 },
+    { id: "dalmatin", name: "Dalmatín", size: "velke", mix: false, range: "24–32", avg: 28 },
+    { id: "irsky-seter", name: "Írsky seter", size: "velke", mix: false, range: "25–32", avg: 29 },
+    { id: "slovensky-hrubosrsty-stavac", name: "Slovenský hrubosrstý stavač", size: "velke", mix: false, range: "22–35", avg: 29 },
+    { id: "labradorsky-retriever", name: "Labradorský retriever", size: "velke", mix: false, range: "25–36", avg: 30 },
+    { id: "boxer", name: "Boxer", size: "velke", mix: false, range: "25–32", avg: 30 },
+    { id: "nemecky-drotosrsty-stavac", name: "Nemecký drôtosrstý stavač", size: "velke", mix: false, range: "27–32", avg: 30 },
+    { id: "zlaty-retriever", name: "Zlatý retriever", size: "velke", mix: false, range: "27–36", avg: 31 },
+    { id: "weimarsky-stavac", name: "Weimarský stavač", size: "velke", mix: false, range: "25–40", avg: 32 },
+    { id: "biely-svajciarsky-ovciak", name: "Biely švajčiarsky ovčiak", size: "velke", mix: false, range: "25–40", avg: 32 },
+    { id: "hovawart", name: "Hovawart", size: "velke", mix: false, range: "25–40", avg: 33 },
+    { id: "nemecky-ovciak", name: "Nemecký ovčiak", size: "velke", mix: false, range: "30–40", avg: 34 },
+    { id: "rodezsky-ridgeback", name: "Rodézsky ridgeback", size: "velke", mix: false, range: "32–37", avg: 34 },
+    { id: "aljassky-malamut", name: "Aljašský malamut", size: "velke", mix: false, range: "34–38", avg: 36 },
+    { id: "slovensky-cuvac", name: "Slovenský čuvač", size: "velke", mix: false, range: "31–44", avg: 38 },
+    { id: "dobrman", name: "Dobrman", size: "velke", mix: false, range: "32–45", avg: 38 },
+    { id: "akita-inu", name: "Akita inu", size: "velke", mix: false, range: "32–45", avg: 38 },
+    { id: "rotvajler", name: "Rotvajler", size: "obrie", mix: false, range: "35–50", avg: 45 },
+    { id: "bernsky-salasnicky-pes", name: "Bernský salašnícky pes", size: "obrie", mix: false, range: "38–50", avg: 45 },
+    { id: "cane-corso", name: "Cane corso", size: "obrie", mix: false, range: "40–50", avg: 45 },
+    { id: "kuvasz", name: "Kuvasz", size: "obrie", mix: false, range: "37–62", avg: 48 },
+    { id: "bullmastif", name: "Bullmastif", size: "obrie", mix: false, range: "41–59", avg: 50 },
+    { id: "bordeauxska-doga", name: "Bordeauxská doga", size: "obrie", mix: false, range: "45–65", avg: 55 },
+    { id: "stredoazijsky-pastiersky-pes", name: "Stredoázijský pastiersky pes", size: "obrie", mix: false, range: "40–80", avg: 55 },
+    { id: "kaukazsky-pastiersky-pes", name: "Kaukazský pastiersky pes", size: "obrie", mix: false, range: "45–70", avg: 55 },
+    { id: "leonberger", name: "Leonberger", size: "obrie", mix: false, range: "45–77", avg: 59 },
+    { id: "novofundlandsky-pes", name: "Novofundlandský pes", size: "obrie", mix: false, range: "54–68", avg: 61 },
+    { id: "nemecka-doga", name: "Nemecká doga", size: "obrie", mix: false, range: "45–90", avg: 65 },
+    { id: "bernardin", name: "Bernardín", size: "obrie", mix: false, range: "64–120", avg: 75 }
   ];
 
   /* ======================================================================
@@ -163,7 +242,7 @@
     doma: "pokojný domáci režim", mesto: "bežný mestský režim",
     sport: "veľa behu a športu", praca: "pracovný režim"
   };
-  var SIZE_TEXT = { male: "malé", stredne: "stredné", velke: "veľké", obrie: "obrie" };
+  var SIZE_TEXT = { trpaslicie: "trpasličie", male: "malé", stredne: "stredné", velke: "veľké", obrie: "obrie" };
   var STAGE_TEXT = { starter: "šteňa do 9. týždňa", puppy: "šteňa", adult: "dospelý", senior: "senior" };
 
   /* ======================================================================
@@ -187,7 +266,7 @@
   function int(v) { var n = parseInt(v, 10); return isNaN(n) ? 0 : n; }
 
   function sizeFromKg(kg, P) {
-    return kg < P.sizeMax.male ? "male" : kg < P.sizeMax.stredne ? "stredne" : kg < P.sizeMax.velke ? "velke" : "obrie";
+    return kg < P.sizeMax.trpaslicie ? "trpaslicie" : kg < P.sizeMax.male ? "male" : kg < P.sizeMax.stredne ? "stredne" : kg < P.sizeMax.velke ? "velke" : "obrie";
   }
 
   function derive(a, P) {
@@ -197,12 +276,15 @@
     var ageMonths = useWeeks ? weeks * 12 / 52.18 : years * 12 + months;
     var kg = +a.kg || 0;
 
-    var breed = BREEDS.filter(function (b) { return b[0] === a.breed; })[0] || BREEDS[0];
-    var adultKg, sizeSource;
-    if (breed[2]) { adultKg = breed[2]; sizeSource = "plemeno " + breed[1] + " (typicky " + breed[2] + " kg)"; }
-    else if (a.adultSize) { adultKg = P.sizeMid[a.adultSize]; sizeSource = "zadaná veľkosť v dospelosti: " + SIZE_TEXT[a.adultSize]; }
-    else { adultKg = kg; sizeSource = "aktuálna hmotnosť " + fmt(kg, 1) + " kg (kríženec bez zadanej veľkosti v dospelosti)"; }
-    var size = breed[2] || !a.adultSize ? sizeFromKg(adultKg, P) : a.adultSize;
+    var breed = BREEDS.filter(function (b) { return b.id === a.breed; })[0] || null;
+    var adultKg, size, sizeSource;
+    if (breed) {
+      adultKg = breed.avg; size = breed.size;
+      sizeSource = (breed.mix ? "" : "plemeno ") + breed.name + " — " + SIZE_TEXT[size] + ", " + breed.range + " kg, priemer " + fmt(breed.avg, 1).replace(",0", "") + " kg";
+    } else {
+      adultKg = kg; size = sizeFromKg(kg, P);
+      sizeSource = "plemeno nie je v zozname — kategória z aktuálnej hmotnosti " + fmt(kg, 1) + " kg";
+    }
 
     var puppyMonths = P.puppyUntilMonths[size], seniorYears = P.seniorFromYears[size];
     var stage = ageWeeks < P.starterWeeks ? "starter"
@@ -215,7 +297,7 @@
       breed: breed, adultKg: adultKg, size: size, sizeSource: sizeSource,
       puppyMonths: puppyMonths, seniorYears: seniorYears, stage: stage,
       isPuppy: stage === "starter" || stage === "puppy",
-      small: size === "male", smallMid: size === "male" || size === "stredne", largeGiant: size === "velke" || size === "obrie",
+      small: size === "trpaslicie" || size === "male", smallMid: size === "trpaslicie" || size === "male" || size === "stredne", largeGiant: size === "velke" || size === "obrie",
       obese: a.body === "navyse",
       pancreas: has(a, "pankreas"),
       intolerance: has(a, "alergia") || has(a, "travenie"),
