@@ -170,15 +170,19 @@
 .paybar b{display:block;font-weight:900;font-size:24px;line-height:1}
 .paybar span{display:block;font-size:14px;font-weight:600;color:var(--i2);margin-top:4px}
 .res aside{width:500px;align-items:center;justify-content:center;position:relative}
-.bigbag{width:320px;height:480px;background:var(--o);color:var(--n);border-radius:0 16px 8px 8px;box-shadow:0 40px 50px -30px rgba(11,14,42,.7);
   display:flex;flex-direction:column;align-items:center;gap:12px;padding:32px 22px 20px;position:relative;overflow:hidden}
-.bigbag::before{content:"";position:absolute;top:0;left:0;right:0;height:14px;background:rgba(0,0,0,.12)}
-.bigbag .logo{background:var(--k);color:var(--m);font-size:37px;padding:7px 13px 6px}
-.bigbag .kind{font-weight:800;font-size:10px;letter-spacing:.14em}
-.bigbag .circle{width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.3);margin-top:6px;display:flex;align-items:center;justify-content:center;gap:6px;color:var(--o)}
-.bigbag .name{font-size:28.8px;text-align:center}
-.bigbag .bottom{margin-top:auto;width:100%;display:flex;justify-content:space-between;align-items:baseline;font-size:11px;font-weight:700}
-.bigbag .bottom b{font-weight:900;font-size:14px}
+.pname{font-size:clamp(26px,2.6vw,34px);line-height:1.05}
+.pack{width:min(460px,96%);height:auto;filter:drop-shadow(0 30px 30px rgba(0,0,0,.35))}
+.facts{border-bottom:2px solid var(--n)}
+.facts details{border-top:2px solid var(--n);padding:14px 0}
+.facts summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;font-weight:800;font-size:16px}
+.facts summary::-webkit-details-marker{display:none}
+.facts summary:hover{color:var(--k)}
+.facts summary i{font-style:normal;font-weight:900;font-size:22px;line-height:1;transition:transform .2s ease}
+.facts details[open] summary i{transform:rotate(45deg)}
+.facts p{margin-top:10px;font-size:14px;line-height:1.55;color:var(--i2)}
+.test-banner{position:fixed;left:0;right:0;bottom:0;z-index:99;background:#B3261E;color:#fff;font:700 13px/1.4 var(--font);padding:8px 16px;text-align:center}
+.test-banner a{color:#fff}
 .res aside .sticker{position:absolute;left:40px;top:110px;background:var(--l);color:var(--n);font-size:24px;line-height:1.05;padding:8px 14px;--t:-8deg}
 
 /* ---------- objednávka ---------- */
@@ -197,13 +201,14 @@
 .pick{display:flex;justify-content:space-between;width:100%;font:600 15px/1.3 var(--font);color:var(--n);background:var(--white);border:2px solid var(--n);padding:13px 16px;cursor:pointer;text-align:left}
 .pick:hover{border-color:var(--k)}
 .box #ship-addr:not([hidden]){display:flex}
+#preg-field[hidden]{display:none}
 .box .note{font-size:13px;line-height:1.4;color:var(--i2)}
 .cardrow{display:flex;gap:10px}
 .cardrow > :first-child{flex:2}.cardrow > *{flex:1;min-width:0}
 .co aside{width:480px;padding:48px 48px 40px;justify-content:flex-start;gap:18px}
 .sum-t{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--o)}
 .sum-item{display:flex;gap:16px;align-items:center}
-.sum-item .mini{width:72px;height:104px;flex:none;background:var(--o);border-radius:8px 8px 4px 4px}
+.sum-item .mini{width:78px;height:104px;flex:none;object-fit:contain}
 .sum-item b{display:block;font-weight:900;font-size:18px;line-height:1;text-transform:uppercase}
 .sum-item span{display:block;font-size:14px;color:var(--muted-dark);margin-top:4px}
 .lines{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--n2);padding-top:16px;font-size:16px}
@@ -239,8 +244,9 @@
   .bowl .sticker{right:-8px;font-size:22px}
   .done-pic{flex-basis:auto;width:100%}.done-pic .frame{height:min(440px,90vw)}
   .done-pic .sticker{left:-6px}
-  .bigbag{width:260px;height:390px}
-  .res aside .sticker{left:16px;top:24px}
+    .res aside .sticker{left:16px;top:24px}
+  .res .pack-aside{order:-1;padding-top:28px;padding-bottom:28px}
+  .pack{width:min(260px,70%)}
   .row2{flex-direction:column}
   .cardrow{flex-wrap:wrap}.cardrow > :first-child{flex-basis:100%}
 }
@@ -328,14 +334,23 @@
       <div class="weight">
         <label for="kg" class="sr-only">Hmotnosť v kilogramoch</label>
         <output for="kg" id="kg-out">18 kg</output>
-        <input class="range" type="range" id="kg" name="kg" min="1" max="70" step="1" value="18">
-        <div class="ends" aria-hidden="true"><span>1 kg</span><span>70 kg</span></div>
+        <input class="range" type="range" id="kg" name="kg" min="0.5" max="70" step="0.5" value="18">
+        <div class="ends" aria-hidden="true"><span>0,5 kg</span><span>70 kg</span></div>
       </div>
       <div class="row2">
         <label class="field"><span>Roky</span><input class="input" type="number" name="years" inputmode="numeric" min="0" max="25" placeholder="napr. 4"></label>
         <label class="field"><span>Mesiace</span><input class="input" type="number" name="months" inputmode="numeric" min="0" max="11" placeholder="0"></label>
       </div>
-      <p class="err" role="alert" hidden data-err="krok-3">Doplň vek: aspoň roky alebo mesiace.</p>
+      <label class="field" id="weeks-field" hidden><span>Presnejšie: koľko má týždňov?</span><input class="input" type="number" name="weeks" inputmode="numeric" min="1" max="13" placeholder="napr. 7"></label>
+      <label class="field" id="size-field" hidden><span>Aký veľký bude v dospelosti?</span>
+        <span class="select-wrap"><select class="select" name="adultSize">
+          <option value="">Vyber veľkosť</option>
+          <option value="male">Malý (do 10 kg)</option>
+          <option value="stredne">Stredný (10–25 kg)</option>
+          <option value="velke">Veľký (25–45 kg)</option>
+          <option value="obrie">Obrí (nad 45 kg)</option>
+        </select></span></label>
+      <p class="err" role="alert" hidden data-err="krok-3">Doplň vek (aspoň roky alebo mesiace) a pri šteniatku kríženca aj veľkosť v dospelosti.</p>
     </div>
     <div class="q-nav" style="max-width:640px">
       <button type="button" class="back" data-prev>← Späť</button>
@@ -401,6 +416,14 @@
           <label class="chip"><input type="radio" name="neutered" value="ano">Áno</label>
           <label class="chip"><input type="radio" name="neutered" value="nie">Nie</label>
         </div>
+        <div id="preg-field" hidden style="display:flex;flex-direction:column;gap:10px;margin-top:6px">
+          <div class="card-label" id="t-preg">Je gravidná?</div>
+          <div class="chips" role="radiogroup" aria-labelledby="t-preg">
+            <label class="chip"><input type="radio" name="pregnant" value="nie">Nie</label>
+            <label class="chip"><input type="radio" name="pregnant" value="early">Áno, prvých 6 týždňov</label>
+            <label class="chip"><input type="radio" name="pregnant" value="late">Áno, posledné 3 týždne</label>
+          </div>
+        </div>
       </div>
       <div style="display:flex;flex-direction:column;gap:12px">
         <div class="card-label" id="t-body">Postava</div>
@@ -410,7 +433,7 @@
           <label class="opt body"><input type="radio" name="body" value="navyse"><span class="shape" aria-hidden="true"><i style="height:40px"></i></span><b>Kilo navyše</b><small>rebrá ťažko nahmatáš</small></label>
         </div>
       </div>
-      <p class="err" role="alert" hidden data-err="krok-5">Odpovedz na kastráciu aj postavu.</p>
+      <p class="err" role="alert" hidden data-err="krok-5">Odpovedz na kastráciu, postavu a pri nekastrovanej fenke aj na graviditu.</p>
     </div>
     <div class="q-nav">
       <button type="button" class="back" data-prev>← Späť</button>
@@ -438,7 +461,7 @@
     <div class="q-body">
       <div class="kicker">Granule na mieru</div>
       <h1 class="display q-title" tabindex="-1" id="t-focus">Na čo sa <span>máme zamerať?</span></h1>
-      <p class="q-lead">Vyber všetko, čo platí. Podľa toho vyberieme mäso a ďalšie suroviny.</p>
+      <p class="q-lead">Vyber všetko, čo platí. Podľa toho vyberieme granule.</p>
       <div class="card chips" role="group" aria-labelledby="t-focus" style="flex-direction:row;gap:12px">
         <label class="chip"><input type="checkbox" name="focus" value="travenie">Citlivé trávenie</label>
         <label class="chip"><input type="checkbox" name="focus" value="kby">Kĺby a pohyb</label>
@@ -449,6 +472,7 @@
         <label class="chip"><input type="checkbox" name="focus" value="svaly">Svaly</label>
         <label class="chip"><input type="checkbox" name="focus" value="imunita">Imunita</label>
         <label class="chip"><input type="checkbox" name="focus" value="alergia">Nesedí mu každé mäso</label>
+        <label class="chip"><input type="checkbox" name="focus" value="pankreas">Problémy s pankreasom</label>
         <label class="chip"><input type="checkbox" name="focus" value="nic">Nič konkrétne</label>
       </div>
       <p class="err" role="alert" hidden data-err="krok-6">Vyber aspoň jednu možnosť. Ak nič nerieši, daj „Nič konkrétne“.</p>
@@ -494,8 +518,9 @@
     </div>
     <div class="kicker" style="margin-top:8px" id="r-kicker">Tvoje granule na mieru</div>
     <h1 class="display q-title" tabindex="-1">Hotovo. <span>Granule sú vybrané.</span></h1>
+    <h2 class="display pname" id="r-name"></h2>
     <p class="why" id="r-why"></p>
-    <ul class="recipe" id="r-recipe" aria-label="V granulách"></ul>
+    <ul class="recipe" id="r-recipe" aria-label="Hlavné suroviny"></ul>
     <div class="kpis">
       <div><b id="r-dose"></b><span>denná dávka</span></div>
       <div><b id="r-macro"></b><span>bielkoviny / tuk</span></div>
@@ -503,22 +528,22 @@
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <div class="sub-lbl" id="t-bag">VRECE · POŠLEME HO SKÔR, NEŽ SA MINIE</div>
-      <div class="opts c3" role="radiogroup" aria-labelledby="t-bag" id="r-bags" style="padding-top:12px"></div>
+      <div class="opts c2" role="radiogroup" aria-labelledby="t-bag" id="r-bags" style="padding-top:12px"></div>
+    </div>
+    <div class="facts" id="r-facts">
+      <details><summary>Zloženie<i aria-hidden="true">+</i></summary><p id="f-comp"></p></details>
+      <details><summary>Analytické zložky<i aria-hidden="true">+</i></summary><p id="f-anal"></p></details>
+      <details><summary>Nutričné doplnkové látky v 1 kg<i aria-hidden="true">+</i></summary><p id="f-add"></p></details>
+      <details><summary>Stopové prvky v 1 kg<i aria-hidden="true">+</i></summary><p id="f-trace"></p></details>
     </div>
     <div class="paybar">
       <div><b id="r-perday"></b><span>s mesačným predplatným · prvé vrece aj každé ďalšie</span></div>
       <a class="btn btn-o next" href="#objednavka">K platbe →</a>
     </div>
   </div>
-  <aside class="side-blue">
-    <div class="bigbag" role="img" id="r-bag-img">
-      <span class="logo">Granula!</span>
-      <div class="kind" id="r-stage">GRANULE NA MIERU</div>
-      <div class="circle" id="r-circle"></div>
-      <div class="name display">Granule na mieru</div>
-      <div class="bottom"><span>Kompletné krmivo pre psov</span><b id="r-bag-kg">9 kg</b></div>
-    </div>
-    <span class="sticker" aria-hidden="true">Na mieru</span>
+  <aside class="side-blue pack-aside">
+    <img class="pack" id="r-pack" src="" alt="" width="896" height="1200">
+    <span class="sticker" aria-hidden="true" id="r-stage">Na mieru</span>
   </aside>
 </section>
 
@@ -576,7 +601,7 @@
   </div>
   <aside style="background:var(--n);color:var(--m)">
     <div class="sum-t">ZHRNUTIE</div>
-    <div class="sum-item"><div class="mini" aria-hidden="true"></div><div><b>Granule na mieru</b><span id="s-meta"></span></div></div>
+    <div class="sum-item"><img class="mini" id="s-pack" src="" alt="" width="896" height="1200"><div><b id="s-name">Granule na mieru</b><span id="s-meta"></span></div></div>
     <div class="lines">
       <div><span id="s-bag-l"></span><span id="s-bag"></span></div>
       <div class="disc" id="s-disc-row"><span id="s-disc-l"></span><span id="s-disc"></span></div>
@@ -611,345 +636,7 @@
 </section>
 
 <script src="icons.js"></script>
-<script>
-(function () {
-  /* ---------------- dáta ---------------- */
-  // typická hmotnosť dospelého psa: iba predvyplní posuvník v kroku 2
-  var BREEDS = [
-    ["krizenec", "Kríženec — hmotnosť zadám sám", null],
-    ["civava", "Čivava", 2.5], ["jorksir", "Jorkšírsky teriér", 3], ["maltezsky", "Maltézsky psík", 4],
-    ["jack-russell", "Jack russell teriér", 7], ["jazvecik", "Jazvečík", 9], ["francuzsky-buldocek", "Francúzsky buldoček", 12],
-    ["bigl", "Bígl", 13], ["kokrspaniel", "Anglický kokršpaniel", 14], ["border-kolia", "Border kólia", 18],
-    ["zlaty-retriever", "Zlatý retriever", 30], ["labrador", "Labradorský retriever", 32],
-    ["nemecky-ovciak", "Nemecký ovčiak", 34], ["bernsky-salasnicky", "Bernský salašnícky pes", 45]
-  ];
-  var BAGS = [
-    { id: "4", kg: 4, label: "4 kg", price: 37 },
-    { id: "9", kg: 9, label: "9 kg", price: 69 },
-    { id: "18", kg: 18, label: "2 × 9 kg", price: 119 }
-  ];
-  var PLANS = { mesiac: 0.10, kvartal: 0.20, raz: 0 };
-  var SHIPPING = 4.90;
-  var KCAL_PER_G = 3.45; // ZÁSTUPNÁ hodnota — nahradiť energiou z reálnej receptúry
-  var ACT = {
-    doma: [1.3, "pokojný domáci režim"], mesto: [1.6, "bežný mestský režim"],
-    sport: [2.0, "veľa behu a športu"], praca: [2.5, "pracovný režim"]
-  };
-
-  /* ---------------- stav ---------------- */
-  var KEY = "granula-quiz";
-  var state = { dogname: "", sex: "", breed: "krizenec", kg: 18, years: "", months: "", activity: "", neutered: "", body: "", focus: [], bag: "", plan: "mesiac", ordered: false };
-  try { Object.assign(state, JSON.parse(sessionStorage.getItem(KEY)) || {}); } catch (e) {}
-  function save() {
-    try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
-  }
-
-  var quiz = document.getElementById("quiz");
-  var order = document.getElementById("order");
-  var $ = function (id) { return document.getElementById(id); };
-  var eur = function (n) { return n.toFixed(2).replace(".", ",") + " €"; };
-  var num = function (n, d) { return (d ? n.toFixed(d) : String(Math.round(n))).replace(".", ","); };
-  function plural(n, one, few, many) { return n === 1 ? one : (n >= 2 && n <= 4 ? few : many); }
-
-  /* ---------------- výpočet ---------------- */
-  function ageMonths() { return (parseInt(state.years, 10) || 0) * 12 + (parseInt(state.months, 10) || 0); }
-  function stage() { var m = ageMonths(); return m < 12 ? "stena" : m >= 84 ? "senior" : "dospely"; }
-  function has(f) { return state.focus.indexOf(f) !== -1; }
-
-  // RER = 70 × kg^0,75; násobky sú orientačné a pred spustením ich má potvrdiť veterinár
-  function plan() {
-    var st = stage(), m = ageMonths(), kg = state.kg;
-    var f = st === "stena" ? (m < 4 ? 3.0 : 2.0) : ACT[state.activity][0];
-    if (st !== "stena") {
-      if (state.neutered === "ano") f *= 0.9;
-      if (st === "senior") f *= 0.9;
-    }
-    f *= { chudsi: 1.1, akurat: 1, navyse: 0.85 }[state.body];
-    if (has("vaha") && state.body !== "chudsi") f *= 0.95;
-    var grams = Math.max(10, Math.round(70 * Math.pow(kg, 0.75) * f / KCAL_PER_G / 5) * 5);
-
-    var active = state.activity === "sport" || state.activity === "praca" || has("energia");
-    var protein = active ? 32 : st === "stena" ? 30 : state.body === "navyse" ? 24 : 26;
-    var fat = active ? 20 : st === "stena" ? 18 : state.body === "navyse" ? 12 : 16;
-    if (has("svaly")) protein = 32;
-
-    var meats, meatTxt;
-    if (has("alergia")) { meats = [["jahna", "Jahňa"]]; meatTxt = "jahňa ako jediný zdroj mäsa"; }
-    else if (has("travenie")) { meats = [["jelen", "Jeleň"]]; meatTxt = "jeleň ako jediný zdroj mäsa"; }
-    else if (active) { meats = [["krava", "Hovädzie"], ["jelen", "Jeleň"]]; meatTxt = "hovädzie s jeleňom"; }
-    else if (has("vyberavy")) { meats = [["hus", "Hus"], ["kacka", "Kačica"]]; meatTxt = "hus a kačica"; }
-    else { meats = [["morka", "Morka"], ["hus", "Hus"], ["kacka", "Kačica"]]; meatTxt = "hydina"; }
-    var veg = active ? ["bataty", "Batáty", "batátmi"] : (state.body === "navyse" || has("vaha")) ? ["mrkva", "Mrkva", "mrkvou"] : ["tekvica", "Tekvica", "tekvicou"];
-
-    var extras = [], why = [];
-    if (has("kby")) { extras.push(["chondroitin", "Chondroitín"], ["glukosamin", "Glukozamín"]); why.push("viac chondroitínu a glukozamínu pre kĺby"); }
-    else if (st === "senior") { extras.push(["kolagen", "Kolagén"]); why.push("kolagén pre kĺby"); }
-    if (has("travenie")) { extras.push(["hliva", "Hliva ustricová"]); why.push("hliva ustricová pre pokojné brucho"); }
-    else if (has("imunita")) { extras.push(["hliva", "Hliva ustricová"]); why.push("hliva ustricová s betaglukánmi"); }
-    if (has("svaly")) why.push("až 32 % bielkovín pre svaly");
-    if (has("srst")) { extras.push(["lan", "Konope a ľan"]); why.push("konope a ľan pre srsť"); }
-
-    var days = BAGS.map(function (b) { return Math.floor(b.kg * 1000 / grams); });
-    var rec = BAGS[BAGS.length - 1].id;
-    for (var i = 0; i < BAGS.length; i++) if (days[i] >= 28) { rec = BAGS[i].id; break; }
-
-    return { stage: st, grams: grams, protein: protein, fat: fat, meats: meats, meatTxt: meatTxt, veg: veg,
-      extras: extras, why: why, days: days, rec: rec };
-  }
-
-  function ageText() {
-    var y = parseInt(state.years, 10) || 0, m = parseInt(state.months, 10) || 0;
-    if (y >= 1) return y + " " + plural(y, "rok", "roky", "rokov");
-    return m + " " + plural(m, "mesiac", "mesiace", "mesiacov");
-  }
-
-  /* ---------------- krok 1 a 2: plemeno a váha ---------------- */
-  var sel = $("breed");
-  BREEDS.forEach(function (b) { sel.add(new Option(b[1], b[0])); });
-  var kg = $("kg"), kgOut = $("kg-out");
-  function paintKg() {
-    kgOut.textContent = kg.value + " kg";
-    kg.style.setProperty("--p", ((kg.value - kg.min) / (kg.max - kg.min) * 100) + "%");
-  }
-  sel.addEventListener("change", function () {
-    var b = BREEDS.filter(function (x) { return x[0] === sel.value; })[0];
-    if (b && b[2]) { state.kg = Math.round(b[2]); kg.value = state.kg; paintKg(); }
-  });
-  kg.addEventListener("input", paintKg);
-
-  /* ---------------- krok 6: exkluzívne „Nič konkrétne“ ---------------- */
-  quiz.addEventListener("change", function (e) {
-    var t = e.target;
-    if (t.name === "focus") {
-      var boxes = quiz.querySelectorAll('input[name="focus"]');
-      if (t.value === "nic" && t.checked) boxes.forEach(function (b) { if (b !== t) b.checked = false; });
-      if (t.value !== "nic" && t.checked) quiz.querySelector('input[value="nic"]').checked = false;
-    }
-    read();
-  });
-
-  // formulár → stav
-  function read() {
-    var fd = new FormData(quiz);
-    state.dogname = (fd.get("dogname") || "").trim();
-    state.sex = fd.get("sex") || "";
-    paintName();
-    state.breed = fd.get("breed");
-    state.kg = +fd.get("kg");
-    state.years = fd.get("years");
-    state.months = fd.get("months");
-    state.activity = fd.get("activity") || "";
-    state.neutered = fd.get("neutered") || "";
-    state.body = fd.get("body") || "";
-    state.focus = fd.getAll("focus");
-    save();
-    var err = quiz.querySelector('[data-err="' + current + '"]');
-    if (err && valid(current)) err.hidden = true;
-  }
-  // stav → formulár
-  function fill() {
-    quiz.dogname.value = state.dogname;
-    sel.value = state.breed;
-    kg.value = state.kg; paintKg();
-    quiz.years.value = state.years; quiz.months.value = state.months;
-    ["sex", "activity", "neutered", "body"].forEach(function (n) {
-      quiz.querySelectorAll('input[name="' + n + '"]').forEach(function (r) { r.checked = r.value === state[n]; });
-    });
-    quiz.querySelectorAll('input[name="focus"]').forEach(function (c) { c.checked = has(c.value); });
-    order.querySelectorAll('input[name="plan"]').forEach(function (r) { r.checked = r.value === state.plan; });
-    paintName();
-  }
-  quiz.addEventListener("input", read);
-
-  // meno v nominatíve sa dá vložiť bez skloňovania („Kto je Bruno?“)
-  function paintName() {
-    document.querySelectorAll("[data-name]").forEach(function (el) { el.textContent = state.dogname || el.dataset.name; });
-    var f = state.sex === "fenka";
-    $("neut-q").textContent = f ? "Je kastrovaná?" : "Je kastrovaný?";
-    $("neut-h").textContent = f ? "Sterilizácia sa počíta tiež." : "";
-  }
-  function valid(step) {
-    switch (step) {
-      case "krok-1": return !!state.dogname && !!state.sex;
-      case "krok-3":
-        var y = state.years === "" ? 0 : +state.years, m = state.months === "" ? 0 : +state.months;
-        return (state.years !== "" || state.months !== "") && y >= 0 && y <= 25 && m >= 0 && m <= 11 && y * 12 + m > 0;
-      case "krok-4": return !!state.activity;
-      case "krok-5": return !!state.neutered && !!state.body;
-      case "krok-6": return state.focus.length > 0;
-      default: return true;
-    }
-  }
-  var STEPS = ["krok-1", "krok-2", "krok-3", "krok-4", "krok-5", "krok-6"];
-  function firstInvalid() {
-    for (var i = 0; i < STEPS.length; i++) if (!valid(STEPS[i])) return STEPS[i];
-    return null;
-  }
-
-  quiz.addEventListener("click", function (e) {
-    var btn = e.target.closest("[data-next],[data-prev]");
-    if (!btn) return;
-    var cur = current, i = STEPS.indexOf(cur);
-    if (btn.hasAttribute("data-prev")) { go(STEPS[i - 1]); return; }
-    read();
-    var err = quiz.querySelector('[data-err="' + cur + '"]');
-    if (!valid(cur)) { if (err) err.hidden = false; return; }
-    if (err) err.hidden = true;
-    go(i < STEPS.length - 1 ? STEPS[i + 1] : "miesame");
-  });
-
-  /* ---------------- miešanie ---------------- */
-  var mixRaf = 0;
-  function runMix() {
-    var items = $("mix-list").children, pct = $("mix-pct");
-    var dur = matchMedia("(prefers-reduced-motion: reduce)").matches ? 600 : 3200, t0 = performance.now();
-    cancelAnimationFrame(mixRaf);
-    (function tick(t) {
-      var p = Math.min(1, (t - t0) / dur), v = Math.round(p * 100);
-      pct.textContent = v + " %";
-      for (var i = 0; i < items.length; i++) {
-        var done = v >= (i + 1) * 25, now = !done && v >= i * 25;
-        items[i].className = done ? "done" : now ? "now" : "";
-      }
-      if (p < 1) mixRaf = requestAnimationFrame(tick);
-      else setTimeout(function () { if (current === "miesame") location.hash = "vysledok"; }, 450);
-    })(t0);
-  }
-
-  /* ---------------- výsledok ---------------- */
-  function renderResult() {
-    var p = plan();
-    if (!state.bag) state.bag = p.rec;
-    var I = GranulaIcons.svg;
-    $("r-kicker").textContent = "Tvoje granule na mieru · " + state.dogname;
-    $("r-why").textContent = ageText() + ", " + state.kg + " kg a " + ACT[state.activity][1] + ". Preto " + p.meatTxt +
-      " s " + p.veg[2] + ", " + (p.why.length ? p.why.join(", ") + " a " : "") + "dávka presne na váhu tvojho psa.";
-    var chips = '<li class="lbl">V GRANULÁCH</li>';
-    p.meats.forEach(function (x) { chips += '<li class="it"><span style="background:var(--o);color:var(--o)">' + I(x[0], 30, "#000000") + "</span>" + x[1] + "</li>"; });
-    chips += '<li class="it"><span style="background:var(--l);color:var(--l)">' + I(p.veg[0], 30, "#000000") + "</span>" + p.veg[1] + "</li>";
-    p.extras.forEach(function (x) { chips += '<li class="it"><span style="background:var(--m);color:var(--m)">' + I(x[0], 30, "#0047BB") + "</span>" + x[1] + "</li>"; });
-    $("r-recipe").innerHTML = chips;
-    $("r-dose").textContent = p.grams + " g";
-    $("r-macro").textContent = p.protein + " / " + p.fat + " %";
-    var month = p.grams * 30 / 1000;
-    $("r-month").textContent = "~" + (month >= 3 ? num(month) : num(month, 1)) + " kg";
-
-    var html = "";
-    BAGS.forEach(function (b, i) {
-      html += '<label class="opt bagopt"><input type="radio" name="bag" value="' + b.id + '"' + (b.id === state.bag ? " checked" : "") + ">" +
-        "<span><b>" + b.label + "</b><small>vydrží " + p.days[i] + " " + plural(p.days[i], "deň", "dni", "dní") + "</small></span>" +
-        '<span class="price">' + b.price + " €</span>" + (b.id === p.rec ? '<span class="rec">Odporúčame</span>' : "") + "</label>";
-    });
-    $("r-bags").innerHTML = html;
-    $("r-stage").textContent = "GRANULE NA MIERU · " + { stena: "ŠTEŇA", dospely: "DOSPELÝ", senior: "SENIOR" }[p.stage];
-    $("r-circle").innerHTML = I(p.meats[0][0], 52, "#000000") + I(p.veg[0], 52, "#000000");
-    paintBag(p);
-  }
-  function paintBag(p) {
-    var b = bag(), i = BAGS.indexOf(b);
-    $("r-perday").textContent = eur(b.price * (1 - PLANS.mesiac) / p.days[i]) + " na deň";
-    $("r-bag-kg").textContent = b.label;
-    $("r-bag-img").setAttribute("aria-label", "Vrece Granula, granule na mieru, " + b.label);
-  }
-  function bag() { return BAGS.filter(function (b) { return b.id === state.bag; })[0] || BAGS[1]; }
-  $("r-bags").addEventListener("change", function (e) {
-    state.bag = e.target.value; save(); paintBag(plan());
-  });
-
-  /* ---------------- objednávka ---------------- */
-  function renderOrder() {
-    var p = plan(), b = bag(), i = BAGS.indexOf(b), d = PLANS[state.plan];
-    Object.keys(PLANS).forEach(function (k) {
-      order.querySelector('[data-plan-price="' + k + '"]').textContent = eur(b.price * (1 - PLANS[k])) + (k === "raz" ? "" : " / vrece");
-    });
-    $("s-meta").textContent = b.label + " · " + p.grams + " g denne · vydrží " + p.days[i] + " " + plural(p.days[i], "deň", "dni", "dní");
-    $("s-bag-l").textContent = "Vrece " + b.label;
-    $("s-bag").textContent = eur(b.price);
-    $("s-disc-row").hidden = !d;
-    $("s-disc-l").textContent = "Zľava predplatného −" + Math.round(d * 100) + " %";
-    $("s-disc").textContent = "−" + eur(b.price * d);
-    $("s-total").textContent = eur(Math.round((b.price * (1 - d) + SHIPPING) * 100) / 100);
-    $("s-submit").textContent = d ? "Objednať predplatné" : "Objednať";
-    $("s-note").textContent = d
-      ? "Platíš pri každom doručení. Ďalšie vrece pošleme okolo " + nextDay(p.days[i]) + ". dňa, skôr než sa to staré minie."
-      : "Platíš raz. Ďalšie vrece si objednáš, keď budeš chcieť.";
-  }
-  function nextDay(days) { return Math.max(1, days - 4); }
-  function shipUI() {
-    var v = order.ship.value;
-    $("ship-point").hidden = v === "adresa";
-    $("ship-addr").hidden = v !== "adresa";
-  }
-  $("pick-btn").addEventListener("click", function () {
-    // sem príde widget dopravcu (SPS / Packeta); dovtedy textové pole
-    var f = $("point"); f.hidden = false; this.setAttribute("aria-expanded", "true"); f.focus();
-  });
-  order.addEventListener("change", function (e) {
-    if (e.target.name === "plan") { state.plan = e.target.value; save(); renderOrder(); }
-    if (e.target.name === "ship") shipUI();
-  });
-  order.addEventListener("submit", function (e) {
-    e.preventDefault();
-    var addr = order.ship.value === "adresa";
-    var need = ["email", "fullname", "tel", "cc", "exp", "cvc"].concat(addr ? ["street", "zip", "city"] : ["point"]);
-    var bad = need.filter(function (n) {
-      var f = order.elements[n];
-      return !f.value.trim() || (f.type === "email" && !f.checkValidity());
-    });
-    order.querySelectorAll(".input").forEach(function (f) { f.style.borderColor = ""; f.removeAttribute("aria-invalid"); });
-    bad.forEach(function (n) { var f = order.elements[n]; f.style.borderColor = "#B3261E"; f.setAttribute("aria-invalid", "true"); });
-    if (bad.length && bad.indexOf("point") !== -1) { $("point").hidden = false; }
-    order.querySelector('[data-err="objednavka"]').hidden = !bad.length;
-    if (bad.length) { order.elements[bad[0]].focus(); return; }
-    // Žiadne dáta sa nikam neposielajú: platba sa napojí cez platobnú bránu (pozri README).
-    order.querySelectorAll("#cc,#exp,#cvc").forEach(function (f) { f.value = ""; });
-    state.ordered = true; save();
-    location.hash = "hotovo";
-  });
-
-  /* ---------------- hotovo ---------------- */
-  function renderDone() {
-    var p = plan(), b = bag(), i = BAGS.indexOf(b), sub = PLANS[state.plan] > 0;
-    $("d-text").textContent = state.dogname + " má večeru vybavenú. Prvé vrece sa chystá na cestu. Keď odíde, pošleme ti e-mail. " +
-      (sub ? "Ďalšie príde samo okolo " + nextDay(p.days[i]) + ". dňa, skôr než miska zostane prázdna." : "Ďalšie si objednáš, keď budeš chcieť.");
-    $("d-dose").textContent = p.grams + " g";
-    $("d-bag").textContent = b.label;
-    $("d-next").textContent = sub ? "~" + nextDay(p.days[i]) + ". deň" : "podľa teba";
-  }
-
-  /* ---------------- smerovanie cez #hash ---------------- */
-  var current = null;
-  var screens = {};
-  document.querySelectorAll("[data-screen]").forEach(function (s) { screens[s.dataset.screen] = s; });
-  function go(id) { location.hash = id; }
-  function route() {
-    var id = location.hash.slice(1);
-    if (!screens[id]) id = "krok-1";
-    var bad = firstInvalid();
-    var after = ["miesame", "vysledok", "objednavka", "hotovo"];
-    if (STEPS.indexOf(id) > STEPS.indexOf(bad) && bad && STEPS.indexOf(id) !== -1) id = bad;
-    if (after.indexOf(id) !== -1 && bad) id = bad;
-    if (id === "hotovo" && !state.ordered) id = "objednavka";
-    if (id !== location.hash.slice(1)) { history.replaceState(null, "", "#" + id); }
-    if (current === id) return;
-    if (id !== "hotovo") state.ordered = false;
-    current = id;
-    Object.keys(screens).forEach(function (k) { screens[k].classList.toggle("on", k === id); });
-    document.title = screens[id].dataset.title;
-    if (id === "miesame") runMix(); else cancelAnimationFrame(mixRaf);
-    if (id === "vysledok") renderResult();
-    if (id === "objednavka") { renderOrder(); shipUI(); }
-    if (id === "hotovo") renderDone();
-    window.scrollTo(0, 0);
-    var h = screens[id].querySelector(".q-title");
-    if (h) h.focus({ preventScroll: true });
-    save();
-  }
-
-  fill();
-  window.addEventListener("hashchange", route);
-  route();
-})();
-</script>
+<script src="engine.js"></script>
+<script src="kviz.js"></script>
 </body>
 </html>

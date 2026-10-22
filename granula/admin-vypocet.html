@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<title>Kontrola výpočtu — Granula (interné)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap">
+<link rel="stylesheet" href="granula.css">
+<style>
+body{font-size:15px}
+.top{background:var(--n);color:var(--m);padding:14px var(--gutter);display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between}
+.top .logo{font-size:22px}
+.top b{font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+.top a{color:var(--m)}
+.layout{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:28px;padding:24px var(--gutter) 64px;max-width:1600px;margin:0 auto}
+.inputs{position:sticky;top:12px;align-self:start;max-height:calc(100vh - 24px);overflow:auto;background:var(--white);border:2px solid var(--n);padding:18px}
+.inputs h2,.panel h2{font-size:13px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
+.f{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
+.f > span{font-size:12px;font-weight:800}
+.f small{font-size:11px;color:var(--i3)}
+.f input[type=number],.f select,.f input[type=text]{font:600 14px var(--font);border:2px solid var(--n);padding:8px 10px;background:#fff;width:100%}
+.row{display:flex;gap:8px}.row > *{flex:1}
+.radios{display:flex;flex-wrap:wrap;gap:6px}
+.radios label{display:inline-flex;align-items:center;gap:5px;border:2px solid var(--n);padding:5px 8px;font-size:12px;font-weight:700;cursor:pointer;background:var(--m)}
+.radios label:has(input:checked){background:var(--k);color:var(--m);border-color:var(--k)}
+.radios input{accent-color:var(--o)}
+.panels{display:flex;flex-direction:column;gap:22px;min-width:0}
+.panel{background:var(--white);border:2px solid var(--n);padding:20px}
+.panel > p.lead2{font-size:13px;color:var(--i2);margin:-6px 0 12px;line-height:1.5}
+.reco{display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px;align-items:center}
+.reco img{width:120px;height:auto}
+.reco .nm{font-size:26px;font-weight:900;text-transform:uppercase;line-height:1.05}
+.big{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.big div{background:var(--m);padding:10px 14px}
+.big b{display:block;font-size:22px;font-weight:900}
+.big span{font-size:11px;font-weight:700;color:var(--i2)}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--m2);font-weight:800;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.win td{background:#E3F3B8}
+tr.skip td{color:var(--i3)}
+.ok{color:#1F7A1F;font-weight:800}
+.no{color:#B3261E;font-weight:800}
+.tag{display:inline-block;font-size:11px;font-weight:800;padding:2px 6px;border:1.5px solid currentColor;margin:1px 2px 1px 0}
+.steps{margin:0;padding-left:20px;line-height:1.7;font-variant-numeric:tabular-nums}
+.warn{background:#FFE9E6;border:2px solid #B3261E;padding:10px 12px;font-size:13px;line-height:1.5}
+.miss{color:#B3261E;font-weight:700}
+.params{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:4px 16px}
+.params label{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;font-weight:700;border-bottom:1px solid var(--line-2,#E9E2D5);padding:4px 0}
+.params input{width:84px;font:600 13px var(--font);border:2px solid var(--n);padding:4px 6px;text-align:right}
+.params input.changed{background:#FFF1B8}
+.params h3{grid-column:1/-1;font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;margin-top:12px}
+.btns{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+.btns button{font:800 13px var(--font);border:2px solid var(--n);background:var(--m);padding:8px 12px;cursor:pointer}
+.btns button:hover{background:var(--n);color:var(--m)}
+.cat details{border-top:2px solid var(--n);padding:12px 0}
+.cat summary{cursor:pointer;font-weight:900;font-size:16px;text-transform:uppercase}
+.cat .grid{display:grid;grid-template-columns:110px minmax(0,1fr);gap:16px;margin-top:12px}
+.cat img{width:110px;height:auto}
+.cat dl{display:grid;grid-template-columns:170px minmax(0,1fr);gap:6px 12px;margin:0;font-size:13px;line-height:1.5}
+.cat dt{font-weight:800}
+.cat dd{margin:0}
+ol.list{line-height:1.6;padding-left:20px;margin:0}
+code{font-size:12px;background:var(--m2);padding:1px 4px}
+@media (max-width:980px){.layout{grid-template-columns:minmax(0,1fr)}.inputs{position:static;max-height:none}}
+</style>
+</head>
+<body>
+<div class="top">
+  <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
+  <b>Kontrola výpočtu · interná, dočasná stránka</b>
+  <a href="granule-na-mieru.html">Otvoriť dotazník →</a>
+</div>
+
+<div class="layout">
+  <!-- ===== VSTUPY ===== -->
+  <form class="inputs" id="in" autocomplete="off">
+    <h2>Odpovede z dotazníka</h2>
+    <div class="f"><span>Pohlavie</span><div class="radios"><label><input type="radio" name="sex" value="pes" checked>Pes</label><label><input type="radio" name="sex" value="fenka">Fenka</label></div></div>
+    <label class="f"><span>Plemeno</span><select name="breed" id="breed"></select><small>Plemeno určuje veľkosť v dospelosti. Kríženec: podľa poľa nižšie alebo podľa aktuálnej hmotnosti.</small></label>
+    <label class="f"><span>Aktuálna hmotnosť (kg)</span><input type="number" name="kg" min="0.5" max="90" step="0.5" value="18"></label>
+    <div class="row">
+      <label class="f"><span>Roky</span><input type="number" name="years" min="0" max="25" value="4"></label>
+      <label class="f"><span>Mesiace</span><input type="number" name="months" min="0" max="11" value="0"></label>
+      <label class="f"><span>Týždne</span><input type="number" name="weeks" min="0" max="13" value=""></label>
+    </div>
+    <p style="font-size:11px;color:var(--i3);margin:-6px 0 12px">Týždne sa použijú, len ak roky = 0 a mesiace ≤ 2 (v dotazníku sa vtedy pole zobrazí).</p>
+    <label class="f"><span>Veľkosť v dospelosti (kríženec)</span><select name="adultSize"><option value="">nezadaná</option><option value="male">malý (do 10 kg)</option><option value="stredne">stredný (10–25 kg)</option><option value="velke">veľký (25–45 kg)</option><option value="obrie">obrí (nad 45 kg)</option></select><small>V dotazníku sa pýtame len pri krížencovi mladšom ako 24 mesiacov.</small></label>
+    <div class="f"><span>Bežný deň</span><div class="radios">
+      <label><input type="radio" name="activity" value="doma">Prevažne doma</label>
+      <label><input type="radio" name="activity" value="mesto" checked>1–2 prechádzky</label>
+      <label><input type="radio" name="activity" value="sport">Šport</label>
+      <label><input type="radio" name="activity" value="praca">Pracovný</label></div></div>
+    <div class="f"><span>Kastrovaný</span><div class="radios"><label><input type="radio" name="neutered" value="ano" checked>Áno</label><label><input type="radio" name="neutered" value="nie">Nie</label></div></div>
+    <div class="f"><span>Gravidná (len fenka, nekastrovaná)</span><div class="radios">
+      <label><input type="radio" name="pregnant" value="nie" checked>Nie</label>
+      <label><input type="radio" name="pregnant" value="early">Prvých 6 týž.</label>
+      <label><input type="radio" name="pregnant" value="late">Posledné 3 týž.</label></div></div>
+    <div class="f"><span>Postava</span><div class="radios">
+      <label><input type="radio" name="body" value="chudsi">Chudší</label>
+      <label><input type="radio" name="body" value="akurat" checked>Akurát</label>
+      <label><input type="radio" name="body" value="navyse">Kilo navyše</label></div></div>
+    <div class="f"><span>Zameranie</span><div class="radios">
+      <label><input type="checkbox" name="focus" value="travenie">Citlivé trávenie</label>
+      <label><input type="checkbox" name="focus" value="kby">Kĺby</label>
+      <label><input type="checkbox" name="focus" value="srst">Srsť</label>
+      <label><input type="checkbox" name="focus" value="vaha">Váha</label>
+      <label><input type="checkbox" name="focus" value="vyberavy">Vyberavý</label>
+      <label><input type="checkbox" name="focus" value="energia">Energia</label>
+      <label><input type="checkbox" name="focus" value="svaly">Svaly</label>
+      <label><input type="checkbox" name="focus" value="imunita">Imunita</label>
+      <label><input type="checkbox" name="focus" value="alergia">Nesedí každé mäso</label>
+      <label><input type="checkbox" name="focus" value="pankreas">Pankreas</label>
+      <label><input type="checkbox" name="focus" value="nic">Nič konkrétne</label></div></div>
+  </form>
+
+  <!-- ===== VÝSTUPY ===== -->
+  <div class="panels">
+    <section class="panel"><h2>1 · Odporúčanie</h2><div id="o-reco"></div></section>
+    <section class="panel"><h2>2 · Odvodené vstupy</h2><div class="scroll" id="o-derived"></div></section>
+    <section class="panel"><h2>3 · Vhodnosť produktov (tvrdé kritériá)</h2>
+      <p class="lead2">Produkt je vhodný, ak spĺňa aspoň jedno „vhodné pre“ a nič z „nevhodné pre“. Kritériá sú prepísané z popisu výrobcu (katalóg nižšie).</p>
+      <div class="scroll" id="o-elig"></div></section>
+    <section class="panel"><h2>4 · Rozhodovacie pravidlá (v poradí)</h2>
+      <p class="lead2">Pravidlá sa skúšajú zhora. Vyhrá prvé, ktorého podmienka platí a ktoré má aspoň jedného vhodného kandidáta; berie sa prvý vhodný kandidát v uvedenom poradí.</p>
+      <div class="scroll" id="o-rules"></div></section>
+    <section class="panel"><h2>5 · Denná dávka krok za krokom</h2><div id="o-energy"></div>
+      <h2 style="margin-top:18px">Energia krmiva a dávka pre každý produkt</h2>
+      <p class="lead2">Metabolizovateľná energia (ME) podľa rovnice NRC 2006, ktorú odporúča FEDIAF. Bezdusíkaté látky (BNLV) = 100 − bielkoviny − tuk − popol − vláknina − vlhkosť. GE = 5,7·B + 9,4·T + 4,1·(BNLV + vláknina). Stráviteľnosť % = 91,2 − 1,43 · vláknina v sušine. ME = GE · stráviteľnosť − 1,04·B. Dávka = energia psa / ME.</p>
+      <div class="scroll" id="o-me"></div></section>
+    <section class="panel"><h2>6 · Kontrola voči dávkovacej tabuľke výrobcu (Hovädzie s ryžou)</h2>
+      <p class="lead2">Jediná dávkovacia tabuľka v podkladoch. Model počíta pre aktuálne odpovede, len s hmotnosťou z tabuľky. „Implikovaný násobok“ = koľko × RER zodpovedá dávke výrobcu pri našej ME.</p>
+      <div class="scroll" id="o-maker"></div></section>
+    <section class="panel"><h2>7 · Vrecia a ceny</h2><div class="scroll" id="o-bags"></div></section>
+    <section class="panel"><h2>8 · Poznámky k zameraniu</h2><p class="lead2">Tieto voľby výber ani dávku nemenia, len informujú.</p><div id="o-notes"></div></section>
+    <section class="panel"><h2>9 · Parametre (editovateľné)</h2>
+      <p class="lead2">Zmena sa hneď prepočíta. Žlté = odlišné od predvolenej hodnoty v <code>engine.js</code>. Trvalú zmenu urob v <code>engine.js</code> (tlačidlo skopíruje zmenené hodnoty ako JSON).</p>
+      <div class="params" id="o-params"></div>
+      <div class="btns">
+        <button type="button" id="b-reset">Obnoviť predvolené</button>
+        <button type="button" id="b-copy">Kopírovať zmeny ako JSON</button>
+        <label style="font-size:13px;font-weight:700;display:inline-flex;gap:6px;align-items:center"><input type="checkbox" id="b-apply"> Použiť aj v dotazníku (len v tomto prehliadači)</label>
+        <span id="b-msg" style="font-size:12px;color:var(--i3)"></span>
+      </div></section>
+    <section class="panel cat"><h2>10 · Katalóg produktov</h2><div id="o-cat"></div></section>
+    <section class="panel"><h2>11 · Predpoklady a otvorené otázky</h2>
+      <ol class="list">
+        <li><b>Jeleň & králik s batátmi</b>: výrobca neposlal popis vhodnosti, cenu, popol, vlákninu, vlhkosť, vápnik, fosfor, vitamíny ani stopové prvky. Vhodnosť je PREDPOKLAD (dospelí a seniori, nie šteňatá; pri nadváhe a pankrease vyhráva, lebo má najmenej tuku – 12 %). Energia počíta s popolom 7 %, vlákninou 3 % a vlhkosťou 8 %.</li>
+        <li><b>Zloženie Jeleň & králik</b>: podklady uvádzajú dve verzie (s ryžou 15 % a batátmi 8 %, alebo bez ryže s batátmi 23 %). Obal ukazuje 23 % batátov, preto je v katalógu verzia bez ryže.</li>
+        <li><b>Dávka vs. výrobca</b>: model (WSAVA násobky × ME podľa NRC) dáva pri Hovädzom s ryžou o ~25–45 % viac než tabuľka výrobcu. Tabuľka zodpovedá ~1,2 × RER, čo je hodnota pre málo aktívneho / kastrovaného psa. Rozhodnúť: nechať model, alebo znížiť parameter <code>kalibrácia</code> (sekcia 6 ukazuje, aká hodnota by sedela).</li>
+        <li><b>Ceny</b>: v podkladoch sú ceny „€/kg bez DPH“. Nie je jasné, či sú predajné alebo nákupné. Web ich zatiaľ zobrazuje ako predajné × (1 + DPH 23 %), bez marže. Zľavy predplatného (−10 / −20 %) sú z pôvodného návrhu.</li>
+        <li><b>Veľkosti vriec</b>: obal ukazuje len 9 kg; ponúkame 9 kg a 2 × 9 kg.</li>
+        <li><b>Hranice veku a veľkosti</b> (šteňa do 10/12/18/24 mesiacov, senior od 9/8/7/6 rokov, veľkosti 10/25/45 kg) sú bežné orientačné hodnoty, nie údaj výrobcu. Treba potvrdiť s veterinárom.</li>
+        <li><b>„Zdravý senior“</b> pri Morka, hus & kačica = bez pankreasu, intolerancie a nadváhy. Iné choroby sa v dotazníku nezisťujú.</li>
+        <li><b>„Kilo navyše“</b> = odhad 10 % nad ideálom (parameter). Presnejšie by bolo pýtať sa na ideálnu hmotnosť alebo BCS 1–9.</li>
+        <li><b>Gravidita</b>: výrobca uvádza len „gravidné feny“ pri Hovädzom s ryžou. Laktácia (dojčenie) sa nepýta; dávka pri nej je 4–8 × RER a patrí k veterinárovi.</li>
+        <li><b>Texty z podkladov</b> sú na webe s opravenými preklepmi (chontroitín → chondroitín, maso → mäso, peržlen → petržlen, pantotenaén → pantotenan, šteňátá → šteňatá, ostropestrec → pestrec). Pri medi bol v podkladoch omylom aj kód mangánu (3b502); ponechaný je len 3b405. Pred tlačou overiť s výrobcom.</li>
+        <li><b>Rozpor s webom</b>: úvodná stránka tvrdí „62 % mäsa“ a „nula kuracieho mäsa“, no produkty majú 48–60 % mäsa a Morka, hus & kačica obsahuje 3 % kuracej pečene.</li>
+      </ol></section>
+  </div>
+</div>
+
+<script src="engine.js"></script>
+<script>
+(function () {
+  var E = window.GranulaEngine, fmt = E.fmt;
+  var form = document.getElementById("in");
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  var yes = '<span class="ok">✓</span>', no = '<span class="no">✗</span>';
+  var byId = {}; E.PRODUCTS.forEach(function (p) { byId[p.id] = p; });
+
+  E.BREEDS.forEach(function (b) { $("breed").add(new Option(b[1] + (b[2] ? " — " + String(b[2]).replace(".", ",") + " kg" : ""), b[0])); });
+
+  /* ---------- parametre ---------- */
+  var override = {};
+  try { override = JSON.parse(localStorage.getItem(E.OVERRIDE_KEY)) || {}; $("b-apply").checked = !!localStorage.getItem(E.OVERRIDE_KEY); } catch (e) {}
+  var LABELS = {
+    sizeMax: "Veľkosť: hranica hmotnosti v dospelosti (kg, „menej než“)", sizeMid: "Kríženec: odhad hmotnosti v dospelosti podľa kategórie (kg)",
+    puppyUntilMonths: "Šteňa do (mesiace)", seniorFromYears: "Senior od (roky)", factor: "Násobky RER (WSAVA / AAHA)", plans: "Zľavy predplatného (podiel)",
+    starterWeeks: "Štartér do (týždne)", overweightFraction: "„Kilo navyše“ = nad ideálom (podiel)", underweightBonus: "„Chudší“ = energia navyše (podiel)",
+    calibration: "Kalibrácia (× energia)", roundTo: "Zaokrúhlenie dávky (g)", vat: "DPH (podiel)", shipping: "Doprava (€)", minBagDays: "Odporúčané vrece aspoň (dní)",
+    reorderLeadDays: "Ďalšie vrece skôr o (dni)",
+    male: "malé", stredne: "stredné", velke: "veľké", obrie: "obrie", mesiac: "každý mesiac", kvartal: "na 3 mesiace", raz: "jednorazovo",
+    puppyUnder4m: "šteňa 0–4 mes.", puppyOver4m: "šteňa 4 mes.–dospelosť", adultNeutered: "dospelý kastrovaný", adultIntact: "dospelý nekastrovaný",
+    inactive: "prevažne doma / senior", lightWork: "šport (ľahká práca)", moderateWork: "pracovný (stredná práca)", weightLoss: "nadváha (× RER ideálu)",
+    gestationEarly: "gravidita 1.–6. týž.", gestationTop: "", gestationLate: "gravidita posl. 3 týž."
+  };
+  function buildParams() {
+    var html = "", flat = [];
+    Object.keys(E.PARAMS).forEach(function (k) {
+      var v = E.PARAMS[k];
+      if (typeof v === "object") {
+        html += "<h3>" + esc(LABELS[k] || k) + "</h3>";
+        Object.keys(v).forEach(function (s) { html += field(k + "." + s, LABELS[s] || s, v[s], override[k] && override[k][s]); });
+      } else flat.push(k);
+    });
+    html += "<h3>Ostatné</h3>";
+    flat.forEach(function (k) { html += field(k, LABELS[k] || k, E.PARAMS[k], override[k]); });
+    $("o-params").innerHTML = html;
+  }
+  function field(path, label, def, cur) {
+    var val = cur != null ? cur : def;
+    return '<label>' + esc(label) + '<input type="number" step="any" data-path="' + path + '" data-def="' + def + '" value="' + val + '"' + (cur != null && +cur !== def ? ' class="changed"' : "") + "></label>";
+  }
+  function readParams() {
+    var o = {};
+    $("o-params").querySelectorAll("input").forEach(function (i) {
+      var parts = i.dataset.path.split("."), def = +i.dataset.def, v = i.value === "" ? def : +i.value;
+      i.classList.toggle("changed", v !== def);
+      if (v === def) return;
+      if (parts.length === 2) { o[parts[0]] = o[parts[0]] || {}; o[parts[0]][parts[1]] = v; } else o[parts[0]] = v;
+    });
+    return o;
+  }
+  $("o-params").addEventListener("input", function () { override = readParams(); persist(); render(); });
+  $("b-reset").addEventListener("click", function () { override = {}; buildParams(); persist(); render(); });
+  $("b-copy").addEventListener("click", function () {
+    var txt = JSON.stringify(override, null, 2);
+    (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(function () { $("b-msg").textContent = "Skopírované."; },
+      function () { $("b-msg").textContent = txt; });
+  });
+  $("b-apply").addEventListener("change", persist);
+  function persist() {
+    try {
+      if ($("b-apply").checked && Object.keys(override).length) localStorage.setItem(E.OVERRIDE_KEY, JSON.stringify(override));
+      else localStorage.removeItem(E.OVERRIDE_KEY);
+    } catch (e) {}
+  }
+
+  /* ---------- vstupy ---------- */
+  function answers() {
+    var fd = new FormData(form);
+    return { sex: fd.get("sex"), breed: fd.get("breed"), kg: fd.get("kg"), years: fd.get("years"), months: fd.get("months"),
+      weeks: fd.get("weeks"), adultSize: fd.get("adultSize"), activity: fd.get("activity"), neutered: fd.get("neutered"),
+      pregnant: fd.get("pregnant"), body: fd.get("body"), focus: fd.getAll("focus") };
+  }
+  form.addEventListener("input", render);
+  form.addEventListener("change", render);
+
+  /* ---------- výstup ---------- */
+  function render() {
+    var a = answers(), r = E.compute(a, override), d = r.derived, P = r.params;
+
+    // 1 odporúčanie
+    var p = r.product, rec = p && r.bags.filter(function (b) { return b.bag.id === r.recBag; })[0];
+    $("o-reco").innerHTML = !p ? '<div class="warn">Žiadny produkt nevyhovuje kritériám. Dotazník ukáže „napíš nám“.</div>' :
+      '<div class="reco"><img src="' + p.img + '" alt=""><div><div class="nm">' + esc(p.name) + '</div>' +
+      '<div style="font-size:13px;margin-top:6px">Pravidlo <b>' + r.winner.rule.id + "</b>: " + esc(r.winner.rule.label) + "</div>" +
+      '<div class="big"><div><b>' + r.dose.grams + ' g</b><span>denná dávka (presne ' + fmt(r.dose.raw, 1) + ' g)</span></div>' +
+      "<div><b>" + fmt(r.energy.kcal, 0) + ' kcal</b><span>energia za deň</span></div>' +
+      "<div><b>" + fmt(r.dose.me.me, 1) + ' kcal</b><span>ME na 100 g krmiva</span></div>' +
+      "<div><b>" + rec.bag.label + "</b><span>odporúčané vrece, vydrží " + rec.days + " dní</span></div>" +
+      "<div><b>" + (rec.price == null ? "—" : fmt(rec.price, 2) + " €") + "</b><span>cena vreca s DPH</span></div></div></div></div>";
+
+    // 2 odvodené
+    var rows = [
+      ["Vek", d.useWeeks ? d.ageWeeks + " týždňov (zadané v týždňoch)" : fmt(d.ageMonths, 1) + " mesiacov = " + d.ageWeeks + " týždňov"],
+      ["Veľkosť v dospelosti", E.SIZE_TEXT[d.size] + " — zdroj: " + d.sizeSource + "; hranice: malé < " + P.sizeMax.male + " kg, stredné < " + P.sizeMax.stredne + " kg, veľké < " + P.sizeMax.velke + " kg, inak obrie"],
+      ["Životná fáza", E.STAGE_TEXT[d.stage] + " — štartér < " + P.starterWeeks + " týž., šteňa < " + d.puppyMonths + " mes., senior ≥ " + d.seniorYears + " r. (pre " + E.SIZE_TEXT[d.size] + " plemeno)"],
+      ["Nadváha", d.obese ? "áno (postava „kilo navyše“)" : "nie"],
+      ["Pankreas", d.pancreas ? "áno" : "nie"],
+      ["Intolerancia / citlivé trávenie", d.intolerance ? "áno" : "nie"],
+      ["Aktívny (šport, pracovný, svaly alebo energia)", d.active ? "áno" : "nie"],
+      ["Gravidita", d.pregnant === "late" ? "posledné 3 týždne" : d.pregnant === "early" ? "prvých 6 týždňov" : "nie" + (a.sex === "fenka" && a.neutered === "nie" ? "" : " (otázka sa nepoužije: nie nekastrovaná fenka)")]
+    ];
+    $("o-derived").innerHTML = "<table>" + rows.map(function (x) { return "<tr><th>" + x[0] + "</th><td>" + esc(x[1]) + "</td></tr>"; }).join("") + "</table>";
+
+    // 3 vhodnosť
+    $("o-elig").innerHTML = "<table><tr><th>Produkt</th><th>Vhodné pre (stačí jedno)</th><th>Nevhodné pre (vylučuje)</th><th>Výsledok</th></tr>" +
+      r.products.map(function (e) {
+        return "<tr" + (p && e.product.id === p.id ? ' class="win"' : "") + "><td><b>" + esc(e.product.name) + "</b></td><td>" +
+          e.fitFor.map(function (x) { return (x.ok ? yes : no) + " " + esc(x.label); }).join("<br>") + "</td><td>" +
+          (e.unfitFor.length ? e.unfitFor.map(function (x) { return (x.ok ? no + " platí: " : yes + " neplatí: ") + esc(x.label); }).join("<br>") : "—") +
+          "</td><td>" + (e.eligible ? yes + " vhodné" : no + " " + esc(e.reason)) + "</td></tr>";
+      }).join("") + "</table>";
+
+    // 4 pravidlá
+    var ST = { won: "VYBRANÉ", off: "podmienka neplatí", noCandidate: "platí, ale žiadny vhodný kandidát", skipped: "nevyhodnocuje sa (už vybrané)" };
+    $("o-rules").innerHTML = "<table><tr><th>#</th><th>Pravidlo</th><th>Podmienka</th><th>Kandidáti v poradí</th><th>Výsledok</th></tr>" +
+      r.rules.map(function (t) {
+        var cls = t.status === "won" ? "win" : t.status === "skipped" || t.status === "off" ? "skip" : "";
+        return '<tr class="' + cls + '"><td>' + t.rule.id + "</td><td>" + esc(t.rule.label) + "</td><td>" + (t.applies ? yes + " platí" : no + " neplatí") + "</td><td>" +
+          t.prefer.map(function (id) { var e = r.products.filter(function (x) { return x.product.id === id; })[0]; return '<span class="tag" style="color:' + (e.eligible ? "#1F7A1F" : "#B3261E") + '">' + esc(byId[id].name) + "</span>"; }).join("") +
+          "</td><td><b>" + ST[t.status] + (t.status === "won" ? ": " + esc(byId[t.pick].name) : "") + "</b></td></tr>";
+      }).join("") + "</table>";
+
+    // 5 energia
+    $("o-energy").innerHTML = '<ol class="steps">' + r.energy.steps.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") +
+      (r.dose ? "<li>ME krmiva „" + esc(p.name) + "“ = " + fmt(r.dose.me.me, 1) + " kcal/100 g = " + fmt(r.dose.me.kcalPerG, 3) + " kcal/g</li>" +
+        "<li>Dávka = " + fmt(r.energy.kcal, 1) + " / " + fmt(r.dose.me.kcalPerG, 3) + " = " + fmt(r.dose.raw, 1) + " g → zaokrúhlené na " + P.roundTo + " g: <b>" + r.dose.grams + " g/deň</b></li>" : "") +
+      "</ol>";
+    $("o-me").innerHTML = "<table><tr><th>Produkt</th><th class=n>B %</th><th class=n>T %</th><th class=n>Popol</th><th class=n>Vlákn.</th><th class=n>Vlhk.</th><th class=n>BNLV</th><th class=n>GE</th><th class=n>Vlákn. v suš.</th><th class=n>Strav. %</th><th class=n>DE</th><th class=n>ME kcal/100 g</th><th class=n>Dávka g</th><th>Vhodný</th></tr>" +
+      r.doses.map(function (x) {
+        var m = x.me, q = x.product, e = r.products.filter(function (y) { return y.product === q; })[0], est = q.missing.some(function (s) { return /popol/.test(s); });
+        return "<tr" + (p && q.id === p.id ? ' class="win"' : "") + "><td>" + esc(q.name) + (est ? ' <span class="miss">(popol/vlákn./vlhk. odhad)</span>' : "") + "</td>" +
+          [q.protein, q.fat, q.ash, q.fiber, q.moisture].map(function (v) { return "<td class=n>" + fmt(v, 1) + "</td>"; }).join("") +
+          "<td class=n>" + fmt(m.nfe, 1) + "</td><td class=n>" + fmt(m.ge, 1) + "</td><td class=n>" + fmt(m.fiberDM, 2) + "</td><td class=n>" + fmt(m.dig, 2) +
+          "</td><td class=n>" + fmt(m.de, 1) + "</td><td class=n><b>" + fmt(m.me, 1) + "</b></td><td class=n>" + fmt(x.raw, 1) + " → <b>" + x.grams + "</b></td><td>" + (e.eligible ? yes : no) + "</td></tr>";
+      }).join("") + "</table>";
+
+    // 6 výrobca
+    var beef = byId["hovadzie"], meB = E.metabolizable(beef), ratios = [];
+    $("o-maker").innerHTML = "<table><tr><th class=n>Hmotnosť</th><th class=n>Výrobca g</th><th class=n>Model g</th><th class=n>Rozdiel</th><th class=n>RER kcal</th><th class=n>Energia výrobcu kcal</th><th class=n>Implikovaný násobok</th><th class=n>Násobok modelu</th></tr>" +
+      beef.makerTable.map(function (row) {
+        var rr = E.compute(Object.assign({}, a, { kg: row[0] }), override), mg = rr.doses.filter(function (x) { return x.product.id === "hovadzie"; })[0];
+        var makerKcal = row[1] * meB.kcalPerG, rer = 70 * Math.pow(row[0], 0.75);
+        ratios.push(row[1] / mg.raw);
+        return "<tr><td class=n>" + row[0] + " kg</td><td class=n>" + row[1] + "</td><td class=n>" + mg.grams + "</td><td class=n>" + (mg.grams >= row[1] ? "+" : "") + fmt((mg.grams / row[1] - 1) * 100, 0) + " %</td><td class=n>" +
+          fmt(rer, 0) + "</td><td class=n>" + fmt(makerKcal, 0) + "</td><td class=n>" + fmt(makerKcal / rer, 2) + "</td><td class=n>" + fmt(rr.energy.kcal / (70 * Math.pow(rr.energy.weight, 0.75)), 2) + "</td></tr>";
+      }).join("") + "</table>" +
+      '<p style="font-size:13px;margin-top:10px">Kalibrácia, pri ktorej by model v priemere sedel s tabuľkou (pri aktuálnych odpovediach): <b>' +
+      fmt(P.calibration * ratios.reduce(function (s, x) { return s + x; }, 0) / ratios.length, 2) + "</b>. Tabuľka výrobcu nerozlišuje aktivitu, kastráciu ani vek.</p>";
+
+    // 7 vrecia
+    $("o-bags").innerHTML = !p ? "—" : "<table><tr><th>Vrece</th><th class=n>Výdrž</th><th class=n>Cena s DPH</th><th class=n>Každý mesiac</th><th class=n>Na 3 mesiace</th><th class=n>€/deň (mesačne)</th><th class=n>Ďalšie vrece</th></tr>" +
+      r.bags.map(function (x) {
+        var pr = x.price;
+        return "<tr" + (x.bag.id === r.recBag ? ' class="win"' : "") + "><td>" + x.bag.label + (x.bag.id === r.recBag ? " (odporúčané)" : "") + "</td><td class=n>" + x.days + " dní</td><td class=n>" +
+          (pr == null ? '<span class="miss">chýba cena</span>' : fmt(pr, 2) + " €") + "</td><td class=n>" + (pr == null ? "—" : fmt(pr * (1 - P.plans.mesiac), 2) + " €") +
+          "</td><td class=n>" + (pr == null ? "—" : fmt(pr * (1 - P.plans.kvartal), 2) + " €") + "</td><td class=n>" + (pr == null ? "—" : fmt(pr * (1 - P.plans.mesiac) / x.days, 2) + " €") +
+          "</td><td class=n>~" + x.nextDay + ". deň</td></tr>";
+      }).join("") + "</table>" +
+      '<p style="font-size:13px;margin-top:10px">Cena = ' + (p.pricePerKgExVat == null ? "?" : fmt(p.pricePerKgExVat, 2)) + " €/kg bez DPH × kg × (1 + " + fmt(P.vat, 2) +
+      "). Výdrž = kg × 1000 / dávka, nadol. Odporúčané = najmenšie vrece, ktoré vydrží aspoň " + P.minBagDays + " dní. Doprava " + fmt(P.shipping, 2) + " € za doručenie.</p>";
+
+    // 8 poznámky
+    $("o-notes").innerHTML = r.notes.length ? "<ul>" + r.notes.map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("") + "</ul>" : "<p>—</p>";
+  }
+
+  /* ---------- katalóg ---------- */
+  function catalog() {
+    var vat = E.PARAMS.vat;
+    $("o-cat").innerHTML = E.PRODUCTS.map(function (p) {
+      var me = E.metabolizable(p);
+      var dl = [
+        ["Analytické zložky", "bielkoviny " + p.protein + " %, tuk " + p.fat + " %, popol " + fmt(p.ash, 1) + " %, vláknina " + fmt(p.fiber, 1) + " %, vlhkosť " + p.moisture + " %" + (p.calcium != null ? ", vápnik " + fmt(p.calcium, 1) + " %, fosfor " + fmt(p.phosphorus, 1) + " %" : "")],
+        ["ME (NRC 2006)", fmt(me.me, 1) + " kcal/100 g"],
+        ["Granula", p.kibbleMm ? p.kibbleMm + " mm" : "—"],
+        ["Monoproteín", p.monoprotein ? "áno" : "nie"],
+        ["Glukozamín / chondroitín", (p.glucosamine ? p.glucosamine + " mg/kg" : "—") + " / " + (p.chondroitin ? p.chondroitin + " mg/kg" : "—")],
+        ["Cena", p.pricePerKgExVat == null ? "—" : fmt(p.pricePerKgExVat, 2) + " €/kg bez DPH · " + fmt(p.pricePerKgExVat * (1 + vat), 2) + " €/kg s DPH · 9 kg " + fmt(E.bagPrice(p, E.BAGS[0], E.PARAMS), 2) + " €"],
+        ["Vhodnosť (výrobca)", p.suitability || "—"],
+        ["Zloženie", p.composition],
+        ["Nutričné doplnkové látky v 1 kg", p.additives || "—"],
+        ["Stopové prvky v 1 kg", p.trace || "—"]
+      ];
+      return "<details><summary>" + esc(p.name) + (p.missing.length ? ' <span class="miss" style="font-size:12px;text-transform:none">· chýba: ' + esc(p.missing.join(", ")) + "</span>" : "") + "</summary>" +
+        '<div class="grid"><img src="' + p.img + '" alt=""><dl>' + dl.map(function (x) { return "<dt>" + x[0] + "</dt><dd>" + esc(x[1]) + "</dd>"; }).join("") + "</dl></div></details>";
+    }).join("");
+  }
+
+  buildParams();
+  catalog();
+  render();
+})();
+</script>
+</body>
+</html>
