@@ -78,9 +78,8 @@ neposielajú** a čísla karty sa po odoslaní mažú.
    textové pole; patrí sem widget SPS / Packeta.
 6. **Recenzie a odborníci.** Mená, citácie a hodnotenia sú z návrhu, nie od
    reálnych ľudí. Pred spustením nahradiť skutočnými. Sekcia odborníkov je skrytá.
-7. **Tvrdenia na webe.** „62 % mäsa“ nesedí (produkty majú 48–60 %), „nula
-   kuracieho mäsa“ nesedí s 3 % kuracej pečene v Morka, hus & kačica, páska
-   „Diviak“ nemá produkt. „Recept od MVDr.“ a výrobca od 1992 treba overiť.
+7. **Tvrdenia na webe.** „62 % mäsa“ je nahradené textom „Kvalitné mäso“ a páska
+   „Diviak“ je odstránená. „Recept od MVDr.“ a výrobca od 1992 treba overiť.
 8. **Texty zloženia** sú s opravenými preklepmi z podkladov (zoznam na kontrolnej
    stránke, bod 11). Pred tlačou overiť s výrobcom.
 9. **Pätička.** Doprava, Kontakt, Obchodné podmienky, Ochrana údajov vedú na `#`;

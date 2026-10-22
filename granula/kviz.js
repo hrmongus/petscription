@@ -57,7 +57,11 @@
     var months = (parseInt(state.years, 10) || 0) * 12 + (parseInt(state.months, 10) || 0);
     return state.breed === "krizenec" && (state.years !== "" || state.months !== "") && months < 24;
   }
-  function needPreg() { return state.sex === "fenka" && state.neutered === "nie"; }
+  // gravidita sa pýta len pri nekastrovanej fenke od 6 mesiacov
+  function needPreg() {
+    var months = (parseInt(state.years, 10) || 0) * 12 + (parseInt(state.months, 10) || 0);
+    return state.sex === "fenka" && state.neutered === "nie" && months >= 6;
+  }
   function paintConditional() {
     $("weeks-field").hidden = !needWeeks();
     $("size-field").hidden = !needSize();
@@ -210,7 +214,8 @@
 
     $("r-pack").src = p.img;
     $("r-pack").alt = "Vrece Granula: " + p.name + ", 9 kg";
-    $("r-stage").textContent = d.isPuppy ? "Pre šteňa" : d.stage === "senior" ? "Pre seniora" : "Na mieru";
+    $("r-pack-m").src = p.img;
+    $("r-stage").textContent = $("r-stage-m").textContent = d.isPuppy ? "Pre šteňa" : d.stage === "senior" ? "Pre seniora" : "Na mieru";
     paintBag(r);
   }
   function paintBag(r) {

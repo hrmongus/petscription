@@ -173,6 +173,8 @@
   display:flex;flex-direction:column;align-items:center;gap:12px;padding:32px 22px 20px;position:relative;overflow:hidden}
 .pname{font-size:clamp(26px,2.6vw,34px);line-height:1.05}
 .pack{width:min(460px,96%);height:auto;filter:drop-shadow(0 30px 30px rgba(0,0,0,.35))}
+.pack-inline{display:none;position:relative;justify-content:center;background:var(--k);padding:24px 16px;margin:0 -16px}
+.pack-inline .sticker{position:absolute;left:16px;top:16px;background:var(--l);color:var(--n);font-size:20px;--t:-8deg}
 .facts{border-bottom:2px solid var(--n)}
 .facts details{border-top:2px solid var(--n);padding:14px 0}
 .facts summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;font-weight:800;font-size:16px}
@@ -245,7 +247,8 @@
   .done-pic{flex-basis:auto;width:100%}.done-pic .frame{height:min(440px,90vw)}
   .done-pic .sticker{left:-6px}
     .res aside .sticker{left:16px;top:24px}
-  .res .pack-aside{order:-1;padding-top:28px;padding-bottom:28px}
+  .res .pack-aside{display:none}
+  .pack-inline{display:flex}
   .pack{width:min(260px,70%)}
   .row2{flex-direction:column}
   .cardrow{flex-wrap:wrap}.cardrow > :first-child{flex-basis:100%}
@@ -519,6 +522,7 @@
     <div class="kicker" style="margin-top:8px" id="r-kicker">Tvoje granule na mieru</div>
     <h1 class="display q-title" tabindex="-1">Hotovo. <span>Granule sú vybrané.</span></h1>
     <h2 class="display pname" id="r-name"></h2>
+    <div class="pack-inline" aria-hidden="true"><img class="pack" id="r-pack-m" src="" alt="" width="896" height="1200"><span class="sticker" id="r-stage-m">Na mieru</span></div>
     <p class="why" id="r-why"></p>
     <ul class="recipe" id="r-recipe" aria-label="Hlavné suroviny"></ul>
     <div class="kpis">

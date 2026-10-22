@@ -209,7 +209,7 @@
       : ageMonths < puppyMonths ? "puppy"
       : ageMonths >= seniorYears * 12 ? "senior" : "adult";
 
-    var pregnant = a.sex === "fenka" && a.neutered === "nie" && (a.pregnant === "early" || a.pregnant === "late") ? a.pregnant : "";
+    var pregnant = a.sex === "fenka" && a.neutered === "nie" && ageMonths >= 6 && (a.pregnant === "early" || a.pregnant === "late") ? a.pregnant : "";
     return {
       ageWeeks: ageWeeks, ageMonths: ageMonths, useWeeks: useWeeks, kg: kg,
       breed: breed, adultKg: adultKg, size: size, sizeSource: sizeSource,

@@ -97,7 +97,7 @@ code{font-size:12px;background:var(--m2);padding:1px 4px}
       <label><input type="radio" name="activity" value="sport">Šport</label>
       <label><input type="radio" name="activity" value="praca">Pracovný</label></div></div>
     <div class="f"><span>Kastrovaný</span><div class="radios"><label><input type="radio" name="neutered" value="ano" checked>Áno</label><label><input type="radio" name="neutered" value="nie">Nie</label></div></div>
-    <div class="f"><span>Gravidná (len fenka, nekastrovaná)</span><div class="radios">
+    <div class="f"><span>Gravidná (len nekastrovaná fenka od 6 mesiacov)</span><div class="radios">
       <label><input type="radio" name="pregnant" value="nie" checked>Nie</label>
       <label><input type="radio" name="pregnant" value="early">Prvých 6 týž.</label>
       <label><input type="radio" name="pregnant" value="late">Posledné 3 týž.</label></div></div>
@@ -160,7 +160,7 @@ code{font-size:12px;background:var(--m2);padding:1px 4px}
         <li><b>„Kilo navyše“</b> = odhad 10 % nad ideálom (parameter). Presnejšie by bolo pýtať sa na ideálnu hmotnosť alebo BCS 1–9.</li>
         <li><b>Gravidita</b>: výrobca uvádza len „gravidné feny“ pri Hovädzom s ryžou. Laktácia (dojčenie) sa nepýta; dávka pri nej je 4–8 × RER a patrí k veterinárovi.</li>
         <li><b>Texty z podkladov</b> sú na webe s opravenými preklepmi (chontroitín → chondroitín, maso → mäso, peržlen → petržlen, pantotenaén → pantotenan, šteňátá → šteňatá, ostropestrec → pestrec). Pri medi bol v podkladoch omylom aj kód mangánu (3b502); ponechaný je len 3b405. Pred tlačou overiť s výrobcom.</li>
-        <li><b>Rozpor s webom</b>: úvodná stránka tvrdí „62 % mäsa“ a „nula kuracieho mäsa“, no produkty majú 48–60 % mäsa a Morka, hus & kačica obsahuje 3 % kuracej pečene.</li>
+        
       </ol></section>
   </div>
 </div>
@@ -267,7 +267,7 @@ code{font-size:12px;background:var(--m2);padding:1px 4px}
       ["Pankreas", d.pancreas ? "áno" : "nie"],
       ["Intolerancia / citlivé trávenie", d.intolerance ? "áno" : "nie"],
       ["Aktívny (šport, pracovný, svaly alebo energia)", d.active ? "áno" : "nie"],
-      ["Gravidita", d.pregnant === "late" ? "posledné 3 týždne" : d.pregnant === "early" ? "prvých 6 týždňov" : "nie" + (a.sex === "fenka" && a.neutered === "nie" ? "" : " (otázka sa nepoužije: nie nekastrovaná fenka)")]
+      ["Gravidita", d.pregnant === "late" ? "posledné 3 týždne" : d.pregnant === "early" ? "prvých 6 týždňov" : "nie" + (a.sex === "fenka" && a.neutered === "nie" ? "" : " (otázka sa nepoužije: platí len pre nekastrovanú fenku od 6 mesiacov)")]
     ];
     $("o-derived").innerHTML = "<table>" + rows.map(function (x) { return "<tr><th>" + x[0] + "</th><td>" + esc(x[1]) + "</td></tr>"; }).join("") + "</table>";
 
