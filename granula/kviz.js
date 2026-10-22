@@ -16,7 +16,7 @@
   /* ---------------- stav ---------------- */
   var KEY = "granula-quiz";
   var state = { dogname: "", sex: "", breed: "krizenec-stredny", kg: 17, years: "", months: "", weeks: "",
-    activity: "", neutered: "", pregnant: "", body: "", focus: [], bag: "", plan: "mesiac", ordered: false };
+    activity: "", neutered: "", pregnant: "", body: "", focus: [], bag: "", plan: "mesiac", ordered: false, recipe: "", recipeFor: "" };
   try { Object.assign(state, JSON.parse(sessionStorage.getItem(KEY)) || {}); } catch (e) {}
   function save() {
     try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
@@ -181,7 +181,7 @@
     var r = result(), d = r.derived, p = r.product;
     // vysvetľujúci text sa ukazuje len vtedy, keď pre psa nemáme vhodné granule
     $("r-why").hidden = !!p;
-    if (!p) { $("r-name").textContent = "Pre tohto psa nemáme vhodné granule"; $("r-why").textContent = "Napíš nám, poradíme osobne."; return; }
+    if (!p) { $("r-swap").hidden = true; $("r-name").textContent = "Pre tohto psa nemáme vhodné granule"; $("r-why").textContent = "Napíš nám, poradíme osobne."; return; }
     if (!r.bags.some(function (x) { return x.bag.id === state.bag; })) state.bag = r.recBag;
     var I = GranulaIcons.svg;
     $("r-kicker").textContent = "Tvoje granule na mieru · " + state.dogname;
@@ -192,6 +192,7 @@
       return '<span class="it"><span style="background:' + ICON_BG[i % 4] + ";color:" + ICON_BG[i % 4] + '">' + I(h[0], 30, "#000000") + "</span>" + h[1] + " " + h[2] + " %</span>";
     }).join("");
     $("r-chips").innerHTML = chips;
+    renderSwap(r);
     $("r-recipe").innerHTML = p.highlights.map(function (h) { return "<li>" + h[1] + " " + h[2] + " %</li>"; }).join("");
     $("r-dose").textContent = r.dose.grams + " g";
     $("r-macro").textContent = p.protein + " / " + p.fat + " %";
@@ -214,9 +215,103 @@
     $("r-pack").src = p.img;
     $("r-pack").alt = "Vrece Granula: " + p.name + ", 9 kg";
     $("r-pack-m").src = p.img;
+    // fakty v bočnom paneli (len tie, ktoré o produkte vieme)
+    $("r-facts-side").innerHTML = [
+      ["Mäso", p.monoprotein ? "Monoproteín" : "Viac druhov"],
+      ["Bielkoviny / tuk", p.protein + " / " + p.fat + " %"],
+      ["Granula", p.kibbleMm ? p.kibbleMm + " mm" : null],
+      ["Glukozamín", p.glucosamine ? p.glucosamine + " mg/kg" : null],
+      ["Chondroitín", p.chondroitin ? p.chondroitin + " mg/kg" : null]
+    ].filter(function (f) { return f[1]; }).slice(0, 4).map(function (f) {
+      return "<div><dt>" + f[0] + "</dt><dd>" + f[1] + "</dd></div>";
+    }).join("");
     $("r-stage").textContent = $("r-stage-m").textContent = d.isPuppy ? "Pre šteňa" : d.stage === "senior" ? "Pre seniora" : "Na mieru";
     paintBag(r);
   }
+  /* „Netoleruje tento proteín?“ — receptúry bez mäsa súčasnej, porovnanie a zmena */
+  var swapPick = null;
+  function meatName(p) {
+    var m = p.proteins.map(function (x, i) { return i ? x.toLowerCase() : x; });
+    return m.length > 1 ? m.slice(0, -1).join(", ") + " & " + m[m.length - 1] : m[0];
+  }
+  function lower(s) { return s.charAt(0).toLowerCase() + s.slice(1); }
+  function swapWhy(e) {
+    var blocked = e.unfitFor.filter(function (x) { return x.ok; });
+    if (blocked.length) return "Výrobca ju neodporúča pri: " + blocked.map(function (x) { return lower(x.label); }).join(", ") + ".";
+    return "Výrobca ju určuje pre: " + e.fitFor.map(function (x) { return lower(x.label); }).join("; ") + ".";
+  }
+  function renderSwap(r) {
+    var p = r.product, rec = r.recommended;
+    var note = $("swap-note");
+    note.hidden = !r.swapped;
+    if (r.swapped) note.innerHTML = "Zmenené z odporúčanej receptúry „" + rec.name + "“. <button type=\"button\" id=\"swap-back\">Vrátiť</button>";
+    $("swap-q").textContent = "Netoleruje " + state.dogname + " tento typ proteínu?";
+    // ponúkame len receptúry, v ktorých nie je ani jeden druh mäsa zo súčasnej
+    var alts = E.PRODUCTS.filter(function (x) {
+      return x !== p && !x.proteins.some(function (m) { return p.proteins.indexOf(m) !== -1; });
+    });
+    $("r-swap").hidden = !alts.length;
+    if (alts.every(function (x) { return x.id !== swapPick; })) swapPick = null;
+    $("swap-list").innerHTML = alts.map(function (x) {
+      var ok = r.products.filter(function (e) { return e.product === x; })[0].eligible;
+      return '<button type="button" data-recipe="' + x.id + '" aria-pressed="' + (x.id === swapPick) + '">' + meatName(x) + (x.monoprotein ? " <small>mono</small>" : "") + (ok ? "" : " <small>menej vhodné</small>") + "</button>";
+    }).join("");
+    renderCmp(r);
+  }
+  function renderCmp(r) {
+    var box = $("swap-cmp");
+    box.hidden = !swapPick;
+    if (!swapPick) return;
+    var cur = r.product;
+    var alt = E.compute(Object.assign({}, state, { recipe: swapPick, recipeFor: r.recommended.id }), params);
+    var q = alt.product, el = alt.products.filter(function (e) { return e.product === q; })[0];
+    var bag = function (x) { return x.bags.filter(function (b) { return b.bag.id === state.bag; })[0] || x.bags.filter(function (b) { return b.bag.id === x.recBag; })[0]; };
+    var perDay = function (x) { var b = bag(x); return b.price == null ? "cena doplniť" : eur(b.price * (1 - x.params.plans.mesiac) / b.days); };
+    var mg = function (v) { return v ? v + " mg/kg" : "—"; };
+    var rows = [
+      ["Mäso", meatName(cur), meatName(q)],
+      ["Druhov mäsa", cur.monoprotein ? "1 (mono)" : cur.proteins.length, q.monoprotein ? "1 (mono)" : q.proteins.length],
+      ["Bielkoviny / tuk", cur.protein + " / " + cur.fat + " %", q.protein + " / " + q.fat + " %"],
+      ["Denná dávka", r.dose.grams + " g", alt.dose.grams + " g"],
+      ["Vrece " + bag(alt).bag.label, eur(bag(r).price), eur(bag(alt).price)],
+      ["Na deň s predplatným", perDay(r), perDay(alt)],
+      ["Glukozamín", mg(cur.glucosamine), mg(q.glucosamine)],
+      ["Chondroitín", mg(cur.chondroitin), mg(q.chondroitin)]
+    ];
+    box.innerHTML = '<table><thead><tr><th scope="col"><span class="sr-only">Údaj</span></th>' +
+      '<th scope="col"><img src="' + cur.img + '" alt=""><small>' + (r.swapped ? "Teraz" : "Odporúčaná") + "</small>" + cur.name + "</th>" +
+      '<th scope="col"><img src="' + q.img + '" alt=""><small>Iné mäso</small>' + q.name + "</th></tr></thead><tbody>" +
+      rows.map(function (x) {
+        return '<tr><th scope="row">' + x[0] + "</th><td>" + x[1] + '</td><td' + (String(x[1]) !== String(x[2]) ? ' class="chg"' : "") + ">" + x[2] + "</td></tr>";
+      }).join("") + "</tbody></table>" +
+      (el.eligible ? "" : '<p class="swap-warn">Pre tohto psa ju neodporúčame. ' + swapWhy(el) + "</p>") +
+      '<div class="swap-act">' + (el.eligible ? '<button type="button" class="btn btn-k" data-swap-to="' + q.id + '">Zmeniť na ' + q.name + "</button>" : "") +
+      '<button type="button" class="later" data-swap-close>Zavrieť porovnanie</button></div>';
+  }
+  $("swap-q").addEventListener("click", function () {
+    var open = this.getAttribute("aria-expanded") !== "true";
+    this.setAttribute("aria-expanded", open);
+    $("swap-panel").hidden = !open;
+    if (!open) { swapPick = null; renderCmp(result()); }
+  });
+  $("r-swap").addEventListener("click", function (e) {
+    var t = e.target.closest("button");
+    if (!t) return;
+    if (t.dataset.recipe) {
+      swapPick = swapPick === t.dataset.recipe ? null : t.dataset.recipe;
+      renderSwap(result());
+      if (swapPick) $("swap-cmp").scrollIntoView({ block: "nearest", behavior: "smooth" });
+    } else if (t.hasAttribute("data-swap-close")) {
+      swapPick = null; renderSwap(result());
+    } else if (t.dataset.swapTo || t.id === "swap-back") {
+      var r = result();
+      state.recipe = t.dataset.swapTo || ""; state.recipeFor = state.recipe ? r.recommended.id : "";
+      swapPick = null; save();
+      $("swap-q").setAttribute("aria-expanded", "false"); $("swap-panel").hidden = true;
+      renderResult();
+      $("r-name").scrollIntoView({ block: "center", behavior: "smooth" });
+    }
+  });
   function paintBag(r) {
     var x = bagOf(r);
     $("r-perday").textContent = x.price == null ? "Cena sa doplní" : eur(x.price * (1 - r.params.plans.mesiac) / x.days) + " na deň";

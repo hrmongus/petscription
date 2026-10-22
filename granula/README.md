@@ -57,6 +57,12 @@ Jeleň & králik s batátmi.
    R1–R4 (štartér, gravidita, nadváha/pankreas, intolerancia) berú len zo svojho
    zoznamu. Ak kandidát nie je, druhá možnosť sa neukáže.
 
+**Iné mäso.** Pod nálepkami surovín je odkaz „Netoleruje [meno] tento typ proteínu?“. Otvorí
+receptúry bez jediného druhu mäsa zo súčasnej (`proteins` pri produkte), po kliknutí
+porovnanie (mäso, bielkoviny/tuk, dávka, cena, kĺbové látky) a tlačidlo „Zmeniť na …“.
+Receptúry, ktoré engine pre psa nevyhodnotí ako vhodné, sa dajú porovnať, ale nie zvoliť.
+Zmena platí, kým sa nezmení odporúčanie (`recipe` + `recipeFor` v odpovediach).
+
 **Denná dávka** = energia psa / energia krmiva:
 - energia psa = RER × násobok (WSAVA / AAHA), RER = 70 × kg^0,75; pri nadváhe
   z ideálnej hmotnosti a s násobkom 1,0;

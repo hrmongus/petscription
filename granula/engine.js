@@ -155,6 +155,7 @@
   var PRODUCTS = [
     {
       id: "hovadzie-morka-jahna",
+      proteins: ["Hovädzie", "Morka", "Jahňa"], // druhy mäsa (pre „Netoleruje tento proteín?“)
       name: "Hovädzie, morka & jahňa s ryžou",
       img: "img/produkty/hovadzie-morka-jahna-s-ryzou.webp",
       bg: "#FFB3C7",
@@ -170,6 +171,7 @@
     },
     {
       id: "morka-hus-kacica",
+      proteins: ["Morka", "Hus", "Kačica"], // druhy mäsa (pre „Netoleruje tento proteín?“)
       name: "Morka, hus & kačica s tekvicou",
       img: "img/produkty/morka-hus-kacica-s-tekvicou.webp",
       bg: "#FF6900",
@@ -185,6 +187,7 @@
     },
     {
       id: "hovadzie",
+      proteins: ["Hovädzie"], // druhy mäsa (pre „Netoleruje tento proteín?“)
       name: "Hovädzie s ryžou",
       img: "img/produkty/hovadzie-s-ryzou.webp",
       bg: "#F4EBE2",
@@ -202,6 +205,7 @@
     },
     {
       id: "jahna",
+      proteins: ["Jahňa"], // druhy mäsa (pre „Netoleruje tento proteín?“)
       name: "Jahňa s batátmi & čučoriedkami",
       img: "img/produkty/jahna-s-batatmi-cucoriedkami.webp",
       bg: "#0047BB",
@@ -217,6 +221,7 @@
     },
     {
       id: "jelen-kralik",
+      proteins: ["Jeleň", "Králik"], // druhy mäsa (pre „Netoleruje tento proteín?“)
       name: "Jeleň & králik s batátmi",
       img: "img/produkty/jelen-kralik-s-batatmi.webp",
       bg: "#000000",
@@ -524,7 +529,10 @@
     var d = derive(a, P);
     var elig = eligibility(d);
     var dec = decide(d, elig);
-    var product = dec.winner ? PRODUCTS.filter(function (p) { return p.id === dec.winner.id; })[0] : null;
+    var recommended = dec.winner ? byId(dec.winner.id) : null;
+    // ručná zmena receptúry vo výsledku platí, len kým sa nezmení odporúčanie
+    var swapped = recommended && a.recipe && a.recipeFor === recommended.id && a.recipe !== recommended.id ? byId(a.recipe) : null;
+    var product = swapped || recommended;
     var en = energy(a, d, P);
     var doses = PRODUCTS.map(function (p) { var g = grams(en.kcal, p, P); return { product: p, me: g.me, raw: g.raw, grams: g.grams }; });
     var dose = product ? doses.filter(function (x) { return x.product === product; })[0] : null;
@@ -547,12 +555,13 @@
     if (d.pregnant) notes.push("Gravidná fena: dávku priebežne upravuj podľa veterinára.");
 
     var second = dec.second ? PRODUCTS.filter(function (p) { return p.id === dec.second.id; })[0] : null;
-    return { params: P, derived: d, products: elig, rules: dec.trace, winner: dec.winner, product: product,
+    return { params: P, derived: d, products: elig, rules: dec.trace, winner: dec.winner, product: product, recommended: recommended, swapped: !!swapped,
       second: dec.second, secondProduct: second, secondDose: second ? doses.filter(function (x) { return x.product === second; })[0] : null,
       energy: en, dose: dose, doses: doses, bags: bags, recBag: recBag, notes: notes };
   }
 
   /* pomocné */
+  function byId(id) { return PRODUCTS.filter(function (p) { return p.id === id; })[0] || null; }
   function merge(base, over) {
     var out = {};
     Object.keys(base).forEach(function (k) {

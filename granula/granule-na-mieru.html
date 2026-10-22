@@ -184,6 +184,33 @@
 .pack-chips .it span{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center}
 .pack-chips .it:nth-child(odd){--t:-2deg}
 .pack-chips .it:nth-child(even){--t:2deg}
+/* „Netoleruje tento proteín?“ — receptúry s iným mäsom a porovnanie */
+.swap{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.swap-q{font:inherit;font-weight:800;font-size:15px;color:var(--k);background:none;border:0;padding:0 0 2px;border-bottom:2px solid var(--o);cursor:pointer;text-align:left}
+.swap-q::after{content:" +";font-weight:900}
+.swap-q[aria-expanded="true"]::after{content:" −"}
+.swap-note{font-size:14px;font-weight:600;color:var(--i2);margin:0}
+.swap-note button{font:inherit;font-weight:800;color:var(--k);background:none;border:0;padding:0;border-bottom:2px solid var(--o);cursor:pointer}
+.swap-panel{display:flex;flex-direction:column;gap:14px;width:100%}
+.swap-list{display:flex;flex-wrap:wrap;gap:10px}
+.swap-list button{font:inherit;font-size:14px;font-weight:800;color:var(--n);background:var(--white);border:2px solid var(--n);padding:9px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.swap-list button:hover{background:var(--m)}
+.swap-list button[aria-pressed="true"]{background:var(--k);color:var(--m);border-color:var(--k)}
+.swap-list button small{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--i3)}
+.swap-list button[aria-pressed="true"] small{color:var(--l)}
+.swap-cmp{background:var(--white);border:2px solid var(--n);box-shadow:8px 8px 0 var(--o);padding:18px 20px;width:calc(100% - 8px)}
+.swap-cmp table{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixed;overflow-wrap:anywhere}
+.swap-cmp th,.swap-cmp td{padding:9px 8px;text-align:left;vertical-align:middle;border-bottom:1.5px solid var(--m)}
+.swap-cmp thead th{border-bottom:2px solid var(--n);font-size:15px;font-weight:900;line-height:1.15;vertical-align:bottom}
+.swap-cmp thead th small{display:block;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--o);margin-bottom:4px}
+.swap-cmp thead img{display:block;width:46px;height:auto;margin-bottom:6px}
+.swap-cmp tbody th{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--i3);width:30%}
+.swap-cmp td{font-weight:800;width:35%}
+.swap-cmp td.chg{color:var(--k)}
+.swap-warn{margin:14px 0 0;font-size:14px;font-weight:700;color:#B3261E}
+.swap-act{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin-top:16px}
+.swap-act .btn{font-size:15px}
+.swap-act .later{font:inherit;font-weight:800;font-size:14px;color:var(--n);background:none;border:0;padding:0;border-bottom:2px solid var(--n);cursor:pointer}
 .pack-inline{display:none;position:relative;justify-content:center;background:var(--k);padding:24px 16px;margin:0 -16px}
 .pack-inline .sticker{position:absolute;left:16px;top:16px;background:var(--l);color:var(--n);font-size:20px;--t:-8deg}
 .facts{border-bottom:2px solid var(--n)}
@@ -196,7 +223,21 @@
 .facts p{margin-top:10px;font-size:14px;line-height:1.55;color:var(--i2)}
 .test-banner{position:fixed;left:0;right:0;bottom:0;z-index:99;background:#B3261E;color:#fff;font:700 13px/1.4 var(--font);padding:8px 16px;text-align:center}
 .test-banner a{color:#fff}
-.res aside .sticker{position:absolute;left:40px;top:110px;background:var(--l);color:var(--n);font-size:24px;line-height:1.05;padding:8px 14px;--t:-8deg}
+.res aside .sticker{background:var(--l);color:var(--n);font-size:24px;line-height:1.05;padding:8px 14px;--t:-6deg}
+/* bočný panel výsledku: nálepka a nadpis, vrece na kruhu s pečiatkou, fakty */
+.res .pack-aside{justify-content:flex-start;align-items:stretch;gap:24px;padding:40px 44px}
+.pa-top{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.pa-kicker{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--o)}
+.pa-stage{position:relative;flex:none;padding:28px 0;display:flex;align-items:center;justify-content:center;min-height:0}
+.pa-disc{position:absolute;width:min(300px,74%);aspect-ratio:1;border-radius:50%;background:var(--k-deep);box-shadow:0 0 0 14px rgba(255,255,255,.06)}
+.pa-stage .pack-stage{width:min(280px,62%)}
+.pa-badge{position:absolute;right:6%;top:8%;width:92px;height:92px;border-radius:50%;background:var(--o);color:var(--n);border:2px solid var(--n);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(10deg);font-weight:800;font-size:14px;text-transform:uppercase;line-height:1}
+.pa-badge b{font-size:38px;font-weight:900}
+.pa-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0}
+.pa-facts div{background:var(--k-deep);padding:14px 16px}
+.pa-facts dt{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--o)}
+.pa-facts dd{margin:6px 0 0;font-weight:900;font-size:18px;line-height:1.15}
 
 /* ---------- objednávka ---------- */
 .co .pane{padding:32px 64px 32px 80px;gap:18px}
@@ -257,11 +298,17 @@
   .bowl .sticker{right:-8px;font-size:22px}
   .done-pic{flex-basis:auto;width:100%}.done-pic .frame{height:min(440px,90vw)}
   .done-pic .sticker{left:-6px}
-    .res aside .sticker{left:16px;top:24px}
   .res .pack-aside{display:none}
   .pack-inline{display:flex}
   .pack-stage{width:min(230px,60%)}
   .pack-chips{gap:10px}
+  .swap-cmp{padding:12px 12px 16px}
+  .swap-cmp table{font-size:13px}
+  .swap-cmp th,.swap-cmp td{padding:8px 5px}
+  .swap-cmp thead th{font-size:13px}
+  .swap-cmp tbody th{font-size:10.5px;letter-spacing:.04em}
+  .swap-cmp thead th small{font-size:10px;letter-spacing:.06em}
+  .swap-act .btn{width:100%;min-height:52px;padding:12px 16px}
   .pack-chips .it{font-size:13px;padding:4px 11px 4px 4px;gap:6px}
   .pack-chips .it span{width:32px;height:32px}
   .pack-chips .it span svg{width:22px;height:22px}
@@ -532,6 +579,14 @@
     <h1 class="display q-title" tabindex="-1">Hotovo. <span>Granule sú vybrané.</span></h1>
     <div class="plabel"><span class="t">Receptúra:</span><h2 class="display pname" id="r-name"></h2></div>
     <div class="pack-chips" id="r-chips" aria-hidden="true"></div>
+    <div class="swap" id="r-swap">
+      <p class="swap-note" id="swap-note" hidden></p>
+      <button type="button" class="swap-q" id="swap-q" aria-expanded="false" aria-controls="swap-panel"></button>
+      <div class="swap-panel" id="swap-panel" hidden>
+        <div class="swap-list" id="swap-list" role="group" aria-label="Receptúry s iným mäsom"></div>
+        <div class="swap-cmp" id="swap-cmp" hidden></div>
+      </div>
+    </div>
     <div class="pack-inline" aria-hidden="true"><div class="pack-stage"><img class="pack" id="r-pack-m" src="" alt="" width="896" height="1200"></div><span class="sticker" id="r-stage-m">Na mieru</span></div>
     <p class="why" id="r-why"></p>
     <ul class="sr-only" id="r-recipe" aria-label="Hlavné suroviny"></ul>
@@ -556,8 +611,13 @@
     </div>
   </div>
   <aside class="side-blue pack-aside">
-    <div class="pack-stage"><img class="pack" id="r-pack" src="" alt="" width="896" height="1200"></div>
-    <span class="sticker" aria-hidden="true" id="r-stage">Na mieru</span>
+    <div class="pa-top"><span class="sticker" aria-hidden="true" id="r-stage">Na mieru</span><span class="pa-kicker">Tvoje vrece</span></div>
+    <div class="pa-stage">
+      <div class="pa-disc" aria-hidden="true"></div>
+      <div class="pack-stage"><img class="pack" id="r-pack" src="" alt="" width="896" height="1200"></div>
+      <span class="pa-badge" aria-hidden="true"><b>9</b>kg</span>
+    </div>
+    <dl class="pa-facts" id="r-facts-side"></dl>
   </aside>
 </section>
 
