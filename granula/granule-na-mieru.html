@@ -177,16 +177,13 @@
 .pack{width:100%;height:auto;display:block;filter:drop-shadow(0 30px 30px rgba(0,0,0,.35))}
 /* vrece s nálepkami hlavných surovín okolo */
 .pack-stage{position:relative;width:min(470px,86%)}
-.pack-chips .it{position:absolute;display:inline-flex;align-items:center;gap:8px;background:var(--white);color:var(--n);padding:5px 14px 5px 5px;border:2px solid var(--n);
-  font-size:14px;font-weight:800;white-space:nowrap;box-shadow:0 10px 18px -10px rgba(0,0,0,.45);transform:rotate(var(--t))}
+/* hlavné suroviny ako nálepky pod názvom receptúry */
+.pack-chips{display:flex;flex-wrap:wrap;gap:12px 14px;margin-top:2px}
+.pack-chips .it{display:inline-flex;align-items:center;gap:8px;background:var(--white);color:var(--n);padding:5px 14px 5px 5px;border:2px solid var(--n);
+  font-size:14px;font-weight:800;white-space:nowrap;transform:rotate(var(--t))}
 .pack-chips .it span{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-/* dva stĺpce po stranách vreca, rovnaké odsadenie, pravidelný rytmus */
-.pack-chips .it:nth-child(odd){left:-18%;--t:-3deg}
-.pack-chips .it:nth-child(even){right:-18%;--t:3deg}
-.pack-chips .it:nth-child(1){top:26%}
-.pack-chips .it:nth-child(2){top:38%}
-.pack-chips .it:nth-child(3){top:56%}
-.pack-chips .it:nth-child(4){top:68%}
+.pack-chips .it:nth-child(odd){--t:-2deg}
+.pack-chips .it:nth-child(even){--t:2deg}
 .pack-inline{display:none;position:relative;justify-content:center;background:var(--k);padding:24px 16px;margin:0 -16px}
 .pack-inline .sticker{position:absolute;left:16px;top:16px;background:var(--l);color:var(--n);font-size:20px;--t:-8deg}
 .facts{border-bottom:2px solid var(--n)}
@@ -264,10 +261,10 @@
   .res .pack-aside{display:none}
   .pack-inline{display:flex}
   .pack-stage{width:min(230px,60%)}
-  .pack-chips .it{font-size:11px;padding:3px 9px 3px 3px;gap:5px}
-  .pack-chips .it span{width:26px;height:26px}
-  .pack-chips .it span svg{width:18px;height:18px}
-  .pack-chips .it:nth-child(odd){left:-34%}.pack-chips .it:nth-child(even){right:-34%}
+  .pack-chips{gap:10px}
+  .pack-chips .it{font-size:13px;padding:4px 11px 4px 4px;gap:6px}
+  .pack-chips .it span{width:32px;height:32px}
+  .pack-chips .it span svg{width:22px;height:22px}
   .row2{flex-direction:column}
   .cardrow{flex-wrap:wrap}.cardrow > :first-child{flex-basis:100%}
 }
@@ -534,7 +531,8 @@
     <div class="kicker" style="margin-top:8px" id="r-kicker">Tvoje granule na mieru</div>
     <h1 class="display q-title" tabindex="-1">Hotovo. <span>Granule sú vybrané.</span></h1>
     <div class="plabel"><span class="t">Receptúra:</span><h2 class="display pname" id="r-name"></h2></div>
-    <div class="pack-inline" aria-hidden="true"><div class="pack-stage"><img class="pack" id="r-pack-m" src="" alt="" width="896" height="1200"><div class="pack-chips" id="r-chips-m"></div></div><span class="sticker" id="r-stage-m">Na mieru</span></div>
+    <div class="pack-chips" id="r-chips" aria-hidden="true"></div>
+    <div class="pack-inline" aria-hidden="true"><div class="pack-stage"><img class="pack" id="r-pack-m" src="" alt="" width="896" height="1200"></div><span class="sticker" id="r-stage-m">Na mieru</span></div>
     <p class="why" id="r-why"></p>
     <ul class="sr-only" id="r-recipe" aria-label="Hlavné suroviny"></ul>
     <div class="kpis">
@@ -558,7 +556,7 @@
     </div>
   </div>
   <aside class="side-blue pack-aside">
-    <div class="pack-stage"><img class="pack" id="r-pack" src="" alt="" width="896" height="1200"><div class="pack-chips" id="r-chips" aria-hidden="true"></div></div>
+    <div class="pack-stage"><img class="pack" id="r-pack" src="" alt="" width="896" height="1200"></div>
     <span class="sticker" aria-hidden="true" id="r-stage">Na mieru</span>
   </aside>
 </section>

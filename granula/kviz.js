@@ -187,11 +187,11 @@
     $("r-kicker").textContent = "Tvoje granule na mieru · " + state.dogname;
     $("r-name").textContent = p.name;
     var ICON_BG = ["var(--o)", "var(--l)", "var(--r)", "var(--m)"];
-    // hlavné suroviny: nálepky okolo vreca (desktop aj mobil) a textový zoznam pre čítačky
+    // hlavné suroviny: nálepky pod názvom receptúry a textový zoznam pre čítačky
     var chips = p.highlights.map(function (h, i) {
       return '<span class="it"><span style="background:' + ICON_BG[i % 4] + ";color:" + ICON_BG[i % 4] + '">' + I(h[0], 30, "#000000") + "</span>" + h[1] + " " + h[2] + " %</span>";
     }).join("");
-    $("r-chips").innerHTML = $("r-chips-m").innerHTML = chips;
+    $("r-chips").innerHTML = chips;
     $("r-recipe").innerHTML = p.highlights.map(function (h) { return "<li>" + h[1] + " " + h[2] + " %</li>"; }).join("");
     $("r-dose").textContent = r.dose.grams + " g";
     $("r-macro").textContent = p.protein + " / " + p.fat + " %";
