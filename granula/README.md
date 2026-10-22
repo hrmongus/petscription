@@ -82,7 +82,7 @@ neposielajú** a čísla karty sa po odoslaní mažú.
    vlhkosť, minerály, vitamíny a stopové prvky. Vhodnosť je zatiaľ predpoklad.
 3. **Ceny.** Jednotné pre všetky receptúry (`PARAMS.bagPrices`): 4 kg 35 €, 9 kg 75 €
    (−5 % za kg), 2 × 9 kg 140 € (−11 % za kg). Ceny €/kg bez DPH z podkladov výrobcu
-   ostávajú v katalógu len ako informácia. Predplatné dáva navyše −10 % / −20 %.
+   ostávajú v katalógu len ako informácia. Predplatné „každý mesiac“ dáva navyše −10 %; ďalšia možnosť je jednorazový nákup.
 4. **Platba.** Polia karty sú len vizuál. Nahradiť ich iframe platobnej brány;
    surové čísla kariet nesmú ísť cez vlastný server.
 5. **Výdajné miesta.** Tlačidlo „Vyber výdajné miesto na mape“ zatiaľ otvorí

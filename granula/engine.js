@@ -55,7 +55,7 @@
     // predajné ceny balení s DPH (€), rovnaké pre všetky receptúry
     // 9 kg ≈ −5 % a 2 × 9 kg ≈ −11 % za kilogram oproti 4 kg
     bagPrices: { "4": 35, "9": 75, "18": 140 },
-    plans: { mesiac: 0.10, kvartal: 0.20, raz: 0 } // zľavy predplatného
+    plans: { mesiac: 0.10, raz: 0 } // zľavy predplatného
   };
 
   /* ======================================================================
