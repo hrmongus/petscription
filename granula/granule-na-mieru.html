@@ -460,8 +460,8 @@
   </div>
   <aside class="side-blue">
     <div class="frame"><div class="ph"><img src="img/kviz-beh-trava.jpg" alt="Pes v plnom behu cez trávu" width="572" height="1024" loading="lazy"></div></div>
-    <div class="tip" aria-live="polite"><div class="h"><span class="g" aria-hidden="true">G!</span><span class="t" id="focus-tip-t">Na mieru</span></div>
-      <p id="focus-tip">Vyber, čo tvojho psa trápi, a granule prispôsobíme.</p></div>
+    <div class="tip"><div class="h"><span class="g" aria-hidden="true">G!</span><span class="t">Na mieru</span></div>
+      <p>Vyber pokojne viac možností. Všetky odpovede zvážime naraz a granule vyberieme až na konci.</p></div>
   </aside>
 </section>
 </form>
@@ -631,18 +631,6 @@
   var PLANS = { mesiac: 0.10, kvartal: 0.20, raz: 0 };
   var SHIPPING = 4.90;
   var KCAL_PER_G = 3.45; // ZÁSTUPNÁ hodnota — nahradiť energiou z reálnej receptúry
-  var FOCUS_TIP = {
-    nic: ["Na mieru", "Granule vyberieme podľa veku, váhy a pohybu tvojho psa."],
-    travenie: ["Citlivé trávenie", "Vyberieme granule s jediným zdrojom mäsa a hlivou ustricovou."],
-    kby: ["Kĺby a pohyb", "Vyberieme granule s vyšším obsahom chondroitínu a glukozamínu."],
-    srst: ["Srsť a koža", "Pridáme konopnú múku a ľanový olej, zdroj omega-3."],
-    vaha: ["Váha", "Dávku spočítame tak, aby sa váha dostala tam, kam patrí."],
-    vyberavy: ["Vyberavý jedák", "Vyberieme hus a kačicu, plnšiu chuť hydiny, ktorú psy milujú."],
-    energia: ["Energia", "Vyberieme hovädzie s jeleňom a viac bielkovín, aby mal z čoho brať."],
-    svaly: ["Svaly", "Konkrétne mäso ako hlavný zdroj bielkovín, až 32 %."],
-    imunita: ["Imunita", "Pridáme hlivu ustricovú, prirodzený zdroj betaglukánov."],
-    alergia: ["Nesedí mu každé mäso", "Vyberieme jahňa ako jediný zdroj mäsa."]
-  };
   var ACT = {
     doma: [1.3, "pokojný domáci režim"], mesto: [1.6, "bežný mestský režim"],
     sport: [2.0, "veľa behu a športu"], praca: [2.5, "pracovný režim"]
@@ -729,16 +717,13 @@
   });
   kg.addEventListener("input", paintKg);
 
-  /* ---------------- krok 5: tip a exkluzívne „Nič konkrétne“ ---------------- */
+  /* ---------------- krok 6: exkluzívne „Nič konkrétne“ ---------------- */
   quiz.addEventListener("change", function (e) {
     var t = e.target;
     if (t.name === "focus") {
       var boxes = quiz.querySelectorAll('input[name="focus"]');
       if (t.value === "nic" && t.checked) boxes.forEach(function (b) { if (b !== t) b.checked = false; });
       if (t.value !== "nic" && t.checked) quiz.querySelector('input[value="nic"]').checked = false;
-      var key = t.checked ? t.value : (Array.prototype.filter.call(boxes, function (b) { return b.checked; })[0] || {}).value || "nic";
-      $("focus-tip-t").textContent = FOCUS_TIP[key][0];
-      $("focus-tip").textContent = FOCUS_TIP[key][1];
     }
     read();
   });
@@ -773,9 +758,6 @@
     quiz.querySelectorAll('input[name="focus"]').forEach(function (c) { c.checked = has(c.value); });
     order.querySelectorAll('input[name="plan"]').forEach(function (r) { r.checked = r.value === state.plan; });
     paintName();
-    var key = state.focus[0] || "nic";
-    $("focus-tip-t").textContent = FOCUS_TIP[key][0];
-    $("focus-tip").textContent = FOCUS_TIP[key][1];
   }
   quiz.addEventListener("input", read);
 
