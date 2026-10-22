@@ -102,6 +102,8 @@ h1,h2,h3,p{margin:0}
 .meat .body{padding:24px 22px 26px;display:flex;flex-direction:column;gap:10px}
 .meat h3{font-size:30px}
 .meat p{font-size:16px;line-height:1.5;color:var(--i2)}
+/* ikony mäsa nad kartami — len na mobile, kde sa karty posúvajú ako karusel */
+.meat-tabs{display:none}
 
 .extras{background:var(--m2)}
 .extras .wrap{display:flex;flex-direction:column;gap:40px}
@@ -122,7 +124,14 @@ h1,h2,h3,p{margin:0}
 }
 @media (max-width:960px){.ing-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){
-  .meats{grid-template-columns:minmax(0,1fr)}
+  .meat-tabs{display:flex;justify-content:space-between;gap:6px;margin-bottom:18px}
+  .meat-tabs button{flex:1 1 0;max-width:56px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:var(--paper);
+    border:2px solid var(--n);cursor:pointer;padding:0;color:var(--n);transition:background .25s ease,transform .25s ease}
+  .meat-tabs button svg{width:60%;height:60%}
+  .meat-tabs button[aria-selected="true"]{background:var(--o);transform:rotate(-4deg) translateY(-2px)}
+  .meats{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -16px;padding:0 16px 28px;scroll-padding:0 16px}
+  .meats::-webkit-scrollbar{display:none}
+  .meat{flex:0 0 100%;scroll-snap-align:start}
   .ing{grid-template-columns:40px minmax(0,1fr);grid-template-areas:"ico n" "nm nm" "tag tag" "d d";padding:16px 14px;column-gap:10px}
   .ing .ico{width:40px;height:40px}
   .ing .ico svg{width:24px;height:24px}
