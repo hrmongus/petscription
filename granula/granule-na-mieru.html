@@ -172,7 +172,16 @@
 .res aside{width:500px;align-items:center;justify-content:center;position:relative}
   display:flex;flex-direction:column;align-items:center;gap:12px;padding:32px 22px 20px;position:relative;overflow:hidden}
 .pname{font-size:clamp(26px,2.6vw,34px);line-height:1.05}
-.pack{width:min(460px,96%);height:auto;filter:drop-shadow(0 30px 30px rgba(0,0,0,.35))}
+.pack{width:100%;height:auto;display:block;filter:drop-shadow(0 30px 30px rgba(0,0,0,.35))}
+/* vrece s nálepkami hlavných surovín okolo */
+.pack-stage{position:relative;width:min(470px,86%)}
+.pack-chips .it{position:absolute;display:inline-flex;align-items:center;gap:8px;background:var(--white);color:var(--n);padding:5px 14px 5px 5px;border:2px solid var(--n);
+  font-size:14px;font-weight:800;white-space:nowrap;box-shadow:0 10px 18px -10px rgba(0,0,0,.45);transform:rotate(var(--t))}
+.pack-chips .it span{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.pack-chips .it:nth-child(1){left:-14%;top:20%;--t:-6deg}
+.pack-chips .it:nth-child(2){right:-14%;top:34%;--t:5deg}
+.pack-chips .it:nth-child(3){left:-10%;bottom:24%;--t:4deg}
+.pack-chips .it:nth-child(4){right:-10%;bottom:12%;--t:-5deg}
 .pack-inline{display:none;position:relative;justify-content:center;background:var(--k);padding:24px 16px;margin:0 -16px}
 .pack-inline .sticker{position:absolute;left:16px;top:16px;background:var(--l);color:var(--n);font-size:20px;--t:-8deg}
 .facts{border-bottom:2px solid var(--n)}
@@ -249,7 +258,11 @@
     .res aside .sticker{left:16px;top:24px}
   .res .pack-aside{display:none}
   .pack-inline{display:flex}
-  .pack{width:min(260px,70%)}
+  .pack-stage{width:min(230px,60%)}
+  .pack-chips .it{font-size:11px;padding:3px 9px 3px 3px;gap:5px}
+  .pack-chips .it span{width:26px;height:26px}
+  .pack-chips .it span svg{width:18px;height:18px}
+  .pack-chips .it:nth-child(1){left:-30%}.pack-chips .it:nth-child(2){right:-30%}.pack-chips .it:nth-child(3){left:-26%}.pack-chips .it:nth-child(4){right:-26%}
   .row2{flex-direction:column}
   .cardrow{flex-wrap:wrap}.cardrow > :first-child{flex-basis:100%}
 }
@@ -516,9 +529,9 @@
     <div class="kicker" style="margin-top:8px" id="r-kicker">Tvoje granule na mieru</div>
     <h1 class="display q-title" tabindex="-1">Hotovo. <span>Granule sú vybrané.</span></h1>
     <h2 class="display pname" id="r-name"></h2>
-    <div class="pack-inline" aria-hidden="true"><img class="pack" id="r-pack-m" src="" alt="" width="896" height="1200"><span class="sticker" id="r-stage-m">Na mieru</span></div>
+    <div class="pack-inline" aria-hidden="true"><div class="pack-stage"><img class="pack" id="r-pack-m" src="" alt="" width="896" height="1200"><div class="pack-chips" id="r-chips-m"></div></div><span class="sticker" id="r-stage-m">Na mieru</span></div>
     <p class="why" id="r-why"></p>
-    <ul class="recipe" id="r-recipe" aria-label="Hlavné suroviny"></ul>
+    <ul class="sr-only" id="r-recipe" aria-label="Hlavné suroviny"></ul>
     <div class="kpis">
       <div><b id="r-dose"></b><span>denná dávka</span></div>
       <div><b id="r-macro"></b><span>bielkoviny / tuk</span></div>
@@ -540,7 +553,7 @@
     </div>
   </div>
   <aside class="side-blue pack-aside">
-    <img class="pack" id="r-pack" src="" alt="" width="896" height="1200">
+    <div class="pack-stage"><img class="pack" id="r-pack" src="" alt="" width="896" height="1200"><div class="pack-chips" id="r-chips" aria-hidden="true"></div></div>
     <span class="sticker" aria-hidden="true" id="r-stage">Na mieru</span>
   </aside>
 </section>
