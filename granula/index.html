@@ -22,10 +22,10 @@
 .hero .visual{position:relative}
 .hero .frame{height:600px}
 .hero .frame img{object-position:62% center}
-.hero .s-vet{position:absolute;left:-36px;top:48px;background:var(--r);font-size:22px;max-width:320px;line-height:1.05}
-.badge-62{position:absolute;right:-14px;bottom:-22px;background:var(--l);padding:24px 24px 18px;transform:rotate(-5deg);text-align:center}
-.badge-62 .v{font-size:44px}
-.badge-62 .u{font-size:15px;font-weight:800;letter-spacing:.12em;margin-top:6px}
+/* nálepka: malý nadpis + veľké slovo, ako odznak „Kvalitné mäso“ */
+.s-vet{position:absolute;left:-36px;top:48px;background:var(--r);color:var(--n);padding:14px 20px 12px;transform:rotate(-5deg);text-align:center}
+.s-vet small{display:block;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;line-height:1.35}
+.s-vet b{display:block;font-size:34px;margin-top:4px}
 
 /* ---------- čísla ---------- */
 .stats,.faq{overflow-x:clip}
@@ -167,7 +167,7 @@
   .hero .wrap,.longevity .wrap,.faq .wrap,.final .wrap{grid-template-columns:minmax(0,1fr)}
   .hero .wrap{gap:56px;padding-top:48px}
   .hero .frame{height:min(600px,110vw)}
-  .hero .s-vet{left:-8px}
+  .s-vet{left:-8px}
   .stats .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}
   .stat:nth-child(3){border-left:0}
   .stat:nth-child(n+3){border-top:2px solid var(--n)}
@@ -186,11 +186,11 @@
 @media (max-width:640px){
   .review{flex-basis:86%}
   .compare .col{padding:32px 20px 24px}
-  .badge-62{right:0}
-  .hero .s-vet{font-size:15px;max-width:210px;top:20px}
+  .s-vet{top:20px;padding:10px 14px 8px}
+  .s-vet small{font-size:9px}
+  .s-vet b{font-size:22px}
   .stat{padding:28px 14px}
   .stat .sticker{font-size:28px}
-  .badge-62 .v{font-size:32px}
 }
 </style>
 </head>
@@ -224,8 +224,7 @@
     </div>
     <div class="visual">
       <div class="frame"><div class="ph"><img src="img/hero-jack-russell.jpg" alt="Jack russell na tenisovom kurte" width="880" height="1168" fetchpriority="high"></div></div>
-      <span class="sticker s-vet">Veterinármi odporúčaná receptúra</span>
-      <div class="badge-62"><div class="display v">Kvalitné</div><div class="u">MÄSO</div></div>
+      <div class="s-vet"><small>Veterinármi<br>odporúčaná</small><b class="display">receptúra</b></div>
     </div>
   </div>
 </section>
