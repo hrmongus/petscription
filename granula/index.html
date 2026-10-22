@@ -83,19 +83,10 @@
 .step h3{font-size:26px}
 .step p{font-size:17px;line-height:1.55}
 .bagpanel{display:grid;grid-template-columns:300px minmax(0,1fr);gap:64px;align-items:center;background:var(--m2);border:2px solid var(--n);padding:48px 56px}
+.bagshot{width:300px;height:auto;filter:drop-shadow(0 24px 24px rgba(0,0,0,.25))}
 .bagpanel .copy{display:flex;flex-direction:column;gap:22px}
 .bagpanel .h2{font-size:clamp(28px,3vw,44px)}
 .bagpanel p{font-size:18px;line-height:1.55;color:var(--i2);max-width:600px}
-.bag{width:260px;height:360px;background:var(--k);color:var(--m);border:2px solid var(--n);box-shadow:14px 14px 0 var(--o);
-  display:flex;flex-direction:column;align-items:center;gap:10px;padding:26px 16px 16px;position:relative}
-.bag .kind{font-size:9px;font-weight:800;letter-spacing:.16em;margin-top:4px}
-.bag .win{width:150px;height:120px;background:var(--m);border:2px solid var(--n);margin-top:8px;display:flex;align-items:center;justify-content:center;gap:4px;position:relative;color:var(--m)}
-.bag .meatpct{position:absolute;right:-26px;top:-16px;background:var(--r);color:var(--n);padding:6px 8px 5px;transform:rotate(6deg);text-align:center}
-.bag .meatpct b{display:block;font-size:20px}
-.bag .meatpct small{display:block;font-size:8px;font-weight:800;letter-spacing:.1em}
-.bag .name{font-size:26px;text-align:center;margin-top:10px}
-.bag .foot-line{margin-top:auto;width:100%;display:flex;justify-content:space-between;align-items:flex-end;font-size:9px;font-weight:700}
-.bag .foot-line b{font-size:15px;font-weight:900}
 
 /* ---------- Granula = nula ---------- */
 .nula h2{font-size:clamp(34px,4.4vw,64px);max-width:1100px}
@@ -402,14 +393,7 @@
       <li class="step blue"><span class="sticker display no" style="background:var(--o)">03</span><h3 class="display">Vrecko príde samo</h3><p>Až k tebe domov. Skôr, než sa to staré minie.</p></li>
     </ol>
     <div class="bagpanel">
-      <div class="bag" role="img" aria-label="Vrecko Granula: granule na mieru, 2,4 kg">
-        <span class="logo">Granula!</span>
-        <div class="kind">GRANULE NA MIERU · DOSPELÝ</div>
-        <div class="win"><span data-icon="jelen" data-size="44"></span><span data-icon="tekvica" data-size="44"></span>
-          <div class="meatpct display"><b style="font-size:13px">KVALITNÉ</b><small>MÄSO</small></div></div>
-        <div class="name display">Granule<br>na mieru</div>
-        <div class="foot-line"><span>Kompletné krmivo pre psov</span><b>2,4 kg</b></div>
-      </div>
+      <img class="bagshot" src="img/produkty/jahna-s-batatmi-cucoriedkami.webp" alt="Vrece Granula: Jahňa s batátmi &amp; čučoriedkami, 9 kg" width="896" height="1200" loading="lazy">
       <div class="copy">
         <h2 class="h2"><span class="lt">Granule na mieru. Dávka na gramy.</span> Vrecko príde samo.</h2>
         <p>Granule aj dávku vyberieme pre jedného konkrétneho psa. A keďže vieme, koľko denne zje, ďalšie vrecko pošleme skôr, než miska zostane prázdna.</p>
@@ -506,7 +490,7 @@
     </div>
     <div class="visual">
       <div class="frame" style="--field:var(--k)"><div class="ph"><img src="img/cta-dalmatin.jpg" alt="Dalmatín pozerá do kamery" width="666" height="1000" loading="lazy"></div></div>
-      <span class="sticker">Večera o 18:00.<br>Hlad od 17:58.</span>
+      <span class="sticker">Granule o 18:00.<br>Hlad od 17:58.</span>
     </div>
   </div>
 </section>

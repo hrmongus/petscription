@@ -69,6 +69,7 @@ h1,h2,h3,p{margin:0}
 .menu a:hover{color:var(--k)}
 .menu a[aria-current="page"]{border-bottom:2px solid var(--o);padding-bottom:2px}
 @media (max-width:860px){.menu{display:none}.logo{font-size:24px}}
+@media (max-width:480px){.site-head .wrap{gap:12px}.btn-head{font-size:11px;letter-spacing:.03em;padding:10px 12px;min-height:42px}.site-head .logo{font-size:21px}}
 
 /* ---------- foto s posunutým farebným poľom ---------- */
 .frame{--off:26px;--field:var(--k);position:relative;padding:0 var(--off) var(--off) 0}
@@ -103,24 +104,32 @@ h1,h2,h3,p{margin:0}
 .meat p{font-size:16px;line-height:1.5;color:var(--i2)}
 
 .extras{background:var(--m2)}
-.extras .wrap{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:64px;align-items:start}
+.extras .wrap{display:flex;flex-direction:column;gap:40px}
+.extras .head{max-width:760px}
 .extras .h2{font-size:clamp(36px,3.8vw,56px)}
-.ing-list{border-bottom:2px solid var(--n)}
-.ing{display:grid;grid-template-columns:72px 64px minmax(0,1.2fr) 140px minmax(0,1.4fr);gap:24px;align-items:center;
-  border-top:2px solid var(--n);padding:22px 0}
-.ing .n{font-size:15px;font-weight:800;letter-spacing:.1em}
-.ing .ico{width:56px;height:56px;border:2px solid var(--n);display:flex;align-items:center;justify-content:center;transform:rotate(var(--t))}
-.ing .nm{font-size:clamp(22px,2.2vw,32px)}
-.ing .tag{justify-self:start;background:var(--n);color:var(--m);padding:6px 10px 5px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
-.ing .d{font-size:16px;line-height:1.5;color:var(--i2)}
+/* suroviny ako mriežka kariet, aby sekcia nebola zbytočne vysoká */
+.ing-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--n);border-left:2px solid var(--n)}
+.ing{display:grid;grid-template-columns:56px minmax(0,1fr);grid-template-areas:"ico n" "ico nm" "tag tag" "d d";
+  column-gap:16px;row-gap:8px;align-items:center;align-content:start;padding:22px;border-right:2px solid var(--n);border-bottom:2px solid var(--n)}
+.ing .n{grid-area:n;font-size:13px;font-weight:800;letter-spacing:.1em;align-self:end}
+.ing .ico{grid-area:ico;width:56px;height:56px;border:2px solid var(--n);display:flex;align-items:center;justify-content:center;transform:rotate(var(--t))}
+.ing .nm{grid-area:nm;font-size:clamp(20px,1.9vw,26px);align-self:start}
+.ing .tag{grid-area:tag;justify-self:start;margin-top:6px;background:var(--n);color:var(--m);padding:6px 10px 5px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.ing .d{grid-area:d;font-size:15px;line-height:1.5;color:var(--i2)}
 
 @media (max-width:1100px){
   .meats{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .ing{grid-template-columns:48px 64px minmax(0,1fr);row-gap:10px}
-  .ing .tag,.ing .d{grid-column:3}
 }
-@media (max-width:960px){.extras .wrap{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:640px){.meats{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:960px){.ing-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){
+  .meats{grid-template-columns:minmax(0,1fr)}
+  .ing{grid-template-columns:40px minmax(0,1fr);grid-template-areas:"ico n" "nm nm" "tag tag" "d d";padding:16px 14px;column-gap:10px}
+  .ing .ico{width:40px;height:40px}
+  .ing .ico svg{width:24px;height:24px}
+  .ing .nm{font-size:17px}
+  .ing .d{font-size:13px}
+  .ing .tag{font-size:10px;padding:4px 7px}
+}
 
 /* ---------- pätička ---------- */
 .foot{background:var(--n);color:var(--m)}
