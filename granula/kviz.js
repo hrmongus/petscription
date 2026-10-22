@@ -234,6 +234,7 @@
     var m = p.proteins.map(function (x, i) { return i ? x.toLowerCase() : x; });
     return m.length > 1 ? m.slice(0, -1).join(", ") + " & " + m[m.length - 1] : m[0];
   }
+  function shared(x, p) { return x.proteins.filter(function (m) { return p.proteins.indexOf(m) !== -1; }); }
   function lower(s) { return s.charAt(0).toLowerCase() + s.slice(1); }
   function swapWhy(e) {
     var blocked = e.unfitFor.filter(function (x) { return x.ok; });
@@ -246,15 +247,13 @@
     note.hidden = !r.swapped;
     if (r.swapped) note.innerHTML = "Zmenené z odporúčanej receptúry „" + rec.name + "“. <button type=\"button\" id=\"swap-back\">Vrátiť</button>";
     $("swap-q").textContent = "Netoleruje " + state.dogname + " tento typ proteínu?";
-    // ponúkame len receptúry, v ktorých nie je ani jeden druh mäsa zo súčasnej
-    var alts = E.PRODUCTS.filter(function (x) {
-      return x !== p && !x.proteins.some(function (m) { return p.proteins.indexOf(m) !== -1; });
-    });
+    // všetky ostatné receptúry; spoločné mäso so súčasnou je pri nich vyznačené
+    var alts = E.PRODUCTS.filter(function (x) { return x !== p; });
     $("r-swap").hidden = !alts.length;
     if (alts.every(function (x) { return x.id !== swapPick; })) swapPick = null;
     $("swap-list").innerHTML = alts.map(function (x) {
       var ok = r.products.filter(function (e) { return e.product === x; })[0].eligible;
-      return '<button type="button" data-recipe="' + x.id + '" aria-pressed="' + (x.id === swapPick) + '">' + meatName(x) + (x.monoprotein ? " <small>mono</small>" : "") + (ok ? "" : " <small>menej vhodné</small>") + "</button>";
+      return '<button type="button" data-recipe="' + x.id + '" aria-pressed="' + (x.id === swapPick) + '">' + meatName(x) + (x.monoprotein ? " <small>mono</small>" : "") + (shared(x, p).length ? " <small>rovnaké: " + shared(x, p).map(lower).join(", ") + "</small>" : "") + (ok ? "" : " <small>menej vhodné</small>") + "</button>";
     }).join("");
     renderCmp(r);
   }
@@ -280,10 +279,11 @@
     ];
     box.innerHTML = '<table><thead><tr><th scope="col"><span class="sr-only">Údaj</span></th>' +
       '<th scope="col"><img src="' + cur.img + '" alt=""><small>' + (r.swapped ? "Teraz" : "Odporúčaná") + "</small>" + cur.name + "</th>" +
-      '<th scope="col"><img src="' + q.img + '" alt=""><small>Iné mäso</small>' + q.name + "</th></tr></thead><tbody>" +
+      '<th scope="col"><img src="' + q.img + '" alt=""><small>Porovnanie</small>' + q.name + "</th></tr></thead><tbody>" +
       rows.map(function (x) {
         return '<tr><th scope="row">' + x[0] + "</th><td>" + x[1] + '</td><td' + (String(x[1]) !== String(x[2]) ? ' class="chg"' : "") + ">" + x[2] + "</td></tr>";
       }).join("") + "</tbody></table>" +
+      (shared(q, cur).length ? '<p class="swap-warn">Rovnaké mäso ako v súčasnej receptúre: ' + shared(q, cur).map(lower).join(", ") + ". Ak ho pes netoleruje, vyber inú.</p>" : "") +
       (el.eligible ? "" : '<p class="swap-warn">Pre tohto psa ju neodporúčame. ' + swapWhy(el) + "</p>") +
       '<div class="swap-act">' + (el.eligible ? '<button type="button" class="btn btn-k" data-swap-to="' + q.id + '">Zmeniť na ' + q.name + "</button>" : "") +
       '<button type="button" class="later" data-swap-close>Zavrieť porovnanie</button></div>';
