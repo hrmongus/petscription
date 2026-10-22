@@ -30,12 +30,6 @@
   function plural(n, one, few, many) { return n === 1 ? one : (n >= 2 && n <= 4 ? few : many); }
   function result() { return E.compute(state, params); }
 
-  function ageText(d) {
-    var y = parseInt(state.years, 10) || 0, m = parseInt(state.months, 10) || 0;
-    if (d.useWeeks) return d.ageWeeks + " " + plural(d.ageWeeks, "týždeň", "týždne", "týždňov");
-    if (y >= 1) return y + " " + plural(y, "rok", "roky", "rokov");
-    return m + " " + plural(m, "mesiac", "mesiace", "mesiacov");
-  }
 
   /* ---------------- plemeno, váha, vek ---------------- */
   var sel = $("breed");
@@ -185,15 +179,13 @@
   }
   function renderResult() {
     var r = result(), d = r.derived, p = r.product;
+    // vysvetľujúci text sa ukazuje len vtedy, keď pre psa nemáme vhodné granule
+    $("r-why").hidden = !!p;
     if (!p) { $("r-name").textContent = "Pre tohto psa nemáme vhodné granule"; $("r-why").textContent = "Napíš nám, poradíme osobne."; return; }
     if (!r.bags.some(function (x) { return x.bag.id === state.bag; })) state.bag = r.recBag;
     var I = GranulaIcons.svg;
     $("r-kicker").textContent = "Tvoje granule na mieru · " + state.dogname;
     $("r-name").textContent = p.name;
-    var who = d.isPuppy ? "šteňa" : d.stage === "senior" ? "senior" : "dospelý pes";
-    var lead = d.breed ? (d.breed.mix ? "Kríženec" : d.breed.name) : "Pes";
-    $("r-why").textContent = lead + " (" + E.SIZE_TEXT[d.size] + " plemeno), " + ageText(d) + ", " + num(state.kg, state.kg % 1 ? 1 : 0) + " kg, " + who +
-      ". Vybrali sme ich, pretože " + r.winner.rule.why + ". Dávku sme spočítali z energie týchto granúl, hmotnosti a bežného dňa tvojho psa.";
     var ICON_BG = ["var(--o)", "var(--l)", "var(--r)", "var(--m)"];
     $("r-recipe").innerHTML = '<li class="lbl">HLAVNÉ SUROVINY</li>' + p.highlights.map(function (h, i) {
       return '<li class="it"><span style="background:' + ICON_BG[i % 4] + ";color:" + ICON_BG[i % 4] + '">' + I(h[0], 30, "#000000") + "</span>" + h[1] + " " + h[2] + " %</li>";
