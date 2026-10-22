@@ -387,16 +387,16 @@
         a ktoré má aspoň jedného vhodného kandidáta, určí produkt.
      ====================================================================== */
   var RULES = [
-    { id: "R1", label: "Šteňa do 9. týždňa → štartér", when: function (d) { return d.stage === "starter"; },
+    { id: "R1", strict: true, label: "Šteňa do 9. týždňa → štartér", when: function (d) { return d.stage === "starter"; },
       prefer: function () { return ["hovadzie-morka-jahna"]; },
       why: "je to šteňa do 9. týždňa a tieto granule sú štartér pre šteňatá všetkých plemien" },
-    { id: "R2", label: "Gravidná fena", when: function (d) { return !!d.pregnant; },
+    { id: "R2", strict: true, label: "Gravidná fena", when: function (d) { return !!d.pregnant; },
       prefer: function () { return ["hovadzie"]; },
       why: "výrobca ich odporúča pre gravidné feny" },
-    { id: "R3", label: "Nadváha alebo pankreas → najnižší tuk spomedzi vhodných", when: function (d) { return d.obese || d.pancreas; },
+    { id: "R3", strict: true, label: "Nadváha alebo pankreas → najnižší tuk spomedzi vhodných", when: function (d) { return d.obese || d.pancreas; },
       prefer: function () { return PRODUCTS.slice().sort(function (x, y) { return x.fat - y.fat; }).map(function (p) { return p.id; }); },
       why: "pri nadváhe a citlivom pankrease vyberáme vhodné granule s najnižším obsahom tuku" },
-    { id: "R4", label: "Potravinová intolerancia / citlivé trávenie → monoproteín", when: function (d) { return d.intolerance; },
+    { id: "R4", strict: true, label: "Potravinová intolerancia / citlivé trávenie → monoproteín", when: function (d) { return d.intolerance; },
       prefer: function () { return ["jahna", "hovadzie"]; },
       why: "majú jediný zdroj mäsa (monoproteín), vhodné pri potravinových intoleranciách" },
     { id: "R5", label: "Šteňa malého alebo stredného plemena", when: function (d) { return d.stage === "puppy" && d.smallMid; },
@@ -435,7 +435,29 @@
         applies: true, prefer: PRODUCTS.map(function (p) { return p.id; }), pick: any ? any.product.id : null, status: any ? "won" : "noCandidate" });
       if (any) winner = { rule: trace[trace.length - 1].rule, id: any.product.id };
     }
-    return { winner: winner, trace: trace };
+    return { winner: winner, trace: trace, second: runnerUp(winner, trace, byId) };
+  }
+
+  /* 2. možnosť: najprv ďalší vhodný kandidát vo víťaznom pravidle, potom prvý vhodný
+     kandidát z nasledujúcich pravidiel, ktorých podmienka tiež platí. Pravidlá so
+     špeciálnou potrebou (strict: R1–R4) dávajú druhú možnosť len zo svojho zoznamu,
+     aby napr. pes s intoleranciou nedostal granule s viacerými druhmi mäsa.
+     Ak taký kandidát nie je, druhá možnosť nie je (záloha R0 ju nedáva). */
+  function runnerUp(winner, trace, byId) {
+    if (!winner) return null;
+    var start = -1;
+    trace.forEach(function (t, i) { if (t.status === "won") start = i; });
+    for (var i = start; i < trace.length; i++) {
+      var t = trace[i];
+      if (!t.applies || t.rule.id === "R0") continue;
+      if (i > start && trace[start].rule.strict) break;
+      var id = t.prefer.filter(function (x) { return x !== winner.id && byId[x].eligible; })[0];
+      if (id) {
+        t.second = id;
+        return { rule: t.rule, id: id, how: i === start ? "ďalší vhodný kandidát v tom istom pravidle" : "prvý vhodný kandidát ďalšieho platného pravidla" };
+      }
+    }
+    return null;
   }
 
   /* ======================================================================
@@ -524,7 +546,9 @@
     if (has(a, "vaha") && !d.obese) notes.push("Zameranie „váha“ samo nemení výber ani dávku; mení ich až postava „kilo navyše“.");
     if (d.pregnant) notes.push("Gravidná fena: dávku priebežne upravuj podľa veterinára.");
 
+    var second = dec.second ? PRODUCTS.filter(function (p) { return p.id === dec.second.id; })[0] : null;
     return { params: P, derived: d, products: elig, rules: dec.trace, winner: dec.winner, product: product,
+      second: dec.second, secondProduct: second, secondDose: second ? doses.filter(function (x) { return x.product === second; })[0] : null,
       energy: en, dose: dose, doses: doses, bags: bags, recBag: recBag, notes: notes };
   }
 

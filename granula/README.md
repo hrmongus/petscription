@@ -52,6 +52,10 @@ Jeleň & králik s batátmi.
    (najmenej tuku) → intolerancia (monoproteín) → šteňa malé/stredné → šteňa
    veľké/obrie → aktívny → senior → dospelý malý → dospelý. Vyhrá prvé pravidlo,
    ktoré platí a má vhodného kandidáta.
+4. *2. možnosť* (zatiaľ len na kontrolnej stránke): ďalší vhodný kandidát vo
+   víťaznom pravidle, inak prvý vhodný kandidát z ďalších platných pravidiel.
+   R1–R4 (štartér, gravidita, nadváha/pankreas, intolerancia) berú len zo svojho
+   zoznamu. Ak kandidát nie je, druhá možnosť sa neukáže.
 
 **Denná dávka** = energia psa / energia krmiva:
 - energia psa = RER × násobok (WSAVA / AAHA), RER = 70 × kg^0,75; pri nadváhe
