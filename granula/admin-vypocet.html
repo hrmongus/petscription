@@ -202,7 +202,7 @@ code{font-size:12px;background:var(--m2);padding:1px 4px}
     puppyUntilMonths: "Šteňa do (mesiace)", seniorFromYears: "Senior od (roky)", factor: "Násobky RER (WSAVA / AAHA)", plans: "Zľavy predplatného (podiel)",
     starterWeeks: "Štartér do (týždne)", overweightFraction: "„Kilo navyše“ = nad ideálom (podiel)", underweightBonus: "„Chudší“ = energia navyše (podiel)",
     calibration: "Kalibrácia (× energia)", roundTo: "Zaokrúhlenie dávky (g)", vat: "DPH (podiel)", shipping: "Doprava (€)", minBagDays: "Odporúčané vrece aspoň (dní)",
-    reorderLeadDays: "Ďalšie vrece skôr o (dni)",
+    reorderLeadDays: "Ďalšie vrece skôr o (dni)", bagPrices: "Ceny balení s DPH (€)", "4": "4 kg", "9": "9 kg", "18": "2 × 9 kg",
     trpaslicie: "trpasličie", male: "malé", stredne: "stredné", velke: "veľké", obrie: "obrie", mesiac: "každý mesiac", kvartal: "na 3 mesiace", raz: "jednorazovo",
     puppyUnder4m: "šteňa 0–4 mes.", puppyOver4m: "šteňa 4 mes.–dospelosť", adultNeutered: "dospelý kastrovaný", adultIntact: "dospelý nekastrovaný",
     inactive: "prevažne doma / senior", lightWork: "šport (ľahká práca)", moderateWork: "pracovný (stredná práca)", weightLoss: "nadváha (× RER ideálu)",
@@ -278,7 +278,7 @@ code{font-size:12px;background:var(--m2);padding:1px 4px}
         '<div style="font-size:13px;margin-top:6px">Pravidlo <b>' + r.second.rule.id + "</b>: " + esc(r.second.rule.label) + " — " + esc(r.second.how) + "</div>" +
         '<div class="big"><div><b>' + r.secondDose.grams + ' g</b><span>denná dávka (presne ' + fmt(r.secondDose.raw, 1) + ' g)</span></div>' +
         "<div><b>" + fmt(r.secondDose.me.me, 1) + ' kcal</b><span>ME na 100 g krmiva</span></div>' +
-        "<div><b>" + (r.secondProduct.pricePerKgExVat == null ? "—" : fmt(E.bagPrice(r.secondProduct, E.BAGS[0], P), 2) + " €") + "</b><span>cena 9 kg s DPH</span></div></div></div></div>"
+        "<div><b>" + r.secondDose.grams + " g × 30 = " + fmt(r.secondDose.grams * 30 / 1000, 1) + " kg</b><span>spotreba za mesiac</span></div></div></div></div>"
        : (p ? '<p class="lead2" style="margin:14px 0 0">2. možnosť: žiadna — víťazné pravidlo ani nasledujúce platné pravidlá nemajú ďalšieho vhodného kandidáta (R1–R4 berú len zo svojho zoznamu).</p>' : ""));
 
     // 2 odvodené
@@ -351,8 +351,9 @@ code{font-size:12px;background:var(--m2);padding:1px 4px}
           "</td><td class=n>" + (pr == null ? "—" : fmt(pr * (1 - P.plans.kvartal), 2) + " €") + "</td><td class=n>" + (pr == null ? "—" : fmt(pr * (1 - P.plans.mesiac) / x.days, 2) + " €") +
           "</td><td class=n>~" + x.nextDay + ". deň</td></tr>";
       }).join("") + "</table>" +
-      '<p style="font-size:13px;margin-top:10px">Cena = ' + (p.pricePerKgExVat == null ? "?" : fmt(p.pricePerKgExVat, 2)) + " €/kg bez DPH × kg × (1 + " + fmt(P.vat, 2) +
-      "). Výdrž = kg × 1000 / dávka, nadol. Odporúčané = najmenšie vrece, ktoré vydrží aspoň " + P.minBagDays + " dní. Doprava " + fmt(P.shipping, 2) + " € za doručenie.</p>";
+      '<p style="font-size:13px;margin-top:10px">Cena = jednotná cena balenia s DPH pre všetky receptúry (parameter „Ceny balení“): ' +
+      E.BAGS.map(function (b) { return b.label + " " + fmt(P.bagPrices[b.id], 2) + " €" + (E.bagSaving(b, P) ? " (−" + E.bagSaving(b, P) + " % za kg oproti " + E.BAGS[0].label + ")" : ""); }).join(", ") +
+      ". Výdrž = kg × 1000 / dávka, nadol. Odporúčané = najmenšie vrece, ktoré vydrží aspoň " + P.minBagDays + " dní. Doprava " + fmt(P.shipping, 2) + " € za doručenie.</p>";
 
     // 12 plemená
     $("o-breeds").innerHTML = "<table><tr><th>Plemeno</th><th>Kategória</th><th class=n>Rozpätie (kg)</th><th class=n>Priemer (kg)</th><th class=n>Šteňa do</th><th class=n>Senior od</th></tr>" +
@@ -376,7 +377,7 @@ code{font-size:12px;background:var(--m2);padding:1px 4px}
         ["Granula", p.kibbleMm ? p.kibbleMm + " mm" : "—"],
         ["Monoproteín", p.monoprotein ? "áno" : "nie"],
         ["Glukozamín / chondroitín", (p.glucosamine ? p.glucosamine + " mg/kg" : "—") + " / " + (p.chondroitin ? p.chondroitin + " mg/kg" : "—")],
-        ["Cena", p.pricePerKgExVat == null ? "—" : fmt(p.pricePerKgExVat, 2) + " €/kg bez DPH · " + fmt(p.pricePerKgExVat * (1 + vat), 2) + " €/kg s DPH · 9 kg " + fmt(E.bagPrice(p, E.BAGS[0], E.PARAMS), 2) + " €"],
+        ["Cena z podkladov výrobcu", (p.pricePerKgExVat == null ? "—" : fmt(p.pricePerKgExVat, 2) + " €/kg bez DPH · " + fmt(p.pricePerKgExVat * (1 + vat), 2) + " €/kg s DPH") + " (len informácia; web predáva za jednotné ceny balení v parametroch)"],
         ["Vhodnosť (výrobca)", p.suitability || "—"],
         ["Zloženie", p.composition],
         ["Nutričné doplnkové látky v 1 kg", p.additives || "—"],

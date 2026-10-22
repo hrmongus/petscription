@@ -80,8 +80,9 @@ neposielajú** a čísla karty sa po odoslaní mažú.
    tabuľka výrobcu (sekcia 6 na kontrolnej stránke); treba rozhodnúť o kalibrácii.
 2. **Jeleň & králik s batátmi.** Chýba cena, popis vhodnosti, popol, vláknina,
    vlhkosť, minerály, vitamíny a stopové prvky. Vhodnosť je zatiaľ predpoklad.
-3. **Ceny.** Podklady uvádzajú €/kg bez DPH; web k nim pripočíta 23 % DPH bez
-   marže. Overiť, či sú to predajné ceny. Vrecia: 9 kg a 2 × 9 kg.
+3. **Ceny.** Jednotné pre všetky receptúry (`PARAMS.bagPrices`): 4 kg 35 €, 9 kg 75 €
+   (−5 % za kg), 2 × 9 kg 140 € (−11 % za kg). Ceny €/kg bez DPH z podkladov výrobcu
+   ostávajú v katalógu len ako informácia. Predplatné dáva navyše −10 % / −20 %.
 4. **Platba.** Polia karty sú len vizuál. Nahradiť ich iframe platobnej brány;
    surové čísla kariet nesmú ísť cez vlastný server.
 5. **Výdajné miesta.** Tlačidlo „Vyber výdajné miesto na mape“ zatiaľ otvorí

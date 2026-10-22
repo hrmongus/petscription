@@ -52,6 +52,9 @@
     shipping: 4.90,           // doprava za doručenie s DPH (€)
     minBagDays: 28,           // odporúčané vrece má vydržať aspoň toľko dní
     reorderLeadDays: 4,       // ďalšie vrece posielame o toľko dní skôr
+    // predajné ceny balení s DPH (€), rovnaké pre všetky receptúry
+    // 9 kg ≈ −5 % a 2 × 9 kg ≈ −11 % za kilogram oproti 4 kg
+    bagPrices: { "4": 35, "9": 75, "18": 140 },
     plans: { mesiac: 0.10, kvartal: 0.20, raz: 0 } // zľavy predplatného
   };
 
@@ -239,6 +242,7 @@
   ];
 
   var BAGS = [
+    { id: "4", kg: 4, label: "4 kg" },
     { id: "9", kg: 9, label: "9 kg" },
     { id: "18", kg: 18, label: "2 × 9 kg" }
   ];
@@ -517,8 +521,13 @@
   }
 
   function bagPrice(product, bag, P) {
-    if (product.pricePerKgExVat == null) return null;
-    return Math.round(product.pricePerKgExVat * bag.kg * (1 + P.vat) * 100) / 100;
+    var v = P.bagPrices[bag.id];
+    return v == null || isNaN(v) ? null : v;
+  }
+  // zľava za kilogram oproti najmenšiemu baleniu (celé percentá)
+  function bagSaving(bag, P) {
+    var base = P.bagPrices[BAGS[0].id] / BAGS[0].kg, kg = P.bagPrices[bag.id] / bag.kg;
+    return bag === BAGS[0] || !base ? 0 : Math.round((1 - kg / base) * 100);
   }
 
   /* ======================================================================
@@ -541,7 +550,7 @@
     if (dose) {
       bags = BAGS.map(function (b) {
         var days = Math.floor(b.kg * 1000 / dose.grams);
-        return { bag: b, days: days, price: bagPrice(product, b, P), nextDay: Math.max(1, days - P.reorderLeadDays) };
+        return { bag: b, days: days, price: bagPrice(product, b, P), saving: bagSaving(b, P), nextDay: Math.max(1, days - P.reorderLeadDays) };
       });
       recBag = (bags.filter(function (x) { return x.days >= P.minBagDays; })[0] || bags[bags.length - 1]).bag.id;
     }
@@ -575,7 +584,7 @@
   window.GranulaEngine = {
     PARAMS: PARAMS, BREEDS: BREEDS, PRODUCTS: PRODUCTS, BAGS: BAGS, RULES: RULES,
     ACTIVITY_TEXT: ACTIVITY_TEXT, SIZE_TEXT: SIZE_TEXT, STAGE_TEXT: STAGE_TEXT,
-    compute: compute, metabolizable: metabolizable, bagPrice: bagPrice, merge: merge, fmt: fmt,
+    compute: compute, metabolizable: metabolizable, bagPrice: bagPrice, bagSaving: bagSaving, merge: merge, fmt: fmt,
     OVERRIDE_KEY: "granula-engine-params"
   };
 })();

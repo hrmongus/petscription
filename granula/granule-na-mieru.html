@@ -161,10 +161,12 @@
 .kpis b{display:block;font-weight:900;font-size:31.2px;line-height:1}
 .kpis span{display:block;font-size:13px;font-weight:700;margin-top:6px}
 .sub-lbl{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--i3)}
-.opt.bagopt{flex-direction:row;justify-content:space-between;align-items:center;gap:10px;padding:16px 18px;min-height:0}
+.opt.bagopt{gap:4px;padding:16px 16px 14px;min-height:0}
 .opt.bagopt b{font-size:18px}
-.opt.bagopt small{display:block;font-size:13px;margin-top:4px;opacity:1}
-.opt.bagopt .price{font-weight:900;font-size:18px}
+.opt.bagopt .price{font-weight:900;font-size:22px;line-height:1.1;margin-top:6px}
+.opt.bagopt small{display:block;font-size:13px;opacity:1}
+.opt.bagopt .save{align-self:flex-start;margin-top:4px;background:var(--n);color:var(--m);font-size:11px;font-weight:800;letter-spacing:.06em;padding:3px 7px 2px}
+.opt.bagopt:has(input:checked) .save{background:var(--o);color:var(--n)}
 .rec{position:absolute;right:10px;top:-14px;background:var(--l);color:var(--n);padding:4px 10px;transform:rotate(3deg);font-weight:900;font-size:14px;text-transform:uppercase}
 .paybar{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:auto;border-top:1.5px solid var(--n);padding-top:18px}
 .paybar b{display:block;font-weight:900;font-size:24px;line-height:1}
@@ -234,6 +236,7 @@
 .pa-badge{position:absolute;right:6%;top:8%;width:92px;height:92px;border-radius:50%;background:var(--o);color:var(--n);border:2px solid var(--n);
   display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(10deg);font-weight:800;font-size:14px;text-transform:uppercase;line-height:1}
 .pa-badge b{font-size:38px;font-weight:900}
+.pa-badge b.long{font-size:24px}
 .pa-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0}
 .pa-facts div{background:var(--k-deep);padding:14px 16px}
 .pa-facts dt{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--o)}
@@ -293,6 +296,13 @@
   .q-body{padding:32px 0;gap:20px}
   .progress .bars i{width:22px}
   .opts.c2,.opts.c3,.tiles,.co .grid2{grid-template-columns:minmax(0,1fr)}
+  .opts.c3.bags{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .opt.bagopt{padding:12px 10px 10px}
+  .opt.bagopt b{font-size:15px}
+  .opt.bagopt .price{font-size:17px}
+  .opt.bagopt small{font-size:11.5px}
+  .opt.bagopt .save{font-size:10px;padding:3px 5px 2px;letter-spacing:.02em}
+  .bags .rec{font-size:10.5px;padding:3px 6px;right:4px;top:-12px}
   .kpis{gap:8px}
   .kpis > div{padding:12px 10px}
   .kpis b{font-size:clamp(17px,5.4vw,22px);white-space:nowrap}
@@ -602,7 +612,7 @@
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <div class="sub-lbl" id="t-bag">VRECE · POŠLEME HO SKÔR, NEŽ SA MINIE</div>
-      <div class="opts c2" role="radiogroup" aria-labelledby="t-bag" id="r-bags" style="padding-top:12px"></div>
+      <div class="opts c3 bags" role="radiogroup" aria-labelledby="t-bag" id="r-bags" style="padding-top:12px"></div>
     </div>
     <div class="facts" id="r-facts">
       <details><summary>Zloženie<i aria-hidden="true">+</i></summary><p id="f-comp"></p></details>
@@ -620,7 +630,7 @@
     <div class="pa-stage">
       <div class="pa-disc" aria-hidden="true"></div>
       <div class="pack-stage"><img class="pack" id="r-pack" src="" alt="" width="896" height="1200"></div>
-      <span class="pa-badge" aria-hidden="true"><b>9</b>kg</span>
+      <span class="pa-badge" aria-hidden="true"><b id="r-badge-kg">9</b>kg</span>
     </div>
     <dl class="pa-facts" id="r-facts-side"></dl>
   </aside>

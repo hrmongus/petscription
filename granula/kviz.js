@@ -203,8 +203,11 @@
 
     $("r-bags").innerHTML = r.bags.map(function (x) {
       return '<label class="opt bagopt"><input type="radio" name="bag" value="' + x.bag.id + '"' + (x.bag.id === state.bag ? " checked" : "") + ">" +
-        "<span><b>" + x.bag.label + "</b><small>vydrží " + x.days + " " + plural(x.days, "deň", "dni", "dní") + "</small></span>" +
-        '<span class="price">' + (x.price == null ? "cena —" : eur(x.price)) + "</span>" + (x.bag.id === r.recBag ? '<span class="rec">Odporúčame</span>' : "") + "</label>";
+        "<b>" + x.bag.label + "</b>" +
+        '<span class="price">' + (x.price == null ? "cena —" : eur(x.price)) + "</span>" +
+        "<small>vydrží " + x.days + " " + plural(x.days, "deň", "dni", "dní") + "</small>" +
+        (x.saving > 0 ? '<span class="save">−' + x.saving + " % za kg</span>" : "") +
+        (x.bag.id === r.recBag ? '<span class="rec">Odporúčame</span>' : "") + "</label>";
     }).join("");
 
     $("f-comp").textContent = p.composition;
@@ -215,7 +218,7 @@
     $("f-trace").textContent = p.trace || "Doplníme.";
 
     $("r-pack").src = p.img;
-    $("r-pack").alt = "Vrece Granula: " + p.name + ", 9 kg";
+    $("r-pack").alt = "Vrece Granula: " + p.name;
     $("r-pack-m").src = p.img;
     // fakty v bočnom paneli (len tie, ktoré o produkte vieme)
     $("r-facts-side").innerHTML = [
@@ -316,6 +319,9 @@
   });
   function paintBag(r) {
     var x = bagOf(r);
+    var kg = x.bag.id === "18" ? "2×9" : String(x.bag.kg);
+    $("r-badge-kg").textContent = kg;
+    $("r-badge-kg").classList.toggle("long", kg.length > 2);
     $("r-perday").textContent = x.price == null ? "Cena sa doplní" : eur(x.price * (1 - r.params.plans.mesiac) / x.days) + " na deň";
   }
   $("r-bags").addEventListener("change", function (e) {
