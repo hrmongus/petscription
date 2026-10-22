@@ -99,14 +99,12 @@
 
 /* ---------- Granula = nula ---------- */
 .nula h2{font-size:clamp(56px,7.6vw,116px)}
-.nula-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:2px solid var(--n);border-left:2px solid var(--n)}
-.nula-grid > *{border-right:2px solid var(--n);border-bottom:2px solid var(--n)}
-.z{padding:26px 24px;display:flex;flex-direction:column;gap:16px;align-items:flex-start;min-height:170px}
-.z .ico{width:76px;height:76px;background:var(--n);color:var(--n);display:flex;align-items:center;justify-content:center;transform:rotate(var(--t))}
-.z b{font-size:20px;line-height:1.1}
-.z b span{font-weight:300}
-.z-end{grid-column:span 3;background:var(--n);color:var(--m);padding:26px 32px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px}
-.z-end .display{font-size:clamp(22px,2.2vw,32px)}
+.nula-tapes{padding:64px 0 24px}
+.nula-tapes .track{align-items:center}
+.zi{display:inline-flex;align-items:center;gap:14px}
+.zi .lt{font-weight:300}
+.zt{width:52px;height:52px;flex:none;background:var(--n);color:var(--n);display:flex;align-items:center;justify-content:center}
+.nula-tapes .back .zt{outline:2px solid var(--m)}
 
 /* ---------- recenzie ---------- */
 .arrows{display:flex;gap:10px}
@@ -185,16 +183,12 @@
   .compare .good{border-left:0;border-top:2px solid var(--n);padding-top:64px}
   .vs{top:auto;bottom:auto;position:relative;left:auto;transform:rotate(-6deg);margin:-48px auto -48px;z-index:1}
   .compare .bad{order:0}.vs{order:1}.compare .good{order:2}
-  .nula-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .z-end{grid-column:span 1}
   .final .frame{height:min(500px,100vw)}
   .final .sticker{left:-8px}
 }
 @media (max-width:640px){
   .review{flex-basis:86%}
   .compare .col{padding:32px 20px 24px}
-  .z{padding:20px 16px;min-height:150px}
-  .z .ico{width:60px;height:60px}
   .badge-62{right:0}
   .stat{padding:28px 14px}
   .stat .sticker{font-size:28px}
@@ -437,22 +431,11 @@
       </div>
       <p class="lead" style="max-width:440px">Trinásť vecí, ktoré bežne nájdeš na etikete granúl. V našich ani jednu.</p>
     </div>
-    <ul class="nula-grid" style="list-style:none;margin:0;padding:0">
-      <li class="z"><span class="ico" style="--t:-4deg" data-icon="psenica" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> pšenice</b></li>
-      <li class="z"><span class="ico" style="--t:3deg" data-icon="kukurica" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> kukurice</b></li>
-      <li class="z"><span class="ico" style="--t:-2deg" data-icon="soja" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> sóje</b></li>
-      <li class="z"><span class="ico" style="--t:4deg" data-icon="hrach" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> hrachu a strukovín</b></li>
-      <li class="z"><span class="ico" style="--t:-3deg" data-icon="kuramaso" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> kuracieho mäsa</b></li>
-      <li class="z"><span class="ico" style="--t:2deg" data-icon="kuratuk" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> kuracieho tuku</b></li>
-      <li class="z"><span class="ico" style="--t:-4deg" data-icon="mucka" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> mäsovej múčky</b></li>
-      <li class="z"><span class="ico" style="--t:3deg" data-icon="cukor" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> pridaného cukru</b></li>
-      <li class="z"><span class="ico" style="--t:-2deg" data-icon="palma" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> palmového oleja</b></li>
-      <li class="z"><span class="ico" style="--t:4deg" data-icon="farbiva" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> umelých farbív</b></li>
-      <li class="z"><span class="ico" style="--t:-3deg" data-icon="konzervanty" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> umelých konzervantov</b></li>
-      <li class="z"><span class="ico" style="--t:2deg" data-icon="aromy" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> umelých aróm</b></li>
-      <li class="z"><span class="ico" style="--t:-4deg" data-icon="gmo" data-size="52" data-ink="#F4EBE2" data-strike></span><b class="display"><span>Nula</span> GMO</b></li>
-      <li class="z-end"><span class="display">Len to, čo do misky <span style="color:var(--o)">patrí.</span></span><span class="logo">Granula!</span></li>
-    </ul>
+  </div>
+  <p class="sr-only">V našich granulách: nula pšenice, nula kukurice, nula sóje, nula hrachu a strukovín, nula kuracieho mäsa, nula kuracieho tuku, nula mäsovej múčky, nula pridaného cukru, nula palmového oleja, nula umelých farbív, nula umelých konzervantov, nula umelých aróm, nula GMO.</p>
+  <div class="tapes nula-tapes" aria-hidden="true">
+    <div class="back"><div class="tape rev" style="--rot:2.5deg;background:var(--n);color:var(--m)"><div class="track"><span class="zi"><span class="zt" data-icon="psenica" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> pšenice</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="kukurica" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> kukurice</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="soja" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> sóje</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="hrach" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> hrachu a strukovín</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="kuramaso" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> kuracieho mäsa</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="kuratuk" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> kuracieho tuku</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="mucka" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> mäsovej múčky</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="psenica" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> pšenice</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="kukurica" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> kukurice</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="soja" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> sóje</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="hrach" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> hrachu a strukovín</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="kuramaso" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> kuracieho mäsa</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="kuratuk" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> kuracieho tuku</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="mucka" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> mäsovej múčky</span></span><span aria-hidden="true">✱</span></div></div></div>
+    <div class="front"><div class="tape" style="--rot:-2.5deg;background:var(--o);color:var(--n)"><div class="track"><span class="zi"><span class="zt" data-icon="cukor" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> pridaného cukru</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="palma" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> palmového oleja</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="farbiva" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> umelých farbív</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="konzervanty" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> umelých konzervantov</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="aromy" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> umelých aróm</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="gmo" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> GMO</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="cukor" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> pridaného cukru</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="palma" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> palmového oleja</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="farbiva" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> umelých farbív</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="konzervanty" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> umelých konzervantov</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="aromy" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> umelých aróm</span></span><span aria-hidden="true">✱</span><span class="zi"><span class="zt" data-icon="gmo" data-size="36" data-ink="#F4EBE2" data-strike></span><span><span class="lt">Nula</span> GMO</span></span><span aria-hidden="true">✱</span></div></div></div>
   </div>
 </section>
 
@@ -472,7 +455,7 @@
     <div class="reviews" data-carousel-row tabindex="0" aria-label="Recenzie zákazníkov">
       <article class="review"><div class="pic"><img src="img/recenzia-bruno.jpg" alt="" width="736" height="981" loading="lazy"><span class="stars" style="--t:-4deg;background:var(--o)" aria-label="5 z 5 hviezdičiek">★★★★★</span></div><div class="body"><blockquote>„Prvé granule, pri ktorých nevyberá. Miska je prázdna skôr, než si stihnem obuť topánky.“</blockquote><div class="by"><b class="display">Bruno, kokršpaniel</b><span>Tomáš, Bratislava</span></div></div></article>
       <article class="review"><div class="pic"><img src="img/recenzia-fifi.jpg" alt="" width="736" height="920" loading="lazy"><span class="stars" style="--t:3deg;background:var(--l)" aria-label="5 z 5 hviezdičiek">★★★★★</span></div><div class="body"><blockquote>„Pri jazvečíkovi sledujeme každý gram. Dávka na gramy konečne sedí a váha sa ustálila.“</blockquote><div class="by"><b class="display">Fifi, jazvečík</b><span>Lucia, Košice</span></div></div></article>
-      <article class="review"><div class="pic"><img src="img/recenzia-aja-bady.jpg" alt="" width="1080" height="1350" loading="lazy"><span class="stars" style="--t:-3deg;background:var(--r)" aria-label="5 z 5 hviezdičiek">★★★★★</span></div><div class="body"><blockquote>„Dva psy, dvoje granule, jedno doručenie. Srsť sa leskne a vrecko nestrážim.“</blockquote><div class="by"><b class="display">Ája a Bady, retrievery</b><span>Zuzana, Žilina</span></div></div></article>
+      <article class="review"><div class="pic"><img src="img/recenzia-aja-bady.jpg" alt="" width="1080" height="1350" loading="lazy" style="object-position:center 88%"><span class="stars" style="--t:-3deg;background:var(--r)" aria-label="5 z 5 hviezdičiek">★★★★★</span></div><div class="body"><blockquote>„Dva psy, dvoje granule, jedno doručenie. Srsť sa leskne a vrecko nestrážim.“</blockquote><div class="by"><b class="display">Ája a Bady, retrievery</b><span>Zuzana, Žilina</span></div></div></article>
       <article class="review"><div class="pic"><img src="img/recenzia-kakao.jpg" alt="" width="736" height="1104" loading="lazy"><span class="stars" style="--t:4deg;background:var(--o)" aria-label="5 z 5 hviezdičiek">★★★★★</span></div><div class="body"><blockquote>„Citlivé brucho a roky skúšania. S jahňacími granulami máme pokoj už tretí mesiac.“</blockquote><div class="by"><b class="display">Kakao, kokršpaniel</b><span>Martin, Trnava</span></div></div></article>
     </div>
   </div>
