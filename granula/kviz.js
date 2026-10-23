@@ -161,6 +161,7 @@
     var items = $("mix-list").children, pct = $("mix-pct");
     var dur = matchMedia("(prefers-reduced-motion: reduce)").matches ? 600 : 3200, t0 = performance.now();
     cancelAnimationFrame(mixRaf);
+    dropIngredients(dur);
     (function tick(t) {
       var p = Math.min(1, (t - t0) / dur), v = Math.round(p * 100);
       pct.textContent = v + " %";
@@ -171,6 +172,20 @@
       if (p < 1) mixRaf = requestAnimationFrame(tick);
       else setTimeout(function () { if (current === "miesame") location.hash = "vysledok"; }, 450);
     })(t0);
+  }
+
+  // suroviny receptúry padajú do misky: od spodného radu ku kôpke navrchu
+  var SLOTS = [[20, 60], [35, 61], [50, 62], [65, 61], [80, 60], [28, 52], [42, 52], [57, 53], [72, 52], [35, 44], [50, 44], [64, 45], [43, 36], [57, 37]];
+  function dropIngredients(dur) {
+    var box = $("mix-drops"), p = result().product;
+    var icons = p ? p.highlights.map(function (h) { return h[0]; }) : ["krava", "morka", "jahna", "ryza"];
+    var BG = ["var(--o)", "var(--l)", "var(--r)", "var(--white)"];
+    var fall = box.offsetHeight * 0.75 + "px";
+    box.innerHTML = SLOTS.map(function (s, i) {
+      var k = i % icons.length, r = ((i * 47) % 60) - 30;
+      return '<span class="drop" style="--x:' + s[0] + "%;--y:" + s[1] + "%;--rot:" + r + "deg;--d:" + Math.round(i * (dur - 700) / SLOTS.length) + "ms;--fall:" + fall + ";background:" + BG[k % BG.length] + '">' +
+        GranulaIcons.svg(icons[k], 40, "#000000") + "</span>";
+    }).join("");
   }
 
   /* ---------------- výsledok ---------------- */

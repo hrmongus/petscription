@@ -111,12 +111,18 @@
 .full .logo{font-size:26px;padding:5px 9px 4px;align-self:flex-start}
 .mix-body{flex:1;display:flex;align-items:center;gap:96px;padding:40px 0}
 .bowl{position:relative;width:460px;height:460px;flex:none}
-.bowl .rim{position:absolute;inset:0;border-radius:50%;background:var(--m);box-shadow:0 40px 50px -30px rgba(11,14,42,.7)}
-.bowl .fill{position:absolute;inset:8%;border-radius:50%;background-color:var(--o);
-  background-image:radial-gradient(circle,#7A3200 0 10px,transparent 11px),radial-gradient(circle,#000 0 5px,transparent 6px),radial-gradient(circle,#C9F04D 0 4px,transparent 5px);
-  background-size:40px 36px,56px 50px,70px 64px;background-position:0 0,20px 16px,34px 8px;animation:stir 9s linear infinite}
-@keyframes stir{to{transform:rotate(360deg)}}
-.bowl .sticker{position:absolute;right:-30px;top:-10px;background:var(--l);color:var(--n);font-size:28px;line-height:1.05;padding:9px 16px}
+.bowl .dish{position:absolute;left:0;right:0;bottom:10%;width:100%;height:auto;z-index:2;overflow:visible}
+.drops{position:absolute;inset:0;z-index:1}
+.drop{position:absolute;width:15%;aspect-ratio:1;border-radius:50%;border:2px solid var(--n);display:flex;align-items:center;justify-content:center;
+  left:var(--x);top:var(--y);transform:translate(-50%,-50%) rotate(var(--rot));opacity:0;animation:drop .7s cubic-bezier(.45,0,.8,.6) var(--d) forwards}
+.drop svg{width:62%;height:62%}
+@keyframes drop{
+  0%{opacity:0;transform:translate(-50%,calc(-50% - var(--fall))) rotate(0deg)}
+  12%{opacity:1}
+  78%{transform:translate(-50%,-50%) rotate(var(--rot))}
+  88%{transform:translate(-50%,-62%) rotate(var(--rot))}
+  100%{opacity:1;transform:translate(-50%,-50%) rotate(var(--rot))}}
+.bowl .sticker{position:absolute;z-index:3;right:-30px;top:-10px;background:var(--l);color:var(--n);font-size:28px;line-height:1.05;padding:9px 16px}
 .mix-copy{flex:1;display:flex;flex-direction:column;gap:28px}
 .mix-copy .pct{font-weight:900;line-height:1;font-size:clamp(80px,9vw,120px);color:var(--o);font-variant-numeric:tabular-nums}
 .mix-copy h1{font-size:clamp(32px,3.4vw,48px)}
@@ -127,7 +133,6 @@
 .mix-list li.done::before{content:"✓ "}
 .mix-list li.now{opacity:1;color:var(--o)}
 .mix-list li.now::before{content:"→ "}
-.skiplink{font-size:14px;font-weight:700;opacity:.7}
 
 .done-body{flex:1;display:flex;align-items:center;gap:80px;padding:40px 0}
 .done-copy{flex:1;display:flex;flex-direction:column;gap:28px}
@@ -329,7 +334,7 @@
   .row2{flex-direction:column}
   .cardrow{flex-wrap:wrap}.cardrow > :first-child{flex-basis:100%}
 }
-@media (prefers-reduced-motion:reduce){.bowl .fill{animation:none}}
+@media (prefers-reduced-motion:reduce){.drop{animation:none;opacity:1}}
 </style>
 </head>
 <body>
@@ -567,7 +572,18 @@
 <section class="screen full" data-screen="miesame" data-title="Vyberáme granule — Granula">
   <span class="logo">Granula!</span>
   <div class="mix-body">
-    <div class="bowl" aria-hidden="true"><div class="rim"></div><div class="fill"></div><span class="sticker" style="--t:8deg">Na mieru</span></div>
+    <div class="bowl" aria-hidden="true">
+      <div class="drops" id="mix-drops"></div>
+      <!-- psia miska z profilu: suroviny padajú dovnútra -->
+      <svg class="dish" viewBox="0 0 400 140">
+        <ellipse cx="200" cy="133" rx="192" ry="7" fill="#000" opacity=".25"/>
+        <path d="M54 34 H346 L376 118 Q379 129 366 129 H34 Q21 129 24 118 Z" fill="#F4EBE2" stroke="#000" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M44 62 H356 L367 95 H33 Z" fill="#FF6900" stroke="#000" stroke-width="4" stroke-linejoin="round"/>
+        <text x="200" y="87" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="900" font-style="italic" font-size="24" fill="#000">GRANULA!</text>
+        <rect x="30" y="12" width="340" height="24" rx="12" fill="#F4EBE2" stroke="#000" stroke-width="4"/>
+      </svg>
+      <span class="sticker" style="--t:8deg">Na mieru</span>
+    </div>
     <div class="mix-copy">
       <div class="pct" id="mix-pct" aria-hidden="true">0 %</div>
       <h1 class="display q-title" tabindex="-1">Vyberáme granule na mieru…</h1>
@@ -577,7 +593,6 @@
         <li>Vyberáme mäso a suroviny</li>
         <li>Veľkosť vreca a termín doručenia</li>
       </ul>
-      <a class="skiplink" href="#vysledok">Pokračovať na výsledok →</a>
     </div>
   </div>
 </section>
