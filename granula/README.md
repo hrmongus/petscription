@@ -71,7 +71,7 @@ Zmena platí, kým sa nezmení odporúčanie (`recipe` + `recipeFor` v odpovedia
 Všetky čísla sú v `PARAMS` a na kontrolnej stránke sa dajú meniť naživo
 (voliteľne aj pre dotazník v tom istom prehliadači).
 
-Odpovede sa držia v `sessionStorage`. Údaje z objednávky sa **nikam
+Odpovede sa držia v `sessionStorage`. Dokončené odpovede (bez údajov z objednávky) sa navyše uložia do `localStorage` (`granula-psy`, max. 3 psy); na 1. kroku sa potom ukáže „Alebo pokračuj s: [meno psa]“ s možnosťou psa zabudnúť (×). Nič z toho neopustí prehliadač, cookies sa nepoužívajú. Údaje z objednávky sa **nikam
 neposielajú** a čísla karty sa po odoslaní mažú.
 
 ## Čo treba doplniť pred spustením

@@ -19,8 +19,19 @@
     activity: "", neutered: "", pregnant: "", body: "", focus: [], bag: "", plan: "mesiac", ordered: false, recipe: "", recipeFor: "", bagKey: "" };
   try { Object.assign(state, JSON.parse(sessionStorage.getItem(KEY)) || {}); } catch (e) {}
   if (!(state.plan in E.PARAMS.plans)) state.plan = "mesiac"; // napr. zrušená možnosť „na 3 mesiace“
+  // dokončené odpovede si pamätáme aj po zatvorení prehliadača (len v tomto prehliadači, max. 3 psy)
+  var SAVED_KEY = "granula-psy";
+  var ANSWERS = ["dogname", "sex", "breed", "kg", "years", "months", "weeks", "activity", "neutered", "pregnant", "body", "focus", "bag", "bagKey", "plan", "recipe", "recipeFor"];
+  function savedDogs() {
+    try { var l = JSON.parse(localStorage.getItem(SAVED_KEY)); return Array.isArray(l) ? l : []; } catch (e) { return []; }
+  }
+  function storeDogs(l) { try { localStorage.setItem(SAVED_KEY, JSON.stringify(l.slice(0, 3))); } catch (e) {} }
   function save() {
     try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+    if (!state.dogname || firstInvalid()) return;
+    var a = {};
+    ANSWERS.forEach(function (k) { a[k] = state[k]; });
+    storeDogs([a].concat(savedDogs().filter(function (d) { return d.dogname.toLowerCase() !== state.dogname.toLowerCase(); })));
   }
 
   var quiz = document.getElementById("quiz");
@@ -99,6 +110,29 @@
     var err = quiz.querySelector('[data-err="' + current + '"]');
     if (err && valid(current)) err.hidden = true;
   }
+  /* pokračovať s uloženým psom */
+  var PAW = '<svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16.5" rx="5.2" ry="4.3"/><ellipse cx="5.2" cy="10.6" rx="2.2" ry="2.8"/><ellipse cx="9.3" cy="6.2" rx="2.2" ry="2.9"/><ellipse cx="14.7" cy="6.2" rx="2.2" ry="2.9"/><ellipse cx="18.8" cy="10.6" rx="2.2" ry="2.8"/></svg>';
+  function paintResume() {
+    var list = savedDogs().filter(function (d) { return d.dogname && d.dogname.toLowerCase() !== state.dogname.toLowerCase(); });
+    $("resume").hidden = !list.length;
+    $("resume-list").innerHTML = list.map(function (d) {
+      var b = breedOf(d.breed), esc = d.dogname.replace(/[&<>"]/g, function (c) { return "&#" + c.charCodeAt(0) + ";"; });
+      return '<div class="rs"><button type="button" class="rs-go" data-resume="' + esc + '"><span class="rs-ico">' + PAW + "</span><span><b>" + esc + "</b><small>" +
+        (b ? b.name : "") + " · " + String(d.kg).replace(".", ",") + ' kg</small></span><span class="rs-arr" aria-hidden="true">→</span></button>' +
+        '<button type="button" class="rs-x" data-forget="' + esc + '" aria-label="Zabudnúť ' + esc + '">×</button></div>';
+    }).join("");
+  }
+  $("resume-list").addEventListener("click", function (e) {
+    var t = e.target.closest("button"); if (!t) return;
+    var name = t.dataset.resume || t.dataset.forget, all = savedDogs();
+    var d = all.filter(function (x) { return x.dogname === name; })[0];
+    if (t.dataset.forget) { storeDogs(all.filter(function (x) { return x !== d; })); paintResume(); return; }
+    if (!d) return;
+    Object.assign(state, d, { ordered: false });
+    fill(); save();
+    go(firstInvalid() || "vysledok");
+  });
+
   // stav → formulár
   function fill() {
     if (!breedOf(state.breed)) state.breed = "krizenec-stredny";
@@ -113,6 +147,7 @@
     order.querySelectorAll('input[name="plan"]').forEach(function (r) { r.checked = r.value === state.plan; });
     paintName();
     paintConditional();
+    paintResume();
   }
   quiz.addEventListener("input", read);
 

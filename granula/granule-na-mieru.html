@@ -221,6 +221,20 @@
 .swap-act{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin-top:16px}
 .swap-act .btn{font-size:15px}
 .swap-act .later{font:inherit;font-weight:800;font-size:14px;color:var(--n);background:none;border:0;padding:0;border-bottom:2px solid var(--n);cursor:pointer}
+/* pokračovať s uloženým psom (krok 1) */
+.resume{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:-6px}
+.resume-l{font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--i3)}
+.resume-list{display:flex;flex-wrap:wrap;gap:10px}
+.rs{display:inline-flex;align-items:stretch;background:var(--white);border:2px solid var(--n)}
+.rs-go{font:inherit;color:var(--n);background:none;border:0;cursor:pointer;display:flex;align-items:center;gap:12px;padding:8px 14px 8px 10px;text-align:left}
+.rs-go:hover{background:var(--m)}
+.rs-ico{width:34px;height:34px;flex:none;background:var(--o);border:2px solid var(--n);display:flex;align-items:center;justify-content:center;transform:rotate(-4deg)}
+.rs-ico svg{width:20px;height:20px}
+.rs-go b{display:block;font-weight:900;font-size:16px;line-height:1.1;text-transform:uppercase}
+.rs-go small{display:block;font-size:12px;font-weight:600;color:var(--i3);margin-top:2px}
+.rs-arr{font-weight:900;color:var(--k);margin-left:4px}
+.rs-x{font:inherit;font-size:16px;font-weight:700;color:var(--i3);background:none;border:0;border-left:1.5px solid var(--m2);padding:0 10px;cursor:pointer}
+.rs-x:hover{color:var(--n);background:var(--m)}
 /* ako kŕmiť prvé 2 týždne: malý odkaz pod dennou dávkou */
 .feed{margin-top:-12px;max-width:560px}
 .feed summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:13px;color:var(--k)}
@@ -404,6 +418,10 @@
       <div class="kicker">Granule na mieru</div>
       <h1 class="display q-title" tabindex="-1" style="font-size:clamp(40px,4.6vw,62.4px)">Ako sa volá <span>tvoj pes?</span></h1>
       <p class="q-lead">Začnime zoznámením. Meno a pohlavie.</p>
+      <div class="resume" id="resume" hidden>
+        <span class="resume-l">Alebo pokračuj s:</span>
+        <div class="resume-list" id="resume-list"></div>
+      </div>
       <div class="card">
         <label class="field"><span>Meno psa</span>
           <input class="input" name="dogname" maxlength="30" autocomplete="off" placeholder="napr. Bruno"></label>
