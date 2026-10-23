@@ -26,9 +26,14 @@
   function savedDogs() {
     try { var l = JSON.parse(localStorage.getItem(SAVED_KEY)); return Array.isArray(l) ? l : []; } catch (e) { return []; }
   }
+  // jednorazovo vymažeme psov uložených prvou verziou (ukladala pri každom písmene mena: „Adol“, „Adolf“, „Adolft“)
+  try { if (localStorage.getItem(SAVED_KEY + "-v") !== "2") { localStorage.removeItem(SAVED_KEY); localStorage.setItem(SAVED_KEY + "-v", "2"); } } catch (e) {}
   function storeDogs(l) { try { localStorage.setItem(SAVED_KEY, JSON.stringify(l.slice(0, 3))); } catch (e) {} }
   function save() {
     try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
+  // psa si zapamätáme až na výsledku (nie pri každom písmene mena)
+  function rememberDog() {
     if (!state.dogname || firstInvalid()) return;
     var a = {};
     ANSWERS.forEach(function (k) { a[k] = state[k]; });
@@ -240,6 +245,7 @@
     var I = GranulaIcons.svg;
     $("r-kicker").textContent = "Tvoje granule na mieru · " + state.dogname;
     $("r-name").textContent = p.name;
+    rememberDog();
     var ICON_BG = ["var(--o)", "var(--l)", "var(--r)", "var(--m)"];
     // hlavné suroviny: nálepky pod názvom receptúry a textový zoznam pre čítačky
     var chips = p.highlights.map(function (h, i) {
@@ -380,7 +386,7 @@
     $("r-perday").textContent = $("r-perday-side").textContent = x.price == null ? "Cena sa doplní" : eur(x.price * (1 - r.params.plans.mesiac) / x.days) + " na deň";
   }
   $("r-bags").addEventListener("change", function (e) {
-    state.bag = e.target.value; save(); paintBag(result());
+    state.bag = e.target.value; save(); rememberDog(); paintBag(result());
   });
 
   /* ---------------- objednávka ---------------- */
