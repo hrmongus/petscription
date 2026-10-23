@@ -15,8 +15,9 @@
 
   /* ---------------- stav ---------------- */
   var KEY = "granula-quiz";
-  var state = { dogname: "", sex: "", breed: "krizenec-stredny", kg: 17, years: "", months: "", weeks: "",
+  var BLANK = { dogname: "", sex: "", breed: "krizenec-stredny", kg: 17, years: "", months: "", weeks: "",
     activity: "", neutered: "", pregnant: "", body: "", focus: [], bag: "", plan: "mesiac", ordered: false, recipe: "", recipeFor: "", bagKey: "" };
+  var state = JSON.parse(JSON.stringify(BLANK));
   try { Object.assign(state, JSON.parse(sessionStorage.getItem(KEY)) || {}); } catch (e) {}
   if (!(state.plan in E.PARAMS.plans)) state.plan = "mesiac"; // napr. zrušená možnosť „na 3 mesiace“
   // dokončené odpovede si pamätáme aj po zatvorení prehliadača (len v tomto prehliadači, max. 3 psy)
@@ -113,7 +114,7 @@
   /* pokračovať s uloženým psom */
   var PAW = '<svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16.5" rx="5.2" ry="4.3"/><ellipse cx="5.2" cy="10.6" rx="2.2" ry="2.8"/><ellipse cx="9.3" cy="6.2" rx="2.2" ry="2.9"/><ellipse cx="14.7" cy="6.2" rx="2.2" ry="2.9"/><ellipse cx="18.8" cy="10.6" rx="2.2" ry="2.8"/></svg>';
   function paintResume() {
-    var list = savedDogs().filter(function (d) { return d.dogname && d.dogname.toLowerCase() !== state.dogname.toLowerCase(); });
+    var list = savedDogs().filter(function (d) { return d.dogname; });
     $("resume").hidden = !list.length;
     $("resume-list").innerHTML = list.map(function (d) {
       var b = breedOf(d.breed), esc = d.dogname.replace(/[&<>"]/g, function (c) { return "&#" + c.charCodeAt(0) + ";"; });
@@ -478,6 +479,13 @@
     save();
   }
 
+  // nový vstup do dotazníka (napr. z úvodnej stránky) po dokončenom psovi: čistý formulár,
+  // dokončený pes je v štítku „Alebo pokračuj s“. Rozpracovaný dotazník ostáva vyplnený.
+  var entry = location.hash.slice(1);
+  if ((entry === "" || entry === "krok-1") && state.dogname && !firstInvalid()) {
+    state = JSON.parse(JSON.stringify(BLANK));
+    try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
   fill();
   window.addEventListener("hashchange", route);
   route();
