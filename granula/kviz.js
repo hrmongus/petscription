@@ -341,7 +341,7 @@
     var kg = x.bag.id === "18" ? "2×9" : String(x.bag.kg);
     $("r-badge-kg").textContent = kg;
     $("r-badge-kg").classList.toggle("long", kg.length > 2);
-    $("r-perday").textContent = x.price == null ? "Cena sa doplní" : eur(x.price * (1 - r.params.plans.mesiac) / x.days) + " na deň";
+    $("r-perday").textContent = $("r-perday-side").textContent = x.price == null ? "Cena sa doplní" : eur(x.price * (1 - r.params.plans.mesiac) / x.days) + " na deň";
   }
   $("r-bags").addEventListener("change", function (e) {
     state.bag = e.target.value; save(); paintBag(result());
@@ -354,6 +354,9 @@
       order.querySelector('[data-plan-price="' + k + '"]').textContent =
         x.price == null ? "cena doplniť" : eur(x.price * (1 - plans[k])) + (k === "raz" ? "" : " / vrece");
     });
+    // predplatné: interval podľa veľkosti balenia
+    $("plan-every").textContent = "Každých " + x.days + " " + plural(x.days, "deň", "dni", "dní");
+    $("plan-note").textContent = "Ďalšie " + x.bag.label + " balenie pošleme " + r.params.reorderLeadDays + " " + plural(r.params.reorderLeadDays, "deň", "dni", "dní") + " predtým, ako sa minie.";
     $("s-pack").src = p.img;
     $("s-name").textContent = p.name;
     $("s-meta").textContent = x.bag.label + " · " + r.dose.grams + " g denne · vydrží " + x.days + " " + plural(x.days, "deň", "dni", "dní");
@@ -365,7 +368,7 @@
     $("s-total").textContent = x.price == null ? "—" : eur(Math.round((x.price * (1 - d) + r.params.shipping) * 100) / 100);
     $("s-submit").textContent = d ? "Objednať predplatné" : "Objednať";
     $("s-note").textContent = d
-      ? "Platíš pri každom doručení. Ďalšie vrece pošleme okolo " + x.nextDay + ". dňa, skôr než sa to staré minie."
+      ? "Platíš pri každom doručení. Vrece " + x.bag.label + " posielame každých " + x.days + " " + plural(x.days, "deň", "dni", "dní") + ", vždy " + r.params.reorderLeadDays + " " + plural(r.params.reorderLeadDays, "deň", "dni", "dní") + " predtým, ako sa minie."
       : "Platíš raz. Ďalšie vrece si objednáš, keď budeš chcieť.";
   }
   function shipUI() {

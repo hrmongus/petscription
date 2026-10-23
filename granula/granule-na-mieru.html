@@ -218,26 +218,25 @@
 .swap-act{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin-top:16px}
 .swap-act .btn{font-size:15px}
 .swap-act .later{font:inherit;font-weight:800;font-size:14px;color:var(--n);background:none;border:0;padding:0;border-bottom:2px solid var(--n);cursor:pointer}
-/* ako kŕmiť prvé 2 týždne */
-.feed{background:var(--white);border:2px solid var(--n)}
-.feed summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:14px;padding:14px 18px;font-weight:800;font-size:16px}
-.feed .ft{text-decoration:underline;text-decoration-color:var(--o);text-decoration-thickness:2px;text-underline-offset:4px}
+/* ako kŕmiť prvé 2 týždne: malý odkaz pod dennou dávkou */
+.feed{margin-top:-12px;max-width:560px}
+.feed summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:13px;color:var(--k)}
 .feed summary::-webkit-details-marker{display:none}
-.feed summary i{margin-left:auto;font-style:normal;font-weight:900;font-size:22px;line-height:1;text-decoration:none;transition:transform .2s ease}
+.feed .ft{text-decoration:underline;text-decoration-color:var(--o);text-decoration-thickness:2px;text-underline-offset:3px}
+.feed summary i{font-style:normal;font-weight:900;font-size:15px;line-height:1;transition:transform .2s ease}
 .feed[open] summary i{transform:rotate(45deg)}
-.feed-ico{width:38px;height:38px;flex:none;background:var(--o);border:2px solid var(--n);display:flex;align-items:center;justify-content:center;transform:rotate(-4deg)}
-.feed-ico svg{width:24px;height:24px}
-.feed p{padding:0 18px;font-size:15px;line-height:1.55;color:var(--i2)}
-.feed-rows{list-style:none;margin:14px 18px 18px;padding:0;border:2px solid var(--n)}
-.feed-rows li{display:flex;align-items:center;gap:14px;padding:14px 16px;font-size:15px}
-.feed-rows li + li{border-top:1.5px solid var(--m2)}
-.feed-rows .fi{width:30px;height:30px;flex:none;color:var(--k)}
+.feed p{margin:8px 0 0;font-size:13px;line-height:1.5;color:var(--i2)}
+.feed-rows{list-style:none;margin:8px 0 0;padding:0;border:1.5px solid var(--n);background:var(--white)}
+.feed-rows li{display:flex;align-items:center;gap:10px;padding:7px 12px;font-size:13px}
+.feed-rows li + li{border-top:1px solid var(--m2)}
+.feed-rows .fi{width:20px;height:20px;flex:none;color:var(--k)}
 .feed-rows .fi svg{width:100%;height:100%}
-.feed-rows b{font-weight:900;font-size:18px}
+.feed-rows b{font-weight:800;font-size:13px}
 .feed-rows .fv{margin-left:auto;text-align:right;font-weight:600}
 .feed-rows em{font-style:normal;font-weight:900;color:var(--o)}
-/* recenzie pod výsledkom */
-.rvs{display:flex;flex-direction:column;gap:18px;border-top:2px solid var(--n);padding-top:28px;margin-top:8px}
+/* recenzie pod výsledkom: celá šírka, pod modrým stĺpcom */
+.res{flex-wrap:wrap}
+.rvs{flex:0 0 100%;display:flex;flex-direction:column;gap:18px;border-top:2px solid var(--n);padding:32px 80px 48px;background:var(--m)}
 .rvs-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
 .rvs h2{font-size:clamp(24px,2.4vw,32px)}
 .rvs h2 span{color:var(--k)}
@@ -245,17 +244,23 @@
 .rv-arrow{width:46px;height:46px;border:2px solid var(--n);background:transparent;color:var(--n);font:900 19px/1 var(--font);cursor:pointer}
 .rv-arrow.dark{background:var(--n);color:var(--o)}
 .rv-arrow:disabled{opacity:.35;cursor:default}
-.rv-row{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:4px 2px 8px}
+.rv-row{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:14px 2px 8px}
 .rv-row::-webkit-scrollbar{display:none}
-.rv{flex:0 0 calc((100% - 16px) / 2);scroll-snap-align:start;background:var(--white);border:2px solid var(--n);padding:16px;display:flex;flex-direction:column;gap:12px}
-.rv-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.rv-top b{font-size:20px}
-.rv-stars{color:var(--o);font-size:17px;letter-spacing:.06em;white-space:nowrap}
-.rv-pic{aspect-ratio:1;position:relative;border:2px solid var(--n);overflow:hidden;background:var(--k-photo)}
+.rv{flex:0 0 calc((100% - 48px) / 4);scroll-snap-align:start;background:var(--white);border:2px solid var(--n);padding:14px;display:flex;flex-direction:column;gap:10px}
+.rv-name{font-size:18px}
+.rv-pic{height:170px;position:relative;border:2px solid var(--n);background:var(--k-photo)}
 .rv-pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.rv-recipe{font-weight:800;font-size:14px;color:var(--k);text-decoration:underline;text-decoration-color:var(--o);text-decoration-thickness:2px;text-underline-offset:3px}
-.rv blockquote{margin:0;font-size:15px;line-height:1.5;font-weight:600}
-.rv-by{margin-top:auto;font-weight:900;font-size:14px}
+.rv-stars{position:absolute;z-index:1;left:-8px;top:-12px;background:var(--o);color:var(--n);border:2px solid var(--n);padding:4px 9px 3px;font-size:21px;line-height:1;letter-spacing:.04em;transform:rotate(-4deg)}
+.rv:nth-child(even) .rv-stars{background:var(--l);transform:rotate(3deg)}
+.rv-recipe{font-weight:800;font-size:13px;color:var(--k);text-decoration:underline;text-decoration-color:var(--o);text-decoration-thickness:2px;text-underline-offset:3px}
+.rv blockquote{margin:0;font-size:14px;line-height:1.5;font-weight:600}
+.rv-by{margin-top:auto;font-weight:900;font-size:13px}
+/* modrý stĺpec: obsah ide so scrollom, výzva k platbe je stále na očiach */
+.pa-sticky{position:sticky;top:24px;display:flex;flex-direction:column;gap:20px}
+.pa-pay{display:flex;flex-direction:column;gap:12px;border-top:2px solid var(--m);padding-top:16px}
+.pa-pay b{display:block;font-weight:900;font-size:22px;line-height:1;color:var(--m)}
+.pa-pay span{display:block;font-size:13px;font-weight:600;margin-top:4px;opacity:.85}
+.pa-pay .btn{width:100%}
 .pack-inline{display:none;position:relative;justify-content:center;background:var(--k);padding:24px 16px;margin:0 -16px}
 .pack-inline .sticker{position:absolute;left:16px;top:16px;background:var(--l);color:var(--n);font-size:20px;--t:-8deg}
 .facts{border-bottom:2px solid var(--n)}
@@ -270,12 +275,12 @@
 .test-banner a{color:#fff}
 .res aside .sticker{background:var(--l);color:var(--n);font-size:24px;line-height:1.05;padding:8px 14px;--t:-6deg}
 /* bočný panel výsledku: nálepka a nadpis, vrece na kruhu s pečiatkou, fakty */
-.res .pack-aside{justify-content:flex-start;align-items:stretch;gap:24px;padding:40px 44px}
+.res .pack-aside{display:block;padding:32px 44px 40px}
 .pa-top{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .pa-kicker{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--o)}
-.pa-stage{position:relative;flex:none;padding:28px 0;display:flex;align-items:center;justify-content:center;min-height:0}
-.pa-disc{position:absolute;width:min(300px,74%);aspect-ratio:1;border-radius:50%;background:var(--k-deep);box-shadow:0 0 0 14px rgba(255,255,255,.06)}
-.pa-stage .pack-stage{width:min(280px,62%)}
+.pa-stage{position:relative;flex:none;padding:8px 0;display:flex;align-items:center;justify-content:center;min-height:0}
+.pa-disc{position:absolute;width:min(250px,62%);aspect-ratio:1;border-radius:50%;background:var(--k-deep);box-shadow:0 0 0 14px rgba(255,255,255,.06)}
+.pa-stage .pack-stage{width:min(230px,52%)}
 .pa-badge{position:absolute;right:6%;top:8%;width:92px;height:92px;border-radius:50%;background:var(--o);color:var(--n);border:2px solid var(--n);
   display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(10deg);font-weight:800;font-size:14px;text-transform:uppercase;line-height:1}
 .pa-badge b{font-size:38px;font-weight:900}
@@ -331,7 +336,7 @@
   .done-pic{flex-basis:340px}.done-pic .frame{height:340px}
 }
 @media (max-width:900px){
-  .screen.on.split{flex-direction:column}
+  .screen.on.split{flex-direction:column;flex-wrap:nowrap}
   .split > aside,.res aside,.co aside{width:auto;padding:36px 16px 40px}
   .split > .pane,.res .pane,.co .pane{padding:20px 16px 32px}
   .full{padding:24px 16px 40px}
@@ -347,10 +352,13 @@
   .opt.bagopt .save{font-size:10px;padding:3px 5px 2px;letter-spacing:.02em}
   .bags .rec{font-size:10.5px;padding:3px 6px;right:4px;top:-12px}
   .kpis{gap:8px}
-  .rv{flex-basis:84%}
-  .feed-rows li{padding:12px 10px;gap:10px;font-size:13.5px}
-  .feed-rows b{font-size:15px}
+  .rvs{padding:28px 16px 40px}
+  .rv{flex-basis:78%}
   .rv-arrows{display:none}
+  .res .paybar{position:sticky;bottom:0;z-index:5;background:var(--m);margin:0 -16px -32px;padding:12px 16px 14px;flex-wrap:nowrap}
+  .res .paybar b{font-size:19px}
+  .res .paybar span{font-size:11.5px}
+  .res .paybar .btn{min-height:50px;padding:12px 18px;font-size:15px;flex:none}
   .kpis > div{padding:12px 10px}
   .kpis b{font-size:clamp(17px,5.4vw,22px);white-space:nowrap}
   .kpis span{font-size:11.5px;margin-top:5px}
@@ -668,7 +676,7 @@
       <div><b id="r-month"></b><span>za mesiac</span></div>
     </div>
     <details class="feed">
-      <summary><span class="feed-ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M3 15h26a13 9 0 0 1-26 0z" fill="#000"/><rect x="9" y="25" width="14" height="3" fill="#000"/><circle cx="12" cy="10" r="2.6" fill="#000"/><circle cx="18" cy="9" r="2.6" fill="#000"/><circle cx="15" cy="5" r="2.6" fill="#000"/></svg></span><span class="ft">Ako kŕmiť prvé 2 týždne?</span><i aria-hidden="true">+</i></summary>
+      <summary><span class="ft">Ako kŕmiť prvé 2 týždne?</span><i aria-hidden="true">+</i></summary>
       <p>Štartovacia dávka je vypočítaná na mieru. Každý pes je ale originál: prvé 2 týždne ho pravidelne váž a dávku podľa potreby dolaď o ±10 %.</p>
       <ul class="feed-rows">
         <li><span class="fi" aria-hidden="true"><svg viewBox="0 0 32 32"><rect x="3" y="3" width="26" height="26" rx="5" fill="currentColor"/><path d="M9 13a7 7 0 0 1 14 0z" fill="#FBF6F0"/><path d="M16 13l3-4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span><b>Drží váhu</b><span class="fv">nechaj <em id="f-keep"></em> / deň</span></li>
@@ -687,21 +695,12 @@
       <details><summary>Stopové prvky v 1 kg<i aria-hidden="true">+</i></summary><p id="f-trace"></p></details>
     </div>
     <div class="paybar">
-      <div><b id="r-perday"></b><span>s mesačným predplatným · prvé vrece aj každé ďalšie</span></div>
+      <div><b id="r-perday"></b><span>s predplatným · prvé vrece aj každé ďalšie</span></div>
       <a class="btn btn-o next" href="#objednavka">K platbe →</a>
     </div>
-    <section class="rvs" data-carousel aria-labelledby="rv-title">
-      <div class="rvs-head"><h2 class="display" id="rv-title">Miska plná. <span>Chvost v pohybe.</span></h2>
-        <div class="rv-arrows"><button type="button" class="rv-arrow" aria-label="Predchádzajúce recenzie" data-carousel-prev>←</button><button type="button" class="rv-arrow dark" aria-label="Ďalšie recenzie" data-carousel-next>→</button></div></div>
-      <div class="rv-row" data-carousel-row tabindex="0" aria-label="Recenzie zákazníkov">
-        <article class="rv"><div class="rv-top"><b class="display">Bruno</b><span class="rv-stars" aria-label="5 z 5 hviezdičiek">★★★★★</span></div><div class="rv-pic"><img src="img/recenzia-bruno.jpg" alt="Bruno, kokršpaniel" width="736" height="981" loading="lazy"></div><span class="rv-recipe">Morka, hus &amp; kačica s tekvicou</span><blockquote>„Prvé granule, pri ktorých nevyberá. Miska je prázdna skôr, než si stihnem obuť topánky.“</blockquote><span class="rv-by">Tomáš, Bratislava</span></article>
-        <article class="rv"><div class="rv-top"><b class="display">Fifi</b><span class="rv-stars" aria-label="5 z 5 hviezdičiek">★★★★★</span></div><div class="rv-pic"><img src="img/recenzia-fifi.jpg" alt="Fifi, vyžla" width="736" height="920" loading="lazy"></div><span class="rv-recipe">Hovädzie s ryžou</span><blockquote>„Pri vyžle sledujeme každý gram. Dávka na gramy konečne sedí a váha sa ustálila.“</blockquote><span class="rv-by">Lucia, Košice</span></article>
-        <article class="rv"><div class="rv-top"><b class="display">Ája a Bady</b><span class="rv-stars" aria-label="5 z 5 hviezdičiek">★★★★★</span></div><div class="rv-pic"><img src="img/recenzia-aja-bady.jpg" alt="Ája a Bady, retrievery" width="1080" height="1350" loading="lazy" style="object-position:center 88%"></div><span class="rv-recipe">Hovädzie, morka &amp; jahňa s ryžou</span><blockquote>„Dva psy, dvoje granule, jedno doručenie. Srsť sa leskne a vrecko nestrážim.“</blockquote><span class="rv-by">Zuzana, Žilina</span></article>
-        <article class="rv"><div class="rv-top"><b class="display">Kakao</b><span class="rv-stars" aria-label="5 z 5 hviezdičiek">★★★★★</span></div><div class="rv-pic"><img src="img/recenzia-kakao.jpg" alt="Kakao, kokršpaniel" width="736" height="1104" loading="lazy"></div><span class="rv-recipe">Jahňa s batátmi &amp; čučoriedkami</span><blockquote>„Citlivé brucho a roky skúšania. S jahňacími granulami máme pokoj už tretí mesiac.“</blockquote><span class="rv-by">Martin, Trnava</span></article>
-      </div>
-    </section>
   </div>
   <aside class="side-blue pack-aside">
+  <div class="pa-sticky">
     <div class="pa-top"><span class="sticker" aria-hidden="true" id="r-stage">Na mieru</span><span class="pa-kicker">Tvoje vrece</span></div>
     <div class="pa-stage">
       <div class="pa-disc" aria-hidden="true"></div>
@@ -709,7 +708,19 @@
       <span class="pa-badge" aria-hidden="true"><b id="r-badge-kg">9</b>kg</span>
     </div>
     <dl class="pa-facts" id="r-facts-side"></dl>
-  </aside>
+    <div class="pa-pay"><div><b id="r-perday-side"></b><span>s predplatným</span></div><a class="btn btn-o" href="#objednavka">K platbe →</a></div>
+    </div>
+</aside>
+  <section class="rvs" data-carousel aria-labelledby="rv-title">
+    <div class="rvs-head"><h2 class="display" id="rv-title">Miska plná. <span>Chvost v pohybe.</span></h2>
+      <div class="rv-arrows"><button type="button" class="rv-arrow" aria-label="Predchádzajúce recenzie" data-carousel-prev>←</button><button type="button" class="rv-arrow dark" aria-label="Ďalšie recenzie" data-carousel-next>→</button></div></div>
+    <div class="rv-row" data-carousel-row tabindex="0" aria-label="Recenzie zákazníkov">
+      <article class="rv"><b class="display rv-name">Bruno</b><div class="rv-pic"><span class="rv-stars" aria-label="5 z 5 hviezdičiek">★★★★★</span><img src="img/recenzia-bruno.jpg" alt="Bruno, kokršpaniel" width="736" height="981" loading="lazy"></div><span class="rv-recipe">Morka, hus &amp; kačica s tekvicou</span><blockquote>„Prvé granule, pri ktorých nevyberá. Miska je prázdna skôr, než si stihnem obuť topánky.“</blockquote><span class="rv-by">Tomáš, Bratislava</span></article>
+      <article class="rv"><b class="display rv-name">Fifi</b><div class="rv-pic"><span class="rv-stars" aria-label="5 z 5 hviezdičiek">★★★★★</span><img src="img/recenzia-fifi.jpg" alt="Fifi, vyžla" width="736" height="920" loading="lazy"></div><span class="rv-recipe">Hovädzie s ryžou</span><blockquote>„Pri vyžle sledujeme každý gram. Dávka na gramy konečne sedí a váha sa ustálila.“</blockquote><span class="rv-by">Lucia, Košice</span></article>
+      <article class="rv"><b class="display rv-name">Ája a Bady</b><div class="rv-pic"><span class="rv-stars" aria-label="5 z 5 hviezdičiek">★★★★★</span><img src="img/recenzia-aja-bady.jpg" alt="Ája a Bady, retrievery" width="1080" height="1350" loading="lazy" style="object-position:center 88%"></div><span class="rv-recipe">Hovädzie, morka &amp; jahňa s ryžou</span><blockquote>„Dva psy, dvoje granule, jedno doručenie. Srsť sa leskne a vrecko nestrážim.“</blockquote><span class="rv-by">Zuzana, Žilina</span></article>
+      <article class="rv"><b class="display rv-name">Kakao</b><div class="rv-pic"><span class="rv-stars" aria-label="5 z 5 hviezdičiek">★★★★★</span><img src="img/recenzia-kakao.jpg" alt="Kakao, kokršpaniel" width="736" height="1104" loading="lazy"></div><span class="rv-recipe">Jahňa s batátmi &amp; čučoriedkami</span><blockquote>„Citlivé brucho a roky skúšania. S jahňacími granulami máme pokoj už tretí mesiac.“</blockquote><span class="rv-by">Martin, Trnava</span></article>
+    </div>
+  </section>
 </section>
 
 <!-- ============ OBJEDNÁVKA ============ -->
@@ -721,7 +732,7 @@
     </div>
     <h1 class="display q-title" tabindex="-1" id="t-plan">Ako to chceš <span>dostávať?</span></h1>
     <div class="opts c2" role="radiogroup" aria-labelledby="t-plan" style="padding-top:8px">
-      <label class="opt"><input type="radio" name="plan" value="mesiac"><b>Každý mesiac</b><small>Vrece príde samo podľa dennej dávky.</small><span class="price" data-plan-price="mesiac"></span><span class="rec">−10 %</span></label>
+      <label class="opt"><input type="radio" name="plan" value="mesiac"><b id="plan-every">Predplatné</b><small id="plan-note">Vrece príde samo podľa dennej dávky.</small><span class="price" data-plan-price="mesiac"></span><span class="rec">−10 %</span></label>
       <label class="opt"><input type="radio" name="plan" value="raz"><b>Jednorazovo</b><small>Jedno vrece, bez záväzku.</small><span class="price" data-plan-price="raz"></span></label>
     </div>
     <div class="grid2">

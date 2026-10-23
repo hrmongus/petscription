@@ -51,7 +51,7 @@
     vat: 0.23,                // DPH
     shipping: 4.90,           // doprava za doručenie s DPH (€)
     minBagDays: 28,           // odporúčané vrece má vydržať aspoň toľko dní
-    reorderLeadDays: 4,       // ďalšie vrece posielame o toľko dní skôr
+    reorderLeadDays: 3,       // ďalšie vrece posielame o toľko dní skôr, než sa minie
     // predajné ceny balení s DPH (€), rovnaké pre všetky receptúry
     // 9 kg ≈ −5 % a 2 × 9 kg ≈ −11 % za kilogram oproti 4 kg
     bagPrices: { "4": 35, "9": 75, "18": 140 },

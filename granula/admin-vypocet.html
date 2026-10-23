@@ -203,7 +203,7 @@ code{font-size:12px;background:var(--m2);padding:1px 4px}
     starterWeeks: "Štartér do (týždne)", overweightFraction: "„Kilo navyše“ = nad ideálom (podiel)", underweightBonus: "„Chudší“ = energia navyše (podiel)",
     calibration: "Kalibrácia (× energia)", roundTo: "Zaokrúhlenie dávky (g)", vat: "DPH (podiel)", shipping: "Doprava (€)", minBagDays: "Odporúčané vrece aspoň (dní)",
     reorderLeadDays: "Ďalšie vrece skôr o (dni)", bagPrices: "Ceny balení s DPH (€)", "4": "4 kg", "9": "9 kg", "18": "2 × 9 kg",
-    trpaslicie: "trpasličie", male: "malé", stredne: "stredné", velke: "veľké", obrie: "obrie", mesiac: "každý mesiac", raz: "jednorazovo",
+    trpaslicie: "trpasličie", male: "malé", stredne: "stredné", velke: "veľké", obrie: "obrie", mesiac: "predplatné (každých X dní podľa balenia)", raz: "jednorazovo",
     puppyUnder4m: "šteňa 0–4 mes.", puppyOver4m: "šteňa 4 mes.–dospelosť", adultNeutered: "dospelý kastrovaný", adultIntact: "dospelý nekastrovaný",
     inactive: "prevažne doma / senior", lightWork: "šport (ľahká práca)", moderateWork: "pracovný (stredná práca)", weightLoss: "nadváha (× RER ideálu)",
     gestationEarly: "gravidita 1.–6. týž.", gestationTop: "", gestationLate: "gravidita posl. 3 týž."
@@ -343,7 +343,7 @@ code{font-size:12px;background:var(--m2);padding:1px 4px}
       fmt(P.calibration * ratios.reduce(function (s, x) { return s + x; }, 0) / ratios.length, 2) + "</b>. Tabuľka výrobcu nerozlišuje aktivitu, kastráciu ani vek.</p>";
 
     // 7 vrecia
-    $("o-bags").innerHTML = !p ? "—" : "<table><tr><th>Vrece</th><th class=n>Výdrž</th><th class=n>Cena s DPH</th><th class=n>Každý mesiac</th><th class=n>€/deň (mesačne)</th><th class=n>Ďalšie vrece</th></tr>" +
+    $("o-bags").innerHTML = !p ? "—" : "<table><tr><th>Vrece</th><th class=n>Výdrž</th><th class=n>Cena s DPH</th><th class=n>Predplatné</th><th class=n>€/deň (mesačne)</th><th class=n>Ďalšie vrece</th></tr>" +
       r.bags.map(function (x) {
         var pr = x.price;
         return "<tr" + (x.bag.id === r.recBag ? ' class="win"' : "") + "><td>" + x.bag.label + (x.bag.id === r.recBag ? " (odporúčané)" : "") + "</td><td class=n>" + x.days + " dní</td><td class=n>" +
