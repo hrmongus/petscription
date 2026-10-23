@@ -213,6 +213,9 @@
     renderSwap(r);
     $("r-recipe").innerHTML = p.highlights.map(function (h) { return "<li>" + h[1] + " " + h[2] + " %</li>"; }).join("");
     $("r-dose").textContent = r.dose.grams + " g";
+    $("f-keep").textContent = r.dose.grams + " g";
+    $("f-up").textContent = Math.round(r.dose.grams * 1.1) + " g";
+    $("f-down").textContent = Math.round(r.dose.grams * 0.9) + " g";
     $("r-macro").textContent = p.protein + " / " + p.fat + " %";
     var month = r.dose.grams * 30 / 1000;
     $("r-month").textContent = "~" + (month >= 3 ? num(month) : num(month, 1)) + " kg";
