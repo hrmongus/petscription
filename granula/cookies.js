@@ -25,14 +25,14 @@
   }
 
   var bar;
-  function show() {
-    if (bar) { bar.hidden = false; bar.querySelector("button").focus(); return; }
+  function show(forForm) {
+    if (bar) { bar.hidden = false; bar.classList.toggle("for-form", !!forForm); bar.querySelector("button").focus(); return; }
     bar = document.createElement("div");
     bar.className = "cookie-bar";
     bar.setAttribute("role", "dialog");
     bar.setAttribute("aria-label", "Súhlas s cookies");
     bar.innerHTML =
-      '<p><b>Cookies? Len s tvojím súhlasom.</b> Nevyhnutné potrebujeme, aby web fungoval. ' +
+      '<p><span class="cookie-form-note">Na zápis potrebujeme Klaviyo, a to beží len s marketingovými cookies. </span><b>Cookies? Len s tvojím súhlasom.</b> Nevyhnutné potrebujeme, aby web fungoval. ' +
       "Marketingové (Klaviyo) nám pomáhajú posielať ti ponuky na mieru. " +
       '<a href="#" data-privacy>Ochrana údajov</a></p>' +
       '<div class="cookie-btns"><button type="button" class="btn btn-o btn-sm" data-cookie="all">Prijať všetky</button>' +
@@ -43,18 +43,37 @@
       var prev = get();
       set(b.dataset.cookie);
       bar.hidden = true;
-      if (b.dataset.cookie === "all") loadKlaviyo();
-      // súhlas odvolaný po načítaní Klaviyo: obnoviť stránku, aby skript nebežal
-      else if (prev === "all" && loaded) location.reload();
+      if (b.dataset.cookie === "all") { loadKlaviyo(); paintEmbeds(); pending.splice(0).forEach(function (fn) { fn(); }); }
+      else {
+        pending = []; paintEmbeds();
+        // súhlas odvolaný po načítaní Klaviyo: obnoviť stránku, aby skript nebežal
+        if (prev === "all" && loaded) location.reload();
+      }
     });
+    bar.classList.toggle("for-form", !!forForm);
     document.body.appendChild(bar);
   }
 
+  // Klaviyo formuláre: bez súhlasu ukážeme lištu a formulár otvoríme hneď po „Prijať všetky“
+  var pending = [];
+  function withKlaviyo(fn) {
+    if (get() === "all") { loadKlaviyo(); fn(); return; }
+    pending.push(fn); show(true);
+  }
+  function paintEmbeds() {
+    var ok = get() === "all";
+    [].forEach.call(document.querySelectorAll(".kl-fallback"), function (f) { f.hidden = ok; });
+  }
+
   document.addEventListener("click", function (e) {
-    if (e.target.closest("[data-cookie-settings]")) { e.preventDefault(); show(); }
+    if (e.target.closest("[data-cookie-settings]")) { e.preventDefault(); show(); return; }
+    var o = e.target.closest("[data-klaviyo-open]");
+    if (o) { var id = o.getAttribute("data-klaviyo-open"); withKlaviyo(function () { window._klOnsite = window._klOnsite || []; window._klOnsite.push(["openForm", id]); }); return; }
+    if (e.target.closest("[data-klaviyo-consent]")) { set("all"); if (bar) bar.hidden = true; loadKlaviyo(); paintEmbeds(); }
   });
 
   var v = get();
+  paintEmbeds();
   if (v === "all") loadKlaviyo();
   else if (v !== "necessary") show();
 })();

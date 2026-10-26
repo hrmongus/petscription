@@ -60,8 +60,13 @@ h1,h2,h3,p{margin:0}
 .link-under:hover{color:var(--k)}
 
 /* ---------- horná lišta a hlavička ---------- */
-.topbar{background:var(--n);color:var(--m);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
-  text-align:center;padding:10px 16px}
+.topbar{background:var(--o);color:var(--n);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  text-align:center;padding:9px 16px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 12px;border-bottom:2px solid var(--n)}
+.topbar-cta{font:inherit;letter-spacing:inherit;text-transform:inherit;font-weight:900;color:var(--m);background:var(--n);border:0;padding:5px 10px;cursor:pointer}
+.topbar-cta:hover{background:var(--k)}
+/* Klaviyo embed bez súhlasu */
+.kl-fallback{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.kl-fallback p{font-size:14px;line-height:1.5;color:var(--i2)}
 .site-head{background:var(--m);border-bottom:2px solid var(--n);position:sticky;top:0;z-index:40}
 .site-head .wrap{padding-top:18px;padding-bottom:18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px}
 .menu{display:flex;flex-wrap:wrap;gap:32px;font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:.06em}
@@ -69,6 +74,7 @@ h1,h2,h3,p{margin:0}
 .menu a:hover{color:var(--k)}
 .menu a[aria-current="page"]{border-bottom:2px solid var(--o);padding-bottom:2px}
 @media (max-width:860px){.menu{display:none}.logo{font-size:24px}}
+@media (max-width:640px){.topbar{font-size:10.5px;letter-spacing:.04em;gap:4px 8px;padding:8px 12px}.topbar > span[aria-hidden]{display:none}.topbar-cta{padding:4px 8px}}
 @media (max-width:480px){.site-head .wrap{gap:12px}.btn-head{font-size:11px;letter-spacing:.03em;padding:10px 12px;min-height:42px}.site-head .logo{font-size:21px}}
 
 /* ---------- foto s posunutým farebným poľom ---------- */
@@ -160,6 +166,8 @@ h1,h2,h3,p{margin:0}
 .cookie-bar b{color:var(--l)}
 .cookie-bar a{color:var(--m);text-decoration:underline;text-decoration-color:var(--o);text-underline-offset:3px}
 .cookie-btns{display:flex;gap:10px;flex:none}
+.cookie-form-note{display:none;color:var(--o);font-weight:800}
+.cookie-bar.for-form .cookie-form-note{display:inline}
 .cookie-bar .btn{min-height:44px}
 .cookie-min{background:transparent;color:var(--m);border-color:var(--m)}
 .cookie-min:hover{background:var(--m);color:var(--n)}

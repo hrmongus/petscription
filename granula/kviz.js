@@ -408,7 +408,7 @@
     $("s-disc-l").textContent = "Zľava predplatného −" + Math.round(d * 100) + " %";
     $("s-disc").textContent = x.price == null ? "" : "−" + eur(x.price * d);
     $("s-total").textContent = x.price == null ? "—" : eur(Math.round((x.price * (1 - d) + r.params.shipping) * 100) / 100);
-    $("s-submit").textContent = d ? "Objednať predplatné" : "Objednať";
+    // objednávky sú do štartu (20. 11.) vypnuté, tlačidlo má pevný text
     $("s-note").textContent = d
       ? "Platíš pri každom doručení. Vrece " + x.bag.label + " posielame každých " + x.days + " " + plural(x.days, "deň", "dni", "dní") + ", vždy " + r.params.reorderLeadDays + " " + plural(r.params.reorderLeadDays, "deň", "dni", "dní") + " predtým, ako sa minie."
       : "Platíš raz. Ďalšie vrece si objednáš, keď budeš chcieť.";
@@ -428,6 +428,7 @@
   });
   order.addEventListener("submit", function (e) {
     e.preventDefault();
+    if ($("s-submit").disabled) return; // pred štartom sa neobjednáva
     var addr = order.ship.value === "adresa";
     var need = ["email", "fullname", "tel", "cc", "exp", "cvc"].concat(addr ? ["street", "zip", "city"] : ["point"]);
     var bad = need.filter(function (n) {

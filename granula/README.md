@@ -75,6 +75,12 @@ Všetky čísla sú v `PARAMS` a na kontrolnej stránke sa dajú meniť naživo
 Odpovede sa držia v `sessionStorage`. Dokončené odpovede (bez údajov z objednávky) sa navyše uložia do `localStorage` (`granula-psy`, max. 3 psy); na 1. kroku sa potom ukáže „Alebo pokračuj s: [meno psa]“ s možnosťou psa zabudnúť (×). Nič z toho neopustí prehliadač, cookies sa nepoužívajú. Údaje z objednávky sa **nikam
 neposielajú** a čísla karty sa po odoslaní mažú.
 
+## Predregistrácia (do 20. 11.)
+- Oranžová lišta hore (`.topbar`) s CTA „Chcem byť prvý“ otvorí Klaviyo pop-up `YcSYzw` (`data-klaviyo-open`).
+- Embed `klaviyo-form-RuSXNc` je na úvode (sekcia `#zapis`) a v objednávke pod možnosťami doručovania.
+- Bez súhlasu s marketingovými cookies sa Klaviyo nenačíta: CTA najprv ukáže cookie lištu, embed ukáže tlačidlo „Povoliť a zobraziť formulár“.
+- Objednávka je vypnutá: možnosti predplatného sú sivé a neaktívne, tlačidlo „Objednávky od 20. 11.“ je `disabled`. Po štarte odstrániť `disabled` (plan inputy, `#s-submit`), triedu `locked`, pásku `.soon-tape` a vrátiť text tlačidla v `renderOrder`.
+
 ## Čo treba doplniť pred spustením
 1. **Výživa.** Násobky, hranice veku a veľkosti a pravidlá výberu má potvrdiť
    veterinár. Model dáva pri „Hovädzie s ryžou“ o ~25–45 % viac než dávkovacia

@@ -315,6 +315,13 @@
 .co .opt b{font-size:16.8px}
 .co .opt small{font-size:13px;line-height:1.35;opacity:.9}
 .co .opt .price{font-weight:900;font-size:17px;margin-top:4px}
+.soon-tape{align-self:stretch;background:var(--n);color:var(--l);font-weight:900;font-size:14px;letter-spacing:.06em;text-transform:uppercase;text-align:center;padding:11px 14px;transform:rotate(-1.2deg);margin:4px 0 2px}
+.opts.locked .opt{background:#E4DDD5;color:#6F6862;border-color:#A39B92;cursor:not-allowed;filter:grayscale(1)}
+.opts.locked .opt .rec{background:#C9C2BA;color:#4A4540}
+.co-embed{background:var(--white);border:2px solid var(--n);box-shadow:8px 8px 0 var(--o);padding:16px;min-height:96px}
+.co aside #s-submit:disabled{background:#5E5852;color:#C9C2BA;border-color:#5E5852;cursor:not-allowed}
+.co-ann{background:var(--o);color:var(--n);padding:12px 14px;font-size:14px;line-height:1.45;font-weight:600}
+.co-ann-cta{font:inherit;font-weight:900;color:var(--n);background:none;border:0;padding:0;border-bottom:2px solid var(--n);cursor:pointer;white-space:nowrap}
 .co .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .box{background:var(--white);padding:20px;display:flex;flex-direction:column;gap:12px}
 .box > .t{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--k)}
@@ -752,10 +759,13 @@
       <a class="back" href="#vysledok">← Späť na výsledok</a>
     </div>
     <h1 class="display q-title" tabindex="-1" id="t-plan">Ako to chceš <span>dostávať?</span></h1>
-    <div class="opts c2" role="radiogroup" aria-labelledby="t-plan" style="padding-top:8px">
-      <label class="opt"><input type="radio" name="plan" value="mesiac"><b id="plan-every">Predplatné</b><small id="plan-note">Vrece príde samo podľa dennej dávky.</small><span class="price" data-plan-price="mesiac"></span><span class="rec">−10 %</span></label>
-      <label class="opt"><input type="radio" name="plan" value="raz"><b>Jednorazovo</b><small>Jedno vrece, bez záväzku.</small><span class="price" data-plan-price="raz"></span></label>
+    <div class="soon-tape" aria-hidden="true">Momentálne vyrábame ✱ Spúšťame 20. 11. ✱ Nezáväzná rezervácia s −30&nbsp;%</div>
+    <p class="sr-only">Momentálne vyrábame, spúšťame 20. novembra. Nezáväzná rezervácia s 30 % zľavou.</p>
+    <div class="opts c2 locked" role="radiogroup" aria-labelledby="t-plan" aria-disabled="true">
+      <label class="opt"><input type="radio" name="plan" value="mesiac" disabled><b id="plan-every">Predplatné</b><small id="plan-note">Vrece príde samo podľa dennej dávky.</small><span class="price" data-plan-price="mesiac"></span><span class="rec">−10 %</span></label>
+      <label class="opt"><input type="radio" name="plan" value="raz" disabled><b>Jednorazovo</b><small>Jedno vrece, bez záväzku.</small><span class="price" data-plan-price="raz"></span></label>
     </div>
+    <div class="kl-embed co-embed"><div class="klaviyo-form-RuSXNc"></div><div class="kl-fallback" hidden><p>Formulár na rezerváciu beží cez Klaviyo a potrebuje marketingové cookies.</p><button type="button" class="btn btn-n btn-sm" data-klaviyo-consent>Povoliť a zobraziť formulár</button></div></div>
     <div class="grid2">
       <fieldset class="box" style="border:0;margin:0">
         <legend class="t" style="padding:0;float:left;width:100%">DORUČENIE</legend>
@@ -804,7 +814,8 @@
       <div><span>Doprava</span><span>4,90 €</span></div>
     </div>
     <div class="total"><span>Spolu za doručenie</span><b id="s-total"></b></div>
-    <button type="submit" class="btn btn-o" id="s-submit">Objednať predplatné</button>
+    <button type="submit" class="btn btn-o" id="s-submit" disabled aria-disabled="true">Objednávky od 20. 11.</button>
+    <div class="co-ann"><b>Štartujeme 20. novembra</b> ✱ Prvé vrecko −30&nbsp;% pre tých, čo sa zapíšu vopred <button type="button" class="co-ann-cta" data-klaviyo-open="YcSYzw">Chcem byť prvý →</button></div>
     <p id="s-note"></p>
   </aside>
 </form>

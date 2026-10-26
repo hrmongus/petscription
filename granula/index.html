@@ -22,7 +22,14 @@
 .hero .copy p{font-size:20px;line-height:1.55;max-width:560px}
 .hero .ctas{display:flex;flex-wrap:wrap;align-items:center;gap:22px}
 .hero .note{font-size:14px;font-weight:700;color:var(--i2)}
+.start-sticker{background:var(--l);color:var(--n);font-size:20px;--t:-5deg}
 .hero .visual{position:relative}
+.signup{background:var(--o)}
+.signup .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:center}
+.signup .eyebrow{color:var(--n)}
+.signup .lead{color:var(--n)}
+.signup .kl-embed{background:var(--white);border:2px solid var(--n);box-shadow:10px 10px 0 var(--n);padding:20px;min-height:120px}
+@media (max-width:960px){.signup .wrap{grid-template-columns:minmax(0,1fr);gap:32px}}
 .hero .frame{height:600px}
 .hero .frame img{object-position:62% center}
 /* nálepka: malý nadpis + veľké slovo, ako odznak „Kvalitné mäso“ */
@@ -199,7 +206,7 @@
 </head>
 <body>
 
-<div class="topbar">Granule na mieru ✱ Veterinármi odporúčaná receptúra ✱ Doma skôr, než dôjdu</div>
+<div class="topbar"><span>Štartujeme 20.&nbsp;novembra</span><span aria-hidden="true">✱</span><span>Prvé vrecko −30&nbsp;% pre tých, čo sa zapíšu vopred</span><button type="button" class="topbar-cta" data-klaviyo-open="YcSYzw">Chcem byť prvý →</button></div>
 <header class="site-head">
   <div class="wrap">
     <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
@@ -222,7 +229,7 @@
       <p>Prémiové granule z diviny a slovenského hovädzieho, vybrané presne podľa veku, váhy a temperamentu tvojho psa. Pre dlhý a nabehaný život.</p>
       <div class="ctas">
         <a class="btn btn-o" href="granule-na-mieru.html">Nájdi granule pre svojho psa</a>
-        <span class="note">2 minúty ✱ bez registrácie</span>
+        <span class="sticker start-sticker">Štart 20. 11.</span>
       </div>
     </div>
     <div class="visual">
@@ -480,6 +487,18 @@
       <details><summary>Ako prejsť na nové granule?<i aria-hidden="true">+</i></summary><p>Postupne. Približne 7 až 10 dní pridávaj do starého krmiva čoraz viac Granuly, kým nezostane len ona.</p></details>
       <details><summary>Kto granule vyrába?<i aria-hidden="true">+</i></summary><p>Slovenský výrobca krmív, ktorý sa im venuje od roku 1992. Receptúry navrhli veterinári so zameraním na výživu psov.</p></details>
     </div>
+  </div>
+</section>
+
+<!-- predregistrácia -->
+<section id="zapis" class="sec signup bt">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Štartujeme 20. novembra</div>
+      <h2 class="h2"><span class="lt">Buď pri tom</span> prvý.</h2>
+      <p class="lead">Momentálne vyrábame prvú várku. Zapíš sa vopred a prvé vrecko dostaneš o 30&nbsp;% lacnejšie. Rezervácia je nezáväzná.</p>
+    </div>
+    <div class="kl-embed"><div class="klaviyo-form-RuSXNc"></div><div class="kl-fallback" hidden><p>Formulár na rezerváciu beží cez Klaviyo a potrebuje marketingové cookies.</p><button type="button" class="btn btn-n btn-sm" data-klaviyo-consent>Povoliť a zobraziť formulár</button></div></div>
   </div>
 </section>
 
