@@ -322,6 +322,10 @@
 .co-tape .track{font-size:clamp(16px,1.5vw,20px)}
 .opts.locked .opt{background:#E4DDD5;color:#6F6862;border-color:#A39B92;cursor:not-allowed;filter:grayscale(1)}
 .opts.locked .opt .rec{background:#C9C2BA;color:#4A4540}
+.co-locked{border:0;margin:0;padding:0;min-width:0;display:flex;flex-direction:column;gap:18px;filter:grayscale(1);opacity:.55;cursor:not-allowed}
+.co-locked *{cursor:not-allowed !important}
+.co-locked .input,.co-locked .chip,.co-locked .pick{background:#E4DDD5;border-color:#A39B92;color:#6F6862}
+.co-locked .input::placeholder{color:#8A827A}
 .co-embed{background:var(--white);border:2px solid var(--n);box-shadow:8px 8px 0 var(--o);padding:16px;min-height:96px}
 .co aside #s-submit:disabled{background:#5E5852;color:#C9C2BA;border-color:#5E5852;cursor:not-allowed}
 .co-ann{background:var(--o);color:var(--n);padding:12px 14px;font-size:14px;line-height:1.45;font-weight:600}
@@ -772,6 +776,8 @@
       <label class="opt"><input type="radio" name="plan" value="raz" disabled><b>Jednorazovo</b><small>Jedno vrece, bez záväzku.</small><span class="price" data-plan-price="raz"></span></label>
     </div>
     <div class="kl-embed co-embed"><div class="klaviyo-form-RuSXNc"></div><div class="kl-fallback" hidden><p>Formulár na rezerváciu beží cez Klaviyo a potrebuje marketingové cookies.</p><button type="button" class="btn btn-n btn-sm" data-klaviyo-consent>Povoliť a zobraziť formulár</button></div></div>
+    <!-- do štartu (20. 11.) sú doručenie, kontakt a platba vypnuté -->
+    <fieldset class="co-locked" disabled aria-label="Doručenie, kontakt a platba budú dostupné od 20. 11.">
     <div class="grid2">
       <fieldset class="box" style="border:0;margin:0">
         <legend class="t" style="padding:0;float:left;width:100%">DORUČENIE</legend>
@@ -809,6 +815,7 @@
         <span><label class="sr-only" for="cvc">CVC</label><input class="input" id="cvc" name="cvc" autocomplete="cc-csc" inputmode="numeric" placeholder="CVC" required></span>
       </div>
     </div>
+    </fieldset>
     <p class="err" role="alert" hidden data-err="objednavka">Doplň zvýraznené polia.</p>
   </div>
   <aside style="background:var(--n);color:var(--m)">

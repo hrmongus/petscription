@@ -79,7 +79,7 @@ neposielajú** a čísla karty sa po odoslaní mažú.
 - Oranžová lišta hore (`.topbar`) s CTA „Chcem byť prvý“ otvorí Klaviyo pop-up `YcSYzw` (`data-klaviyo-open`).
 - Embed `klaviyo-form-RuSXNc` je na úvode (sekcia `#zapis`) a v objednávke pod možnosťami doručovania.
 - Bez súhlasu s marketingovými cookies sa Klaviyo nenačíta: CTA najprv ukáže cookie lištu, embed ukáže tlačidlo „Povoliť a zobraziť formulár“.
-- Objednávka je vypnutá: možnosti predplatného sú sivé a neaktívne, tlačidlo „Objednávky od 20. 11.“ je `disabled`. Po štarte odstrániť `disabled` (plan inputy, `#s-submit`), triedu `locked`, pásku `.soon-tape` a vrátiť text tlačidla v `renderOrder`.
+- Objednávka je vypnutá: možnosti predplatného sú sivé a neaktívne, tlačidlo „Objednávky od 20. 11.“ je `disabled`. Po štarte odstrániť `disabled` (plan inputy, `#s-submit`, `fieldset.co-locked` okolo doručenia, kontaktu a platby), triedu `locked`, pásku `.soon-tape` a vrátiť text tlačidla v `renderOrder`.
 
 ## Čo treba doplniť pred spustením
 1. **Výživa.** Násobky, hranice veku a veľkosti a pravidlá výberu má potvrdiť
