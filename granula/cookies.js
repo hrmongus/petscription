@@ -63,7 +63,7 @@
   function paintEmbeds() {
     var ok = get() === "all";
     [].forEach.call(document.querySelectorAll(".kl-fallback"), function (f) { f.hidden = ok; });
-    if (ok) setTimeout(checkEmbeds, 6000);
+    if (ok) setTimeout(checkEmbeds, 8000);
   }
   // Klaviyo embed sa nemusí zobraziť (napr. formulár je v Klaviyo nastavený len pre mobil alebo je skrytý
   // pre už známeho návštevníka). Vtedy namiesto prázdneho boxu ukážeme tlačidlo na pop-up.
@@ -76,6 +76,10 @@
       alt.innerHTML = "<p><b>Zapíš sa vopred</b> a prvé vrecko dostaneš o 30&nbsp;% lacnejšie. Rezervácia je nezáväzná.</p>" +
         '<button type="button" class="btn btn-o btn-sm" data-klaviyo-open="YcSYzw">Chcem byť prvý →</button>';
       w.appendChild(alt);
+      // formulár sa vykreslil neskôr: náhradu odstránime
+      if ("MutationObserver" in window) new MutationObserver(function (m, o) {
+        if (form.children.length) { alt.remove(); o.disconnect(); }
+      }).observe(form, { childList: true });
     });
   }
 
