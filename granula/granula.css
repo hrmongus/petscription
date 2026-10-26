@@ -153,6 +153,22 @@ h1,h2,h3,p{margin:0}
 .foot .bottom{padding-top:18px;padding-bottom:32px;border-top:1px solid #333;display:flex;flex-wrap:wrap;gap:12px;
   justify-content:space-between;font-size:13px;color:var(--muted-dark)}
 
+/* ---------- cookie lišta ---------- */
+.cookie-bar{position:fixed;left:16px;right:16px;bottom:16px;z-index:200;max-width:920px;margin:0 auto;background:var(--n);color:var(--m);
+  border:2px solid var(--n);box-shadow:8px 8px 0 var(--o);padding:16px 20px;display:flex;align-items:center;gap:20px}
+.cookie-bar p{font-size:14px;line-height:1.5}
+.cookie-bar b{color:var(--l)}
+.cookie-bar a{color:var(--m);text-decoration:underline;text-decoration-color:var(--o);text-underline-offset:3px}
+.cookie-btns{display:flex;gap:10px;flex:none}
+.cookie-bar .btn{min-height:44px}
+.cookie-min{background:transparent;color:var(--m);border-color:var(--m)}
+.cookie-min:hover{background:var(--m);color:var(--n)}
+@media (max-width:640px){
+  .cookie-bar{flex-direction:column;align-items:stretch;gap:12px;left:10px;right:10px;bottom:10px;padding:14px 14px 16px;box-shadow:5px 5px 0 var(--o)}
+  .cookie-bar p{font-size:13px}
+  .cookie-btns .btn{flex:1;padding:10px 12px;font-size:13px}
+}
+
 /* ---------- objavovanie pri scrolle ---------- */
 /* skryté len keď beží JS (trieda .js na <html>) */
 .js [data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1);

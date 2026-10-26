@@ -14,6 +14,7 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 | `kviz.js` | ovládanie dotazníka | |
 | `granula.css` | spoločné tokeny a komponenty (logo-nálepka, tlačidlá, foto s posunutým farebným poľom, pásky, karty mäsa, pätička) | |
 | `icons.js` | ikony surovín z návrhu; `<span data-icon="jelen" data-ink="#F4EBE2">` | |
+| `cookies.js` | cookie lišta; Klaviyo (marketing) sa načíta až po „Prijať všetky“, voľba v `localStorage` (`granula-cookies`), lištu znova otvorí odkaz „Nastavenia cookies“ v pätičke | |
 | `site.js` | objavovanie pri scrolle, karusel recenzií | |
 | `img/` | fotky z návrhu, pomenované podľa obsahu | |
 
@@ -93,6 +94,7 @@ neposielajú** a čísla karty sa po odoslaní mažú.
    „Diviak“ je odstránená. „Veterinármi odporúčaná receptúra“ a výrobca od 1992 treba overiť.
 8. **Texty zloženia** sú s opravenými preklepmi z podkladov (zoznam na kontrolnej
    stránke, bod 11). Pred tlačou overiť s výrobcom.
-9. **Pätička.** Doprava, Kontakt, Obchodné podmienky, Ochrana údajov vedú na `#`;
+9. **Cookies.** Text lišty odkazuje na „Ochrana údajov“, ktorá zatiaľ vedie na `#`. Doplniť stránku so zoznamom cookies (Klaviyo) a právnym základom.
+10. **Pätička.** Doprava, Kontakt, Obchodné podmienky, Ochrana údajov vedú na `#`;
    `[Firma s.r.o.] · IČO [—]` sú zástupné údaje. Odkaz na kontrolnú stránku pred
    spustením odstrániť.
