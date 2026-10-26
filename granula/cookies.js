@@ -1,4 +1,5 @@
 /* Granula — jednoduchá cookie lišta. Klaviyo (marketing) sa načíta až po súhlase.
+   Značka Klaviyo je v HTML ako type="text/plain" (overenie v Klaviyo ju nájde, prehliadač ju nespustí).
    Voľba sa pamätá v localStorage („granula-cookies“: "all" alebo "necessary").
    Lištu znova otvorí akýkoľvek odkaz s atribútom data-cookie-settings. */
 (function () {
@@ -12,10 +13,15 @@
     if (loaded) return; loaded = true;
     // inicializácia objektu podľa kódu z Klaviyo
     !function(){if(!window.klaviyo){window._klOnsite=window._klOnsite||[];try{window.klaviyo=new Proxy({},{get:function(n,i){return"push"===i?function(){var n;(n=window._klOnsite).push.apply(n,arguments)}:function(){for(var n=arguments.length,o=new Array(n),w=0;w<n;w++)o[w]=arguments[w];var t="function"==typeof o[o.length-1]?o.pop():void 0,e=new Promise((function(n){window._klOnsite.push([i].concat(o,[function(i){t&&t(i),n(i)}]))}));return e}}})}catch(n){window.klaviyo=window.klaviyo||[],window.klaviyo.push=function(){var n;(n=window._klOnsite).push.apply(n,arguments)}}}}();
-    var s = document.createElement("script");
-    s.async = true;
-    s.src = "https://static.klaviyo.com/onsite/js/" + KLAVIYO_ID + "/klaviyo.js?company_id=" + KLAVIYO_ID;
-    document.body.appendChild(s);
+    // vypnuté značky <script type="text/plain" data-cookie-category="marketing"> zapneme; bez nich náhradná adresa
+    var off = document.querySelectorAll('script[type="text/plain"][data-cookie-category="marketing"]');
+    var srcs = [].map.call(off, function (t) { return t.getAttribute("src"); });
+    if (!srcs.length) srcs = ["https://static.klaviyo.com/onsite/js/" + KLAVIYO_ID + "/klaviyo.js?company_id=" + KLAVIYO_ID];
+    srcs.forEach(function (src) {
+      var s = document.createElement("script");
+      s.async = true; s.src = src;
+      document.body.appendChild(s);
+    });
   }
 
   var bar;
