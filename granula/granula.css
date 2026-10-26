@@ -154,13 +154,18 @@ h1,h2,h3,p{margin:0}
 /* ---------- pätička ---------- */
 .foot{background:var(--n);color:var(--m)}
 .foot a{color:var(--m);text-decoration:none}.foot a:hover{color:var(--o)}
-.foot .top{padding-top:64px;padding-bottom:28px;display:flex;flex-wrap:wrap;gap:48px;justify-content:space-between}
+.foot .top{padding-top:64px;padding-bottom:28px;display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between}
 .foot .about{display:flex;flex-direction:column;gap:20px;max-width:340px}
 .foot .about .logo{font-size:40px;padding:8px 14px 6px;align-self:flex-start}
 .foot .about p{font-size:15px;line-height:1.55;color:var(--muted-dark)}
-.foot .cols{display:flex;flex-wrap:wrap;gap:64px}
+.foot .cols{display:flex;flex-wrap:wrap;gap:32px 44px}
 .foot nav{display:flex;flex-direction:column;gap:10px;font-size:15px;font-weight:600}
 .foot nav .t{font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--o)}
+.foot-co{display:flex;flex-direction:column;gap:10px}
+.foot-co .t{font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--o)}
+.foot-co address{font-style:normal;font-size:14px;line-height:1.6;color:var(--muted-dark)}
+.foot-co address b{color:var(--m);font-weight:700}
+.foot-co address a{color:var(--m);text-decoration:underline;text-decoration-color:var(--o);text-underline-offset:3px}
 .foot .bottom{padding-top:18px;padding-bottom:32px;border-top:1px solid #333;display:flex;flex-wrap:wrap;gap:12px;
   justify-content:space-between;font-size:13px;color:var(--muted-dark)}
 

@@ -102,5 +102,5 @@ neposielajú** a čísla karty sa po odoslaní mažú.
    stránke, bod 11). Pred tlačou overiť s výrobcom.
 9. **Cookies.** Text lišty odkazuje na „Ochrana údajov“, ktorá zatiaľ vedie na `#`. Doplniť stránku so zoznamom cookies (Klaviyo) a právnym základom.
 10. **Pätička.** Doprava, Kontakt, Obchodné podmienky, Ochrana údajov vedú na `#`;
-   `[Firma s.r.o.] · IČO [—]` sú zástupné údaje. Odkaz na kontrolnú stránku pred
+   údaje prevádzkovateľa (Carbone Company s. r. o.) sú doplnené. Odkaz na kontrolnú stránku pred
    spustením odstrániť.
