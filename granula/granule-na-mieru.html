@@ -315,7 +315,11 @@
 .co .opt b{font-size:16.8px}
 .co .opt small{font-size:13px;line-height:1.35;opacity:.9}
 .co .opt .price{font-weight:900;font-size:17px;margin-top:4px}
-.soon-tape{align-self:stretch;background:var(--n);color:var(--l);font-weight:900;font-size:14px;letter-spacing:.06em;text-transform:uppercase;text-align:center;padding:11px 14px;transform:rotate(-1.2deg);margin:4px 0 2px}
+/* páska v objednávke: od kraja po kraj stĺpca, ako na úvode */
+.co .pane{--pl:80px;--pr:64px;overflow-x:clip}
+.co-tape{margin:0 calc(-1 * var(--pr)) 0 calc(-1 * var(--pl));padding:10px 0;overflow-x:clip}
+.co-tape .tape{padding:12px 0}
+.co-tape .track{font-size:clamp(16px,1.5vw,20px)}
 .opts.locked .opt{background:#E4DDD5;color:#6F6862;border-color:#A39B92;cursor:not-allowed;filter:grayscale(1)}
 .opts.locked .opt .rec{background:#C9C2BA;color:#4A4540}
 .co-embed{background:var(--white);border:2px solid var(--n);box-shadow:8px 8px 0 var(--o);padding:16px;min-height:96px}
@@ -353,6 +357,7 @@
 /* ---------- mobil ---------- */
 @media (max-width:1100px){
   .split > .pane,.res .pane,.co .pane{padding:28px 32px 36px}
+  .co .pane{--pl:32px;--pr:32px}
   .split > aside{width:420px;padding:40px 36px}
   .res aside,.co aside{width:400px}
   .mix-body,.done-body{gap:48px}
@@ -363,6 +368,7 @@
   .screen.on.split{flex-direction:column;flex-wrap:nowrap}
   .split > aside,.res aside,.co aside{width:auto;padding:36px 16px 40px}
   .split > .pane,.res .pane,.co .pane{padding:20px 16px 32px}
+  .co .pane{--pl:16px;--pr:16px}
   .full{padding:24px 16px 40px}
   .split aside .frame{height:min(400px,80vw)}
   .q-body{padding:32px 0;gap:20px}
@@ -759,7 +765,7 @@
       <a class="back" href="#vysledok">← Späť na výsledok</a>
     </div>
     <h1 class="display q-title" tabindex="-1" id="t-plan">Ako to chceš <span>dostávať?</span></h1>
-    <div class="soon-tape" aria-hidden="true">Momentálne vyrábame ✱ Spúšťame 20. 11. ✱ Nezáväzná rezervácia s −30&nbsp;%</div>
+    <div class="co-tape" aria-hidden="true"><div class="tape" style="--rot:-1.5deg;background:var(--o);color:var(--n)"><div class="track"><span>Momentálne vyrábame</span><span>✱</span><span>Spúšťame 20. 11.</span><span>✱</span><span>Nezáväzná rezervácia s −30&nbsp;%</span><span>✱</span><span>Momentálne vyrábame</span><span>✱</span><span>Spúšťame 20. 11.</span><span>✱</span><span>Nezáväzná rezervácia s −30&nbsp;%</span><span>✱</span><span>Momentálne vyrábame</span><span>✱</span><span>Spúšťame 20. 11.</span><span>✱</span><span>Nezáväzná rezervácia s −30&nbsp;%</span><span>✱</span><span>Momentálne vyrábame</span><span>✱</span><span>Spúšťame 20. 11.</span><span>✱</span><span>Nezáväzná rezervácia s −30&nbsp;%</span><span>✱</span></div></div></div>
     <p class="sr-only">Momentálne vyrábame, spúšťame 20. novembra. Nezáväzná rezervácia s 30 % zľavou.</p>
     <div class="opts c2 locked" role="radiogroup" aria-labelledby="t-plan" aria-disabled="true">
       <label class="opt"><input type="radio" name="plan" value="mesiac" disabled><b id="plan-every">Predplatné</b><small id="plan-note">Vrece príde samo podľa dennej dávky.</small><span class="price" data-plan-price="mesiac"></span><span class="rec">−10 %</span></label>

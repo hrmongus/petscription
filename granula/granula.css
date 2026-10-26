@@ -67,6 +67,9 @@ h1,h2,h3,p{margin:0}
 /* Klaviyo embed bez súhlasu */
 .kl-fallback{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
 .kl-fallback p{font-size:14px;line-height:1.5;color:var(--i2)}
+.kl-alt{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.kl-alt p{font-size:15px;line-height:1.5}
+[class*="klaviyo-form-"]:empty{display:none}
 .site-head{background:var(--m);border-bottom:2px solid var(--n);position:sticky;top:0;z-index:40}
 .site-head .wrap{padding-top:18px;padding-bottom:18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px}
 .menu{display:flex;flex-wrap:wrap;gap:32px;font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:.06em}
