@@ -708,7 +708,7 @@ def jsonld(post, url):
             "author": dict({"@type": "Person", "name": m.get("author", ""), "description": m.get("author_bio", "")},
                            **({"image": "%s/%s" % (BASE_URL, m["author_photo"])} if m.get("author_photo") and not is_placeholder(str(m["author_photo"])) else {})),
             **({"image": "%s/%s" % (BASE_URL, m["hero"])} if m.get("hero") and not is_placeholder(str(m["hero"])) else {}),
-            "publisher": {"@type": "Organization", "name": "Carbone Company s. r. o. (Granula!)", "url": BASE_URL + "/"},
+            "publisher": {"@type": "Organization", "name": "Spark Link, s. r. o. (Granula!)", "url": BASE_URL + "/"},
             "mainEntityOfPage": url, "inLanguage": "sk"}
 
 
