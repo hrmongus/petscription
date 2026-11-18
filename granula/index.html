@@ -64,26 +64,52 @@
 .longevity .src{font-size:13px;line-height:1.4}
 .longevity .txt p:not(.big):not(.src){font-size:18px;line-height:1.5;max-width:500px}
 
-/* ---------- 05 porovnanie ---------- */
-.compare{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border:2px solid var(--n);position:relative}
-.compare .col{padding:40px 48px 32px;display:flex;flex-direction:column}
-.compare .bad{background:var(--ml)}
-.compare .good{background:var(--o);border-left:2px solid var(--n)}
-.compare .bad .title{font-size:32px;margin-bottom:20px}
-/* logo na Oranži stojí na poli Mlieka */
-.logo-field{align-self:flex-start;background:var(--m);border:2px solid var(--n);padding:12px 16px 14px;margin-bottom:20px}
-.logo-field .logo{font-size:26px;padding:5px 9px 4px}
-.row-bad{display:flex;align-items:center;gap:18px;border-top:2px solid var(--n);padding:16px 0}
-.row-bad .x{width:52px;height:52px;flex:none;border:2px solid var(--n);background:var(--ml);color:var(--ml);display:flex;align-items:center;justify-content:center}
-.row-bad s{font-size:22px;text-decoration-thickness:3px}
-.row-bad small,.row-good small{display:block;font-size:14px;font-weight:600;margin-top:4px}
-.row-good{display:flex;align-items:center;gap:18px;border-top:2px solid var(--n);padding:16px 0}
-.row-good .tile{width:84px;height:84px;flex:none;border:2px solid var(--n);display:grid;grid-template-columns:repeat(2,30px);
-  gap:4px;align-content:center;justify-content:center}
-.row-good b,.row-bad s{display:block}
-.row-good b{font-size:22px}
-.vs{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(6deg);width:96px;height:96px;
-  background:var(--ml);color:var(--n);border:2px solid var(--n);display:flex;align-items:center;justify-content:center;font-size:32px}
+/* ---------- 04 porovnanie: rozrezané vrecká + zloženie ---------- */
+.cp-grid{display:grid;grid-template-columns:minmax(0,1fr) 120px minmax(0,1fr)}
+.cp-bag{display:flex;flex-direction:column;align-items:center;gap:28px}
+.cp-bag img{height:420px;width:auto}
+.cp-cap{min-height:104px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.cp-cap .plain{font-size:34px;font-weight:400}
+.cp-cap .logo{font-size:32px}
+.cp-cap .rec{font-size:22px}
+/* VS medzi vreckami: štvorcový odznak Mlieka s rámom */
+.cp-vs{align-self:start;justify-self:center;margin-top:170px;width:96px;height:96px;background:var(--ml);color:var(--n);border:2px solid var(--n);
+  display:flex;align-items:center;justify-content:center;font-size:36px;transform:rotate(6deg)}
+.cp-list{list-style:none;margin:0;background:var(--ml);border:2px solid var(--n);padding:28px 32px 32px;display:flex;flex-direction:column;gap:18px}
+.cp-list li{display:flex;align-items:center;gap:14px}
+.cp-list img{width:44px;height:44px;flex:none;object-fit:cover;border:2px solid var(--n)}
+.cp-nm{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.cp-nm b{font-size:17px;font-weight:700}
+.cp-nm b .sh{display:none}
+.cp-nm small{font-size:14px;line-height:1.4}
+.cp-v{flex:none;font-weight:900;white-space:nowrap;font-size:20px}
+.cp-v.l{font-size:32px}.cp-v.m{font-size:24px}
+.cp-good .cp-v{color:var(--k)}
+.cp-good .cp-v.l{font-size:30px}.cp-good .cp-v.m{font-size:22px}
+.cp-foot{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.cp-note{font-size:13px;line-height:1.4;max-width:500px}
+@media (max-width:760px){
+  .cp-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;position:relative}
+  .cp-grid.bags{gap:10px}
+  .cp-bag{gap:12px}
+  .cp-bag img{height:190px}
+  .cp-cap{min-height:60px;gap:8px}
+  .cp-cap .plain{font-size:17px}
+  .cp-cap .logo{font-size:19px}
+  .cp-cap .rec{font-size:11px}
+  .cp-vs{position:absolute;left:50%;top:70px;margin:0;width:56px;height:56px;font-size:22px;transform:translateX(-50%) rotate(6deg);z-index:2}
+  .cp-list{padding:10px 8px;gap:8px}
+  .cp-list li{gap:7px;min-height:30px}
+  .cp-list img{width:26px;height:26px}
+  .cp-nm b{font-size:11.5px;line-height:1.2}
+  .cp-nm b .lg,.cp-nm small{display:none}
+  .cp-nm b .sh{display:inline}
+  .cp-v,.cp-good .cp-v{font-size:13px}
+  .cp-v.l,.cp-good .cp-v.l{font-size:17px}
+  .cp-v.m,.cp-good .cp-v.m{font-size:15px}
+  .cp-grid > div:empty{display:none}
+  .cp-foot .btn{width:100%}
+}
 
 /* ---------- 06 ako to funguje ---------- */
 .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:2px solid var(--n)}
@@ -187,16 +213,11 @@
   .steps{grid-template-columns:minmax(0,1fr)}
   .step + .step{border-left:0;border-top:2px solid var(--n)}
   .bagpanel{grid-template-columns:minmax(0,1fr);justify-items:center;padding:40px 24px}
-  .compare{grid-template-columns:minmax(0,1fr)}
-  .compare .good{border-left:0;border-top:2px solid var(--n);padding-top:64px}
-  .vs{top:auto;bottom:auto;position:relative;left:auto;transform:rotate(-6deg);margin:-48px auto -48px;z-index:1}
-  .compare .bad{order:0}.vs{order:1}.compare .good{order:2}
   .final .frame{height:min(500px,100vw)}
   .final .sticker{left:-8px}
 }
 @media (max-width:640px){
   .review{flex-basis:86%}
-  .compare .col{padding:32px 20px 24px}
   .s-vet{top:20px;padding:10px 14px 8px}
   .s-vet small{font-size:9px}
   .s-vet b{font-size:22px}
@@ -380,35 +401,52 @@
 
 <!-- 04 porovnanie -->
 <section class="sec">
-  <div class="wrap" style="display:flex;flex-direction:column;gap:48px">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:40px">
     <div class="head" style="align-items:center;text-align:center">
       <div class="eyebrow">04. Porovnanie</div>
-      <h2 class="h2">Čo ide <span class="ac">do misky?</span></h2>
+      <h2 class="h2">Rozrež vrecko. <span class="ac">Uvidíš rozdiel.</span></h2>
     </div>
-    <div class="compare">
-      <div class="col bad">
-        <h3 class="display title">Bežné granule</h3>
-        <div class="row-bad"><span class="x" aria-hidden="true" data-icon="mucka" data-size="40" data-ink="#0047BB" data-strike></span><div><s class="display">Mäsové deriváty</s><small>bez mena, bez pôvodu</small></div></div>
-        <div class="row-bad"><span class="x" aria-hidden="true" data-icon="kukurica" data-size="40" data-ink="#0047BB" data-strike></span><div><s class="display">Kukurica</s><small>lacná výplň</small></div></div>
-        <div class="row-bad"><span class="x" aria-hidden="true" data-icon="psenica" data-size="40" data-ink="#0047BB" data-strike></span><div><s class="display">Pšeničná múka</s><small>lacná výplň namiesto mäsa</small></div></div>
-        <div class="row-bad"><span class="x" aria-hidden="true" data-icon="soja" data-size="40" data-ink="#0047BB" data-strike></span><div><s class="display">Sója</s><small>rastlinná bielkovina</small></div></div>
-        <div class="row-bad"><span class="x" aria-hidden="true" data-icon="cukor" data-size="40" data-ink="#0047BB" data-strike></span><div><s class="display">Cukry</s><small>sladidlo, ktoré pes nepotrebuje</small></div></div>
-        <div class="row-bad"><span class="x" aria-hidden="true" data-icon="farbiva" data-size="40" data-ink="#0047BB" data-strike></span><div><s class="display">Farbivá a arómy</s><small>aby granule lepšie vyzerali a voňali</small></div></div>
-        <div class="row-bad"><span class="x" aria-hidden="true" data-icon="palma" data-size="40" data-ink="#0047BB" data-strike></span><div><s class="display">Lacné oleje</s><small>neznámy pôvod, slabá kvalita</small></div></div>
+    <div class="cp-grid bags">
+      <div class="cp-bag">
+        <img src="img/porovnanie/vrece-bezne.webp" alt="Rozrezané vrecko bežných granúl: obilniny, sója, múčka, oleje, cukor a farbivá" width="660" height="1060" loading="lazy">
+        <div class="cp-cap"><span class="plain">Bežné granule</span></div>
       </div>
-      <div class="vs display" aria-hidden="true">vs</div>
-      <div class="col good">
-        <span class="logo-field"><span class="logo">Granula!</span></span>
-        <div class="row-good"><span class="tile" style="background:var(--k);color:var(--k)"><span data-icon="jelen" data-ink="#F4EBE2"></span><span data-icon="kralik" data-ink="#F4EBE2"></span><span data-icon="krava" data-ink="#F4EBE2"></span><span data-icon="morka" data-ink="#F4EBE2"></span></span><div><b class="display">Čerstvé mäso</b><small>lokálne, v humánnej kvalite</small></div></div>
-        <div class="row-good"><span class="tile" style="background:var(--k);color:var(--k)"><span data-icon="tekvica" data-ink="#F4EBE2"></span><span data-icon="mrkva" data-ink="#F4EBE2"></span><span data-icon="bataty" data-ink="#F4EBE2"></span><span data-icon="spenat" data-ink="#F4EBE2"></span></span><div><b class="display">Zelenina</b><small>tekvica, mrkva, batáty, špenát</small></div></div>
-        <div class="row-good"><span class="tile" style="background:var(--k);color:var(--k)"><span data-icon="lan" data-ink="#F4EBE2"></span><span data-icon="konope" data-ink="#F4EBE2"></span></span><div><b class="display">Semienka</b><small>ľan a konope</small></div></div>
-        <div class="row-good"><span class="tile" style="background:var(--k);color:var(--k)"><span data-icon="pestrec" data-ink="#F4EBE2"></span><span data-icon="harmancek" data-ink="#F4EBE2"></span><span data-icon="rozmarin" data-ink="#F4EBE2"></span><span data-icon="petrzlen" data-ink="#F4EBE2"></span></span><div><b class="display">Bylinky</b><small>pestrec, harmanček, rozmarín, petržlen</small></div></div>
+      <div class="cp-vs display" aria-hidden="true">vs</div>
+      <div class="cp-bag">
+        <img src="img/porovnanie/vrece-granula.webp" alt="Rozrezané vrecko Granula Jeleň a králik s batátmi: mäso, batáty, zelenina, bylinky a čučoriedky" width="640" height="947" loading="lazy">
+        <div class="cp-cap"><span class="logo">Granula!</span><span class="display rec">Jeleň &amp; králik</span></div>
       </div>
     </div>
-    <div style="display:flex;justify-content:center"><a class="btn btn-k" href="granule-na-mieru.html">Chcem takúto misku</a></div>
+    <div class="cp-grid">
+      <ul class="cp-list cp-bad" aria-label="Zloženie bežných granúl">
+          <li><img src="img/porovnanie/b-obilniny.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b>Obilniny</b><small>pšenica, kukurica</small></span><span class="cp-v l">45&nbsp;%</span></li>
+          <li><img src="img/porovnanie/b-masove-produkty.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b><span class="lg">Mäsové vedľajšie produkty</span><span class="sh">Mäsokostná múčka</span></b><small>mäsokostná múčka</small></span><span class="cp-v l">15&nbsp;%</span></li>
+          <li><img src="img/porovnanie/b-soja.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b><span class="lg">Rastlinné bielkovinové extrakty</span><span class="sh">Sójové extrakty</span></b><small>sója</small></span><span class="cp-v m">12&nbsp;%</span></li>
+          <li><img src="img/porovnanie/b-oleje.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b><span class="lg">Rastlinné oleje</span><span class="sh">Oleje bez pôvodu</span></b><small>neurčený zdroj</small></span><span class="cp-v m">9&nbsp;%</span></li>
+          <li><img src="img/porovnanie/b-repne-rezky.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b><span class="lg">Produkty rastlinného pôvodu</span><span class="sh">Repné rezky</span></b><small>repné rezky</small></span><span class="cp-v m">8&nbsp;%</span></li>
+          <li><img src="img/porovnanie/b-mineraly.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b>Minerálne látky</b></span><span class="cp-v">5&nbsp;%</span></li>
+          <li><img src="img/porovnanie/b-cukry.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b>Cukry a melasa</b></span><span class="cp-v">3&nbsp;%</span></li>
+          <li><img src="img/porovnanie/b-farbiva.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b><span class="lg">Farbivá, arómy, konzervanty</span><span class="sh">Farbivá a arómy</span></b></span><span class="cp-v">2&nbsp;%</span></li>
+          <li><img src="img/porovnanie/b-zelenina.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b><span class="lg">Zelenina</span><span class="sh">Sušená zelenina</span></b><small>sušená</small></span><span class="cp-v">1&nbsp;%</span></li>
+        </ul>
+      <div aria-hidden="true"></div>
+      <ul class="cp-list cp-good" aria-label="Zloženie Granula Jeleň a králik s batátmi">
+          <li><img src="img/porovnanie/g-jelen.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b>Jelenie mäso</b></span><span class="cp-v l">35&nbsp;%</span></li>
+          <li><img src="img/porovnanie/g-bataty.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b>Batáty</b></span><span class="cp-v l">23&nbsp;%</span></li>
+          <li><img src="img/porovnanie/g-kralik.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b>Králičie mäso</b></span><span class="cp-v l">15&nbsp;%</span></li>
+          <li><img src="img/porovnanie/g-loj-tuk.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b><span class="lg">Jelení loj a bravčový tuk</span><span class="sh">Loj a tuk</span></b></span><span class="cp-v m">10&nbsp;%</span></li>
+          <li><img src="img/porovnanie/g-zelenina.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b>Zelenina</b><small>mrkva, petržlen, špenát</small></span><span class="cp-v">7&nbsp;%</span></li>
+          <li><img src="img/porovnanie/g-bylinky.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b><span class="lg">Bylinky a funkčné zložky</span><span class="sh">Bylinky</span></b><small>pestrec, fenikel, šípky, harmanček, kolagén, konope, kvasnice</small></span><span class="cp-v">5&nbsp;%</span></li>
+          <li><img src="img/porovnanie/g-cucoriedky.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b>Čučoriedky</b></span><span class="cp-v">3&nbsp;%</span></li>
+          <li><img src="img/porovnanie/g-repna-vlaknina.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b>Repná vláknina</b></span><span class="cp-v">2&nbsp;%</span></li>
+        </ul>
+    </div>
+    <div class="cp-foot">
+      <a class="btn btn-o" href="granule-na-mieru.html">Chcem takúto misku</a>
+      <p class="cp-note">Bežné granule = ilustrácia typického zloženia lacných granúl z regálu, nie konkrétna značka.</p>
+    </div>
   </div>
 </section>
-
 <!-- 05 ako to funguje -->
 <section id="ako" class="sec bt">
   <div class="wrap" style="display:flex;flex-direction:column;gap:48px">
