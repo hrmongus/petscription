@@ -8,7 +8,7 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 | --- | --- | --- |
 | `index.html` | úvodná stránka: hero, čísla, piliere, 1,8 roka, mäso, suroviny, porovnanie, ako to funguje, Granula = nula, recenzie, odborníci, otázky, výzva, pätička | Homepage + Homepage — pokračovanie |
 | `suroviny.html` | podstránka Suroviny | Suroviny |
-| `granule-na-mieru.html` | funkčný dotazník: 6 krokov (meno a pohlavie, plemeno, váha a vek, deň, kastrácia a postava, zameranie) → miešanie → výsledok → objednávka → hotovo (smerovanie cez `#krok-1` … `#hotovo`) | Formulár 1–5 + nový krok s menom, Vyberáme granule, Výsledok, Checkout, Hotovo |
+| `granule-na-mieru.html` | funkčný dotazník: 6 krokov (meno a pohlavie, plemeno s vyhľadávaním, váha a vek, deň, kastrácia a postava, zameranie) → miešanie → výsledok → objednávka → hotovo (smerovanie cez `#krok-1` … `#hotovo`) | Formulár 1–5 + nový krok s menom, Vyberáme granule, Výsledok, Checkout, Hotovo |
 | `admin-vypocet.html` | dočasná kontrolná stránka výpočtu (všetky otázky, vhodnosť, pravidlá, dávka krok za krokom, parametre, katalóg) | |
 | `engine.js` | výber granúl a dávka; jediný zdroj pravdy | |
 | `kviz.js` | ovládanie dotazníka | |
@@ -17,6 +17,10 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 | `cookies.js` | cookie lišta; Klaviyo (marketing) sa načíta až po „Prijať všetky“, voľba v `localStorage` (`granula-cookies`), lištu znova otvorí odkaz „Nastavenia cookies“ v pätičke | |
 | `site.js` | objavovanie pri scrolle, karusel recenzií, sekcia surovín (filtre a šípky) | |
 | `img/` | fotky z návrhu, pomenované podľa obsahu; `img/suroviny/` 38 fotiek surovín (WebP 640 px) | |
+
+## Vyhľadávanie plemena (krok 2)
+
+Pole s lupou nad skrytým `<select name="breed">` (ten drží hodnotu pre výpočet). Hľadá bez diakritiky a podľa začiatku slov („ovciak“ nájde všetkých ovčiakov), šípky a Enter vyberajú, Esc zatvorí. Bez zhody ponúkne krížencov podľa veľkosti. V prázdnom poli sa písmeno po písmene píšu príklady (foxteriér, labradorský retriever…); pri `prefers-reduced-motion` je tam len statický príklad. Kým nie je vybrané plemeno, počíta sa s krížencom strednej veľkosti ako doteraz.
 
 ## Sekcia Suroviny
 
