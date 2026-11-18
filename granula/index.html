@@ -43,15 +43,42 @@
 .stat .v{font-size:clamp(26px,2.4vw,36px);color:var(--k)}
 .stat span:last-child{font-size:14px;font-weight:700;line-height:1.4;max-width:220px}
 
-/* ---------- 01 piliere ---------- */
-.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
-.pillar{display:flex;flex-direction:column;gap:14px}
-.pillar .frame{height:280px}
-.pillar .kicker{position:absolute;left:-10px;top:18px;font-size:15px;padding:8px 12px 7px}
-.pillar h3{margin-top:6px;font-size:22px}
-.pillar p{font-size:15px;line-height:1.45}
-.tags{display:flex;flex-wrap:wrap;gap:8px}
-.tags span{border:2px solid var(--n);padding:7px 12px;font-size:13px;font-weight:800}
+/* ---------- 01 recenzie: dva rady, ktoré sa samy posúvajú opačným smerom ---------- */
+.rw .wrap{margin-bottom:32px}
+.rw-wrap{display:flex;flex-direction:column;gap:12px;overflow:hidden}
+.rw-row{list-style:none;margin:0;padding:0;display:flex;gap:12px;width:max-content;animation:rw-left 80s linear infinite}
+.rw-row.rw-b{animation-name:rw-right;animation-duration:95s}
+.rw-wrap:hover .rw-row,.rw-wrap:focus-within .rw-row{animation-play-state:paused}
+@keyframes rw-left{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 6px))}}
+@keyframes rw-right{from{transform:translateX(calc(-50% - 6px))}to{transform:translateX(0)}}
+.rw-c{flex:none;height:240px;border:2px solid var(--n);background:var(--ml)}
+.rw-ph{position:relative;width:240px;overflow:hidden}
+.rw-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rw-prod{position:absolute;left:8px;right:8px;bottom:8px;min-height:48px;display:flex;align-items:center;gap:8px;padding:6px 10px 6px 58px;
+  background:var(--m);border:2px solid var(--n);color:var(--n);text-decoration:none;transition:background 150ms ease}
+.rw-prod:hover{background:var(--o)}
+.rw-prod img{position:absolute;left:8px;bottom:3px;height:76px;width:auto}
+.rw-pt{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.rw-pt small{font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.rw-pt b{font-size:12px;font-weight:800;line-height:1.2}
+.rw-arr{flex:none;font-weight:900}
+.rw-tx{width:320px;padding:20px 22px 16px;display:flex;flex-direction:column;gap:12px}
+.rate{display:flex;gap:4px;color:var(--k)}
+.rw-tx .rate{font-size:15px}
+.rw-tx p{flex:1;font-size:15px;line-height:1.45;font-weight:600}
+.rw-by{display:flex;align-items:flex-end;gap:12px;font-size:12px;line-height:1.35}
+.rw-by img{height:58px;width:auto;flex:none}
+.rw-by b{font-weight:800}
+@media (max-width:640px){
+  .rw-c{height:200px}.rw-ph{width:200px}.rw-tx{width:264px;padding:14px 16px 12px;gap:8px}
+  .rw-tx p{font-size:13px}.rw-by img{height:48px}
+  .rw-prod{min-height:44px;padding-left:50px}.rw-prod img{height:62px}
+  .rw-pt small{font-size:8px}.rw-pt b{font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){
+  .rw-wrap{overflow-x:auto}.rw-row{animation:none}
+  .rw-row [aria-hidden="true"]{display:none}
+}
 
 /* ---------- 02 dlhovekosť ---------- */
 /* Mlieko sekcia; číslo v orámovanom Kobaltovom paneli, Limetka ako jediný akcent */
@@ -144,28 +171,6 @@
 /* dve oranžové pásky do X: horná oddelená pruhom Mlieka */
 .nula-tapes .dark .tape{outline:3px solid var(--m)}
 
-/* ---------- recenzie ---------- */
-.arrows{display:flex;gap:10px}
-.arrow{width:48px;height:48px;border:2px solid var(--n);background:transparent;color:var(--n);font:900 22px/1 var(--font);cursor:pointer;
-  display:flex;align-items:center;justify-content:center}
-.arrow.dark{background:var(--n);color:var(--o)}
-.arrow{transition:background 150ms ease,color 150ms ease}
-.arrow:hover:not(:disabled){background:var(--n);color:var(--m)}
-.arrow.dark:hover:not(:disabled){background:var(--o);color:var(--n)}
-.arrow:disabled{opacity:.35;cursor:default}
-.is-static .arrow:disabled{opacity:1}
-.reviews{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
-.reviews::-webkit-scrollbar{display:none}
-.review{flex:0 0 calc((100% - 48px) / 4);scroll-snap-align:start;background:var(--ml);border:2px solid var(--n);display:flex;flex-direction:column}
-.review .pic{height:210px;position:relative;border-bottom:2px solid var(--n);overflow:hidden}
-.review .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.rate{display:flex;gap:4px;color:var(--k);font-size:14px}
-.review .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
-.review blockquote{margin:0;font-size:14px;line-height:1.45;font-weight:600}
-.review .by{margin-top:auto;border-top:2px solid var(--n);padding-top:12px}
-.review .by b{font-size:13px;display:block}
-.review .by span{display:block;font-size:12px;font-weight:600;margin-top:4px}
-
 /* ---------- odborníci ---------- */
 .experts-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .expert{background:var(--ml);border:2px solid var(--n);padding:32px;display:flex;flex-direction:column;gap:26px}
@@ -201,9 +206,6 @@
 .final .sticker{position:absolute;left:-24px;bottom:40px;font-size:22px}
 
 /* ---------- menšie obrazovky ---------- */
-@media (max-width:1100px){
-  .review{flex-basis:calc((100% - 24px) / 2)}
-}
 @media (max-width:960px){
   .hero .wrap,.longevity .wrap,.faq .wrap,.final .wrap{grid-template-columns:minmax(0,1fr)}
   .hero .wrap{gap:56px;padding-top:48px}
@@ -212,7 +214,7 @@
   .stats .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}
   .stat:nth-child(3){border-left:0}
   .stat:nth-child(n+3){border-top:2px solid var(--n)}
-  .pillars,.experts-grid{grid-template-columns:minmax(0,1fr)}
+  .experts-grid{grid-template-columns:minmax(0,1fr)}
   .lg-panel{padding:28px 24px 32px}
   .steps{grid-template-columns:minmax(0,1fr)}
   .step + .step{border-left:0;border-top:2px solid var(--n)}
@@ -221,7 +223,6 @@
   .final .sticker{left:-8px}
 }
 @media (max-width:640px){
-  .review{flex-basis:86%}
   .s-vet{top:20px;padding:10px 14px 8px}
   .s-vet small{font-size:9px}
   .s-vet b{font-size:22px}
@@ -282,42 +283,17 @@
   </div>
 </section>
 
-<!-- 01 prečo -->
-<section class="sec">
-  <div class="wrap" style="display:flex;flex-direction:column;gap:32px">
-    <div class="head" style="max-width:900px">
-      <div class="eyebrow">01. Prečo Granula</div>
-      <h2 class="h2">Energia. Pohoda. <span class="ac">Roky navyše.</span></h2>
+<!-- 01 recenzie -->
+<section id="recenzie" class="sec rw">
+  <div class="wrap">
+    <div class="head" style="align-items:center;text-align:center">
+      <div class="eyebrow">01. Recenzie</div>
+      <h2 class="h2">Staň sa súčasťou svorky <span class="ac">spokojných zákazníkov</span></h2>
     </div>
-    <div class="pillars">
-      <article class="pillar" data-reveal>
-        <div style="position:relative">
-          <div class="frame"><div class="ph"><img src="img/energia-frisbee.jpg" alt="Pes chytá frisbee vo výskoku" width="736" height="1104" loading="lazy"></div></div>
-          <span class="sticker st-k kicker" style="--t:-6deg">Energia</span>
-        </div>
-        <h3 class="display">Chuť na loptičku. Každý deň.</h3>
-        <p>Konkrétne mäso ako hlavný zdroj bielkovín, 24 až 32&nbsp;% podľa veku a pohybu. Aby mal tvoj pes z čoho stavať svaly.</p>
-        <div class="tags"><span>Konkrétne mäso</span><span>Až 32&nbsp;% bielkovín</span></div>
-      </article>
-      <article class="pillar" data-reveal style="--d:.08s">
-        <div style="position:relative">
-          <div class="frame" style="--field:var(--k)"><div class="ph"><img src="img/pohoda-retrievery.jpg" alt="Dva zlaté retrievery na lúke" width="736" height="736" loading="lazy"></div></div>
-          <span class="sticker st-o kicker" style="--t:3deg">Pohoda</span>
-        </div>
-        <h3 class="display">Pokojné brucho. Lesklá srsť.</h3>
-        <p>Hliva ustricová, tanín z jedlého gaštana, ľanový olej a konopná múka. Suroviny, ktoré na bežnej etikete nenájdeš.</p>
-        <div class="tags"><span>Hliva ustricová</span><span>Ľanový olej</span></div>
-      </article>
-      <article class="pillar" data-reveal style="--d:.16s">
-        <div style="position:relative">
-          <div class="frame"><div class="ph"><img src="img/dlhovekost-objatie.jpg" alt="Pes v objatí s majiteľom" width="848" height="1200" loading="lazy"></div></div>
-          <span class="sticker st-k kicker" style="--t:-3deg">Dlhovekosť</span>
-        </div>
-        <h3 class="display">Roky navyše spolu.</h3>
-        <p>Kolagén, chondroitín a glukozamín pre kĺby a dávka presne na váhu tvojho psa. Aby ste spolu chodili čo najdlhšie.</p>
-        <div class="tags"><span>Kolagén</span><span>Kĺby</span></div>
-      </article>
-    </div>
+  </div>
+  <div class="rw-wrap" tabindex="0" aria-label="Recenzie zákazníkov (posúvajú sa samy, pri prejdení myšou sa zastavia)">
+    <ul class="rw-row rw-a"><li class="rw-c rw-ph"><img class="rw-img" src="img/recenzie/pes-v-rukach.webp" alt="Pes zdvihnutý v rukách majiteľa proti modrej oblohe" width="600" height="720" loading="lazy"><a class="rw-prod" href="granule-na-mieru.html"><img src="img/produkty/jelen-kralik-s-batatmi.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><small>Granule na mieru</small><b>Jeleň &amp; králik s batátmi</b></span><span class="rw-arr" aria-hidden="true">→</span></a></li><li class="rw-c rw-tx"><span class="rate" role="img" aria-label="Hodnotenie 5 z 5"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><p>„Prvý raz za roky dojedá misku do dna a potom ju ešte chvíľu oblizuje.“</p><div class="rw-by"><img src="img/produkty/hovadzie-s-ryzou.webp" alt="" width="896" height="1200" loading="lazy"><span><b>Zuzana M.</b><br>Hovädzie s ryžou</span></div></li><li class="rw-c rw-ph"><img class="rw-img" src="img/recenzie/pes-banan.webp" alt="Pes si hryzie banán z ruky majiteľa" width="600" height="720" loading="lazy"><a class="rw-prod" href="granule-na-mieru.html"><img src="img/produkty/jahna-s-batatmi-cucoriedkami.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><small>Granule na mieru</small><b>Jahňa s batátmi &amp; čučoriedkami</b></span><span class="rw-arr" aria-hidden="true">→</span></a></li><li class="rw-c rw-ph"><img class="rw-img" src="img/recenzie/dievca-dalmatin.webp" alt="Dievča v červenom kabáte s dalmatínom a retrieverom" width="600" height="720" loading="lazy"><a class="rw-prod" href="granule-na-mieru.html"><img src="img/produkty/morka-hus-kacica-s-tekvicou.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><small>Granule na mieru</small><b>Morka, hus &amp; kačica s tekvicou</b></span><span class="rw-arr" aria-hidden="true">→</span></a></li><li class="rw-c rw-tx"><span class="rate" role="img" aria-label="Hodnotenie 5 z 5"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><p>„Konečne viem, koľko gramov dávať. Za dva mesiace sme zhodili kilo a pol a na prechádzkach vydrží dlhšie.“</p><div class="rw-by"><img src="img/produkty/hovadzie-morka-jahna-s-ryzou.webp" alt="" width="896" height="1200" loading="lazy"><span><b>Martin K.</b><br>Hovädzie, morka &amp; jahňa s ryžou</span></div></li><li class="rw-c rw-ph"><img class="rw-img" src="img/recenzie/border-kolia.webp" alt="Border kólia s vyplazeným jazykom na lúke" width="600" height="720" loading="lazy"><a class="rw-prod" href="granule-na-mieru.html"><img src="img/produkty/jelen-kralik-s-batatmi.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><small>Granule na mieru</small><b>Jeleň &amp; králik s batátmi</b></span><span class="rw-arr" aria-hidden="true">→</span></a></li><li class="rw-c rw-ph" aria-hidden="true"><img class="rw-img" src="img/recenzie/pes-v-rukach.webp" alt="" width="600" height="720" loading="lazy"><a class="rw-prod" href="granule-na-mieru.html" tabindex="-1"><img src="img/produkty/jelen-kralik-s-batatmi.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><small>Granule na mieru</small><b>Jeleň &amp; králik s batátmi</b></span><span class="rw-arr" aria-hidden="true">→</span></a></li><li class="rw-c rw-tx" aria-hidden="true"><span class="rate" role="img" aria-label="Hodnotenie 5 z 5"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><p>„Prvý raz za roky dojedá misku do dna a potom ju ešte chvíľu oblizuje.“</p><div class="rw-by"><img src="img/produkty/hovadzie-s-ryzou.webp" alt="" width="896" height="1200" loading="lazy"><span><b>Zuzana M.</b><br>Hovädzie s ryžou</span></div></li><li class="rw-c rw-ph" aria-hidden="true"><img class="rw-img" src="img/recenzie/pes-banan.webp" alt="" width="600" height="720" loading="lazy"><a class="rw-prod" href="granule-na-mieru.html" tabindex="-1"><img src="img/produkty/jahna-s-batatmi-cucoriedkami.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><small>Granule na mieru</small><b>Jahňa s batátmi &amp; čučoriedkami</b></span><span class="rw-arr" aria-hidden="true">→</span></a></li><li class="rw-c rw-ph" aria-hidden="true"><img class="rw-img" src="img/recenzie/dievca-dalmatin.webp" alt="" width="600" height="720" loading="lazy"><a class="rw-prod" href="granule-na-mieru.html" tabindex="-1"><img src="img/produkty/morka-hus-kacica-s-tekvicou.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><small>Granule na mieru</small><b>Morka, hus &amp; kačica s tekvicou</b></span><span class="rw-arr" aria-hidden="true">→</span></a></li><li class="rw-c rw-tx" aria-hidden="true"><span class="rate" role="img" aria-label="Hodnotenie 5 z 5"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><p>„Konečne viem, koľko gramov dávať. Za dva mesiace sme zhodili kilo a pol a na prechádzkach vydrží dlhšie.“</p><div class="rw-by"><img src="img/produkty/hovadzie-morka-jahna-s-ryzou.webp" alt="" width="896" height="1200" loading="lazy"><span><b>Martin K.</b><br>Hovädzie, morka &amp; jahňa s ryžou</span></div></li><li class="rw-c rw-ph" aria-hidden="true"><img class="rw-img" src="img/recenzie/border-kolia.webp" alt="" width="600" height="720" loading="lazy"><a class="rw-prod" href="granule-na-mieru.html" tabindex="-1"><img src="img/produkty/jelen-kralik-s-batatmi.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><small>Granule na mieru</small><b>Jeleň &amp; králik s batátmi</b></span><span class="rw-arr" aria-hidden="true">→</span></a></li></ul>
+    <ul class="rw-row rw-b"><li class="rw-c rw-tx"><span class="rate" role="img" aria-label="Hodnotenie 5 z 5"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><p>„Vrecko príde skôr, než dôjde to staré. Na granule už vôbec nemyslím.“</p><div class="rw-by"><img src="img/produkty/hovadzie-s-ryzou.webp" alt="" width="896" height="1200" loading="lazy"><span><b>Peter S.</b><br>Hovädzie s ryžou</span></div></li><li class="rw-c rw-ph"><img class="rw-img" src="img/recenzie/dieta-pudel.webp" alt="Dieťa s bielym pudlom na jesennej ulici" width="600" height="720" loading="lazy"><a class="rw-prod" href="granule-na-mieru.html"><img src="img/produkty/jahna-s-batatmi-cucoriedkami.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><small>Granule na mieru</small><b>Jahňa s batátmi &amp; čučoriedkami</b></span><span class="rw-arr" aria-hidden="true">→</span></a></li><li class="rw-c rw-ph"><img class="rw-img" src="img/recenzie/pudel-sneh.webp" alt="Pudel vo výskoku na snehu" width="600" height="720" loading="lazy"><a class="rw-prod" href="granule-na-mieru.html"><img src="img/produkty/morka-hus-kacica-s-tekvicou.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><small>Granule na mieru</small><b>Morka, hus &amp; kačica s tekvicou</b></span><span class="rw-arr" aria-hidden="true">→</span></a></li><li class="rw-c rw-tx"><span class="rate" role="img" aria-label="Hodnotenie 5 z 5"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><p>„Na vrecku vidím, čo presne je vnútri a koľko. Žiadne hádanie, žiadne „mäsové deriváty“.“</p><div class="rw-by"><img src="img/produkty/hovadzie-morka-jahna-s-ryzou.webp" alt="" width="896" height="1200" loading="lazy"><span><b>Tomáš H.</b><br>Hovädzie, morka &amp; jahňa s ryžou</span></div></li><li class="rw-c rw-ph"><img class="rw-img" src="img/recenzie/pes-zlta-stena.webp" alt="Pes sedí pred žltou drevenou stenou" width="600" height="720" loading="lazy"><a class="rw-prod" href="granule-na-mieru.html"><img src="img/produkty/jelen-kralik-s-batatmi.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><small>Granule na mieru</small><b>Jeleň &amp; králik s batátmi</b></span><span class="rw-arr" aria-hidden="true">→</span></a></li><li class="rw-c rw-ph"><img class="rw-img" src="img/recenzie/pes-luka.webp" alt="Pes beží cez rozkvitnutú lúku" width="600" height="720" loading="lazy"><a class="rw-prod" href="granule-na-mieru.html"><img src="img/produkty/hovadzie-s-ryzou.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><small>Granule na mieru</small><b>Hovädzie s ryžou</b></span><span class="rw-arr" aria-hidden="true">→</span></a></li><li class="rw-c rw-ph"><img class="rw-img" src="img/recenzie/psi-nos.webp" alt="Detail psieho nosa a vyplazeného jazyka" width="600" height="720" loading="lazy"><a class="rw-prod" href="granule-na-mieru.html"><img src="img/produkty/jahna-s-batatmi-cucoriedkami.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><small>Granule na mieru</small><b>Jahňa s batátmi &amp; čučoriedkami</b></span><span class="rw-arr" aria-hidden="true">→</span></a></li><li class="rw-c rw-tx" aria-hidden="true"><span class="rate" role="img" aria-label="Hodnotenie 5 z 5"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><p>„Vrecko príde skôr, než dôjde to staré. Na granule už vôbec nemyslím.“</p><div class="rw-by"><img src="img/produkty/hovadzie-s-ryzou.webp" alt="" width="896" height="1200" loading="lazy"><span><b>Peter S.</b><br>Hovädzie s ryžou</span></div></li><li class="rw-c rw-ph" aria-hidden="true"><img class="rw-img" src="img/recenzie/dieta-pudel.webp" alt="" width="600" height="720" loading="lazy"><a class="rw-prod" href="granule-na-mieru.html" tabindex="-1"><img src="img/produkty/jahna-s-batatmi-cucoriedkami.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><small>Granule na mieru</small><b>Jahňa s batátmi &amp; čučoriedkami</b></span><span class="rw-arr" aria-hidden="true">→</span></a></li><li class="rw-c rw-ph" aria-hidden="true"><img class="rw-img" src="img/recenzie/pudel-sneh.webp" alt="" width="600" height="720" loading="lazy"><a class="rw-prod" href="granule-na-mieru.html" tabindex="-1"><img src="img/produkty/morka-hus-kacica-s-tekvicou.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><small>Granule na mieru</small><b>Morka, hus &amp; kačica s tekvicou</b></span><span class="rw-arr" aria-hidden="true">→</span></a></li><li class="rw-c rw-tx" aria-hidden="true"><span class="rate" role="img" aria-label="Hodnotenie 5 z 5"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><p>„Na vrecku vidím, čo presne je vnútri a koľko. Žiadne hádanie, žiadne „mäsové deriváty“.“</p><div class="rw-by"><img src="img/produkty/hovadzie-morka-jahna-s-ryzou.webp" alt="" width="896" height="1200" loading="lazy"><span><b>Tomáš H.</b><br>Hovädzie, morka &amp; jahňa s ryžou</span></div></li><li class="rw-c rw-ph" aria-hidden="true"><img class="rw-img" src="img/recenzie/pes-zlta-stena.webp" alt="" width="600" height="720" loading="lazy"><a class="rw-prod" href="granule-na-mieru.html" tabindex="-1"><img src="img/produkty/jelen-kralik-s-batatmi.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><small>Granule na mieru</small><b>Jeleň &amp; králik s batátmi</b></span><span class="rw-arr" aria-hidden="true">→</span></a></li><li class="rw-c rw-ph" aria-hidden="true"><img class="rw-img" src="img/recenzie/pes-luka.webp" alt="" width="600" height="720" loading="lazy"><a class="rw-prod" href="granule-na-mieru.html" tabindex="-1"><img src="img/produkty/hovadzie-s-ryzou.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><small>Granule na mieru</small><b>Hovädzie s ryžou</b></span><span class="rw-arr" aria-hidden="true">→</span></a></li><li class="rw-c rw-ph" aria-hidden="true"><img class="rw-img" src="img/recenzie/psi-nos.webp" alt="" width="600" height="720" loading="lazy"><a class="rw-prod" href="granule-na-mieru.html" tabindex="-1"><img src="img/produkty/jahna-s-batatmi-cucoriedkami.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><small>Granule na mieru</small><b>Jahňa s batátmi &amp; čučoriedkami</b></span><span class="rw-arr" aria-hidden="true">→</span></a></li></ul>
   </div>
 </section>
 
@@ -485,28 +461,6 @@
   <div class="nula-tapes" aria-hidden="true">
     <div class="row dark"><div class="tape rev" style="--rot:10deg"><div class="track"><span class="zi"><span class="zt" data-icon="psenica" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula pšenice</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="kukurica" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula kukurice</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="soja" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula sóje</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="hrach" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula hrachu a strukovín</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="kuramaso" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula kuracieho mäsa</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="kuratuk" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula kuracieho tuku</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="mucka" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula mäsovej múčky</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="psenica" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula pšenice</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="kukurica" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula kukurice</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="soja" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula sóje</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="hrach" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula hrachu a strukovín</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="kuramaso" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula kuracieho mäsa</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="kuratuk" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula kuracieho tuku</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="mucka" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula mäsovej múčky</span></span><span class="star" aria-hidden="true"></span></div></div></div>
     <div class="row"><div class="tape" style="--rot:-10deg"><div class="track"><span class="zi"><span class="zt" data-icon="cukor" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula pridaného cukru</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="palma" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula palmového oleja</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="farbiva" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula umelých farbív</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="konzervanty" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula umelých konzervantov</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="aromy" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula umelých aróm</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="gmo" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula GMO</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="cukor" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula pridaného cukru</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="palma" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula palmového oleja</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="farbiva" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula umelých farbív</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="konzervanty" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula umelých konzervantov</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="aromy" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula umelých aróm</span></span><span class="star" aria-hidden="true"></span><span class="zi"><span class="zt" data-icon="gmo" data-size="36" data-ink="#0047BB" data-strike></span><span>Nula GMO</span></span><span class="star" aria-hidden="true"></span></div></div></div>
-  </div>
-</section>
-
-<!-- recenzie -->
-<section id="recenzie" class="sec" data-carousel>
-  <div class="wrap" style="display:flex;flex-direction:column;gap:32px">
-    <div class="head-row">
-      <div class="head">
-        <div class="eyebrow">#granulapsy</div>
-        <h2 class="h2">Miska plná. <span class="ac">Chvost v pohybe.</span></h2>
-      </div>
-      <div class="arrows">
-        <button type="button" class="arrow" aria-label="Predchádzajúce recenzie" data-carousel-prev>←</button>
-        <button type="button" class="arrow dark" aria-label="Ďalšie recenzie" data-carousel-next>→</button>
-      </div>
-    </div>
-    <div class="reviews" data-carousel-row tabindex="0" aria-label="Recenzie zákazníkov">
-      <article class="review"><div class="pic"><img src="img/recenzia-bruno.jpg" alt="" width="736" height="981" loading="lazy"></div><div class="body"><span class="rate" role="img" aria-label="5 z 5 hviezdičiek"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><blockquote>„Prvé granule, pri ktorých nevyberá. Miska je prázdna skôr, než si stihnem obuť topánky.“</blockquote><div class="by"><b class="display">Bruno, kokršpaniel</b><span>Tomáš, Bratislava</span></div></div></article>
-      <article class="review"><div class="pic"><img src="img/recenzia-fifi.jpg" alt="" width="736" height="920" loading="lazy"></div><div class="body"><span class="rate" role="img" aria-label="5 z 5 hviezdičiek"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><blockquote>„Pri vyžle sledujeme každý gram. Dávka na gramy konečne sedí a váha sa ustálila.“</blockquote><div class="by"><b class="display">Fifi, vyžla</b><span>Lucia, Košice</span></div></div></article>
-      <article class="review"><div class="pic"><img src="img/recenzia-aja-bady.jpg" alt="" width="1080" height="1350" loading="lazy" style="object-position:center 88%"></div><div class="body"><span class="rate" role="img" aria-label="5 z 5 hviezdičiek"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><blockquote>„Dva psy, dvoje granule, jedno doručenie. Srsť sa leskne a vrecko nestrážim.“</blockquote><div class="by"><b class="display">Ája a Bady, retrievery</b><span>Zuzana, Žilina</span></div></div></article>
-      <article class="review"><div class="pic"><img src="img/recenzia-kakao.jpg" alt="" width="736" height="1104" loading="lazy"></div><div class="body"><span class="rate" role="img" aria-label="5 z 5 hviezdičiek"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><blockquote>„Citlivé brucho a roky skúšania. S jahňacími granulami máme pokoj už tretí mesiac.“</blockquote><div class="by"><b class="display">Kakao, kokršpaniel</b><span>Martin, Trnava</span></div></div></article>
-    </div>
   </div>
 </section>
 
