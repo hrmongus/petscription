@@ -15,8 +15,12 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 | `granula.css` | spoločné tokeny a komponenty (logo-nálepka, tlačidlá, foto s posunutým farebným poľom, pásky, karty mäsa, pätička) | |
 | `icons.js` | ikony surovín z návrhu; `<span data-icon="jelen" data-ink="#F4EBE2">` | |
 | `cookies.js` | cookie lišta; Klaviyo (marketing) sa načíta až po „Prijať všetky“, voľba v `localStorage` (`granula-cookies`), lištu znova otvorí odkaz „Nastavenia cookies“ v pätičke | |
-| `site.js` | objavovanie pri scrolle, karusel recenzií | |
-| `img/` | fotky z návrhu, pomenované podľa obsahu | |
+| `site.js` | objavovanie pri scrolle, karusel recenzií, sekcia surovín (filtre a šípky) | |
+| `img/` | fotky z návrhu, pomenované podľa obsahu; `img/suroviny/` 38 fotiek surovín (WebP 640 px) | |
+
+## Sekcia Suroviny
+
+Na úvode (03) aj na podstránke Suroviny (01) je rovnaká sekcia: filtre (Všetko, Mäso a vajcia, Tuky a oleje, Zelenina a prílohy, Ovocie, Bylinky a semiačka, Funkčné zložky), dva riadky fotiek posúvané doprava šípkami alebo potiahnutím. „Všetko“ strieda skupiny, aby nebolo len mäso. Fotka = `img/suroviny/<názov>.webp`, skupina = `data-cat` pri položke.
 
 ## Systém
 
