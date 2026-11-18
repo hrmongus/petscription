@@ -1,0 +1,648 @@
+#!/usr/bin/env python3
+"""Granula blog — build a kontrola GEO.
+
+Spustenie (z koreňa repozitára):  python3 granula/blog/build.py
+Voliteľne:  --check  len skontroluje, nič nezapíše (exit 1 pri chybách v publikovaných článkoch)
+
+Vstup:  granula/blog/_src/*.md   (súbory začínajúce „_“ sa ignorujú, napr. _template.md)
+Výstup:
+  granula/blog/index.html                 zoznam publikovaných článkov
+  granula/blog/<slug>/index.html          publikovaný článok (statické HTML, bez JS)
+  granula/blog/nahlad/<slug>/index.html   náhľad každého článku (noindex), aj konceptov
+  granula/blog/posts.js                   dáta pre /granula/admin-blog/ (kontrola, sekcie)
+  granula/sitemap.xml, robots.txt (koreň repozitára)
+
+Bez závislostí: len štandardná knižnica Pythonu 3.
+Pravidlá kontroly vychádzajú z granula/blog/GEO-TEMPLATE.md.
+"""
+import datetime as dt
+import html
+import json
+import os
+import re
+import shutil
+import sys
+import unicodedata
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+SITE_DIR = os.path.dirname(HERE)                  # granula/
+REPO = os.path.dirname(SITE_DIR)
+SRC = os.path.join(HERE, "_src")
+
+# Verejná adresa webu (bez lomky na konci). Zmeniť, keď bude doména nasmerovaná inak.
+BASE_URL = "https://granula.sk/granula"
+SITE_NAME = "Granula!"
+BLOG_TITLE = "Blog"
+BLOG_LEAD = "Výživa, kŕmenie a zdravie psov. Konkrétne čísla, zdroje a odpovede bez omáčky."
+
+# ---------------------------------------------------------------- frontmatter
+
+def parse_frontmatter(text):
+    """Podmnožina YAML: `kľúč: hodnota`, `kľúč: >` (zložený text) a zoznamy `  - položka`."""
+    if not text.startswith("---"):
+        raise ValueError("chýba frontmatter (súbor musí začínať riadkom ---)")
+    end = text.find("\n---", 3)
+    if end == -1:
+        raise ValueError("frontmatter nie je uzavretý riadkom ---")
+    head, body = text[3:end].strip("\n"), text[end + 4:].lstrip("\n")
+    meta, key, mode = {}, None, None
+    for raw in head.splitlines():
+        if not raw.strip() or raw.lstrip().startswith("#"):
+            continue
+        m = re.match(r"^([A-Za-z_][\w-]*):\s*(.*)$", raw)
+        if m and not raw.startswith((" ", "\t")):
+            key, val = m.group(1), m.group(2).strip()
+            if val in (">", "|"):
+                meta[key], mode = "", "fold"
+            elif val == "":
+                meta[key], mode = [], "list"
+            else:
+                meta[key], mode = unquote(val), None
+            continue
+        s = raw.strip()
+        if mode == "list" and s.startswith("- "):
+            meta[key].append(unquote(s[2:].strip()))
+        elif mode == "fold":
+            meta[key] = (meta[key] + " " + s).strip()
+        else:
+            raise ValueError("nerozumiem riadku vo frontmatteri: " + raw)
+    return meta, body
+
+
+def unquote(v):
+    if len(v) >= 2 and v[0] == v[-1] and v[0] in "\"'":
+        return v[1:-1]
+    if v.lower() in ("true", "false"):
+        return v.lower() == "true"
+    return v
+
+# ---------------------------------------------------------------- markdown
+
+def slugify(t):
+    t = unicodedata.normalize("NFKD", t).encode("ascii", "ignore").decode().lower()
+    return re.sub(r"[^a-z0-9]+", "-", t).strip("-")
+
+
+def typo(s):
+    """Nezalomiteľná medzera pred % a € (pravidlo dizajn systému)."""
+    return re.sub(r"(\d) (%|€)", "\\1\u00a0\\2", s)
+
+
+def inline(s):
+    s = html.escape(typo(s), quote=False)
+    s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
+    s = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
+    s = re.sub(r"(?<![\*\w])\*(?!\s)(.+?)(?<!\s)\*(?![\*\w])", r"<em>\1</em>", s)
+
+    def link(m):
+        text, url = m.group(1), m.group(2).replace('"', "%22")
+        ext = url.startswith("http")
+        return '<a href="%s"%s>%s</a>' % (url, ' rel="noopener"' if ext else "", text)
+    s = re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", link, s)
+    return s
+
+
+def md_blocks(md):
+    """Rozdelí markdown na bloky: (typ, dáta)."""
+    lines = md.replace("\r\n", "\n").split("\n")
+    out, i = [], 0
+    while i < len(lines):
+        ln = lines[i]
+        if not ln.strip():
+            i += 1
+            continue
+        m = re.match(r"^(#{2,4})\s+(.*)$", ln)
+        if m:
+            out.append(("h%d" % len(m.group(1)), m.group(2).strip()))
+            i += 1
+            continue
+        if re.match(r"^#\s", ln):
+            out.append(("h1", ln[2:].strip()))
+            i += 1
+            continue
+        if re.match(r"^(-{3,}|\*{3,})$", ln.strip()):
+            out.append(("hr", None))
+            i += 1
+            continue
+        if ln.lstrip().startswith("|"):
+            rows = []
+            while i < len(lines) and lines[i].lstrip().startswith("|"):
+                rows.append(lines[i].strip())
+                i += 1
+            cells = [[c.strip() for c in r.strip("|").split("|")] for r in rows]
+            if len(cells) >= 2 and all(re.match(r"^:?-{2,}:?$", c) for c in cells[1]):
+                out.append(("table", (cells[0], cells[2:])))
+            else:
+                out.append(("p", " ".join(rows)))
+            continue
+        if re.match(r"^\d+[.)]\s", ln):
+            items = []
+            while i < len(lines) and (re.match(r"^\d+[.)]\s", lines[i]) or (lines[i].startswith("   ") and items)):
+                if re.match(r"^\d+[.)]\s", lines[i]):
+                    items.append(re.sub(r"^\d+[.)]\s+", "", lines[i]))
+                else:
+                    items[-1] += " " + lines[i].strip()
+                i += 1
+            out.append(("ol", items))
+            continue
+        if re.match(r"^[-*]\s", ln):
+            items = []
+            while i < len(lines) and (re.match(r"^[-*]\s", lines[i]) or (lines[i].startswith("  ") and items and lines[i].strip())):
+                if re.match(r"^[-*]\s", lines[i]):
+                    items.append(lines[i][2:].strip())
+                else:
+                    items[-1] += " " + lines[i].strip()
+                i += 1
+            out.append(("ul", items))
+            continue
+        if ln.startswith(">"):
+            buf = []
+            while i < len(lines) and lines[i].startswith(">"):
+                buf.append(lines[i][1:].strip())
+                i += 1
+            out.append(("quote", " ".join(buf)))
+            continue
+        buf = []
+        while i < len(lines) and lines[i].strip() and not re.match(r"^(#{1,4}\s|\||>|[-*]\s|\d+[.)]\s|-{3,}$)", lines[i]):
+            buf.append(lines[i].strip())
+            i += 1
+        out.append(("p", " ".join(buf)))
+    return out
+
+
+def render_blocks(blocks):
+    h = []
+    for t, d in blocks:
+        if t in ("h2", "h3", "h4"):
+            h.append('<%s id="%s">%s</%s>' % (t, slugify(d), inline(d), t))
+        elif t == "p":
+            h.append("<p>%s</p>" % inline(d))
+        elif t == "ul":
+            h.append("<ul>%s</ul>" % "".join("<li>%s</li>" % inline(x) for x in d))
+        elif t == "ol":
+            h.append("<ol>%s</ol>" % "".join("<li>%s</li>" % inline(x) for x in d))
+        elif t == "quote":
+            h.append("<blockquote><p>%s</p></blockquote>" % inline(d))
+        elif t == "table":
+            head, rows = d
+            th = "".join('<th scope="col">%s</th>' % inline(c) for c in head)
+            trs = "".join("<tr>%s</tr>" % "".join(
+                ('<th scope="row">%s</th>' if j == 0 else "<td>%s</td>") % inline(c) for j, c in enumerate(r)) for r in rows)
+            h.append('<div class="tbl"><table><thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>' % (th, trs))
+        elif t == "hr":
+            h.append("<hr>")
+    return "\n".join(h)
+
+
+def plain(s):
+    s = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", s)
+    return re.sub(r"[*`_>#|]", "", s)
+
+
+def words(s):
+    return len(re.findall(r"[\w%€–-]+", plain(s)))
+
+
+def sentences(s):
+    s = plain(s)
+    return [x.strip() for x in re.split(r"(?<=[.!?…])\s+(?=[A-ZÁÄČĎÉÍĹĽŇÓÔŔŠŤÚÝŽ„\"0-9])", s) if x.strip()]
+
+
+NUM = re.compile(r"\d")
+
+# ---------------------------------------------------------------- sekcie a kontrola
+
+def kind_of(title):
+    t = title.lower()
+    if t.startswith("čo je") or t.startswith("čo sú"):
+        return "definition"
+    if t.startswith("časté otázky") or t == "faq":
+        return "faq"
+    if t.startswith("zhrnutie"):
+        return "summary"
+    if t.startswith("zdroje"):
+        return "sources"
+    return "main"
+
+
+def sections(blocks):
+    secs, cur = [], None
+    for t, d in blocks:
+        if t == "h2":
+            cur = {"title": d, "kind": kind_of(d), "blocks": []}
+            secs.append(cur)
+        elif cur is not None:
+            cur["blocks"].append((t, d))
+    for s in secs:
+        text = []
+        for t, d in s["blocks"]:
+            if t in ("p", "quote", "h3", "h4"):
+                text.append(d)
+            elif t in ("ul", "ol"):
+                text.extend(d)
+            elif t == "table":
+                text.extend(" ".join(r) for r in [d[0]] + d[1])
+        s["text"] = " ".join(text)
+        s["words"] = words(s["text"])
+        s["numbers"] = len(re.findall(r"\d+(?:[,.]\d+)?", s["text"]))
+        s["question"] = s["title"].rstrip().endswith("?")
+        first = next((d for t, d in s["blocks"] if t == "p"), "")
+        s["first_bold"] = first.startswith("**")
+        s["has_table"] = any(t == "table" for t, _ in s["blocks"])
+        s["has_ol"] = any(t == "ol" for t, _ in s["blocks"])
+        s["first"] = first
+    return secs
+
+
+BACKREFS = [r"\bako sme (už )?(spomenuli|uviedli|písali)", r"\bspomínan", r"\bvyššie\b", r"\bnižšie\b",
+            r"\bv predchádzajúc", r"\bako už vieme\b", r"\bpozri (vyššie|nižšie)"]
+PRONOUN_START = re.compile(r"^(Toto|To|Tento|Táto|Tieto|Ten|Tá)\s", re.U)
+RETIRED = ["bez obilnín", "mäso zo slovenska", "hovädzie zo slovenska", "recept od mvdr", "superprémiov", "holistick"]
+VY_FORM = [r"\bvášho\b", r"\bvášmu\b", r"\bváš\b", r"\bvaša\b", r"\bvaše\b", r"\bbudete\b", r"\bmáte\b", r"\bviete\b", r"\bnájdete\b"]
+EMOJI = re.compile("[\U0001F300-\U0001FAFF\u2600-\u27BF]")
+
+
+def lint(meta, secs, body):
+    R = []
+
+    def add(rid, level, ok, msg, details=None):
+        if rid in (meta.get("lint_ignore") or []):
+            level = "info"
+            msg += " (vypnuté cez lint_ignore)"
+        R.append({"id": rid, "level": level, "ok": bool(ok), "msg": msg, "details": details or []})
+
+    title = meta.get("title", "")
+    add("title", "error", bool(title), "Titulok je vyplnený")
+    add("title-length", "warn", 0 < len(title) <= 70, "Titulok má najviac 70 znakov (má %d)" % len(title))
+    years = re.findall(r"\b20\d\d\b", title)
+    upd = str(meta.get("updated", ""))
+    add("title-year", "warn", not years or upd.startswith(years[0]),
+        "Rok v titulku len pri téme, ktorá sa mení, a len ak sedí s dátumom aktualizácie",
+        ["titulok: %s, aktualizované: %s" % (years[0], upd)] if years else [])
+    desc = meta.get("description", "")
+    add("description", "warn", 120 <= len(desc) <= 160, "Meta popis má 120–160 znakov (má %d)" % len(desc))
+    add("author", "error", bool(meta.get("author")) and bool(meta.get("author_bio")), "Autor a jedna veta, prečo mu veriť (author, author_bio)")
+
+    def date(v):
+        try:
+            return dt.date.fromisoformat(str(v))
+        except ValueError:
+            return None
+    pub, upd_d = date(meta.get("published", "")), date(meta.get("updated", ""))
+    add("dates", "error", pub and upd_d and upd_d >= pub, "Dátumy published a updated (RRRR-MM-DD), updated ≥ published")
+    log = meta.get("changelog") or []
+    add("changelog", "warn", bool(log) and str(log[0]).startswith(str(meta.get("updated", "?"))),
+        "Viditeľný changelog: prvý záznam má dátum aktualizácie", [str(x) for x in log[:3]])
+
+    tldr = meta.get("tldr", "")
+    tw = words(tldr)
+    add("tldr", "error", 35 <= tw <= 70, "Krátka odpoveď (tldr) má 40–60 slov (má %d)" % tw)
+    add("tldr-range", "warn", 40 <= tw <= 60, "Krátka odpoveď presne v rozsahu 40–60 slov (má %d)" % tw)
+    add("tldr-intro", "error", not re.search(r"v tomto článku|dozviete sa|dozvieš sa|v článku sa", tldr, re.I),
+        "Krátka odpoveď začína priamou odpoveďou, nie úvodom („v tomto článku…“)")
+    kp = meta.get("key_points") or []
+    add("key-points", "error", len(kp) >= 3, "Aspoň 3 kľúčové body (má %d)" % len(kp))
+    nums = len(re.findall(r"\d+(?:[,.]\d+)?", tldr + " " + " ".join(kp)))
+    add("tldr-numbers", "warn", nums >= 3, "Krátka odpoveď a kľúčové body obsahujú aspoň 3 čísla (majú %d)" % nums)
+
+    main = [s for s in secs if s["kind"] == "main"]
+    content = [s for s in secs if s["kind"] in ("main", "definition")]
+    defin = [s for s in secs if s["kind"] == "definition"]
+    add("definition", "warn", bool(defin) and " je " in plain(defin[0]["first"]),
+        "Sekcia „Čo je …?“ s definíciou vo forme „X je Y, ktoré Z“")
+    add("sections", "warn", 3 <= len(main) <= 8, "3–6 hlavných sekcií (má %d)" % len(main))
+    q = [s for s in content if s["question"]]
+    add("h2-questions", "warn", content and len(q) >= len(content) / 2,
+        "Aspoň polovica nadpisov H2 sú otázky (%d z %d)" % (len(q), len(content)),
+        [s["title"] for s in content if not s["question"]])
+    bad_len = ["%s: %d slov" % (s["title"], s["words"]) for s in main if not (150 <= s["words"] <= 450)]
+    add("section-length", "warn", not bad_len, "Hlavné sekcie majú 200–400 slov", bad_len)
+    no_bold = [s["title"] for s in content if not s["first_bold"]]
+    add("first-sentence", "warn", not no_bold, "Každá sekcia začína tučnou prvou vetou = odpoveď na nadpis", no_bold)
+    no_num = [s["title"] for s in main if s["numbers"] == 0]
+    add("section-numbers", "warn", not no_num, "Každá hlavná sekcia má aspoň 1 číslo (ideálne so zdrojom)", no_num)
+
+    refs = []
+    for s in secs:
+        for pat in BACKREFS:
+            for m in re.finditer(pat, s["text"], re.I):
+                refs.append("%s: „…%s…“" % (s["title"], s["text"][max(0, m.start() - 25):m.end() + 25]))
+        for t, d in s["blocks"]:
+            if t == "p" and PRONOUN_START.match(plain(d).strip()):
+                refs.append("%s: odsek začína „%s“" % (s["title"], plain(d).strip()[:40]))
+    add("standalone", "warn", not refs, "Sekcie obstoja samy (žiadne „vyššie“, „ako sme spomenuli“, odsek začínajúci „Toto/To“)", refs[:8])
+
+    add("table", "info", any(s["has_table"] for s in secs), "Porovnávacia tabuľka (odporúčané pri „X vs Y“)")
+    add("steps", "info", any(s["has_ol"] for s in secs), "Postup krok za krokom (číslovaný zoznam)")
+    own = [s for s in secs if re.search(r"naše dáta|naša skúsenos|z našej praxe|čo ukázali", s["title"], re.I)]
+    add("own-data", "info", bool(own), "Vlastné dáta alebo skúsenosť (najväčší diferenciátor)")
+
+    faq = [s for s in secs if s["kind"] == "faq"]
+    if faq:
+        qs = [d for t, d in faq[0]["blocks"] if t == "p" and re.match(r"^\*\*[^*]+\?\*\*", d)]
+        long_a = [plain(d)[:50] for d in qs if len(sentences(re.sub(r"^\*\*[^*]+\*\*", "", d))) > 3]
+        add("faq", "warn", 3 <= len(qs) <= 6 and not long_a,
+            "Časté otázky: 3–6 otázok v tvare **Otázka?** odpoveď, odpoveď najviac 3 vety (má %d)" % len(qs), long_a)
+    else:
+        add("faq", "warn", False, "Sekcia „Časté otázky“ (3–6 krátkych otázok)")
+    summ = [s for s in secs if s["kind"] == "summary"]
+    add("summary", "warn", bool(summ) and any(t == "ul" for t, _ in summ[0]["blocks"]),
+        "Sekcia „Zhrnutie“ ako zoznam (hlavný záver, kedy áno/nie, ďalší krok)")
+
+    src = meta.get("sources") or []
+    with_url = [x for x in src if re.search(r"https?://", x)]
+    add("sources", "error", len(with_url) >= 3, "Aspoň 3 zdroje s URL (má %d)" % len(with_url))
+    add("sources-format", "warn", len(with_url) == len(src), "Každý zdroj v tvare „Názov – vydavateľ, rok | https://…“",
+        [x for x in src if x not in with_url])
+
+    first_third = body[: max(1, len(body) // 3)]
+    add("first-third", "info", len(re.findall(r"\d", first_third)) >= 5, "Kľúčové fakty (čísla) sú v prvej tretine textu")
+    atomic = [x for x in sentences(" ".join(s["text"] for s in secs)) if 6 <= len(x.split()) <= 20 and NUM.search(x)]
+    add("atomic", "info", len(atomic) >= 5, "Atomické fakty: vety so 6–20 slovami a číslom (má %d)" % len(atomic))
+    all_text = (title + " " + tldr + " " + " ".join(kp) + " " + body).lower()
+    add("self-promo", "warn", not (re.match(r"^(najlepš|top \d)", title.lower()) and "granul" in body.lower()),
+        "„Najlepšie X“ len s transparentnou metodikou a bez Granuly na prvom mieste")
+    retired = [w for w in RETIRED if w in all_text]
+    add("claims", "warn", not retired, "Žiadne vyradené tvrdenia a superlatívy z dizajn systému", retired)
+    vy = sorted({m.group(0) for p in VY_FORM for m in re.finditer(p, all_text)})
+    add("ty-form", "warn", not vy, "Tykanie („tvoj pes“), nie vykanie", vy)
+    add("emoji", "warn", not EMOJI.search(all_text), "Bez emoji")
+    total = words(tldr) + sum(s["words"] for s in secs)
+    add("length", "info", True, "Dĺžka článku: %d slov (dĺžka nerozhoduje, hustota áno)" % total)
+    return R, total
+
+# ---------------------------------------------------------------- HTML šablóny
+
+def site_parts():
+    s = open(os.path.join(SITE_DIR, "index.html"), encoding="utf-8").read()
+    grab = lambda a, b: s[s.index(a): s.index(b, s.index(a)) + len(b)]
+    return grab('<div class="topbar">', "</div>"), grab('<header class="site-head">', "</header>"), grab('<footer class="foot">', "</footer>")
+
+
+def relink(fragment, pre):
+    def fix(m):
+        attr, url = m.group(1), m.group(2)
+        if re.match(r"^(https?:|mailto:|tel:|data:)", url):
+            return m.group(0)
+        if url.startswith("#"):
+            url = "index.html" + url if url != "#" else "#"
+            if url == "#":
+                return m.group(0)
+        return '%s="%s%s"' % (attr, pre, url)
+    return re.sub(r'(href|src)="([^"]*)"', fix, fragment)
+
+
+def page(*, pre, title, description, canonical, body, noindex=False, jsonld=None, current_blog=True):
+    topbar, header, footer = site_parts()
+    header = relink(header, pre)
+    if current_blog:
+        header = header.replace('href="%sblog/">Blog</a>' % pre, 'href="%sblog/" aria-current="page">Blog</a>' % pre)
+    head_ld = '<script type="application/ld+json">%s</script>\n' % json.dumps(jsonld, ensure_ascii=False) if jsonld else ""
+    robots = '<meta name="robots" content="noindex, nofollow">\n' if noindex else ""
+    return f"""<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<title>{html.escape(title)}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="{html.escape(description)}">
+{robots}<link rel="canonical" href="{canonical}">
+<meta property="og:type" content="article">
+<meta property="og:title" content="{html.escape(title)}">
+<meta property="og:description" content="{html.escape(description)}">
+<meta property="og:url" content="{canonical}">
+<link rel="icon" href="{pre}favicon.ico" sizes="any">
+<link rel="icon" href="{pre}favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,900&display=swap">
+<link rel="stylesheet" href="{pre}granula.css">
+<link rel="stylesheet" href="{pre}blog/blog.css">
+{head_ld}</head>
+<body>
+{relink(topbar, pre)}
+{header}
+<main>
+{body}
+</main>
+{relink(footer, pre)}
+<script type="text/plain" data-cookie-category="marketing" async src="https://static.klaviyo.com/onsite/js/Yf7K2A/klaviyo.js?company_id=Yf7K2A"></script>
+<script src="{pre}cookies.js"></script>
+</body>
+</html>
+"""
+
+
+SK_MONTHS = ["januára", "februára", "marca", "apríla", "mája", "júna", "júla", "augusta", "septembra", "októbra", "novembra", "decembra"]
+
+
+def sk_date(v):
+    try:
+        d = dt.date.fromisoformat(str(v))
+    except ValueError:
+        return str(v)
+    return "%d.\u00a0%s %d" % (d.day, SK_MONTHS[d.month - 1], d.year)
+
+
+def source_html(x):
+    m = re.match(r"^(.*?)\s*\|\s*(https?://\S+)\s*$", x)
+    if m:
+        return '%s – <a href="%s" rel="noopener">%s</a>' % (inline(m.group(1)), html.escape(m.group(2)), html.escape(re.sub(r"^https?://(www\.)?", "", m.group(2))[:60]))
+    return inline(x)
+
+
+def article_html(post, pre, preview):
+    m = post["meta"]
+    read_min = max(1, round(post["words"] / 200))
+    banner = ""
+    if preview:
+        st = {"draft": "Koncept", "published": "Publikované", "blocked": "Zablokované kontrolou"}[post["status"]]
+        banner = ('<div class="bl-preview" role="note"><b>Náhľad · %s</b> Táto stránka nie je verejná ani indexovaná. '
+                  '<a href="%sadmin-blog/#%s">Späť do redakcie</a></div>' % (st, pre, post["slug"]))
+    kp = "".join("<li>%s</li>" % inline(x) for x in m.get("key_points") or [])
+    log = m.get("changelog") or []
+    log_html = ""
+    if log:
+        log_html = '<details class="bl-log"><summary>História zmien</summary><ul>%s</ul></details>' % "".join("<li>%s</li>" % inline(x) for x in log)
+    src = m.get("sources") or []
+    src_html = ('<section class="bl-sources" aria-labelledby="zdroje"><h2 id="zdroje">Zdroje</h2><ol>%s</ol></section>'
+                % "".join("<li>%s</li>" % source_html(x) for x in src)) if src else ""
+    body_blocks = [b for b in post["blocks"] if not (b[0] == "h2" and kind_of(b[1]) == "sources")]
+    return f"""{banner}<article class="bl-article">
+  <div class="wrap bl-col">
+    <nav class="bl-crumbs" aria-label="Omrvinky"><a href="{pre}index.html">Granula</a> / <a href="{pre}blog/">Blog</a></nav>
+    <header class="bl-head">
+      <h1>{inline(m["title"])}</h1>
+      <p class="bl-meta">Autor: <b>{inline(m.get("author", ""))}</b>, {inline(m.get("author_bio", ""))}<br>
+      Publikované: <time datetime="{m.get("published", "")}">{sk_date(m.get("published", ""))}</time> · Aktualizované: <time datetime="{m.get("updated", "")}">{sk_date(m.get("updated", ""))}</time> · {read_min}&nbsp;min čítania</p>
+    </header>
+    <section class="bl-tldr" aria-labelledby="kratka-odpoved">
+      <h2 id="kratka-odpoved" class="bl-tldr-t">Krátka odpoveď</h2>
+      <p>{inline(m.get("tldr", ""))}</p>
+      <h3 class="bl-tldr-t">Kľúčové body</h3>
+      <ul>{kp}</ul>
+    </section>
+    <div class="bl-body">
+{render_blocks(body_blocks)}
+    </div>
+    {src_html}
+    {log_html}
+  </div>
+</article>
+<section class="bl-cta bt">
+  <div class="wrap">
+    <h2 class="h2">Granule na mieru <span class="ac">pre tvojho psa</span></h2>
+    <p class="lead">Povedz nám o ňom za dve minúty. Granule aj dávku na gramy vyberieme my.</p>
+    <div><a class="btn btn-o" href="{pre}granule-na-mieru.html">Nájdi granule pre svojho psa</a></div>
+  </div>
+</section>"""
+
+
+def index_html(posts):
+    pre = "../"
+    cards = []
+    for p in posts:
+        m = p["meta"]
+        excerpt = plain(m.get("tldr", ""))
+        excerpt = excerpt if len(excerpt) <= 190 else excerpt[:185].rsplit(" ", 1)[0] + "…"
+        cards.append(f"""<li class="bl-card"><a href="{p["slug"]}/">
+  <span class="bl-card-date">Aktualizované {sk_date(m.get("updated", ""))}</span>
+  <h2>{inline(m["title"])}</h2>
+  <p>{html.escape(excerpt)}</p>
+  <span class="bl-card-more">Čítať · {max(1, round(p["words"] / 200))}&nbsp;min →</span>
+</a></li>""")
+    lst = '<ul class="bl-list">%s</ul>' % "\n".join(cards) if cards else '<p class="bl-empty">Prvé články pripravujeme.</p>'
+    body = f"""<section class="sec bl-index">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Blog</div>
+      <h1 class="h2">Čo jesť, <span class="ac">koľko a prečo.</span></h1>
+      <p class="lead">{BLOG_LEAD}</p>
+    </div>
+    {lst}
+  </div>
+</section>"""
+    ld = {"@context": "https://schema.org", "@type": "Blog", "name": "%s — %s" % (SITE_NAME, BLOG_TITLE), "url": BASE_URL + "/blog/"}
+    return page(pre=pre, title="Blog — Granula", description=BLOG_LEAD, canonical=BASE_URL + "/blog/", body=body, jsonld=ld)
+
+# ---------------------------------------------------------------- build
+
+def load_posts():
+    posts, problems = [], []
+    if not os.path.isdir(SRC):
+        return posts, problems
+    for fn in sorted(os.listdir(SRC)):
+        if not fn.endswith(".md") or fn.startswith("_"):
+            continue
+        path = os.path.join(SRC, fn)
+        try:
+            meta, body = parse_frontmatter(open(path, encoding="utf-8").read())
+        except ValueError as e:
+            problems.append("%s: %s" % (fn, e))
+            continue
+        slug = meta.get("slug") or fn[:-3]
+        if not re.match(r"^[a-z0-9]+(-[a-z0-9]+)*$", slug):
+            problems.append("%s: slug „%s“ smie mať len malé písmená bez diakritiky, číslice a pomlčky" % (fn, slug))
+            continue
+        blocks = md_blocks(body)
+        secs = sections(blocks)
+        results, total = lint(meta, secs, body)
+        errors = [r for r in results if r["level"] == "error" and not r["ok"]]
+        want = meta.get("status", "draft")
+        status = "published" if want == "published" and not errors else ("blocked" if want == "published" else "draft")
+        posts.append({"file": "granula/blog/_src/" + fn, "slug": slug, "meta": meta, "blocks": blocks, "sections": secs,
+                      "lint": results, "words": total, "status": status, "wanted": want})
+    slugs = [p["slug"] for p in posts]
+    for s in set(slugs):
+        if slugs.count(s) > 1:
+            problems.append("slug „%s“ je použitý viackrát" % s)
+    return posts, problems
+
+
+def write(path, text):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(text)
+
+
+def jsonld(post, url):
+    m = post["meta"]
+    return {"@context": "https://schema.org", "@type": "BlogPosting", "headline": m["title"], "description": m.get("description", ""),
+            "datePublished": str(m.get("published", "")), "dateModified": str(m.get("updated", "")),
+            "author": {"@type": "Person", "name": m.get("author", ""), "description": m.get("author_bio", "")},
+            "publisher": {"@type": "Organization", "name": "Carbone Company s. r. o. (Granula!)", "url": BASE_URL + "/"},
+            "mainEntityOfPage": url, "inLanguage": "sk"}
+
+
+def build(check_only=False):
+    posts, problems = load_posts()
+    pub = sorted([p for p in posts if p["status"] == "published"], key=lambda p: str(p["meta"].get("updated", "")), reverse=True)
+
+    for p in posts:
+        e = [r for r in p["lint"] if r["level"] == "error" and not r["ok"]]
+        w = [r for r in p["lint"] if r["level"] == "warn" and not r["ok"]]
+        print("%-12s %-40s %d chýb, %d upozornení" % (p["status"].upper(), p["slug"], len(e), len(w)))
+        for r in e:
+            print("   CHYBA  %s: %s" % (r["id"], r["msg"]))
+        for r in w:
+            print("   pozor  %s: %s%s" % (r["id"], r["msg"], (" → " + "; ".join(r["details"][:3])) if r["details"] else ""))
+    for x in problems:
+        print("PROBLÉM", x)
+    if check_only:
+        return 1 if problems or any(p["status"] == "blocked" for p in posts) else 0
+
+    # vyčistiť staré výstupy (článkové priečinky a náhľady), ponechať zdroje a statické súbory
+    keep = {"_src", "build.py", "blog.css", "CLAUDE.md", "GEO-TEMPLATE.md", "README.md"}
+    for name in os.listdir(HERE):
+        full = os.path.join(HERE, name)
+        if name in keep:
+            continue
+        if os.path.isdir(full):
+            shutil.rmtree(full)
+        elif name in ("index.html", "posts.js"):
+            os.remove(full)
+
+    for p in posts:
+        url = "%s/blog/%s/" % (BASE_URL, p["slug"])
+        m = p["meta"]
+        title = "%s — Granula" % m["title"]
+        write(os.path.join(HERE, "nahlad", p["slug"], "index.html"),
+              page(pre="../../../", title="Náhľad: " + title, description=m.get("description", ""), canonical=url,
+                   body=article_html(p, "../../../", True), noindex=True))
+        if p["status"] == "published":
+            write(os.path.join(HERE, p["slug"], "index.html"),
+                  page(pre="../../", title=title, description=m.get("description", ""), canonical=url,
+                       body=article_html(p, "../../", False), jsonld=jsonld(p, url)))
+    write(os.path.join(HERE, "index.html"), index_html(pub))
+
+    manifest = {"built": dt.datetime.now().strftime("%Y-%m-%d %H:%M"), "base": BASE_URL, "problems": problems, "posts": [{
+        "slug": p["slug"], "file": p["file"], "title": p["meta"].get("title", ""), "status": p["status"], "wanted": p["wanted"],
+        "example": bool(p["meta"].get("example")), "published": str(p["meta"].get("published", "")), "updated": str(p["meta"].get("updated", "")),
+        "author": p["meta"].get("author", ""), "words": p["words"], "description": p["meta"].get("description", ""),
+        "preview": "../blog/nahlad/%s/index.html" % p["slug"], "live": "../blog/%s/index.html" % p["slug"] if p["status"] == "published" else None,
+        "lint": p["lint"],
+        "sections": [{"title": s["title"], "kind": s["kind"], "words": s["words"], "numbers": s["numbers"], "question": s["question"],
+                      "firstBold": s["first_bold"], "table": s["has_table"], "steps": s["has_ol"]} for s in p["sections"]],
+    } for p in posts]}
+    write(os.path.join(HERE, "posts.js"), "/* vygenerované build.py — needitovať */\nwindow.GRANULA_POSTS = %s;\n" % json.dumps(manifest, ensure_ascii=False, indent=1))
+
+    # statické stránky bez lastmod (dátum buildu by klamal); blog podľa najnovšieho článku, články podľa `updated`
+    last = str(pub[0]["meta"].get("updated", "")) if pub else ""
+    urls = [(BASE_URL + "/", ""), (BASE_URL + "/suroviny.html", ""), (BASE_URL + "/granule-na-mieru.html", ""), (BASE_URL + "/blog/", last)]
+    urls += [("%s/blog/%s/" % (BASE_URL, p["slug"]), str(p["meta"].get("updated", ""))) for p in pub]
+    write(os.path.join(SITE_DIR, "sitemap.xml"), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n%s</urlset>\n'
+          % "".join("  <url><loc>%s</loc>%s</url>\n" % (html.escape(u), "<lastmod>%s</lastmod>" % d if d else "") for u, d in urls))
+    bots = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "PerplexityBot", "ClaudeBot", "Claude-User", "Claude-SearchBot", "Google-Extended", "Bingbot", "Googlebot"]
+    path = BASE_URL.split("://", 1)[1].split("/", 1)[1] if BASE_URL.count("/") > 2 else ""
+    pfx = "/" + path if path else ""
+    dis = ["%s/admin-blog/" % pfx, "%s/blog/nahlad/" % pfx, "%s/admin-vypocet.html" % pfx]
+    robots = "# vygenerované granula/blog/build.py\n# AI vyhľadávače sú výslovne povolené (GEO); súkromné stránky zakázané všetkým.\n\n"
+    robots += "".join("User-agent: %s\n" % b for b in bots) + "".join("Disallow: %s\n" % d for d in dis) + "Allow: /\n\n"
+    robots += "User-agent: *\n" + "".join("Disallow: %s\n" % d for d in dis) + "Allow: /\n\nSitemap: %s/sitemap.xml\n" % BASE_URL
+    write(os.path.join(REPO, "robots.txt"), robots)
+    print("\nHotovo: %d článkov (%d publikovaných). Redakcia: granula/admin-blog/" % (len(posts), len(pub)))
+    return 1 if problems else 0
+
+
+if __name__ == "__main__":
+    sys.exit(build(check_only="--check" in sys.argv))

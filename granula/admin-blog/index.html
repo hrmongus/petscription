@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<title>Redakcia blogu — Granula</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,900&display=swap">
+<link rel="stylesheet" href="../granula.css">
+<style>
+body{font-size:15px}
+.ad-top{border-bottom:2px solid var(--n);background:var(--m);position:sticky;top:0;z-index:10}
+.ad-top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;padding-top:14px;padding-bottom:14px}
+.ad-top .logo{font-size:24px}
+.ad-top h1{font-size:18px;font-weight:900;text-transform:uppercase}
+.ad-top .built{margin-left:auto;font-size:13px}
+.ad{display:grid;grid-template-columns:340px minmax(0,1fr);gap:24px;padding-top:24px;padding-bottom:48px;align-items:start}
+.panel{background:var(--ml);border:2px solid var(--n);padding:16px}
+.panel h2{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--k);margin-bottom:10px}
+.side{display:flex;flex-direction:column;gap:16px;position:sticky;top:76px}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.posts{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;max-height:52vh;overflow-y:auto}
+.posts button{width:100%;text-align:left;font:inherit;color:var(--n);background:var(--m);border:2px solid var(--n);padding:10px 12px;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.posts button[aria-current="true"]{background:var(--k);color:var(--m);border-color:var(--k)}
+.posts b{font-weight:800;line-height:1.25}
+.posts .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px}
+.badge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border:2px solid var(--n);background:var(--ml);color:var(--n)}
+.badge.published{background:var(--k);color:var(--m);border-color:var(--k)}
+.badge.blocked{background:var(--err);color:#fff;border-color:var(--err)}
+.badge.draft{background:var(--o)}
+.badge.example{background:var(--m)}
+.cnt-e{color:var(--err);font-weight:800}
+.cnt-w{font-weight:800}
+.posts button[aria-current="true"] .cnt-e{color:var(--m)}
+.new textarea,.fb textarea,.new input{width:100%;font:400 15px/1.4 var(--font);border:2px solid var(--n);background:var(--m);padding:10px 12px;color:var(--n)}
+.new label{display:flex;flex-direction:column;gap:6px;font-weight:700;margin-bottom:10px}
+.detail{display:flex;flex-direction:column;gap:16px;min-width:0}
+.d-head{display:flex;flex-direction:column;gap:10px}
+.d-head h2{font-size:26px;line-height:1.1;font-weight:900;text-transform:uppercase}
+.d-meta{font-size:13px;display:flex;flex-wrap:wrap;gap:6px 16px}
+.d-meta code{font-size:12px}
+.acts{display:flex;flex-wrap:wrap;gap:8px}
+.acts .btn{min-height:40px;padding:8px 14px;font-size:13px}
+.score{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.bar{flex:1;min-width:200px;height:12px;border:2px solid var(--n);background:var(--m);position:relative}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--k)}
+.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.checks li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;padding:8px 0;border-top:2px solid var(--m)}
+.checks li:first-child{border-top:0}
+.mark{width:22px;height:22px;border:2px solid var(--n);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px}
+.mark.ok{background:var(--k);color:var(--m);border-color:var(--k)}
+.mark.error{background:var(--err);color:#fff;border-color:var(--err)}
+.mark.warn{background:var(--o)}
+.mark.info{background:var(--m)}
+.checks small{display:block;font-size:12px;margin-top:3px;overflow-wrap:anywhere}
+.grp-t{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:12px 0 2px}
+.grp-t:first-child{margin-top:0}
+details.okc summary{cursor:pointer;font-weight:800;font-size:13px;margin-top:10px}
+table.secs{width:100%;border-collapse:collapse;font-size:13px}
+table.secs th,table.secs td{text-align:left;padding:6px 8px;border-top:2px solid var(--m);vertical-align:top}
+table.secs thead th{border-top:0;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
+.bad{color:var(--err);font-weight:800}
+.manual{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 16px}
+.manual label{display:flex;gap:8px;align-items:flex-start;cursor:pointer}
+.manual input{width:18px;height:18px;accent-color:var(--k);flex:none;margin-top:1px}
+.fb textarea{min-height:120px}
+.fb .acts{margin-top:10px}
+.copied{font-size:13px;font-weight:800;color:var(--k)}
+.frame-wrap{border:2px solid var(--n);background:#fff;height:80vh}
+.frame-wrap iframe{width:100%;height:100%;border:0;display:block}
+.empty{padding:32px;text-align:center}
+.probs{background:var(--err);color:#fff;padding:10px 14px;border:2px solid var(--n)}
+.help{font-size:13px;line-height:1.5}
+.help code{font-size:12px;background:var(--m);padding:1px 4px}
+@media (max-width:960px){.ad{grid-template-columns:minmax(0,1fr)}.side{position:static}.manual{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<header class="ad-top">
+  <div class="wrap">
+    <a class="logo-link" href="../index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
+    <h1>Redakcia blogu</h1>
+    <a class="link-under" href="../blog/">Verejný blog →</a>
+    <span class="built" id="built"></span>
+  </div>
+</header>
+
+<div class="wrap ad">
+  <aside class="side">
+    <div class="panel">
+      <h2>Články</h2>
+      <div class="filters" role="group" aria-label="Filtrovať">
+        <button type="button" class="chip-f" aria-pressed="true" data-f="all">Všetky</button>
+        <button type="button" class="chip-f" aria-pressed="false" data-f="draft">Koncepty</button>
+        <button type="button" class="chip-f" aria-pressed="false" data-f="blocked">Zablokované</button>
+        <button type="button" class="chip-f" aria-pressed="false" data-f="published">Publikované</button>
+      </div>
+      <ul class="posts" id="posts"></ul>
+    </div>
+    <div class="panel new">
+      <h2>Nový článok</h2>
+      <label>Hlavná otázka, na ktorú článok odpovedá
+        <input id="n-q" placeholder="napr. Koľko granúl denne pre psa?"></label>
+      <label>Poznámky pre autora (publikum, uhol, zdroje, vlastné dáta)
+        <textarea id="n-notes" rows="3"></textarea></label>
+      <button type="button" class="btn btn-k btn-sm" id="n-copy">Kopírovať zadanie pre Claude</button>
+      <span class="copied" id="n-ok" hidden>Skopírované</span>
+    </div>
+    <div class="panel help">
+      <h2>Ako to funguje</h2>
+      <p>Články píše druhá session Claude Code podľa <code>granula/blog/CLAUDE.md</code>. Spätnú väzbu napíš tu, skopíruj a vlož jej do chatu. Kontrolu GEO robí <code>python3 granula/blog/build.py</code>; táto stránka zobrazuje jej výsledok z posledného buildu.</p>
+      <p>Stránka aj náhľady sú <b>noindex</b> a zakázané v robots.txt, ale nie sú pod heslom: kto pozná adresu, otvorí ich.</p>
+    </div>
+  </aside>
+
+  <section class="detail" id="detail" aria-live="polite"></section>
+</div>
+
+<script src="../blog/posts.js"></script>
+<script>
+(function () {
+  var D = window.GRANULA_POSTS || { posts: [], problems: [] };
+  var posts = D.posts, filter = "all";
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return "&#" + c.charCodeAt(0) + ";"; }); };
+  var store = {
+    get: function (k, d) { try { var v = localStorage.getItem("granula-blog:" + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+    set: function (k, v) { try { localStorage.setItem("granula-blog:" + k, JSON.stringify(v)); } catch (e) {} }
+  };
+  var ST = { draft: "Koncept", published: "Publikované", blocked: "Zablokované" };
+  var MANUAL = ["Fakty overené voči zdrojom", "Zdroje sú primárne (štúdie, oficiálne dokumenty)", "Obsahuje vlastné dáta alebo skúsenosť",
+    "Tvrdenia o produkte sedia s dizajn systémom", "Indexované v Google Search Console", "Indexované v Bing Webmaster Tools",
+    "Video verzia na YouTube", "Post na LinkedIn", "Zmienka na Reddite alebo v médiách"];
+
+  $("built").textContent = D.built ? "Posledný build: " + D.built : "Build ešte nebežal";
+  function counts(p) {
+    var e = 0, w = 0, ok = 0, n = 0;
+    p.lint.forEach(function (r) { if (r.level === "info") return; n++; if (r.ok) ok++; else if (r.level === "error") e++; else w++; });
+    return { e: e, w: w, ok: ok, n: n };
+  }
+  function list() {
+    var sel = location.hash.slice(1);
+    var shown = posts.filter(function (p) { return filter === "all" || p.status === filter; })
+      .sort(function (a, b) { return (b.updated || "").localeCompare(a.updated || ""); });
+    $("posts").innerHTML = shown.length ? shown.map(function (p) {
+      var c = counts(p);
+      return '<li><button type="button" data-slug="' + esc(p.slug) + '" aria-current="' + (p.slug === sel) + '"><b>' + esc(p.title) + "</b>" +
+        '<span class="row"><span class="badge ' + p.status + '">' + ST[p.status] + "</span>" + (p.example ? '<span class="badge example">Vzor</span>' : "") +
+        '<span class="cnt-e">' + c.e + " chýb</span><span class=\"cnt-w\">" + c.w + " upoz.</span><span>" + esc(p.updated) + "</span></span></button></li>";
+    }).join("") : '<li class="empty">Nič tu nie je.</li>';
+  }
+  function copy(text, okEl) {
+    var done = function () { okEl.hidden = false; setTimeout(function () { okEl.hidden = true; }, 2000); };
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
+    function fallback() { var t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); done(); }
+  }
+  function abs(rel) { return new URL(rel, location.href).href; }
+  function failing(p) {
+    return p.lint.filter(function (r) { return !r.ok && r.level !== "info"; }).map(function (r) {
+      return "- [" + (r.level === "error" ? "CHYBA" : "upozornenie") + "] " + r.id + ": " + r.msg + (r.details.length ? " (" + r.details.slice(0, 4).join("; ") + ")" : "");
+    });
+  }
+  function feedbackPrompt(p, notes) {
+    var f = failing(p);
+    return "Spätná väzba k článku „" + p.title + "“\n" +
+      "Súbor: " + p.file + " (verzia " + p.updated + ", stav: " + ST[p.status] + ")\n" +
+      "Náhľad: " + abs(p.preview) + "\n\n" +
+      "Moje poznámky:\n" + (notes.trim() || "(bez poznámok, oprav len body z kontroly)") + "\n\n" +
+      (f.length ? "Neprešlo v kontrole GEO:\n" + f.join("\n") + "\n\n" : "Kontrola GEO: bez chýb a upozornení.\n\n") +
+      "Postup: uprav článok podľa poznámok a pravidiel v granula/blog/CLAUDE.md. Fakty nemeň bez zdroja. " +
+      "Nastav `updated` na dnešný dátum a pridaj záznam do `changelog`, spusti `python3 granula/blog/build.py`, " +
+      "oprav všetky CHYBY, commitni a pushni. Status nechaj `draft`, kým ho neschválim.";
+  }
+  function approvePrompt(p) {
+    return "Článok „" + p.title + "“ (" + p.file + ") schvaľujem na publikovanie.\n" +
+      "Nastav `status: published`, skontroluj, že `updated` a `changelog` sedia, spusti `python3 granula/blog/build.py` " +
+      "(musí prejsť bez CHÝB, inak ostane zablokovaný), commitni a pushni. Potom mi pošli verejnú adresu článku.";
+  }
+  function show() {
+    var slug = location.hash.slice(1), p = posts.filter(function (x) { return x.slug === slug; })[0];
+    list();
+    if (!p) {
+      $("detail").innerHTML = (D.problems.length ? '<div class="probs"><b>Problémy pri builde:</b><br>' + D.problems.map(esc).join("<br>") + "</div>" : "") +
+        '<div class="panel empty">' + (posts.length ? "Vyber článok vľavo." : "Zatiaľ žiadne články. Zadaj prvý cez „Nový článok“.") + "</div>";
+      return;
+    }
+    var c = counts(p), groups = { error: [], warn: [], info: [], ok: [] };
+    p.lint.forEach(function (r) { (r.ok ? groups.ok : groups[r.level]).push(r); });
+    var row = function (r, cls) {
+      return '<li><span class="mark ' + cls + '" aria-hidden="true">' + (cls === "ok" ? "✓" : cls === "error" ? "!" : cls === "warn" ? "!" : "i") + "</span><div>" +
+        esc(r.msg) + (r.details.length ? "<small>" + r.details.map(esc).join("<br>") + "</small>" : "") + "</div></li>";
+    };
+    var grp = function (t, arr, cls) { return arr.length ? '<div class="grp-t">' + t + " (" + arr.length + ")</div><ul class=\"checks\">" + arr.map(function (r) { return row(r, cls); }).join("") + "</ul>" : ""; };
+    var man = store.get("manual:" + p.slug, {});
+    var notes = store.get("notes:" + p.slug, "");
+    var why = p.status === "blocked" ? "<p class=\"bad\">Článok má status published, ale kvôli chybám v kontrole ostáva neverejný.</p>" : "";
+    $("detail").innerHTML =
+      '<div class="panel d-head"><div class="row" style="display:flex;gap:8px;flex-wrap:wrap"><span class="badge ' + p.status + '">' + ST[p.status] + "</span>" +
+        (p.example ? '<span class="badge example">Vzor — po prvom článku zmazať</span>' : "") + "</div>" +
+        "<h2>" + esc(p.title) + "</h2>" + why +
+        '<div class="d-meta"><span>Autor: ' + esc(p.author || "—") + "</span><span>Publikované: " + esc(p.published) + "</span><span>Aktualizované: " + esc(p.updated) + "</span><span>" + p.words + " slov</span><span>Zdroj: <code>" + esc(p.file) + "</code></span></div>" +
+        '<div class="acts"><a class="btn btn-o" href="' + esc(p.preview) + '" target="_blank" rel="noopener">Otvoriť náhľad ↗</a>' +
+        (p.live ? '<a class="btn btn-k" href="' + esc(p.live) + '" target="_blank" rel="noopener">Verejná verzia ↗</a>' : "") +
+        '<button type="button" class="btn btn-line" id="approve">Kopírovať schválenie</button> <span class="copied" id="ap-ok" hidden>Skopírované</span></div></div>' +
+      '<div class="panel"><h2>Kontrola GEO</h2><div class="score"><strong>' + c.ok + " z " + c.n + ' pravidiel</strong><span class="bar"><i style="width:' + Math.round(c.ok / Math.max(1, c.n) * 100) + '%"></i></span>' +
+        '<span class="cnt-e">' + c.e + ' chýb</span><span class="cnt-w">' + c.w + " upozornení</span></div><div style=\"margin-top:12px\">" +
+        grp("Chyby — blokujú publikovanie", groups.error, "error") + grp("Upozornenia", groups.warn, "warn") + grp("Odporúčania", groups.info, "info") +
+        (groups.ok.length ? '<details class="okc"><summary>Splnené (' + groups.ok.length + ")</summary><ul class=\"checks\">" + groups.ok.map(function (r) { return row(r, "ok"); }).join("") + "</ul></details>" : "") + "</div></div>" +
+      '<div class="panel"><h2>Sekcie</h2><table class="secs"><thead><tr><th>Nadpis H2</th><th>Typ</th><th>Slová</th><th>Čísla</th><th>Otázka</th><th>Tučná 1. veta</th></tr></thead><tbody>' +
+        p.sections.map(function (s) {
+          var main = s.kind === "main", lenBad = main && (s.words < 150 || s.words > 450);
+          return "<tr><td>" + esc(s.title) + "</td><td>" + ({ main: "hlavná", definition: "definícia", faq: "otázky", summary: "zhrnutie", sources: "zdroje" })[s.kind] +
+            '</td><td class="num' + (lenBad ? " bad" : "") + '">' + s.words + '</td><td class="num' + (main && !s.numbers ? " bad" : "") + '">' + s.numbers + "</td><td>" + (s.question ? "✓" : "—") + "</td><td>" + (s.firstBold ? "✓" : (main || s.kind === "definition") ? '<span class="bad">—</span>' : "—") + "</td></tr>";
+        }).join("") + "</tbody></table></div>" +
+      '<div class="panel"><h2>Ručná kontrola a distribúcia</h2><ul class="manual">' + MANUAL.map(function (m, i) {
+          return '<li><label><input type="checkbox" data-m="' + i + '"' + (man[i] ? " checked" : "") + "> " + esc(m) + "</label></li>"; }).join("") + "</ul></div>" +
+      '<div class="panel fb"><h2>Spätná väzba pre autora</h2><textarea id="notes" placeholder="Čo zmeniť: tón, fakty, chýbajúce otázky, poradie sekcií…">' + esc(notes) + "</textarea>" +
+        '<div class="acts"><button type="button" class="btn btn-o" id="fb-copy">Kopírovať spätnú väzbu pre Claude</button><span class="copied" id="fb-ok" hidden>Skopírované, vlož do chatu s autorom</span></div></div>' +
+      '<div class="panel"><h2>Náhľad</h2><div class="frame-wrap"><iframe title="Náhľad článku" src="' + esc(p.preview) + '" loading="lazy"></iframe></div></div>';
+    $("notes").addEventListener("input", function () { store.set("notes:" + p.slug, this.value); });
+    $("fb-copy").addEventListener("click", function () { copy(feedbackPrompt(p, $("notes").value), $("fb-ok")); });
+    $("approve").addEventListener("click", function () { copy(approvePrompt(p), $("ap-ok")); });
+    document.querySelectorAll("[data-m]").forEach(function (cb) {
+      cb.addEventListener("change", function () { man[cb.dataset.m] = cb.checked; store.set("manual:" + p.slug, man); });
+    });
+  }
+  $("posts").addEventListener("click", function (e) { var b = e.target.closest("[data-slug]"); if (b) location.hash = b.dataset.slug; });
+  document.querySelectorAll("[data-f]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      filter = b.dataset.f;
+      document.querySelectorAll("[data-f]").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      list();
+    });
+  });
+  $("n-copy").addEventListener("click", function () {
+    var q = $("n-q").value.trim(), n = $("n-notes").value.trim();
+    copy("Napíš nový článok na blog Granula.\nHlavná otázka: " + (q || "[doplň]") + "\n" + (n ? "Poznámky: " + n + "\n" : "") +
+      "\nPostupuj presne podľa granula/blog/CLAUDE.md: najprv výskum s primárnymi zdrojmi, potom koncept v granula/blog/_src/<slug>.md " +
+      "zo šablóny _template.md, `status: draft`. Spusti `python3 granula/blog/build.py`, oprav všetky CHYBY, commitni a pushni. " +
+      "Pošli mi zhrnutie: slug, hlavná odpoveď, zdroje a čo z kontroly ostalo ako upozornenie.", $("n-ok"));
+  });
+  window.addEventListener("hashchange", show);
+  if (!location.hash && posts.length) { var first = posts.slice().sort(function (a, b) { return (b.updated || "").localeCompare(a.updated || ""); })[0]; history.replaceState(null, "", "#" + first.slug); }
+  show();
+})();
+</script>
+</body>
+</html>

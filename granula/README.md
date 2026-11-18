@@ -14,9 +14,18 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 | `kviz.js` | ovládanie dotazníka | |
 | `granula.css` | spoločné tokeny a komponenty (logo-nálepka, tlačidlá, foto s posunutým farebným poľom, pásky, karty mäsa, pätička) | |
 | `icons.js` | ikony surovín z návrhu; `<span data-icon="jelen" data-ink="#F4EBE2">` | |
+| `blog/`, `admin-blog/` | blog a redakcia, pozri časť Blog (GEO) | |
 | `cookies.js` | cookie lišta; Klaviyo (marketing) sa načíta až po „Prijať všetky“, voľba v `localStorage` (`granula-cookies`), lištu znova otvorí odkaz „Nastavenia cookies“ v pätičke | |
 | `site.js` | objavovanie pri scrolle, karusel recenzií, sekcia surovín (filtre a šípky) | |
 | `img/` | fotky z návrhu, pomenované podľa obsahu; `img/suroviny/` 38 fotiek surovín (WebP 640 px) | |
+
+## Blog (GEO)
+
+- Články: `blog/_src/<slug>.md` (frontmatter + markdown podľa `blog/_src/_template.md`). Pravidlá pre autora (aj pre Claude Code): `blog/CLAUDE.md`, výskum a šablóna: `blog/GEO-TEMPLATE.md`.
+- `python3 blog/build.py` (z koreňa: `python3 granula/blog/build.py`) vygeneruje statické HTML: `blog/` (zoznam), `blog/<slug>/` (publikované), `blog/nahlad/<slug>/` (náhľady, noindex), `blog/posts.js`, `sitemap.xml` a `../robots.txt` (AI crawlery povolené). Kontroluje článok voči GEO šablóne; článok s CHYBOU sa nepublikuje ani pri `status: published`. `--check` len skontroluje.
+- Redakcia: `admin-blog/` (noindex, nie je pod heslom): stav článkov, kontrola GEO, sekcie, ručný checklist, náhľad a spätná väzba, ktorú skopíruješ do chatu s autorom.
+- `BASE_URL` v `blog/build.py` (kanonické adresy, sitemap) je zatiaľ `https://granula.sk/granula`; upraviť podľa skutočnej domény.
+- `blog/_src/vzor-struktury.md` je vzorový koncept; po prvom skutočnom článku zmazať.
 
 ## Vyhľadávanie plemena (krok 2)
 
