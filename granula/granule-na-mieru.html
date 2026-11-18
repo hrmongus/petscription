@@ -440,25 +440,29 @@
 }
 
 /* ---------- profil psa (radar) ---------- */
-.split > aside.side-prof{background:var(--m);border-left:2px solid var(--n);justify-content:center;align-items:stretch}
+/* modrý pravý stĺpec: hore graf (bez rámu a textu), pod ním „Vedel si?“ */
+.split > aside.side-prof{background:var(--k);color:var(--m);border-left:2px solid var(--n);justify-content:flex-start;gap:28px;padding-top:28px}
 @media (min-width:1200px){.split > aside.side-prof{width:520px}}
-.prof{background:var(--ml);border:2px solid var(--n);padding:24px 24px 20px;display:flex;flex-direction:column;gap:8px}
-.prof-t{font-size:26px;line-height:1;font-weight:900;text-transform:uppercase}
-.prof-p{font-size:14px;line-height:1.45}
-.prof-ch{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--k);min-height:16px}
+.side-facts{display:flex;flex-direction:column;gap:14px}
+.prof{display:flex;flex-direction:column}
 .radar{position:relative;width:100%;max-width:520px;aspect-ratio:680/560;align-self:center}
 .radar svg{position:absolute;inset:0;width:100%;height:100%;display:block}
 .radar-lbl{position:absolute;width:25%;font-size:13px;line-height:1.2;font-weight:800;letter-spacing:.08em;text-transform:uppercase;pointer-events:none;transition:color .2s}
 .radar-lbl.locked{color:#5c5650}
+/* graf na Kobalte: svetlé čiary a popisy */
+.side-prof .radar-lbl{color:var(--m)}
+.side-prof .radar-lbl.locked{color:rgba(244,235,226,.55)}
+.side-prof .radar .rg{stroke:rgba(244,235,226,.22)}
+.side-prof .radar .rs{stroke:rgba(244,235,226,.75)}
+.side-prof .radar .rs.locked{stroke:rgba(244,235,226,.35)}
+.side-prof .radar .rshape{fill:rgba(255,105,0,.9)}
+.side-prof .radar .rd.locked{fill:rgba(244,235,226,.55)}
 .prof-m:empty,.prof-res:empty{display:none}
-.prof-res .prof{margin:4px 0}
+.prof-res .radar{max-width:440px}
 @media (max-width:900px){
   .split > aside.side-prof{display:none}
-  .prof-m .prof{padding:12px 14px 10px;gap:4px;margin-top:12px}
-  .prof-m .prof-t{font-size:15px}
-  .prof-m .prof-p{display:none}
-  .prof-m .prof-ch{font-size:11px;min-height:14px}
-  .prof-m .radar{max-width:250px}
+  .prof-m{margin-top:8px}
+  .prof-m .radar{max-width:260px}
   .prof-m .radar-lbl,.prof-res .radar-lbl{font-size:9.5px;letter-spacing:.04em}
   /* navigácia krokov stále na spodnej lište */
   .split > .pane{padding-bottom:96px}
@@ -506,7 +510,14 @@
       <button type="button" class="btn btn-o next" data-next>Ďalej →</button>
     </div>
   </div>
-  <aside class="side-prof"></aside>
+  <aside class="side-prof on-brand">
+    <div class="prof-d" data-prof-d></div>
+    <div class="side-facts">
+      <div class="tip"><div class="h"><span class="g" aria-hidden="true">G!</span><span class="t">Vedel si?</span></div>
+      <p>Až tretina majiteľov psov s nadváhou si myslí, že ich pes má normálnu váhu. Preto sa o chvíľu spýtame aj na postavu, nielen na kilá.</p>
+      <p style="font-size:13px;font-weight:400">Prieskum Association for Pet Obesity Prevention, USA, 2009</p></div>
+    </div>
+  </aside>
 </section>
 
 <!-- ============ KROK 2 ============ -->
@@ -543,7 +554,13 @@
       <button type="button" class="btn btn-o next" data-next>Ďalej →</button>
     </div>
   </div>
-  <aside class="side-prof"></aside>
+  <aside class="side-prof on-brand">
+    <div class="prof-d" data-prof-d></div>
+    <div class="side-facts">
+      <div class="tip"><div class="h"><span class="g" aria-hidden="true">G!</span><span class="t">Vedel si?</span></div>
+      <p>Hrsť granúl je pre jorkšíra skoro celá denná dávka. Pre labradora je to asi šestina. Preto sa pýtame na plemeno.</p></div>
+    </div>
+  </aside>
 </section>
 
 <!-- ============ KROK 3 ============ -->
@@ -576,7 +593,18 @@
       <button type="button" class="btn btn-o next" data-next>Ďalej →</button>
     </div>
   </div>
-  <aside class="side-prof"></aside>
+  <aside class="side-prof on-brand">
+    <div class="prof-d" data-prof-d></div>
+    <div class="side-facts">
+      <div class="fact">
+      <div class="t">VEDEL SI?</div>
+      <div class="n">1,8</div>
+      <div class="display u">roka navyše</div>
+      <p>Toľko dlhšie žili labradory, ktoré celý život držali ideálnu váhu, oproti súrodencom, ktorí jedli o štvrtinu viac.</p>
+      <p class="src">14-ročná štúdia, Kealy a kol., JAVMA, 2002</p>
+    </div>
+    </div>
+  </aside>
 </section>
 
 <!-- ============ KROK 4 ============ -->
@@ -604,7 +632,13 @@
       <button type="button" class="btn btn-o next" data-next>Ďalej →</button>
     </div>
   </div>
-  <aside class="side-prof"></aside>
+  <aside class="side-prof on-brand">
+    <div class="prof-d" data-prof-d></div>
+    <div class="side-facts">
+      <div class="tip"><div class="h"><span class="g" aria-hidden="true">G!</span><span class="t">Vedel si?</span></div>
+      <p>Pes, ktorý celý deň behá, môže potrebovať o polovicu viac energie než rovnako veľký gaučák. Dávku preto rátame podľa bežného dňa tvojho psa, nie podľa vreca.</p></div>
+    </div>
+  </aside>
 </section>
 
 <!-- ============ KROK 5 ============ -->
@@ -649,7 +683,18 @@
       <button type="button" class="btn btn-o next" data-next>Ďalej →</button>
     </div>
   </div>
-  <aside class="side-prof"></aside>
+  <aside class="side-prof on-brand">
+    <div class="prof-d" data-prof-d></div>
+    <div class="side-facts">
+      <div class="fact">
+      <div class="t">VEDEL SI?</div>
+      <div class="n">2,5</div>
+      <div class="display u">roka života</div>
+      <p>Až o toľko môže nadváha v strednom veku skrátiť psovi život. Pri menších plemenách je rozdiel najväčší.</p>
+      <p class="src">50 787 psov, Salt a kol., University of Liverpool, 2019</p>
+    </div>
+    </div>
+  </aside>
 </section>
 
 <!-- ============ KROK 6 ============ -->
@@ -684,7 +729,13 @@
       <button type="button" class="btn btn-o next" data-next>Vybrať granule →</button>
     </div>
   </div>
-  <aside class="side-prof"></aside>
+  <aside class="side-prof on-brand">
+    <div class="prof-d" data-prof-d></div>
+    <div class="side-facts">
+      <div class="tip"><div class="h"><span class="g" aria-hidden="true">G!</span><span class="t">Na mieru</span></div>
+      <p>Vyber pokojne viac možností. Všetky odpovede zvážime naraz a granule vyberieme až na konci.</p></div>
+    </div>
+  </aside>
 </section>
 </form>
 
@@ -890,10 +941,7 @@
 
 <!-- profil psa: jedna karta, kviz.js ju presúva (desktop vpravo, mobil hore, výsledok) -->
 <div hidden id="prof-home">
-  <section class="prof" id="prof" aria-labelledby="prof-t">
-    <h2 class="prof-t" id="prof-t">Profil tvojho psa</h2>
-    <p class="prof-p">Toto sú potreby tvojho psa. Recept k nim vyberieme na konci.</p>
-    <span class="prof-ch" id="prof-ch" aria-live="polite">Odpovedz na prvú otázku</span>
+  <section class="prof" id="prof" aria-label="Profil tvojho psa">
     <div class="prof-radar" id="prof-radar"></div>
   </section>
 </div>

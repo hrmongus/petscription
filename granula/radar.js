@@ -1,3 +1,5 @@
+/* Farby sú v atribútoch (svetlý podklad); na tmavom podklade ich prepíše CSS cez triedy
+   .rg (mriežka), .rs (os, .locked), .rshape (tvar), .rd (bod, .locked), .radar-lbl (.locked). */
 /* Granula — radarový graf „Profil tvojho psa“ (dotazník aj admin-vypocet.html).
    Hodnoty vždy z GranulaEngine.profilPsa(); tento súbor len kreslí.
    var r = new GranulaRadar(el); r.update(profil)   // profil = { hodnoty, zamknute, osi }
@@ -18,10 +20,10 @@
     svg.setAttribute("role", "img");
     svg.setAttribute("aria-label", "Profil potrieb psa");
     function mk(tag, attrs) { var n = document.createElementNS(NS, tag); for (var k in attrs) n.setAttribute(k, attrs[k]); svg.appendChild(n); return n; }
-    [0.25, 0.5, 0.75, 1].forEach(function (r) { mk("path", { d: self.path(self.axes.map(function () { return r; })), fill: "none", stroke: "rgba(0,0,0,.18)", "stroke-width": 1 }); });
-    this.spokes = this.axes.map(function (_, i) { var p = self.pt(i, 1); return mk("line", { x1: self.cx, y1: self.cy, x2: p[0], y2: p[1], "stroke-width": 1.5 }); });
-    this.shape = mk("path", { fill: "rgba(255,105,0,.55)", stroke: "#000", "stroke-width": 2, "stroke-linejoin": "miter" });
-    this.dots = this.axes.map(function () { return mk("rect", { width: 8, height: 8 }); });
+    [0.25, 0.5, 0.75, 1].forEach(function (r) { mk("path", { "class": "rg", d: self.path(self.axes.map(function () { return r; })), fill: "none", stroke: "rgba(0,0,0,.18)", "stroke-width": 1 }); });
+    this.spokes = this.axes.map(function (_, i) { var p = self.pt(i, 1); return mk("line", { "class": "rs", x1: self.cx, y1: self.cy, x2: p[0], y2: p[1], "stroke-width": 1.5 }); });
+    this.shape = mk("path", { "class": "rshape", fill: "rgba(255,105,0,.55)", stroke: "#000", "stroke-width": 2, "stroke-linejoin": "miter" });
+    this.dots = this.axes.map(function () { return mk("rect", { "class": "rd", width: 8, height: 8 }); });
     el.classList.add("radar");
     el.appendChild(svg);
     // popisy osí ako HTML (SVG <text> sa niekde nevykreslí)
@@ -54,6 +56,7 @@
       self.dots[i].setAttribute("x", (p[0] - 4).toFixed(1));
       self.dots[i].setAttribute("y", (p[1] - 4).toFixed(1));
       self.dots[i].setAttribute("fill", self.locked[i] ? "rgba(0,0,0,.35)" : "#000");
+      self.dots[i].classList.toggle("locked", self.locked[i]);
     });
   };
   Radar.prototype.paintLocks = function () {
@@ -62,6 +65,7 @@
       self.spokes[i].setAttribute("stroke", l ? "rgba(0,0,0,.3)" : "rgba(0,0,0,.55)");
       self.spokes[i].setAttribute("stroke-dasharray", l ? "4 6" : "none");
       self.labels[i].classList.toggle("locked", l);
+      self.spokes[i].classList.toggle("locked", l);
     });
   };
   Radar.prototype.update = function (profil) {

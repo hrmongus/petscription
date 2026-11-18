@@ -563,7 +563,7 @@
 
   /* ---------------- profil psa (radar) ----------------
      Hodnoty len z E.profilPsa(); graf nikdy neukazuje receptúry. */
-  var profCard = $("prof"), profHome = $("prof-home"), profCh = $("prof-ch");
+  var profCard = $("prof"), profHome = $("prof-home"), profCh = $("prof-ch") || {}; // riadok so zmenou je zatiaľ skrytý
   var radar = new GranulaRadar($("prof-radar"), { axes: E.PROFILE_AXES });
   var lastProf = null, noteFocus = "";
   var NOTE_ONLY = { kby: "kĺby", srst: "srsť a koža", imunita: "imunita", vyberavy: "vyberavý jedák", vaha: "váha" };
@@ -572,7 +572,7 @@
   function profNow() { return E.profilPsa(state, krokNo(current), params); }
   function placeProf() {
     var scr = screens[current], slot = null;
-    if (scr && STEPS.indexOf(current) !== -1) slot = scr.querySelector(mobileQ.matches ? "[data-prof-m]" : "aside.side-prof");
+    if (scr && STEPS.indexOf(current) !== -1) slot = scr.querySelector(mobileQ.matches ? "[data-prof-m]" : "[data-prof-d]");
     if (current === "vysledok") slot = scr.querySelector("[data-prof-res]");
     (slot || profHome).appendChild(profCard);
   }
