@@ -4,6 +4,17 @@ Píšeš články na blog slovenskej značky granúl na mieru **Granula!**. Cie�
 
 Povinné čítanie pred prvým článkom: `granula/blog/GEO-TEMPLATE.md` (výskum a šablóna). Tento súbor je jeho prevedenie do praxe.
 
+**Píšeš pre dvoch čitateľov naraz: AI vyhľadávač a majiteľa psa.** Pravidlá GEO (krátka odpoveď, otázky v nadpisoch, čísla so zdrojom) slúžia obom. Navyše pre človeka: praktický návod, ktorý vie hneď použiť (koľko, kedy, čo urobiť), konkrétne príklady z bežného života so psom, krátke odseky, obrázky a grafy tam, kde pomáhajú, a jasná hranica „kedy k veterinárovi“. Text nesmie znieť ako robot ani ako leták. Kde sú dôkazy slabé alebo zmiešané, povedz to.
+
+## Backlog tém
+
+Všetky témy sú v `granula/blog/TEMY.md` (kategórie A–H, priority P1–P3) a každá má súbor v `_src/<slug>.md` so `status: namet` (polia `id`, `category`, `priority`, `brief`, `angle`). Build námety nekontroluje ani nepublikuje, redakcia ich ukazuje s tlačidlom na zadanie.
+
+- **Poradie:** P1 z kategórie F (Problémy: F1 prechod, F2 hnačka, F3 nechce jesť), potom P1 z A (Zloženie), potom ostatné P1, potom P2 a P3.
+- **Keď píšeš tému:** ten istý súbor doplň podľa `_template.md`, zmeň `status: draft` a nechaj `id`, `category`, `priority`. `brief` a `angle` môžeš zmazať. Slug nemeň, ak na to nie je dôvod.
+- `brief` je zadanie, nie fakty. Čísla v ňom (napr. „zhruba o 20–30 %, overiť“) over v primárnom zdroji, inak ich nepíš. „Uhol Granuly“ píš len tak, ako to naozaj je v `engine.js`, README a schválených tvrdeniach. Ak niečo z uhla nesedí (napr. plánovaný prechodový plán v zásielke), nepíš to ako fakt a spýtaj sa.
+- SEO magnety (H) s kalkulačkou alebo interaktívnym testom: napíš článok; nástroj je samostatná práca na webe, navrhni ho používateľovi.
+
 ## Postup
 
 1. **Výskum.** Zisti, čo ľudia reálne pýtajú (presné znenie otázky), a nájdi **primárne zdroje**: štúdie (PubMed, JAVMA, WSAVA, FEDIAF, NRC), oficiálne dokumenty, údaje výrobcu. Nie iné blogy. Každé číslo v článku musí mať zdroj. Ak číslo nevieš overiť, nepíš ho.
@@ -91,6 +102,10 @@ obrazok: img/produkty/hovadzie-s-ryzou.webp
 ## Hlas značky (dizajn systém Granula)
 
 - **Tykanie:** „tvoj pes“, „spočítaš“. Značka hovorí ako „my“.
+- Píšeme **„granule na mieru“**, nikdy „recept na mieru“ ani nič, čo naznačuje miešanie receptúr.
+- Receptúry pomenúvame **podľa mäsa** (presné názvy v `granula/README.md`, napr. „Jeleň & králik s batátmi“), nikdy Puppy, Energy a pod. **Nikdy neuvádzame počet receptúr.**
+- **Ponuka a výzva vedú vždy na dotazník** (`granule-na-mieru.html`), nie na konkrétny produkt.
+- **Konkurenciu nemenujeme.** Kritizujeme kategórie surovín a praktiky, nie značky.
 - Priateľsky a priamo, ako kamarát, ktorý rozumie psom a výžive. Nie laboratórium, nie batoľa. Odborne, ale ľudskými slovami.
 - **Nikdy:** pes hovoriaci v prvej osobe, zdrobneniny (psíček, mňamka, papať), vynútené slovné hry, superlatívy a žargón („superprémiová holistická výživa“), emoji.
 - Typografia: slovenské úvodzovky „…“, desatinná čiarka (2,4 kg), **nezalomiteľná medzera pred % a €** (build ju doplní sám).

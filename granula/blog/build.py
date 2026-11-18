@@ -351,7 +351,8 @@ def sections(blocks):
 BACKREFS = [r"\bako sme (už )?(spomenuli|uviedli|písali)", r"\bspomínan", r"\bvyššie\b", r"\bnižšie\b",
             r"\bv predchádzajúc", r"\bako už vieme\b", r"\bpozri (vyššie|nižšie)"]
 PRONOUN_START = re.compile(r"^(Toto|To|Tento|Táto|Tieto|Ten|Tá)\s", re.U)
-RETIRED = ["bez obilnín", "mäso zo slovenska", "hovädzie zo slovenska", "recept od mvdr", "superprémiov", "holistick"]
+RETIRED = ["bez obilnín", "mäso zo slovenska", "hovädzie zo slovenska", "recept od mvdr", "superprémiov", "holistick", "recept na mieru", "receptúra na mieru", "receptúru na mieru"]
+INTERNAL_NAMES = re.compile(r"\b(puppy|energy|senior recept)\b", re.I)
 VY_FORM = [r"\bvášho\b", r"\bvášmu\b", r"\bváš\b", r"\bvaša\b", r"\bvaše\b", r"\bbudete\b", r"\bmáte\b", r"\bviete\b", r"\bnájdete\b"]
 EMOJI = re.compile("[\U0001F300-\U0001FAFF\u2600-\u27BF]")
 
@@ -456,6 +457,10 @@ def lint(meta, secs, body):
     add("offer-mid", "warn", len(mid) >= 1, "Ponuka uprostred článku, ktorá sedí k téme (blok ::: ponuka)")
     bad_offer = [d.get("nadpis", "?") for k, d in offers if not (d.get("nadpis") and d.get("text"))]
     add("offer-fields", "warn", not bad_offer, "Ponuka má nadpis a text", bad_offer)
+    bad_link = [d.get("nadpis", "?") for k, d in offers if (d.get("odkaz") or "granule-na-mieru.html") != "granule-na-mieru.html"]
+    if meta.get("cta_link") and meta["cta_link"] != "granule-na-mieru.html":
+        bad_link.append("záverečná ponuka (cta_link)")
+    add("offer-link", "warn", not bad_link, "Ponuka vedie na dotazník (granule-na-mieru.html), nie na konkrétny produkt", bad_link)
     add("offer-count", "warn", len(offers) <= 2, "Najviac 2 ponuky v texte (má %d), inak to pôsobí ako reklama" % len(offers))
     add("table", "info", any(s["has_table"] for s in secs), "Porovnávacia tabuľka (odporúčané pri „X vs Y“)")
     add("steps", "info", any(s["has_ol"] for s in secs), "Postup krok za krokom (číslovaný zoznam)")
@@ -489,6 +494,8 @@ def lint(meta, secs, body):
         "„Najlepšie X“ len s transparentnou metodikou a bez Granuly na prvom mieste")
     retired = [w for w in RETIRED if w in all_text]
     add("claims", "warn", not retired, "Žiadne vyradené tvrdenia a superlatívy z dizajn systému", retired)
+    names = sorted({m.group(0) for m in INTERNAL_NAMES.finditer(body + " " + tldr + " " + " ".join(kp))})
+    add("recipe-names", "warn", not names, "Receptúry podľa mäsa (napr. „Jeleň & králik“), nie interné názvy Puppy/Energy", names)
     vy = sorted({m.group(0) for p in VY_FORM for m in re.finditer(p, all_text)})
     add("ty-form", "warn", not vy, "Tykanie („tvoj pes“), nie vykanie", vy)
     add("emoji", "warn", not EMOJI.search(all_text), "Bez emoji")
@@ -680,6 +687,10 @@ def load_posts():
         if not re.match(r"^[a-z0-9]+(-[a-z0-9]+)*$", slug):
             problems.append("%s: slug „%s“ smie mať len malé písmená bez diakritiky, číslice a pomlčky" % (fn, slug))
             continue
+        if meta.get("status") == "namet":
+            posts.append({"file": "granula/blog/_src/" + fn, "slug": slug, "meta": meta, "blocks": [], "sections": [],
+                          "lint": [], "words": 0, "status": "namet", "wanted": "namet"})
+            continue
         blocks = md_blocks(body)
         secs = sections(blocks)
         results, total = lint(meta, secs, body)
@@ -716,7 +727,12 @@ def build(check_only=False):
     posts, problems = load_posts()
     pub = sorted([p for p in posts if p["status"] == "published"], key=lambda p: str(p["meta"].get("updated", "")), reverse=True)
 
+    ideas = [p for p in posts if p["status"] == "namet"]
+    if ideas:
+        print("NÁMETY       %d (%s)" % (len(ideas), ", ".join("%s: %d" % (k, sum(1 for p in ideas if p["meta"].get("priority") == k)) for k in ("P1", "P2", "P3"))))
     for p in posts:
+        if p["status"] == "namet":
+            continue
         e = [r for r in p["lint"] if r["level"] == "error" and not r["ok"]]
         w = [r for r in p["lint"] if r["level"] == "warn" and not r["ok"]]
         print("%-12s %-40s %d chýb, %d upozornení" % (p["status"].upper(), p["slug"], len(e), len(w)))
@@ -730,7 +746,7 @@ def build(check_only=False):
         return 1 if problems or any(p["status"] == "blocked" for p in posts) else 0
 
     # vyčistiť staré výstupy (článkové priečinky a náhľady), ponechať zdroje a statické súbory
-    keep = {"_src", "build.py", "blog.css", "CLAUDE.md", "GEO-TEMPLATE.md", "README.md"}
+    keep = {"_src", "build.py", "blog.css", "CLAUDE.md", "GEO-TEMPLATE.md", "README.md", "TEMY.md"}
     for name in os.listdir(HERE):
         full = os.path.join(HERE, name)
         if name in keep:
@@ -741,6 +757,8 @@ def build(check_only=False):
             os.remove(full)
 
     for p in posts:
+        if p["status"] == "namet":
+            continue
         url = "%s/blog/%s/" % (BASE_URL, p["slug"])
         m = p["meta"]
         title = "%s — Granula" % m["title"]
@@ -757,7 +775,9 @@ def build(check_only=False):
         "slug": p["slug"], "file": p["file"], "title": p["meta"].get("title", ""), "status": p["status"], "wanted": p["wanted"],
         "example": bool(p["meta"].get("example")), "published": str(p["meta"].get("published", "")), "updated": str(p["meta"].get("updated", "")),
         "author": p["meta"].get("author", ""), "authorPhoto": str(p["meta"].get("author_photo", "")), "hero": str(p["meta"].get("hero", "")), "words": p["words"], "description": p["meta"].get("description", ""),
-        "preview": "../blog/nahlad/%s/index.html" % p["slug"], "live": "../blog/%s/index.html" % p["slug"] if p["status"] == "published" else None,
+        "id": p["meta"].get("id", ""), "category": p["meta"].get("category", ""), "priority": p["meta"].get("priority", ""),
+        "brief": p["meta"].get("brief", ""), "angle": p["meta"].get("angle", ""),
+        "preview": "../blog/nahlad/%s/index.html" % p["slug"] if p["status"] != "namet" else None, "live": "../blog/%s/index.html" % p["slug"] if p["status"] == "published" else None,
         "lint": p["lint"],
         "sections": [{"title": s["title"], "kind": s["kind"], "words": s["words"], "numbers": s["numbers"], "question": s["question"],
                       "firstBold": s["first_bold"], "table": s["has_table"], "steps": s["has_ol"],
@@ -779,7 +799,7 @@ def build(check_only=False):
     robots += "".join("User-agent: %s\n" % b for b in bots) + "".join("Disallow: %s\n" % d for d in dis) + "Allow: /\n\n"
     robots += "User-agent: *\n" + "".join("Disallow: %s\n" % d for d in dis) + "Allow: /\n\nSitemap: %s/sitemap.xml\n" % BASE_URL
     write(os.path.join(REPO, "robots.txt"), robots)
-    print("\nHotovo: %d článkov (%d publikovaných). Redakcia: granula/admin-blog/" % (len(posts), len(pub)))
+    print("\nHotovo: %d článkov (%d publikovaných), %d námetov. Redakcia: granula/admin-blog/" % (len(posts) - len(ideas), len(pub), len(ideas)))
     return 1 if problems else 0
 
 
