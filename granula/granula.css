@@ -167,6 +167,32 @@ h1,h2,h3,p{margin:0}
 }
 
 
+/* ---------- blog na úvodnej stránke (vkladá blog/build.py) ---------- */
+.hb-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:28px;flex-wrap:wrap}
+.hb-acts{display:flex;align-items:center;gap:24px}
+.hb-row{list-style:none;margin:0;padding:0 0 4px;display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.hb-row::-webkit-scrollbar{display:none}
+.hb-card{flex:0 0 calc((100% - 48px) / 4);scroll-snap-align:start}
+.hb-card a{height:100%;display:flex;flex-direction:column;background:var(--ml);border:2px solid var(--n);color:var(--n);text-decoration:none;transition:background 150ms ease}
+.hb-card a:hover{background:var(--m)}
+.hb-img{display:block;aspect-ratio:16/10;border-bottom:2px solid var(--n);background:var(--k);overflow:hidden}
+.hb-img img{width:100%;height:100%;object-fit:cover;transition:transform 300ms ease}
+.hb-card a:hover .hb-img img{transform:scale(1.04)}
+.hb-noimg{display:block;width:100%;height:100%;position:relative}
+.hb-noimg::after{content:"";position:absolute;inset:30%;background:var(--o);-webkit-mask:var(--star) center/contain no-repeat;mask:var(--star) center/contain no-repeat}
+.hb-body{display:flex;flex-direction:column;gap:8px;padding:16px 18px 18px;flex:1}
+.hb-date{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--k)}
+.hb-title{font-size:17px;line-height:1.2;font-weight:900;text-transform:uppercase}
+.hb-ex{font-size:14px;line-height:1.45}
+.hb-all a{background:var(--k);color:var(--m);justify-content:center;gap:12px;padding:24px}
+.hb-all a:hover{background:var(--n)}
+.hb-all-n{font-size:64px;font-weight:900;line-height:1;color:var(--l)}
+.hb-all .hb-title{font-size:24px}
+.hb-more{font-weight:800;margin-top:auto}
+@media (max-width:1100px){.hb-card{flex-basis:calc((100% - 32px) / 3)}}
+@media (max-width:760px){.hb-card{flex-basis:calc((100% - 16px) / 2)}}
+@media (max-width:640px){.hb-card{flex-basis:78%}.hb-acts .ig-arrows{display:none}.hb-row{margin:0 -16px;padding:0 16px 4px;scroll-padding:0 16px}}
+
 /* ---------- pätička ---------- */
 /* Mlieko s logom na nálepke; logo nikdy na Noci */
 .foot{background:var(--m);color:var(--n);border-top:2px solid var(--n)}

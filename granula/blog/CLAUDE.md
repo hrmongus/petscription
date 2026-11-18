@@ -118,6 +118,7 @@ obrazok: img/produkty/hovadzie-s-ryzou.webp
 - Statické HTML (server-side, bez JavaScriptu), sémantické `h1/h2/table/ol`, viditeľný autor, dátumy a história zmien, zdroje, JSON-LD BlogPosting (len SEO hygiena, nie GEO páka).
 - `granula/blog/<slug>/`: verejný článok (len `published` bez chýb). `granula/blog/nahlad/<slug>/`: náhľad každého článku (noindex).
 - `granula/blog/index.html`, `granula/sitemap.xml`, `robots.txt` (AI crawlery povolené, redakcia a náhľady zakázané), `granula/blog/posts.js` (dáta redakcie).
+- `granula/index.html`: sekcia „Blog“ na úvodnej stránke (najnovších 8 publikovaných článkov + karta „Všetky články“) medzi značkami `blog-home:start/end`. Generuje ju build, ručne ju needituj. Kým nie je publikovaný žiadny článok, je skrytá.
 - `--check` len skontroluje bez zápisu.
 
 ## Mimo repozitára (pripomeň používateľovi pri publikovaní)
