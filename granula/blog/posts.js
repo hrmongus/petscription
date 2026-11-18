@@ -1,6 +1,6 @@
 /* vygenerované build.py — needitovať */
 window.GRANULA_POSTS = {
- "built": "2026-11-18 08:31",
+ "built": "2026-11-18 08:37",
  "base": "https://granula.sk/granula",
  "problems": [],
  "posts": [
@@ -2942,26 +2942,469 @@ window.GRANULA_POSTS = {
   {
    "slug": "svrbenie-skrabanie-alergia-na-krmivo",
    "file": "granula/blog/_src/svrbenie-skrabanie-alergia-na-krmivo.md",
-   "title": "Svrbenie, škrabanie, olizovanie láp: alergia na krmivo?",
-   "status": "namet",
-   "wanted": "namet",
+   "title": "Svrbenie, škrabanie, olizovanie láp: je to alergia na krmivo?",
+   "status": "draft",
+   "wanted": "draft",
    "example": false,
-   "published": "",
-   "updated": "",
-   "author": "",
-   "authorPhoto": "",
-   "hero": "",
-   "words": 0,
-   "description": "",
+   "published": "2026-11-18",
+   "updated": "2026-11-18",
+   "author": "[Meno Priezvisko]",
+   "authorPhoto": "placeholder",
+   "hero": "placeholder",
+   "words": 1797,
+   "description": "Alergia na krmivo je za svrbením len pri 9–40 % svrbiacich psov. Potvrdí ju eliminačná diéta aspoň 8 týždňov, nie krvný test ani test zo srsti.",
    "id": "F6",
    "category": "Problémy",
    "priority": "P1",
-   "brief": "Potravinová alergia vs. atopia vs. blchy (potravinová je menšina prípadov), diagnostika len eliminačnou diétou, krvné testy na potravinové alergie sú nespoľahlivé",
-   "angle": "Jahňa / Jeleň & králik",
-   "preview": null,
+   "brief": "",
+   "angle": "",
+   "preview": "../blog/nahlad/svrbenie-skrabanie-alergia-na-krmivo/index.html",
    "live": null,
-   "lint": [],
-   "sections": []
+   "lint": [
+    {
+     "id": "title",
+     "level": "error",
+     "ok": true,
+     "msg": "Titulok je vyplnený",
+     "details": []
+    },
+    {
+     "id": "title-length",
+     "level": "warn",
+     "ok": true,
+     "msg": "Titulok má najviac 70 znakov (má 61)",
+     "details": []
+    },
+    {
+     "id": "title-year",
+     "level": "warn",
+     "ok": true,
+     "msg": "Rok v titulku len pri téme, ktorá sa mení, a len ak sedí s dátumom aktualizácie",
+     "details": []
+    },
+    {
+     "id": "description",
+     "level": "warn",
+     "ok": true,
+     "msg": "Meta popis má 120–160 znakov (má 143)",
+     "details": []
+    },
+    {
+     "id": "author",
+     "level": "error",
+     "ok": false,
+     "msg": "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)",
+     "details": []
+    },
+    {
+     "id": "author-photo",
+     "level": "error",
+     "ok": false,
+     "msg": "Fotka autora (author_photo, súbor v granula/img/autori/)",
+     "details": []
+    },
+    {
+     "id": "dates",
+     "level": "error",
+     "ok": true,
+     "msg": "Dátumy published a updated (RRRR-MM-DD), updated ≥ published",
+     "details": []
+    },
+    {
+     "id": "changelog",
+     "level": "warn",
+     "ok": true,
+     "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
+     "details": [
+      "2026-11-18: Prvá verzia"
+     ]
+    },
+    {
+     "id": "tldr",
+     "level": "error",
+     "ok": true,
+     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 57)",
+     "details": []
+    },
+    {
+     "id": "tldr-range",
+     "level": "warn",
+     "ok": true,
+     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 57)",
+     "details": []
+    },
+    {
+     "id": "tldr-intro",
+     "level": "error",
+     "ok": true,
+     "msg": "Krátka odpoveď začína priamou odpoveďou, nie úvodom („v tomto článku…“)",
+     "details": []
+    },
+    {
+     "id": "key-points",
+     "level": "error",
+     "ok": true,
+     "msg": "Aspoň 3 kľúčové body (má 4)",
+     "details": []
+    },
+    {
+     "id": "tldr-numbers",
+     "level": "warn",
+     "ok": true,
+     "msg": "Krátka odpoveď a kľúčové body obsahujú aspoň 3 čísla (majú 14)",
+     "details": []
+    },
+    {
+     "id": "definition",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcia „Čo je …?“ s definíciou vo forme „X je Y, ktoré Z“",
+     "details": []
+    },
+    {
+     "id": "sections",
+     "level": "warn",
+     "ok": true,
+     "msg": "3–6 hlavných sekcií (má 6)",
+     "details": []
+    },
+    {
+     "id": "h2-questions",
+     "level": "warn",
+     "ok": true,
+     "msg": "Aspoň polovica nadpisov H2 sú otázky (5 z 7)",
+     "details": [
+      "Alergia na krmivo vs. atopia vs. blchy: porovnanie",
+      "Ako sa potvrdí alergia na krmivo: 6 krokov"
+     ]
+    },
+    {
+     "id": "section-length",
+     "level": "warn",
+     "ok": true,
+     "msg": "Hlavné sekcie majú 200–400 slov",
+     "details": []
+    },
+    {
+     "id": "first-sentence",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každá sekcia začína tučnou prvou vetou = odpoveď na nadpis",
+     "details": []
+    },
+    {
+     "id": "section-numbers",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každá hlavná sekcia má aspoň 1 číslo (ideálne so zdrojom)",
+     "details": []
+    },
+    {
+     "id": "standalone",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcie obstoja samy (žiadne „vyššie“, „ako sme spomenuli“, odsek začínajúci „Toto/To“)",
+     "details": []
+    },
+    {
+     "id": "hero",
+     "level": "warn",
+     "ok": true,
+     "msg": "Obrázok v hlavičke článku (hero, hero_alt)",
+     "details": []
+    },
+    {
+     "id": "images",
+     "level": "warn",
+     "ok": true,
+     "msg": "Obrázky v texte: aspoň 3 obrázky alebo grafy (1 na 2 hlavné sekcie), má 3",
+     "details": []
+    },
+    {
+     "id": "chart",
+     "level": "warn",
+     "ok": true,
+     "msg": "Aspoň 1 graf (blok ::: graf), keď článok porovnáva čísla",
+     "details": []
+    },
+    {
+     "id": "img-alt",
+     "level": "error",
+     "ok": true,
+     "msg": "Každý obrázok má popis (alt)",
+     "details": []
+    },
+    {
+     "id": "img-placeholder",
+     "level": "error",
+     "ok": false,
+     "msg": "Zástupné obrázky sú nahradené skutočnými (pred publikovaním)",
+     "details": [
+      "hero: Pes strednej veľkosti leží na koberci v obývačke a olizuje si prednú labku, medzi prstami je vidieť začervenanú kožu a srsť sfarbenú do hneda od slín",
+      "obrázok: Detail prednej labky psa s červenou kožou medzi prstami a hnedastým sfarbením srsti od olizovania, labku drží ruka majiteľa",
+      "obrázok: Majiteľka drží v ruke obálku so vzorkou psej srsti a pozerá na výsledkový list s dlhým zoznamom potravín, pes sedí vedľa nej"
+     ]
+    },
+    {
+     "id": "img-files",
+     "level": "error",
+     "ok": true,
+     "msg": "Súbory obrázkov existujú (cesta od granula/, napr. img/blog/<slug>/…)",
+     "details": []
+    },
+    {
+     "id": "offer-mid",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka uprostred článku, ktorá sedí k téme (blok ::: ponuka)",
+     "details": []
+    },
+    {
+     "id": "offer-fields",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka má nadpis a text",
+     "details": []
+    },
+    {
+     "id": "offer-link",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka vedie na dotazník (granule-na-mieru.html), nie na konkrétny produkt",
+     "details": []
+    },
+    {
+     "id": "offer-count",
+     "level": "warn",
+     "ok": true,
+     "msg": "Najviac 2 ponuky v texte (má 1), inak to pôsobí ako reklama",
+     "details": []
+    },
+    {
+     "id": "table",
+     "level": "info",
+     "ok": true,
+     "msg": "Porovnávacia tabuľka (odporúčané pri „X vs Y“)",
+     "details": []
+    },
+    {
+     "id": "steps",
+     "level": "info",
+     "ok": true,
+     "msg": "Postup krok za krokom (číslovaný zoznam)",
+     "details": []
+    },
+    {
+     "id": "own-data",
+     "level": "info",
+     "ok": false,
+     "msg": "Vlastné dáta alebo skúsenosť (najväčší diferenciátor)",
+     "details": []
+    },
+    {
+     "id": "faq",
+     "level": "warn",
+     "ok": true,
+     "msg": "Časté otázky: 3–6 otázok v tvare **Otázka?** odpoveď, odpoveď najviac 3 vety (má 5)",
+     "details": []
+    },
+    {
+     "id": "summary",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcia „Zhrnutie“ ako zoznam (hlavný záver, kedy áno/nie, ďalší krok)",
+     "details": []
+    },
+    {
+     "id": "sources",
+     "level": "error",
+     "ok": true,
+     "msg": "Aspoň 3 zdroje s URL (má 9)",
+     "details": []
+    },
+    {
+     "id": "sources-format",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každý zdroj v tvare „Názov – vydavateľ, rok | https://…“",
+     "details": []
+    },
+    {
+     "id": "first-third",
+     "level": "info",
+     "ok": true,
+     "msg": "Kľúčové fakty (čísla) sú v prvej tretine textu",
+     "details": []
+    },
+    {
+     "id": "atomic",
+     "level": "info",
+     "ok": true,
+     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 13)",
+     "details": []
+    },
+    {
+     "id": "self-promo",
+     "level": "warn",
+     "ok": true,
+     "msg": "„Najlepšie X“ len s transparentnou metodikou a bez Granuly na prvom mieste",
+     "details": []
+    },
+    {
+     "id": "claims",
+     "level": "warn",
+     "ok": true,
+     "msg": "Žiadne vyradené tvrdenia a superlatívy z dizajn systému",
+     "details": []
+    },
+    {
+     "id": "recipe-names",
+     "level": "warn",
+     "ok": true,
+     "msg": "Receptúry podľa mäsa (napr. „Jeleň & králik“), nie interné názvy Puppy/Energy",
+     "details": []
+    },
+    {
+     "id": "ty-form",
+     "level": "warn",
+     "ok": true,
+     "msg": "Tykanie („tvoj pes“), nie vykanie",
+     "details": []
+    },
+    {
+     "id": "emoji",
+     "level": "warn",
+     "ok": true,
+     "msg": "Bez emoji",
+     "details": []
+    },
+    {
+     "id": "length",
+     "level": "info",
+     "ok": true,
+     "msg": "Dĺžka článku: 1797 slov (dĺžka nerozhoduje, hustota áno)",
+     "details": []
+    }
+   ],
+   "sections": [
+    {
+     "title": "Čo je potravinová alergia u psa?",
+     "kind": "definition",
+     "words": 97,
+     "numbers": 0,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 1,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Ako často je za svrbením psa alergia na krmivo?",
+     "kind": "main",
+     "words": 248,
+     "numbers": 12,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Alergia na krmivo vs. atopia vs. blchy: porovnanie",
+     "kind": "main",
+     "words": 246,
+     "numbers": 4,
+     "question": false,
+     "firstBold": true,
+     "table": true,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Na aké krmivo je pes najčastejšie alergický?",
+     "kind": "main",
+     "words": 170,
+     "numbers": 13,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 1,
+     "offers": 0
+    },
+    {
+     "title": "Prečo krvný test ani test zo srsti alergiu na krmivo neodhalí?",
+     "kind": "main",
+     "words": 244,
+     "numbers": 10,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 1,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Ako sa potvrdí alergia na krmivo: 6 krokov",
+     "kind": "main",
+     "words": 236,
+     "numbers": 13,
+     "question": false,
+     "firstBold": true,
+     "table": false,
+     "steps": true,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Pomôžu granule s jedným druhom mäsa pri alergii?",
+     "kind": "main",
+     "words": 234,
+     "numbers": 3,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 1
+    },
+    {
+     "title": "Časté otázky",
+     "kind": "faq",
+     "words": 164,
+     "numbers": 6,
+     "question": false,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Zhrnutie",
+     "kind": "summary",
+     "words": 101,
+     "numbers": 3,
+     "question": false,
+     "firstBold": false,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    }
+   ]
   },
   {
    "slug": "taurin-a-l-karnitin-potrebuje-ich-pes",
