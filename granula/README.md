@@ -128,10 +128,14 @@ neposielajú** a čísla karty sa po odoslaní mažú.
 3. **Ceny.** Jednotné pre všetky receptúry (`PARAMS.bagPrices`): 4 kg 35 €, 9 kg 75 €
    (−5 % za kg), 2 × 9 kg 140 € (−11 % za kg). Ceny €/kg bez DPH z podkladov výrobcu
    ostávajú v katalógu len ako informácia. Predplatné (doručenie každých X dní podľa veľkosti balenia, 3 dni pred minutím) dáva navyše −10 %; ďalšia možnosť je jednorazový nákup.
-4. **Platba.** Polia karty sú len vizuál. Nahradiť ich iframe platobnej brány;
-   surové čísla kariet nesmú ísť cez vlastný server.
-5. **Výdajné miesta.** Tlačidlo „Vyber výdajné miesto na mape“ zatiaľ otvorí
-   textové pole; patrí sem widget SPS / Packeta.
+4. **Platba (Stripe).** Stránka platby je podľa návrhu pripravená na Stripe: adresa → Address Element,
+   Apple Pay / G Pay → Express Checkout Element, karta / bankový prevod → Payment Element.
+   Polia sú zatiaľ len vizuál a nič sa neodosiela; surové čísla kariet nesmú ísť cez vlastný server.
+   Treba backend (PaymentIntent / Subscription pre predplatné). Pokladňu otvára prepínač
+   `CHECKOUT_OPEN` v `kviz.js` (teraz `false`: tlačidlo „Objednávky od 20. 11.“ + rezervácia cez Klaviyo).
+   Zľavové kódy zatiaľ neplatia žiadne. Doprava: Packeta aj kuriér `PARAMS.shipping` (4,90 €).
+5. **Výdajné miesta.** Tlačidlo „Vyber výdajné miesto“ zatiaľ otvorí
+   textové pole; patrí sem widget Packeta.
 6. **Recenzie a odborníci.** Mená, citácie a hodnotenia sú z návrhu, nie od
    reálnych ľudí. Pred spustením nahradiť skutočnými. Sekcia odborníkov je skrytá.
 7. **Tvrdenia na webe.** „62 % mäsa“ je nahradené textom „Kvalitné mäso“ a páska

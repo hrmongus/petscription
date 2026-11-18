@@ -540,6 +540,112 @@
 .rm-rw .rm-h span{color:var(--k)}
 @media (max-width:1100px){.rm-rw .rm-h{padding:0 32px}}
 @media (max-width:760px){.rm-rw{gap:16px;padding:0 0 40px}.rm-rw .rm-h{padding:0 16px}}
+
+/* ---------- platba (návrh „platba desktop / mobil“) ---------- */
+.screen.on.pay{flex-direction:column}
+.pay{max-width:1440px;width:100%;margin:0 auto;padding:36px 80px 72px;gap:36px}
+.pay-top{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.pay-top .logo{font-size:26px;padding:6px 10px 5px}
+.pay-back{font-weight:700;font-size:15px;text-decoration:underline;text-underline-offset:4px;color:var(--n)}
+.pay-h{font-size:clamp(30px,3.4vw,44px);line-height:1.02}
+.pay-h span{color:var(--k)}
+.pay-h:focus{outline:none}
+.pay-h2{font-size:clamp(20px,2vw,28px);font-weight:900;text-transform:uppercase}
+.pay-plans{display:flex;flex-direction:column;gap:16px}
+.pp-opts{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding-top:8px}
+.pp{position:relative;display:flex;align-items:center;gap:16px;padding:24px 26px;border:2px solid var(--n);background:var(--ml);color:var(--n);cursor:pointer}
+.pp input,.so input,.pm-tab input{position:absolute;opacity:0;pointer-events:none}
+.pp:has(input:checked){background:var(--k);color:var(--m)}
+.pp:has(input:focus-visible),.so:has(input:focus-visible),.pm-tab:has(input:focus-visible){outline:3px solid var(--n);outline-offset:2px}
+.pp-rec{position:absolute;right:-10px;top:-18px;background:var(--o);color:var(--n);font-weight:900;text-transform:uppercase;line-height:1;transform:rotate(4deg);font-size:15px;padding:8px 12px 7px}
+.pp-box,.so-box{width:24px;height:24px;flex:none;border:2px solid currentColor;display:flex;align-items:center;justify-content:center}
+.pp-box::after,.so-box::after{content:"";width:12px;height:12px;background:currentColor;transform:scale(0)}
+.pp:has(input:checked) .pp-box::after,.so:has(input:checked) .so-box::after{transform:scale(1)}
+.pp-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.pp-txt b{font-size:clamp(20px,2vw,28px);font-weight:900;text-transform:uppercase;line-height:1}
+.pp-txt span{font-size:15px}
+.pp-pr{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex:none}
+.pp-pr b{font-size:clamp(20px,2vw,28px);font-weight:900;line-height:1}
+.pp-pr span{font-size:12px}
+.pay-grid{display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:72px;align-items:start}
+.pay-main{display:flex;flex-direction:column;gap:28px}
+.pay-sec{display:flex;flex-direction:column;gap:14px;padding-bottom:28px;border-bottom:1px solid #CDBFB0}
+.ps-h{display:flex;align-items:center;gap:12px}
+.ps-n{width:30px;height:30px;background:var(--n);color:var(--m);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px}
+.ps-h h2{font-size:20px;font-weight:900;text-transform:uppercase}
+.pf{display:flex;flex-direction:column;gap:6px;min-width:0}
+.pf > span{font-size:13px;font-weight:700}
+.pay .input{height:48px;border:2px solid var(--n);background:var(--ml);padding:0 14px;font:500 15px Montserrat,sans-serif;color:var(--n);border-radius:0;width:100%}
+.pay .input:focus{outline:none;border-color:var(--k);box-shadow:0 0 0 2px var(--k)}
+.pay .input[aria-invalid="true"]{border-color:var(--err)}
+.pf2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pf2.zip{grid-template-columns:1fr 2fr}
+.ship-opts{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.so{display:flex;align-items:center;gap:14px;padding:14px 16px;border:2px solid var(--n);background:var(--ml);cursor:pointer}
+.so .so-box{width:20px;height:20px}.so .so-box::after{width:10px;height:10px}
+.so:has(input:checked){border:3px solid var(--k);padding:13px 15px;color:var(--k)}
+.so-txt{flex:1;display:flex;flex-direction:column;gap:2px;color:var(--n)}
+.so-txt b{font-size:15px;font-weight:800}
+.so-txt span{font-size:13px}
+.so-pr{font-size:15px;font-weight:900;color:var(--n)}
+.so-point{display:flex;flex-direction:column;gap:10px;padding:0 0 4px 50px}
+.so-point .link-under{align-self:flex-start;font:700 14px Montserrat,sans-serif;background:none;border:0;border-bottom:2px solid currentColor;padding:0 0 2px;color:var(--n);cursor:pointer}
+.wallet:disabled{cursor:not-allowed}
+.wallets{display:flex;gap:10px}
+.wallet{flex:1;height:48px;border:0;background:var(--n);color:#fff;font:700 16px Montserrat,sans-serif;cursor:pointer}
+.wallet:hover{background:var(--k)}
+.pay-or{display:flex;align-items:center;gap:12px;font-size:13px}
+.pay-or span{flex:1;height:1px;background:#CDBFB0}
+.pm{border:2px solid var(--n);background:var(--ml);padding:16px;display:flex;flex-direction:column;gap:12px}
+.pm-tabs{display:flex;gap:8px}
+.pm-tab{position:relative;flex:1;border:1.5px solid #CDBFB0;padding:10px 12px;font-size:14px;font-weight:600;cursor:pointer}
+.pm-tab:has(input:checked){border:2px solid var(--k);font-weight:800}
+.pm-card{display:flex;flex-direction:column;gap:12px}
+.pm-bank{font-size:14px;line-height:1.5}
+.pay-side{display:flex;flex-direction:column;gap:18px;position:sticky;top:24px}
+.pay-sum{border:2px solid var(--n);background:var(--ml);padding:26px;display:flex;flex-direction:column;gap:18px}
+.sum-prod{display:flex;gap:16px;align-items:center}
+.sum-img{width:84px;height:104px;flex:none;display:flex;align-items:center;justify-content:center}
+.sum-img img{height:100%;width:auto}
+.sum-txt{display:flex;flex-direction:column;gap:4px}
+.sum-txt b{font-size:17px;font-weight:900;text-transform:uppercase;line-height:1.15}
+.sum-txt span{font-size:14px}
+.sum-txt a{font-size:13px;font-weight:700;color:var(--n);text-decoration:underline;text-underline-offset:3px;align-self:flex-start}
+.sum-lines{display:flex;flex-direction:column;gap:10px;padding-top:16px;border-top:1px solid #CDBFB0}
+.sum-lines > div{display:flex;justify-content:space-between;gap:12px;font-size:15px;font-weight:500}
+.sum-lines .disc{color:var(--k);font-weight:700}
+.promo{gap:8px !important}
+.promo input{flex:1;height:42px;border:2px solid var(--n);background:var(--m);padding:0 12px;font:500 14px Montserrat,sans-serif;border-radius:0;min-width:0}
+.promo button{height:42px;border:2px solid var(--n);background:var(--m);padding:0 14px;font:800 13px Montserrat,sans-serif;text-transform:uppercase;cursor:pointer;color:var(--n)}
+.promo button:hover{background:var(--n);color:var(--m)}
+.promo-msg{font-size:13px}
+.sum-total{padding-top:14px;border-top:2px solid var(--n)}
+.sum-total > div{display:flex;justify-content:space-between;font-size:18px;font-weight:900}
+.sum-total p{font-size:13px;margin-top:4px}
+.pay-cta{width:100%;min-height:60px;font-size:18px}
+.pay-cta:disabled{opacity:.55;cursor:not-allowed}
+.pay-fine{font-size:13px;line-height:1.5;text-align:center}
+.pay .co-ann{font-size:13px;line-height:1.5;text-align:center}
+@media (max-width:1100px){.pay{padding:28px 32px 56px}.pay-grid{grid-template-columns:minmax(0,1fr) 360px;gap:40px}}
+@media (max-width:860px){
+  .pay{padding:18px 16px 40px;gap:24px}
+  .pay-top .logo{font-size:20px}
+  .pay-back{font-size:14px}
+  .pp-opts{grid-template-columns:minmax(0,1fr);gap:14px}
+  .pp{padding:18px 16px;gap:12px}
+  .pp-rec{font-size:12px;padding:6px 9px 5px;top:-14px;right:-6px}
+  .pp-txt b,.pp-pr b{font-size:20px}
+  .pp-txt span{font-size:13px}
+  .pay-grid{display:flex;flex-direction:column;gap:24px}
+  .pay-side{display:contents}
+  .pay-sum{order:1;padding:18px}
+  .pay-main{order:2;gap:22px}
+  .pay-act{order:3;display:flex;flex-direction:column;gap:14px}
+  .pay-sec{padding-bottom:22px}
+  .so-point{padding-left:0}
+  .sum-img{width:64px;height:80px}
+  .sum-txt b{font-size:15px}
+}
 /* ---------- výsledok (návrh „výsledok desktop / mobil“) ---------- */
 .screen.on.res2{flex-direction:column}
 .rh{background:var(--k);color:var(--m);padding:28px 80px 48px;display:flex;flex-direction:column;gap:20px}
@@ -997,76 +1103,101 @@
   </section>
 </section>
 
-<!-- ============ OBJEDNÁVKA ============ -->
-<form class="screen split co" data-screen="objednavka" data-title="Objednávka — Granula" id="order" novalidate>
-  <div class="pane">
-    <div class="topline">
-      <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
-      <a class="back" href="#vysledok">← Späť na výsledok</a>
-    </div>
-    <h1 class="display q-title" tabindex="-1" id="t-plan">Ako to chceš <span>dostávať?</span></h1>
-    <div class="co-tape" aria-hidden="true"><div class="tape"><div class="track"><span>Momentálne vyrábame</span><span class="star"></span><span>Spúšťame 20. 11.</span><span class="star"></span><span>Nezáväzná rezervácia s −30&nbsp;%</span><span class="star"></span><span>Momentálne vyrábame</span><span class="star"></span><span>Spúšťame 20. 11.</span><span class="star"></span><span>Nezáväzná rezervácia s −30&nbsp;%</span><span class="star"></span><span>Momentálne vyrábame</span><span class="star"></span><span>Spúšťame 20. 11.</span><span class="star"></span><span>Nezáväzná rezervácia s −30&nbsp;%</span><span class="star"></span><span>Momentálne vyrábame</span><span class="star"></span><span>Spúšťame 20. 11.</span><span class="star"></span><span>Nezáväzná rezervácia s −30&nbsp;%</span><span class="star"></span></div></div></div>
-    <p class="sr-only">Momentálne vyrábame, spúšťame 20. novembra. Nezáväzná rezervácia s 30&nbsp;% zľavou.</p>
-    <div class="opts c2 locked" role="radiogroup" aria-labelledby="t-plan" aria-disabled="true">
-      <label class="opt"><input type="radio" name="plan" value="mesiac" disabled><b id="plan-every">Predplatné</b><small id="plan-note">Vrece príde samo podľa dennej dávky.</small><span class="price" data-plan-price="mesiac"></span><span class="rec">−10&nbsp;%</span></label>
-      <label class="opt"><input type="radio" name="plan" value="raz" disabled><b>Jednorazovo</b><small>Jedno vrece, bez záväzku.</small><span class="price" data-plan-price="raz"></span></label>
-    </div>
-    <div class="kl-embed co-embed"><div class="klaviyo-form-RuSXNc"></div><div class="kl-fallback" hidden><p>Formulár na rezerváciu beží cez Klaviyo a potrebuje marketingové cookies.</p><button type="button" class="btn btn-o btn-sm" data-klaviyo-consent>Povoliť a zobraziť formulár</button></div></div>
-    <!-- do štartu (20. 11.) sú doručenie, kontakt a platba vypnuté -->
-    <fieldset class="co-locked" disabled aria-label="Doručenie, kontakt a platba budú dostupné od 20. 11.">
-    <div class="grid2">
-      <fieldset class="box" style="border:0;margin:0">
-        <legend class="t" style="padding:0;float:left;width:100%">DORUČENIE</legend>
-        <div class="chips">
-          <label class="chip"><input type="radio" name="ship" value="sps" checked>SPS výdajné miesto</label>
-          <label class="chip"><input type="radio" name="ship" value="packeta">Packeta Z-BOX</label>
-          <label class="chip"><input type="radio" name="ship" value="adresa">Na adresu</label>
-        </div>
-        <div id="ship-point">
-          <button type="button" class="pick" id="pick-btn" aria-expanded="false" aria-controls="point">Vyber výdajné miesto na mape <span aria-hidden="true">→</span></button>
-          <label class="sr-only" for="point">Výdajné miesto</label>
-          <input class="input" id="point" name="point" autocomplete="off" placeholder="Mesto alebo PSČ výdajného miesta" hidden style="margin-top:8px">
-        </div>
-        <div id="ship-addr" hidden style="flex-direction:column;gap:10px">
-          <label class="sr-only" for="street">Ulica a číslo</label><input class="input" id="street" name="street" autocomplete="street-address" placeholder="Ulica a číslo">
-          <div class="row2" style="gap:10px">
-            <span><label class="sr-only" for="zip">PSČ</label><input class="input" id="zip" name="zip" autocomplete="postal-code" inputmode="numeric" placeholder="PSČ"></span>
-            <span><label class="sr-only" for="city">Mesto</label><input class="input" id="city" name="city" autocomplete="address-level2" placeholder="Mesto"></span>
-          </div>
-        </div>
-        <div class="note">Doprava 4,90&nbsp;€ za každé doručenie.</div>
-      </fieldset>
-      <div class="box">
-        <div class="t">KONTAKT</div>
-        <label class="sr-only" for="email">E-mail</label><input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="E-mail" required>
-        <label class="sr-only" for="fullname">Meno a priezvisko</label><input class="input" id="fullname" name="fullname" autocomplete="name" placeholder="Meno a priezvisko" required>
-        <label class="sr-only" for="tel">Telefón (pre kuriéra)</label><input class="input" id="tel" name="tel" type="tel" autocomplete="tel" placeholder="Telefón (pre kuriéra)" required>
-      </div>
-    </div>
-    <div class="box">
-      <div class="t">PLATBA</div>
-      <div class="cardrow">
-        <span><label class="sr-only" for="cc">Číslo karty</label><input class="input" id="cc" name="cc" autocomplete="cc-number" inputmode="numeric" placeholder="Číslo karty" required></span>
-        <span><label class="sr-only" for="exp">Platnosť MM / RR</label><input class="input" id="exp" name="exp" autocomplete="cc-exp" inputmode="numeric" placeholder="MM / RR" required></span>
-        <span><label class="sr-only" for="cvc">CVC</label><input class="input" id="cvc" name="cvc" autocomplete="cc-csc" inputmode="numeric" placeholder="CVC" required></span>
-      </div>
-    </div>
-    </fieldset>
-    <p class="err" role="alert" hidden data-err="objednavka">Doplň zvýraznené polia.</p>
+<!-- ============ OBJEDNÁVKA (platba) ============ -->
+<!-- Polia doručenia a platby sú pripravené na Stripe (Address Element, Express Checkout Element,
+     Payment Element). Kým nie je napojený backend, nič sa neodosiela; pozri README. -->
+<form class="screen pay" data-screen="objednavka" data-title="Platba — Granula" id="order" novalidate>
+  <div class="pay-top">
+    <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
+    <a class="pay-back" href="#vysledok">← Späť na výber</a>
   </div>
-  <aside class="on-brand" style="background:var(--n);color:var(--m)">
-    <div class="sum-t">ZHRNUTIE</div>
-    <div class="sum-item"><img class="mini" id="s-pack" src="" alt="" width="896" height="1200"><div><b id="s-name">Granule na mieru</b><span id="s-meta"></span></div></div>
-    <div class="lines">
-      <div><span id="s-bag-l"></span><span id="s-bag"></span></div>
-      <div class="disc" id="s-disc-row"><span id="s-disc-l"></span><span id="s-disc"></span></div>
-      <div><span>Doprava</span><span>4,90&nbsp;€</span></div>
+  <h1 class="display pay-h q-title" tabindex="-1">Posledný krok. <span>Platba.</span></h1>
+  <div class="pay-plans">
+    <h2 class="pay-h2" id="t-plan">Ako chceš nakupovať?</h2>
+    <div class="pp-opts" role="radiogroup" aria-labelledby="t-plan">
+      <label class="pp"><input type="radio" name="plan" value="mesiac"><span class="pp-rec">Odporúčame</span><span class="pp-box" aria-hidden="true"></span>
+        <span class="pp-txt"><b>Predplatné</b><span id="plan-note">zrušíš kedykoľvek</span></span>
+        <span class="pp-pr"><b data-plan-price="mesiac"></b><span data-plan-kg></span></span></label>
+      <label class="pp"><input type="radio" name="plan" value="raz"><span class="pp-box" aria-hidden="true"></span>
+        <span class="pp-txt"><b>Jednorazovo</b><span>len toto vrece</span></span>
+        <span class="pp-pr"><b data-plan-price="raz"></b><span data-plan-kg></span></span></label>
     </div>
-    <div class="total"><span>Spolu za doručenie</span><b id="s-total"></b></div>
-    <button type="submit" class="btn btn-o" id="s-submit" disabled aria-disabled="true">Objednávky od 20. 11.</button>
-    <div class="co-ann"><b>Štartujeme 20. novembra</b> <span class="star" aria-hidden="true"></span> Prvé vrecko −30&nbsp;% pre tých, čo sa zapíšu vopred <button type="button" class="co-ann-cta" data-klaviyo-open="YcSYzw">Chcem byť prvý →</button></div>
-    <p id="s-note"></p>
-  </aside>
+  </div>
+  <div class="pay-grid">
+    <div class="pay-main">
+      <section class="pay-sec" aria-labelledby="t-contact">
+        <div class="ps-h"><span class="ps-n" aria-hidden="true">1</span><h2 id="t-contact">Kontakt</h2></div>
+        <label class="pf"><span>E-mail</span><input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="meno@email.sk" required></label>
+      </section>
+      <section class="pay-sec" aria-labelledby="t-ship">
+        <div class="ps-h"><span class="ps-n" aria-hidden="true">2</span><h2 id="t-ship">Doručenie</h2></div>
+        <div class="pf2">
+          <label class="pf"><span>Meno</span><input class="input" id="fname" name="fname" autocomplete="given-name" required></label>
+          <label class="pf"><span>Priezvisko</span><input class="input" id="lname" name="lname" autocomplete="family-name" required></label>
+        </div>
+        <label class="pf"><span>Ulica a číslo</span><input class="input" id="street" name="street" autocomplete="street-address" required></label>
+        <div class="pf2 zip">
+          <label class="pf"><span>PSČ</span><input class="input" id="zip" name="zip" autocomplete="postal-code" inputmode="numeric" required></label>
+          <label class="pf"><span>Mesto</span><input class="input" id="city" name="city" autocomplete="address-level2" required></label>
+        </div>
+        <div class="ship-opts" role="radiogroup" aria-label="Spôsob doručenia">
+          <label class="so"><input type="radio" name="ship" value="packeta" checked><span class="so-box" aria-hidden="true"></span>
+            <span class="so-txt"><b>Packeta – výdajné miesto</b><span>2–3 pracovné dni</span></span><b class="so-pr" data-ship-price></b></label>
+          <div class="so-point" id="ship-point">
+            <button type="button" class="link-under" id="pick-btn" aria-expanded="false" aria-controls="point">Vyber výdajné miesto →</button>
+            <label class="pf" id="point-f" hidden><span>Výdajné miesto</span><input class="input" id="point" name="point" autocomplete="off" placeholder="Mesto alebo PSČ výdajného miesta"></label>
+          </div>
+          <label class="so"><input type="radio" name="ship" value="kurier"><span class="so-box" aria-hidden="true"></span>
+            <span class="so-txt"><b>Kuriér na adresu</b><span>1–2 pracovné dni</span></span><b class="so-pr" data-ship-price></b></label>
+          <label class="pf" id="tel-f" hidden><span>Telefón pre kuriéra</span><input class="input" id="tel" name="tel" type="tel" autocomplete="tel" placeholder="+421"></label>
+        </div>
+      </section>
+      <section class="pay-sec" aria-labelledby="t-payment">
+        <div class="ps-h"><span class="ps-n" aria-hidden="true">3</span><h2 id="t-payment">Platba</h2></div>
+        <div class="wallets">
+          <button type="button" class="wallet" data-wallet="apple">Apple Pay</button>
+          <button type="button" class="wallet" data-wallet="google">G Pay</button>
+        </div>
+        <div class="pay-or"><span></span>alebo<span></span></div>
+        <div class="pm">
+          <div class="pm-tabs" role="radiogroup" aria-label="Spôsob platby">
+            <label class="pm-tab"><input type="radio" name="pm" value="karta" checked>Karta</label>
+            <label class="pm-tab"><input type="radio" name="pm" value="prevod">Bankový prevod</label>
+          </div>
+          <div id="pm-card" class="pm-card">
+            <label class="pf"><span>Číslo karty</span><input class="input" id="cc" name="cc" autocomplete="cc-number" inputmode="numeric" placeholder="1234 1234 1234 1234"></label>
+            <div class="pf2">
+              <label class="pf"><span>Platnosť</span><input class="input" id="exp" name="exp" autocomplete="cc-exp" inputmode="numeric" placeholder="MM / RR"></label>
+              <label class="pf"><span>CVC</span><input class="input" id="cvc" name="cvc" autocomplete="cc-csc" inputmode="numeric" placeholder="123"></label>
+            </div>
+          </div>
+          <p id="pm-bank" class="pm-bank" hidden>Po objednávke ti na e-mail pošleme údaje na prevod. Vrece odošleme, keď platba príde.</p>
+        </div>
+      </section>
+      <p class="err" role="alert" hidden data-err="objednavka">Doplň zvýraznené polia.</p>
+    </div>
+    <div class="pay-side">
+      <div class="pay-sum">
+        <div class="sum-prod">
+          <div class="sum-img"><img id="s-pack" src="" alt="" width="896" height="1200"></div>
+          <div class="sum-txt"><b id="s-name">Granule na mieru</b><span id="s-meta"></span><a href="#vysledok">Zmeniť</a></div>
+        </div>
+        <div class="sum-lines">
+          <div><span id="s-bag-l"></span><span id="s-bag"></span></div>
+          <div class="disc" id="s-disc-row"><span id="s-disc-l"></span><span id="s-disc"></span></div>
+          <div><span>Doprava</span><span id="s-ship"></span></div>
+          <div class="promo"><label class="sr-only" for="promo">Zľavový kód</label><input id="promo" name="promo" placeholder="Zľavový kód" autocomplete="off"><button type="button" id="promo-btn">Použiť</button></div>
+          <p class="promo-msg" id="promo-msg" role="status" hidden></p>
+        </div>
+        <div class="sum-total"><div><span>Spolu dnes</span><b id="s-total"></b></div><p id="s-note"></p></div>
+      </div>
+      <div class="pay-act">
+        <button type="submit" class="btn btn-o pay-cta" id="s-submit"></button>
+        <p class="pay-fine" id="s-fine">Platbu bezpečne spracuje Stripe. Predplatné zrušíš jedným klikom v účte.</p>
+        <div class="co-ann" id="s-ann" hidden><b>Štartujeme 20. novembra</b> <span class="star" aria-hidden="true"></span> Prvé vrecko −30&nbsp;% pre tých, čo sa zapíšu vopred <button type="button" class="co-ann-cta" data-klaviyo-open="YcSYzw">Chcem byť prvý →</button></div>
+      </div>
+    </div>
+  </div>
 </form>
 
 <!-- ============ HOTOVO ============ -->

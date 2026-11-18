@@ -477,61 +477,82 @@
   });
 
   /* ---------------- objednávka ---------------- */
+  // Objednávky sa otvoria, keď bude napojená platobná brána (Stripe) — dovtedy tlačidlo len informuje o štarte.
+  var CHECKOUT_OPEN = false;
+  function days(n) { return n + " " + plural(n, "deň", "dni", "dní"); }
   function renderOrder() {
-    var r = result(), p = r.product, x = bagOf(r), plans = r.params.plans, d = plans[state.plan];
+    var r = result(), p = r.product, x = bagOf(r), plans = r.params.plans;
+    var d = plans[state.plan] || 0, ship = r.params.shipping;
+    order.querySelectorAll('input[name="plan"]').forEach(function (i) { i.checked = i.value === state.plan; });
     Object.keys(plans).forEach(function (k) {
-      order.querySelector('[data-plan-price="' + k + '"]').textContent =
-        x.price == null ? "cena doplniť" : eur(x.price * (1 - plans[k])) + (k === "raz" ? "" : " / vrece");
+      order.querySelector('[data-plan-price="' + k + '"]').textContent = x.price == null ? "cena —" : eur(x.price * (1 - plans[k]));
     });
-    // predplatné: interval podľa veľkosti balenia
-    $("plan-every").textContent = "Každých " + x.days + " " + plural(x.days, "deň", "dni", "dní");
-    $("plan-note").textContent = "Ďalšie " + x.bag.label + " balenie pošleme " + r.params.reorderLeadDays + " " + plural(r.params.reorderLeadDays, "deň", "dni", "dní") + " predtým, ako sa minie.";
+    order.querySelectorAll("[data-plan-kg]").forEach(function (e) { e.textContent = "za " + x.bag.label; });
+    $("plan-note").textContent = "každých " + days(x.days) + " · zrušíš kedykoľvek";
+    order.querySelectorAll("[data-ship-price]").forEach(function (e) { e.textContent = eur(ship); });
     $("s-pack").src = p.img;
+    $("s-pack").alt = "Vrece Granula: " + p.name;
     $("s-name").textContent = p.name;
-    $("s-meta").textContent = x.bag.label + " · " + r.dose.grams + " g denne · vydrží " + x.days + " " + plural(x.days, "deň", "dni", "dní");
+    $("s-meta").textContent = x.bag.label + " · denná dávka " + r.dose.grams + " g";
     $("s-bag-l").textContent = "Vrece " + x.bag.label;
-    $("s-bag").textContent = eur(x.price);
+    $("s-bag").textContent = x.price == null ? "—" : eur(x.price);
     $("s-disc-row").hidden = !d || x.price == null;
     $("s-disc-l").textContent = "Zľava predplatného −" + Math.round(d * 100) + "\u00a0%";
     $("s-disc").textContent = x.price == null ? "" : "−" + eur(x.price * d);
-    $("s-total").textContent = x.price == null ? "—" : eur(Math.round((x.price * (1 - d) + r.params.shipping) * 100) / 100);
-    // objednávky sú do štartu (20. 11.) vypnuté, tlačidlo má pevný text
-    $("s-note").textContent = d
-      ? "Platíš pri každom doručení. Vrece " + x.bag.label + " posielame každých " + x.days + " " + plural(x.days, "deň", "dni", "dní") + ", vždy " + r.params.reorderLeadDays + " " + plural(r.params.reorderLeadDays, "deň", "dni", "dní") + " predtým, ako sa minie."
-      : "Platíš raz. Ďalšie vrece si objednáš, keď budeš chcieť.";
+    $("s-ship").textContent = eur(ship);
+    var total = x.price == null ? null : Math.round((x.price * (1 - d) + ship) * 100) / 100;
+    $("s-total").textContent = total == null ? "—" : eur(total);
+    $("s-note").textContent = d ? "Potom " + eur(total) + " každých " + days(x.days) + ". Ďalšie vrece pošleme " + days(r.params.reorderLeadDays) + " predtým, ako sa minie." : "Platíš raz. Ďalšie vrece si objednáš, keď budeš chcieť.";
+    $("s-fine").textContent = "Platbu bezpečne spracuje Stripe." + (d ? " Predplatné zrušíš jedným klikom v účte." : "");
+    var btn = $("s-submit");
+    btn.disabled = !CHECKOUT_OPEN;
+    btn.setAttribute("aria-disabled", String(!CHECKOUT_OPEN));
+    btn.textContent = CHECKOUT_OPEN ? (total == null ? "Objednať" : "Zaplatiť " + eur(total)) : "Objednávky od 20. 11.";
+    $("s-ann").hidden = CHECKOUT_OPEN;
+    order.querySelectorAll(".wallet").forEach(function (w) { w.disabled = !CHECKOUT_OPEN; });
   }
   function shipUI() {
     var v = order.ship.value;
-    $("ship-point").hidden = v === "adresa";
-    $("ship-addr").hidden = v !== "adresa";
+    $("ship-point").hidden = v !== "packeta";
+    $("tel-f").hidden = v !== "kurier";
+    var bank = order.pm.value === "prevod";
+    $("pm-card").hidden = bank; $("pm-bank").hidden = !bank;
   }
   $("pick-btn").addEventListener("click", function () {
-    // sem príde widget dopravcu (SPS / Packeta); dovtedy textové pole
-    var f = $("point"); f.hidden = false; this.setAttribute("aria-expanded", "true"); f.focus();
+    // sem príde widget Packety (výber výdajného miesta na mape); dovtedy textové pole
+    $("point-f").hidden = false; this.setAttribute("aria-expanded", "true"); $("point").focus();
+  });
+  $("promo-btn").addEventListener("click", function () {
+    var v = $("promo").value.trim(), m = $("promo-msg");
+    m.hidden = !v;
+    m.textContent = v ? "Kód „" + v + "“ nepoznáme." : "";
   });
   order.addEventListener("change", function (e) {
     if (e.target.name === "plan") { state.plan = e.target.value; save(); renderOrder(); }
-    if (e.target.name === "ship") shipUI();
+    if (e.target.name === "ship" || e.target.name === "pm") shipUI();
   });
-  order.addEventListener("submit", function (e) {
-    e.preventDefault();
-    if ($("s-submit").disabled) return; // pred štartom sa neobjednáva
-    var addr = order.ship.value === "adresa";
-    var need = ["email", "fullname", "tel", "cc", "exp", "cvc"].concat(addr ? ["street", "zip", "city"] : ["point"]);
+  function checkout(wallet) {
+    if (!CHECKOUT_OPEN) return; // pred štartom sa neobjednáva
+    var need = ["email", "fname", "lname", "street", "zip", "city"];
+    if (order.ship.value === "packeta") need.push("point");
+    if (order.ship.value === "kurier") need.push("tel");
+    if (!wallet && order.pm.value === "karta") need = need.concat(["cc", "exp", "cvc"]);
     var bad = need.filter(function (n) {
       var f = order.elements[n];
       return !f.value.trim() || (f.type === "email" && !f.checkValidity());
     });
-    order.querySelectorAll(".input").forEach(function (f) { f.style.borderColor = ""; f.removeAttribute("aria-invalid"); });
-    bad.forEach(function (n) { var f = order.elements[n]; f.style.borderColor = "var(--err)"; f.setAttribute("aria-invalid", "true"); });
-    if (bad.length && bad.indexOf("point") !== -1) { $("point").hidden = false; }
+    order.querySelectorAll(".input").forEach(function (f) { f.removeAttribute("aria-invalid"); });
+    bad.forEach(function (n) { order.elements[n].setAttribute("aria-invalid", "true"); });
+    if (bad.indexOf("point") !== -1) $("point-f").hidden = false;
     order.querySelector('[data-err="objednavka"]').hidden = !bad.length;
     if (bad.length) { order.elements[bad[0]].focus(); return; }
-    // Žiadne dáta sa nikam neposielajú: platba sa napojí cez platobnú bránu (pozri README).
+    // Žiadne dáta sa nikam neposielajú: platbu spracuje Stripe po napojení backendu (pozri README).
     order.querySelectorAll("#cc,#exp,#cvc").forEach(function (f) { f.value = ""; });
     state.ordered = true; save();
     location.hash = "hotovo";
-  });
+  }
+  order.addEventListener("submit", function (e) { e.preventDefault(); checkout(false); });
+  order.querySelectorAll(".wallet").forEach(function (w) { w.addEventListener("click", function () { checkout(true); }); });
 
   /* ---------------- hotovo ---------------- */
   function renderDone() {
