@@ -668,6 +668,61 @@ def index_html(posts):
     ld = {"@context": "https://schema.org", "@type": "Blog", "name": "%s — %s" % (SITE_NAME, BLOG_TITLE), "url": BASE_URL + "/blog/"}
     return page(pre=pre, title="Blog — Granula", description=BLOG_LEAD, canonical=BASE_URL + "/blog/", body=body, jsonld=ld)
 
+# ---------------------------------------------------------------- blog na úvodnej stránke
+
+HOME_START, HOME_END = "<!-- blog-home:start (generuje blog/build.py) -->", "<!-- blog-home:end -->"
+
+
+def home_section(posts, limit=8):
+    """Sekcia s náhľadmi publikovaných článkov na granula/index.html. Bez článkov je skrytá."""
+    cards = []
+    for p in posts[:limit]:
+        m = p["meta"]
+        excerpt = plain(m.get("tldr", ""))
+        excerpt = excerpt if len(excerpt) <= 150 else excerpt[:145].rsplit(" ", 1)[0] + "…"
+        hero = str(m.get("hero", ""))
+        img = ('<img src="%s" alt="" loading="lazy">' % html.escape(hero)) if hero and not is_placeholder(hero) else '<span class="hb-noimg" aria-hidden="true"></span>'
+        cards.append('<li class="hb-card"><a href="blog/%s/"><span class="hb-img">%s</span><span class="hb-body">'
+                     '<span class="hb-date">%s · %d&nbsp;min</span><span class="hb-title">%s</span><span class="hb-ex">%s</span></span></a></li>'
+                     % (p["slug"], img, sk_date(m.get("updated", "")), max(1, round(p["words"] / 200)), inline(m["title"]), html.escape(excerpt)))
+    cards.append('<li class="hb-card hb-all"><a href="blog/"><span class="hb-all-n">%d</span><span class="hb-title">Všetky články</span>'
+                 '<span class="hb-ex">Výživa, kŕmenie a zdravie psov s číslami a zdrojmi.</span><span class="hb-more">Otvoriť blog →</span></a></li>' % len(posts))
+    hidden = "" if posts else " hidden"
+    return f"""{HOME_START}
+<section id="blog" class="sec hb bt" data-carousel{hidden}>
+  <div class="wrap">
+    <div class="hb-head">
+      <div class="head">
+        <div class="eyebrow">Blog</div>
+        <h2 class="h2">Čo jesť, <span class="ac">koľko a prečo.</span></h2>
+      </div>
+      <div class="hb-acts">
+        <a class="link-under" href="blog/">Všetky články →</a>
+        <div class="ig-arrows">
+          <button type="button" class="ig-arw" aria-label="Predchádzajúce články" data-carousel-prev>←</button>
+          <button type="button" class="ig-arw dark" aria-label="Ďalšie články" data-carousel-next>→</button>
+        </div>
+      </div>
+    </div>
+    <ul class="hb-row" data-carousel-row tabindex="0" aria-label="Najnovšie články">
+      {"".join(cards)}
+    </ul>
+  </div>
+</section>
+{HOME_END}"""
+
+
+def write_home(posts):
+    path = os.path.join(SITE_DIR, "index.html")
+    s = open(path, encoding="utf-8").read()
+    if HOME_START not in s or HOME_END not in s:
+        print("PROBLÉM granula/index.html nemá značky %s … %s, sekcia blogu sa nevložila" % (HOME_START, HOME_END))
+        return
+    a, b = s.index(HOME_START), s.index(HOME_END) + len(HOME_END)
+    new = s[:a] + home_section(posts) + s[b:]
+    if new != s:
+        write(path, new)
+
 # ---------------------------------------------------------------- build
 
 def load_posts():
@@ -770,6 +825,7 @@ def build(check_only=False):
                   page(pre="../../", title=title, description=m.get("description", ""), canonical=url,
                        body=article_html(p, "../../", False), jsonld=jsonld(p, url), image=str(m.get("hero", ""))))
     write(os.path.join(HERE, "index.html"), index_html(pub))
+    write_home(pub)
 
     manifest = {"built": dt.datetime.now().strftime("%Y-%m-%d %H:%M"), "base": BASE_URL, "problems": problems, "posts": [{
         "slug": p["slug"], "file": p["file"], "title": p["meta"].get("title", ""), "status": p["status"], "wanted": p["wanted"],
