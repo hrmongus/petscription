@@ -21,6 +21,21 @@
   ];
   // [obrázok, názov, krátky názov na mobil, podnadpis, %]
   var RECIPES = {
+    "jahna": {
+      name: "Jahňa s batátmi",
+      full: "Jahňa s batátmi a čučoriedkami",
+      bag: { src: D + "vrece-jahna.webp", w: 630, h: 1003, alt: "Rozrezané vrecko Granula Jahňa s batátmi a čučoriedkami: jahňacie mäso, batáty, tuk, zelenina, čučoriedky a jablká" },
+      items: [
+        ["g-jahna", "Jahňacie mäso", null, null, 51],
+        ["g-bataty", "Batáty", null, null, 19],
+        ["g-bravcovy-tuk", "Jahňací a bravčový tuk", null, null, 10],
+        ["g-mrkva", "Zelenina", null, "mrkva, repa, špenát", 10],
+        ["g-cucoriedky", "Čučoriedky", null, null, 4],
+        ["g-jablko", "Jablká", null, null, 3],
+        ["g-konope", "Konopná múka", null, null, 2],
+        ["g-harmancek", "Bylinky a funkčné zložky", "Bylinky", "pestrec, petržlen, yucca, gaštan, kvasnice, kolagén", 1]
+      ]
+    },
     "hovadzie-morka-jahna": {
       name: "Hovädzie, morka & jahňa",
       full: "Hovädzie, morka a jahňa s ryžou",
