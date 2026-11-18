@@ -21,6 +21,19 @@
   ];
   // [obrázok, názov, krátky názov na mobil, podnadpis, %]
   var RECIPES = {
+    "hovadzie": {
+      name: "Hovädzie s ryžou",
+      full: "Hovädzie s ryžou",
+      bag: { src: D + "vrece-hovadzie.webp", w: 663, h: 1072, alt: "Rozrezané vrecko Granula Hovädzie s ryžou: hovädzie mäso, ryža, tuk, zelenina a bylinky" },
+      items: [
+        ["g-hovadzie", "Hovädzie mäso", null, "čerstvé a sušené", 60],
+        ["g-ryza", "Ryža", null, null, 13],
+        ["g-bravcovy-tuk", "Hovädzí a bravčový tuk", null, null, 11],
+        ["g-mrkva", "Zelenina", null, "zemiakové vločky, mrkva, petržlen, špenát", 10],
+        ["g-repa", "Repná vláknina", null, null, 3],
+        ["g-hliva", "Bylinky a funkčné zložky", "Bylinky", "pestrec, hliva, gaštan, ľanový olej, kvasnice, kolagén", 3]
+      ]
+    },
     "morka-hus-kacica": {
       name: "Morka, hus & kačica",
       full: "Morka, hus a kačica s tekvicou",
