@@ -21,7 +21,7 @@ tldr: >
 key_points:
   - "Na kuracie reaguje 15 % psov s alergiou na krmivo. Na hovädzie 34 %."
   - "Kuraciu múčku pes strávi horšie ako kuracie mäso: v štúdii 60 % sušiny oproti asi 76 %."
-  - "Na nápis „s kuracím“ stačia v krmive 4 % kuraťa, na „bohaté na kuracie“ 14 %."
+  - "Na nápis „s kuracím“ stačia v krmive 4 % kuracieho mäsa, na „bohaté na kuracie“ 14 %."
   - "Častý omyl: „hydina“ na obale môže znamenať aj kuracie."
 changelog:
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
