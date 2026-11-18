@@ -1,6 +1,6 @@
 /* vygenerované build.py — needitovať */
 window.GRANULA_POSTS = {
- "built": "2026-11-18 08:43",
+ "built": "2026-11-18 08:47",
  "base": "https://granula.sk/granula",
  "problems": [],
  "posts": [
@@ -611,27 +611,469 @@ window.GRANULA_POSTS = {
   {
    "slug": "cerstve-maso-dehydrovane-maso-masova-mucka",
    "file": "granula/blog/_src/cerstve-maso-dehydrovane-maso-masova-mucka.md",
-   "title": "Čerstvé mäso, dehydrované mäso, mäsová múčka: aký je rozdiel?",
-   "status": "namet",
-   "wanted": "namet",
+   "title": "Čerstvé mäso, sušené mäso, mäsová múčka: aký je rozdiel na etikete?",
+   "status": "draft",
+   "wanted": "draft",
    "example": false,
-   "published": "",
-   "updated": "",
-   "author": "",
-   "authorPhoto": "",
-   "hero": "",
-   "words": 0,
-   "description": "",
+   "published": "2026-11-18",
+   "updated": "2026-11-18",
+   "author": "[Meno Priezvisko]",
+   "authorPhoto": "placeholder",
+   "hero": "placeholder",
+   "words": 1823,
+   "description": "Čerstvé mäso má okolo 67–75 % vody, mäsová múčka pod 10 %. Zloženie granúl sa radí podľa hmotnosti pri miešaní, preto čerstvé mäso býva na etikete prvé.",
    "id": "A4",
    "category": "Zloženie a suroviny",
    "priority": "P1",
-   "brief": "Obsah vody a poradie na etikete; „70 % mäsa“ pred a po sušení; kvalita múčok",
-   "angle": "Transparentnosť zloženia",
-   "preview": null,
-   "pdf": null,
+   "brief": "",
+   "angle": "",
+   "preview": "../blog/nahlad/cerstve-maso-dehydrovane-maso-masova-mucka/index.html",
+   "pdf": "../blog/nahlad-pdf/cerstve-maso-dehydrovane-maso-masova-mucka.pdf",
    "live": null,
-   "lint": [],
-   "sections": []
+   "lint": [
+    {
+     "id": "title",
+     "level": "error",
+     "ok": true,
+     "msg": "Titulok je vyplnený",
+     "details": []
+    },
+    {
+     "id": "title-length",
+     "level": "warn",
+     "ok": true,
+     "msg": "Titulok má najviac 70 znakov (má 67)",
+     "details": []
+    },
+    {
+     "id": "title-year",
+     "level": "warn",
+     "ok": true,
+     "msg": "Rok v titulku len pri téme, ktorá sa mení, a len ak sedí s dátumom aktualizácie",
+     "details": []
+    },
+    {
+     "id": "description",
+     "level": "warn",
+     "ok": true,
+     "msg": "Meta popis má 120–160 znakov (má 152)",
+     "details": []
+    },
+    {
+     "id": "author",
+     "level": "error",
+     "ok": false,
+     "msg": "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)",
+     "details": []
+    },
+    {
+     "id": "author-photo",
+     "level": "error",
+     "ok": false,
+     "msg": "Fotka autora (author_photo, súbor v granula/img/autori/)",
+     "details": []
+    },
+    {
+     "id": "dates",
+     "level": "error",
+     "ok": true,
+     "msg": "Dátumy published a updated (RRRR-MM-DD), updated ≥ published",
+     "details": []
+    },
+    {
+     "id": "changelog",
+     "level": "warn",
+     "ok": true,
+     "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
+     "details": [
+      "2026-11-18: Prvá verzia"
+     ]
+    },
+    {
+     "id": "tldr",
+     "level": "error",
+     "ok": true,
+     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 53)",
+     "details": []
+    },
+    {
+     "id": "tldr-range",
+     "level": "warn",
+     "ok": true,
+     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 53)",
+     "details": []
+    },
+    {
+     "id": "tldr-intro",
+     "level": "error",
+     "ok": true,
+     "msg": "Krátka odpoveď začína priamou odpoveďou, nie úvodom („v tomto článku…“)",
+     "details": []
+    },
+    {
+     "id": "key-points",
+     "level": "error",
+     "ok": true,
+     "msg": "Aspoň 3 kľúčové body (má 5)",
+     "details": []
+    },
+    {
+     "id": "tldr-numbers",
+     "level": "warn",
+     "ok": true,
+     "msg": "Krátka odpoveď a kľúčové body obsahujú aspoň 3 čísla (majú 11)",
+     "details": []
+    },
+    {
+     "id": "definition",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcia „Čo je …?“ s definíciou vo forme „X je Y, ktoré Z“",
+     "details": []
+    },
+    {
+     "id": "sections",
+     "level": "warn",
+     "ok": true,
+     "msg": "3–6 hlavných sekcií (má 6)",
+     "details": []
+    },
+    {
+     "id": "h2-questions",
+     "level": "warn",
+     "ok": true,
+     "msg": "Aspoň polovica nadpisov H2 sú otázky (5 z 7)",
+     "details": [
+      "Čerstvé mäso vs. sušené mäso vs. múčka vs. vedľajšie produkty: porovnanie",
+      "Ako čítať mäso v zložení granúl: 5 krokov"
+     ]
+    },
+    {
+     "id": "section-length",
+     "level": "warn",
+     "ok": true,
+     "msg": "Hlavné sekcie majú 200–400 slov",
+     "details": []
+    },
+    {
+     "id": "first-sentence",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každá sekcia začína tučnou prvou vetou = odpoveď na nadpis",
+     "details": []
+    },
+    {
+     "id": "section-numbers",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každá hlavná sekcia má aspoň 1 číslo (ideálne so zdrojom)",
+     "details": []
+    },
+    {
+     "id": "standalone",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcie obstoja samy (žiadne „vyššie“, „ako sme spomenuli“, odsek začínajúci „Toto/To“)",
+     "details": []
+    },
+    {
+     "id": "hero",
+     "level": "warn",
+     "ok": true,
+     "msg": "Obrázok v hlavičke článku (hero, hero_alt)",
+     "details": []
+    },
+    {
+     "id": "images",
+     "level": "warn",
+     "ok": true,
+     "msg": "Obrázky v texte: aspoň 3 obrázky alebo grafy (1 na 2 hlavné sekcie), má 5",
+     "details": []
+    },
+    {
+     "id": "chart",
+     "level": "warn",
+     "ok": true,
+     "msg": "Aspoň 1 graf (blok ::: graf), keď článok porovnáva čísla",
+     "details": []
+    },
+    {
+     "id": "img-alt",
+     "level": "error",
+     "ok": true,
+     "msg": "Každý obrázok má popis (alt)",
+     "details": []
+    },
+    {
+     "id": "img-placeholder",
+     "level": "error",
+     "ok": false,
+     "msg": "Zástupné obrázky sú nahradené skutočnými (pred publikovaním)",
+     "details": [
+      "hero: Tri biele misky vedľa seba na svetlom stole: v prvej kocky surového červeného mäsa, v druhej tmavšie suché kúsky sušeného mäsa, v tretej jemný hnedosivý prášok mäsovej múčky; pred miskami ležia granule a obal granúl otočený zadnou stranou so zložením",
+      "obrázok: Zadná strana obalu granúl, detail časti Zloženie, v ktorej je ako prvá surovina uvedené mäso s percentom a slovom sušené"
+     ]
+    },
+    {
+     "id": "img-files",
+     "level": "error",
+     "ok": true,
+     "msg": "Súbory obrázkov existujú (cesta od granula/, napr. img/blog/<slug>/…)",
+     "details": []
+    },
+    {
+     "id": "offer-mid",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka uprostred článku, ktorá sedí k téme (blok ::: ponuka)",
+     "details": []
+    },
+    {
+     "id": "offer-fields",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka má nadpis a text",
+     "details": []
+    },
+    {
+     "id": "offer-link",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka vedie na dotazník (granule-na-mieru.html), nie na konkrétny produkt",
+     "details": []
+    },
+    {
+     "id": "offer-count",
+     "level": "warn",
+     "ok": true,
+     "msg": "Najviac 2 ponuky v texte (má 1), inak to pôsobí ako reklama",
+     "details": []
+    },
+    {
+     "id": "table",
+     "level": "info",
+     "ok": true,
+     "msg": "Porovnávacia tabuľka (odporúčané pri „X vs Y“)",
+     "details": []
+    },
+    {
+     "id": "steps",
+     "level": "info",
+     "ok": true,
+     "msg": "Postup krok za krokom (číslovaný zoznam)",
+     "details": []
+    },
+    {
+     "id": "own-data",
+     "level": "info",
+     "ok": false,
+     "msg": "Vlastné dáta alebo skúsenosť (najväčší diferenciátor)",
+     "details": []
+    },
+    {
+     "id": "faq",
+     "level": "warn",
+     "ok": true,
+     "msg": "Časté otázky: 3–6 otázok v tvare **Otázka?** odpoveď, odpoveď najviac 3 vety (má 5)",
+     "details": []
+    },
+    {
+     "id": "summary",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcia „Zhrnutie“ ako zoznam (hlavný záver, kedy áno/nie, ďalší krok)",
+     "details": []
+    },
+    {
+     "id": "sources",
+     "level": "error",
+     "ok": true,
+     "msg": "Aspoň 3 zdroje s URL (má 10)",
+     "details": []
+    },
+    {
+     "id": "sources-format",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každý zdroj v tvare „Názov – vydavateľ, rok | https://…“",
+     "details": []
+    },
+    {
+     "id": "first-third",
+     "level": "info",
+     "ok": true,
+     "msg": "Kľúčové fakty (čísla) sú v prvej tretine textu",
+     "details": []
+    },
+    {
+     "id": "atomic",
+     "level": "info",
+     "ok": true,
+     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 18)",
+     "details": []
+    },
+    {
+     "id": "self-promo",
+     "level": "warn",
+     "ok": true,
+     "msg": "„Najlepšie X“ len s transparentnou metodikou a bez Granuly na prvom mieste",
+     "details": []
+    },
+    {
+     "id": "claims",
+     "level": "warn",
+     "ok": true,
+     "msg": "Žiadne vyradené tvrdenia a superlatívy z dizajn systému",
+     "details": []
+    },
+    {
+     "id": "recipe-names",
+     "level": "warn",
+     "ok": true,
+     "msg": "Receptúry podľa mäsa (napr. „Jeleň & králik“), nie interné názvy Puppy/Energy",
+     "details": []
+    },
+    {
+     "id": "ty-form",
+     "level": "warn",
+     "ok": true,
+     "msg": "Tykanie („tvoj pes“), nie vykanie",
+     "details": []
+    },
+    {
+     "id": "emoji",
+     "level": "warn",
+     "ok": true,
+     "msg": "Bez emoji",
+     "details": []
+    },
+    {
+     "id": "length",
+     "level": "info",
+     "ok": true,
+     "msg": "Dĺžka článku: 1823 slov (dĺžka nerozhoduje, hustota áno)",
+     "details": []
+    }
+   ],
+   "sections": [
+    {
+     "title": "Čo je čerstvé mäso, sušené mäso a mäsová múčka?",
+     "kind": "definition",
+     "words": 160,
+     "numbers": 3,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 1,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Prečo je čerstvé mäso v zložení granúl často na prvom mieste?",
+     "kind": "main",
+     "words": 222,
+     "numbers": 10,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 1,
+     "offers": 0
+    },
+    {
+     "title": "Koľko mäsa ostane z „70 % mäsa“ po sušení?",
+     "kind": "main",
+     "words": 246,
+     "numbers": 37,
+     "question": true,
+     "firstBold": true,
+     "table": true,
+     "steps": false,
+     "images": 0,
+     "charts": 1,
+     "offers": 0
+    },
+    {
+     "title": "Je mäsová múčka horšia ako čerstvé mäso?",
+     "kind": "main",
+     "words": 261,
+     "numbers": 16,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Čerstvé mäso vs. sušené mäso vs. múčka vs. vedľajšie produkty: porovnanie",
+     "kind": "main",
+     "words": 206,
+     "numbers": 5,
+     "question": false,
+     "firstBold": true,
+     "table": true,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Čo znamená „čerstvo spracované mäso v sušenom stave“ v zložení Granuly?",
+     "kind": "main",
+     "words": 212,
+     "numbers": 11,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 2,
+     "charts": 0,
+     "offers": 1
+    },
+    {
+     "title": "Ako čítať mäso v zložení granúl: 5 krokov",
+     "kind": "main",
+     "words": 195,
+     "numbers": 10,
+     "question": false,
+     "firstBold": true,
+     "table": false,
+     "steps": true,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Časté otázky",
+     "kind": "faq",
+     "words": 180,
+     "numbers": 1,
+     "question": false,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Zhrnutie",
+     "kind": "summary",
+     "words": 88,
+     "numbers": 3,
+     "question": false,
+     "firstBold": false,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    }
+   ]
   },
   {
    "slug": "co-pes-nesmie-jest-kompletny-zoznam",
@@ -2244,27 +2686,482 @@ window.GRANULA_POSTS = {
   {
    "slug": "kuracie-maso-v-granulach-ano-alebo-nie",
    "file": "granula/blog/_src/kuracie-maso-v-granulach-ano-alebo-nie.md",
-   "title": "Kuracie mäso v granulách: áno alebo nie?",
-   "status": "namet",
-   "wanted": "namet",
+   "title": "Kuracie mäso v granulách: áno alebo nie? Alergia, múčka, obal",
+   "status": "draft",
+   "wanted": "draft",
    "example": false,
-   "published": "",
-   "updated": "",
-   "author": "",
-   "authorPhoto": "",
-   "hero": "",
-   "words": 0,
-   "description": "",
+   "published": "2026-11-18",
+   "updated": "2026-11-18",
+   "author": "[Meno Priezvisko]",
+   "authorPhoto": "placeholder",
+   "hero": "placeholder",
+   "words": 2073,
+   "description": "Kuracie mäso je pre väčšinu psov dobrá bielkovina. Alergia naň sa týka 15 % psov s potvrdenou alergiou na krmivo, vyhýbaj sa mu len pri nej.",
    "id": "A3",
    "category": "Zloženie a suroviny",
    "priority": "P1",
-   "brief": "Aké časté sú alergie na kuracie (Mueller 2016: hovädzie, mléčne, kuracie, pšenica); kvalita kuracieho mäsa vs. kuracej múčky; prečo je kuracie všade",
-   "angle": "Jeleň, králik, jahňa, morka, hus, kačica",
-   "preview": null,
-   "pdf": null,
+   "brief": "",
+   "angle": "",
+   "preview": "../blog/nahlad/kuracie-maso-v-granulach-ano-alebo-nie/index.html",
+   "pdf": "../blog/nahlad-pdf/kuracie-maso-v-granulach-ano-alebo-nie.pdf",
    "live": null,
-   "lint": [],
-   "sections": []
+   "lint": [
+    {
+     "id": "title",
+     "level": "error",
+     "ok": true,
+     "msg": "Titulok je vyplnený",
+     "details": []
+    },
+    {
+     "id": "title-length",
+     "level": "warn",
+     "ok": true,
+     "msg": "Titulok má najviac 70 znakov (má 61)",
+     "details": []
+    },
+    {
+     "id": "title-year",
+     "level": "warn",
+     "ok": true,
+     "msg": "Rok v titulku len pri téme, ktorá sa mení, a len ak sedí s dátumom aktualizácie",
+     "details": []
+    },
+    {
+     "id": "description",
+     "level": "warn",
+     "ok": true,
+     "msg": "Meta popis má 120–160 znakov (má 140)",
+     "details": []
+    },
+    {
+     "id": "author",
+     "level": "error",
+     "ok": false,
+     "msg": "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)",
+     "details": []
+    },
+    {
+     "id": "author-photo",
+     "level": "error",
+     "ok": false,
+     "msg": "Fotka autora (author_photo, súbor v granula/img/autori/)",
+     "details": []
+    },
+    {
+     "id": "dates",
+     "level": "error",
+     "ok": true,
+     "msg": "Dátumy published a updated (RRRR-MM-DD), updated ≥ published",
+     "details": []
+    },
+    {
+     "id": "changelog",
+     "level": "warn",
+     "ok": true,
+     "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
+     "details": [
+      "2026-11-18: Prvá verzia"
+     ]
+    },
+    {
+     "id": "tldr",
+     "level": "error",
+     "ok": true,
+     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 54)",
+     "details": []
+    },
+    {
+     "id": "tldr-range",
+     "level": "warn",
+     "ok": true,
+     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 54)",
+     "details": []
+    },
+    {
+     "id": "tldr-intro",
+     "level": "error",
+     "ok": true,
+     "msg": "Krátka odpoveď začína priamou odpoveďou, nie úvodom („v tomto článku…“)",
+     "details": []
+    },
+    {
+     "id": "key-points",
+     "level": "error",
+     "ok": true,
+     "msg": "Aspoň 3 kľúčové body (má 4)",
+     "details": []
+    },
+    {
+     "id": "tldr-numbers",
+     "level": "warn",
+     "ok": true,
+     "msg": "Krátka odpoveď a kľúčové body obsahujú aspoň 3 čísla (majú 12)",
+     "details": []
+    },
+    {
+     "id": "definition",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcia „Čo je …?“ s definíciou vo forme „X je Y, ktoré Z“",
+     "details": []
+    },
+    {
+     "id": "sections",
+     "level": "warn",
+     "ok": true,
+     "msg": "3–6 hlavných sekcií (má 7)",
+     "details": []
+    },
+    {
+     "id": "h2-questions",
+     "level": "warn",
+     "ok": true,
+     "msg": "Aspoň polovica nadpisov H2 sú otázky (7 z 8)",
+     "details": [
+      "Kedy sa kuraciemu mäsu vyhnúť: 5 krokov"
+     ]
+    },
+    {
+     "id": "section-length",
+     "level": "warn",
+     "ok": true,
+     "msg": "Hlavné sekcie majú 200–400 slov",
+     "details": []
+    },
+    {
+     "id": "first-sentence",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každá sekcia začína tučnou prvou vetou = odpoveď na nadpis",
+     "details": []
+    },
+    {
+     "id": "section-numbers",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každá hlavná sekcia má aspoň 1 číslo (ideálne so zdrojom)",
+     "details": []
+    },
+    {
+     "id": "standalone",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcie obstoja samy (žiadne „vyššie“, „ako sme spomenuli“, odsek začínajúci „Toto/To“)",
+     "details": []
+    },
+    {
+     "id": "hero",
+     "level": "warn",
+     "ok": true,
+     "msg": "Obrázok v hlavičke článku (hero, hero_alt)",
+     "details": []
+    },
+    {
+     "id": "images",
+     "level": "warn",
+     "ok": true,
+     "msg": "Obrázky v texte: aspoň 4 obrázky alebo grafy (1 na 2 hlavné sekcie), má 4",
+     "details": []
+    },
+    {
+     "id": "chart",
+     "level": "warn",
+     "ok": true,
+     "msg": "Aspoň 1 graf (blok ::: graf), keď článok porovnáva čísla",
+     "details": []
+    },
+    {
+     "id": "img-alt",
+     "level": "error",
+     "ok": true,
+     "msg": "Každý obrázok má popis (alt)",
+     "details": []
+    },
+    {
+     "id": "img-placeholder",
+     "level": "error",
+     "ok": false,
+     "msg": "Zástupné obrázky sú nahradené skutočnými (pred publikovaním)",
+     "details": [
+      "hero: Majiteľ drží v ruke vrece granúl a číta zloženie na zadnej strane, prstom ukazuje na riadok so slovom kuracie, pri nohách mu sedí pes strednej veľkosti",
+      "obrázok: Detail zadnej strany vreca granúl so zoznamom zloženia, na ktorom je zvýraznený riadok kuracia múčka a o kúsok nižšie kurací tuk",
+      "obrázok: Dve misky vedľa seba: v jednej kúsky surového kuracieho mäsa, v druhej svetlohnedá kuracia múčka, na stole medzi nimi lístok so zložením granúl"
+     ]
+    },
+    {
+     "id": "img-files",
+     "level": "error",
+     "ok": true,
+     "msg": "Súbory obrázkov existujú (cesta od granula/, napr. img/blog/<slug>/…)",
+     "details": []
+    },
+    {
+     "id": "offer-mid",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka uprostred článku, ktorá sedí k téme (blok ::: ponuka)",
+     "details": []
+    },
+    {
+     "id": "offer-fields",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka má nadpis a text",
+     "details": []
+    },
+    {
+     "id": "offer-link",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka vedie na dotazník (granule-na-mieru.html), nie na konkrétny produkt",
+     "details": []
+    },
+    {
+     "id": "offer-count",
+     "level": "warn",
+     "ok": true,
+     "msg": "Najviac 2 ponuky v texte (má 1), inak to pôsobí ako reklama",
+     "details": []
+    },
+    {
+     "id": "table",
+     "level": "info",
+     "ok": true,
+     "msg": "Porovnávacia tabuľka (odporúčané pri „X vs Y“)",
+     "details": []
+    },
+    {
+     "id": "steps",
+     "level": "info",
+     "ok": true,
+     "msg": "Postup krok za krokom (číslovaný zoznam)",
+     "details": []
+    },
+    {
+     "id": "own-data",
+     "level": "info",
+     "ok": false,
+     "msg": "Vlastné dáta alebo skúsenosť (najväčší diferenciátor)",
+     "details": []
+    },
+    {
+     "id": "faq",
+     "level": "warn",
+     "ok": true,
+     "msg": "Časté otázky: 3–6 otázok v tvare **Otázka?** odpoveď, odpoveď najviac 3 vety (má 5)",
+     "details": []
+    },
+    {
+     "id": "summary",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcia „Zhrnutie“ ako zoznam (hlavný záver, kedy áno/nie, ďalší krok)",
+     "details": []
+    },
+    {
+     "id": "sources",
+     "level": "error",
+     "ok": true,
+     "msg": "Aspoň 3 zdroje s URL (má 6)",
+     "details": []
+    },
+    {
+     "id": "sources-format",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každý zdroj v tvare „Názov – vydavateľ, rok | https://…“",
+     "details": []
+    },
+    {
+     "id": "first-third",
+     "level": "info",
+     "ok": true,
+     "msg": "Kľúčové fakty (čísla) sú v prvej tretine textu",
+     "details": []
+    },
+    {
+     "id": "atomic",
+     "level": "info",
+     "ok": true,
+     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 10)",
+     "details": []
+    },
+    {
+     "id": "self-promo",
+     "level": "warn",
+     "ok": true,
+     "msg": "„Najlepšie X“ len s transparentnou metodikou a bez Granuly na prvom mieste",
+     "details": []
+    },
+    {
+     "id": "claims",
+     "level": "warn",
+     "ok": true,
+     "msg": "Žiadne vyradené tvrdenia a superlatívy z dizajn systému",
+     "details": []
+    },
+    {
+     "id": "recipe-names",
+     "level": "warn",
+     "ok": true,
+     "msg": "Receptúry podľa mäsa (napr. „Jeleň & králik“), nie interné názvy Puppy/Energy",
+     "details": []
+    },
+    {
+     "id": "ty-form",
+     "level": "warn",
+     "ok": true,
+     "msg": "Tykanie („tvoj pes“), nie vykanie",
+     "details": []
+    },
+    {
+     "id": "emoji",
+     "level": "warn",
+     "ok": true,
+     "msg": "Bez emoji",
+     "details": []
+    },
+    {
+     "id": "length",
+     "level": "info",
+     "ok": true,
+     "msg": "Dĺžka článku: 2073 slov (dĺžka nerozhoduje, hustota áno)",
+     "details": []
+    }
+   ],
+   "sections": [
+    {
+     "title": "Čo je kuracie mäso v granulách?",
+     "kind": "definition",
+     "words": 89,
+     "numbers": 0,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 1,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Je kuracie mäso pre psa dobré?",
+     "kind": "main",
+     "words": 248,
+     "numbers": 6,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Aká častá je alergia na kuracie mäso u psov?",
+     "kind": "main",
+     "words": 198,
+     "numbers": 11,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 1,
+     "offers": 0
+    },
+    {
+     "title": "Kuracie mäso, kuracia múčka, hydina: čo znamenajú názvy na obale?",
+     "kind": "main",
+     "words": 318,
+     "numbers": 6,
+     "question": true,
+     "firstBold": true,
+     "table": true,
+     "steps": false,
+     "images": 1,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Je kuracia múčka horšia ako kuracie mäso?",
+     "kind": "main",
+     "words": 262,
+     "numbers": 12,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Prečo je kuracie mäso skoro v každých granulách?",
+     "kind": "main",
+     "words": 245,
+     "numbers": 14,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Kedy sa kuraciemu mäsu vyhnúť: 5 krokov",
+     "kind": "main",
+     "words": 216,
+     "numbers": 5,
+     "question": false,
+     "firstBold": true,
+     "table": false,
+     "steps": true,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Je v granulách Granula kuracie mäso?",
+     "kind": "main",
+     "words": 198,
+     "numbers": 8,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 1,
+     "charts": 0,
+     "offers": 1
+    },
+    {
+     "title": "Časté otázky",
+     "kind": "faq",
+     "words": 149,
+     "numbers": 0,
+     "question": false,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Zhrnutie",
+     "kind": "summary",
+     "words": 96,
+     "numbers": 2,
+     "question": false,
+     "firstBold": false,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    }
+   ]
   },
   {
    "slug": "makke-vs-tvrde-granule",
