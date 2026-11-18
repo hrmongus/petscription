@@ -165,29 +165,6 @@ h1,h2,h3,p{margin:0}
   .ig-nm{font-size:12px}
 }
 
-.extras{background:var(--m)}
-.extras .wrap{display:flex;flex-direction:column;gap:40px}
-.extras .head{max-width:760px}
-.extras .h2{font-size:clamp(36px,3.8vw,56px)}
-/* suroviny ako mriežka kariet, aby sekcia nebola zbytočne vysoká */
-.ing-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--n);border-left:2px solid var(--n)}
-.ing{display:grid;grid-template-columns:56px minmax(0,1fr);grid-template-areas:"ico n" "ico nm" "tag tag" "d d";
-  column-gap:16px;row-gap:8px;align-items:center;align-content:start;padding:22px;border-right:2px solid var(--n);border-bottom:2px solid var(--n)}
-.ing .n{grid-area:n;font-size:13px;font-weight:800;letter-spacing:.1em;align-self:end}
-.ing .ico{grid-area:ico;width:56px;height:56px;border:2px solid var(--n);display:flex;align-items:center;justify-content:center;transform:rotate(var(--t))}
-.ing .nm{grid-area:nm;font-size:clamp(20px,1.9vw,26px);align-self:start}
-.ing .tag{grid-area:tag;justify-self:start;margin-top:6px;background:var(--n);color:var(--m);padding:6px 10px 5px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
-.ing .d{grid-area:d;font-size:15px;line-height:1.45}
-
-@media (max-width:960px){.ing-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:640px){
-  .ing{grid-template-columns:40px minmax(0,1fr);grid-template-areas:"ico n" "nm nm" "tag tag" "d d";padding:16px 14px;column-gap:10px}
-  .ing .ico{width:40px;height:40px}
-  .ing .ico svg{width:24px;height:24px}
-  .ing .nm{font-size:17px}
-  .ing .d{font-size:13px}
-  .ing .tag{font-size:10px;padding:4px 7px}
-}
 
 /* ---------- pätička ---------- */
 /* Mlieko s logom na nálepke; logo nikdy na Noci */
