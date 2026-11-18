@@ -1,31 +1,32 @@
 ---
-title: "Je kukurica v granulách zlá? Stráviteľnosť, glutén a aflatoxín"
+title: "Kukurica v granulách: kedy psovi nevadí a kedy je problém"
 slug: je-kukurica-v-granulach-zla
 status: draft
 id: A2
 category: "Zloženie a suroviny"
 priority: P1
-description: "Kukurica v granulách nie je jed: škrob z varenej kukurice pes strávi z viac ako 98 %. Riziká sú kukuričný glutén namiesto mäsa a aflatoxín z plesní."
+description: "Varenú kukuricu pes dobre strávi, škrob z nej z viac ako 98 %. Problém je, keď v granulách nahrádza mäso alebo keď je zrno plesnivé."
 author: "[Meno Priezvisko]"
 author_bio: "[1 veta, prečo mu veriť: napr. veterinárka so zameraním na výživu psov]"
 author_photo: placeholder
 hero: placeholder
 hero_alt: "Detail zadnej strany vreca granúl so zoznamom zloženia, v ktorom je zvýraznené slovo kukurica; vedľa vreca leží na drevenej doske hrsť granúl a niekoľko suchých kukuričných zŕn"
-hero_caption: "O kukurici v granulách nerozhoduje samotné slovo na etikete, ale jej forma, množstvo a kvalita."
+hero_caption: "Nerozhoduje samotné slovo kukurica na obale, ale jej forma, množstvo a kvalita."
 published: 2026-11-18
 updated: 2026-11-18
 tldr: >
-  Kukurica v granulách nie je jed: varená a extrudovaná kukurica je pre psa dobre stráviteľný
-  zdroj energie a škrob z nej pes strávi z viac ako 98 %. Problém je množstvo, kvalita a skladovanie.
-  Kukuričný glutén je slabší zdroj bielkovín ako mäso, plesnivé zrno môže obsahovať aflatoxín
-  a kukurica tvorí asi 4 % hlásených potravinových alergií psov.
+  Kukurica v granulách psovi zvyčajne neškodí. Varenú kukuricu pes dobre strávi.
+  Škrob z nej strávi z viac ako 98 %. Problém nastáva, keď kukurica v granulách nahrádza mäso. Riziko je aj plesnivé
+  zrno, ktoré môže obsahovať jed aflatoxín. Alergia na kukuricu je zriedkavá: týka sa asi 4 % psov
+  s alergiou na krmivo.
 key_points:
-  - "V štúdiách s extrudovanými granulami psy strávili škrob z kukurice z viac ako 98 až 99 %"
-  - "Kukuričný glutén má málo lyzínu a tryptofánu; ako hlavný zdroj bielkovín v nízkobielkovinovej strave súvisel so stratou svalovej hmoty"
-  - "V prehľade 297 psov s potravinovou alergiou reagovalo na kukuricu 13 psov (4 %), na hovädzie 102 psov (34 %)"
-  - "EÚ povoľuje v kompletnom krmive najviac 0,01 mg aflatoxínu B1 na kg; v USA v rokoch 2020 a 2021 zomrelo po krmive s kontaminovanou kukuricou viac ako 110 zvierat"
-  - "Najčastejší mýtus: kukurica je len plnáč bez výživy; skutočný problém je, keď nahrádza mäso alebo je zle skladovaná"
+  - "Varenú kukuricu pes dobre strávi. Škrob z nej strávi z viac ako 98 %."
+  - "Kukuričný glutén zvýši bielkoviny na obale, ale mäso nenahradí."
+  - "Na kukuricu reagujú len 4 % psov s alergiou na krmivo. Na hovädzie 34 %."
+  - "Plesnivá kukurica môže obsahovať aflatoxín. V USA po takom krmive zomrelo viac ako 110 zvierat."
+  - "Najčastejší mýtus: kukurica je len plnáč. Problém je, keď nahrádza mäso alebo keď je zle skladovaná."
 changelog:
+  - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
 sources:
   - "Evaluation of selected high-starch flours as ingredients in canine diets (Murray a kol.) – Journal of Animal Science, 1999 | https://pubmed.ncbi.nlm.nih.gov/10461997/"
@@ -37,51 +38,58 @@ sources:
   - "FDA Alert: Certain Lots of … Pet Food Recalled for Potentially Fatal Levels of Aflatoxin – U.S. Food and Drug Administration, 2021 | https://www.fda.gov/animal-veterinary/outbreaks-and-advisories/fda-alert-certain-lots-sportmix-pet-food-recalled-potentially-fatal-levels-aflatoxin"
   - "Nariadenie Komisie (EÚ) č. 574/2011, ktorým sa mení príloha I smernice 2002/32/ES (maximálne obsahy aflatoxínu B1 v krmivách) – Európska únia, 2011 | https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32011R0574"
   - "Mycotoxins in pet food: a review on worldwide prevalence and preventative strategies (Leung a kol.) – Journal of Agricultural and Food Chemistry, 2006 | https://pubmed.ncbi.nlm.nih.gov/17177480/"
-cta_title: "Pozri sa, čo bude v miske tvojho psa"
-cta_text: "Vyplň dotazník a odporučíme ti granule podľa veku, veľkosti, aktivity a zdravotného zamerania tvojho psa. Vo výsledku uvidíš celé zloženie aj dennú dávku na gramy."
-cta_button: "Vyplň dotazník pre svojho psa"
+cta_title: "Granule, pri ktorých vidíš celé zloženie"
+cta_text: "Povedz nám o svojom psovi. Odporučíme granule podľa jeho veku, veľkosti a aktivity, ukážeme ti celé zloženie a dennú dávku spočítame na gramy."
+cta_button: "Nájdi granule pre svojho psa"
 ---
 
 ## Čo je kukurica v granulách?
 
-**Kukurica v granulách je obilnina, ktorá v suchom krmive pre psov slúži hlavne ako zdroj energie zo škrobu, menej ako zdroj bielkovín a vlákniny.** Na etikete sa objavuje v rôznych formách: celá mletá kukurica, kukuričná múka, kukuričný škrob, kukuričný glutén alebo kukuričný olej. Každá forma je iná surovina s inou úlohou v receptúre.
+**Kukurica v granulách je obilnina, ktorá dodáva psovi hlavne energiu zo škrobu.** Bielkovín a vlákniny v nej je menej. Na obale ju nájdeš pod rôznymi názvami: kukurica, kukuričná múka, kukuričný škrob, kukuričný glutén alebo kukuričný olej. Každý názov znamená inú surovinu.
 
-Podľa štúdie Murray a kol. (Journal of Animal Science, 1999) tvoria obilniny 30 až 60 % sušiny mnohých krmív pre spoločenské zvieratá. Kukurica patrí medzi najčastejšie, lebo je dostupná a pri extrúzii dobre drží tvar granuly. Otázka teda nie je, či je kukurica „dobrá“ alebo „zlá“, ale v akej forme, v akom množstve a v akej kvalite je v konkrétnych granulách.
+V mnohých krmivách tvoria obilniny 30–60 % sušiny.[^podiel] Kukurica je medzi nimi častá. Je dostupná a granula z nej dobre drží tvar. ==Nerozhoduje teda, či je kukurica v granulách, ale v akej forme, v akom množstve a v akej kvalite.==
 
-![Na drevenom stole vedľa seba štyri misky so surovinami s popiskami: celé kukuričné zrná, žltá kukuričná múka, biely kukuričný škrob a zlatistý prášok kukuričného gluténu](placeholder "Kukurica, kukuričná múka, škrob a glutén sú na etikete štyri rôzne suroviny.")
+![Na drevenom stole vedľa seba štyri misky so surovinami s popiskami: celé kukuričné zrná, žltá kukuričná múka, biely kukuričný škrob a zlatistý prášok kukuričného gluténu](placeholder "Kukurica, kukuričná múka, škrob a glutén sú na obale štyri rôzne suroviny.")
+
+[^podiel]: Murray a kol., Journal of Animal Science, 1999.
 
 ## Je kukurica v granulách len lacný plnáč?
 
-**Kukurica v granulách nie je len plnáč: po uvarení a extrúzii je pre psa dobre stráviteľný zdroj energie.** Surové obilné zrno pes trávi zle, ale granule prechádzajú pri výrobe varom a tlakom, ktoré škrob sprístupnia.
+**Nie. Uvarenú kukuricu pes dobre strávi a dostane z nej energiu.** Surové zrno pes trávi zle. Pri výrobe granúl sa však kukurica varí pod tlakom, vďaka čomu pes škrob strávi.
 
-Štúdia Murray a kol. (Journal of Animal Science, 1999) porovnala extrudované granuly so šiestimi druhmi múky: jačmennou, kukuričnou, zemiakovou, ryžovou, cirokovou a pšeničnou. Škrob zo všetkých diét psy strávili takmer úplne, z viac ako 99 %. Stráviteľnosť bielkovín bola najvyššia práve pri kukurici, 87 %. Autori uzavreli, že ktorúkoľvek z týchto múk možno použiť bez negatívneho vplyvu na trávenie.
+V dvoch štúdiách s granulami psy strávili škrob z kukurice z viac ako 98 %.[^stravitelnost] Rovnako dobre strávili aj škrob z ryže, jačmeňa či zemiakov. Kukurica navyše obsahuje kyselinu linolovú, vitamíny skupiny B, horčík, draslík a karotenoidy.[^tufts]
 
-Podobne dopadla štúdia Carciofi a kol. (Journal of Animal Physiology and Animal Nutrition, 2008) s 36 psami a šiestimi zdrojmi škrobu. Stráviteľnosť škrobu bola vo všetkých diétach vyššia ako 98 %. Kukurica a cirok mali celkovú stráviteľnosť nižšiu ako ryža a maniok, ale vyššiu ako hrach a šošovica. Kukurica, ryža a maniok zvýšili hladinu glukózy a inzulínu skôr po jedle ako strukoviny.
+Slovo „plnáč“ sa hodí inde. ==Problém je, keď kukurica a iné obilniny tvoria väčšinu granúl a mäso je v zložení až za nimi.== Dobre stráviteľná energia nenahradí kvalitné bielkoviny z mäsa. Granule s vysokým podielom škrobu majú navyše veľa energie. Pri nich si treba strážiť dávku, inak pes priberie.
 
-Veterinárna nutričná špecialistka Cailin Heinze z Tufts Petfoodology (2023) uvádza, že škrob z mletej kukurice a kukuričnej múky je v štúdiách stráviteľný z 90 až 99 %. Kukurica podľa nej prináša aj kyselinu linolovú, vitamíny skupiny B, horčík, draslík a karotenoidy.
+[^stravitelnost]: Murray a kol., Journal of Animal Science, 1999: granule so šiestimi druhmi múky (jačmenná, kukuričná, zemiaková, ryžová, ciroková a pšeničná). Škrob psy strávili z viac ako 99 %, bielkoviny najlepšie pri kukurici (87 %). Podľa autorov sa dá použiť ktorákoľvek z týchto múk bez zlého vplyvu na trávenie. Carciofi a kol., Journal of Animal Physiology and Animal Nutrition, 2008: 36 psov, šesť zdrojov škrobu, stráviteľnosť škrobu vo všetkých diétach nad 98 %. Kukurica a cirok mali celkovú stráviteľnosť nižšiu ako ryža a maniok, ale vyššiu ako hrach a šošovica. Kukurica, ryža a maniok zvýšili hladinu glukózy a inzulínu po jedle skôr ako strukoviny.
+[^tufts]: C. R. Heinze, veterinárna nutričná špecialistka, Tufts Petfoodology, 2023. Škrob z mletej kukurice a kukuričnej múky je podľa nej v štúdiách stráviteľný na 90–99 %.
 
-Pojem „plnáč“ má zmysel inde: keď kukurica a ďalšie obilniny tvoria väčšinu receptúry a mäso je až za nimi. Dobre stráviteľná energia totiž nenahradí kvalitné živočíšne bielkoviny. Pri granulách s vysokým podielom škrobu si navyše treba strážiť dávku, lebo energia zo škrobu je stále energia a nadbytok sa uloží ako tuk.
+::: ponuka
+nadpis: Chceš granule, v ktorých je na prvom mieste mäso?
+text: Odporučíme granule podľa veku, veľkosti a aktivity tvojho psa. Ukážeme ti celé zloženie a dennú dávku spočítame na gramy.
+tlacidlo: Nájdi granule pre svojho psa
+odkaz: granule-na-mieru.html
+:::
 
 ## Prečo je kukuričný glutén slabší zdroj bielkovín ako mäso?
 
-**Kukuričný glutén je koncentrovaná rastlinná bielkovina, ktorá má málo esenciálnych aminokyselín lyzínu a tryptofánu.** Na etikete zvýši percento bielkovín, ale pes z neho nedostane rovnako vyvážené bielkoviny ako z mäsa alebo vajec.
+**Kukuričný glutén má málo lyzínu a tryptofánu, dvoch aminokyselín, ktoré pes nutne potrebuje.** Na obale zvýši percento bielkovín. Pes z neho však nedostane také vyvážené bielkoviny ako z mäsa alebo z vajec.
 
-Kukuričný glutén (často aj „kukuričný lepok“, anglicky *corn gluten meal*) vzniká pri spracovaní kukurice na škrob. Nie je to to isté ako lepok z pšenice a nemá súvis s celiakiou. Problém je zloženie aminokyselín: pes si lyzín a tryptofán nevie vytvoriť sám, musí ich dostať v krmive.
+Kukuričný glutén (niekedy aj „kukuričný lepok“) vzniká pri výrobe kukuričného škrobu. Nie je to lepok z pšenice a s celiakiou nesúvisí. Lyzín a tryptofán si pes nevie vytvoriť sám. Musí ich dostať v krmive.
 
-Štúdia Wakshlag a kol. (Journal of Animal Physiology and Animal Nutrition, 2003) kŕmila 56 dospelých feniek 10 týždňov diétami s 12 % alebo 28 % bielkovín. Bielkoviny pochádzali z kukuričného gluténu a kuracieho mäsa v rôznom pomere. Čím viac kukuričného gluténu diéta obsahovala, tým viac svalovej hmoty psy strácali (korelácia R = 0,56). Autori stratu svalov spojili hlavne s nízkobielkovinovými diétami založenými prevažne na kukuričnom gluténe.
+V jednej štúdii mali psy krmivo, v ktorom časť bielkovín pochádzala z kukuričného gluténu a časť z kuracieho mäsa. Čím viac gluténu krmivo obsahovalo, tým viac svalov psy stratili. Najviac to platilo pri krmive s málo bielkovinami.[^svaly] Podľa novšej štúdie pes kukuričný glutén dobre strávi. Lyzínu v ňom však nie je dosť pre psa v žiadnom veku.[^lyzin]
 
-Novšia štúdia Oba a kol. (Journal of Animal Science, 2023) merala stráviteľnosť aminokyselín metódou na kohútoch. Kukuričný glutén mal stráviteľnosť väčšiny aminokyselín vysokú, ale lyzín bol v ňom výrazne limitujúci pre všetky životné fázy psov. Inými slovami: kukuričný glutén sa dobre trávi, len neobsahuje všetko, čo pes potrebuje, v správnom pomere.
+==Vysoké percento bielkovín na obale preto ešte nič nehovorí o ich kvalite.== Ak je kukuričný glutén v zložení vysoko a mäso nízko, časť bielkovín je rastlinná. Výrobca môže chýbajúce aminokyseliny doplniť, napríklad čistým lyzínom. Z obalu to však nevyčítaš.
 
-V praxi to znamená, že vysoké percento bielkovín na obale ešte nič nehovorí o ich kvalite. Ak je kukuričný glutén v zložení vysoko a mäso nízko, časť bielkovín je rastlinného pôvodu. Výrobca môže chýbajúce aminokyseliny doplniť inými surovinami alebo čistým lyzínom, z etikety to však bežný majiteľ nevyčíta.
+[^svaly]: Wakshlag a kol., Journal of Animal Physiology and Animal Nutrition, 2003: 56 dospelých feniek, 10 týždňov, krmivo s 12 % alebo 28 % bielkovín z kukuričného gluténu a kuracieho mäsa v rôznom pomere. Súvislosť medzi podielom gluténu a stratou svalov: R = 0,56. Autori stratu svalov spojili hlavne s krmivom s málo bielkovinami, ktoré stálo prevažne na kukuričnom gluténe.
+[^lyzin]: Oba a kol., Journal of Animal Science, 2023. Stráviteľnosť aminokyselín merali na kohútoch, čo je bežný laboratórny model. Väčšinu aminokyselín z kukuričného gluténu kohúty strávili dobre, lyzín bol však výrazne nedostatkový pre všetky životné fázy psov.
 
 ## Sú psy často alergické na kukuricu?
 
-**Alergia na kukuricu je u psov zriedkavá: v prehľade 297 psov s potravinovou alergiou reagovalo na kukuricu 13 psov, teda 4 %.** Oveľa častejšie psy reagujú na živočíšne bielkoviny, najmä hovädzie, mliečne výrobky a kuracie.
-
-Prehľad Mueller, Olivry a Prélaud (BMC Veterinary Research, 2016) zhrnul štúdie, v ktorých psom s kožnou potravinovou alergiou potvrdili spúšťač eliminačnou diétou a opätovným podaním suroviny. Hovädzie spôsobovalo reakciu u 102 psov (34 %), mliečne výrobky u 51 psov (17 %), kuracie u 45 psov (15 %) a pšenica u 38 psov (13 %). Kukurica bola so 4 % medzi menej častými spúšťačmi, spolu s vajcami.
+**Nie. Na kukuricu reagujú len 4 % psov s alergiou na krmivo.** Oveľa častejšie psom vadí hovädzie, mliečne výrobky a kuracie.[^alergeny]
 
 ::: graf
-nazov: Potvrdené potravinové alergény u psov (297 psov s kožnou potravinovou alergiou)
+nazov: Na čo reagovali psy s alergiou na krmivo
 jednotka: % psov
 os: Surovina
 zdroj: Mueller, Olivry, Prélaud – BMC Veterinary Research, 2016
@@ -99,85 +107,75 @@ Ryby | 2
 Ryža | 2
 :::
 
-Čísla treba čítať opatrne. Ide o malé a staršie štúdie a jeden pes mohol reagovať na viac surovín. Percentá navyše čiastočne odrážajú, čo psy v tých rokoch najčastejšie jedli: surovina, ktorú pes je roky, má viac príležitostí spôsobiť alergiu. Výsledok preto neznamená, že kukurica je „bezpečná pre každého“, len že je ako alergén v porovnaní s mäsom menej častá.
+^ Jeden pes môže reagovať na viac surovín, preto je súčet vyšší ako 100 %.
 
-Tufts Petfoodology (2023) to zhŕňa podobne: kukurica sa ako príčina alergie u psov potvrdí len zriedka. Ak tvoj pes svrbí alebo má opakované tráviace ťažkosti, samotné vyradenie kukurice preto väčšinou nepomôže. Spoľahlivú odpoveď dá len eliminačná diéta pod dohľadom veterinára.
+Kukurica patrí spolu s vajcami medzi menej časté spúšťače. Poradie čiastočne odráža, čo psy najčastejšie jedli. Alergia totiž vzniká na to, čo pes je roky. ==Kukurica teda nie je bezpečná pre každého psa. Ako alergén je však oveľa zriedkavejšia ako mäso.==
 
-::: ponuka
-nadpis: Nesedí tvojmu psovi každé mäso?
-text: V dotazníku zaškrtni „Nesedí mu každé mäso“ alebo „Citlivé trávenie“. Odporučíme ti granule s jedným druhom mäsa (monoproteín) a dennú dávku na gramy.
-tlacidlo: Vyplň dotazník pre svojho psa
-odkaz: granule-na-mieru.html
-obrazok: img/produkty/jahna-s-batatmi-cucoriedkami.webp
-:::
+Ak psa trápi svrbenie alebo má často problémy s trávením, samotné vyradenie kukurice väčšinou nepomôže.[^zriedka] S istotou príčinu zistí len eliminačná diéta pod dohľadom veterinára.
 
-## Aké riziko predstavujú mykotoxíny v kukurici?
+[^alergeny]: Mueller, Olivry a Prélaud, BMC Veterinary Research, 2016. Údaje o 297 psoch, ktorým alergiu potvrdila eliminačná diéta a opätovné podanie suroviny: hovädzie 102 psov (34 %), mliečne výrobky 51 (17 %), kuracie 45 (15 %), pšenica 38 (13 %), kukurica 13 (4 %). Ide o malé a staršie štúdie.
+[^zriedka]: Tufts Petfoodology, 2023: kukurica sa ako príčina alergie u psov potvrdí len zriedka.
 
-**Najväčšie skutočné riziko kukurice v granulách je aflatoxín, jed z plesne, ktorý môže pri kontaminovanom zrne psa vážne poškodiť alebo zabiť.** Aflatoxíny tvorí pleseň *Aspergillus flavus*, ktorá rastie na kukurici a iných obilninách, najmä pri teple a vlhku.
+## Prečo je nebezpečná plesnivá kukurica?
 
-Podľa FDA (2021) spustil americký výrobca v decembri 2020 sťahovanie krmív po úmrtí najmenej 28 psov. V januári 2021 ho rozšíril na všetky krmivá s kukuricou z jedného svojho závodu. K 21. januáru 2021 evidovala FDA viac ako 110 uhynutých a viac ako 210 chorých zvierat. FDA dodáva, že nie všetky prípady boli potvrdené ako otrava aflatoxínom a skutočný počet môže byť iný.
+**Plesnivá kukurica môže obsahovať aflatoxín. Je to jed z plesne, ktorý môže psa vážne poškodiť, ba aj zabiť.** Pleseň, ktorá ho tvorí, rastie na kukurici a iných obilninách, najmä v teple a vlhku.
 
-FDA uvádza tieto príznaky otravy aflatoxínom: malátnosť, nechuť do jedla, zvracanie, žltačka (zožltnutie očí, ďasien alebo kože pre poškodenie pečene) a hnačka. Niektoré zvieratá môžu mať poškodenú pečeň bez viditeľných príznakov. Ak tvoj pes po novom vreci granúl prestane jesť, zvracia alebo mu zožltnú ďasná, choď hneď k veterinárovi a vrece si odlož aj s číslom šarže.
+V USA v rokoch 2020 a 2021 zomrelo po krmive s kontaminovanou kukuricou viac ako 110 zvierat. Ďalších viac ako 210 ochorelo.[^fda] V EÚ má aflatoxín v krmivách stanovený najvyšší povolený obsah.[^limit]
 
-Prehľad Leung a kol. (Journal of Agricultural and Food Chemistry, 2006) uvádza, že aflatoxín spôsobil u psov viacero hromadných otráv a v mnohých krajinách je jeho obsah v krmivách regulovaný. V EÚ platí podľa nariadenia Komisie (EÚ) č. 574/2011 limit aflatoxínu B1 najviac 0,02 mg/kg v kŕmnych surovinách a 0,01 mg/kg v kompletných krmivách, pri vlhkosti 12 %.
+Príznaky otravy aflatoxínom sú malátnosť, nechuť do jedla, zvracanie, hnačka a žltačka (žlté oči, ďasná alebo koža). Pečeň môže byť poškodená aj bez viditeľných príznakov. ==Ak pes po novom vreci granúl prestane jesť, zvracia alebo mu zožltnú ďasná, choď hneď k veterinárovi.== Vrece si odlož aj s číslom šarže.
 
-Riziko pritom nie je „v kukurici ako takej“, ale v kvalite zrna a v kontrole výrobcu. Pri výbere granúl pomáha, keď výrobca suroviny pravidelne testuje. Doma riziko plesní znížiš tým, že granule skladuješ v suchu, v uzavretom pôvodnom vreci a nepoužiješ ich, ak sú vlhké, zapáchajú alebo majú povlak.
+Riziko nie je v kukurici samotnej, ale v kvalite zrna a v tom, ako ho výrobca kontroluje. Doma skladuj granule v suchu, v uzavretom pôvodnom vreci. Ak sú vlhké, zapáchajú alebo majú povlak, nepoužívaj ich.
 
-## Ako rozoznať formy kukurice na etikete?
+[^fda]: FDA, 2021. Americký výrobca v decembri 2020 sťahoval krmivá po úmrtí najmenej 28 psov. V januári 2021 rozšíril sťahovanie na všetky krmivá s kukuricou z jedného svojho závodu. Čísla platia k 21. januáru 2021. Podľa FDA nie všetky prípady boli potvrdené ako otrava aflatoxínom a skutočný počet môže byť iný.
+[^limit]: Nariadenie Komisie (EÚ) č. 574/2011: aflatoxín B1 najviac 0,02 mg/kg v kŕmnych surovinách a 0,01 mg/kg v kompletných krmivách, pri vlhkosti 12 %. Aflatoxín tvorí pleseň *Aspergillus flavus*. Podľa prehľadu Leung a kol. (Journal of Agricultural and Food Chemistry, 2006) spôsobil aflatoxín u psov viacero hromadných otráv a v mnohých krajinách je jeho obsah v krmivách regulovaný.
 
-**Na etikete granúl sa kukurica skrýva pod viacerými názvami a každý znamená inú surovinu s inou úlohou.** Zložky sú zoradené podľa hmotnosti zostupne, preto rozhoduje aj poradie, nielen názov.
+## Ako spoznáš kukuricu na obale granúl?
 
-| Na etikete | Čo to je | Úloha v granulách | Na čo si dať pozor |
+**Kukurica sa na obale skrýva pod viacerými názvami a každý znamená inú surovinu.** Zložky sú zoradené podľa hmotnosti od najväčšej. Rozhoduje preto aj poradie, nielen názov.
+
+| Na obale | Čo to je | Na čo slúži v granulách | Na čo si dať pozor |
 | --- | --- | --- | --- |
-| Kukurica, mletá kukurica | celé zrno pomleté na múčku | energia zo škrobu, trochu vlákniny a kyselina linolová | prvé miesto v zložení pred mäsom; kvalita zrna (plesne) |
-| Kukuričná múka, krupica | zrno bez väčšiny obalu | energia zo škrobu | rovnaké ako pri mletej kukurici |
-| Kukuričný škrob | čistý škrob | energia, spojivo granuly | žiadne bielkoviny ani vláknina, len energia |
+| Kukurica, mletá kukurica | celé zrno pomleté na múčku | energia zo škrobu, trochu vlákniny a kyselina linolová | či nie je v zložení pred mäsom; kvalita zrna (plesne) |
+| Kukuričná múka, krupica | zrno bez väčšiny obalu | energia zo škrobu | to isté ako pri mletej kukurici |
+| Kukuričný škrob | čistý škrob | energia, spája granulu | žiadne bielkoviny ani vláknina, len energia |
 | Kukuričný glutén (lepok) | koncentrovaná bielkovina z kukurice | zvýši percento bielkovín | málo lyzínu a tryptofánu; môže nahrádzať mäso |
-| Kukuričné otruby, vláknina | obal zrna | nerozpustná vláknina, tvar stolice | v malom množstve bez problémov |
+| Kukuričné otruby, vláknina | obal zrna | nerozpustná vláknina, pevnejšia stolica | v malom množstve bez problémov |
 | Kukuričný olej | tuk z klíčkov | energia, kyselina linolová | bez zásadných obáv |
 
-Ak sa kukurica v zložení objaví v 2 alebo 3 formách naraz, napríklad ako kukurica, kukuričný glutén a kukuričný škrob, môže každá z nich stáť za mäsom, hoci spolu by ho prevážili. Pri čítaní etikety preto spočítaj všetky kukuričné zložky dohromady.
+Kukurica môže byť v zložení aj v 2 alebo 3 formách naraz, napríklad ako kukurica, glutén a škrob. Každá z nich môže stáť za mäsom, no spolu ho môžu prevážiť. ==Spočítaj preto všetky kukuričné zložky dohromady.==
 
-Pre úplnosť: v zložení našich granúl kukurica nie je. Ako zdroj škrobu v nich sú podľa receptúry ryža, zemiakové vločky, tekvica alebo batáty a na prvom mieste je vždy mäso.
+V našich granulách kukurica nie je. Škrob v nich pochádza podľa receptúry z ryže, zemiakových vločiek, tekvice alebo batátov. Na prvom mieste je vždy mäso.
 
-![Ruka s perom podčiarkuje na zadnej strane vreca granúl všetky kukuričné zložky v zozname zloženia, prvé tri zložky sú zakrúžkované](placeholder "Spočítaj všetky kukuričné zložky dohromady a pozri sa, čo stojí na prvom mieste.")
+![Ruka s perom podčiarkuje na zadnej strane vreca granúl všetky kukuričné zložky v zozname zloženia, prvé tri zložky sú zakrúžkované](placeholder "Spočítaj všetky kukuričné zložky a pozri sa, čo je na prvom mieste.")
 
-::: ponuka
-nadpis: Chceš vidieť celé zloženie skôr, než objednáš?
-text: Po vyplnení dotazníka ti ukážeme odporúčané granule s úplným zložením, obsahom bielkovín a tuku a dennú dávku na gramy pre tvojho psa.
-tlacidlo: Pozri zloženie pre svojho psa
-odkaz: granule-na-mieru.html
-obrazok: img/produkty/hovadzie-s-ryzou.webp
-:::
+## Ako posúdiš kukuricu v granulách svojho psa: 5 krokov
 
-## Ako posúdiť, či je kukurica v granulách problém: 5 krokov
+**Stačí 5 krokov: pozri poradie, formy kukurice, zdroj bielkovín, skladovanie a to, ako sa psovi darí.**
 
-**Či je kukurica v konkrétnych granulách problém, posúdiš v 5 krokoch: pozri poradie, formu, zdroj bielkovín, skladovanie a reakciu psa.**
+1. **Pozri prvé tri zložky.** Ak je prvé mäso a kukurica až za ním, kukurica dodáva hlavne energiu. Ak je kukurica prvá, tvorí väčšinu granúl.
+2. **Spočítaj všetky kukuričné zložky.** Kukurica, kukuričná múka, glutén aj škrob sú jedna plodina, aj keď sú v zozname na rôznych miestach.
+3. **Zisti, odkiaľ sú bielkoviny.** Ak je kukuričný glutén v zozname vysoko, časť bielkovín je rastlinná a má menej lyzínu a tryptofánu.
+4. **Skladuj granule v suchu a v uzavretom vreci.** V teple a vlhku rastú plesne. Granule, ktoré páchnu plesňou, vyhoď.
+5. **Sleduj psa, nielen obal.** Ak má pevnú stolicu, peknú srsť a stálu hmotnosť, kukurica mu pravdepodobne nevadí. Pri svrbení alebo opakovanej hnačke rieš s veterinárom celé zloženie, nielen kukuricu.
 
-1. **Pozri prvé tri zložky.** Ak je na prvom mieste mäso a kukurica až za ním, kukurica slúži hlavne ako zdroj energie. Ak kukurica vedie zoznam, tvorí väčšinu receptúry.
-2. **Spočítaj všetky kukuričné zložky.** Kukurica, kukuričná múka, glutén a škrob sú spolu jedna plodina, aj keď stoja v zozname na rôznych miestach.
-3. **Over, odkiaľ sú bielkoviny.** Pri vysokom percente bielkovín a kukuričnom gluténe vysoko v zozname je časť bielkovín rastlinná, s menej lyzínu a tryptofánu.
-4. **Skladuj granule v suchu a uzavreté.** Vlhkosť a teplo podporujú rast plesní; vrece po otvorení uzavri a granule s pachom plesne vyhoď.
-5. **Sleduj psa, nie len etiketu.** Ak má pevnú stolicu, peknú srsť a stabilnú hmotnosť, kukurica v jeho granulách mu pravdepodobne nevadí. Pri svrbení alebo opakovanej hnačke rieš s veterinárom celé zloženie, nielen kukuricu.
-
-Platí aj opačná hranica: bez kukurice ešte neznamená automaticky lepšie. Granule bez kukurice môžu mať veľa iného škrobu alebo málo mäsa, preto vždy čítaj celé zloženie.
+==Granule bez kukurice nie sú automaticky lepšie.== Môžu mať veľa iného škrobu alebo málo mäsa. Vždy preto čítaj celé zloženie.
 
 ## Časté otázky
 
-**Môže pes jesť kukuricu z klasu?** Kukuricu na klase psovi nedávaj. Podľa Tufts Petfoodology (2023) psy často prehltnú veľké kusy klasu, ktoré môžu upchať črevo a riešiť sa musia operáciou.
+**Môže pes jesť kukuricu z klasu?** Nie, klas psovi nedávaj. Psy často prehltnú veľké kusy klasu, ktoré môžu upchať črevo. Potom treba operáciu (Tufts Petfoodology, 2023).
 
 **Prečo vidím v stolici psa celé kukuričné zrná?** Celé zrná sladkej kukurice môžu prejsť črevom nestrávené, najmä ak ich pes nerozhryzie. V granulách je kukurica pomletá a uvarená, preto sa trávi oveľa lepšie.
 
-**Je kukuričný glutén to isté ako pšeničný lepok?** Nie, kukuričný glutén je iná bielkovina ako pšeničný lepok. Tufts Petfoodology (2023) uvádza, že ani psy z plemien s citlivosťou na lepok by nemali mať s kukuricou problém.
+**Je kukuričný glutén to isté ako pšeničný lepok?** Nie, ide o inú bielkovinu. Podľa Tufts Petfoodology (2023) by s kukuricou nemali mať problém ani psy z plemien citlivých na lepok.
 
-**Spôsobuje kukurica v granulách nadváhu?** Kukurica sama nadváhu nespôsobuje, spôsobuje ju nadbytok energie. Granule s vysokým podielom škrobu sú energeticky bohaté, preto dávku odvažuj podľa potreby psa, nie podľa odmerky.
+**Priberie pes z kukurice v granulách?** Kukurica sama nadváhu nespôsobuje, spôsobuje ju priveľa energie. Granule s vysokým podielom škrobu majú veľa energie, preto dávku odvažuj podľa potreby psa, nie podľa odmerky.
 
-**Ničí výroba granúl aflatoxín?** Na varenie a extrúziu sa pri aflatoxíne spoliehať nedá. Dôležitá je kontrola surovín pred výrobou a limity, ktoré pre krmivá stanovuje legislatíva.
+**Zničí výroba granúl aflatoxín?** Na to sa spoliehať nedá. Dôležité je, aby výrobca kontroloval suroviny pred výrobou a dodržal limity, ktoré pre krmivá určuje zákon.
 
 ## Zhrnutie
 
-- Kukurica v granulách nie je jed: varená a extrudovaná je dobre stráviteľný zdroj energie, škrob z nej pes strávi z viac ako 98 %.
-- Problém nastáva, keď kukurica a kukuričný glutén nahrádzajú mäso; glutén má málo lyzínu a tryptofánu.
-- Alergia na kukuricu je zriedkavá (asi 4 % potvrdených prípadov), častejšie psy reagujú na hovädzie, mliečne výrobky a kuracie.
-- Najvážnejšie riziko je aflatoxín z plesnivého zrna; rozhoduje kontrola výrobcu a suché skladovanie doma.
+- Kukurica v granulách nie je jed. Uvarenú kukuricu pes dobre strávi. Škrob z nej strávi z viac ako 98 %.
+- Problém je, keď kukurica a kukuričný glutén nahrádzajú mäso. Glutén má málo lyzínu a tryptofánu.
+- Alergia na kukuricu je zriedkavá, týka sa asi 4 % psov s alergiou na krmivo. Častejšie psom vadí hovädzie, mliečne výrobky a kuracie.
+- Najväčšie riziko je aflatoxín z plesnivého zrna. Chráni pred ním kontrola u výrobcu a suché skladovanie doma.
 - Ďalší krok: vezmi vrece granúl svojho psa, pozri prvé tri zložky a spočítaj všetky kukuričné suroviny.
