@@ -248,3 +248,42 @@ h1,h2,h3,p{margin:0}
   .tape .track{animation:none}
   *{transition-duration:.001ms !important;animation-duration:.001ms !important;animation-iteration-count:1 !important}
 }
+
+/* ---------- recenzie (úvodná stránka aj výsledok konfigurátora; obsah z reviews.js) ---------- */
+.rw-wrap{display:flex;flex-direction:column;gap:12px;overflow:hidden;position:relative;width:100%;max-width:1800px;margin-inline:auto}
+.rw-row{list-style:none;margin:0;padding:0;display:flex;gap:12px;width:max-content;animation:rw-left 80s linear infinite}
+.rw-row.rw-b{animation-name:rw-right;animation-duration:95s}
+.rw-wrap:hover .rw-row,.rw-wrap:focus-within .rw-row{animation-play-state:paused}
+@keyframes rw-left{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 6px))}}
+@keyframes rw-right{from{transform:translateX(calc(-50% - 6px))}to{transform:translateX(0)}}
+.rw-c{flex:none;height:240px;border:2px solid var(--n);background:var(--ml)}
+.rw-ph{position:relative;width:240px;overflow:hidden}
+.rw-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rw-prod{position:absolute;left:8px;right:8px;bottom:8px;min-height:48px;display:flex;align-items:center;gap:8px;padding:6px 10px 6px 58px;
+  background:var(--m);border:2px solid var(--n);color:var(--n)}
+.rw-prod img{position:absolute;left:8px;bottom:3px;height:76px;width:auto}
+.rw-pt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+/* foto recenzia: pes, plemeno; pod tým menšie a tenšie majiteľ */
+.rw-pt b{font-size:12px;font-weight:800;line-height:1.25}
+.rw-pt small{font-size:11px;font-weight:400;line-height:1.25}
+.rw-tx{padding:18px 20px 14px;display:flex;flex-direction:column;gap:10px}
+.rw-w1{width:300px}.rw-w2{width:360px}.rw-w3{width:420px}
+.rate{display:flex;gap:4px;color:var(--o)}
+.rw-tx .rate{font-size:15px}
+.star.off{opacity:.25}
+.rw-tx p{flex:1;font-size:14px;line-height:1.45;font-weight:600}
+.rw-by{display:flex;align-items:flex-end;gap:12px;font-size:12px;line-height:1.35}
+.rw-by img{height:54px;width:auto;flex:none}
+.rw-by b{font-weight:800}
+@media (max-width:640px){
+  .rw-c{height:220px}.rw-ph{width:200px}.rw-tx{padding:14px 14px 12px;gap:8px}
+  .rw-w1{width:240px}.rw-w2{width:280px}.rw-w3{width:320px}
+  .rw-tx p{font-size:12.5px}.rw-by img{height:44px}
+  .rw-prod{min-height:44px;padding-left:50px}.rw-prod img{height:62px}
+  .rw-pt b{font-size:11px}.rw-pt small{font-size:10px}
+}
+@media (prefers-reduced-motion:reduce){
+  .rw-wrap{overflow-x:auto}.rw-row{animation:none}
+  .rw-row [aria-hidden="true"]{display:none}
+}
+@media (min-width:1801px){.rw-wrap{-webkit-mask-image:linear-gradient(90deg,transparent,#000 120px,#000 calc(100% - 120px),transparent);mask-image:linear-gradient(90deg,transparent,#000 120px,#000 calc(100% - 120px),transparent)}}
