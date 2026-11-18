@@ -19,11 +19,11 @@ body{font-size:15px}
 .top b{font-size:13px;letter-spacing:.12em;text-transform:uppercase}
 .top a{color:var(--m)}
 .layout{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:28px;padding:24px var(--gutter) 64px;max-width:1600px;margin:0 auto}
-.inputs{position:sticky;top:12px;align-self:start;max-height:calc(100vh - 24px);overflow:auto;background:var(--white);border:2px solid var(--n);padding:18px}
+.inputs{position:sticky;top:12px;align-self:start;max-height:calc(100vh - 24px);overflow:auto;background:var(--ml);border:2px solid var(--n);padding:18px}
 .inputs h2,.panel h2{font-size:13px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
 .f{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
 .f > span{font-size:12px;font-weight:800}
-.f small{font-size:11px;color:var(--i3)}
+.f small{font-size:11px;color:var(--n)}
 .f input[type=number],.f select,.f input[type=text]{font:600 14px var(--font);border:2px solid var(--n);padding:8px 10px;background:#fff;width:100%}
 .row{display:flex;gap:8px}.row > *{flex:1}
 .radios{display:flex;flex-wrap:wrap;gap:6px}
@@ -31,25 +31,25 @@ body{font-size:15px}
 .radios label:has(input:checked){background:var(--k);color:var(--m);border-color:var(--k)}
 .radios input{accent-color:var(--o)}
 .panels{display:flex;flex-direction:column;gap:22px;min-width:0}
-.panel{background:var(--white);border:2px solid var(--n);padding:20px}
-.panel > p.lead2{font-size:13px;color:var(--i2);margin:-6px 0 12px;line-height:1.5}
+.panel{background:var(--ml);border:2px solid var(--n);padding:20px}
+.panel > p.lead2{font-size:13px;color:var(--n);margin:-6px 0 12px;line-height:1.5}
 .reco{display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px;align-items:center}
 .reco img{width:120px;height:auto}
-.reco.second{margin-top:18px;padding-top:18px;border-top:2px dashed var(--line)}
+.reco.second{margin-top:18px;padding-top:18px;border-top:2px dashed var(--k-soft)}
 .reco.second .nm{font-size:20px}
 .lbl2{display:inline-block;background:#0047BB;color:#fff;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;margin-bottom:6px}
 .reco .nm{font-size:26px;font-weight:900;text-transform:uppercase;line-height:1.05}
 .big{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
 .big div{background:var(--m);padding:10px 14px}
 .big b{display:block;font-size:22px;font-weight:900}
-.big span{font-size:11px;font-weight:700;color:var(--i2)}
+.big span{font-size:11px;font-weight:700;color:var(--n)}
 .scroll{overflow-x:auto}
 table{border-collapse:collapse;width:100%;font-size:13px}
-th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
-th{background:var(--m2);font-weight:800;white-space:nowrap}
+th,td{border:1px solid var(--k-soft);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--m);font-weight:800;white-space:nowrap}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 tr.win td{background:#E3F3B8}
-tr.skip td{color:var(--i3)}
+tr.skip td{color:var(--n)}
 .ok{color:#1F7A1F;font-weight:800}
 .no{color:#B3261E;font-weight:800}
 .tag{display:inline-block;font-size:11px;font-weight:800;padding:2px 6px;border:1.5px solid currentColor;margin:1px 2px 1px 0}
@@ -72,7 +72,7 @@ tr.skip td{color:var(--i3)}
 .cat dt{font-weight:800}
 .cat dd{margin:0}
 ol.list{line-height:1.6;padding-left:20px;margin:0}
-code{font-size:12px;background:var(--m2);padding:1px 4px}
+code{font-size:12px;background:var(--m);padding:1px 4px}
 @media (max-width:980px){.layout{grid-template-columns:minmax(0,1fr)}.inputs{position:static;max-height:none}}
 </style>
 </head>
@@ -95,7 +95,7 @@ code{font-size:12px;background:var(--m2);padding:1px 4px}
       <label class="f"><span>Mesiace</span><input type="number" name="months" min="0" max="11" value="0"></label>
       <label class="f"><span>Týždne</span><input type="number" name="weeks" min="0" max="13" value=""></label>
     </div>
-    <p style="font-size:11px;color:var(--i3);margin:-6px 0 12px">Týždne sa použijú, len ak roky = 0 a mesiace ≤ 2 (v dotazníku sa vtedy pole zobrazí).</p>
+    <p style="font-size:11px;color:var(--n);margin:-6px 0 12px">Týždne sa použijú, len ak roky = 0 a mesiace ≤ 2 (v dotazníku sa vtedy pole zobrazí).</p>
     <div class="f"><span>Bežný deň</span><div class="radios">
       <label><input type="radio" name="activity" value="doma">Prevažne doma</label>
       <label><input type="radio" name="activity" value="mesto" checked>1–2 prechádzky</label>
@@ -150,26 +150,26 @@ code{font-size:12px;background:var(--m2);padding:1px 4px}
         <button type="button" id="b-reset">Obnoviť predvolené</button>
         <button type="button" id="b-copy">Kopírovať zmeny ako JSON</button>
         <label style="font-size:13px;font-weight:700;display:inline-flex;gap:6px;align-items:center"><input type="checkbox" id="b-apply"> Použiť aj v dotazníku (len v tomto prehliadači)</label>
-        <span id="b-msg" style="font-size:12px;color:var(--i3)"></span>
+        <span id="b-msg" style="font-size:12px;color:var(--n)"></span>
       </div></section>
     <section class="panel cat"><h2>10 · Katalóg produktov</h2><div id="o-cat"></div></section>
     <section class="panel"><h2>11 · Predpoklady a otvorené otázky</h2>
       <ol class="list">
-        <li><b>Jeleň & králik s batátmi</b>: výrobca neposlal popis vhodnosti, cenu, popol, vlákninu, vlhkosť, vápnik, fosfor, vitamíny ani stopové prvky. Vhodnosť je PREDPOKLAD (dospelí a seniori, nie šteňatá; pri nadváhe a pankrease vyhráva, lebo má najmenej tuku – 12 %). Energia počíta s popolom 7 %, vlákninou 3 % a vlhkosťou 8 %.</li>
-        <li><b>Zloženie Jeleň & králik</b>: podklady uvádzajú dve verzie (s ryžou 15 % a batátmi 8 %, alebo bez ryže s batátmi 23 %). Obal ukazuje 23 % batátov, preto je v katalógu verzia bez ryže.</li>
-        <li><b>Dávka vs. výrobca</b>: model (WSAVA násobky × ME podľa NRC) dáva pri Hovädzom s ryžou o ~25–45 % viac než tabuľka výrobcu. Tabuľka zodpovedá ~1,2 × RER, čo je hodnota pre málo aktívneho / kastrovaného psa. Rozhodnúť: nechať model, alebo znížiť parameter <code>kalibrácia</code> (sekcia 6 ukazuje, aká hodnota by sedela).</li>
-        <li><b>Ceny</b>: v podkladoch sú ceny „€/kg bez DPH“. Nie je jasné, či sú predajné alebo nákupné. Web ich zatiaľ zobrazuje ako predajné × (1 + DPH 23 %), bez marže. Zľavy predplatného (−10 / −20 %) sú z pôvodného návrhu.</li>
+        <li><b>Jeleň & králik s batátmi</b>: výrobca neposlal popis vhodnosti, cenu, popol, vlákninu, vlhkosť, vápnik, fosfor, vitamíny ani stopové prvky. Vhodnosť je PREDPOKLAD (dospelí a seniori, nie šteňatá; pri nadváhe a pankrease vyhráva, lebo má najmenej tuku – 12&nbsp;%). Energia počíta s popolom 7&nbsp;%, vlákninou 3&nbsp;% a vlhkosťou 8&nbsp;%.</li>
+        <li><b>Zloženie Jeleň & králik</b>: podklady uvádzajú dve verzie (s ryžou 15&nbsp;% a batátmi 8&nbsp;%, alebo bez ryže s batátmi 23&nbsp;%). Obal ukazuje 23&nbsp;% batátov, preto je v katalógu verzia bez ryže.</li>
+        <li><b>Dávka vs. výrobca</b>: model (WSAVA násobky × ME podľa NRC) dáva pri Hovädzom s ryžou o ~25–45&nbsp;% viac než tabuľka výrobcu. Tabuľka zodpovedá ~1,2 × RER, čo je hodnota pre málo aktívneho / kastrovaného psa. Rozhodnúť: nechať model, alebo znížiť parameter <code>kalibrácia</code> (sekcia 6 ukazuje, aká hodnota by sedela).</li>
+        <li><b>Ceny</b>: v podkladoch sú ceny „€/kg bez DPH“. Nie je jasné, či sú predajné alebo nákupné. Web ich zatiaľ zobrazuje ako predajné × (1 + DPH 23&nbsp;%), bez marže. Zľavy predplatného (−10 / −20&nbsp;%) sú z pôvodného návrhu.</li>
         <li><b>Veľkosti vriec</b>: obal ukazuje len 9 kg; ponúkame 9 kg a 2 × 9 kg.</li>
         <li><b>Hranice veku</b> (šteňa do 10/10/12/18/24 mesiacov, senior od 9/9/8/7/6 rokov pre trpasličie/malé/stredné/veľké/obrie) sú bežné orientačné hodnoty, nie údaj výrobcu. Treba potvrdiť s veterinárom.</li>
         <li><b>Plemená</b>: kategóriu berieme z tabuľky plemien (sekcia 12). „Trpasličie“ sa pri výbere granúl ráta ako malé, lebo výrobca rozlišuje len malé, stredné, veľké a obrie. Kríženci majú len malý, stredný a veľký; obrieho kríženca zatiaľ nemáme.</li>
         <li><b>„Zdravý senior“</b> pri Morka, hus & kačica = bez pankreasu, intolerancie a nadváhy. Iné choroby sa v dotazníku nezisťujú.</li>
-        <li><b>„Kilo navyše“</b> = odhad 10 % nad ideálom (parameter). Presnejšie by bolo pýtať sa na ideálnu hmotnosť alebo BCS 1–9.</li>
+        <li><b>„Kilo navyše“</b> = odhad 10&nbsp;% nad ideálom (parameter). Presnejšie by bolo pýtať sa na ideálnu hmotnosť alebo BCS 1–9.</li>
         <li><b>Gravidita</b>: výrobca uvádza len „gravidné feny“ pri Hovädzom s ryžou. Laktácia (dojčenie) sa nepýta; dávka pri nej je 4–8 × RER a patrí k veterinárovi.</li>
         <li><b>Texty z podkladov</b> sú na webe s opravenými preklepmi (chontroitín → chondroitín, maso → mäso, peržlen → petržlen, pantotenaén → pantotenan, šteňátá → šteňatá, ostropestrec → pestrec). Pri medi bol v podkladoch omylom aj kód mangánu (3b502); ponechaný je len 3b405. Pred tlačou overiť s výrobcom.</li>
         
       </ol></section>
     <section class="panel"><h2>12 · Plemená</h2>
-      <p class="lead2">Kategória, rozpätie a priemer hmotnosti dospelého psa (pes aj suka spolu; psy bývajú o 10–25 % ťažšie ako suky). Kategória rozhoduje o fáze života a výbere granúl; priemer len predvyplní hmotnosť v dotazníku. Zvýraznené = aktuálne zvolené plemeno.</p>
+      <p class="lead2">Kategória, rozpätie a priemer hmotnosti dospelého psa (pes aj suka spolu; psy bývajú o 10–25&nbsp;% ťažšie ako suky). Kategória rozhoduje o fáze života a výbere granúl; priemer len predvyplní hmotnosť v dotazníku. Zvýraznené = aktuálne zvolené plemeno.</p>
       <div class="scroll" id="o-breeds"></div></section>
   </div>
 </div>

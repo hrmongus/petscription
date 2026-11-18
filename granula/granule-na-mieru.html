@@ -10,7 +10,7 @@
 <meta name="description" content="Päť otázok o tvojom psovi. Vyberieme granule, spočítame dennú dávku na gramy a vrecko príde samo.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,800;1,900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,900&display=swap">
 <link rel="stylesheet" href="granula.css">
 <style>
 /* ---------- obrazovky ---------- */
@@ -23,94 +23,94 @@
 .topline{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
 .progress{display:flex;align-items:center;gap:14px;font-size:12px;font-weight:800;letter-spacing:.12em}
 .progress .bars{display:flex;gap:6px}
-.progress .bars i{width:40px;height:6px;border-radius:3px;background:var(--line)}
+.progress .bars i{width:40px;height:6px;background:var(--k-soft)}
 .progress .bars i.on{background:var(--o)}
 .q-body{flex:1;display:flex;flex-direction:column;justify-content:center;gap:24px;max-width:680px;padding:40px 0}
 .q-body.narrow{max-width:640px}
-.kicker{font-size:13px;font-weight:800;letter-spacing:.14em;color:var(--k);text-transform:uppercase}
+.kicker{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--k);text-transform:uppercase}
 .q-title{font-size:clamp(38px,4.2vw,57.6px);text-wrap:balance}
 .q-title span{color:var(--k)}
 .q-title:focus{outline:none}
-.q-lead{font-size:19px;line-height:1.5;color:var(--i2)}
+.q-lead{font-size:18px;line-height:1.5}
 .q-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;max-width:680px}
 .back{font:800 16px/1 var(--font);color:var(--n);text-decoration:none;padding:12px 0;background:none;border:0;cursor:pointer}
 .back:hover{color:var(--k)}
 .next{min-height:56px;padding:18px 30px}
-.err{margin:0;font-size:15px;font-weight:700;color:#B3261E}
+.err{margin:0;font-size:15px;font-weight:700;color:var(--err)}
 .err[hidden]{display:none}
 
 /* ---------- polia ---------- */
-.card{background:var(--white);padding:26px;display:flex;flex-direction:column;gap:18px}
+.card{background:var(--ml);border:2px solid var(--n);padding:26px;display:flex;flex-direction:column;gap:18px}
 .field{display:flex;flex-direction:column;gap:8px}
 .field > span{font-weight:700;font-size:15px}
-.input,.select{width:100%;font:600 18px/1.3 var(--font);color:var(--n);background:var(--white);border:2px solid var(--n);border-radius:0;padding:16px 18px}
-.input::placeholder{color:var(--i3);font-weight:500}
-.input:focus,.select:focus{outline:3px solid var(--o);outline-offset:0}
+.input,.select{width:100%;font:400 18px/1.3 var(--font);color:var(--n);background:var(--ml);border:2px solid var(--n);border-radius:0;padding:14px 18px}
+.input::placeholder{color:var(--n);opacity:.55;font-weight:400}
+.input:focus,.select:focus{outline:3px solid var(--n);outline-offset:2px}
 .select-wrap{position:relative}
 .select{appearance:none;-webkit-appearance:none;padding-right:48px;cursor:pointer}
-.select-wrap::after{content:"▾";position:absolute;right:18px;top:50%;transform:translateY(-50%);font-weight:900;pointer-events:none}
+/* šípka výberu: nakreslená, nie znak */
+.select-wrap::after{content:"";position:absolute;right:20px;top:50%;width:10px;height:10px;border-right:3px solid var(--n);border-bottom:3px solid var(--n);transform:translateY(-70%) rotate(45deg);pointer-events:none}
 .row2{display:flex;gap:16px}
 .row2 > *{flex:1}
 
 /* váha */
-.weight{background:var(--k);color:var(--m);padding:26px 28px;display:flex;flex-direction:column;gap:12px}
-.weight output{display:block;font-weight:900;letter-spacing:-.015em;font-size:clamp(72px,8vw,110px);line-height:1;color:var(--o)}
-.range{-webkit-appearance:none;appearance:none;width:100%;height:34px;margin:0;background:transparent;cursor:pointer;--p:30%}
-.range::-webkit-slider-runnable-track{height:10px;border-radius:5px;background:linear-gradient(to right,var(--o) 0 var(--p),var(--k-soft) var(--p) 100%)}
-.range::-webkit-slider-thumb{-webkit-appearance:none;width:34px;height:34px;margin-top:-12px;border-radius:50%;background:var(--m);border:4px solid var(--o);box-sizing:border-box}
-.range::-moz-range-track{height:10px;border-radius:5px;background:var(--k-soft)}
-.range::-moz-range-progress{height:10px;border-radius:5px;background:var(--o)}
-.range::-moz-range-thumb{width:34px;height:34px;border-radius:50%;background:var(--m);border:4px solid var(--o);box-sizing:border-box}
+.weight{background:var(--k);color:var(--m);border:2px solid var(--n);padding:26px 28px;display:flex;flex-direction:column;gap:12px}
+.weight output{display:block;font-weight:900;letter-spacing:0;font-size:clamp(72px,8vw,110px);line-height:1;color:var(--o)}
+.range{-webkit-appearance:none;appearance:none;width:100%;height:30px;margin:0;background:transparent;cursor:pointer;--p:30%}
+.range::-webkit-slider-runnable-track{height:6px;background:linear-gradient(to right,var(--o) 0 var(--p),var(--k-soft) var(--p) 100%)}
+.range::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;margin-top:-11px;border-radius:0;background:var(--o);border:2px solid var(--n);box-sizing:border-box}
+.range::-moz-range-track{height:6px;border-radius:0;background:var(--k-soft)}
+.range::-moz-range-progress{height:6px;border-radius:0;background:var(--o)}
+.range::-moz-range-thumb{width:28px;height:28px;border-radius:0;background:var(--o);border:2px solid var(--n);box-sizing:border-box}
 .range:focus-visible{outline:3px solid var(--m);outline-offset:6px}
-.weight .ends{display:flex;justify-content:space-between;font-size:13px;font-weight:700}
+.weight .ends{display:flex;justify-content:space-between;font-size:13px;font-weight:400}
 
 /* voľby: radio/checkbox schované, štýl nesie label */
 .opts{display:grid;gap:12px}
 .opts.c2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .opts.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
-.opt{position:relative;cursor:pointer;padding:22px 24px;background:var(--white);color:var(--n);border:2px solid var(--n);display:flex;flex-direction:column;gap:6px;min-height:104px}
+.opt{position:relative;cursor:pointer;padding:22px 24px;background:var(--ml);color:var(--n);border:2px solid var(--n);display:flex;flex-direction:column;gap:6px;min-height:104px}
 .opt input{position:absolute;opacity:0;pointer-events:none}
 .opt b{font-weight:900;font-size:19.2px;line-height:1;text-transform:uppercase}
 .opt small{font-size:15px;font-weight:600;opacity:.85}
 .opt:hover{border-color:var(--k)}
 .opt:has(input:checked){background:var(--k);color:var(--m);border-color:var(--k)}
-.opt:has(input:focus-visible){outline:3px solid var(--o);outline-offset:2px}
+.opt:has(input:focus-visible){outline:3px solid var(--n);outline-offset:2px}
 .opt.body{align-items:center;text-align:center;gap:14px;padding:20px}
 .opt.body b{font-size:16.8px}
 .opt.body small{font-size:14px}
 .opt.body .shape{height:56px;display:flex;align-items:center;justify-content:center}
-.opt.body .shape i{width:110px;border-radius:999px;background:currentColor;opacity:.85}
+.opt.body .shape i{width:110px;background:currentColor}
 .chips{display:flex;flex-wrap:wrap;gap:10px}
-.chip{position:relative;cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:12px 18px;background:var(--m);color:var(--n);border:2px solid var(--n);font-size:15px;font-weight:700}
+.chip{position:relative;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;background:transparent;color:var(--n);border:2px solid var(--n);font-size:15px;font-weight:600}
 .chip input{position:absolute;opacity:0;pointer-events:none}
 .chip:hover{border-color:var(--k)}
 .chip:has(input:checked){background:var(--k);color:var(--m);border-color:var(--k)}
 .chip:has(input:checked)::before{content:"✓"}
-.chip:has(input:focus-visible){outline:3px solid var(--o);outline-offset:2px}
+.chip:has(input:focus-visible){outline:3px solid var(--n);outline-offset:2px}
 .card-label{font-weight:700;font-size:16px}
-.card-label span{font-weight:500;color:var(--i3)}
+.card-label span{font-weight:400}
 
 /* ---------- bočné panely ---------- */
 .side-blue{background:var(--k);color:var(--m)}
-.side-dark{background:var(--n);color:var(--m);justify-content:center !important}
-.side-orange{background:var(--o);color:var(--n);justify-content:center !important}
-.split aside .frame{--off:22px;--field:var(--o);height:400px}
-.tip{background:var(--k-deep);padding:24px 26px;display:flex;flex-direction:column;gap:10px}
+.side-fact{justify-content:center !important}
+.split aside .frame{height:400px}
+.tip{background:var(--k);border:2px solid var(--n);padding:24px 26px;display:flex;flex-direction:column;gap:10px}
 .tip .h{display:flex;align-items:center;gap:12px}
 .tip .g{display:inline-block;background:var(--o);color:var(--n);font-weight:900;font-style:italic;font-size:15px;line-height:1;padding:5px 7px 4px;transform:rotate(-4deg)}
-.tip .t{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--o);text-transform:uppercase}
+.tip .t{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
 .tip p{font-size:17px;line-height:1.45;font-weight:600}
 .fact{display:flex;flex-direction:column;gap:18px}
 .fact .t{font-size:12px;font-weight:800;letter-spacing:.12em}
-.fact .n{font-weight:900;line-height:1;font-size:clamp(88px,9vw,132px)}
+.fact .n{font-weight:900;line-height:1;font-size:clamp(88px,9vw,132px);color:var(--l)}
 .fact .u{font-size:26.4px}
 .fact p{font-size:18px;line-height:1.45;font-weight:600}
-.fact .src{font-size:13px;line-height:1.45;font-weight:500}
+.fact .src{font-size:13px;line-height:1.4;font-weight:400}
 
 /* ---------- miešanie a hotovo ---------- */
 .full{background:var(--k);color:var(--m);flex-direction:column;padding:36px 80px 56px}
 .full a{color:var(--m)}
-.full a:hover{color:var(--o)}
+.full a:hover{color:var(--m)}
 .full .logo{font-size:26px;padding:5px 9px 4px;align-self:flex-start}
 .mix-body{flex:1;display:flex;align-items:center;gap:96px;padding:40px 0}
 .bowl{position:relative;width:460px;height:460px;flex:none}
@@ -125,7 +125,7 @@
   78%{transform:translate(-50%,-50%) rotate(var(--rot))}
   88%{transform:translate(-50%,-62%) rotate(var(--rot))}
   100%{opacity:1;transform:translate(-50%,-50%) rotate(var(--rot))}}
-.bowl .sticker{position:absolute;z-index:3;right:-30px;top:-10px;background:var(--l);color:var(--n);font-size:28px;line-height:1.05;padding:9px 16px}
+.bowl .sticker{position:absolute;z-index:3;right:-30px;top:-10px;font-size:28px;line-height:1.05;padding:9px 16px}
 .mix-copy{flex:1;display:flex;flex-direction:column;gap:28px}
 .mix-copy .pct{font-weight:900;line-height:1;font-size:clamp(80px,9vw,120px);color:var(--o);font-variant-numeric:tabular-nums}
 .mix-copy h1{font-size:clamp(32px,3.4vw,48px)}
@@ -134,123 +134,122 @@
 .mix-list li::before{content:"\00a0\00a0\00a0"}
 .mix-list li.done{opacity:1}
 .mix-list li.done::before{content:"✓ "}
-.mix-list li.now{opacity:1;color:var(--o)}
+.mix-list li.now{opacity:1;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
 .mix-list li.now::before{content:"→ "}
 
 .done-body{flex:1;display:flex;align-items:center;gap:80px;padding:40px 0}
 .done-copy{flex:1;display:flex;flex-direction:column;gap:28px}
-.done-copy .kicker{color:var(--o)}
+.done-copy .kicker{color:var(--m)}
 .done-copy h1{font-size:clamp(44px,5vw,72px)}
-.done-copy h1 span{color:var(--o)}
-.done-copy p{font-size:20px;line-height:1.5;max-width:620px}
+.done-copy h1 span{color:var(--l)}
+.done-copy p{font-size:18px;line-height:1.5;max-width:500px}
 .tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:680px}
-.tiles > div{background:var(--k-deep);padding:18px 20px}
-.tiles .t{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--o)}
+.tiles > div{background:var(--ml);color:var(--n);border:2px solid var(--n);padding:18px 20px}
+.tiles .t{font-size:12px;font-weight:800;letter-spacing:.12em}
 .tiles .v{font-weight:900;font-size:26.4px;line-height:1;margin-top:8px}
-.home-link{font-weight:800;font-size:16px;border-bottom:2px solid var(--o);padding-bottom:2px;text-decoration:none;align-self:flex-start}
+.home-link{font-weight:700;font-size:17px;border-bottom:2px solid currentColor;padding-bottom:2px;text-decoration:none;align-self:flex-start}
 .done-pic{flex:0 0 440px;position:relative}
-.done-pic .frame{--off:24px;--field:var(--o);height:440px}
-.done-pic .sticker{position:absolute;left:-20px;bottom:40px;background:var(--l);color:var(--n);font-size:30px;line-height:1.05;padding:10px 17px;--t:-6deg}
+.done-pic .frame{height:440px}
+.done-pic .sticker{position:absolute;left:-20px;bottom:40px;font-size:30px;line-height:1.05;padding:10px 17px;--t:-6deg}
 
 /* ---------- výsledok ---------- */
 .res .pane{padding:36px 64px 40px 80px;gap:22px}
 .res h1.q-title{font-size:clamp(24px,2.2vw,30px)}
 .res h1.q-title > span{color:var(--k)}
-.res .why{font-size:18px;line-height:1.5;color:var(--i2);max-width:640px}
-.edit{font-weight:800;font-size:15px;color:var(--k);border-bottom:2px solid var(--o);padding-bottom:2px;text-decoration:none}
+.res .why{font-size:18px;line-height:1.5;max-width:500px}
+.edit{font-weight:700;font-size:15px;color:var(--k);border-bottom:2px solid currentColor;padding-bottom:2px;text-decoration:none}
+.edit:hover{color:var(--n)}
 .recipe{display:flex;align-items:center;gap:14px;flex-wrap:wrap;list-style:none;margin:0;padding:0}
-.recipe .lbl{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--i3)}
-.recipe .it{display:inline-flex;align-items:center;gap:8px;background:var(--white);padding:5px 14px 5px 5px;border:2px solid var(--n);font-size:14px;font-weight:800}
-.recipe .it span{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.recipe .lbl{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--n)}
+.recipe .it{display:inline-flex;align-items:center;gap:8px;background:var(--ml);padding:5px 14px 5px 5px;border:2px solid var(--n);font-size:14px;font-weight:800}
+.recipe .it span{width:44px;height:44px;border:2px solid var(--n);display:flex;align-items:center;justify-content:center}
 .kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.kpis > div{background:var(--white);padding:18px 20px}
+.kpis > div{background:var(--ml);border:2px solid var(--n);padding:18px 20px}
 .kpis > div:first-child{background:var(--k);color:var(--m)}
-.kpis > div:first-child b{color:var(--o)}
 .kpis b{display:block;font-weight:900;font-size:31.2px;line-height:1}
 .kpis span{display:block;font-size:13px;font-weight:700;margin-top:6px}
-.sub-lbl{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--i3)}
+.sub-lbl{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--n)}
 .opt.bagopt{gap:4px;padding:16px 16px 14px;min-height:0}
 .opt.bagopt b{font-size:18px}
 .opt.bagopt .price{font-weight:900;font-size:22px;line-height:1.1;margin-top:6px}
 .opt.bagopt small{display:block;font-size:13px;opacity:1}
 .opt.bagopt .save{align-self:flex-start;margin-top:4px;background:var(--n);color:var(--m);font-size:11px;font-weight:800;letter-spacing:.06em;padding:3px 7px 2px}
-.opt.bagopt:has(input:checked) .save{background:var(--o);color:var(--n)}
-.rec{position:absolute;right:10px;top:-14px;background:var(--l);color:var(--n);padding:4px 10px;transform:rotate(3deg);font-weight:900;font-size:14px;text-transform:uppercase}
-.paybar{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:auto;border-top:1.5px solid var(--n);padding-top:18px}
+.opt.bagopt:has(input:checked) .save{background:var(--m);color:var(--n)}
+.rec{position:absolute;right:10px;top:-14px;background:var(--o);color:var(--n);padding:4px 10px;transform:rotate(3deg);font-weight:900;font-size:14px;text-transform:uppercase}
+.paybar{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:auto;border-top:2px solid var(--n);padding-top:18px}
 .paybar b{display:block;font-weight:900;font-size:24px;line-height:1}
-.paybar span{display:block;font-size:14px;font-weight:600;color:var(--i2);margin-top:4px}
+.paybar span{display:block;font-size:14px;font-weight:600;color:var(--n);margin-top:4px}
 .res aside{width:500px;align-items:center;justify-content:center;position:relative}
 /* názov receptúry ako štítok — hlavný bod výsledku */
-.plabel{align-self:flex-start;max-width:100%;background:var(--white);border:2px solid var(--n);box-shadow:10px 10px 0 var(--k);padding:16px 22px 18px;margin:6px 10px 10px 0}
-.plabel .t{display:block;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--o)}
-.pname{font-size:clamp(30px,3.4vw,48px);line-height:1;margin-top:6px}
-.pack{width:100%;height:auto;display:block;filter:drop-shadow(0 30px 30px rgba(0,0,0,.35))}
+.plabel{align-self:flex-start;max-width:100%;background:var(--ml);border:2px solid var(--n);padding:16px 22px 18px;margin:6px 0 0}
+.plabel .t{display:block;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--k)}
+.pname{font-size:clamp(32px,3.6vw,56px);line-height:1;margin-top:6px}
+.pack{width:100%;height:auto;display:block}
 /* vrece s nálepkami hlavných surovín okolo */
 .pack-stage{position:relative;width:min(470px,86%)}
 /* hlavné suroviny ako nálepky pod názvom receptúry */
 .pack-chips{display:flex;flex-wrap:wrap;gap:12px 14px;margin-top:2px}
-.pack-chips .it{display:inline-flex;align-items:center;gap:8px;background:var(--white);color:var(--n);padding:5px 14px 5px 5px;border:2px solid var(--n);
+.pack-chips .it{display:inline-flex;align-items:center;gap:8px;background:var(--ml);color:var(--n);padding:5px 14px 5px 5px;border:2px solid var(--n);
   font-size:14px;font-weight:800;white-space:nowrap;transform:rotate(var(--t))}
-.pack-chips .it span{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.pack-chips .it:nth-child(odd){--t:-2deg}
-.pack-chips .it:nth-child(even){--t:2deg}
+.pack-chips .it span{width:40px;height:40px;border:2px solid var(--n);display:flex;align-items:center;justify-content:center}
+.pack-chips .it:nth-child(odd){--t:-3deg}
+.pack-chips .it:nth-child(even){--t:3deg}
 /* „Netoleruje tento proteín?“ — receptúry s iným mäsom a porovnanie */
 .swap{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
-.swap-q{font:inherit;font-weight:800;font-size:15px;color:var(--k);background:none;border:0;padding:0 0 2px;border-bottom:2px solid var(--o);cursor:pointer;text-align:left}
+.swap-q{font:inherit;font-weight:700;font-size:15px;color:var(--k);background:none;border:0;padding:0 0 2px;border-bottom:2px solid currentColor;cursor:pointer;text-align:left}
+.swap-q:hover{color:var(--n)}
 .swap-q::after{content:" +";font-weight:900}
 .swap-q[aria-expanded="true"]::after{content:" −"}
-.swap-note{font-size:14px;font-weight:600;color:var(--i2);margin:0}
-.swap-note button{font:inherit;font-weight:800;color:var(--k);background:none;border:0;padding:0;border-bottom:2px solid var(--o);cursor:pointer}
+.swap-note{font-size:15px;font-weight:600;margin:0}
+.swap-note button{font:inherit;font-weight:700;color:var(--k);background:none;border:0;padding:0;border-bottom:2px solid currentColor;cursor:pointer}
 .swap-panel{display:flex;flex-direction:column;gap:14px;width:100%}
 .swap-list{display:flex;flex-wrap:wrap;gap:10px}
-.swap-list button{font:inherit;font-size:14px;font-weight:800;color:var(--n);background:var(--white);border:2px solid var(--n);padding:9px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.swap-list button{font:inherit;font-size:14px;font-weight:800;color:var(--n);background:var(--ml);border:2px solid var(--n);padding:9px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
 .swap-list button:hover{background:var(--m)}
 .swap-list button[aria-pressed="true"]{background:var(--k);color:var(--m);border-color:var(--k)}
-.swap-list button small{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--i3)}
-.swap-list button[aria-pressed="true"] small{color:var(--l)}
-.swap-cmp{background:var(--white);border:2px solid var(--n);box-shadow:8px 8px 0 var(--o);padding:18px 20px;width:calc(100% - 8px)}
+.swap-list button small{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--n)}
+.swap-list button[aria-pressed="true"] small{color:var(--m)}
+.swap-cmp{background:var(--ml);border:2px solid var(--n);padding:18px 20px;width:100%}
 .swap-cmp table{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixed;overflow-wrap:anywhere}
-.swap-cmp th,.swap-cmp td{padding:9px 8px;text-align:left;vertical-align:middle;border-bottom:1.5px solid var(--m)}
+.swap-cmp th,.swap-cmp td{padding:9px 8px;text-align:left;vertical-align:middle;border-bottom:2px solid var(--m)}
 .swap-cmp thead th{border-bottom:2px solid var(--n);font-size:15px;font-weight:900;line-height:1.15;vertical-align:bottom}
-.swap-cmp thead th small{display:block;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--o);margin-bottom:4px}
+.swap-cmp thead th small{display:block;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--k);margin-bottom:4px}
 .swap-cmp thead img{display:block;width:46px;height:auto;margin-bottom:6px}
-.swap-cmp tbody th{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--i3);width:30%}
+.swap-cmp tbody th{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--n);width:30%}
 .swap-cmp td{font-weight:800;width:35%}
 .swap-cmp td.chg{color:var(--k)}
-.swap-warn{margin:14px 0 0;font-size:14px;font-weight:700;color:#B3261E}
+.swap-warn{margin:14px 0 0;font-size:14px;font-weight:700;color:var(--err)}
 .swap-act{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin-top:16px}
 .swap-act .btn{font-size:15px}
-.swap-act .later{font:inherit;font-weight:800;font-size:14px;color:var(--n);background:none;border:0;padding:0;border-bottom:2px solid var(--n);cursor:pointer}
+.swap-act .later{font:inherit;font-weight:700;font-size:14px;color:var(--n);background:none;border:0;padding:0;border-bottom:2px solid var(--n);cursor:pointer}
 /* pokračovať s uloženým psom (krok 1) */
 .resume{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:-6px}
-.resume-l{font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--i3)}
+.resume-l{font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--n)}
 .resume-list{display:flex;flex-wrap:wrap;gap:10px}
-.rs{display:inline-flex;align-items:stretch;background:var(--white);border:2px solid var(--n)}
+.rs{display:inline-flex;align-items:stretch;background:var(--ml);border:2px solid var(--n)}
 .rs-go{font:inherit;color:var(--n);background:none;border:0;cursor:pointer;display:flex;align-items:center;gap:12px;padding:8px 14px 8px 10px;text-align:left}
 .rs-go:hover{background:var(--m)}
 .rs-ico{width:34px;height:34px;flex:none;background:var(--o);border:2px solid var(--n);display:flex;align-items:center;justify-content:center;transform:rotate(-4deg)}
 .rs-ico svg{width:20px;height:20px}
 .rs-go b{display:block;font-weight:900;font-size:16px;line-height:1.1;text-transform:uppercase}
-.rs-go small{display:block;font-size:12px;font-weight:600;color:var(--i3);margin-top:2px}
+.rs-go small{display:block;font-size:12px;font-weight:600;color:var(--n);margin-top:2px}
 .rs-arr{font-weight:900;color:var(--k);margin-left:4px}
-.rs-x{font:inherit;font-size:16px;font-weight:700;color:var(--i3);background:none;border:0;border-left:1.5px solid var(--m2);padding:0 10px;cursor:pointer}
+.rs-x{font:inherit;font-size:16px;font-weight:700;color:var(--n);background:none;border:0;border-left:2px solid var(--n);padding:0 10px;cursor:pointer}
 .rs-x:hover{color:var(--n);background:var(--m)}
 /* ako kŕmiť prvé 2 týždne: malý odkaz pod dennou dávkou */
 .feed{margin-top:-12px;max-width:560px}
-.feed summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:13px;color:var(--k)}
+.feed summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:15px;color:var(--k)}
 .feed summary::-webkit-details-marker{display:none}
-.feed .ft{text-decoration:underline;text-decoration-color:var(--o);text-decoration-thickness:2px;text-underline-offset:3px}
+.feed .ft{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
 .feed summary i{font-style:normal;font-weight:900;font-size:15px;line-height:1;transition:transform .2s ease}
 .feed[open] summary i{transform:rotate(45deg)}
-.feed p{margin:8px 0 0;font-size:13px;line-height:1.5;color:var(--i2)}
-.feed-rows{list-style:none;margin:8px 0 0;padding:0;border:1.5px solid var(--n);background:var(--white)}
+.feed p{margin:8px 0 0;font-size:13px;line-height:1.5;color:var(--n)}
+.feed-rows{list-style:none;margin:8px 0 0;padding:0;border:2px solid var(--n);background:var(--ml)}
 .feed-rows li{display:flex;align-items:center;gap:10px;padding:7px 12px;font-size:13px}
-.feed-rows li + li{border-top:1px solid var(--m2)}
-.feed-rows .fi{width:20px;height:20px;flex:none;color:var(--k)}
-.feed-rows .fi svg{width:100%;height:100%}
+.feed-rows li + li{border-top:2px solid var(--m)}
 .feed-rows b{font-weight:800;font-size:13px}
 .feed-rows .fv{margin-left:auto;text-align:right;font-weight:600}
-.feed-rows em{font-style:normal;font-weight:900;color:var(--o)}
+.feed-rows em{font-style:normal;font-weight:900;color:var(--k)}
 /* recenzie pod výsledkom: celá šírka, pod modrým stĺpcom */
 .res{flex-wrap:wrap}
 .rvs{flex:0 0 100%;display:flex;flex-direction:column;gap:18px;border-top:2px solid var(--n);padding:32px 80px 48px;background:var(--m)}
@@ -258,18 +257,19 @@
 .rvs h2{font-size:clamp(24px,2.4vw,32px)}
 .rvs h2 span{color:var(--k)}
 .rv-arrows{display:flex;gap:8px}
-.rv-arrow{width:46px;height:46px;border:2px solid var(--n);background:transparent;color:var(--n);font:900 19px/1 var(--font);cursor:pointer}
+.rv-arrow{width:46px;height:46px;border:2px solid var(--n);background:transparent;color:var(--n);font:900 19px/1 var(--font);cursor:pointer;transition:background 150ms ease,color 150ms ease}
+.rv-arrow:hover:not(:disabled){background:var(--n);color:var(--m)}
+.rv-arrow.dark:hover:not(:disabled){background:var(--o);color:var(--n)}
 .rv-arrow.dark{background:var(--n);color:var(--o)}
 .rv-arrow:disabled{opacity:.35;cursor:default}
 .rv-row{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:14px 2px 8px}
 .rv-row::-webkit-scrollbar{display:none}
-.rv{flex:0 0 calc((100% - 48px) / 4);scroll-snap-align:start;background:var(--white);border:2px solid var(--n);padding:14px;display:flex;flex-direction:column;gap:10px}
+.rv{flex:0 0 calc((100% - 48px) / 4);scroll-snap-align:start;background:var(--ml);border:2px solid var(--n);padding:14px;display:flex;flex-direction:column;gap:10px}
 .rv-name{font-size:18px}
-.rv-pic{height:170px;position:relative;border:2px solid var(--n);background:var(--k-photo)}
+.rv-pic{height:170px;position:relative;border:2px solid var(--n);background:var(--k)}
 .rv-pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.rv-stars{position:absolute;z-index:1;left:-8px;top:-12px;background:var(--o);color:var(--n);border:2px solid var(--n);padding:4px 9px 3px;font-size:21px;line-height:1;letter-spacing:.04em;transform:rotate(-4deg)}
-.rv:nth-child(even) .rv-stars{background:var(--l);transform:rotate(3deg)}
-.rv-recipe{font-weight:800;font-size:13px;color:var(--k);text-decoration:underline;text-decoration-color:var(--o);text-decoration-thickness:2px;text-underline-offset:3px}
+.rate{display:flex;gap:4px;color:var(--k);font-size:16px}
+.rv-recipe{font-weight:700;font-size:13px;color:var(--k);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
 .rv blockquote{margin:0;font-size:14px;line-height:1.5;font-weight:600}
 .rv-by{margin-top:auto;font-weight:900;font-size:13px}
 /* modrý stĺpec: obsah ide so scrollom, výzva k platbe je stále na očiach */
@@ -279,7 +279,7 @@
 .pa-pay span{display:block;font-size:13px;font-weight:600;margin-top:4px;opacity:.85}
 .pa-pay .btn{width:100%}
 .pack-inline{display:none;position:relative;justify-content:center;background:var(--k);padding:24px 16px;margin:0 -16px}
-.pack-inline .sticker{position:absolute;left:16px;top:16px;background:var(--l);color:var(--n);font-size:20px;--t:-8deg}
+.pack-inline .sticker{position:absolute;left:16px;top:16px;font-size:20px;--t:-6deg}
 .facts{border-bottom:2px solid var(--n)}
 .facts details{border-top:2px solid var(--n);padding:14px 0}
 .facts summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;font-weight:800;font-size:16px}
@@ -287,24 +287,24 @@
 .facts summary:hover{color:var(--k)}
 .facts summary i{font-style:normal;font-weight:900;font-size:22px;line-height:1;transition:transform .2s ease}
 .facts details[open] summary i{transform:rotate(45deg)}
-.facts p{margin-top:10px;font-size:14px;line-height:1.55;color:var(--i2)}
+.facts p{margin-top:10px;font-size:14px;line-height:1.55;color:var(--n)}
 .test-banner{position:fixed;left:0;right:0;bottom:0;z-index:99;background:#B3261E;color:#fff;font:700 13px/1.4 var(--font);padding:8px 16px;text-align:center}
 .test-banner a{color:#fff}
-.res aside .sticker{background:var(--l);color:var(--n);font-size:24px;line-height:1.05;padding:8px 14px;--t:-6deg}
+.res aside .sticker{font-size:24px;line-height:1.05;padding:8px 14px;--t:-6deg}
 /* bočný panel výsledku: nálepka a nadpis, vrece na kruhu s pečiatkou, fakty */
 .res .pack-aside{display:block;padding:32px 44px 40px}
 .pa-top{display:flex;align-items:center;justify-content:space-between;gap:16px}
-.pa-kicker{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--o)}
+.pa-kicker{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
 .pa-stage{position:relative;flex:none;padding:8px 0;display:flex;align-items:center;justify-content:center;min-height:0}
-.pa-disc{position:absolute;width:min(250px,62%);aspect-ratio:1;border-radius:50%;background:var(--k-deep);box-shadow:0 0 0 14px rgba(255,255,255,.06)}
 .pa-stage .pack-stage{width:min(230px,52%)}
-.pa-badge{position:absolute;right:6%;top:8%;width:92px;height:92px;border-radius:50%;background:var(--o);color:var(--n);border:2px solid var(--n);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(10deg);font-weight:800;font-size:14px;text-transform:uppercase;line-height:1}
+/* štvorcový odznak, Oranž bez rámu, 6° */
+.pa-badge{position:absolute;right:6%;top:8%;width:92px;height:92px;background:var(--o);color:var(--n);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(6deg);font-weight:800;font-size:14px;text-transform:uppercase;line-height:1}
 .pa-badge b{font-size:38px;font-weight:900}
 .pa-badge b.long{font-size:24px}
 .pa-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0}
-.pa-facts div{background:var(--k-deep);padding:14px 16px}
-.pa-facts dt{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--o)}
+.pa-facts div{background:var(--ml);color:var(--n);border:2px solid var(--n);padding:14px 16px}
+.pa-facts dt{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
 .pa-facts dd{margin:6px 0 0;font-weight:900;font-size:18px;line-height:1.15}
 
 /* ---------- objednávka ---------- */
@@ -320,43 +320,41 @@
 .co-tape{margin:0 calc(-1 * var(--pr)) 0 calc(-1 * var(--pl));padding:10px 0;overflow-x:clip}
 .co-tape .tape{padding:12px 0}
 .co-tape .track{font-size:clamp(16px,1.5vw,20px)}
-.opts.locked .opt{background:#E4DDD5;color:#6F6862;border-color:#A39B92;cursor:not-allowed;filter:grayscale(1)}
-.opts.locked .opt .rec{background:#C9C2BA;color:#4A4540}
-.co-locked{border:0;margin:0;padding:0;min-width:0;display:flex;flex-direction:column;gap:18px;filter:grayscale(1);opacity:.55;cursor:not-allowed}
+/* vypnuté = 40 % krytie, bez prefarbovania */
+.opts.locked .opt{opacity:.4;cursor:not-allowed}
+.co-locked{border:0;margin:0;padding:0;min-width:0;display:flex;flex-direction:column;gap:18px;opacity:.4;cursor:not-allowed}
 .co-locked *{cursor:not-allowed !important}
-.co-locked .input,.co-locked .chip,.co-locked .pick{background:#E4DDD5;border-color:#A39B92;color:#6F6862}
-.co-locked .input::placeholder{color:#8A827A}
-.co-embed{background:var(--white);border:2px solid var(--n);box-shadow:8px 8px 0 var(--o);padding:16px;min-height:96px}
-.co aside #s-submit:disabled{background:#5E5852;color:#C9C2BA;border-color:#5E5852;cursor:not-allowed}
+.co-embed{background:var(--ml);border:2px solid var(--n);padding:16px;min-height:96px}
+.co aside #s-submit:disabled{opacity:.4;cursor:not-allowed}
+.co aside #s-submit:disabled:hover{background:var(--o);color:var(--n);border-color:var(--n)}
 .co-ann{background:var(--o);color:var(--n);padding:12px 14px;font-size:14px;line-height:1.45;font-weight:600}
 .co-ann-cta{font:inherit;font-weight:900;color:var(--n);background:none;border:0;padding:0;border-bottom:2px solid var(--n);cursor:pointer;white-space:nowrap}
 .co .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.box{background:var(--white);padding:20px;display:flex;flex-direction:column;gap:12px}
+.box{background:var(--ml);border:2px solid var(--n) !important;padding:20px;display:flex;flex-direction:column;gap:12px}
 .box > .t{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--k)}
-.box .input{font-size:15px;font-weight:500;padding:12px 16px}
-.box .chip{background:var(--m)}
-.pick{display:flex;justify-content:space-between;width:100%;font:600 15px/1.3 var(--font);color:var(--n);background:var(--white);border:2px solid var(--n);padding:13px 16px;cursor:pointer;text-align:left}
+.box .input{font-size:15px;font-weight:400;padding:12px 16px}
+.pick{display:flex;justify-content:space-between;width:100%;font:400 15px/1.3 var(--font);color:var(--n);background:var(--ml);border:2px solid var(--n);padding:13px 16px;cursor:pointer;text-align:left}
 .pick:hover{border-color:var(--k)}
 .box #ship-addr:not([hidden]){display:flex}
 #preg-field[hidden]{display:none}
-.box .note{font-size:13px;line-height:1.4;color:var(--i2)}
+.box .note{font-size:13px;line-height:1.4;color:var(--n)}
 .cardrow{display:flex;gap:10px}
 .cardrow > :first-child{flex:2}.cardrow > *{flex:1;min-width:0}
 .co aside{width:480px;padding:48px 48px 40px;justify-content:flex-start;gap:18px}
-.sum-t{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--o)}
+.sum-t{font-size:12px;font-weight:800;letter-spacing:.12em}
 .sum-item{display:flex;gap:16px;align-items:center}
 .sum-item .mini{width:78px;height:104px;flex:none;object-fit:contain}
 .sum-item b{display:block;font-weight:900;font-size:18px;line-height:1;text-transform:uppercase}
-.sum-item span{display:block;font-size:14px;color:var(--muted-dark);margin-top:4px}
-.lines{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--n2);padding-top:16px;font-size:16px}
+.sum-item span{display:block;font-size:14px;color:var(--m);margin-top:4px}
+.lines{display:flex;flex-direction:column;gap:10px;border-top:2px solid var(--m);padding-top:16px;font-size:16px}
 .lines div{display:flex;justify-content:space-between;gap:12px}
-.lines .disc{color:var(--l)}
-.total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--n2);padding-top:16px}
+.lines .disc{font-weight:800}
+.total{display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid var(--m);padding-top:16px}
 .total span{font-weight:800;font-size:16px}
 .total b{font-weight:900;font-size:33.6px;line-height:1;color:var(--o)}
 .co aside .btn{width:100%;min-height:60px;font-size:18px;margin-top:4px}
 .co aside .btn:hover{background:var(--m);color:var(--n);border-color:var(--m)}
-.co aside p{font-size:14px;line-height:1.5;color:var(--muted-dark)}
+.co aside p{font-size:14px;line-height:1.5;color:var(--m)}
 
 /* ---------- mobil ---------- */
 @media (max-width:1100px){
@@ -456,11 +454,11 @@
       <button type="button" class="btn btn-o next" data-next>Ďalej →</button>
     </div>
   </div>
-  <aside class="side-blue">
+  <aside class="side-blue on-brand">
     <div class="frame"><div class="ph"><img src="img/cta-dalmatin.jpg" alt="Dalmatín pozerá do kamery" width="666" height="1000" style="object-position:center 25%"></div></div>
     <div class="tip"><div class="h"><span class="g" aria-hidden="true">G!</span><span class="t">Vedel si?</span></div>
       <p>Až tretina majiteľov psov s nadváhou si myslí, že ich pes má normálnu váhu. Preto sa o chvíľu spýtame aj na postavu, nielen na kilá.</p>
-      <p style="font-size:12px;font-weight:500;opacity:.8">Prieskum Association for Pet Obesity Prevention, USA, 2009</p></div>
+      <p style="font-size:13px;font-weight:400">Prieskum Association for Pet Obesity Prevention, USA, 2009</p></div>
   </aside>
 </section>
 
@@ -478,7 +476,7 @@
       <div class="card">
         <label class="field"><span>Plemeno</span>
           <span class="select-wrap"><select class="select" name="breed" id="breed"></select></span>
-          <small style="font-size:14px;color:var(--i3)">Plemeno nie je v zozname? Vyber kríženca podľa veľkosti.</small>
+          <small style="font-size:15px">Plemeno nie je v zozname? Vyber kríženca podľa veľkosti.</small>
         </label>
       </div>
     </div>
@@ -487,7 +485,7 @@
       <button type="button" class="btn btn-o next" data-next>Ďalej →</button>
     </div>
   </div>
-  <aside class="side-blue">
+  <aside class="side-blue on-brand">
     <div class="frame"><div class="ph"><img src="img/hero-jack-russell.jpg" alt="Pes na tenisovom kurte" width="880" height="1168"></div></div>
     <div class="tip"><div class="h"><span class="g" aria-hidden="true">G!</span><span class="t">Vedel si?</span></div>
       <p>Hrsť granúl je pre jorkšíra skoro celá denná dávka. Pre labradora je to asi šestina. Preto sa pýtame na plemeno.</p></div>
@@ -523,13 +521,13 @@
       <button type="button" class="btn btn-o next" data-next>Ďalej →</button>
     </div>
   </div>
-  <aside class="side-dark">
+  <aside class="side-blue side-fact on-brand">
     <div class="fact">
-      <div class="t" style="color:var(--o)">VEDEL SI?</div>
-      <div class="n" style="color:var(--o)">1,8</div>
+      <div class="t">VEDEL SI?</div>
+      <div class="n">1,8</div>
       <div class="display u">roka navyše</div>
       <p>Toľko dlhšie žili labradory, ktoré celý život držali ideálnu váhu, oproti súrodencom, ktorí jedli o štvrtinu viac.</p>
-      <p class="src" style="color:var(--muted-dark)">14-ročná štúdia, Kealy a kol., JAVMA, 2002</p>
+      <p class="src">14-ročná štúdia, Kealy a kol., JAVMA, 2002</p>
     </div>
   </aside>
 </section>
@@ -558,7 +556,7 @@
       <button type="button" class="btn btn-o next" data-next>Ďalej →</button>
     </div>
   </div>
-  <aside class="side-blue">
+  <aside class="side-blue on-brand">
     <div class="frame"><div class="ph"><img src="img/kviz-beh-hory.jpg" alt="Pes beží s majiteľkou po horskom chodníku" width="882" height="588" loading="lazy"></div></div>
     <div class="tip"><div class="h"><span class="g" aria-hidden="true">G!</span><span class="t">Vedel si?</span></div>
       <p>Pes, ktorý celý deň behá, môže potrebovať o polovicu viac energie než rovnako veľký gaučák. Dávku preto rátame podľa bežného dňa tvojho psa, nie podľa vreca.</p></div>
@@ -606,7 +604,7 @@
       <button type="button" class="btn btn-o next" data-next>Ďalej →</button>
     </div>
   </div>
-  <aside class="side-orange">
+  <aside class="side-blue side-fact on-brand">
     <div class="fact">
       <div class="t">VEDEL SI?</div>
       <div class="n">2,5</div>
@@ -648,7 +646,7 @@
       <button type="button" class="btn btn-o next" data-next>Vybrať granule →</button>
     </div>
   </div>
-  <aside class="side-blue">
+  <aside class="side-blue on-brand">
     <div class="frame"><div class="ph"><img src="img/kviz-beh-trava.jpg" alt="Pes v plnom behu cez trávu" width="572" height="1024" loading="lazy"></div></div>
     <div class="tip"><div class="h"><span class="g" aria-hidden="true">G!</span><span class="t">Na mieru</span></div>
       <p>Vyber pokojne viac možností. Všetky odpovede zvážime naraz a granule vyberieme až na konci.</p></div>
@@ -657,7 +655,7 @@
 </form>
 
 <!-- ============ MIEŠANIE ============ -->
-<section class="screen full" data-screen="miesame" data-title="Vyberáme granule — Granula">
+<section class="screen full on-brand" data-screen="miesame" data-title="Vyberáme granule — Granula">
   <span class="logo">Granula!</span>
   <div class="mix-body">
     <div class="bowl" aria-hidden="true">
@@ -670,10 +668,10 @@
         <text x="200" y="87" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="900" font-style="italic" font-size="24" fill="#000">GRANULA!</text>
         <rect x="30" y="12" width="340" height="24" rx="12" fill="#F4EBE2" stroke="#000" stroke-width="4"/>
       </svg>
-      <span class="sticker" style="--t:8deg">Na mieru</span>
+      <span class="sticker st-o" style="--t:3deg">Na mieru</span>
     </div>
     <div class="mix-copy">
-      <div class="pct" id="mix-pct" aria-hidden="true">0 %</div>
+      <div class="pct" id="mix-pct" aria-hidden="true">0&nbsp;%</div>
       <h1 class="display q-title" tabindex="-1">Vyberáme granule na mieru…</h1>
       <ul class="mix-list" id="mix-list" aria-live="polite">
         <li>Plemeno, vek a hmotnosť</li>
@@ -696,7 +694,7 @@
     <h1 class="display q-title" tabindex="-1">Hotovo. <span>Granule sú vybrané.</span></h1>
     <div class="plabel"><span class="t">Receptúra:</span><h2 class="display pname" id="r-name"></h2></div>
     <!-- vrece len na mobile (na desktope je v bočnom paneli), suroviny pod ním -->
-    <div class="pack-inline" aria-hidden="true"><div class="pack-stage"><img class="pack" id="r-pack-m" src="" alt="" width="896" height="1200"></div><span class="sticker" id="r-stage-m">Na mieru</span></div>
+    <div class="pack-inline" aria-hidden="true"><div class="pack-stage"><img class="pack" id="r-pack-m" src="" alt="" width="896" height="1200"></div><span class="sticker st-o" id="r-stage-m">Na mieru</span></div>
     <div class="pack-chips" id="r-chips" aria-hidden="true"></div>
     <div class="swap" id="r-swap">
       <p class="swap-note" id="swap-note" hidden></p>
@@ -715,11 +713,11 @@
     </div>
     <details class="feed">
       <summary><span class="ft">Ako kŕmiť prvé 2 týždne?</span><i aria-hidden="true">+</i></summary>
-      <p>Štartovacia dávka je vypočítaná na mieru. Každý pes je ale originál: prvé 2 týždne ho pravidelne váž a dávku podľa potreby dolaď o ±10 %.</p>
+      <p>Štartovacia dávka je vypočítaná na mieru. Každý pes je ale originál: prvé 2 týždne ho pravidelne váž a dávku podľa potreby dolaď o ±10&nbsp;%.</p>
       <ul class="feed-rows">
-        <li><span class="fi" aria-hidden="true"><svg viewBox="0 0 32 32"><rect x="3" y="3" width="26" height="26" rx="5" fill="currentColor"/><path d="M9 13a7 7 0 0 1 14 0z" fill="#FBF6F0"/><path d="M16 13l3-4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span><b>Drží váhu</b><span class="fv">nechaj <em id="f-keep"></em> / deň</span></li>
-        <li><span class="fi" aria-hidden="true"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 15h26a13 9 0 0 1-26 0z" fill="currentColor"/><rect x="9" y="25" width="14" height="3" fill="currentColor"/><path d="M16 3v8M12 7h8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span><b>Chudne</b><span class="fv">pridaj až na <em id="f-up"></em> / deň</span></li>
-        <li><span class="fi" aria-hidden="true"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 15h26a13 9 0 0 1-26 0z" fill="currentColor"/><rect x="9" y="25" width="14" height="3" fill="currentColor"/><path d="M12 8h8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span><b>Priberá</b><span class="fv">uber až na <em id="f-down"></em> / deň</span></li>
+        <li><b>Drží váhu</b><span class="fv">nechaj <em id="f-keep"></em> / deň</span></li>
+        <li><b>Chudne</b><span class="fv">pridaj až na <em id="f-up"></em> / deň</span></li>
+        <li><b>Priberá</b><span class="fv">uber až na <em id="f-down"></em> / deň</span></li>
       </ul>
     </details>
     <div style="display:flex;flex-direction:column;gap:10px">
@@ -737,11 +735,11 @@
       <a class="btn btn-o next" href="#objednavka">K platbe →</a>
     </div>
   </div>
-  <aside class="side-blue pack-aside">
+  <aside class="side-blue on-brand pack-aside">
   <div class="pa-sticky">
-    <div class="pa-top"><span class="sticker" aria-hidden="true" id="r-stage">Na mieru</span><span class="pa-kicker">Tvoje vrece</span></div>
+    <div class="pa-top"><span class="sticker st-o" aria-hidden="true" id="r-stage">Na mieru</span><span class="pa-kicker">Tvoje vrece</span></div>
     <div class="pa-stage">
-      <div class="pa-disc" aria-hidden="true"></div>
+      
       <div class="pack-stage"><img class="pack" id="r-pack" src="" alt="" width="896" height="1200"></div>
       <span class="pa-badge" aria-hidden="true"><b id="r-badge-kg">9</b>kg</span>
     </div>
@@ -753,10 +751,10 @@
     <div class="rvs-head"><h2 class="display" id="rv-title">Miska plná. <span>Chvost v pohybe.</span></h2>
       <div class="rv-arrows"><button type="button" class="rv-arrow" aria-label="Predchádzajúce recenzie" data-carousel-prev>←</button><button type="button" class="rv-arrow dark" aria-label="Ďalšie recenzie" data-carousel-next>→</button></div></div>
     <div class="rv-row" data-carousel-row tabindex="0" aria-label="Recenzie zákazníkov">
-      <article class="rv"><b class="display rv-name">Bruno</b><div class="rv-pic"><span class="rv-stars" aria-label="5 z 5 hviezdičiek">★★★★★</span><img src="img/recenzia-bruno.jpg" alt="Bruno, kokršpaniel" width="736" height="981" loading="lazy"></div><span class="rv-recipe">Morka, hus &amp; kačica s tekvicou</span><blockquote>„Prvé granule, pri ktorých nevyberá. Miska je prázdna skôr, než si stihnem obuť topánky.“</blockquote><span class="rv-by">Tomáš, Bratislava</span></article>
-      <article class="rv"><b class="display rv-name">Fifi</b><div class="rv-pic"><span class="rv-stars" aria-label="5 z 5 hviezdičiek">★★★★★</span><img src="img/recenzia-fifi.jpg" alt="Fifi, vyžla" width="736" height="920" loading="lazy"></div><span class="rv-recipe">Hovädzie s ryžou</span><blockquote>„Pri vyžle sledujeme každý gram. Dávka na gramy konečne sedí a váha sa ustálila.“</blockquote><span class="rv-by">Lucia, Košice</span></article>
-      <article class="rv"><b class="display rv-name">Ája a Bady</b><div class="rv-pic"><span class="rv-stars" aria-label="5 z 5 hviezdičiek">★★★★★</span><img src="img/recenzia-aja-bady.jpg" alt="Ája a Bady, retrievery" width="1080" height="1350" loading="lazy" style="object-position:center 88%"></div><span class="rv-recipe">Hovädzie, morka &amp; jahňa s ryžou</span><blockquote>„Dva psy, dvoje granule, jedno doručenie. Srsť sa leskne a vrecko nestrážim.“</blockquote><span class="rv-by">Zuzana, Žilina</span></article>
-      <article class="rv"><b class="display rv-name">Kakao</b><div class="rv-pic"><span class="rv-stars" aria-label="5 z 5 hviezdičiek">★★★★★</span><img src="img/recenzia-kakao.jpg" alt="Kakao, kokršpaniel" width="736" height="1104" loading="lazy"></div><span class="rv-recipe">Jahňa s batátmi &amp; čučoriedkami</span><blockquote>„Citlivé brucho a roky skúšania. S jahňacími granulami máme pokoj už tretí mesiac.“</blockquote><span class="rv-by">Martin, Trnava</span></article>
+      <article class="rv"><b class="display rv-name">Bruno</b><span class="rate" role="img" aria-label="5 z 5 hviezdičiek"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><div class="rv-pic"><img src="img/recenzia-bruno.jpg" alt="Bruno, kokršpaniel" width="736" height="981" loading="lazy"></div><span class="rv-recipe">Morka, hus &amp; kačica s tekvicou</span><blockquote>„Prvé granule, pri ktorých nevyberá. Miska je prázdna skôr, než si stihnem obuť topánky.“</blockquote><span class="rv-by">Tomáš, Bratislava</span></article>
+      <article class="rv"><b class="display rv-name">Fifi</b><span class="rate" role="img" aria-label="5 z 5 hviezdičiek"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><div class="rv-pic"><img src="img/recenzia-fifi.jpg" alt="Fifi, vyžla" width="736" height="920" loading="lazy"></div><span class="rv-recipe">Hovädzie s ryžou</span><blockquote>„Pri vyžle sledujeme každý gram. Dávka na gramy konečne sedí a váha sa ustálila.“</blockquote><span class="rv-by">Lucia, Košice</span></article>
+      <article class="rv"><b class="display rv-name">Ája a Bady</b><span class="rate" role="img" aria-label="5 z 5 hviezdičiek"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><div class="rv-pic"><img src="img/recenzia-aja-bady.jpg" alt="Ája a Bady, retrievery" width="1080" height="1350" loading="lazy" style="object-position:center 88%"></div><span class="rv-recipe">Hovädzie, morka &amp; jahňa s ryžou</span><blockquote>„Dva psy, dvoje granule, jedno doručenie. Srsť sa leskne a vrecko nestrážim.“</blockquote><span class="rv-by">Zuzana, Žilina</span></article>
+      <article class="rv"><b class="display rv-name">Kakao</b><span class="rate" role="img" aria-label="5 z 5 hviezdičiek"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><div class="rv-pic"><img src="img/recenzia-kakao.jpg" alt="Kakao, kokršpaniel" width="736" height="1104" loading="lazy"></div><span class="rv-recipe">Jahňa s batátmi &amp; čučoriedkami</span><blockquote>„Citlivé brucho a roky skúšania. S jahňacími granulami máme pokoj už tretí mesiac.“</blockquote><span class="rv-by">Martin, Trnava</span></article>
     </div>
   </section>
 </section>
@@ -769,13 +767,13 @@
       <a class="back" href="#vysledok">← Späť na výsledok</a>
     </div>
     <h1 class="display q-title" tabindex="-1" id="t-plan">Ako to chceš <span>dostávať?</span></h1>
-    <div class="co-tape" aria-hidden="true"><div class="tape" style="--rot:-1.5deg;background:var(--o);color:var(--n)"><div class="track"><span>Momentálne vyrábame</span><span>✱</span><span>Spúšťame 20. 11.</span><span>✱</span><span>Nezáväzná rezervácia s −30&nbsp;%</span><span>✱</span><span>Momentálne vyrábame</span><span>✱</span><span>Spúšťame 20. 11.</span><span>✱</span><span>Nezáväzná rezervácia s −30&nbsp;%</span><span>✱</span><span>Momentálne vyrábame</span><span>✱</span><span>Spúšťame 20. 11.</span><span>✱</span><span>Nezáväzná rezervácia s −30&nbsp;%</span><span>✱</span><span>Momentálne vyrábame</span><span>✱</span><span>Spúšťame 20. 11.</span><span>✱</span><span>Nezáväzná rezervácia s −30&nbsp;%</span><span>✱</span></div></div></div>
-    <p class="sr-only">Momentálne vyrábame, spúšťame 20. novembra. Nezáväzná rezervácia s 30 % zľavou.</p>
+    <div class="co-tape" aria-hidden="true"><div class="tape"><div class="track"><span>Momentálne vyrábame</span><span class="star"></span><span>Spúšťame 20. 11.</span><span class="star"></span><span>Nezáväzná rezervácia s −30&nbsp;%</span><span class="star"></span><span>Momentálne vyrábame</span><span class="star"></span><span>Spúšťame 20. 11.</span><span class="star"></span><span>Nezáväzná rezervácia s −30&nbsp;%</span><span class="star"></span><span>Momentálne vyrábame</span><span class="star"></span><span>Spúšťame 20. 11.</span><span class="star"></span><span>Nezáväzná rezervácia s −30&nbsp;%</span><span class="star"></span><span>Momentálne vyrábame</span><span class="star"></span><span>Spúšťame 20. 11.</span><span class="star"></span><span>Nezáväzná rezervácia s −30&nbsp;%</span><span class="star"></span></div></div></div>
+    <p class="sr-only">Momentálne vyrábame, spúšťame 20. novembra. Nezáväzná rezervácia s 30&nbsp;% zľavou.</p>
     <div class="opts c2 locked" role="radiogroup" aria-labelledby="t-plan" aria-disabled="true">
-      <label class="opt"><input type="radio" name="plan" value="mesiac" disabled><b id="plan-every">Predplatné</b><small id="plan-note">Vrece príde samo podľa dennej dávky.</small><span class="price" data-plan-price="mesiac"></span><span class="rec">−10 %</span></label>
+      <label class="opt"><input type="radio" name="plan" value="mesiac" disabled><b id="plan-every">Predplatné</b><small id="plan-note">Vrece príde samo podľa dennej dávky.</small><span class="price" data-plan-price="mesiac"></span><span class="rec">−10&nbsp;%</span></label>
       <label class="opt"><input type="radio" name="plan" value="raz" disabled><b>Jednorazovo</b><small>Jedno vrece, bez záväzku.</small><span class="price" data-plan-price="raz"></span></label>
     </div>
-    <div class="kl-embed co-embed"><div class="klaviyo-form-RuSXNc"></div><div class="kl-fallback" hidden><p>Formulár na rezerváciu beží cez Klaviyo a potrebuje marketingové cookies.</p><button type="button" class="btn btn-n btn-sm" data-klaviyo-consent>Povoliť a zobraziť formulár</button></div></div>
+    <div class="kl-embed co-embed"><div class="klaviyo-form-RuSXNc"></div><div class="kl-fallback" hidden><p>Formulár na rezerváciu beží cez Klaviyo a potrebuje marketingové cookies.</p><button type="button" class="btn btn-o btn-sm" data-klaviyo-consent>Povoliť a zobraziť formulár</button></div></div>
     <!-- do štartu (20. 11.) sú doručenie, kontakt a platba vypnuté -->
     <fieldset class="co-locked" disabled aria-label="Doručenie, kontakt a platba budú dostupné od 20. 11.">
     <div class="grid2">
@@ -798,7 +796,7 @@
             <span><label class="sr-only" for="city">Mesto</label><input class="input" id="city" name="city" autocomplete="address-level2" placeholder="Mesto"></span>
           </div>
         </div>
-        <div class="note">Doprava 4,90 € za každé doručenie.</div>
+        <div class="note">Doprava 4,90&nbsp;€ za každé doručenie.</div>
       </fieldset>
       <div class="box">
         <div class="t">KONTAKT</div>
@@ -818,23 +816,23 @@
     </fieldset>
     <p class="err" role="alert" hidden data-err="objednavka">Doplň zvýraznené polia.</p>
   </div>
-  <aside style="background:var(--n);color:var(--m)">
+  <aside class="on-brand" style="background:var(--n);color:var(--m)">
     <div class="sum-t">ZHRNUTIE</div>
     <div class="sum-item"><img class="mini" id="s-pack" src="" alt="" width="896" height="1200"><div><b id="s-name">Granule na mieru</b><span id="s-meta"></span></div></div>
     <div class="lines">
       <div><span id="s-bag-l"></span><span id="s-bag"></span></div>
       <div class="disc" id="s-disc-row"><span id="s-disc-l"></span><span id="s-disc"></span></div>
-      <div><span>Doprava</span><span>4,90 €</span></div>
+      <div><span>Doprava</span><span>4,90&nbsp;€</span></div>
     </div>
     <div class="total"><span>Spolu za doručenie</span><b id="s-total"></b></div>
     <button type="submit" class="btn btn-o" id="s-submit" disabled aria-disabled="true">Objednávky od 20. 11.</button>
-    <div class="co-ann"><b>Štartujeme 20. novembra</b> ✱ Prvé vrecko −30&nbsp;% pre tých, čo sa zapíšu vopred <button type="button" class="co-ann-cta" data-klaviyo-open="YcSYzw">Chcem byť prvý →</button></div>
+    <div class="co-ann"><b>Štartujeme 20. novembra</b> <span class="star" aria-hidden="true"></span> Prvé vrecko −30&nbsp;% pre tých, čo sa zapíšu vopred <button type="button" class="co-ann-cta" data-klaviyo-open="YcSYzw">Chcem byť prvý →</button></div>
     <p id="s-note"></p>
   </aside>
 </form>
 
 <!-- ============ HOTOVO ============ -->
-<section class="screen full" data-screen="hotovo" data-title="Objednávka prijatá — Granula">
+<section class="screen full on-brand" data-screen="hotovo" data-title="Objednávka prijatá — Granula">
   <span class="logo">Granula!</span>
   <div class="done-body">
     <div class="done-copy">
@@ -850,7 +848,7 @@
     </div>
     <div class="done-pic">
       <div class="frame"><div class="ph"><img src="img/kviz-lopticka.jpg" alt="Pes beží za loptičkou" width="736" height="736" loading="lazy"></div></div>
-      <span class="sticker" aria-hidden="true">Miska plná!</span>
+      <span class="sticker st-m" aria-hidden="true">Miska plná!</span>
     </div>
   </div>
 </section>

@@ -43,7 +43,7 @@
   var quiz = document.getElementById("quiz");
   var order = document.getElementById("order");
   var $ = function (id) { return document.getElementById(id); };
-  var eur = function (n) { return n == null ? "cena doplniť" : n.toFixed(2).replace(".", ",") + " €"; };
+  var eur = function (n) { return n == null ? "cena doplniť" : n.toFixed(2).replace(".", ",") + "\u00a0€"; };
   var num = function (n, d) { return (d ? n.toFixed(d) : String(Math.round(n))).replace(".", ","); };
   function plural(n, one, few, many) { return n === 1 ? one : (n >= 2 && n <= 4 ? few : many); }
   function result() { return E.compute(state, params); }
@@ -205,7 +205,7 @@
     dropIngredients(dur);
     (function tick(t) {
       var p = Math.min(1, (t - t0) / dur), v = Math.round(p * 100);
-      pct.textContent = v + " %";
+      pct.textContent = v + "\u00a0%";
       for (var i = 0; i < items.length; i++) {
         var done = v >= (i + 1) * 25, now = !done && v >= i * 25;
         items[i].className = done ? "done" : now ? "now" : "";
@@ -220,12 +220,13 @@
   function dropIngredients(dur) {
     var box = $("mix-drops"), p = result().product;
     var icons = p ? p.highlights.map(function (h) { return h[0]; }) : ["krava", "morka", "jahna", "ryza"];
-    var BG = ["var(--o)", "var(--l)", "var(--r)", "var(--white)"];
+    // dlaždice ikon: Oranž s Noc kresbou alebo Mlieko s Kobaltovou (nikdy Limetka/Ružová)
+    var BG = [["var(--o)", "#000000"], ["var(--ml)", "#0047BB"]];
     var fall = box.offsetHeight * 0.75 + "px";
     box.innerHTML = SLOTS.map(function (s, i) {
       var k = i % icons.length, r = ((i * 47) % 60) - 30;
-      return '<span class="drop" style="--x:' + s[0] + "%;--y:" + s[1] + "%;--rot:" + r + "deg;--d:" + Math.round(i * (dur - 700) / SLOTS.length) + "ms;--fall:" + fall + ";background:" + BG[k % BG.length] + '">' +
-        GranulaIcons.svg(icons[k], 40, "#000000") + "</span>";
+      return '<span class="drop" style="--x:' + s[0] + "%;--y:" + s[1] + "%;--rot:" + r + "deg;--d:" + Math.round(i * (dur - 700) / SLOTS.length) + "ms;--fall:" + fall + ";background:" + BG[k % BG.length][0] + ";color:" + BG[k % BG.length][0] + '">' +
+        GranulaIcons.svg(icons[k], 40, BG[k % BG.length][1]) + "</span>";
     }).join("");
   }
 
@@ -246,19 +247,18 @@
     $("r-kicker").textContent = "Tvoje granule na mieru · " + state.dogname;
     $("r-name").textContent = p.name;
     rememberDog();
-    var ICON_BG = ["var(--o)", "var(--l)", "var(--r)", "var(--m)"];
-    // hlavné suroviny: nálepky pod názvom receptúry a textový zoznam pre čítačky
-    var chips = p.highlights.map(function (h, i) {
-      return '<span class="it"><span style="background:' + ICON_BG[i % 4] + ";color:" + ICON_BG[i % 4] + '">' + I(h[0], 30, "#000000") + "</span>" + h[1] + " " + h[2] + " %</span>";
+    // hlavné suroviny: nálepky pod názvom receptúry (jedna farba dlaždíc v rade) a textový zoznam pre čítačky
+    var chips = p.highlights.map(function (h) {
+      return '<span class="it"><span style="background:var(--ml);color:var(--ml)">' + I(h[0], 30, "#0047BB") + "</span>" + h[1] + " " + h[2] + "\u00a0%</span>";
     }).join("");
     $("r-chips").innerHTML = chips;
     renderSwap(r);
-    $("r-recipe").innerHTML = p.highlights.map(function (h) { return "<li>" + h[1] + " " + h[2] + " %</li>"; }).join("");
+    $("r-recipe").innerHTML = p.highlights.map(function (h) { return "<li>" + h[1] + " " + h[2] + "\u00a0%</li>"; }).join("");
     $("r-dose").textContent = r.dose.grams + " g";
     $("f-keep").textContent = r.dose.grams + " g";
     $("f-up").textContent = Math.round(r.dose.grams * 1.1) + " g";
     $("f-down").textContent = Math.round(r.dose.grams * 0.9) + " g";
-    $("r-macro").textContent = p.protein + " / " + p.fat + " %";
+    $("r-macro").textContent = p.protein + " / " + p.fat + "\u00a0%";
     var month = r.dose.grams * 30 / 1000;
     $("r-month").textContent = "~" + (month >= 3 ? num(month) : num(month, 1)) + " kg";
 
@@ -267,14 +267,14 @@
         "<b>" + x.bag.label + "</b>" +
         '<span class="price">' + (x.price == null ? "cena —" : eur(x.price)) + "</span>" +
         "<small>vydrží " + x.days + " " + plural(x.days, "deň", "dni", "dní") + "</small>" +
-        (x.saving > 0 ? '<span class="save">−' + x.saving + " % za kg</span>" : "") +
+        (x.saving > 0 ? '<span class="save">−' + x.saving + "\u00a0% za kg</span>" : "") +
         (x.bag.id === r.recBag ? '<span class="rec">Odporúčame</span>' : "") + "</label>";
     }).join("");
 
     $("f-comp").textContent = p.composition;
-    $("f-anal").textContent = "Proteín " + p.protein + " %, hrubý tuk " + p.fat + " %" +
+    $("f-anal").textContent = "Proteín " + p.protein + "\u00a0%, hrubý tuk " + p.fat + "\u00a0%" +
       (p.missing.some(function (m) { return /popol/.test(m); }) ? " (ostatné hodnoty doplníme)." :
-        ", popol " + num(p.ash, p.ash % 1 ? 1 : 0) + " %, vláknina " + num(p.fiber, 1) + " %, vápnik " + num(p.calcium, 1) + " %, fosfor " + num(p.phosphorus, 1) + " %, vlhkosť " + p.moisture + " %.");
+        ", popol " + num(p.ash, p.ash % 1 ? 1 : 0) + "\u00a0%, vláknina " + num(p.fiber, 1) + "\u00a0%, vápnik " + num(p.calcium, 1) + "\u00a0%, fosfor " + num(p.phosphorus, 1) + "\u00a0%, vlhkosť " + p.moisture + " %.");
     $("f-add").textContent = p.additives || "Doplníme.";
     $("f-trace").textContent = p.trace || "Doplníme.";
 
@@ -284,7 +284,7 @@
     // fakty v bočnom paneli (len tie, ktoré o produkte vieme)
     $("r-facts-side").innerHTML = [
       ["Mäso", p.monoprotein ? "Monoproteín" : "Viac druhov"],
-      ["Bielkoviny / tuk", p.protein + " / " + p.fat + " %"],
+      ["Bielkoviny / tuk", p.protein + " / " + p.fat + "\u00a0%"],
       ["Granula", p.kibbleMm ? p.kibbleMm + " mm" : null],
       ["Glukozamín", p.glucosamine ? p.glucosamine + " mg/kg" : null],
       ["Chondroitín", p.chondroitin ? p.chondroitin + " mg/kg" : null]
@@ -336,7 +336,7 @@
     var rows = [
       ["Mäso", meatName(cur), meatName(q)],
       ["Druhov mäsa", cur.monoprotein ? "1 (mono)" : cur.proteins.length, q.monoprotein ? "1 (mono)" : q.proteins.length],
-      ["Bielkoviny / tuk", cur.protein + " / " + cur.fat + " %", q.protein + " / " + q.fat + " %"],
+      ["Bielkoviny / tuk", cur.protein + " / " + cur.fat + "\u00a0%", q.protein + " / " + q.fat + "\u00a0%"],
       ["Denná dávka", r.dose.grams + " g", alt.dose.grams + " g"],
       ["Vrece " + bag(alt).bag.label, eur(bag(r).price), eur(bag(alt).price)],
       ["Na deň s predplatným", perDay(r), perDay(alt)],
@@ -405,7 +405,7 @@
     $("s-bag-l").textContent = "Vrece " + x.bag.label;
     $("s-bag").textContent = eur(x.price);
     $("s-disc-row").hidden = !d || x.price == null;
-    $("s-disc-l").textContent = "Zľava predplatného −" + Math.round(d * 100) + " %";
+    $("s-disc-l").textContent = "Zľava predplatného −" + Math.round(d * 100) + "\u00a0%";
     $("s-disc").textContent = x.price == null ? "" : "−" + eur(x.price * d);
     $("s-total").textContent = x.price == null ? "—" : eur(Math.round((x.price * (1 - d) + r.params.shipping) * 100) / 100);
     // objednávky sú do štartu (20. 11.) vypnuté, tlačidlo má pevný text
@@ -436,7 +436,7 @@
       return !f.value.trim() || (f.type === "email" && !f.checkValidity());
     });
     order.querySelectorAll(".input").forEach(function (f) { f.style.borderColor = ""; f.removeAttribute("aria-invalid"); });
-    bad.forEach(function (n) { var f = order.elements[n]; f.style.borderColor = "#B3261E"; f.setAttribute("aria-invalid", "true"); });
+    bad.forEach(function (n) { var f = order.elements[n]; f.style.borderColor = "var(--err)"; f.setAttribute("aria-invalid", "true"); });
     if (bad.length && bad.indexOf("point") !== -1) { $("point").hidden = false; }
     order.querySelector('[data-err="objednavka"]').hidden = !bad.length;
     if (bad.length) { order.elements[bad[0]].focus(); return; }

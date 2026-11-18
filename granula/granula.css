@@ -1,122 +1,146 @@
 /* Granula — spoločný základ pre index.html, suroviny.html a granule-na-mieru.html.
-   Jedna svetlá téma, každá farba vypísaná explicitne (žiadny tmavý režim). */
+   Podľa Granula Design System (identita v2). Jedna svetlá téma, len farby z palety. */
 :root{
-  --k:#0047BB; --k-deep:#003A99; --k-soft:#2F68CC; --k-photo:#3A70D0;
-  --o:#FF6900; --o-deep:#E55E00;
-  --m:#F4EBE2; --m2:#EADFD2; --paper:#FBF6F0; --white:#FFFAF4;
-  --n:#000000; --n2:#1C1C1C; --i2:#2E2E2E; --i3:#5E5852; --muted-dark:#C9C2BA;
-  --line:#CDBFB0;
-  --l:#C9F04D; --r:#FFB3C7;
-  --font:'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
+  /* paleta (tokens.json) */
+  --g-mlieko:#F4EBE2; --g-mlieko-light:#FFF7EE; --g-kobalt:#0047BB; --g-kobalt-soft:#2F68CC;
+  --g-oranz:#FF6900; --g-noc:#000000; --g-limetka:#C9F04D;
+  /* skratky používané v kóde */
+  --k:var(--g-kobalt); --k-soft:var(--g-kobalt-soft); --o:var(--g-oranz);
+  --m:var(--g-mlieko); --ml:var(--g-mlieko-light); --n:var(--g-noc);
+  --l:var(--g-limetka); /* len jedno akcentové slovo/číslo na Kobalte */
+  --err:#B3261E;        /* chybové hlásenia: v dizajn systéme zatiaľ chýba */
+  --font:'Proxima Nova','Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
   --gutter:clamp(16px,4vw,64px);
+  --star:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-52 -52 104 104'%3E%3Cg%3E%3Crect x='-50' y='-15' width='100' height='30' rx='15' transform='rotate(90)'/%3E%3Crect x='-50' y='-15' width='100' height='30' rx='15' transform='rotate(30)'/%3E%3Crect x='-50' y='-15' width='100' height='30' rx='15' transform='rotate(150)'/%3E%3C/g%3E%3C/svg%3E");
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--m);color:var(--n);font-family:var(--font);font-size:17px;line-height:1.5;
+body{margin:0;background:var(--m);color:var(--n);font-family:var(--font);font-size:18px;line-height:1.5;
   -webkit-font-smoothing:antialiased;overflow-x:clip}
 img{max-width:100%;display:block}
-a{color:var(--k)}a:hover{color:var(--n)}
-:focus-visible{outline:3px solid var(--o);outline-offset:3px}
+a{color:var(--k);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}a:hover{color:var(--n)}
+/* fokus: Noc na svetlom podklade, Mlieko na Kobalte a Noci */
+:focus-visible{outline:3px solid var(--n);outline-offset:2px}
+.on-brand :focus-visible,.on-brand:focus-visible{outline-color:var(--m)}
 ::selection{background:var(--k);color:var(--m)}
 h1,h2,h3,p{margin:0}
 [hidden]{display:none !important}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
 .wrap{max-width:1312px;margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter)}
-.sec{padding:clamp(72px,8vw,112px) 0}
+.sec{padding:clamp(64px,7vw,96px) 0}
 .bt{border-top:2px solid var(--n)}
 .bb{border-bottom:2px solid var(--n)}
 
 /* ---------- typografia ---------- */
-.display{font-weight:900;text-transform:uppercase;line-height:1;letter-spacing:-.015em}
-.eyebrow{font-size:13px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
-.h2{font-size:clamp(40px,5vw,76px);line-height:1.02;text-transform:uppercase;letter-spacing:-.015em;font-weight:900;text-wrap:balance}
-.h2 .lt{font-weight:300}
-.lead{font-size:19px;line-height:1.55;color:var(--i2)}
+.display{font-weight:900;text-transform:uppercase;line-height:1;letter-spacing:0}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+/* nadpisy sekcií: Black verzálkami (display 96), zvýraznené slovo Kobaltom */
+.h2{font-size:clamp(40px,6.4vw,96px);line-height:1;text-transform:uppercase;letter-spacing:0;font-weight:900;text-wrap:balance}
+.ac{color:var(--k)}
+.lead{font-size:18px;line-height:1.5;max-width:500px}
+/* hviezdička: šesť zaoblených lupeňov, farba podľa textu */
+.star{display:inline-block;flex:none;width:.78em;height:.78em;vertical-align:middle;background:currentColor;
+  -webkit-mask:var(--star) center/contain no-repeat;mask:var(--star) center/contain no-repeat}
 .head{display:flex;flex-direction:column;gap:18px}
 .head-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px}
 
 /* ---------- logo a nálepky ---------- */
 .logo{display:inline-block;background:var(--o);color:var(--n);font-weight:900;font-style:italic;text-transform:uppercase;
-  line-height:1;letter-spacing:-.01em;transform:rotate(-4deg);white-space:nowrap;font-size:30px;padding:6px 10px 5px}
+  line-height:1;letter-spacing:-.02em;transform:rotate(-4deg);white-space:nowrap;font-size:34px;padding:6px 11px 5px}
 .logo-link{display:inline-flex;text-decoration:none}
 .sticker{display:inline-block;padding:7px 12px 6px;font-weight:900;text-transform:uppercase;line-height:1;
-  letter-spacing:-.015em;font-size:18px;transform:rotate(var(--t,-4deg))}
+  letter-spacing:0;font-size:18px;transform:rotate(var(--t,-6deg))}
+/* nálepky len v Oranži, Kobalte alebo v Mlieku s rámom */
+.st-o{background:var(--o);color:var(--n)}
+.st-k{background:var(--k);color:var(--m)}
+.st-m{background:var(--ml);color:var(--n);border:2px solid var(--n)}
 
 /* ---------- tlačidlá ---------- */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:58px;padding:16px 28px;
   border:2px solid var(--n);border-radius:0;font-family:inherit;font-weight:900;font-size:17px;letter-spacing:.02em;
   text-transform:uppercase;text-decoration:none;cursor:pointer;
-  transition:background 120ms ease,color 120ms ease,border-color 120ms ease}
+  transition:background 150ms ease,color 150ms ease,border-color 150ms ease}
+/* primárne: Oranž s rámom Noc; hover Noc s oranžovým textom */
 .btn-o{background:var(--o);color:var(--n)}
-.btn-head{border-color:var(--k)}
-.btn-k{background:var(--k);color:var(--m)}
-.btn-n{background:var(--n);color:var(--m)}
-.btn-o:hover,.btn-k:hover{background:var(--n);color:var(--m);border-color:var(--n)}
-.btn-n:hover{background:var(--k);color:var(--m)}
-.btn-sm{min-height:46px;padding:12px 20px;font-weight:800;font-size:14px;letter-spacing:.06em}
-.link-under{font-weight:800;font-size:15px;text-transform:uppercase;letter-spacing:.06em;color:var(--n);
-  border-bottom:3px solid var(--o);padding-bottom:3px;text-decoration:none}
-.link-under:hover{color:var(--k)}
+.btn-o:hover{background:var(--n);color:var(--o);border-color:var(--n)}
+/* sekundárne: Kobalt bez rámu */
+.btn-k{background:var(--k);color:var(--m);border-color:var(--k)}
+.btn-k:hover{background:var(--n);color:var(--m);border-color:var(--n)}
+/* tmavé (len na Oranži): Noc s oranžovým textom */
+.btn-n{background:var(--n);color:var(--o)}
+.btn-n:hover{background:var(--o);color:var(--n);border-color:var(--n)}
+/* obrysové: rám Noc, bez verzálok */
+.btn-line{background:transparent;color:var(--n);font-weight:600;text-transform:none;letter-spacing:0}
+.btn-line:hover{background:var(--n);color:var(--m)}
+.btn:disabled,.btn[aria-disabled="true"]{opacity:.4;cursor:not-allowed}
+.btn-sm{min-height:46px;padding:12px 20px;font-size:14px}
+/* textový odkaz: Kobalt s 2px podčiarknutím rovnakej farby */
+.link-under{font-weight:700;font-size:17px;color:var(--k);text-decoration:none;border-bottom:2px solid currentColor;padding-bottom:2px}
+.link-under:hover{color:var(--n)}
 
 /* ---------- horná lišta a hlavička ---------- */
 .topbar{background:var(--o);color:var(--n);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
   text-align:center;padding:9px 16px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 12px;border-bottom:2px solid var(--n)}
-.topbar-cta{font:inherit;letter-spacing:inherit;text-transform:inherit;font-weight:900;color:var(--m);background:var(--n);border:0;padding:5px 10px;cursor:pointer}
-.topbar-cta:hover{background:var(--k)}
+.topbar .star{width:1.1em;height:1.1em}
+.topbar-cta{font:inherit;letter-spacing:inherit;text-transform:inherit;font-weight:900;color:var(--o);background:var(--n);border:0;padding:5px 10px;cursor:pointer;transition:background 150ms ease,color 150ms ease}
+.topbar-cta:hover{background:var(--m);color:var(--n)}
 /* Klaviyo embed bez súhlasu */
 .kl-fallback{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
-.kl-fallback p{font-size:14px;line-height:1.5;color:var(--i2)}
+.kl-fallback p{font-size:15px;line-height:1.45}
 .kl-alt{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
 .kl-alt p{font-size:15px;line-height:1.5}
 [class*="klaviyo-form-"]:empty{display:none}
 /* keď sa Klaviyo formulár vykreslí, náš rám zmizne (formulár má vlastný dizajn) */
-.kl-embed:has([class*="klaviyo-form-"] > *){background:none !important;border:0 !important;box-shadow:none !important;padding:0 !important;min-height:0 !important}
+.kl-embed:has([class*="klaviyo-form-"] > *){background:none !important;border:0 !important;padding:0 !important;min-height:0 !important}
 .site-head{background:var(--m);border-bottom:2px solid var(--n);position:sticky;top:0;z-index:40}
 .site-head .wrap{padding-top:18px;padding-bottom:18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px}
-.menu{display:flex;flex-wrap:wrap;gap:32px;font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:.06em}
+.menu{display:flex;flex-wrap:wrap;gap:28px;font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:.08em}
 .menu a{color:var(--n);text-decoration:none;padding:4px 0}
 .menu a:hover{color:var(--k)}
 .menu a[aria-current="page"]{border-bottom:2px solid var(--o);padding-bottom:2px}
-@media (max-width:860px){.menu{display:none}.logo{font-size:24px}}
+@media (max-width:860px){.menu{display:none}.logo{font-size:26px}}
 @media (max-width:640px){.topbar{font-size:10.5px;letter-spacing:.04em;gap:4px 8px;padding:8px 12px}.topbar > span[aria-hidden]{display:none}.topbar-cta{padding:4px 8px}}
 @media (max-width:480px){.site-head .wrap{gap:12px}.btn-head{font-size:11px;letter-spacing:.03em;padding:10px 12px;min-height:42px}.site-head .logo{font-size:21px}}
 
 /* ---------- foto s posunutým farebným poľom ---------- */
-.frame{--off:26px;--field:var(--k);position:relative;padding:0 var(--off) var(--off) 0}
+/* pole je Oranž; Kobalt len na Oranži alebo vedľa oranžového tlačidla (--field:var(--k)) */
+.frame{--off:24px;--field:var(--o);position:relative;padding:0 var(--off) var(--off) 0}
 .frame::before{content:"";position:absolute;left:var(--off);top:var(--off);right:0;bottom:0;background:var(--field)}
-.frame .ph{position:relative;height:100%;border:2px solid var(--n);background:var(--k-photo);overflow:hidden}
+.frame .ph{position:relative;height:100%;border:2px solid var(--n);background:var(--k);overflow:hidden}
 .frame .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 
 /* ---------- pásky ---------- */
+/* páska: oranžový pás, text Noc, slová spája hviezdička; vždy od kraja po kraj */
 /* pásky sú širšie než okno a pootočené: orezať len vodorovne */
 .tapes{position:relative;z-index:3;padding:46px 0;overflow-x:clip}
 .tapes .back{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%)}
 .tapes .front{position:relative}
 .tape-solo{position:relative;z-index:3;padding:24px 0;overflow-x:clip}
 .tape{width:108%;margin-left:-4%;overflow:hidden;white-space:nowrap;padding:16px 0;
-  border-top:2px solid var(--n);border-bottom:2px solid var(--n);transform:rotate(var(--rot,-2.5deg))}
-.tape .track{display:inline-flex;gap:28px;padding-right:28px;font-weight:900;text-transform:uppercase;line-height:1;
-  letter-spacing:-.015em;font-size:clamp(22px,2.4vw,34px);animation:tape 38s linear infinite}
+  background:var(--o);color:var(--n);transform:rotate(var(--rot,-1.5deg))}
+.tape .track{display:inline-flex;align-items:center;gap:28px;padding-right:28px;font-weight:900;text-transform:uppercase;line-height:1;
+  letter-spacing:0;font-size:clamp(22px,2.4vw,34px);animation:tape 38s linear infinite}
+.tape .star:nth-child(4n+2){transform:rotate(15deg)}
 .tape.rev .track{animation-direction:reverse}
 @keyframes tape{to{transform:translateX(-50%)}}
 
 /* ---------- karty mäsa a riadky surovín (index + suroviny) ---------- */
-.meats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
-.meat{background:var(--paper);border:2px solid var(--n);display:flex;flex-direction:column}
-.meat .pic{height:250px;border-bottom:2px solid var(--n);position:relative}
+.meats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.meat{background:var(--ml);border:2px solid var(--n);display:flex;flex-direction:column}
+.meat .pic{height:250px;border-bottom:2px solid var(--n);position:relative;background:var(--k)}
 .meat .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.meat .who{position:absolute;left:16px;top:16px;background:var(--m);color:var(--n);padding:6px 10px 5px;font-size:11px;
+.meat .who{position:absolute;left:16px;top:16px;background:var(--ml);color:var(--n);border:2px solid var(--n);padding:5px 9px 4px;font-size:11px;
   font-weight:900;letter-spacing:.12em;text-transform:uppercase;transform:rotate(-3deg)}
 .meat .ico{position:absolute;right:16px;bottom:-24px;width:52px;height:52px;background:var(--k);border:2px solid var(--n);
   display:flex;align-items:center;justify-content:center;transform:rotate(var(--t));color:var(--k)}
 .meat .body{padding:24px 22px 26px;display:flex;flex-direction:column;gap:10px}
-.meat h3{font-size:30px}
-.meat p{font-size:16px;line-height:1.5;color:var(--i2)}
+.meat h3{font-size:32px}
+.meat p{font-size:15px;line-height:1.45}
 /* ikony mäsa nad kartami — len na mobile, kde sa karty posúvajú ako karusel */
 .meat-tabs{display:none}
 
-.extras{background:var(--m2)}
+.extras{background:var(--m)}
 .extras .wrap{display:flex;flex-direction:column;gap:40px}
 .extras .head{max-width:760px}
 .extras .h2{font-size:clamp(36px,3.8vw,56px)}
@@ -128,7 +152,7 @@ h1,h2,h3,p{margin:0}
 .ing .ico{grid-area:ico;width:56px;height:56px;border:2px solid var(--n);display:flex;align-items:center;justify-content:center;transform:rotate(var(--t))}
 .ing .nm{grid-area:nm;font-size:clamp(20px,1.9vw,26px);align-self:start}
 .ing .tag{grid-area:tag;justify-self:start;margin-top:6px;background:var(--n);color:var(--m);padding:6px 10px 5px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
-.ing .d{grid-area:d;font-size:15px;line-height:1.5;color:var(--i2)}
+.ing .d{grid-area:d;font-size:15px;line-height:1.45}
 
 @media (max-width:1100px){
   .meats{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -136,10 +160,10 @@ h1,h2,h3,p{margin:0}
 @media (max-width:960px){.ing-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){
   .meat-tabs{display:flex;justify-content:space-between;gap:6px;margin-bottom:18px}
-  .meat-tabs button{flex:1 1 0;max-width:56px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:var(--paper);
+  .meat-tabs button{flex:1 1 0;max-width:56px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:var(--ml);
     border:2px solid var(--n);cursor:pointer;padding:0;color:var(--n);transition:background .25s ease,transform .25s ease}
   .meat-tabs button svg{width:60%;height:60%}
-  .meat-tabs button[aria-selected="true"]{background:var(--o);transform:rotate(-4deg) translateY(-2px)}
+  .meat-tabs button[aria-selected="true"]{background:var(--o);transform:rotate(-3deg) translateY(-2px)}
   .meats{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -16px;padding:0 16px 28px;scroll-padding:0 16px}
   .meats::-webkit-scrollbar{display:none}
   .meat{flex:0 0 100%;scroll-snap-align:start}
@@ -152,37 +176,38 @@ h1,h2,h3,p{margin:0}
 }
 
 /* ---------- pätička ---------- */
-.foot{background:var(--n);color:var(--m)}
-.foot a{color:var(--m);text-decoration:none}.foot a:hover{color:var(--o)}
+/* Mlieko s logom na nálepke; logo nikdy na Noci */
+.foot{background:var(--m);color:var(--n);border-top:2px solid var(--n)}
+.foot a{color:var(--n);text-decoration:none}.foot a:hover{color:var(--k)}
 .foot .top{padding-top:64px;padding-bottom:28px;display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between}
 .foot .about{display:flex;flex-direction:column;gap:20px;max-width:340px}
 .foot .about .logo{font-size:40px;padding:8px 14px 6px;align-self:flex-start}
-.foot .about p{font-size:15px;line-height:1.55;color:var(--muted-dark)}
+.foot .about p{font-size:15px;line-height:1.45}
 .foot .cols{display:flex;flex-wrap:wrap;gap:32px 44px}
 .foot nav{display:flex;flex-direction:column;gap:10px;font-size:15px;font-weight:600}
-.foot nav .t{font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--o)}
+.foot nav .t,.foot-co .t{font-size:14px;font-weight:800;letter-spacing:.08em}
 .foot-co{display:flex;flex-direction:column;gap:10px}
-.foot-co .t{font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--o)}
-.foot-co address{font-style:normal;font-size:14px;line-height:1.6;color:var(--muted-dark)}
-.foot-co address b{color:var(--m);font-weight:700}
-.foot-co address a{color:var(--m);text-decoration:underline;text-decoration-color:var(--o);text-underline-offset:3px}
-.foot .bottom{padding-top:18px;padding-bottom:32px;border-top:1px solid #333;display:flex;flex-wrap:wrap;gap:12px;
-  justify-content:space-between;font-size:13px;color:var(--muted-dark)}
+.foot-co address{font-style:normal;font-size:15px;line-height:1.6}
+.foot-co address b{font-weight:700}
+.foot-co address a{color:var(--k);text-decoration:none;border-bottom:2px solid currentColor}
+.foot .bottom{padding-top:18px;padding-bottom:32px;border-top:2px solid var(--n);display:flex;flex-wrap:wrap;gap:12px;
+  justify-content:space-between;font-size:13px}
 
 /* ---------- cookie lišta ---------- */
-.cookie-bar{position:fixed;left:16px;right:16px;bottom:16px;z-index:200;max-width:920px;margin:0 auto;background:var(--n);color:var(--m);
-  border:2px solid var(--n);box-shadow:8px 8px 0 var(--o);padding:16px 20px;display:flex;align-items:center;gap:20px}
-.cookie-bar p{font-size:14px;line-height:1.5}
-.cookie-bar b{color:var(--l)}
-.cookie-bar a{color:var(--m);text-decoration:underline;text-decoration-color:var(--o);text-underline-offset:3px}
+/* svetlý box s rámom Noc, bez tieňa */
+.cookie-bar{position:fixed;left:16px;right:16px;bottom:16px;z-index:200;max-width:920px;margin:0 auto;background:var(--ml);color:var(--n);
+  border:2px solid var(--n);padding:16px 20px;display:flex;align-items:center;gap:20px}
+.cookie-bar p{font-size:15px;line-height:1.45}
+.cookie-bar b{font-weight:800}
+.cookie-bar a{color:var(--k);text-decoration:none;border-bottom:2px solid currentColor}
 .cookie-btns{display:flex;gap:10px;flex:none}
-.cookie-form-note{display:none;color:var(--o);font-weight:800}
+.cookie-form-note{display:none;color:var(--k);font-weight:800}
 .cookie-bar.for-form .cookie-form-note{display:inline}
 .cookie-bar .btn{min-height:44px}
-.cookie-min{background:transparent;color:var(--m);border-color:var(--m)}
-.cookie-min:hover{background:var(--m);color:var(--n)}
+.cookie-min{background:transparent;color:var(--n);font-weight:600;text-transform:none;letter-spacing:0}
+.cookie-min:hover{background:var(--n);color:var(--m)}
 @media (max-width:640px){
-  .cookie-bar{flex-direction:column;align-items:stretch;gap:12px;left:10px;right:10px;bottom:10px;padding:14px 14px 16px;box-shadow:5px 5px 0 var(--o)}
+  .cookie-bar{flex-direction:column;align-items:stretch;gap:12px;left:10px;right:10px;bottom:10px;padding:14px 14px 16px}
   .cookie-bar p{font-size:13px}
   .cookie-btns .btn{flex:1;padding:10px 12px;font-size:13px}
 }

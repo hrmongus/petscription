@@ -20,18 +20,25 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 
 ## Systém
 
+Podľa **Granula Design System** (identita v2, artefakt „Granula Design System“). Hodnoty sú v `granula.css` pod názvami z `tokens.json` (`--g-mlieko`, `--g-kobalt`…) so skratkami `--m`, `--ml`, `--k`, `--o`, `--n`.
+
 | Vrstva | Hodnoty |
 | --- | --- |
-| Podklad | mlieko `#F4EBE2`, `#EADFD2`, karty `#FBF6F0` / `#FFFAF4` |
-| Text | čierna `#000`, `#2E2E2E`, tlmený `#5E5852` |
-| Značka | kobalt `#0047BB` (`#003A99`), oranž `#FF6900` |
-| Nálepky | limetka `#C9F04D`, ružová `#FFB3C7` — len nálepky a odznaky |
-| Písmo | Montserrat 300–900 (titulky 900 verzálkami, „ľahká“ polovica nadpisov 300) |
-| Tvar | hranaté boxy, 2px čierne linky, pootočené nálepky, foto s farebným poľom posunutým doprava dole |
+| Podklad | Mlieko `#F4EBE2` pod každou stránkou; karty, polia a panely Mlieko light `#FFF7EE` |
+| Text | len Noc `#000` (na Kobalte a Noci Mlieko); žiadne sivé |
+| Značka | Kobalt `#0047BB`, Oranž `#FF6900` ako orámované prvky na Mlieku, nikdy celoplošné sekcie |
+| Akcent | Limetka `#C9F04D` len ako jedno slovo/číslo na Kobalte (1,8 · fakty v dotazníku · „Večera je vybavená“). Ružová sa nepoužíva |
+| Písmo | Montserrat 400–900 + 900 italic (náhrada Proxima Nova); nadpisy len Black verzálkami, zvýraznenie Kobaltom (`.ac`); text 18/1,5 |
+| Tvar | hranaté boxy, 2px rám Noc, žiadne tiene; foto s oranžovým poľom dole vpravo (Kobalt len vedľa oranžového tlačidla), posun 24px |
+| Nálepky | `.st-o` Oranž, `.st-k` Kobalt, `.st-m` Mlieko s rámom; náklon −6° / 3° / −3°, najviac tri na plochu; odznaky štvorcové, 6° |
+| Páska | Oranž, text Noc, slová spája hviezdička (`.star`, šesť lupeňov); náklon −1,5°. Prekrížené pásky (Suroviny, „Granula = nula“) sú vedomá výnimka |
+| Ikony | vždy v štvorcovej dlaždici s 2px rámom Noc; Mlieko s Kobaltovou kresbou, Kobalt s Mlieko kresbou alebo Oranž s Noc kresbou |
+| Fokus | 3px Noc, odsadenie 2px; na Kobalte a Noci Mlieko (trieda `.on-brand`) |
 
-Jedna svetlá téma, bez tmavého režimu (ako v návrhu). Pásky sa pomaly posúvajú;
-všetok pohyb rešpektuje `prefers-reduced-motion`. Pod 960 px sa stĺpce skladajú,
+Jedna svetlá téma, bez tmavého režimu. Pásky sa pomaly posúvajú; všetok pohyb rešpektuje `prefers-reduced-motion`. Pod 960 px sa stĺpce skladajú,
 dotazník dáva bočný panel pod otázku.
+
+**Vedomé výnimky z dizajn systému:** oranžová lišta hore počas predregistrácie; celoplošné Kobaltové obrazovky miešania a hotovo a Noc zhrnutie v objednávke (zatiaľ nechané); chybová farba `--err #B3261E` (systém ju nemá); `--g-kobalt-soft #2F68CC` (systém ho používa, ale nedefinuje).
 
 ## Dotazník a výpočet
 
@@ -97,7 +104,7 @@ neposielajú** a čísla karty sa po odoslaní mažú.
 6. **Recenzie a odborníci.** Mená, citácie a hodnotenia sú z návrhu, nie od
    reálnych ľudí. Pred spustením nahradiť skutočnými. Sekcia odborníkov je skrytá.
 7. **Tvrdenia na webe.** „62 % mäsa“ je nahradené textom „Kvalitné mäso“ a páska
-   „Diviak“ je odstránená. „Veterinármi odporúčaná receptúra“ a výrobca od 1992 treba overiť.
+   „Diviak“ je odstránená. „Receptúry navrhnuté s veterinármi“ a výrobca od 1992 treba overiť.
 8. **Texty zloženia** sú s opravenými preklepmi z podkladov (zoznam na kontrolnej
    stránke, bod 11). Pred tlačou overiť s výrobcom.
 9. **Cookies.** Text lišty odkazuje na „Ochrana údajov“, ktorá zatiaľ vedie na `#`. Doplniť stránku so zoznamom cookies (Klaviyo) a právnym základom.
