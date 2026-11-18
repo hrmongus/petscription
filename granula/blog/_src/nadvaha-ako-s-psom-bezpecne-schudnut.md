@@ -129,7 +129,6 @@ nadpis: Dávka z ideálnej hmotnosti, nie zo súčasnej
 text: Pri postave „Kilo navyše“ spočítame dennú dávku z ideálnej hmotnosti (1,0 × RER) a spomedzi granúl vhodných pre tvojho psa vyberieme tie s najnižším obsahom tuku.
 tlacidlo: Spočítaj dávku pre svojho psa
 odkaz: granule-na-mieru.html
-obrazok: img/produkty/jelen-kralik-s-batatmi.webp
 :::
 
 ## Čo s maškrtami a pohybom počas chudnutia?
