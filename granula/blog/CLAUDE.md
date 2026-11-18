@@ -79,6 +79,7 @@ odkaz: granule-na-mieru.html
 obrazok: img/produkty/hovadzie-s-ryzou.webp
 :::
 ```
+- **Obrázok produktu v ponuke** (`obrazok:`) daj len vtedy, keď presne zodpovedá textu ponuky (napr. text o monoproteíne → len receptúra s `monoprotein: true` v `engine.js`; Jeleň & králik nie je monoproteín). Keď ponuka nesľubuje konkrétnu receptúru, obrázok produktu vynechaj.
 - **Záverečnú ponuku** prispôsob téme cez `cta_title`, `cta_text`, `cta_button`.
 
 ## Štruktúra tela (poradie)
