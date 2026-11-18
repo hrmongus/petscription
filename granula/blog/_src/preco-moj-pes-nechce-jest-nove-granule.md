@@ -26,6 +26,7 @@ key_points:
   - "„Pravidlo 15 minút“ je praktický tip, nie veterinárna norma."
   - "Najčastejšia chyba: po odmietnutej miske dať psovi niečo lepšie. Tak sa naučí granule odmietať."
 changelog:
+  - "2026-11-18: „žerie“ nahradené"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
 sources:
@@ -77,7 +78,7 @@ Podľa čoho spoznáš naučenú vyberavosť:
 
 - pes je zdravý, aktívny a drží si váhu,
 - granule odmieta, ale maškrty a jedlo zo stola zje vždy,
-- žerie, keď pri ňom stojíš, prehováraš ho alebo ho kŕmiš z ruky,
+- je, keď pri ňom stojíš, prehováraš ho alebo ho kŕmiš z ruky,
 - problém trvá týždne, nielen prvé dni po zmene krmiva.
 
 Riešenie je skôr na ľuďoch v domácnosti ako na psovi. Dohodnite sa, kto a koľko maškŕt dáva, a odpočítajte ich z dennej dávky.
@@ -166,11 +167,11 @@ Prečo tip aj tak funguje:
 
 - **Dá psovi rytmus.** Pes sa naučí, že jedlo príde v určitom čase a nezostane ležať celý deň.
 - **Skončí vyjednávanie.** Miska bez slova zmizne a nič iné nepríde.
-- **Ukáže, koľko pes naozaj zje.** Pri stále plnej miske nevieš, či žerie málo, alebo veľa.
+- **Ukáže, koľko pes naozaj zje.** Pri stále plnej miske nevieš, či zje málo, alebo veľa.
 
 ==Či zvolíš 10, 15 alebo 20 minút, je menej dôležité ako dôslednosť.== Pravidlo je pre zdravého dospelého psa. Nepoužívaj ho pri šteňati, chorom psovi, psovi po operácii ani pri psovi, ktorý 24 hodín nič nezjedol. Takého psa nenechávaj hladovať pre výchovu a zavolaj veterinárovi.
 
-[^minuty]: Kanadská akadémia veterinárnej výživy (VCA, 2025). Štúdia s bíglami (Callon a kol., 2017) merala, ako dlho pes žerie od prvej po poslednú granulu, a o limite 15 minút nehovorí nič.
+[^minuty]: Kanadská akadémia veterinárnej výživy (VCA, 2025). Štúdia s bíglami (Callon a kol., 2017) merala, ako dlho psovi trvá zjesť dávku od prvej po poslednú granulu, a o limite 15 minút nehovorí nič.
 
 ## Ako naučiť psa jesť nové granule: 7 krokov
 

@@ -24,6 +24,7 @@ key_points:
   - "Na nápis „s kuracím“ stačia v krmive 4 % kuracieho mäsa, na „bohaté na kuracie“ 14 %."
   - "Častý omyl: „hydina“ na obale môže znamenať aj kuracie."
 changelog:
+  - "2026-11-18: upravený opis čerstvého mäsa v tabuľke"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
 sources:
@@ -102,7 +103,7 @@ odkaz: granule-na-mieru.html
 
 | Na obale | Čo to znamená | Na čo si dať pozor |
 | --- | --- | --- |
-| Čerstvé kuracie mäso | mäso, ktoré bolo len chladené; nesmelo sa variť, sušiť ani mraziť | má veľa vody, v hotovej granule z neho ostane oveľa menej, ako ukazuje percento |
+| Čerstvé kuracie mäso | surové mäso aj s vodou, bez sušenia | má veľa vody, v hotovej granule z neho ostane oveľa menej, ako ukazuje percento |
 | Sušené kuracie mäso, kuracie mäso v sušenom stave | kuracie mäso bez vody; percento platí pre mäso po vysušení | percento zodpovedá podielu v hotovej granule |
 | Kuracia múčka | sušená a pomletá kuracia surovina; podiel mäsa, kostí a vnútorností z názvu nevyčítaš | kvalita kolíše; v štúdii mala viac popola a pes ju strávil horšie ako mäso |
 | Kuracia pečeň, kuracie srdcia | konkrétny vnútorný orgán z kuraťa | výživná surovina; pri alergii na kuracie sa jej tiež vyhni |

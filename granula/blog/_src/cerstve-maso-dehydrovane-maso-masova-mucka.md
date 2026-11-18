@@ -23,9 +23,9 @@ key_points:
   - "Surové mäso je zo 67–75 % voda. Zo 100 g surového jahňacieho ostane po vysušení asi 26 g."
   - "Zloženie sa radí podľa hmotnosti pri miešaní. Sušené mäso sa váži už suché."
   - "Kvalita mäsovej múčky kolíše. Z krmív s rôznymi múčkami psy strávili 62–82 % aminokyselín."
-  - "Slovo „čerstvé“ smie mať len mäso, ktoré bolo iba chladené."
   - "Najčastejší omyl: čerstvé mäso na prvom mieste neznamená, že v granulách je najviac mäsa."
 changelog:
+  - "2026-11-18: odstránený výklad slova „čerstvé“"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
 sources:
@@ -48,7 +48,7 @@ cta_button: "Nájdi granule pre svojho psa"
 
 **Mäso v granulách je surovina, ktorá sa do zmesi pridáva v troch formách: čerstvé, sušené alebo ako mäsová múčka.** Formy sa líšia hlavne obsahom vody. Všetky dodávajú psovi najmä bielkoviny a tuk. Na obale ich však nájdeš na inom mieste a s inými percentami.
 
-- **Čerstvé mäso** je mäso, ktoré bolo len chladené. Nesmelo sa variť, sušiť ani mraziť.[^cerstve]
+- **Čerstvé mäso** je surové mäso aj s vodou, ktoré ide do zmesi bez sušenia.[^cerstve]
 - **Sušené (dehydrované) mäso** je mäso, z ktorého sa odstránila voda. Na obale musí byť jasne napísané, že je sušené.
 - **Mäsová múčka** vzniká tak, že sa surovina uvarí, oddelí sa z nej tuk a zvyšok sa vysuší a pomelie. Vody má menej ako 10 %.[^mucka]
 
@@ -56,7 +56,7 @@ cta_button: "Nájdi granule pre svojho psa"
 
 ![Zadná strana obalu granúl, detail časti Zloženie, v ktorej je ako prvá surovina uvedené mäso s percentom a slovom sušené](placeholder "Forma mäsa (čerstvé, sušené, múčka) je v zložení napísaná pri názve suroviny.")
 
-[^cerstve]: Kódex správneho označovania FEDIAF, 2019. Slovo „čerstvé“ sa nesmie použiť po varení, sušení, mrazení, hydrolýze ani po pridaní konzervantov. Pri sušenej surovine kódex vyžaduje, aby to jasne povedal jej názov, napríklad slovom „sušené“. Mäso je v kódexe kostrový sval; kategória „mäso a živočíšne vedľajšie produkty“ zahŕňa mäsité časti a produkty zo spracovania tiel teplokrvných suchozemských zvierat.
+[^cerstve]: Kódex správneho označovania FEDIAF, 2019. Pri sušenej surovine kódex vyžaduje, aby to jasne povedal jej názov, napríklad slovom „sušené“. Mäso je v kódexe kostrový sval; kategória „mäso a živočíšne vedľajšie produkty“ zahŕňa mäsité časti a produkty zo spracovania tiel teplokrvných suchozemských zvierat.
 [^mucka]: Tufts Petfoodology, 2016. Múčka sa vyrába kafilerickým spracovaním (renderingom).
 
 ## Prečo je čerstvé mäso v zložení granúl často na prvom mieste?
@@ -142,7 +142,7 @@ Iné štúdie našli rozdiel medzi surovým mäsom a múčkou. Výsledky však n
 
 | | Čerstvé mäso | Sušené mäso | Mäsová múčka | Mäso a živočíšne vedľajšie produkty |
 | --- | --- | --- | --- | --- |
-| Čo to je | mäso, ktoré bolo len chladené | mäso, z ktorého sa odstránila voda | uvarená, odtučnená, vysušená a pomletá surovina | zákonná kategória: mäsité časti aj produkty zo spracovania tiel zvierat |
+| Čo to je | surové mäso aj s vodou | mäso, z ktorého sa odstránila voda | uvarená, odtučnená, vysušená a pomletá surovina | zákonná kategória: mäsité časti aj produkty zo spracovania tiel zvierat |
 | Voda | asi 67–75 % (USDA) | málo, výrobca ju na obale neuvádza | menej ako 10 % (Tufts, 2016) | rôzne |
 | Miesto v zložení | vysoko, lebo obsahuje vodu | podľa hmotnosti po vysušení | podľa hmotnosti po vysušení | podľa hmotnosti celej kategórie |
 | Ako vyzerá na obale | „čerstvé kuracie mäso“ | „sušené jahňacie mäso“ | „hydinová múčka“, „mäsokostná múčka“ | „mäso a živočíšne vedľajšie produkty (z toho hovädzie 4 %)“ |
@@ -156,7 +156,7 @@ Kategória „mäso a živočíšne vedľajšie produkty“ je legálna. Pri krm
 
 **Údaj „čerstvo spracované jahňacie mäso v sušenom stave 51 %“ znamená, že jahňacie bolo pred sušením čerstvé a 51 % je jeho hmotnosť už po vysušení.** Sušená surovina sa totiž v zložení uvádza hmotnosťou v sušenom stave.[^granula]
 
-„Čerstvo spracované“ hovorí, v akom stave bolo mäso pred sušením. Samotné slovo „čerstvé“ smie mať len mäso, ktoré bolo iba chladené. V zložení preto uvádzame obe informácie: z čoho sme vychádzali a v akej forme mäso ide do granúl.
+„Čerstvo spracované“ hovorí, v akom stave bolo mäso pred sušením. V zložení uvádzame obe informácie: z čoho sme vychádzali a v akej forme mäso ide do granúl.
 
 ![Tri surové jahňacie kotlety s kosťou na svetlom podklade](img/suroviny/jahnacie.webp "Jahňacie je jediný druh mäsa v granulách Jahňa s batátmi & čučoriedkami.")
 

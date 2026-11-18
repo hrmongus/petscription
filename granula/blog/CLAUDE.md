@@ -110,7 +110,7 @@ obrazok: img/produkty/hovadzie-s-ryzou.webp
 - **Ponuka a výzva vedú vždy na dotazník** (`granule-na-mieru.html`), nie na konkrétny produkt.
 - **Konkurenciu nemenujeme.** Kritizujeme kategórie surovín a praktiky, nie značky.
 - Priateľsky a priamo, ako kamarát, ktorý rozumie psom a výžive. Nie laboratórium, nie batoľa. Odborne, ale ľudskými slovami.
-- **Nikdy:** pes hovoriaci v prvej osobe, zdrobneniny (psíček, mňamka, papať), vynútené slovné hry, superlatívy a žargón („superprémiová holistická výživa“), emoji.
+- **Nikdy:** pes hovoriaci v prvej osobe, zdrobneniny (psíček, mňamka, papať; „psík“ občas áno, viď STYL.md), vynútené slovné hry, superlatívy a žargón („superprémiová holistická výživa“), emoji.
 - Typografia: slovenské úvodzovky „…“, desatinná čiarka (2,4 kg), **nezalomiteľná medzera pred % a €** (build ju doplní sám).
 - Tvrdenia o produkte len schválené, doslova: Bez pšenice · Bez sóje · Bez hrachu a strukovín · Bez kuracieho tuku · Bez pridaného cukru · Bez palmového oleja · Čerstvé mäso · Vysoký podiel mäsa · Zelenina · Podpora trávenia · Prírodné antioxidanty · Receptúry navrhnuté s veterinármi · Bez umelých farbív, konzervantov a aróm · Bez GMO · Vyrobené na Slovensku. Vyradené (nepoužívať): „Bez obilnín“, „Mäso zo Slovenska“, „Hovädzie zo Slovenska“, „Recept od MVDr.“.
 - Zdravotné tvrdenia opatrne: výživa nie je liečba. Pri zdravotných problémoch odkáž na veterinára.
@@ -118,7 +118,7 @@ obrazok: img/produkty/hovadzie-s-ryzou.webp
 
 ## Čo build robí za teba
 
-- Statické HTML (server-side, bez JavaScriptu), sémantické `h1/h2/table/ol`, viditeľný autor, dátumy a história zmien, zdroje, JSON-LD BlogPosting (len SEO hygiena, nie GEO páka).
+- Statické HTML (server-side, bez JavaScriptu), sémantické `h1/h2/table/ol`, viditeľný autor, dátumy (história zmien len v redakcii, na stránke nie), zdroje, JSON-LD BlogPosting (len SEO hygiena, nie GEO páka).
 - `granula/blog/<slug>/`: verejný článok (len `published` bez chýb). `granula/blog/nahlad/<slug>/`: náhľad každého článku (noindex).
 - `granula/blog/index.html`, `granula/sitemap.xml`, `robots.txt` (AI crawlery povolené, redakcia a náhľady zakázané), `granula/blog/posts.js` (dáta redakcie).
 - `granula/blog/nahlad-pdf/<slug>.pdf`: PDF náhľadu na review (tlačidlo „Stiahnuť PDF“ v redakcii). Prerenderuje sa len zmenený článok; potrebuje Node + Playwright, `--no-pdf` ho preskočí. Commituj aj PDF.

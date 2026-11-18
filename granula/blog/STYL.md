@@ -40,7 +40,8 @@ Najväčší problém prvých konceptov (review 2026-11-18): text znel ako doslo
 
 - Tykanie, priateľsky a priamo, ako kamarát, ktorý rozumie psom a výžive. Odborne, ale ľudskými slovami. (zdroj: dizajn systém)
 - Kde sú dôkazy slabé alebo zmiešané, povedz to otvorene, ale jednou vetou, nie odsekom. (zoznam tém, 2026-11-17; review 2026-11-18)
-- Zdrobneniny nie (psíček, mňamka). Pozn.: v review sa objavilo „psíka“; kým používateľ nepovie inak, píš „psa“.
+- **„pes“ / „psík“:** väčšinou „pes“. „Psík“ občas smieš, keď to sedí (napr. „ak psíka začalo trápiť svrbenie“), nie v každej vete. Iné zdrobneniny nie (psíček, mňamka, papať). (používateľ, 2026-11-18)
+- **„jesť“, nie „žrať“:** pri psovi píš „je“, „zje“, „má chuť do jedla“, nikdy „žerie“. Keď by „je“ splývalo so slovesom byť, preformuluj („je čulý a má chuť do jedla“). (používateľ, 2026-11-18)
 
 ## Slová a formulácie
 
@@ -67,12 +68,19 @@ Najväčší problém prvých konceptov (review 2026-11-18): text znel ako doslo
 
 ## Čo nerobiť
 
+- Nepíš verejne nič, čo spochybňuje schválené tvrdenie o produkte (napr. výklad slova „čerstvé“ pri „Čerstvé mäso“). Rozpor nahlás používateľovi. (používateľ, 2026-11-18)
+
 - Nepíš o produkte nič, čo web reálne nerobí (napr. prechodový plán v zásielke, zákaznícka podpora), ani to, čo je len v pláne. (redakcia, 2026-11-18)
 - Verejne nepíš o slabinách produktu, ktoré patria do vývoja (napr. „táto voľba v dotazníku nič nemení“). Nahlás ich používateľovi. (redakcia, 2026-11-18)
 - Neuvádzaj súčet percent mäsa ani iné marketingové číslo, ktoré nie je doslova v zložení. (redakcia, 2026-11-18)
+
+## Komunikácia s používateľom
+
+- Keď v chate spomínaš článok, používaj jeho **názov** (titulok), nie kód z backlogu (F3, A1…). Kód môžeš pridať do zátvorky. (používateľ, 2026-11-18)
 
 ## Feedback z review (chronologicky)
 
 _Sem zapisuj všeobecný feedback v poradí, ako prišiel: dátum, čo používateľ povedal, ktoré pravidlo vyššie z toho vzniklo._
 
 - **2026-11-18, review F6 (ručné poznámky v PDF + správa):** „Najväčší problém je, že to znie ako doslovný preklad z angličtiny, ťažko sa to číta, niektoré vety nedávajú zmysel. Treba to skorigovať v slovenčine.“ Ďalej: titulok je len pracovný názov z backlogu; „Krátka odpoveď“ → „Sumár“; „láp“ → „labiek“; kľúčové body zjednodušiť; percentá na začiatok, „až“ → pomlčka; technikálie do poznámok pod čiarou; zvýrazniť najdôležitejšie; ponuka bez názvov volieb dotazníka, štítok „Granule na mieru“; záverečná ponuka nad zdroje; história zmien zo stránky preč; dlhý článok s viacerými ponukami málokto dočíta. → sekcie Jazyk, Nadpis, Štruktúra, Obrázky/ponuky vyššie.
+- **2026-11-18, odpovede na otvorené otázky:** v článku o čerstvom mäse vyhodiť vetu o význame „čerstvé“ (stret so schváleným tvrdením); „je“ namiesto „žerie“; väčšinou „psa“, občas „psíka“; viditeľnú históriu zmien nevracať; v chate spomínať články názvom. → Tón a hlas, Čo nerobiť, Komunikácia.

@@ -1,6 +1,6 @@
 /* vygenerované build.py — needitovať */
 window.GRANULA_POSTS = {
- "built": "2026-11-18 09:32",
+ "built": "2026-11-18 09:54",
  "base": "https://granula.sk/granula",
  "problems": [],
  "posts": [
@@ -628,7 +628,7 @@ window.GRANULA_POSTS = {
    "author": "[Meno Priezvisko]",
    "authorPhoto": "placeholder",
    "hero": "placeholder",
-   "words": 1483,
+   "words": 1471,
    "description": "Surové mäso je zo 67–75 % voda, múčka z menej ako 10 %. Zloženie sa radí podľa hmotnosti pri miešaní, preto je čerstvé mäso na obale často prvé.",
    "id": "A4",
    "category": "Zloženie a suroviny",
@@ -694,6 +694,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-18: odstránený výklad slova „čerstvé“",
       "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok",
       "2026-11-18: Prvá verzia"
      ]
@@ -723,7 +724,7 @@ window.GRANULA_POSTS = {
      "id": "key-points",
      "level": "error",
      "ok": true,
-     "msg": "Aspoň 3 kľúčové body (má 5)",
+     "msg": "Aspoň 3 kľúčové body (má 4)",
      "details": []
     },
     {
@@ -960,7 +961,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1483 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1471 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -1040,7 +1041,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo znamená „čerstvo spracované mäso v sušenom stave“ v zložení Granuly?",
      "kind": "main",
-     "words": 195,
+     "words": 183,
      "numbers": 9,
      "question": true,
      "firstBold": true,
@@ -1403,7 +1404,7 @@ window.GRANULA_POSTS = {
    "author": "[Meno Priezvisko]",
    "authorPhoto": "placeholder",
    "hero": "placeholder",
-   "words": 1047,
+   "words": 1059,
    "description": "Hnačka po nových granulách zvyčajne odznie za 1–3 dni. Vráť sa k starému krmivu a prechod spomaľ. K veterinárovi pri krvi, zvracaní, apatii alebo po 2 dňoch.",
    "id": "F2",
    "category": "Problémy",
@@ -1469,6 +1470,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-18: „žerie“ nahradené",
       "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok",
       "2026-11-18: Prvá verzia"
      ]
@@ -1735,7 +1737,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1047 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1059 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -1750,7 +1752,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo je hnačka po zmene krmiva?",
      "kind": "definition",
-     "words": 58,
+     "words": 61,
      "numbers": 0,
      "question": true,
      "firstBold": true,
@@ -1776,7 +1778,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Je hnačka po zmene granúl normálna a ako dlho trvá?",
      "kind": "main",
-     "words": 157,
+     "words": 160,
      "numbers": 10,
      "question": true,
      "firstBold": true,
@@ -1789,7 +1791,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Kedy ísť s hnačkou po zmene krmiva k veterinárovi?",
      "kind": "main",
-     "words": 187,
+     "words": 190,
      "numbers": 5,
      "question": true,
      "firstBold": true,
@@ -1802,7 +1804,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo robiť, keď má pes po nových granulách hnačku: 6 krokov",
      "kind": "main",
-     "words": 180,
+     "words": 183,
      "numbers": 7,
      "question": false,
      "firstBold": true,
@@ -2727,7 +2729,7 @@ window.GRANULA_POSTS = {
    "author": "[Meno Priezvisko]",
    "authorPhoto": "placeholder",
    "hero": "placeholder",
-   "words": 1581,
+   "words": 1577,
    "description": "Kuracie mäso je pre väčšinu psov dobrá bielkovina. Vyhýbaj sa mu len pri potvrdenej alergii. Tá sa týka 15 % psov s alergiou na krmivo.",
    "id": "A3",
    "category": "Zloženie a suroviny",
@@ -2793,6 +2795,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-18: upravený opis čerstvého mäsa v tabuľke",
       "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok",
       "2026-11-18: Prvá verzia"
      ]
@@ -3059,7 +3062,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1581 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1577 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -3113,7 +3116,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Kuracie mäso, múčka, hydina: čo znamenajú názvy na obale?",
      "kind": "main",
-     "words": 277,
+     "words": 273,
      "numbers": 0,
      "question": true,
      "firstBold": true,
@@ -4768,6 +4771,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-18: „žerie“ nahradené",
       "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok",
       "2026-11-18: Prvá verzia"
      ]
