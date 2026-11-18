@@ -15,7 +15,7 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--m);color:var(--n);font-family:var(--font);font-size:18px;line-height:1.5;
+body{margin:0;background:var(--m);color:var(--n);font-family:var(--font);font-size:16px;line-height:1.5;
   -webkit-font-smoothing:antialiased;overflow-x:clip}
 img{max-width:100%;display:block}
 a{color:var(--k);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}a:hover{color:var(--n)}
@@ -28,7 +28,7 @@ h1,h2,h3,p{margin:0}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
 .wrap{max-width:1312px;margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter)}
-.sec{padding:clamp(64px,7vw,96px) 0}
+.sec{padding:clamp(48px,5.5vw,80px) 0}
 .bt{border-top:2px solid var(--n)}
 .bb{border-bottom:2px solid var(--n)}
 
@@ -36,13 +36,13 @@ h1,h2,h3,p{margin:0}
 .display{font-weight:900;text-transform:uppercase;line-height:1;letter-spacing:0}
 .eyebrow{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
 /* nadpisy sekcií: Black verzálkami (display 96), zvýraznené slovo Kobaltom */
-.h2{font-size:clamp(40px,6.4vw,96px);line-height:1;text-transform:uppercase;letter-spacing:0;font-weight:900;text-wrap:balance}
+.h2{font-size:clamp(30px,3.6vw,52px);line-height:1;text-transform:uppercase;letter-spacing:0;font-weight:900;text-wrap:balance}
 .ac{color:var(--k)}
-.lead{font-size:18px;line-height:1.5;max-width:500px}
+.lead{font-size:16px;line-height:1.5;max-width:500px}
 /* hviezdička: šesť zaoblených lupeňov, farba podľa textu */
 .star{display:inline-block;flex:none;width:.78em;height:.78em;vertical-align:middle;background:currentColor;
   -webkit-mask:var(--star) center/contain no-repeat;mask:var(--star) center/contain no-repeat}
-.head{display:flex;flex-direction:column;gap:18px}
+.head{display:flex;flex-direction:column;gap:14px}
 .head-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px}
 
 /* ---------- logo a nálepky ---------- */
@@ -57,8 +57,8 @@ h1,h2,h3,p{margin:0}
 .st-m{background:var(--ml);color:var(--n);border:2px solid var(--n)}
 
 /* ---------- tlačidlá ---------- */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:58px;padding:16px 28px;
-  border:2px solid var(--n);border-radius:0;font-family:inherit;font-weight:900;font-size:17px;letter-spacing:.02em;
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:14px 26px;
+  border:2px solid var(--n);border-radius:0;font-family:inherit;font-weight:900;font-size:16px;letter-spacing:.02em;
   text-transform:uppercase;text-decoration:none;cursor:pointer;
   transition:background 150ms ease,color 150ms ease,border-color 150ms ease}
 /* primárne: Oranž s rámom Noc; hover Noc s oranžovým textom */
@@ -76,7 +76,7 @@ h1,h2,h3,p{margin:0}
 .btn:disabled,.btn[aria-disabled="true"]{opacity:.4;cursor:not-allowed}
 .btn-sm{min-height:46px;padding:12px 20px;font-size:14px}
 /* textový odkaz: Kobalt s 2px podčiarknutím rovnakej farby */
-.link-under{font-weight:700;font-size:17px;color:var(--k);text-decoration:none;border-bottom:2px solid currentColor;padding-bottom:2px}
+.link-under{font-weight:700;font-size:15px;color:var(--k);text-decoration:none;border-bottom:2px solid currentColor;padding-bottom:2px}
 .link-under:hover{color:var(--n)}
 
 /* ---------- horná lišta a hlavička ---------- */
@@ -116,44 +116,45 @@ h1,h2,h3,p{margin:0}
 .tapes{position:relative;z-index:3;padding:46px 0;overflow-x:clip}
 .tapes .back{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%)}
 .tapes .front{position:relative}
-.tape-solo{position:relative;z-index:3;padding:24px 0;overflow-x:clip}
-.tape{width:108%;margin-left:-4%;overflow:hidden;white-space:nowrap;padding:16px 0;
+.tape-solo{position:relative;z-index:3;padding:16px 0;overflow-x:clip}
+.tape{width:108%;margin-left:-4%;overflow:hidden;white-space:nowrap;padding:12px 0;
   background:var(--o);color:var(--n);transform:rotate(var(--rot,-1.5deg))}
 .tape .track{display:inline-flex;align-items:center;gap:28px;padding-right:28px;font-weight:900;text-transform:uppercase;line-height:1;
-  letter-spacing:0;font-size:clamp(22px,2.4vw,34px);animation:tape 38s linear infinite}
+  letter-spacing:0;font-size:clamp(18px,1.9vw,26px);animation:tape 38s linear infinite}
 .tape .star:nth-child(4n+2){transform:rotate(15deg)}
 .tape.rev .track{animation-direction:reverse}
 @keyframes tape{to{transform:translateX(-50%)}}
 
 /* ---------- suroviny: filtre + 2 riadky fotiek, posun doprava (index + suroviny) ---------- */
-.ig-head{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;margin-bottom:40px}
+.ig-head{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;margin-bottom:24px}
 .ig-arrows{display:flex;gap:10px;flex:none}
-.ig-arw{width:56px;height:56px;border:2px solid var(--n);background:transparent;color:var(--n);font:900 22px/1 var(--font);cursor:pointer;
+.ig-arw{width:48px;height:48px;border:2px solid var(--n);background:transparent;color:var(--n);font:900 22px/1 var(--font);cursor:pointer;
   display:flex;align-items:center;justify-content:center;transition:background 150ms ease,color 150ms ease}
 .ig-arw.dark{background:var(--n);color:var(--o)}
 .ig-arw:hover:not(:disabled){background:var(--n);color:var(--m)}
 .ig-arw.dark:hover:not(:disabled){background:var(--o);color:var(--n)}
 .ig-arw:disabled{opacity:.4;cursor:default}
-.ig-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;margin-bottom:32px}
+.ig-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
 .ig-tabs{display:flex;flex-wrap:wrap;gap:8px}
 /* filter = čip z dizajn systému: rám Noc; vybraný Kobalt s ✓ */
-.chip-f{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;background:transparent;color:var(--n);border:2px solid var(--n);border-radius:0;
-  font:600 15px/1.2 var(--font);cursor:pointer;transition:background 150ms ease,color 150ms ease,border-color 150ms ease}
+.chip-f{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;background:transparent;color:var(--n);border:2px solid var(--n);border-radius:0;
+  font:600 14px/1.2 var(--font);cursor:pointer;transition:background 150ms ease,color 150ms ease,border-color 150ms ease}
 .chip-f:hover{border-color:var(--k)}
 .chip-f[aria-pressed="true"]{background:var(--k);color:var(--m);border-color:var(--k)}
 .chip-f[aria-pressed="true"]::before{content:"✓"}
 /* dva riadky, stĺpce idú doprava; na desktope 6 viditeľných */
-.ig-row{--cols:6;list-style:none;margin:0;padding:0 0 4px;display:grid;grid-template-rows:repeat(2,auto);grid-auto-flow:column;
-  grid-auto-columns:calc((100% - (var(--cols) - 1) * 16px) / var(--cols));gap:28px 16px;overflow-x:auto;scroll-snap-type:x mandatory;
+.ig-row{--cols:8;list-style:none;margin:0;padding:0 0 4px;display:grid;grid-template-rows:repeat(2,auto);grid-auto-flow:column;
+  grid-auto-columns:calc((100% - (var(--cols) - 1) * 14px) / var(--cols));gap:18px 14px;overflow-x:auto;scroll-snap-type:x mandatory;
   scrollbar-width:none;overscroll-behavior-x:contain}
 .ig-row::-webkit-scrollbar{display:none}
-.ig-it{display:flex;flex-direction:column;gap:12px;scroll-snap-align:start}
+.ig-it{display:flex;flex-direction:column;gap:8px;scroll-snap-align:start}
 .ig-it[hidden]{display:none}
 .ig-ph{display:block;aspect-ratio:1;border:2px solid var(--n);background:var(--ml);overflow:hidden}
 .ig-ph img{width:100%;height:100%;object-fit:cover;transition:transform 300ms ease}
 .ig-it:hover .ig-ph img{transform:scale(1.04)}
-.ig-nm{font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;line-height:1.2}
-@media (max-width:1100px){.ig-row{--cols:4}}
+.ig-nm{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;line-height:1.2}
+@media (max-width:1200px){.ig-row{--cols:6}}
+@media (max-width:900px){.ig-row{--cols:4}}
 @media (max-width:760px){.ig-row{--cols:3}}
 @media (max-width:640px){
   .ig-head{margin-bottom:28px}

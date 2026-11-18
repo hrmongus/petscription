@@ -36,7 +36,7 @@ Podľa **Granula Design System** (identita v2, artefakt „Granula Design System
 | Text | len Noc `#000` (na Kobalte a Noci Mlieko); žiadne sivé |
 | Značka | Kobalt `#0047BB`, Oranž `#FF6900` ako orámované prvky na Mlieku, nikdy celoplošné sekcie |
 | Akcent | Limetka `#C9F04D` len ako jedno slovo/číslo na Kobalte (1,8 · fakty v dotazníku · „Večera je vybavená“). Ružová sa nepoužíva |
-| Písmo | Montserrat 400–900 + 900 italic (náhrada Proxima Nova); nadpisy len Black verzálkami, zvýraznenie Kobaltom (`.ac`); text 18/1,5 |
+| Písmo | Montserrat 400–900 + 900 italic (náhrada Proxima Nova); nadpisy len Black verzálkami, zvýraznenie Kobaltom (`.ac`); nadpisy sekcií max. 52 px, hero 72 px, text 16/1,5 (zmenšené oproti dizajn systému, aby sa sekcia zmestila na jednu obrazovku) |
 | Tvar | hranaté boxy, 2px rám Noc, žiadne tiene; foto s oranžovým poľom dole vpravo (Kobalt len vedľa oranžového tlačidla), posun 24px |
 | Nálepky | `.st-o` Oranž, `.st-k` Kobalt, `.st-m` Mlieko s rámom; náklon −6° / 3° / −3°, najviac tri na plochu; odznaky štvorcové, 6° |
 | Páska | Oranž, text Noc, slová spája hviezdička (`.star`, šesť lupeňov); náklon −1,5°. Prekrížené pásky (Suroviny, „Granula = nula“) sú vedomá výnimka |
