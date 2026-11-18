@@ -1,6 +1,6 @@
 /* vygenerované build.py — needitovať */
 window.GRANULA_POSTS = {
- "built": "2026-11-18 08:37",
+ "built": "2026-11-18 08:39",
  "base": "https://granula.sk/granula",
  "problems": [],
  "posts": [
@@ -1956,26 +1956,468 @@ window.GRANULA_POSTS = {
   {
    "slug": "nadvaha-ako-s-psom-bezpecne-schudnut",
    "file": "granula/blog/_src/nadvaha-ako-s-psom-bezpecne-schudnut.md",
-   "title": "Nadváha: ako s psom bezpečne schudnúť",
-   "status": "namet",
-   "wanted": "namet",
+   "title": "Nadváha psa: ako bezpečne schudnúť o 1–2 % týždenne",
+   "status": "draft",
+   "wanted": "draft",
    "example": false,
-   "published": "",
-   "updated": "",
-   "author": "",
-   "authorPhoto": "",
-   "hero": "",
-   "words": 0,
-   "description": "",
+   "published": "2026-11-18",
+   "updated": "2026-11-18",
+   "author": "[Meno Priezvisko]",
+   "authorPhoto": "placeholder",
+   "hero": "placeholder",
+   "words": 1731,
+   "description": "Pes s nadváhou má chudnúť o 1–2 % hmotnosti týždenne. Dávku počítaj z ideálnej hmotnosti, maškrty drž pod 10 % energie a psa váž každé 2 týždne.",
    "id": "F11",
    "category": "Problémy",
    "priority": "P1",
-   "brief": "Ciele 1–2 % hmotnosti týždenne, dávka podľa cieľovej váhy, maškrty, pohyb",
-   "angle": "Dávka podľa cieľovej váhy v dotazníku",
-   "preview": null,
+   "brief": "",
+   "angle": "",
+   "preview": "../blog/nahlad/nadvaha-ako-s-psom-bezpecne-schudnut/index.html",
    "live": null,
-   "lint": [],
-   "sections": []
+   "lint": [
+    {
+     "id": "title",
+     "level": "error",
+     "ok": true,
+     "msg": "Titulok je vyplnený",
+     "details": []
+    },
+    {
+     "id": "title-length",
+     "level": "warn",
+     "ok": true,
+     "msg": "Titulok má najviac 70 znakov (má 51)",
+     "details": []
+    },
+    {
+     "id": "title-year",
+     "level": "warn",
+     "ok": true,
+     "msg": "Rok v titulku len pri téme, ktorá sa mení, a len ak sedí s dátumom aktualizácie",
+     "details": []
+    },
+    {
+     "id": "description",
+     "level": "warn",
+     "ok": true,
+     "msg": "Meta popis má 120–160 znakov (má 144)",
+     "details": []
+    },
+    {
+     "id": "author",
+     "level": "error",
+     "ok": false,
+     "msg": "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)",
+     "details": []
+    },
+    {
+     "id": "author-photo",
+     "level": "error",
+     "ok": false,
+     "msg": "Fotka autora (author_photo, súbor v granula/img/autori/)",
+     "details": []
+    },
+    {
+     "id": "dates",
+     "level": "error",
+     "ok": true,
+     "msg": "Dátumy published a updated (RRRR-MM-DD), updated ≥ published",
+     "details": []
+    },
+    {
+     "id": "changelog",
+     "level": "warn",
+     "ok": true,
+     "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
+     "details": [
+      "2026-11-18: Prvá verzia"
+     ]
+    },
+    {
+     "id": "tldr",
+     "level": "error",
+     "ok": true,
+     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 55)",
+     "details": []
+    },
+    {
+     "id": "tldr-range",
+     "level": "warn",
+     "ok": true,
+     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 55)",
+     "details": []
+    },
+    {
+     "id": "tldr-intro",
+     "level": "error",
+     "ok": true,
+     "msg": "Krátka odpoveď začína priamou odpoveďou, nie úvodom („v tomto článku…“)",
+     "details": []
+    },
+    {
+     "id": "key-points",
+     "level": "error",
+     "ok": true,
+     "msg": "Aspoň 3 kľúčové body (má 4)",
+     "details": []
+    },
+    {
+     "id": "tldr-numbers",
+     "level": "warn",
+     "ok": true,
+     "msg": "Krátka odpoveď a kľúčové body obsahujú aspoň 3 čísla (majú 16)",
+     "details": []
+    },
+    {
+     "id": "definition",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcia „Čo je …?“ s definíciou vo forme „X je Y, ktoré Z“",
+     "details": []
+    },
+    {
+     "id": "sections",
+     "level": "warn",
+     "ok": true,
+     "msg": "3–6 hlavných sekcií (má 6)",
+     "details": []
+    },
+    {
+     "id": "h2-questions",
+     "level": "warn",
+     "ok": true,
+     "msg": "Aspoň polovica nadpisov H2 sú otázky (6 z 7)",
+     "details": [
+      "Ako s psom schudnúť: 8 krokov"
+     ]
+    },
+    {
+     "id": "section-length",
+     "level": "warn",
+     "ok": true,
+     "msg": "Hlavné sekcie majú 200–400 slov",
+     "details": []
+    },
+    {
+     "id": "first-sentence",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každá sekcia začína tučnou prvou vetou = odpoveď na nadpis",
+     "details": []
+    },
+    {
+     "id": "section-numbers",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každá hlavná sekcia má aspoň 1 číslo (ideálne so zdrojom)",
+     "details": []
+    },
+    {
+     "id": "standalone",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcie obstoja samy (žiadne „vyššie“, „ako sme spomenuli“, odsek začínajúci „Toto/To“)",
+     "details": []
+    },
+    {
+     "id": "hero",
+     "level": "warn",
+     "ok": true,
+     "msg": "Obrázok v hlavičke článku (hero, hero_alt)",
+     "details": []
+    },
+    {
+     "id": "images",
+     "level": "warn",
+     "ok": true,
+     "msg": "Obrázky v texte: aspoň 3 obrázky alebo grafy (1 na 2 hlavné sekcie), má 4",
+     "details": []
+    },
+    {
+     "id": "chart",
+     "level": "warn",
+     "ok": true,
+     "msg": "Aspoň 1 graf (blok ::: graf), keď článok porovnáva čísla",
+     "details": []
+    },
+    {
+     "id": "img-alt",
+     "level": "error",
+     "ok": true,
+     "msg": "Každý obrázok má popis (alt)",
+     "details": []
+    },
+    {
+     "id": "img-placeholder",
+     "level": "error",
+     "ok": false,
+     "msg": "Zástupné obrázky sú nahradené skutočnými (pred publikovaním)",
+     "details": [
+      "hero: Labrador s viditeľnou nadváhou (bez pása pri pohľade zhora) stojí na digitálnej váhe vo veterinárnej ambulancii, majiteľ sa skláňa a odčítava hmotnosť z displeja",
+      "obrázok: Pohľad zhora na dvoch psov rovnakého plemena vedľa seba: vľavo štíhly pes s jasne viditeľným pásom za rebrami, vpravo pes s nadváhou s rovným chrbtom bez pása",
+      "obrázok: Majiteľ drží psa strednej veľkosti v náručí na osobnej váhe v kúpeľni a vedľa na papieri zapisuje dátum a hmotnosť do tabuľky"
+     ]
+    },
+    {
+     "id": "img-files",
+     "level": "error",
+     "ok": true,
+     "msg": "Súbory obrázkov existujú (cesta od granula/, napr. img/blog/<slug>/…)",
+     "details": []
+    },
+    {
+     "id": "offer-mid",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka uprostred článku, ktorá sedí k téme (blok ::: ponuka)",
+     "details": []
+    },
+    {
+     "id": "offer-fields",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka má nadpis a text",
+     "details": []
+    },
+    {
+     "id": "offer-link",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka vedie na dotazník (granule-na-mieru.html), nie na konkrétny produkt",
+     "details": []
+    },
+    {
+     "id": "offer-count",
+     "level": "warn",
+     "ok": true,
+     "msg": "Najviac 2 ponuky v texte (má 1), inak to pôsobí ako reklama",
+     "details": []
+    },
+    {
+     "id": "table",
+     "level": "info",
+     "ok": true,
+     "msg": "Porovnávacia tabuľka (odporúčané pri „X vs Y“)",
+     "details": []
+    },
+    {
+     "id": "steps",
+     "level": "info",
+     "ok": true,
+     "msg": "Postup krok za krokom (číslovaný zoznam)",
+     "details": []
+    },
+    {
+     "id": "own-data",
+     "level": "info",
+     "ok": false,
+     "msg": "Vlastné dáta alebo skúsenosť (najväčší diferenciátor)",
+     "details": []
+    },
+    {
+     "id": "faq",
+     "level": "warn",
+     "ok": true,
+     "msg": "Časté otázky: 3–6 otázok v tvare **Otázka?** odpoveď, odpoveď najviac 3 vety (má 4)",
+     "details": []
+    },
+    {
+     "id": "summary",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcia „Zhrnutie“ ako zoznam (hlavný záver, kedy áno/nie, ďalší krok)",
+     "details": []
+    },
+    {
+     "id": "sources",
+     "level": "error",
+     "ok": true,
+     "msg": "Aspoň 3 zdroje s URL (má 12)",
+     "details": []
+    },
+    {
+     "id": "sources-format",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každý zdroj v tvare „Názov – vydavateľ, rok | https://…“",
+     "details": []
+    },
+    {
+     "id": "first-third",
+     "level": "info",
+     "ok": true,
+     "msg": "Kľúčové fakty (čísla) sú v prvej tretine textu",
+     "details": []
+    },
+    {
+     "id": "atomic",
+     "level": "info",
+     "ok": true,
+     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 33)",
+     "details": []
+    },
+    {
+     "id": "self-promo",
+     "level": "warn",
+     "ok": true,
+     "msg": "„Najlepšie X“ len s transparentnou metodikou a bez Granuly na prvom mieste",
+     "details": []
+    },
+    {
+     "id": "claims",
+     "level": "warn",
+     "ok": true,
+     "msg": "Žiadne vyradené tvrdenia a superlatívy z dizajn systému",
+     "details": []
+    },
+    {
+     "id": "recipe-names",
+     "level": "warn",
+     "ok": true,
+     "msg": "Receptúry podľa mäsa (napr. „Jeleň & králik“), nie interné názvy Puppy/Energy",
+     "details": []
+    },
+    {
+     "id": "ty-form",
+     "level": "warn",
+     "ok": true,
+     "msg": "Tykanie („tvoj pes“), nie vykanie",
+     "details": []
+    },
+    {
+     "id": "emoji",
+     "level": "warn",
+     "ok": true,
+     "msg": "Bez emoji",
+     "details": []
+    },
+    {
+     "id": "length",
+     "level": "info",
+     "ok": true,
+     "msg": "Dĺžka článku: 1731 slov (dĺžka nerozhoduje, hustota áno)",
+     "details": []
+    }
+   ],
+   "sections": [
+    {
+     "title": "Čo je nadváha u psa?",
+     "kind": "definition",
+     "words": 151,
+     "numbers": 15,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 1,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Ako zistím, že má môj pes nadváhu?",
+     "kind": "main",
+     "words": 276,
+     "numbers": 31,
+     "question": true,
+     "firstBold": true,
+     "table": true,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Ako rýchlo má pes chudnúť?",
+     "kind": "main",
+     "words": 211,
+     "numbers": 39,
+     "question": true,
+     "firstBold": true,
+     "table": true,
+     "steps": false,
+     "images": 0,
+     "charts": 1,
+     "offers": 0
+    },
+    {
+     "title": "Koľko krmiva dať psovi, ktorý má schudnúť?",
+     "kind": "main",
+     "words": 229,
+     "numbers": 22,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 1,
+     "offers": 1
+    },
+    {
+     "title": "Čo s maškrtami a pohybom počas chudnutia?",
+     "kind": "main",
+     "words": 207,
+     "numbers": 10,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Ako s psom schudnúť: 8 krokov",
+     "kind": "main",
+     "words": 173,
+     "numbers": 12,
+     "question": false,
+     "firstBold": true,
+     "table": false,
+     "steps": true,
+     "images": 1,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Čo robiť, keď pes prestane chudnúť, a kedy ísť k veterinárovi?",
+     "kind": "main",
+     "words": 206,
+     "numbers": 16,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Časté otázky",
+     "kind": "faq",
+     "words": 128,
+     "numbers": 8,
+     "question": false,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Zhrnutie",
+     "kind": "summary",
+     "words": 95,
+     "numbers": 9,
+     "question": false,
+     "firstBold": false,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    }
+   ]
   },
   {
    "slug": "namacat-granule",
@@ -2100,26 +2542,480 @@ window.GRANULA_POSTS = {
   {
    "slug": "patria-obilniny-do-granul",
    "file": "granula/blog/_src/patria-obilniny-do-granul.md",
-   "title": "Patria obilniny do granúl?",
-   "status": "namet",
-   "wanted": "namet",
+   "title": "Patria obilniny do granúl? Čo hovorí veda o škrobe, alergii a DCM",
+   "status": "draft",
+   "wanted": "draft",
    "example": false,
-   "published": "",
-   "updated": "",
-   "author": "",
-   "authorPhoto": "",
-   "hero": "",
-   "words": 0,
-   "description": "",
+   "published": "2026-11-18",
+   "updated": "2026-11-18",
+   "author": "[Meno Priezvisko]",
+   "authorPhoto": "placeholder",
+   "hero": "placeholder",
+   "words": 1848,
+   "description": "Väčšina psov obilniny v granulách strávi, pes má zvyčajne asi 5-krát viac kópií génu AMY2B ako vlk. Alergia na pšenicu je pri alergii na krmivo v 13 % prípadov.",
    "id": "A1",
    "category": "Zloženie a suroviny",
    "priority": "P1",
-   "brief": "Stráviteľnosť škrobu u psov (gén AMY2B, Axelsson 2013); grain-free vs. grain-inclusive; FDA vyšetrovanie DCM od 2018 a čo z neho reálne vyšlo; kedy obilniny vadia (alergia, celiakia u írskych setrov)",
-   "angle": "Naše recepty: ryža vs. batáty, prečo",
-   "preview": null,
+   "brief": "",
+   "angle": "",
+   "preview": "../blog/nahlad/patria-obilniny-do-granul/index.html",
    "live": null,
-   "lint": [],
-   "sections": []
+   "lint": [
+    {
+     "id": "title",
+     "level": "error",
+     "ok": true,
+     "msg": "Titulok je vyplnený",
+     "details": []
+    },
+    {
+     "id": "title-length",
+     "level": "warn",
+     "ok": true,
+     "msg": "Titulok má najviac 70 znakov (má 65)",
+     "details": []
+    },
+    {
+     "id": "title-year",
+     "level": "warn",
+     "ok": true,
+     "msg": "Rok v titulku len pri téme, ktorá sa mení, a len ak sedí s dátumom aktualizácie",
+     "details": []
+    },
+    {
+     "id": "description",
+     "level": "warn",
+     "ok": true,
+     "msg": "Meta popis má 120–160 znakov (má 160)",
+     "details": []
+    },
+    {
+     "id": "author",
+     "level": "error",
+     "ok": false,
+     "msg": "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)",
+     "details": []
+    },
+    {
+     "id": "author-photo",
+     "level": "error",
+     "ok": false,
+     "msg": "Fotka autora (author_photo, súbor v granula/img/autori/)",
+     "details": []
+    },
+    {
+     "id": "dates",
+     "level": "error",
+     "ok": true,
+     "msg": "Dátumy published a updated (RRRR-MM-DD), updated ≥ published",
+     "details": []
+    },
+    {
+     "id": "changelog",
+     "level": "warn",
+     "ok": true,
+     "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
+     "details": [
+      "2026-11-18: Prvá verzia"
+     ]
+    },
+    {
+     "id": "tldr",
+     "level": "error",
+     "ok": true,
+     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 54)",
+     "details": []
+    },
+    {
+     "id": "tldr-range",
+     "level": "warn",
+     "ok": true,
+     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 54)",
+     "details": []
+    },
+    {
+     "id": "tldr-intro",
+     "level": "error",
+     "ok": true,
+     "msg": "Krátka odpoveď začína priamou odpoveďou, nie úvodom („v tomto článku…“)",
+     "details": []
+    },
+    {
+     "id": "key-points",
+     "level": "error",
+     "ok": true,
+     "msg": "Aspoň 3 kľúčové body (má 5)",
+     "details": []
+    },
+    {
+     "id": "tldr-numbers",
+     "level": "warn",
+     "ok": true,
+     "msg": "Krátka odpoveď a kľúčové body obsahujú aspoň 3 čísla (majú 15)",
+     "details": []
+    },
+    {
+     "id": "definition",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcia „Čo je …?“ s definíciou vo forme „X je Y, ktoré Z“",
+     "details": []
+    },
+    {
+     "id": "sections",
+     "level": "warn",
+     "ok": true,
+     "msg": "3–6 hlavných sekcií (má 7)",
+     "details": []
+    },
+    {
+     "id": "h2-questions",
+     "level": "warn",
+     "ok": true,
+     "msg": "Aspoň polovica nadpisov H2 sú otázky (6 z 8)",
+     "details": [
+      "Granule s obilninami vs. grain-free: porovnanie",
+      "Ako vybrať granule s obilninami alebo bez nich: 5 krokov"
+     ]
+    },
+    {
+     "id": "section-length",
+     "level": "warn",
+     "ok": true,
+     "msg": "Hlavné sekcie majú 200–400 slov",
+     "details": []
+    },
+    {
+     "id": "first-sentence",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každá sekcia začína tučnou prvou vetou = odpoveď na nadpis",
+     "details": []
+    },
+    {
+     "id": "section-numbers",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každá hlavná sekcia má aspoň 1 číslo (ideálne so zdrojom)",
+     "details": []
+    },
+    {
+     "id": "standalone",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcie obstoja samy (žiadne „vyššie“, „ako sme spomenuli“, odsek začínajúci „Toto/To“)",
+     "details": []
+    },
+    {
+     "id": "hero",
+     "level": "warn",
+     "ok": true,
+     "msg": "Obrázok v hlavičke článku (hero, hero_alt)",
+     "details": []
+    },
+    {
+     "id": "images",
+     "level": "warn",
+     "ok": true,
+     "msg": "Obrázky v texte: aspoň 4 obrázky alebo grafy (1 na 2 hlavné sekcie), má 4",
+     "details": []
+    },
+    {
+     "id": "chart",
+     "level": "warn",
+     "ok": true,
+     "msg": "Aspoň 1 graf (blok ::: graf), keď článok porovnáva čísla",
+     "details": []
+    },
+    {
+     "id": "img-alt",
+     "level": "error",
+     "ok": true,
+     "msg": "Každý obrázok má popis (alt)",
+     "details": []
+    },
+    {
+     "id": "img-placeholder",
+     "level": "error",
+     "ok": false,
+     "msg": "Zástupné obrázky sú nahradené skutočnými (pred publikovaním)",
+     "details": [
+      "hero: Dve misky granúl vedľa seba na drevenom stole, pri jednej malá kôpka surovej ryže, pri druhej rozrezaný batát, za miskami sedí pes strednej veľkosti a pozerá na ne"
+     ]
+    },
+    {
+     "id": "img-files",
+     "level": "error",
+     "ok": true,
+     "msg": "Súbory obrázkov existujú (cesta od granula/, napr. img/blog/<slug>/…)",
+     "details": []
+    },
+    {
+     "id": "offer-mid",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka uprostred článku, ktorá sedí k téme (blok ::: ponuka)",
+     "details": []
+    },
+    {
+     "id": "offer-fields",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka má nadpis a text",
+     "details": []
+    },
+    {
+     "id": "offer-link",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka vedie na dotazník (granule-na-mieru.html), nie na konkrétny produkt",
+     "details": []
+    },
+    {
+     "id": "offer-count",
+     "level": "warn",
+     "ok": true,
+     "msg": "Najviac 2 ponuky v texte (má 1), inak to pôsobí ako reklama",
+     "details": []
+    },
+    {
+     "id": "table",
+     "level": "info",
+     "ok": true,
+     "msg": "Porovnávacia tabuľka (odporúčané pri „X vs Y“)",
+     "details": []
+    },
+    {
+     "id": "steps",
+     "level": "info",
+     "ok": true,
+     "msg": "Postup krok za krokom (číslovaný zoznam)",
+     "details": []
+    },
+    {
+     "id": "own-data",
+     "level": "info",
+     "ok": false,
+     "msg": "Vlastné dáta alebo skúsenosť (najväčší diferenciátor)",
+     "details": []
+    },
+    {
+     "id": "faq",
+     "level": "warn",
+     "ok": true,
+     "msg": "Časté otázky: 3–6 otázok v tvare **Otázka?** odpoveď, odpoveď najviac 3 vety (má 5)",
+     "details": []
+    },
+    {
+     "id": "summary",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcia „Zhrnutie“ ako zoznam (hlavný záver, kedy áno/nie, ďalší krok)",
+     "details": []
+    },
+    {
+     "id": "sources",
+     "level": "error",
+     "ok": true,
+     "msg": "Aspoň 3 zdroje s URL (má 10)",
+     "details": []
+    },
+    {
+     "id": "sources-format",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každý zdroj v tvare „Názov – vydavateľ, rok | https://…“",
+     "details": []
+    },
+    {
+     "id": "first-third",
+     "level": "info",
+     "ok": true,
+     "msg": "Kľúčové fakty (čísla) sú v prvej tretine textu",
+     "details": []
+    },
+    {
+     "id": "atomic",
+     "level": "info",
+     "ok": true,
+     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 30)",
+     "details": []
+    },
+    {
+     "id": "self-promo",
+     "level": "warn",
+     "ok": true,
+     "msg": "„Najlepšie X“ len s transparentnou metodikou a bez Granuly na prvom mieste",
+     "details": []
+    },
+    {
+     "id": "claims",
+     "level": "warn",
+     "ok": true,
+     "msg": "Žiadne vyradené tvrdenia a superlatívy z dizajn systému",
+     "details": []
+    },
+    {
+     "id": "recipe-names",
+     "level": "warn",
+     "ok": true,
+     "msg": "Receptúry podľa mäsa (napr. „Jeleň & králik“), nie interné názvy Puppy/Energy",
+     "details": []
+    },
+    {
+     "id": "ty-form",
+     "level": "warn",
+     "ok": true,
+     "msg": "Tykanie („tvoj pes“), nie vykanie",
+     "details": []
+    },
+    {
+     "id": "emoji",
+     "level": "warn",
+     "ok": true,
+     "msg": "Bez emoji",
+     "details": []
+    },
+    {
+     "id": "length",
+     "level": "info",
+     "ok": true,
+     "msg": "Dĺžka článku: 1848 slov (dĺžka nerozhoduje, hustota áno)",
+     "details": []
+    }
+   ],
+   "sections": [
+    {
+     "title": "Čo sú obilniny v granulách?",
+     "kind": "definition",
+     "words": 106,
+     "numbers": 0,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Vedia psy stráviť obilniny?",
+     "kind": "main",
+     "words": 194,
+     "numbers": 17,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 1,
+     "offers": 0
+    },
+    {
+     "title": "Sú grain-free granule zdravšie ako granule s obilninami?",
+     "kind": "main",
+     "words": 212,
+     "numbers": 11,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 1,
+     "offers": 0
+    },
+    {
+     "title": "Spôsobujú grain-free granule ochorenie srdca (DCM)?",
+     "kind": "main",
+     "words": 256,
+     "numbers": 16,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Kedy psovi obilniny naozaj vadia?",
+     "kind": "main",
+     "words": 225,
+     "numbers": 10,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 1
+    },
+    {
+     "title": "Granule s obilninami vs. grain-free: porovnanie",
+     "kind": "main",
+     "words": 183,
+     "numbers": 8,
+     "question": false,
+     "firstBold": true,
+     "table": true,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Ktoré granule Granula obsahujú ryžu a ktoré batáty?",
+     "kind": "main",
+     "words": 190,
+     "numbers": 7,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 2,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Ako vybrať granule s obilninami alebo bez nich: 5 krokov",
+     "kind": "main",
+     "words": 171,
+     "numbers": 3,
+     "question": false,
+     "firstBold": true,
+     "table": false,
+     "steps": true,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Časté otázky",
+     "kind": "faq",
+     "words": 157,
+     "numbers": 3,
+     "question": false,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Zhrnutie",
+     "kind": "summary",
+     "words": 100,
+     "numbers": 5,
+     "question": false,
+     "firstBold": false,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    }
+   ]
   },
   {
    "slug": "pes-je-vlk-sacharidy-nepotrebuje",
