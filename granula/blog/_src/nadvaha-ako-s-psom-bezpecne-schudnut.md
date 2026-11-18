@@ -1,5 +1,5 @@
 ---
-title: "Nadváha psa: ako bezpečne schudnúť o 1–2 % týždenne"
+title: "Pes má nadváhu? Ako schudne bezpečne a koľko mu dávať"
 slug: nadvaha-ako-s-psom-bezpecne-schudnut
 status: draft
 id: F11
@@ -11,20 +11,21 @@ author_bio: "[1 veta, prečo mu veriť: napr. veterinárka so zameraním na vý�
 author_photo: placeholder
 hero: placeholder
 hero_alt: "Labrador s viditeľnou nadváhou (bez pása pri pohľade zhora) stojí na digitálnej váhe vo veterinárnej ambulancii, majiteľ sa skláňa a odčítava hmotnosť z displeja"
-hero_caption: "Chudnutie psa je beh na niekoľko mesiacov: pravidelné váženie ukáže, či ide plán správnym tempom."
+hero_caption: "Chudnutie psa trvá mesiace. Pravidelné váženie ukáže, či ide správnym tempom."
 published: 2026-11-18
 updated: 2026-11-18
 tldr: >
-  Pes s nadváhou má bezpečne chudnúť o 1 až 2 % hmotnosti týždenne, pri 20 kg psovi
-  teda o 200 až 400 g. Dennú dávku počítaj z ideálnej, nie súčasnej hmotnosti, maškrty
-  drž pod 10 % dennej energie a psa váž aspoň každé 2 týždne. Plán pri obezite
-  nastav s veterinárom, ktorý vylúči aj choroby.
+  Pes s nadváhou má chudnúť pomaly, o 1–2 % hmotnosti týždenne. Pri 20 kg psovi
+  je to 200–400 g. Dennú dávku počítaj z ideálnej hmotnosti, nie zo súčasnej.
+  Maškrty môžu tvoriť najviac 10 % dennej energie. Psa váž aspoň každé 2 týždne.
+  Pri obezite nastav plán s veterinárom, ktorý vylúči aj choroby.
 key_points:
-  - "Za bezpečné tempo považuje Cornellova univerzita 1–2 % hmotnosti týždenne, MSD Veterinary Manual uvádza asi 1 %"
-  - "Každý bod nad ideálom na 9-bodovej škále BCS znamená zhruba 10 % hmotnosti navyše"
-  - "V štúdii s 926 psami chudli psy v priemere o 0,9 % týždenne a za 3 mesiace dosiahlo cieľ len 7 %"
-  - "Najčastejšia chyba: rátať dávku zo súčasnej hmotnosti alebo uberať granule bez plánu; maškrty a pohyb pritom ostanú rovnaké"
+  - "Bezpečné tempo chudnutia je 1–2 % hmotnosti týždenne."
+  - "Každý bod nad ideálnou postavou znamená asi 10 % hmotnosti navyše."
+  - "V praxi psy chudnú pomalšie, v priemere o 0,9 % týždenne."
+  - "Najčastejšia chyba: rátať dávku zo súčasnej hmotnosti alebo len ubrať granule a maškrty nechať tak."
 changelog:
+  - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
 sources:
   - "Obesity and weight loss in dogs (A. Cohen) – Cornell Riney Canine Health Center, Cornell University College of Veterinary Medicine, 2024 | https://www.vet.cornell.edu/departments-centers-and-institutes/riney-canine-health-center/canine-health-topics/obesity-and-weight-loss-dogs"
@@ -40,44 +41,52 @@ sources:
   - "Effects of diet restriction on life span and age-related changes in dogs (Kealy a kol.) – Journal of the American Veterinary Medical Association, 2002 | https://pubmed.ncbi.nlm.nih.gov/11991408/"
   - "Study finds dogs fed reduced-calorie diet live nearly two years longer – Penn Today, University of Pennsylvania, 2002 | https://penntoday.upenn.edu/news/study-finds-dogs-fed-reduced-calorie-diet-live-nearly-two-years-longer-dogs-unrestricted-diet"
 cta_title: "Dávka pre psa, ktorý má schudnúť"
-cta_text: "Keď v dotazníku pri postave zvolíš „Kilo navyše“, dennú dávku spočítame z ideálnej hmotnosti a odporučíme vhodné granule s najnižším obsahom tuku."
-cta_button: "Spočítaj dávku na chudnutie"
+cta_text: "Povedz nám o svojom psovi za dve minúty. Dennú dávku spočítame z jeho ideálnej hmotnosti a vyberieme vhodné granule s čo najmenším obsahom tuku."
+cta_button: "Spočítaj dávku pre svojho psa"
 ---
 
 ## Čo je nadváha u psa?
 
-**Nadváha u psa je stav, keď pes váži o 10 až 20 % viac, ako je jeho ideálna hmotnosť; nad 20 % ide o obezitu.** Takto ju vymedzuje MSD Veterinary Manual (2025). Ideálnu postavu opisuje 9-bodová škála kondície (BCS), na ktorej je ideál 4 až 5 bodov.
+**Nadváha u psa je stav, keď pes váži o 10–20 % viac, ako je jeho ideálna hmotnosť.** Keď je to viac ako 20 %, ide už o obezitu.[^definicia] Veterinári hodnotia postavu na škále od 1 do 9 bodov. Ideál je 4–5 bodov.
 
-Nadváha nie je len kozmetika. Cornellova univerzita (2024) uvádza, že obezita zaťažuje takmer každý orgán, najčastejšie zhoršuje artrózu a zvyšuje riziko pri anestézii. Štúdia Kealy a kol. (JAVMA, 2002) sledovala 48 labradorov celý život. Psy, ktoré dostávali o 25 % menej krmiva ako ich súrodenci, žili v mediáne 13 rokov, kontrolné psy 11,2 roka, teda o 1,8 roka menej (Penn Today, 2002). Chronické ochorenia sa u štíhlejších psov objavovali neskôr. Štúdiu financoval výrobca krmiva a išlo o jedno plemeno chované v kolónii.
+Nadváha nie je len otázka vzhľadu. Obezita zaťažuje takmer každý orgán. Najčastejšie zhoršuje artrózu a zvyšuje riziko pri narkóze.[^cornell]
 
-Chudnutie je preto liečba, nie diéta na skúšku. Pes stráca tuk pomaly a plán počíta s mesiacmi, nie s týždňami.
+==V dlhodobej štúdii s labradormi žili psy, ktoré jedli o 25 % menej, o 1,8 roka dlhšie.==[^kealy] Chronické choroby sa u nich objavili neskôr.
+
+Chudnutie je preto liečba, nie diéta na skúšku. Pes stráca tuk pomaly, takže rátaj s mesiacmi, nie s týždňami.
 
 ![Pohľad zhora na dvoch psov rovnakého plemena vedľa seba: vľavo štíhly pes s jasne viditeľným pásom za rebrami, vpravo pes s nadváhou s rovným chrbtom bez pása](placeholder "Pás za rebrami pri pohľade zhora je najrýchlejší domáci test postavy.")
 
-## Ako zistím, že má môj pes nadváhu?
+[^definicia]: MSD Veterinary Manual, 2025. Škála postavy (body condition score, BCS) podľa WSAVA, 2011.
+[^cornell]: Cornell University College of Veterinary Medicine, 2024.
+[^kealy]: Kealy a kol., JAVMA, 2002, a Penn Today, 2002. Štúdia sledovala 48 labradorov celý život. Psy, ktoré dostávali o 25 % menej krmiva ako ich súrodenci, žili v mediáne 13 rokov, ostatné 11,2 roka. Štúdiu financoval výrobca krmiva a išlo o jedno plemeno chované v kolónii.
 
-**Nadváhu zistíš podľa rebier, pásu a brucha: ak rebrá nahmatáš len s námahou a pás zhora nevidno, pes má nadváhu.** Samotná váha nestačí, lebo dva psy s rovnakou hmotnosťou môžu mať úplne inú postavu. Veterinári preto používajú hodnotenie kondície (body condition score, BCS) na 9-bodovej škále, ktorú odporúča WSAVA (2011).
+## Ako zistíš, či má pes nadváhu?
 
-| BCS (1–9) | Rebrá | Pás a brucho | Orientačná nadváha |
+**Nahmataj rebrá a pozri sa na psa zhora. Ak rebrá cítiš len s námahou a pás nevidno, pes má nadváhu.** Samotná váha nestačí. Dva psy s rovnakou hmotnosťou môžu mať úplne inú postavu. Veterinári preto hodnotia postavu na škále od 1 do 9 bodov.[^bcs]
+
+| Počet bodov (1–9) | Rebrá | Pás a brucho | Približne navyše |
 | --- | --- | --- | --- |
 | 1–3 | viditeľné, bez tuku | výrazný pás, vtiahnuté brucho | pod ideálom |
-| 4–5 | ľahko nahmatáš pod tenkou vrstvou tuku | pás zhora viditeľný, brucho vtiahnuté | ideál |
-| 6 | nahmatáš pod miernou vrstvou tuku | pás zhora viditeľný, ale nevýrazný | asi 10 % |
-| 7 | nahmatáš s námahou, hrubá vrstva tuku | pás chýba alebo je sotva viditeľný, tuk pri koreni chvosta | asi 20 % |
-| 8 | nenahmatáš alebo len silným tlakom | pás chýba, brucho nie je vtiahnuté | asi 30 % |
-| 9 | pod masívnou vrstvou tuku | tuk na krku a nohách, brucho vypuklé | asi 40 % a viac |
+| 4–5 | ľahko ich nahmatáš pod tenkou vrstvou tuku | pás zhora viditeľný, brucho vtiahnuté | ideál |
+| 6 | nahmatáš ich pod miernou vrstvou tuku | pás zhora viditeľný, ale nevýrazný | asi 10 % |
+| 7 | nahmatáš ich s námahou, hrubá vrstva tuku | pás chýba alebo je sotva viditeľný, tuk pri koreni chvosta | asi 20 % |
+| 8 | nenahmatáš ich alebo len silným tlakom | pás chýba, brucho nie je vtiahnuté | asi 30 % |
+| 9 | pod masívnou vrstvou tuku | tuk na krku a nohách, vypuklé brucho | asi 40 % a viac |
 
-Opis bodov je podľa tabuľky WSAVA Body Condition Score (2013). Odhad nadváhy vychádza z pravidla Cornellovej univerzity (2024): každý bod nad ideálom znamená zhruba 10 % hmotnosti navyše. Pes s 30 kg na BCS 7 má teda zhruba 6 kg navyše.
+==Každý bod nad ideálom znamená asi 10 % hmotnosti navyše.== Pes, ktorý váži 30 kg a má 7 bodov, má teda zhruba 5 kg navyše (ideál asi 25 kg).
 
-Nadváha je bežnejšia, ako si majitelia myslia. V britskej štúdii Courcier a kol. (2010) mal z 696 psov v 5 ambulanciách nadváhu 38,9 % a obezitu ďalších 20,4 %. Vo veterinárnych záznamoch je pritom nadváha zapísaná len u 7,1 % psov (Pegram a kol., 2021), čo autori vysvetľujú tým, že ju veterinári často nezaznamenajú.
+Nadváha je bežnejšia, ako si majitelia myslia. V jednej britskej štúdii malo nadváhu 38,9 % psov a ďalších 20,4 % bolo obéznych.[^vyskyt]
 
-WSAVA upozorňuje, že ideálny pes na BCS 4 až 5 môže majiteľovi pripadať príliš chudý. Ak si nie si istý, nechaj postavu ohodnotiť pri najbližšej návšteve veterinára a zapíš si číslo.
+Ideálne štíhly pes môže majiteľovi pripadať príliš chudý.[^wsava] Ak si nie si istý, nechaj postavu psa ohodnotiť pri najbližšej návšteve veterinára a zapíš si číslo.
+
+[^bcs]: Hodnotenie postavy (BCS) podľa WSAVA, 2011. Opis bodov v tabuľke podľa WSAVA Body Condition Score, 2013. Odhad nadváhy podľa pravidla Cornellovej univerzity, 2024.
+[^vyskyt]: Courcier a kol., 2010: 696 psov v 5 ambulanciách. Vo veterinárnych záznamoch je nadváha zapísaná len pri 7,1 % psov (Pegram a kol., 2021). Autori to vysvetľujú tým, že ju veterinári často nezapíšu.
+[^wsava]: WSAVA, 2011.
 
 ## Ako rýchlo má pes chudnúť?
 
-**Pes má chudnúť o 1 až 2 % svojej hmotnosti týždenne.** Tak to uvádza Cornellova univerzita (2024): 20-kilový pes teda schudne za týždeň 200 až 400 g. MSD Veterinary Manual (2025) považuje za rozumný cieľ asi 1 % týždenne a pomalšie tempo je v poriadku, ak sa psovi darí dobre.
-
-Rýchlejšie chudnutie podľa Cornellu znamená, že pes dostáva príliš málo energie, alebo môže signalizovať zdravotný problém. Pomalšie chudnutie znamená, že plán treba upraviť.
+**Pes má chudnúť o 1–2 % svojej hmotnosti týždenne.** Pes s hmotnosťou 20 kg teda schudne za týždeň 200–400 g.[^tempo] Pomalšie tempo okolo 1 % je tiež v poriadku, ak sa psovi darí dobre.
 
 | Hmotnosť psa | 1 % týždenne | 2 % týždenne |
 | --- | --- | --- |
@@ -87,104 +96,124 @@ Rýchlejšie chudnutie podľa Cornellu znamená, že pes dostáva príliš málo
 | 30 kg | 300 g | 600 g |
 | 40 kg | 400 g | 800 g |
 
-V praxi chudnú psy skôr na spodnej hranici. V medzinárodnej štúdii Flanagan a kol. (PLOS ONE, 2017) s 926 psami z 27 krajín schudli psy za 3 mesiace v priemere 11,4 % hmotnosti, teda 0,9 % týždenne. Cieľovú hmotnosť za ten čas dosiahlo len 65 psov (7 %). Majitelia napriek tomu hlásili, že psy boli aktívnejšie ešte pred dosiahnutím cieľa. Štúdiu financoval výrobca diétnych krmív.
+==Keď pes chudne rýchlejšie, dostáva príliš málo energie alebo môže mať zdravotný problém.== Keď chudne pomalšie, treba upraviť plán.
+
+V praxi psy chudnú skôr pomalšie. Vo veľkej medzinárodnej štúdii schudli za 3 mesiace v priemere 11,4 % hmotnosti, teda 0,9 % týždenne. Cieľ za ten čas dosiahlo len 7 % psov. Majitelia si však všimli, že psy boli aktívnejšie ešte predtým, ako cieľ dosiahli.[^flanagan]
 
 ::: graf
 nazov: Koľko týždňov trvá chudnutie pri tempe 1 % týždenne (ilustračný výpočet)
 jednotka: týždňov
-os: Nadváha nad ideálnou hmotnosťou
+os: Koľko pes váži nad ideálom
 zdroj: vlastný výpočet z tempa 1 % hmotnosti týždenne (Cornell 2024, MSD Veterinary Manual 2025); cieľ = súčasná hmotnosť / (1 + nadváha)
-zvyraznit: 20 % (BCS 7)
-10 % (BCS 6) | 9,5
-20 % (BCS 7) | 18,1
-30 % (BCS 8) | 26,1
-40 % (BCS 9) | 33,5
+zvyraznit: 20 % (7 bodov)
+10 % (6 bodov) | 9,5
+20 % (7 bodov) | 18,1
+30 % (8 bodov) | 26,1
+40 % (9 bodov) | 33,5
 :::
 
-Pes na BCS 7 teda pri tempe 1 % týždenne chudne zhruba 4 mesiace, pes na BCS 9 viac ako 7 mesiacov. Pri tempe 2 % týždenne sa časy zhruba skrátia na polovicu.
+Pes so 7 bodmi teda pri tempe 1 % týždenne chudne zhruba 4 mesiace. Pes s 9 bodmi viac ako 7 mesiacov. Pri tempe 2 % týždenne to trvá približne polovicu času.
+
+[^tempo]: Tempo 1–2 % týždenne uvádza Cornellova univerzita, 2024. MSD Veterinary Manual, 2025, považuje za rozumný cieľ asi 1 % týždenne.
+[^flanagan]: Flanagan a kol., PLOS ONE, 2017: 926 psov z 27 krajín, cieľovú hmotnosť za 3 mesiace dosiahlo 65 psov. Štúdiu financoval výrobca diétnych krmív.
 
 ## Koľko krmiva dať psovi, ktorý má schudnúť?
 
-**Psovi, ktorý má schudnúť, počítaj dennú dávku z ideálnej hmotnosti, nie zo súčasnej.** Energia sa ráta od pokojovej potreby RER, ktorú MSD Veterinary Manual (2024) uvádza ako RER = 70 × hmotnosť v kg^0,75. Ak by si do vzorca dosadil súčasnú hmotnosť, dávka by zostala nastavená pre psa s nadváhou.
+**Dennú dávku počítaj z ideálnej hmotnosti psa, nie zo súčasnej.** Ak ju počítaš zo súčasnej hmotnosti, dávka ostane nastavená pre psa s nadváhou.
 
-Odporúčania sa v presnom čísle líšia. MSD Veterinary Manual (2025) navrhuje začať na 60 % udržiavacej potreby a podľa váženia upravovať. V štúdii Flanagan a kol. (2017) dostávali psy na začiatku 60 až 80 kcal na kg^0,75 cieľovej hmotnosti podľa pohlavia a kastrácie. Hodnota 70 kcal na kg^0,75 ideálnej hmotnosti zodpovedá 1,0 × RER ideálnej hmotnosti.
+Východiskom je energia, ktorú pes spáli v pokoji. Veterinári ju nazývajú pokojovou potrebou energie a počítajú ju zo vzorca.[^rer] Odporúčania sa v presnom čísle líšia. MSD Veterinary Manual radí začať na 60 % bežnej dávky a potom ju upravovať podľa váženia. V medzinárodnej štúdii dostávali psy na začiatku zhruba toľko, koľko je pokojová potreba ich cieľovej hmotnosti.[^start]
 
-Dotazník Granuly pri postave „Kilo navyše“ počíta presne takto. Ideálnu hmotnosť odhadne ako súčasnú hmotnosť / 1,10, teda predpokladá nadváhu asi 10 %. Energiu potom ráta ako 1,0 × RER tejto ideálnej hmotnosti. U šteniat a gravidných súk dávku takto neznižuje.
+Náš dotazník počíta takto: keď uvedieš, že pes má pár kíl navyše, predpokladáme nadváhu asi 10 %. Ideálnu hmotnosť vypočítame ako súčasnú hmotnosť vydelenú číslom 1,10. Dennú energiu potom nastavíme na pokojovú potrebu tejto ideálnej hmotnosti. Pri šteňatách a gravidných sukách dávku takto neznižujeme.
 
 ::: graf
 nazov: Denná energia pre 22 kg kastrovaného psa (ilustračný výpočet)
 jednotka: kcal
 os: Spôsob výpočtu
-zdroj: RER = 70 × kg^0,75 (MSD Veterinary Manual 2024); násobky 1,6 a 1,0 a ideálna hmotnosť 22 / 1,10 = 20 kg podľa dotazníka Granuly
-zvyraznit: Kilo navyše: 1,0 × RER 20 kg
-Postava akurát: 1,6 × RER 22 kg | 1138
-1,0 × RER súčasnej hmotnosti 22 kg | 711
-Kilo navyše: 1,0 × RER 20 kg | 662
+zdroj: pokojová potreba (RER) = 70 × kg^0,75 (MSD Veterinary Manual 2024); bežná dávka 1,6 × RER 22 kg, znížená 1,0 × RER, ideálna hmotnosť 22 / 1,10 = 20 kg podľa dotazníka Granuly
+zvyraznit: Z ideálnej hmotnosti 20 kg
+Bežná dávka pre 22 kg | 1138
+Znížená, zo súčasnej hmotnosti 22 kg | 711
+Z ideálnej hmotnosti 20 kg | 662
 :::
 
-Ak má tvoj pes podľa tabuľky BCS 7 a viac, nadváha je skôr 20 až 40 % a cieľovú hmotnosť by mal určiť veterinár. Pri silnom obmedzení bežného krmiva hrozí aj nedostatok živín. Teoretická štúdia Linder a kol. (2012) zistila, že pri 70 kcal na kg^0,75 ideálnej hmotnosti mali všetkých 5 hodnotených krmív viacero živín pod odporúčaním NRC. Cornell preto radí pred obmedzením bežného krmiva poradiť sa s veterinárom, ktorý môže odporučiť diétne krmivo na chudnutie.
+==Ak má pes 7 a viac bodov, nadváha je skôr 20–40 % a cieľovú hmotnosť má určiť veterinár.== Keď bežného krmiva dávaš oveľa menej, pes nemusí dostať dosť živín.[^linder] Preto sa pred veľkým znížením bežného krmiva poraď s veterinárom. Môže odporučiť diétne krmivo na chudnutie.
+
+[^rer]: RER = 70 × hmotnosť v kg^0,75 (MSD Veterinary Manual, 2024). Hodnota 70 kcal na kg^0,75 ideálnej hmotnosti zodpovedá 1,0 × RER ideálnej hmotnosti.
+[^start]: MSD Veterinary Manual, 2025: začať na 60 % udržiavacej potreby. Flanagan a kol., 2017: 60–80 kcal na kg^0,75 cieľovej hmotnosti podľa pohlavia a kastrácie.
+[^linder]: Linder a kol., 2012, teoretická štúdia: pri 70 kcal na kg^0,75 ideálnej hmotnosti mali všetkých 5 hodnotených krmív viacero živín pod odporúčaním NRC. Odporúčanie poradiť sa s veterinárom je od Cornellovej univerzity, 2024.
 
 ::: ponuka
 nadpis: Dávka z ideálnej hmotnosti, nie zo súčasnej
-text: Pri postave „Kilo navyše“ spočítame dennú dávku z ideálnej hmotnosti (1,0 × RER) a spomedzi granúl vhodných pre tvojho psa vyberieme tie s najnižším obsahom tuku.
+text: Dennú dávku spočítame z ideálnej hmotnosti tvojho psa. Z granúl, ktoré sú preňho vhodné, vyberieme tie s najmenším obsahom tuku.
 tlacidlo: Spočítaj dávku pre svojho psa
 odkaz: granule-na-mieru.html
 :::
 
 ## Čo s maškrtami a pohybom počas chudnutia?
 
-**Maškrty môžu tvoriť najviac 10 % dennej energie psa a pohyb pomáha, ale len spolu s menšou dávkou.** Limit 10 % uvádzajú Cornellova univerzita (2024) aj MSD Veterinary Manual (2025). WSAVA (2011) považuje maškrty a zvyšky zo stola nad 10 % kalórií za rizikový faktor vo výžive.
+**Maškrty môžu tvoriť najviac 10 % dennej energie psa. Pohyb pomáha, ale len spolu s menšou dávkou.**[^desat]
 
-Pri 662 kcal denne to znamená najviac asi 66 kcal z maškŕt. Maškrty sa do dennej energie rátajú, nie pridávajú k nej. Ak pes dostane maškrtu, uber zodpovedajúce množstvo granúl. Cornell navrhuje odložiť si časť dennej dávky granúl a dávať ju ako odmenu počas dňa, prípadne použiť malé kúsky vhodnej zeleniny.
+Pri dávke 662 kcal denne je to najviac asi 66 kcal z maškŕt. ==Maškrty sa do dennej dávky rátajú, nepridávajú sa k nej.== Keď pes dostane maškrtu, uber z granúl. Môžeš si aj odložiť časť dennej dávky granúl a dávať ju počas dňa ako odmenu. Hodia sa aj malé kúsky vhodnej zeleniny.
 
-Do maškŕt patrí všetko, čo pes zje mimo misky: kôrka od chleba, kúsok syra na zabalenie tabletky, žuvačky na zuby aj to, čo mu potajomky dávajú deti alebo starí rodičia. V britskej štúdii Courcier a kol. (2010) súvisela obezita psov okrem iného s frekvenciou maškŕt a s počtom hodín pohybu týždenne.
+Maškrta je všetko, čo pes zje mimo misky. Kôrka od chleba, kúsok syra na zabalenie tabletky, žuvačka na zuby. Aj to, čo mu potajomky dajú deti alebo starí rodičia. Obezita psov podľa jednej britskej štúdie súvisela okrem iného s tým, ako často dostávali maškrty a koľko sa hýbali.[^courcier]
 
-MSD Veterinary Manual (2025) uvádza, že najúspešnejšie programy na chudnutie spájajú obmedzenie energie s pohybom. Cornell odporúča šetrný pohyb, napríklad prechádzky alebo plávanie, a pri psovi, ktorý sa doteraz veľa nehýbal, postupné predlžovanie. Samotný pohyb bez úpravy dávky podľa Cornellu na schudnutie nestačí. Pes s nadváhou a boľavými kĺbmi neznesie dlhé behy, preto začni kratšími a častejšími prechádzkami.
+Najlepšie výsledky prináša menšia dávka spolu s pohybom. Samotný pohyb bez menšej dávky na schudnutie nestačí.[^pohyb] Vhodné sú prechádzky alebo plávanie. Psovi s nadváhou môžu bolieť kĺby. Začni preto kratšími a častejšími prechádzkami a predlžuj ich postupne.
+
+[^desat]: Limit 10 % uvádzajú Cornellova univerzita, 2024, aj MSD Veterinary Manual, 2025. WSAVA, 2011, považuje maškrty a zvyšky zo stola nad 10 % kalórií za rizikový faktor vo výžive.
+[^courcier]: Courcier a kol., 2010.
+[^pohyb]: MSD Veterinary Manual, 2025: najúspešnejšie programy spájajú menej energie s pohybom. Cornellova univerzita, 2024: šetrný pohyb, postupné predlžovanie, samotný pohyb nestačí.
 
 ## Ako s psom schudnúť: 8 krokov
 
-**Bezpečné chudnutie psa stojí na 8 krokoch: kontrola u veterinára, cieľová hmotnosť, presná dávka, maškrty v limite, pohyb a váženie každé 2 týždne.**
+**Bezpečné chudnutie stojí na kontrole u veterinára, presnej dávke, maškrtách v limite, pohybe a vážení každé 2 týždne.**
 
-1. **Nechaj psa vyšetriť.** Cornell (2024) medzi príčinami nadváhy uvádza aj zníženú funkciu štítnej žľazy a Cushingovu chorobu; niektoré lieky tiež podporujú priberanie.
-2. **Urči cieľovú hmotnosť.** Z BCS odhadni nadváhu (asi 10 % na bod nad ideálom) a cieľ nastav s veterinárom, najmä pri BCS 7 a viac.
-3. **Spočítaj dávku z cieľovej hmotnosti.** Vychádzaj z RER = 70 × kg^0,75 ideálnej hmotnosti, nie súčasnej.
-4. **Odvažuj granule na kuchynskej váhe.** Odmerka je nepresná a pri zníženej dávke sa chyba prejaví rýchlo.
-5. **Zapíš všetko, čo pes zje.** Maškrty drž pod 10 % dennej energie a odpočítaj ich z granúl.
+1. **Nechaj psa vyšetriť.** Nadváhu môže spôsobiť aj slabšia činnosť štítnej žľazy alebo Cushingova choroba. Niektoré lieky tiež podporujú priberanie.[^priciny]
+2. **Urči cieľovú hmotnosť.** Podľa bodov postavy odhadni, koľko pes váži navyše (asi 10 % na každý bod nad ideálom). Pri 7 a viac bodoch urči cieľ s veterinárom.
+3. **Spočítaj dávku z cieľovej hmotnosti.** Nie zo súčasnej.
+4. **Odvažuj granule na kuchynskej váhe.** Odmerka je nepresná a pri menšej dávke sa chyba prejaví rýchlo.
+5. **Zapisuj všetko, čo pes zje.** Maškrty drž pod 10 % dennej energie a odpočítaj ich z granúl.
 6. **Pridaj pravidelný pohyb.** Začni prechádzkami alebo plávaním a predlžuj ich postupne.
-7. **Váž psa aspoň každé 2 týždne.** Cornell aj MSD Veterinary Manual odporúčajú váženie zhruba každých 14 dní, vždy na tej istej váhe.
-8. **Uprav plán podľa tempa.** Cieľ je 1 až 2 % týždenne; keď je tempo mimo, uprav dávku alebo choď k veterinárovi.
+7. **Váž psa aspoň každé 2 týždne.** Vždy na tej istej váhe.[^vazenie]
+8. **Uprav plán podľa tempa.** Cieľ je 1–2 % týždenne. Keď je tempo iné, uprav dávku alebo choď k veterinárovi.
 
 ![Majiteľ drží psa strednej veľkosti v náručí na osobnej váhe v kúpeľni a vedľa na papieri zapisuje dátum a hmotnosť do tabuľky](placeholder "Malého a stredného psa odvážiš doma: zváž sa s ním v náručí a odpočítaj svoju hmotnosť.")
 
-## Čo robiť, keď pes prestane chudnúť, a kedy ísť k veterinárovi?
+[^priciny]: Cornellova univerzita, 2024.
+[^vazenie]: Váženie zhruba každých 14 dní odporúčajú Cornellova univerzita, 2024, aj MSD Veterinary Manual, 2025.
 
-**Keď pes chudne pomalšie ako 1 % týždenne, uber z dennej energie asi 10 %; keď chudne rýchlejšie ako 2 % týždenne alebo sa mu pridajú ťažkosti, choď k veterinárovi.** Zníženie o 10 % pri tempe pod 1 % týždenne navrhoval program v štúdii Flanagan a kol. (2017), veterinár mohol rozhodnúť inak.
+## Čo robiť, keď pes prestane chudnúť?
 
-Než dávku znížiš, skontroluj skryté kalórie: maškrty od iných členov rodiny, jedlo z misky iného zvieraťa, zvyšky pri prechádzke. Ak pes ani po úprave dávky a pri dodržaní plánu nechudne, je to dôvod na vyšetrenie. MSD Veterinary Manual (2024) radí pri nezvyčajne nízkej energetickej potrebe vylúčiť napríklad zníženú funkciu štítnej žľazy.
+**Keď pes chudne pomalšie ako 1 % týždenne, uber z dennej dávky asi 10 %. Keď chudne rýchlejšie ako 2 % týždenne alebo sa mu pridajú ťažkosti, choď k veterinárovi.**[^uprava]
 
-K veterinárovi choď, ak platí niektoré z týchto:
+Skôr ako dávku znížiš, hľadaj skryté kalórie. Maškrty od ostatných v rodine, jedlo z misky iného zvieraťa, niečo zjedené na prechádzke. ==Ak pes nechudne ani po úprave dávky a plán dodržiavaš, nechaj ho vyšetriť.== Veterinár môže vylúčiť napríklad slabšiu činnosť štítnej žľazy.[^stitna]
 
-- pes chudne rýchlejšie ako 2 % týždenne (Cornell, 2024),
-- pes nechudne napriek dodržiavaniu plánu niekoľko týždňov,
+K veterinárovi choď, ak:
+
+- pes chudne rýchlejšie ako 2 % týždenne,
+- pes niekoľko týždňov nechudne, hoci plán dodržiavaš,
 - je apatický, slabý, veľa pije alebo močí, má zlú srsť,
-- má BCS 8 až 9 alebo ochorenie, pri ktorom treba stráženú diétu.
+- má 8–9 bodov alebo chorobu, pri ktorej potrebuje špeciálnu diétu.
 
-Po dosiahnutí cieľa chudnutie nekončí. V štúdii German a kol. (2012) s 33 psami, ktoré úspešne schudli, si hmotnosť udržalo 42 % psov a 48 % pribralo viac ako 5 %. Menej pribrali psy, ktoré zostali na diétnom krmive, ako psy prevedené na bežné krmivo. Dávku po schudnutí zvyšuj opatrne a váž psa naďalej aspoň raz mesačne.
+Keď pes dosiahne cieľ, práca nekončí. Mnohé psy po schudnutí znova priberú. Menej priberali psy, ktoré ostali na diétnom krmive, ako tie, ktoré prešli späť na bežné krmivo.[^german] Dávku po schudnutí zvyšuj opatrne a psa naďalej váž aspoň raz za mesiac.
+
+[^uprava]: Zníženie o 10 % pri tempe pod 1 % týždenne navrhoval program v štúdii Flanagan a kol., 2017. Veterinár mohol rozhodnúť inak. Hranicu 2 % týždenne uvádza Cornellova univerzita, 2024.
+[^stitna]: MSD Veterinary Manual, 2024, pri nezvyčajne nízkej potrebe energie.
+[^german]: German a kol., 2012: z 33 psov, ktoré úspešne schudli, si hmotnosť udržalo 42 % a 48 % pribralo viac ako 5 %.
 
 ## Časté otázky
 
-**Koľko kíl môže pes schudnúť za mesiac?** Pri tempe 1 až 2 % týždenne schudne pes za mesiac zhruba 4 až 8 % hmotnosti. Pri 20 kg psovi je to asi 0,8 až 1,6 kg.
+**Koľko kíl môže pes schudnúť za mesiac?** Pri tempe 1–2 % týždenne schudne za mesiac zhruba 4–8 % hmotnosti. Pes s hmotnosťou 20 kg teda asi 0,8–1,6 kg.
 
-**Môžem psovi jednoducho dať o polovicu menej jeho granúl?** Nie je to dobrý nápad bez výpočtu. Polovica dávky môže byť príliš veľa aj príliš málo a pri silnom obmedzení bežného krmiva hrozí nedostatok niektorých živín.
+**Môžem psovi jednoducho dať polovicu granúl?** Bez výpočtu to nie je dobrý nápad. Polovica môže byť priveľa aj primálo. Keď bežného krmiva dávaš oveľa menej, pes nemusí dostať dosť živín.
 
-**Chudne kastrovaný pes ťažšie?** V štúdii Flanagan a kol. (2017) schudli kastrované psy menej ako nekastrované, ale chudli aj tak. Kastrovaný pes potrebuje rovnaký plán, len môže trvať dlhšie.
+**Chudne kastrovaný pes ťažšie?** V štúdii Flanagan a kol. (2017) schudli kastrované psy menej ako nekastrované, ale chudli. Kastrovaný pes potrebuje rovnaký plán, len to môže trvať dlhšie.
 
-**Platí rovnaký postup aj pre šteňa s nadváhou?** Nie. Šteňa ešte rastie a jeho dávku nemožno znižovať ako u dospelého psa, preto chudnutie šteňaťa rieš s veterinárom.
+**Platí rovnaký postup aj pre šteňa s nadváhou?** Nie. Šteňa ešte rastie a dávku mu nemôžeš znižovať ako dospelému psovi. Chudnutie šteňaťa rieš s veterinárom.
 
 ## Zhrnutie
 
-- Pes s nadváhou má chudnúť o 1 až 2 % hmotnosti týždenne a dennú dávku počítaj z ideálnej hmotnosti.
-- Miernu nadváhu (BCS 6) zvládneš po kontrole u veterinára sám; pri BCS 7 a viac, pri šteňati alebo chorom psovi nastav plán s veterinárom.
+- Pes s nadváhou má chudnúť o 1–2 % hmotnosti týždenne. Dennú dávku počítaj z ideálnej hmotnosti.
+- Miernu nadváhu (6 bodov) zvládneš po kontrole u veterinára sám. Pri 7 a viac bodoch, pri šteňati alebo chorom psovi nastav plán s veterinárom.
 - Maškrty drž pod 10 % dennej energie, pridaj šetrný pohyb a psa váž každé 2 týždne.
-- Pri tempe pod 1 % týždenne uber z dávky asi 10 %, pri tempe nad 2 % alebo ťažkostiach choď k veterinárovi.
-- Ďalší krok: ohodnoť postavu psa podľa tabuľky BCS a zapíš si jeho dnešnú hmotnosť.
+- Keď pes chudne pomalšie ako 1 % týždenne, uber z dávky asi 10 %. Keď rýchlejšie ako 2 % alebo má ťažkosti, choď k veterinárovi.
+- Ďalší krok: ohodnoť postavu psa podľa tabuľky a zapíš si jeho dnešnú hmotnosť.

@@ -60,7 +60,7 @@ Najväčší problém prvých konceptov (review 2026-11-18): text znel ako doslo
 
 ## Obrázky, grafy, ponuky
 
-- **Ponuka predáva prínos, nie ovládanie dotazníka.** Nepíš názvy volieb ani tlačidiel („zaškrtni Nesedí mu každé mäso“, „cez Netoleruje tento typ proteínu porovnáš…“). Napíš, čo majiteľ získa (napr. „Vyberieme granule s mäsom, ktoré tvojmu psovi sedí, a dávku spočítame na gramy.“). Štítok ponuky je „Granule na mieru“ (robí build). (review 2026-11-18)
+- **Ponuka predáva prínos, nie ovládanie dotazníka.** Nepíš názvy volieb ani tlačidiel („zaškrtni Nesedí mu každé mäso“, „cez Netoleruje tento typ proteínu porovnáš…“). Napíš, čo majiteľ získa (napr. „Granule vyberieme podľa toho, čo tvoj pes potrebuje, a dennú dávku spočítame na gramy.“). Prínos musí byť pravdivý: nesľubuj funkciu, ktorú dotazník nemá. Štítok ponuky je „Granule na mieru“ (robí build). (review 2026-11-18)
 - **Ponuky:** 1 v prvej polovici článku (za sekciou, s ktorou súvisí) + záverečná pod zhrnutím (build ju dáva nad zdroje). Viac nie; na konci článku je ich málokto uvidí. (review 2026-11-18)
 - Obrázok produktu v ponuke len vtedy, keď presne sedí s textom ponuky (monoproteín → len receptúra s `monoprotein: true`). Inak bez obrázka produktu. (redakcia, 2026-11-18)
 - Ponuka nesľubuje konkrétnu receptúru, ak ju dotazník nemusí vybrať (pravidlá R1–R10 majú poradie). (redakcia, 2026-11-18)

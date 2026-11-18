@@ -1,31 +1,33 @@
 ---
-title: "Patria obilniny do granúl? Čo hovorí veda o škrobe, alergii a DCM"
+title: "Sú obilniny v granulách pre psa zlé? Kedy áno a kedy nie"
 slug: patria-obilniny-do-granul
 status: draft
 id: A1
 category: "Zloženie a suroviny"
 priority: P1
-description: "Väčšina psov obilniny v granulách strávi, pes má zvyčajne asi 5-krát viac kópií génu AMY2B ako vlk. Alergia na pšenicu je pri alergii na krmivo v 13 % prípadov."
+description: "Väčšina psov obilniny v granulách strávi. Pšenica vadí 13 % psov s alergiou na krmivo, hovädzie 34 %. Granule bez obilia zdravému psovi nepomáhajú."
 author: "[Meno Priezvisko]"
 author_bio: "[1 veta, prečo mu veriť: napr. veterinárka so zameraním na výživu psov]"
 author_photo: placeholder
 hero: placeholder
 hero_alt: "Dve misky granúl vedľa seba na drevenom stole, pri jednej malá kôpka surovej ryže, pri druhej rozrezaný batát, za miskami sedí pes strednej veľkosti a pozerá na ne"
-hero_caption: "Ryža alebo batáty: pre väčšinu psov rozhoduje skôr druh mäsa a celé zloženie než prítomnosť obilnín."
+hero_caption: "Ryža alebo batáty? Pre väčšinu psov je dôležitejší druh mäsa a celé zloženie ako to, či sú v granulách obilniny."
 published: 2026-11-18
 updated: 2026-11-18
 tldr: >
-  Obilniny do granúl patriť môžu: väčšina psov varený škrob dobre strávi a pes má v mediáne
-  10 kópií génu pre amylázu AMY2B, vlk 2. Grain-free granule nemajú preukázaný zdravotný prínos
-  pre zdravého psa. Obilniny vadia hlavne pri potvrdenej alergii na pšenicu (13 % psov s alergiou
-  na krmivo) a pri zriedkavej citlivosti na lepok.
+  Obilniny do granúl patriť môžu. Väčšina psov uvarený škrob z obilnín dobre strávi.
+  Typický pes má 10 kópií génu na trávenie škrobu, vlk len 2. Granule bez obilia
+  zdravému psovi preukázateľne nepomáhajú. Obilniny vadia hlavne pri potvrdenej
+  alergii na pšenicu a pri zriedkavej citlivosti na lepok. Alergiu na pšenicu má
+  13 % psov s alergiou na krmivo.
 key_points:
-  - "Psy majú v mediáne 10 kópií génu AMY2B na štiepenie škrobu, vlky 2 (Arendt a kol., 2016)"
-  - "Pri potvrdenej alergii na krmivo bola pšenica spúšťačom u 13 % psov, hovädzie u 34 % a ryža u 2 % (Mueller a kol., 2016)"
-  - "FDA dostala do novembra 2022 hlásenia o 1 382 psoch s DCM, príčinnú súvislosť s grain-free krmivom nepotvrdila"
-  - "Pri DCM sa podozrenie presunulo od chýbajúcich obilnín k strukovinám, hlavne hrachu a šošovici"
-  - "Najčastejší mýtus: pes je mäsožravec ako vlk, a preto obilniny nestrávi"
+  - "Typický pes má 10 kópií génu na trávenie škrobu, vlk len 2."
+  - "Pšenica vadí 13 % psov s alergiou na krmivo, hovädzie 34 % a ryža 2 %."
+  - "Americký úrad FDA dostal hlásenia o 1 382 psoch s ochorením srdca (DCM). Že ho spôsobujú granule bez obilia, nepotvrdil."
+  - "Pri ochorení srdca sa podozrenie presunulo od chýbajúceho obilia k strukovinám, hlavne k hrachu a šošovici."
+  - "Najčastejší mýtus: pes je mäsožravec ako vlk, a preto obilniny nestrávi."
 changelog:
+  - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
 sources:
   - "The genomic signature of dog domestication reveals adaptation to a starch-rich diet (Axelsson a kol.) – Nature, 2013 | https://www.nature.com/articles/nature11837"
@@ -39,35 +41,36 @@ sources:
   - "Dietary modulation of gluten sensitivity in a naturally occurring enteropathy of Irish setter dogs (Hall, Batt) – Gut, 1992 | https://pmc.ncbi.nlm.nih.gov/articles/PMC1373930/"
   - "Canine paroxysmal dyskinesia – a review (Mandigers a kol.) – Frontiers in Veterinary Science, 2024 | https://pmc.ncbi.nlm.nih.gov/articles/PMC11308868/"
 cta_title: "Granule s ryžou alebo s batátmi? Vyberieme podľa tvojho psa"
-cta_text: "Z veku, veľkosti, aktivity a zdravotného zamerania tvojho psa odporučíme granule a spočítame dennú dávku na gramy. Keď mu nesedí každé mäso, ponúkneme granule s jedným druhom mäsa."
+cta_text: "Povedz nám o svojom psovi za dve minúty. Podľa veku, veľkosti, aktivity a zdravia mu vyberieme granule a dennú dávku spočítame na gramy."
 cta_button: "Nájdi granule pre svojho psa"
 ---
 
 ## Čo sú obilniny v granulách?
 
-**Obilnina v granulách je semeno trávy, napríklad ryža, pšenica, kukurica, jačmeň alebo ovos, ktoré dodáva krmivu pre psov hlavne škrob a časť bielkovín a vlákniny.** Varením a extrúziou sa škrob zmení na formu, ktorú pes ľahšie strávi. Škrob zároveň drží granulu pohromade.
+**Obilnina v granulách je zrno, napríklad ryža, pšenica, kukurica, jačmeň alebo ovos, ktoré dodáva krmivu pre psov hlavne škrob.** Pridávajú aj trochu bielkovín a vlákniny. Pri výrobe sa zrno uvarí pod tlakom. Škrob sa tak zmení, aby ho pes ľahšie strávil, a zároveň drží granulu pohromade.
 
-Grain-free granule obilniny neobsahujú, škrob v nich ale zostáva. Výrobcovia ho nahrádzajú inými surovinami, napríklad zemiakmi, batátmi, tapiokou, hrachom alebo šošovicou. Grain-free teda neznamená „bez sacharidov“ ani „viac mäsa“. Batáty a zemiaky sú hľuzy, nie obilniny. Hrach a šošovica sú strukoviny.
+Granule bez obilia (na obale často „grain-free“) obilniny nemajú, ale škrob v nich ostáva. Výrobcovia ho len berú z iných surovín, napríklad zo zemiakov, batátov, tapioky, hrachu alebo šošovice. ==Bez obilia teda neznamená bez sacharidov ani viac mäsa.==
 
-Otázka „patria obilniny do granúl?“ sa preto v skutočnosti delí na dve: vie pes škrob stráviť a vadí konkrétnemu psovi niektorá konkrétna obilnina?
+Batáty a zemiaky sú hľuzy, nie obilniny. Hrach a šošovica sú strukoviny.
 
+Otázka, či obilniny patria do granúl, má preto dve časti. Vie pes škrob stráviť? A vadí konkrétnemu psovi niektorá konkrétna obilnina?
 ## Vedia psy stráviť obilniny?
 
-**Áno, väčšina psov varený škrob z obilnín strávi dobre, lebo sa počas domestikácie prispôsobili strave bohatej na škrob.** Pes nie je vlk ani genetikou, ani trávením.
+**Áno. Väčšina psov uvarený škrob z obilnín strávi dobre.** Odkedy žijú vedľa človeka, prispôsobili sa strave bohatej na škrob. Pes nie je vlk ani v génoch, ani v trávení.
 
-Štúdia Axelsson a kol. (Nature, 2013) porovnala genómy psov a vlkov. Signály prirodzeného výberu našla v 10 génoch dôležitých pre trávenie škrobu a metabolizmus tukov. Autori zároveň ukázali, že psy trávia škrob lepšie ako vlky.
+Pri porovnaní génov psov a vlkov našli vedci zmeny v 10 génoch, ktoré súvisia s trávením škrobu a spracovaním tukov. Psy navyše trávia škrob lepšie ako vlky.[^axelsson]
 
-Kľúčový je gén AMY2B pre pankreatickú amylázu, enzým, ktorý štiepi škrob na cukry. Arendt a kol. (Heredity, 2016) zmerali počet jeho kópií u 392 psov a 51 vlkov. Vlky mali takmer vždy 2 kópie, 49 z 51 vlkov presne 2. Psy mali v mediáne 10 kópií, v rozpätí od 1 do 22.
+Najdôležitejší je gén pre amylázu, enzým, ktorý v tráviacom trakte štiepi škrob na cukry. ==Typický pes má 10 kópií tohto génu, vlk len 2.==[^arendt]
 
-Nie všetky psy sú však rovnaké. Málo kópií AMY2B mali austrálske dingá a psy z arktických oblastí, napríklad sibírsky husky s mediánom 3 kópie. Autori to spájajú s tým, že do týchto oblastí sa prehistorické poľnohospodárstvo nerozšírilo. Pre bežného psa z Európy je adaptácia na škrob pravidlom.
+Nie všetky psy sú rovnaké. Málo kópií majú psy z arktických oblastí a austrálske dingá. Sibírsky husky má zvyčajne 3 kópie. Vedci to spájajú s tým, že sa tam v praveku nerozšírilo poľnohospodárstvo. Pre bežného psa z Európy je prispôsobenie na škrob pravidlom.
 
-Veterinárni nutriční špecialisti z Tufts Petfoodology (2016) uvádzajú, že psy využijú živiny z obilnín v granulách s účinnosťou nad 90 %. Podmienkou je spracovanie: surové zrno pes strávi oveľa horšie ako uvarené a extrudované.
+Psy využijú živiny z obilnín v granulách z viac ako 90 %. Podmienkou je, aby bolo zrno uvarené. Surové zrno pes strávi oveľa horšie.[^tufts-travenie]
 
 ::: graf
-nazov: Počet kópií génu AMY2B (amyláza na trávenie škrobu)
+nazov: Koľko kópií génu na trávenie škrobu majú psy a vlky
 jednotka: kópií
 os: Skupina
-zdroj: Arendt a kol., Heredity 2016 (medián, diploidný počet kópií)
+zdroj: Arendt a kol., Heredity 2016 (medián, diploidný počet kópií génu AMY2B)
 zvyraznit: Psy spolu (392 psov)
 Vlk (51 vlkov) | 2
 Psy spolu (392 psov) | 10
@@ -75,22 +78,20 @@ Sibírsky husky | 3
 Grónsky pes | 2,5
 :::
 
-## Sú grain-free granule zdravšie ako granule s obilninami?
+[^axelsson]: Axelsson a kol., Nature, 2013.
+[^arendt]: Arendt a kol., Heredity, 2016. Gén AMY2B pre pankreatickú amylázu zmerali u 392 psov a 51 vlkov. Z 51 vlkov malo presne 2 kópie 49. Psy mali v mediáne 10 kópií, v rozpätí 1–22.
+[^tufts-travenie]: Veterinárni nutriční špecialisti z Tufts Petfoodology, 2016.
 
-**Pre zdravého psa nie sú grain-free granule preukázateľne zdravšie, žiadna štúdia im zatiaľ nepriznala zdravotný prínos.** Tím klinickej výživy Tufts Petfoodology (2016) označil grain-free za marketingový koncept, nie zdravotné riešenie.
+## Sú granule bez obilia zdravšie?
 
-Hlavný argument pre grain-free býva alergia. Údaje ho ale nepodporujú. Mueller, Olivry a Prélaud (BMC Veterinary Research, 2016) zhrnuli štúdie s 297 psami, ktorým alergiu na krmivo potvrdila eliminačná diéta a následná provokácia. Najčastejším spúšťačom bolo hovädzie mäso u 34 % psov. Mliečne výrobky mali 17 %, kuracie mäso 15 % a pšenica 13 %. Kukurica vyvolala reakciu u 4 % psov a ryža len u 2 %.
+**Pre zdravého psa nie. Žiadna štúdia zatiaľ nepreukázala, že by mu granule bez obilia zdravotne pomáhali.** Odborníci na výživu z Tufts ich označili za marketing, nie za riešenie zdravotných problémov.[^marketing]
 
-Psy s alergiou na krmivo teda reagujú častejšie na bielkoviny z mäsa a mlieka ako na obilniny. Jeden pes môže reagovať na viac zložiek naraz, preto percentá nedávajú súčet 100. Autori dodávajú, že skutočný výskyt jednotlivých alergénov je pravdepodobne vyšší, než ukazujú publikované štúdie.
-
-Druhý argument znie „menej sacharidov“. Tufts Petfoodology (2016) upozorňuje, že časť grain-free granúl má síce menej sacharidov, ale o to viac tuku a energie. Iné len nahradia obilniny podobným množstvom rafinovaného škrobu zo zemiakov alebo tapioky.
-
-Grain-free granule teda nie sú zlé, len nie sú automaticky lepšie. Pre psa s potvrdenou alergiou na pšenicu môžu byť dobrá voľba, pre zdravého psa je dôležitejšie celé zloženie, kvalita bielkovín a správna dávka.
+Najčastejší dôvod, prečo ľudia kupujú granule bez obilia, je alergia. Údaje ho však nepodporujú. ==Psy s alergiou na krmivo reagujú častejšie na mäso a mliečne výrobky ako na obilniny.==[^alergeny]
 
 ::: graf
-nazov: Spúšťače alergie na krmivo u psov
+nazov: Koľko psov s alergiou na krmivo reagovalo na danú surovinu
 jednotka: % psov
-os: Zložka krmiva
+os: Surovina
 zdroj: Mueller, Olivry, Prélaud – BMC Veterinary Research 2016 (297 psov s potvrdenou alergiou na krmivo)
 zvyraznit: Pšenica
 Hovädzie | 34
@@ -103,105 +104,130 @@ Kukurica | 4
 Ryža | 2
 :::
 
-## Spôsobujú grain-free granule ochorenie srdca (DCM)?
+^ Jeden pes môže reagovať na viac surovín, preto je súčet vyšší ako 100 %.
 
-**Príčinná súvislosť medzi grain-free granulami a dilatačnou kardiomyopatiou (DCM) nie je dokázaná, ale súvis s niektorými krmivami sa stále skúma.** DCM je ochorenie, pri ktorom sa srdcový sval rozšíri a slabšie pumpuje.
+Druhý dôvod býva „menej sacharidov“. Niektoré granule bez obilia ich naozaj majú menej, ale zato viac tuku a energie. Iné nahradia obilniny podobným množstvom čistého škrobu zo zemiakov alebo tapioky.[^sacharidy]
 
-Americký úrad FDA začal prípady DCM u psov na niektorých krmivách vyšetrovať v júli 2018. Od januára 2014 do 1. novembra 2022 dostal hlásenia o 1 382 psoch s DCM. V analýze hlásení z roku 2019 bolo 91 % krmív označených ako grain-free a 93 % obsahovalo hrach alebo šošovicu. Zemiaky alebo batáty boli v 42 % krmív.
+Granule bez obilia teda nie sú zlé, len nie sú automaticky lepšie. Psovi s potvrdenou alergiou na pšenicu môžu pomôcť. Pri zdravom psovi rozhoduje celé zloženie, kvalita bielkovín a správna dávka.
 
-FDA zdôrazňuje, že samotné hlásenia na dôkaz príčiny nestačia. V decembri 2022 oznámila, že ďalšie verejné aktualizácie nevydá, kým nebudú k dispozícii významné nové vedecké informácie. Na stránke otázok a odpovedí FDA uvádza, že nemá jednoznačné informácie o tom, že by tieto krmivá boli samy osebe nebezpečné. Hlásenia stále prichádzajú, ale v menšom počte ako v rokoch 2018 až 2020.
+[^marketing]: Tím klinickej výživy Tufts Petfoodology, 2016.
+[^alergeny]: Mueller, Olivry a Prélaud, BMC Veterinary Research, 2016. Súhrn štúdií s 297 psami, ktorým alergiu na krmivo potvrdila eliminačná diéta a následný návrat k pôvodnému krmivu. Autori dodávajú, že skutočný výskyt jednotlivých alergénov je pravdepodobne vyšší, ako ukazujú publikované štúdie.
+[^sacharidy]: Tufts Petfoodology, 2016.
 
-Podozrenie sa medzitým presunulo od chýbajúcich obilnín k strukovinám. „Konkrétna príčina zatiaľ nie je známa,“ píše veterinárna nutričná špecialistka Lisa M. Freeman z Tufts Petfoodology (2023). DCM podľa nej súvisí viac s krmivami so strukovinami, hlavne hrachom a šošovicou, než s tým, či krmivo obsahuje obilniny. Prehľad Mornard a kol. (Veterinary Sciences, 2025) hovorí o súvislosti, nie o dokázanej príčine, a mechanizmus označuje za nejasný.
+::: ponuka
+nadpis: Rozhoduje mäso, nie nápis na obale
+text: Granule vyberieme podľa toho, čo tvoj pes potrebuje, nie podľa nápisu na obale. Dennú dávku spočítame na gramy.
+tlacidlo: Nájdi granule pre svojho psa
+odkaz: granule-na-mieru.html
+:::
 
-Prakticky to znamená: grain-free nálepka o riziku veľa nepovie, pozri sa na celý zoznam zložiek. Tufts radí pozornosť, ak sú strukoviny medzi prvými 10 zložkami. Ak má tvoj pes diagnostikovanú DCM alebo zmeny na srdci, krmivo vyber spolu s veterinárnym kardiológom.
+## Spôsobujú granule bez obilia ochorenie srdca (DCM)?
+
+**Nie je dokázané, že granule bez obilia spôsobujú ochorenie srdca. Súvislosť s niektorými krmivami sa však stále skúma.** Ide o dilatačnú kardiomyopatiu (DCM). Srdcový sval sa pri nej roztiahne a slabšie pumpuje krv.
+
+Americký úrad pre potraviny a liečivá (FDA) začal prípady skúmať v roku 2018. Do novembra 2022 dostal hlásenia o 1 382 psoch s DCM. Väčšina krmív z hlásení bola bez obilia a obsahovala hrach alebo šošovicu.[^fda]
+
+==Samotné hlásenia podľa FDA nedokazujú, že ochorenie spôsobilo krmivo.== FDA zároveň uvádza, že nemá jasné dôkazy, že by tieto krmivá boli samy osebe nebezpečné. Hlásenia stále prichádzajú, ale menej ako v rokoch 2018–2020.[^fda-dnes]
+
+Podozrenie sa medzitým presunulo od chýbajúceho obilia k strukovinám. „Konkrétna príčina zatiaľ nie je známa,“ píše veterinárna nutričná špecialistka Lisa M. Freeman z Tufts Petfoodology. Ochorenie podľa nej súvisí skôr s krmivami s hrachom a šošovicou ako s tým, či majú obilniny.[^freeman]
+
+Prakticky to znamená, že nápis „bez obilia“ ti o riziku veľa nepovie. Pozri sa na celé zloženie. Pozor si daj, keď sú strukoviny medzi prvými 10 zložkami. Ak má pes diagnostikovanú DCM alebo zmeny na srdci, krmivo vyber spolu s veterinárnym kardiológom.
+
+[^fda]: FDA, 2022. Vyšetrovanie začalo v júli 2018 a zahŕňa hlásenia od januára 2014 do 1. novembra 2022. V analýze hlásení z roku 2019 bolo 91 % krmív bez obilia, 93 % obsahovalo hrach alebo šošovicu a 42 % zemiaky alebo batáty.
+[^fda-dnes]: FDA, 2024 (otázky a odpovede). V decembri 2022 FDA oznámila, že ďalšie verejné aktualizácie vydá, až keď bude mať významné nové vedecké informácie.
+[^freeman]: Tufts Petfoodology, 2023. Prehľad Mornard a kol. (Veterinary Sciences, 2025) hovorí o súvislosti, nie o dokázanej príčine, a mechanizmus označuje za nejasný.
 
 ## Kedy psovi obilniny naozaj vadia?
 
-**Obilniny psovi naozaj vadia pri potvrdenej alergii na konkrétnu obilninu a pri zriedkavej dedičnej citlivosti na lepok.** V oboch prípadoch ide o diagnózu od veterinára, nie o odhad podľa svrbenia alebo mäkšej stolice.
+**Obilniny psovi naozaj vadia pri potvrdenej alergii na konkrétnu obilninu a pri zriedkavej dedičnej citlivosti na lepok.** V oboch prípadoch to musí potvrdiť veterinár. Svrbenie alebo mäkšia stolica na to nestačia.
 
 ### Alergia na pšenicu
 
-Pšenica bola v súhrne Mueller a kol. (2016) spúšťačom alergie u 38 z 297 psov s potvrdenou alergiou na krmivo, teda u 13 %. Ryža vyvolala reakciu u 5 psov. Alergia na pšenicu neznamená alergiu na všetky obilniny. Spoľahlivo ju potvrdí len eliminačná diéta a následná provokácia; autori považujú pozitívnu provokáciu za jediný pevný dôkaz.
+Na pšenicu reaguje 13 % psov s potvrdenou alergiou na krmivo. Na ryžu 2 %.[^psenica] ==Alergia na pšenicu neznamená alergiu na všetky obilniny.== S istotou ju potvrdí len eliminačná diéta a potom návrat k pôvodnému krmivu.
 
 ### Citlivosť na lepok u írskych setrov
 
-Írske setre majú dedičnú enteropatiu citlivú na lepok, ktorú opísali Hall a Batt (Gut, 1992). Postihnuté psy na krmive s pšenicou mali poškodenú sliznicu tenkého čreva. Po prechode na bezlepkovú stravu sa nálezy upravili a po opätovnom podaní lepku sa vrátili. Lepok je v pšenici, jačmeni a raži, ryža ho neobsahuje.
+Niektoré írske setre majú dedičné ochorenie čreva, ktoré zhoršuje lepok. Na krmive s pšenicou mali poškodenú sliznicu tenkého čreva. Na strave bez lepku sa im črevo zlepšilo. Keď lepok znova dostali, problémy sa vrátili.[^setre] Lepok je v pšenici, jačmeni a raži. Ryža ho nemá.
 
-### Paroxyzmálna dyskinéza u border teriérov
+### Záchvaty u border teriérov
 
-Border teriéry môžu mať záchvaty mimovoľných pohybov pri zachovanom vedomí, predtým nazývané epileptoidný kŕčový syndróm. Podľa prehľadu Mandigers a kol. (2024) mali 6 border teriérov v štúdii Lowrie a kol. (2015) zvýšené protilátky súvisiace s lepkom a všetkých 6 dobre reagovalo na bezlepkovú diétu. Ochorenie sa odvtedy volá paroxyzmálna dyskinéza citlivá na lepok.
+Border teriéry môžu mať záchvaty mimovoľných pohybov, pri ktorých sú pri vedomí. Pri niektorých psoch súvisia s lepkom a pomáha im strava bez lepku. Ochorenie sa dnes volá paroxyzmálna dyskinéza citlivá na lepok.[^border]
 
 Pri podozrení na alergiu alebo citlivosť na lepok nemeň granule naslepo. Diétu nastav s veterinárom, aby výsledok niečo ukázal.
 
-::: ponuka
-nadpis: Nesedí mu každé mäso?
-text: V dotazníku zaškrtni Nesedí mu každé mäso alebo Citlivé trávenie. Odporučíme ti granule s jedným druhom mäsa a pri výsledku si môžeš porovnať receptúry s iným mäsom.
-tlacidlo: Vyplň dotazník pre svojho psa
-odkaz: granule-na-mieru.html
-obrazok: img/produkty/jahna-s-batatmi-cucoriedkami.webp
-:::
+[^psenica]: Mueller a kol., 2016: pšenica u 38 z 297 psov, ryža u 5. Autori považujú pozitívny výsledok návratu k pôvodnému krmivu (provokácie) za jediný pevný dôkaz.
+[^setre]: Hall a Batt, Gut, 1992 (enteropatia citlivá na lepok).
+[^border]: Prehľad Mandigers a kol., 2024. V štúdii Lowrie a kol. (2015) malo 6 border teriérov zvýšené protilátky súvisiace s lepkom a všetkých 6 dobre reagovalo na bezlepkovú diétu. Ochorenie sa predtým volalo epileptoidný kŕčový syndróm.
 
-## Granule s obilninami vs. grain-free: porovnanie
+## Granule s obilninami alebo bez obilia: porovnanie
 
-**Granule s obilninami aj grain-free granule môžu byť kvalitné, rozdiel robí celé zloženie a potreby konkrétneho psa.** Obe skupiny obsahujú škrob, líšia sa hlavne jeho zdrojom. Pri alergii aj pri srdci rozhoduje viac konkrétna surovina ako nápis na obale.
+**Kvalitné môžu byť granule s obilninami aj bez nich. Rozhoduje celé zloženie a to, čo potrebuje konkrétny pes.** Oba druhy obsahujú škrob, líšia sa hlavne tým, odkiaľ pochádza. Pri alergii aj pri srdci je dôležitejšia konkrétna surovina ako nápis na obale.
 
-| Kritérium | Granule s obilninami | Grain-free granule |
+| | Granule s obilninami | Granule bez obilia |
 | --- | --- | --- |
 | Zdroj škrobu | ryža, kukurica, pšenica, jačmeň, ovos | zemiaky, batáty, tapioka, hrach, šošovica |
-| Stráviteľnosť | po uvarení nad 90 % (Tufts, 2016) | závisí od suroviny a spracovania |
-| Alergia | pšenica 13 %, kukurica 4 %, ryža 2 % psov s alergiou na krmivo | časté spúšťače (hovädzie 34 %, kuracie 15 %) môžu obsahovať tiež |
-| Srdce (DCM) | bez známeho súvisu | súvis skúmaný pri krmivách s veľa strukovinami, príčina nedokázaná |
+| Stráviteľnosť | po uvarení viac ako 90 % (Tufts, 2016) | závisí od suroviny a spracovania |
+| Alergia | pšenica 13 %, kukurica 4 %, ryža 2 % psov s alergiou na krmivo | môžu obsahovať časté spúšťače ako hovädzie (34 %) a kuracie (15 %) |
+| Srdce (DCM) | súvislosť nie je známa | skúma sa pri krmivách s veľa strukovinami, príčina nie je dokázaná |
 | Pre koho | väčšina zdravých psov | pes s potvrdenou alergiou na obilninu alebo citlivosťou na lepok |
 | Na čo si dať pozor | pšenica pri potvrdenej alergii | strukoviny medzi prvými 10 zložkami |
 
-Verdikt: pre zdravého psa nie je dôvod obilniny vylučovať, grain-free má zmysel pri potvrdenej alergii alebo citlivosti na lepok.
+==Zdravému psovi netreba obilniny vynechávať. Granule bez obilia majú zmysel pri potvrdenej alergii alebo citlivosti na lepok.==
 
-Ak si nie si istý, či tvojmu psovi niektorá obilnina vadí, nerozhoduj podľa trendu. Opýtaj sa veterinára na eliminačnú diétu, ktorá odpoveď dá s istotou.
+Ak si nie si istý, či psovi niektorá obilnina vadí, neriaď sa módou. Spýtaj sa veterinára na eliminačnú diétu. Iba tá ti odpovie s istotou.
 
-## Ktoré granule Granula obsahujú ryžu a ktoré batáty?
+## Ktoré granule Granula majú ryžu a ktoré batáty?
 
-**Granule Granula s ryžou sú Hovädzie, morka & jahňa s ryžou, Hovädzie s ryžou a Morka, hus & kačica s tekvicou; batáty namiesto ryže majú Jahňa s batátmi & čučoriedkami a Jeleň & králik s batátmi.** Všetky naše granule sú bez pšenice a bez hrachu a strukovín.
+**Ryžu majú naše granule Hovädzie, morka & jahňa s ryžou, Hovädzie s ryžou a Morka, hus & kačica s tekvicou. Batáty namiesto ryže majú Jahňa s batátmi & čučoriedkami a Jeleň & králik s batátmi.** Všetky naše granule sú bez pšenice a bez hrachu a strukovín.
 
-Podľa zloženia na obale obsahuje Hovädzie, morka & jahňa s ryžou 15 % ryže. Hovädzie s ryžou má 13 % ryže a Morka, hus & kačica s tekvicou tiež 13 % ryže. Ryža je jediná obilnina v zozname zložiek týchto granúl. Ryža bola v súhrne Mueller a kol. (2016) spúšťačom alergie len u 2 % psov s alergiou na krmivo.
+Podľa zloženia na obale obsahujú:
 
-![Kôpka surovej bielej dlhozrnnej ryže na svetlom podklade](img/suroviny/ryza.webp "Ryža je v granulách Hovädzie, morka & jahňa s ryžou, Hovädzie s ryžou a Morka, hus & kačica s tekvicou.")
+- Hovädzie, morka & jahňa s ryžou: 15 % ryže,
+- Hovädzie s ryžou: 13 % ryže,
+- Morka, hus & kačica s tekvicou: 13 % ryže,
+- Jahňa s batátmi & čučoriedkami: 19 % batátov,
+- Jeleň & králik s batátmi: 23 % batátov.
 
-Jahňa s batátmi & čučoriedkami obsahuje 19 % batátov, Jeleň & králik s batátmi 23 % batátov. Ryžu tieto granule nemajú, škrob v nich pochádza z batátov.
+Ryža je jediná obilnina v zložení našich granúl. ==Na ryžu reagujú len 2 % psov s alergiou na krmivo.==[^ryza] Granule s batátmi ryžu nemajú, škrob v nich pochádza z batátov.
 
-Pri výbere granúl v dotazníku nerozhoduje obilnina, ale pes. Keď zaškrtneš Nesedí mu každé mäso alebo Citlivé trávenie, odporučíme granule s jedným druhom mäsa: Jahňa s batátmi & čučoriedkami alebo Hovädzie s ryžou. Konkrétnu z nich vyberieme podľa veku, veľkosti a ďalších odpovedí.
+![Kôpka surovej bielej dlhozrnnej ryže na svetlom podklade](img/suroviny/ryza.webp "Ryžu majú granule Hovädzie, morka & jahňa s ryžou, Hovädzie s ryžou a Morka, hus & kačica s tekvicou.")
+
+Pri výbere granúl nerozhoduje obilnina, ale pes. Psovi s citlivým trávením alebo psovi, ktorému nesedí každé mäso, uprednostníme granule s jedným druhom mäsa: Jahňa s batátmi & čučoriedkami alebo Hovädzie s ryžou. Ktoré z nich, rozhodneme podľa veku, veľkosti a ďalších odpovedí.
 
 ![Celý batát s červenofialovou šupkou, rozkrojená polovica s oranžovou dužinou a kocky uvareného batátu](img/suroviny/bataty.webp "Batáty sú zdroj škrobu v granulách Jahňa s batátmi & čučoriedkami a Jeleň & králik s batátmi.")
 
-Ak má tvoj pes potvrdenú citlivosť na lepok alebo diagnostikované ochorenie srdca, krmivo vyber s veterinárom. Granule na mieru nenahrádzajú veterinárnu diétu.
+Ak má pes potvrdenú citlivosť na lepok alebo ochorenie srdca, krmivo vyber s veterinárom. Granule na mieru nenahrádzajú veterinárnu diétu.
+
+[^ryza]: Mueller a kol., 2016.
 
 ## Ako vybrať granule s obilninami alebo bez nich: 5 krokov
 
-**Pri výbere granúl sa najprv pozri na zdravie psa a celé zloženie, až potom na to, či obsahujú obilniny.**
+**Najprv sa pozri na zdravie psa a celé zloženie granúl. Až potom na to, či majú obilniny.**
 
-1. **Zisti, či má pes potvrdenú alergiu.** Svrbenie alebo mäkšia stolica ešte nie sú dôkaz, alergiu potvrdí eliminačná diéta s provokáciou u veterinára. Diéta trvá niekoľko týždňov a pes počas nej nesmie dostať nič iné.
-2. **Vylúč len to, čo psovi preukázateľne vadí.** Pri alergii na pšenicu vylúč pšenicu, nie automaticky ryžu, na ktorú reagovali 2 % psov s alergiou na krmivo.
-3. **Pozri sa na druh mäsa.** Hovädzie, mliečne výrobky a kuracie boli v súhrne z roku 2016 častejšími spúšťačmi alergie ako všetky obilniny.
-4. **Skontroluj prvých 10 zložiek.** Pri grain-free granulách si všimni, či medzi nimi nie sú hrach, šošovica alebo iné strukoviny.
-5. **Sleduj psa niekoľko týždňov.** Kondícia, srsť a stolica ti o vhodnosti granúl povedia viac než nápis na obale. Nové granule zavádzaj postupne, aby si mäkšiu stolicu z prechodu nezamenil s neznášanlivosťou.
+1. **Zisti, či má pes potvrdenú alergiu.** Svrbenie alebo mäkšia stolica ešte nie sú dôkaz. Alergiu potvrdí eliminačná diéta u veterinára. Trvá niekoľko týždňov a pes počas nej nesmie dostať nič iné.
+2. **Vynechaj len to, čo psovi preukázateľne vadí.** Pri alergii na pšenicu vynechaj pšenicu. Ryžu nie automaticky, reagujú na ňu len 2 % psov s alergiou na krmivo.
+3. **Pozri sa na druh mäsa.** Hovädzie, mliečne výrobky a kuracie vyvolávajú alergiu častejšie ako všetky obilniny.
+4. **Skontroluj prvých 10 zložiek.** Pri granulách bez obilia si všimni, či medzi nimi nie je hrach, šošovica alebo iné strukoviny.
+5. **Sleduj psa niekoľko týždňov.** Kondícia, srsť a stolica ti povedia viac ako nápis na obale. Nové granule zavádzaj postupne. Inak si mäkšiu stolicu po zmene krmiva môžeš pomýliť s neznášanlivosťou.
 
-Ak má pes zdravotný problém, napríklad chronickú hnačku, opakované svrbenie alebo ochorenie srdca, prvý krok patrí veterinárovi, nie zmene granúl.
+Ak má pes zdravotný problém, napríklad dlhodobú hnačku, opakované svrbenie alebo chorobu srdca, choď najprv k veterinárovi. Zmena granúl príde na rad až potom.
 
 ## Časté otázky
 
-**Je ryža v granulách len lacný plnič?** Ryža je zdroj škrobu, ktorý pes po uvarení dobre strávi, a alergiu vyvoláva zriedka. O kvalite granúl rozhoduje celé zloženie a podiel mäsa, nie samotná prítomnosť ryže.
+**Je ryža v granulách len lacná výplň?** Nie. Ryža je zdroj škrobu, ktorý pes po uvarení dobre strávi, a alergiu vyvoláva zriedka. O kvalite granúl rozhoduje celé zloženie a podiel mäsa.
 
-**Sú batáty obilnina?** Nie, batáty sú hľuzy rovnako ako zemiaky. Granule s batátmi namiesto obilnín stále obsahujú škrob.
+**Sú batáty obilnina?** Nie, batáty sú hľuzy ako zemiaky. Aj granule s batátmi namiesto obilnín obsahujú škrob.
 
-**Môže pes s alergiou na pšenicu jesť granule s ryžou?** Často áno, lebo alergia na pšenicu neznamená alergiu na ryžu. Ak pes reaguje na viac zložiek, rozhodni o krmive s veterinárom.
+**Môže pes s alergiou na pšenicu jesť granule s ryžou?** Často áno, alergia na pšenicu neznamená alergiu na ryžu. Ak pes reaguje na viac surovín, krmivo vyber s veterinárom.
 
-**Je kukurica v granulách zlá?** Kukurica bola v súhrne Mueller a kol. (2016) spúšťačom alergie u 4 % psov s potvrdenou alergiou na krmivo. Pre psa bez takejto alergie nie je dôvod sa jej vyhýbať, ak je uvarená a pomletá.
+**Je kukurica v granulách zlá?** Na kukuricu reagujú 4 % psov s potvrdenou alergiou na krmivo. Pes bez takej alergie sa jej nemusí vyhýbať, ak je uvarená a pomletá.
 
-**Mám psa preradiť z grain-free granúl, keď je zdravý?** Kvôli DCM nemusíš granule meniť bez porady s veterinárom, FDA zmenu krmiva odporúča konzultovať s ním. Skontroluj, či granule nemajú strukoviny medzi prvými 10 zložkami.
+**Mám zdravého psa prestaviť z granúl bez obilia?** Kvôli DCM nemeň granule bez porady s veterinárom, aj FDA odporúča zmenu krmiva konzultovať s ním. Skontroluj, či granule nemajú strukoviny medzi prvými 10 zložkami.
 
 ## Zhrnutie
 
-- Obilniny do granúl patriť môžu: väčšina psov varený škrob strávi a pes má v mediáne 10 kópií génu AMY2B, vlk 2.
-- Grain-free granule nemajú preukázaný zdravotný prínos pre zdravého psa a príčinná súvislosť s DCM nie je dokázaná.
-- Obilniny vylúč pri potvrdenej alergii na pšenicu (13 % psov s alergiou na krmivo) alebo citlivosti na lepok u írskych setrov a border teriérov.
-- Pri citlivom psovi sa pozri najprv na druh mäsa, hovädzie a kuracie vyvolávajú alergiu častejšie ako obilniny.
-- Ďalší krok: skontroluj prvých 10 zložiek granúl svojho psa a pri podozrení na alergiu sa dohodni s veterinárom na eliminačnej diéte.
+- Obilniny do granúl patriť môžu. Väčšina psov uvarený škrob strávi a typický pes má 10 kópií génu na trávenie škrobu, vlk 2.
+- Granule bez obilia zdravému psovi preukázateľne nepomáhajú. Že spôsobujú ochorenie srdca (DCM), nie je dokázané.
+- Obilniny vynechaj pri potvrdenej alergii na pšenicu (13 % psov s alergiou na krmivo) alebo pri citlivosti na lepok u írskych setrov a border teriérov.
+- Pri citlivom psovi sa najprv pozri na druh mäsa. Hovädzie a kuracie vyvolávajú alergiu častejšie ako obilniny.
+- Ďalší krok: skontroluj prvých 10 zložiek granúl svojho psa. Pri podozrení na alergiu sa dohodni s veterinárom na eliminačnej diéte.
