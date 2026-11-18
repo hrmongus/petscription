@@ -457,13 +457,39 @@
 .side-prof .radar .rs.locked{stroke:rgba(244,235,226,.35)}
 .side-prof .radar .rshape{fill:rgba(255,105,0,.9)}
 .side-prof .radar .rd.locked{fill:rgba(244,235,226,.55)}
-.prof-m:empty,.prof-res:empty{display:none}
+.prof-m:empty{visibility:hidden}.prof-res:empty{display:none}
 .prof-res .radar{max-width:440px}
 @media (max-width:900px){
   .split > aside.side-prof{display:none}
-  .prof-m{margin-top:8px}
-  .prof-m .radar{max-width:260px}
-  .prof-m .radar-lbl,.prof-res .radar-lbl{font-size:9.5px;letter-spacing:.04em}
+  /* mobil: malý graf v pravom hornom rohu, otázka hneď pod lištou */
+  .split .topline{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;column-gap:12px;row-gap:10px;align-items:center}
+  .split .topline > .logo-link{grid-column:1;grid-row:1;justify-self:start}
+  .split .topline .logo{font-size:20px;padding:4px 8px 3px}
+  .split .topline > .progress{grid-column:1;grid-row:2}
+  .prof-m{grid-column:2;grid-row:1 / span 2;width:104px;height:92px;position:relative;overflow:hidden}
+  .prof-m .prof{position:absolute;inset:0}
+  .prof-m .radar{position:absolute;left:50%;top:50%;width:190px;max-width:none;transform:translate(-50%,-50%)}
+  .prof-m .radar-lbl{display:none}
+  .split .progress{gap:8px;white-space:nowrap}
+  .split .progress .bars{gap:4px}
+  .split .progress .bars i{width:16px}
+  .opts.c3:not(.bags){grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .opt.body{padding:10px 6px;gap:6px}
+  .opt.body .shape{height:28px}
+  .opt.body .shape i{width:70%}
+  .opt.body b{font-size:13px}
+  .opt.body small{font-size:11px}
+  .split .row2{flex-direction:row;gap:10px}
+  .weight{padding:12px 16px;gap:6px}
+  .weight output{font-size:48px}
+  .chip{padding:7px 11px;font-size:13px}
+  .chips{gap:6px}
+  .prof-res .radar-lbl{font-size:9.5px;letter-spacing:.04em}
+  .q-body{padding:14px 0 16px;gap:12px}
+  .q-body .kicker{display:none}
+  .q-title{font-size:clamp(26px,7.4vw,34px)}
+  .q-lead{font-size:15px}
+  .card{padding:16px;gap:12px}
   /* navigácia krokov stále na spodnej lište */
   .split > .pane{padding-bottom:96px}
   .split .q-nav{position:fixed;left:0;right:0;bottom:0;z-index:30;max-width:none !important;margin:0;background:var(--m);
@@ -483,8 +509,8 @@
     <div class="topline">
       <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
       <div class="progress" aria-label="Krok 1 z 6"><span aria-hidden="true">KROK 1 / 6</span><div class="bars" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="prof-m" data-prof-m></div>
     </div>
-    <div class="prof-m" data-prof-m></div>
     <div class="q-body narrow">
       <div class="kicker">Granule na mieru</div>
       <h1 class="display q-title" tabindex="-1">Ako sa volá <span>tvoj pes?</span></h1>
@@ -526,8 +552,8 @@
     <div class="topline">
       <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
       <div class="progress" aria-label="Krok 2 z 6"><span aria-hidden="true">KROK 2 / 6</span><div class="bars" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="prof-m" data-prof-m></div>
     </div>
-    <div class="prof-m" data-prof-m></div>
     <div class="q-body narrow">
       <div class="kicker">Granule na mieru</div>
       <h1 class="display q-title" tabindex="-1">Kto je <span data-name="tvoj pes">tvoj pes</span><span>?</span></h1>
@@ -569,8 +595,8 @@
     <div class="topline">
       <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
       <div class="progress" aria-label="Krok 3 z 6"><span aria-hidden="true">KROK 3 / 6</span><div class="bars" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div></div>
+      <div class="prof-m" data-prof-m></div>
     </div>
-    <div class="prof-m" data-prof-m></div>
     <div class="q-body narrow">
       <div class="kicker">Granule na mieru</div>
       <h1 class="display q-title" tabindex="-1">Koľko váži <span>a koľko má rokov?</span></h1>
@@ -613,8 +639,8 @@
     <div class="topline">
       <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
       <div class="progress" aria-label="Krok 4 z 6"><span aria-hidden="true">KROK 4 / 6</span><div class="bars" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div></div>
+      <div class="prof-m" data-prof-m></div>
     </div>
-    <div class="prof-m" data-prof-m></div>
     <div class="q-body">
       <div class="kicker">Granule na mieru</div>
       <h1 class="display q-title" tabindex="-1" id="t-activity">Ako vyzerá <span>bežný deň?</span></h1>
@@ -647,8 +673,8 @@
     <div class="topline">
       <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
       <div class="progress" aria-label="Krok 5 z 6"><span aria-hidden="true">KROK 5 / 6</span><div class="bars" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div></div>
+      <div class="prof-m" data-prof-m></div>
     </div>
-    <div class="prof-m" data-prof-m></div>
     <div class="q-body">
       <div class="kicker">Granule na mieru</div>
       <h1 class="display q-title" tabindex="-1">Ešte <span>dve veci.</span></h1>
@@ -703,8 +729,8 @@
     <div class="topline">
       <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
       <div class="progress" aria-label="Krok 6 z 6"><span aria-hidden="true">KROK 6 / 6</span><div class="bars" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div></div>
+      <div class="prof-m" data-prof-m></div>
     </div>
-    <div class="prof-m" data-prof-m></div>
     <div class="q-body">
       <div class="kicker">Granule na mieru</div>
       <h1 class="display q-title" tabindex="-1" id="t-focus">Na čo sa <span>máme zamerať?</span></h1>

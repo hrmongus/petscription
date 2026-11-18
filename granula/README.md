@@ -33,7 +33,7 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 
 ## Profil psa (radar v dotazníku)
 
-- Vedľa otázok (desktop hore v modrom pravom stĺpci nad „Vedel si?“, mobil hore pod lištou krokov) je graf „Profil tvojho psa“ (len graf, bez rámu a textu) so 6 osami: Energia, Bielkoviny, Tuk, Jednoduché zloženie, Rast, Veľkosť granule. Ukazuje **potreby psa, nikdy receptúry**; tie sú až vo výsledku. Vo výsledku je graf kompletný (všetky osi odomknuté).
+- Vedľa otázok (desktop hore v modrom pravom stĺpci nad „Vedel si?“, mobil malý v pravom hornom rohu vedľa loga a krokov, bez popisov osí) je graf „Profil tvojho psa“ (len graf, bez rámu a textu) so 6 osami: Energia, Bielkoviny, Tuk, Jednoduché zloženie, Rast, Veľkosť granule. Ukazuje **potreby psa, nikdy receptúry**; tie sú až vo výsledku. Vo výsledku je graf kompletný (všetky osi odomknuté).
 - Hodnoty počíta `engine.js` → `profilPsa(odpovede, krok)` z rovnakých odvodených údajov ako odporúčanie (veľkosť z tabuľky plemien, fáza, násobok RER cez spoločnú `factorFor()`, príznaky). Kreslí `radar.js`. Kontrola čísel: `admin-vypocet.html`, sekcia 1b.
 - Os je zamknutá (stred, sivá, prerušovaná), kým nie je zodpovedaný jej krok: veľkosť granule → plemeno, rast → vek, energia a bielkoviny → bežný deň, tuk → kastrácia/postava, zloženie → zameranie. Odpovede z neskorších krokov sa nepočítajú (návrat späť). Riadok „čo sa zmenilo“ je v kóde pripravený, ale zatiaľ skrytý.
 - Hodnoty osí sú návrh na zobrazenie smeru potreby, nie výživové pravidlo; neoveril ich veterinár.
