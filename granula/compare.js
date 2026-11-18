@@ -21,6 +21,20 @@
   ];
   // [obrázok, názov, krátky názov na mobil, podnadpis, %]
   var RECIPES = {
+    "hovadzie-morka-jahna": {
+      name: "Hovädzie, morka & jahňa",
+      full: "Hovädzie, morka a jahňa s ryžou",
+      bag: { src: D + "vrece-hovadzie-morka-jahna.webp", w: 573, h: 890, alt: "Rozrezané vrecko Granula Hovädzie, morka a jahňa s ryžou: hovädzie, tuk, morka, ryža, zelenina, jahňacie a bylinky" },
+      items: [
+        ["g-hovadzie", "Hovädzie mäso", null, "čerstvé a sušené", 33],
+        ["g-bravcovy-tuk", "Hovädzí a bravčový tuk", null, null, 15],
+        ["g-morka", "Morčacie mäso", null, null, 15],
+        ["g-ryza", "Ryža", null, null, 15],
+        ["g-mrkva", "Zelenina", null, "zemiakové vločky, mrkva, petržlen, špenát", 13],
+        ["g-jahna", "Jahňacie mäso", null, null, 5],
+        ["g-hliva", "Ovocie, bylinky a funkčné zložky", "Ovocie a bylinky", "jablká, repná vláknina, lososový olej, ľan, hliva, gaštan, kvasnice, kolagén", 4]
+      ]
+    },
     "hovadzie": {
       name: "Hovädzie s ryžou",
       full: "Hovädzie s ryžou",
