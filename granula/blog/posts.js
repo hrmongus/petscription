@@ -620,7 +620,7 @@ window.GRANULA_POSTS = {
    "author": "[Meno Priezvisko]",
    "authorPhoto": "placeholder",
    "hero": "placeholder",
-   "words": 1823,
+   "words": 1825,
    "description": "Čerstvé mäso má okolo 67–75 % vody, mäsová múčka pod 10 %. Zloženie granúl sa radí podľa hmotnosti pri miešaní, preto čerstvé mäso býva na etikete prvé.",
    "id": "A4",
    "category": "Zloženie a suroviny",
@@ -693,14 +693,14 @@ window.GRANULA_POSTS = {
      "id": "tldr",
      "level": "error",
      "ok": true,
-     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 53)",
+     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 55)",
      "details": []
     },
     {
      "id": "tldr-range",
      "level": "warn",
      "ok": true,
-     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 53)",
+     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 55)",
      "details": []
     },
     {
@@ -951,7 +951,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1823 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1825 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     }
    ],
