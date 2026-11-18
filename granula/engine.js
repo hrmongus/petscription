@@ -515,12 +515,12 @@
          krok: 1–6 = aktuálny krok dotazníka, 7 = hotovo (všetko odomknuté).
      ====================================================================== */
   var PROFILE_AXES = [
-    { key: "energia", label: "Energia", at: 4 },
-    { key: "bielkoviny", label: "Bielkoviny", at: 4 },
-    { key: "tuk", label: "Tuk", at: 5 },
-    { key: "zlozenie", label: "Jednoduché zloženie", at: 6 },
-    { key: "rast", label: "Rast", at: 3 },
-    { key: "granula", label: "Veľkosť granule", at: 2 }
+    { key: "energia", short: "Energia", label: "Energia", at: 4 },
+    { key: "bielkoviny", short: "Bielkoviny", label: "Bielkoviny", at: 4 },
+    { key: "tuk", short: "Tuk", label: "Tuk", at: 5 },
+    { key: "zlozenie", short: "Zloženie", label: "Jednoduché zloženie", at: 6 },
+    { key: "rast", short: "Rast", label: "Rast", at: 3 },
+    { key: "granula", short: "Granula", label: "Veľkosť granule", at: 2 }
   ];
   function touched(a, step) {
     if (step === 2) return !!a.breedSet;

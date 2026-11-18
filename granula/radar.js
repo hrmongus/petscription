@@ -29,7 +29,7 @@
     // popisy osí ako HTML (SVG <text> sa niekde nevykreslí)
     this.labels = this.axes.map(function (ax, i) {
       var d = document.createElement("div"), p = self.pt(i, 1.1), c = Math.cos(self.ang(i)), n = self.axes.length;
-      d.className = "radar-lbl"; d.textContent = ax.label;
+      d.className = "radar-lbl"; d.innerHTML = '<span class="rl-l">' + ax.label + '</span><span class="rl-s">' + (ax.short || ax.label) + "</span>";
       d.style.left = (p[0] / self.W * 100) + "%";
       d.style.top = (p[1] / self.H * 100) + "%";
       if (i === 0) { d.style.transform = "translate(-50%,-100%)"; d.style.textAlign = "center"; }
