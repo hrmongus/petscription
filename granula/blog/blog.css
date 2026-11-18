@@ -123,6 +123,19 @@
 .bl-card-img img{width:100%;height:100%;object-fit:cover;display:block}
 @media (max-width:640px){.bl-offer.has-img{grid-template-columns:minmax(0,1fr)}.bl-offer.has-img .bl-offer-in{border-right:2px solid var(--n);border-bottom:0}
   .bl-offer-img img{max-height:160px}.bl-chart{padding:14px}.bl-chart th{width:38%;font-size:14px}.bl-av{width:52px;height:52px}}
+/* tabuľky s 3+ stĺpcami: na mobile karty (riadok = karta, pri hodnote popis stĺpca) */
+@media (max-width:640px){
+  .tbl-cards{border:0;overflow:visible}
+  .tbl-cards table,.tbl-cards tbody,.tbl-cards tr,.tbl-cards th,.tbl-cards td{display:block;width:auto}
+  .tbl-cards thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .tbl-cards table{background:none}
+  .tbl-cards tr{background:var(--ml);border:2px solid var(--n)}
+  .tbl-cards tr + tr{margin-top:12px}
+  .tbl-cards tbody th{background:var(--k);color:var(--m);border:0;padding:10px 12px}
+  .tbl-cards td{border:0;border-top:2px solid var(--m);padding:8px 12px;display:grid;grid-template-columns:40% minmax(0,1fr);gap:10px}
+  .tbl-cards td::before{content:attr(data-label);font-weight:800}
+  .tbl-cards th + th,.tbl-cards td,.tbl-cards tbody th + td{border-left:0}
+}
 @media (max-width:640px){.bl-body{font-size:16px}.bl-tldr{padding:16px 16px 18px}.bl-tldr p{font-size:16px}}
 .bl-body .bl-offer .btn-o{color:var(--n);text-decoration:none}
 .bl-body .bl-offer .btn-o:hover{color:var(--o)}

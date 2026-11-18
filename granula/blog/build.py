@@ -304,9 +304,12 @@ def render_blocks(blocks, pre=""):
         elif t == "table":
             head, rows = d
             th = "".join('<th scope="col">%s</th>' % inline(c) for c in head)
+            labels = [html.escape(plain(c), quote=True) for c in head]
             trs = "".join("<tr>%s</tr>" % "".join(
-                ('<th scope="row">%s</th>' if j == 0 else "<td>%s</td>") % inline(c) for j, c in enumerate(r)) for r in rows)
-            h.append('<div class="tbl"><table><thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>' % (th, trs))
+                ('<th scope="row">%s</th>' % inline(c)) if j == 0 else
+                ('<td data-label="%s">%s</td>' % (labels[j] if j < len(labels) else "", inline(c))) for j, c in enumerate(r)) for r in rows)
+            cls = "tbl tbl-cards" if len(head) >= 3 else "tbl"
+            h.append('<div class="%s"><table><thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>' % (cls, th, trs))
         elif t == "hr":
             h.append("<hr>")
         elif t == "note":
