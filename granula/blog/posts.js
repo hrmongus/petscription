@@ -1,6 +1,6 @@
 /* vygenerované build.py — needitovať */
 window.GRANULA_POSTS = {
- "built": "2026-11-18 08:50",
+ "built": "2026-11-18 09:23",
  "base": "https://granula.sk/granula",
  "problems": [],
  "posts": [
@@ -197,7 +197,7 @@ window.GRANULA_POSTS = {
      "id": "section-length",
      "level": "warn",
      "ok": true,
-     "msg": "Hlavné sekcie majú 200–400 slov",
+     "msg": "Hlavné sekcie majú 80–400 slov (kratšie je lepšie, viď STYL.md)",
      "details": []
     },
     {
@@ -211,7 +211,7 @@ window.GRANULA_POSTS = {
      "id": "section-numbers",
      "level": "warn",
      "ok": true,
-     "msg": "Každá hlavná sekcia má aspoň 1 číslo (ideálne so zdrojom)",
+     "msg": "Každá hlavná sekcia má aspoň 1 číslo alebo poznámku so zdrojom",
      "details": []
     },
     {
@@ -398,6 +398,13 @@ window.GRANULA_POSTS = {
      "level": "info",
      "ok": true,
      "msg": "Dĺžka článku: 1412 slov (dĺžka nerozhoduje, hustota áno)",
+     "details": []
+    },
+    {
+     "id": "footnotes",
+     "level": "error",
+     "ok": true,
+     "msg": "Každá poznámka [^id] v texte má definíciu „[^id]: text“",
      "details": []
     }
    ],
@@ -752,7 +759,7 @@ window.GRANULA_POSTS = {
      "id": "section-length",
      "level": "warn",
      "ok": true,
-     "msg": "Hlavné sekcie majú 200–400 slov",
+     "msg": "Hlavné sekcie majú 80–400 slov (kratšie je lepšie, viď STYL.md)",
      "details": []
     },
     {
@@ -766,7 +773,7 @@ window.GRANULA_POSTS = {
      "id": "section-numbers",
      "level": "warn",
      "ok": true,
-     "msg": "Každá hlavná sekcia má aspoň 1 číslo (ideálne so zdrojom)",
+     "msg": "Každá hlavná sekcia má aspoň 1 číslo alebo poznámku so zdrojom",
      "details": []
     },
     {
@@ -952,6 +959,13 @@ window.GRANULA_POSTS = {
      "level": "info",
      "ok": true,
      "msg": "Dĺžka článku: 1825 slov (dĺžka nerozhoduje, hustota áno)",
+     "details": []
+    },
+    {
+     "id": "footnotes",
+     "level": "error",
+     "ok": true,
+     "msg": "Každá poznámka [^id] v texte má definíciu „[^id]: text“",
      "details": []
     }
    ],
@@ -1518,7 +1532,7 @@ window.GRANULA_POSTS = {
      "id": "section-length",
      "level": "warn",
      "ok": true,
-     "msg": "Hlavné sekcie majú 200–400 slov",
+     "msg": "Hlavné sekcie majú 80–400 slov (kratšie je lepšie, viď STYL.md)",
      "details": []
     },
     {
@@ -1532,7 +1546,7 @@ window.GRANULA_POSTS = {
      "id": "section-numbers",
      "level": "warn",
      "ok": true,
-     "msg": "Každá hlavná sekcia má aspoň 1 číslo (ideálne so zdrojom)",
+     "msg": "Každá hlavná sekcia má aspoň 1 číslo alebo poznámku so zdrojom",
      "details": []
     },
     {
@@ -1719,6 +1733,13 @@ window.GRANULA_POSTS = {
      "level": "info",
      "ok": true,
      "msg": "Dĺžka článku: 1258 slov (dĺžka nerozhoduje, hustota áno)",
+     "details": []
+    },
+    {
+     "id": "footnotes",
+     "level": "error",
+     "ok": true,
+     "msg": "Každá poznámka [^id] v texte má definíciu „[^id]: text“",
      "details": []
     }
    ],
@@ -2059,7 +2080,7 @@ window.GRANULA_POSTS = {
      "id": "section-length",
      "level": "warn",
      "ok": true,
-     "msg": "Hlavné sekcie majú 200–400 slov",
+     "msg": "Hlavné sekcie majú 80–400 slov (kratšie je lepšie, viď STYL.md)",
      "details": []
     },
     {
@@ -2073,7 +2094,7 @@ window.GRANULA_POSTS = {
      "id": "section-numbers",
      "level": "warn",
      "ok": true,
-     "msg": "Každá hlavná sekcia má aspoň 1 číslo (ideálne so zdrojom)",
+     "msg": "Každá hlavná sekcia má aspoň 1 číslo alebo poznámku so zdrojom",
      "details": []
     },
     {
@@ -2260,6 +2281,13 @@ window.GRANULA_POSTS = {
      "level": "info",
      "ok": true,
      "msg": "Dĺžka článku: 1758 slov (dĺžka nerozhoduje, hustota áno)",
+     "details": []
+    },
+    {
+     "id": "footnotes",
+     "level": "error",
+     "ok": true,
+     "msg": "Každá poznámka [^id] v texte má definíciu „[^id]: text“",
      "details": []
     }
    ],
@@ -2826,7 +2854,7 @@ window.GRANULA_POSTS = {
      "id": "section-length",
      "level": "warn",
      "ok": true,
-     "msg": "Hlavné sekcie majú 200–400 slov",
+     "msg": "Hlavné sekcie majú 80–400 slov (kratšie je lepšie, viď STYL.md)",
      "details": []
     },
     {
@@ -2840,7 +2868,7 @@ window.GRANULA_POSTS = {
      "id": "section-numbers",
      "level": "warn",
      "ok": true,
-     "msg": "Každá hlavná sekcia má aspoň 1 číslo (ideálne so zdrojom)",
+     "msg": "Každá hlavná sekcia má aspoň 1 číslo alebo poznámku so zdrojom",
      "details": []
     },
     {
@@ -3027,6 +3055,13 @@ window.GRANULA_POSTS = {
      "level": "info",
      "ok": true,
      "msg": "Dĺžka článku: 2073 slov (dĺžka nerozhoduje, hustota áno)",
+     "details": []
+    },
+    {
+     "id": "footnotes",
+     "level": "error",
+     "ok": true,
+     "msg": "Každá poznámka [^id] v texte má definíciu „[^id]: text“",
      "details": []
     }
    ],
@@ -3481,7 +3516,7 @@ window.GRANULA_POSTS = {
      "id": "section-length",
      "level": "warn",
      "ok": true,
-     "msg": "Hlavné sekcie majú 200–400 slov",
+     "msg": "Hlavné sekcie majú 80–400 slov (kratšie je lepšie, viď STYL.md)",
      "details": []
     },
     {
@@ -3495,7 +3530,7 @@ window.GRANULA_POSTS = {
      "id": "section-numbers",
      "level": "warn",
      "ok": true,
-     "msg": "Každá hlavná sekcia má aspoň 1 číslo (ideálne so zdrojom)",
+     "msg": "Každá hlavná sekcia má aspoň 1 číslo alebo poznámku so zdrojom",
      "details": []
     },
     {
@@ -3682,6 +3717,13 @@ window.GRANULA_POSTS = {
      "level": "info",
      "ok": true,
      "msg": "Dĺžka článku: 1731 slov (dĺžka nerozhoduje, hustota áno)",
+     "details": []
+    },
+    {
+     "id": "footnotes",
+     "level": "error",
+     "ok": true,
+     "msg": "Každá poznámka [^id] v texte má definíciu „[^id]: text“",
      "details": []
     }
    ],
@@ -4074,7 +4116,7 @@ window.GRANULA_POSTS = {
      "id": "section-length",
      "level": "warn",
      "ok": true,
-     "msg": "Hlavné sekcie majú 200–400 slov",
+     "msg": "Hlavné sekcie majú 80–400 slov (kratšie je lepšie, viď STYL.md)",
      "details": []
     },
     {
@@ -4088,7 +4130,7 @@ window.GRANULA_POSTS = {
      "id": "section-numbers",
      "level": "warn",
      "ok": true,
-     "msg": "Každá hlavná sekcia má aspoň 1 číslo (ideálne so zdrojom)",
+     "msg": "Každá hlavná sekcia má aspoň 1 číslo alebo poznámku so zdrojom",
      "details": []
     },
     {
@@ -4273,6 +4315,13 @@ window.GRANULA_POSTS = {
      "level": "info",
      "ok": true,
      "msg": "Dĺžka článku: 1848 slov (dĺžka nerozhoduje, hustota áno)",
+     "details": []
+    },
+    {
+     "id": "footnotes",
+     "level": "error",
+     "ok": true,
+     "msg": "Každá poznámka [^id] v texte má definíciu „[^id]: text“",
      "details": []
     }
    ],
@@ -4778,7 +4827,7 @@ window.GRANULA_POSTS = {
      "id": "section-length",
      "level": "warn",
      "ok": true,
-     "msg": "Hlavné sekcie majú 200–400 slov",
+     "msg": "Hlavné sekcie majú 80–400 slov (kratšie je lepšie, viď STYL.md)",
      "details": []
     },
     {
@@ -4792,7 +4841,7 @@ window.GRANULA_POSTS = {
      "id": "section-numbers",
      "level": "warn",
      "ok": true,
-     "msg": "Každá hlavná sekcia má aspoň 1 číslo (ideálne so zdrojom)",
+     "msg": "Každá hlavná sekcia má aspoň 1 číslo alebo poznámku so zdrojom",
      "details": []
     },
     {
@@ -4981,6 +5030,13 @@ window.GRANULA_POSTS = {
      "level": "info",
      "ok": true,
      "msg": "Dĺžka článku: 1852 slov (dĺžka nerozhoduje, hustota áno)",
+     "details": []
+    },
+    {
+     "id": "footnotes",
+     "level": "error",
+     "ok": true,
+     "msg": "Každá poznámka [^id] v texte má definíciu „[^id]: text“",
      "details": []
     }
    ],
@@ -5245,7 +5301,7 @@ window.GRANULA_POSTS = {
   {
    "slug": "svrbenie-skrabanie-alergia-na-krmivo",
    "file": "granula/blog/_src/svrbenie-skrabanie-alergia-na-krmivo.md",
-   "title": "Svrbenie, škrabanie, olizovanie láp: je to alergia na krmivo?",
+   "title": "Pes sa škriabe a olizuje si labky: môže za to krmivo?",
    "status": "draft",
    "wanted": "draft",
    "example": false,
@@ -5254,8 +5310,8 @@ window.GRANULA_POSTS = {
    "author": "[Meno Priezvisko]",
    "authorPhoto": "placeholder",
    "hero": "placeholder",
-   "words": 1797,
-   "description": "Alergia na krmivo je za svrbením len pri 9–40 % svrbiacich psov. Potvrdí ju eliminačná diéta aspoň 8 týždňov, nie krvný test ani test zo srsti.",
+   "words": 1074,
+   "description": "Alergiu na krmivo má len 9–40 % psov, ktorých trápi svrbenie. Potvrdí ju eliminačná diéta aspoň 8 týždňov, nie test z krvi ani zo srsti.",
    "id": "F6",
    "category": "Problémy",
    "priority": "P1",
@@ -5276,7 +5332,7 @@ window.GRANULA_POSTS = {
      "id": "title-length",
      "level": "warn",
      "ok": true,
-     "msg": "Titulok má najviac 70 znakov (má 61)",
+     "msg": "Titulok má najviac 70 znakov (má 53)",
      "details": []
     },
     {
@@ -5290,7 +5346,7 @@ window.GRANULA_POSTS = {
      "id": "description",
      "level": "warn",
      "ok": true,
-     "msg": "Meta popis má 120–160 znakov (má 143)",
+     "msg": "Meta popis má 120–160 znakov (má 136)",
      "details": []
     },
     {
@@ -5320,6 +5376,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok, jedna ponuka v texte",
       "2026-11-18: Prvá verzia"
      ]
     },
@@ -5327,14 +5384,14 @@ window.GRANULA_POSTS = {
      "id": "tldr",
      "level": "error",
      "ok": true,
-     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 57)",
+     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 52)",
      "details": []
     },
     {
      "id": "tldr-range",
      "level": "warn",
      "ok": true,
-     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 57)",
+     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 52)",
      "details": []
     },
     {
@@ -5355,7 +5412,7 @@ window.GRANULA_POSTS = {
      "id": "tldr-numbers",
      "level": "warn",
      "ok": true,
-     "msg": "Krátka odpoveď a kľúčové body obsahujú aspoň 3 čísla (majú 14)",
+     "msg": "Krátka odpoveď a kľúčové body obsahujú aspoň 3 čísla (majú 6)",
      "details": []
     },
     {
@@ -5376,18 +5433,19 @@ window.GRANULA_POSTS = {
      "id": "h2-questions",
      "level": "warn",
      "ok": true,
-     "msg": "Aspoň polovica nadpisov H2 sú otázky (5 z 7)",
+     "msg": "Aspoň polovica nadpisov H2 sú otázky (6 z 7)",
      "details": [
-      "Alergia na krmivo vs. atopia vs. blchy: porovnanie",
       "Ako sa potvrdí alergia na krmivo: 6 krokov"
      ]
     },
     {
      "id": "section-length",
      "level": "warn",
-     "ok": true,
-     "msg": "Hlavné sekcie majú 200–400 slov",
-     "details": []
+     "ok": false,
+     "msg": "Hlavné sekcie majú 80–400 slov (kratšie je lepšie, viď STYL.md)",
+     "details": [
+      "Na aké krmivo sú psy najčastejšie alergické?: 61 slov"
+     ]
     },
     {
      "id": "first-sentence",
@@ -5400,7 +5458,7 @@ window.GRANULA_POSTS = {
      "id": "section-numbers",
      "level": "warn",
      "ok": true,
-     "msg": "Každá hlavná sekcia má aspoň 1 číslo (ideálne so zdrojom)",
+     "msg": "Každá hlavná sekcia má aspoň 1 číslo alebo poznámku so zdrojom",
      "details": []
     },
     {
@@ -5544,7 +5602,7 @@ window.GRANULA_POSTS = {
      "id": "atomic",
      "level": "info",
      "ok": true,
-     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 13)",
+     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 9)",
      "details": []
     },
     {
@@ -5586,15 +5644,22 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1797 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1074 slov (dĺžka nerozhoduje, hustota áno)",
+     "details": []
+    },
+    {
+     "id": "footnotes",
+     "level": "error",
+     "ok": true,
+     "msg": "Každá poznámka [^id] v texte má definíciu „[^id]: text“",
      "details": []
     }
    ],
    "sections": [
     {
-     "title": "Čo je potravinová alergia u psa?",
+     "title": "Čo je alergia na krmivo u psa?",
      "kind": "definition",
-     "words": 97,
+     "words": 70,
      "numbers": 0,
      "question": true,
      "firstBold": true,
@@ -5605,24 +5670,24 @@ window.GRANULA_POSTS = {
      "offers": 0
     },
     {
-     "title": "Ako často je za svrbením psa alergia na krmivo?",
+     "title": "Ako často spôsobuje svrbenie alergia na krmivo?",
      "kind": "main",
-     "words": 248,
-     "numbers": 12,
+     "words": 127,
+     "numbers": 6,
      "question": true,
      "firstBold": true,
      "table": false,
      "steps": false,
      "images": 0,
      "charts": 0,
-     "offers": 0
+     "offers": 1
     },
     {
-     "title": "Alergia na krmivo vs. atopia vs. blchy: porovnanie",
+     "title": "Ako rozlíšiš alergiu na krmivo od atopie a bĺch?",
      "kind": "main",
-     "words": 246,
-     "numbers": 4,
-     "question": false,
+     "words": 138,
+     "numbers": 1,
+     "question": true,
      "firstBold": true,
      "table": true,
      "steps": false,
@@ -5631,10 +5696,10 @@ window.GRANULA_POSTS = {
      "offers": 0
     },
     {
-     "title": "Na aké krmivo je pes najčastejšie alergický?",
+     "title": "Na aké krmivo sú psy najčastejšie alergické?",
      "kind": "main",
-     "words": 170,
-     "numbers": 13,
+     "words": 61,
+     "numbers": 1,
      "question": true,
      "firstBold": true,
      "table": false,
@@ -5644,10 +5709,10 @@ window.GRANULA_POSTS = {
      "offers": 0
     },
     {
-     "title": "Prečo krvný test ani test zo srsti alergiu na krmivo neodhalí?",
+     "title": "Odhalí alergiu na krmivo test z krvi alebo zo srsti?",
      "kind": "main",
-     "words": 244,
-     "numbers": 10,
+     "words": 96,
+     "numbers": 0,
      "question": true,
      "firstBold": true,
      "table": false,
@@ -5659,8 +5724,8 @@ window.GRANULA_POSTS = {
     {
      "title": "Ako sa potvrdí alergia na krmivo: 6 krokov",
      "kind": "main",
-     "words": 236,
-     "numbers": 13,
+     "words": 184,
+     "numbers": 9,
      "question": false,
      "firstBold": true,
      "table": false,
@@ -5670,23 +5735,23 @@ window.GRANULA_POSTS = {
      "offers": 0
     },
     {
-     "title": "Pomôžu granule s jedným druhom mäsa pri alergii?",
+     "title": "Pomôžu granule s jedným druhom mäsa?",
      "kind": "main",
-     "words": 234,
-     "numbers": 3,
+     "words": 138,
+     "numbers": 0,
      "question": true,
      "firstBold": true,
      "table": false,
      "steps": false,
      "images": 0,
      "charts": 0,
-     "offers": 1
+     "offers": 0
     },
     {
      "title": "Časté otázky",
      "kind": "faq",
-     "words": 164,
-     "numbers": 6,
+     "words": 132,
+     "numbers": 5,
      "question": false,
      "firstBold": true,
      "table": false,
@@ -5698,8 +5763,8 @@ window.GRANULA_POSTS = {
     {
      "title": "Zhrnutie",
      "kind": "summary",
-     "words": 101,
-     "numbers": 3,
+     "words": 76,
+     "numbers": 1,
      "question": false,
      "firstBold": false,
      "table": false,
@@ -6229,7 +6294,7 @@ window.GRANULA_POSTS = {
      "id": "section-length",
      "level": "warn",
      "ok": false,
-     "msg": "Hlavné sekcie majú 200–400 slov",
+     "msg": "Hlavné sekcie majú 80–400 slov (kratšie je lepšie, viď STYL.md)",
      "details": [
       "Ako vyzerá sekcia, ktorú AI dokáže citovať?: 48 slov",
       "Šablóna A vs šablóna B: porovnanie: 38 slov",
@@ -6247,7 +6312,7 @@ window.GRANULA_POSTS = {
      "id": "section-numbers",
      "level": "warn",
      "ok": false,
-     "msg": "Každá hlavná sekcia má aspoň 1 číslo (ideálne so zdrojom)",
+     "msg": "Každá hlavná sekcia má aspoň 1 číslo alebo poznámku so zdrojom",
      "details": [
       "Šablóna A vs šablóna B: porovnanie"
      ]
@@ -6434,6 +6499,13 @@ window.GRANULA_POSTS = {
      "level": "info",
      "ok": true,
      "msg": "Dĺžka článku: 263 slov (dĺžka nerozhoduje, hustota áno)",
+     "details": []
+    },
+    {
+     "id": "footnotes",
+     "level": "error",
+     "ok": true,
+     "msg": "Každá poznámka [^id] v texte má definíciu „[^id]: text“",
      "details": []
     }
    ],

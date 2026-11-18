@@ -244,7 +244,7 @@ table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
         (groups.ok.length ? '<details class="okc"><summary>Splnené (' + groups.ok.length + ")</summary><ul class=\"checks\">" + groups.ok.map(function (r) { return row(r, "ok"); }).join("") + "</ul></details>" : "") + "</div></div>" +
       '<div class="panel"><h2>Sekcie</h2><table class="secs"><thead><tr><th>Nadpis H2</th><th>Typ</th><th>Slová</th><th>Čísla</th><th>Otázka</th><th>Tučná 1. veta</th><th>Vizuály</th></tr></thead><tbody>' +
         p.sections.map(function (s) {
-          var main = s.kind === "main", lenBad = main && (s.words < 150 || s.words > 450);
+          var main = s.kind === "main", lenBad = main && (s.words < 80 || s.words > 450);
           return "<tr><td>" + esc(s.title) + "</td><td>" + ({ main: "hlavná", definition: "definícia", faq: "otázky", summary: "zhrnutie", sources: "zdroje" })[s.kind] +
             '</td><td class="num' + (lenBad ? " bad" : "") + '">' + s.words + '</td><td class="num' + (main && !s.numbers ? " bad" : "") + '">' + s.numbers + "</td><td>" + (s.question ? "✓" : "—") + "</td><td>" + (s.firstBold ? "✓" : (main || s.kind === "definition") ? '<span class="bad">—</span>' : "—") + "</td><td>" + (
               [s.images ? s.images + "× obrázok" : "", s.charts ? s.charts + "× graf" : "", s.offers ? s.offers + "× ponuka" : ""].filter(Boolean).join(", ") || "—") + "</td></tr>";

@@ -88,8 +88,33 @@ def typo(s):
     return re.sub(r"(\d) (%|€)", "\\1\u00a0\\2", s)
 
 
+FN = {"order": []}   # poznámky pod čiarou aktuálneho článku (id v poradí výskytu)
+
+
+def fn_ref(m):
+    fid = m.group(1)
+    if fid not in FN["order"]:
+        FN["order"].append(fid)
+    n = FN["order"].index(fid) + 1
+    return '<sup class="bl-fn"><a href="#fn-%s" id="fnref-%s" aria-label="Poznámka %d">%d</a></sup>' % (slugify(fid), slugify(fid), n, n)
+
+
+def split_footnotes(body):
+    """Riadky `[^id]: text` vyberie z tela; vráti (telo, {id: text})."""
+    notes, keep = {}, []
+    for ln in body.split("\n"):
+        m = re.match(r"^\[\^([^\]]+)\]:\s*(.+)$", ln.strip())
+        if m:
+            notes[m.group(1)] = m.group(2).strip()
+        else:
+            keep.append(ln)
+    return "\n".join(keep), notes
+
+
 def inline(s):
     s = html.escape(typo(s), quote=False)
+    s = re.sub(r"\[\^([^\]]+)\]", fn_ref, s)
+    s = re.sub(r"==(.+?)==", r'<mark class="bl-hl">\1</mark>', s)
     s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
     s = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
     s = re.sub(r"(?<![\*\w])\*(?!\s)(.+?)(?<!\s)\*(?![\*\w])", r"<em>\1</em>", s)
@@ -179,6 +204,14 @@ def md_blocks(md):
             fields["rows"] = rows
             out.append((kind, fields))
             continue
+        if ln.startswith("^ "):
+            buf = [ln[2:].strip()]
+            i += 1
+            while i < len(lines) and lines[i].strip() and not re.match(r"^(#{1,4}\s|\||>|[-*]\s|\d+[.)]\s|-{3,}$|:::|!\[|\^ )", lines[i]):
+                buf.append(lines[i].strip())
+                i += 1
+            out.append(("note", " ".join(buf)))
+            continue
         if ln.startswith(">"):
             buf = []
             while i < len(lines) and lines[i].startswith(">"):
@@ -187,7 +220,7 @@ def md_blocks(md):
             out.append(("quote", " ".join(buf)))
             continue
         buf = []
-        while i < len(lines) and lines[i].strip() and not re.match(r"^(#{1,4}\s|\||>|[-*]\s|\d+[.)]\s|-{3,}$|:::|!\[)", lines[i]):
+        while i < len(lines) and lines[i].strip() and not re.match(r"^(#{1,4}\s|\||>|[-*]\s|\d+[.)]\s|-{3,}$|:::|!\[|\^ )", lines[i]):
             buf.append(lines[i].strip())
             i += 1
         out.append(("p", " ".join(buf)))
@@ -251,7 +284,7 @@ def offer_html(d, pre, end=False):
     tag = "section" if end else "aside"
     return ('<%s class="bl-offer%s%s" aria-label="Ponuka Granula"><div class="bl-offer-in"><span class="bl-offer-k">%s</span><p class="bl-offer-h">%s</p><p>%s</p>'
             '<div><a class="btn btn-o" href="%s">%s</a></div></div>%s</%s>'
-            % (tag, " bl-offer-end" if end else "", " has-img" if pic else "", html.escape(d.get("stitok") or "Granula na mieru"),
+            % (tag, " bl-offer-end" if end else "", " has-img" if pic else "", html.escape(d.get("stitok") or "Granule na mieru"),
                inline(d.get("nadpis", "")), inline(d.get("text", "")), html.escape(href), html.escape(d.get("tlacidlo") or "Nájdi granule pre svojho psa"), pic, tag))
 
 
@@ -276,6 +309,8 @@ def render_blocks(blocks, pre=""):
             h.append('<div class="tbl"><table><thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>' % (th, trs))
         elif t == "hr":
             h.append("<hr>")
+        elif t == "note":
+            h.append('<p class="bl-note">%s</p>' % inline(d))
         elif t == "img":
             h.append(figure_html(d, pre))
         elif t == "graf":
@@ -286,6 +321,7 @@ def render_blocks(blocks, pre=""):
 
 
 def plain(s):
+    s = re.sub(r"\[\^[^\]]+\]", "", s).replace("==", "")
     s = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", s)
     return re.sub(r"[*`_>#|]", "", s)
 
@@ -336,6 +372,7 @@ def sections(blocks):
         s["text"] = " ".join(text)
         s["words"] = words(s["text"])
         s["numbers"] = len(re.findall(r"\d+(?:[,.]\d+)?", s["text"]))
+        s["fnrefs"] = len(re.findall(r"\[\^[^\]]+\]", json.dumps(s["blocks"], ensure_ascii=False)))
         s["question"] = s["title"].rstrip().endswith("?")
         first = next((d for t, d in s["blocks"] if t == "p"), "")
         s["first_bold"] = first.startswith("**")
@@ -418,12 +455,12 @@ def lint(meta, secs, body):
     add("h2-questions", "warn", content and len(q) >= len(content) / 2,
         "Aspoň polovica nadpisov H2 sú otázky (%d z %d)" % (len(q), len(content)),
         [s["title"] for s in content if not s["question"]])
-    bad_len = ["%s: %d slov" % (s["title"], s["words"]) for s in main if not (150 <= s["words"] <= 450)]
-    add("section-length", "warn", not bad_len, "Hlavné sekcie majú 200–400 slov", bad_len)
+    bad_len = ["%s: %d slov" % (s["title"], s["words"]) for s in main if not (80 <= s["words"] <= 450)]
+    add("section-length", "warn", not bad_len, "Hlavné sekcie majú 80–400 slov (kratšie je lepšie, viď STYL.md)", bad_len)
     no_bold = [s["title"] for s in content if not s["first_bold"]]
     add("first-sentence", "warn", not no_bold, "Každá sekcia začína tučnou prvou vetou = odpoveď na nadpis", no_bold)
-    no_num = [s["title"] for s in main if s["numbers"] == 0]
-    add("section-numbers", "warn", not no_num, "Každá hlavná sekcia má aspoň 1 číslo (ideálne so zdrojom)", no_num)
+    no_num = [s["title"] for s in main if s["numbers"] == 0 and s["fnrefs"] == 0]
+    add("section-numbers", "warn", not no_num, "Každá hlavná sekcia má aspoň 1 číslo alebo poznámku so zdrojom", no_num)
 
     refs = []
     for s in secs:
@@ -593,14 +630,18 @@ def article_html(post, pre, preview):
         banner = ('<div class="bl-preview" role="note"><b>Náhľad · %s</b> Táto stránka nie je verejná ani indexovaná. '
                   '<a href="%sadmin-blog/#%s">Späť do redakcie</a></div>' % (st, pre, post["slug"]))
     kp = "".join("<li>%s</li>" % inline(x) for x in m.get("key_points") or [])
-    log = m.get("changelog") or []
-    log_html = ""
-    if log:
-        log_html = '<details class="bl-log"><summary>História zmien</summary><ul>%s</ul></details>' % "".join("<li>%s</li>" % inline(x) for x in log)
     src = m.get("sources") or []
     src_html = ('<section class="bl-sources" aria-labelledby="zdroje"><h2 id="zdroje">Zdroje</h2><ol>%s</ol></section>'
                 % "".join("<li>%s</li>" % source_html(x) for x in src)) if src else ""
     body_blocks = [b for b in post["blocks"] if not (b[0] == "h2" and kind_of(b[1]) == "sources")]
+    FN["order"] = []
+    body_html = render_blocks(body_blocks, pre)
+    notes = post.get("notes") or {}
+    fn_html = ""
+    if FN["order"]:
+        fn_html = ('<section class="bl-notes" aria-labelledby="poznamky"><h2 id="poznamky">Poznámky</h2><ol>%s</ol></section>'
+                   % "".join('<li id="fn-%s">%s <a href="#fnref-%s" aria-label="Späť do textu">↩</a></li>' % (slugify(f), inline(notes.get(f, "")), slugify(f))
+                             for f in list(FN["order"])))
     photo = str(m.get("author_photo", ""))
     if photo and not is_placeholder(photo):
         avatar = '<img class="bl-av" src="%s%s" alt="%s" width="64" height="64">' % (pre, html.escape(photo), html.escape(m.get("author", "")))
@@ -610,7 +651,7 @@ def article_html(post, pre, preview):
     hero_html = ""
     if m.get("hero"):
         hero_html = figure_html({"src": str(m["hero"]), "alt": m.get("hero_alt", ""), "caption": m.get("hero_caption", "")}, pre, "bl-hero")
-    end = {"stitok": "Granula na mieru", "nadpis": m.get("cta_title") or "Granule na mieru pre tvojho psa",
+    end = {"stitok": "Granule na mieru", "nadpis": m.get("cta_title") or "Granule na mieru pre tvojho psa",
            "text": m.get("cta_text") or "Povedz nám o ňom za dve minúty. Granule aj dávku na gramy vyberieme my.",
            "tlacidlo": m.get("cta_button") or "Nájdi granule pre svojho psa", "odkaz": m.get("cta_link") or "granule-na-mieru.html",
            "obrazok": m.get("cta_image", "")}
@@ -623,19 +664,19 @@ def article_html(post, pre, preview):
       Publikované: <time datetime="{m.get("published", "")}">{sk_date(m.get("published", ""))}</time> · Aktualizované: <time datetime="{m.get("updated", "")}">{sk_date(m.get("updated", ""))}</time> · {read_min}&nbsp;min čítania</p></div>
     </header>
     {hero_html}
-    <section class="bl-tldr" aria-labelledby="kratka-odpoved">
-      <h2 id="kratka-odpoved" class="bl-tldr-t">Krátka odpoveď</h2>
+    <section class="bl-tldr" aria-labelledby="sumar">
+      <h2 id="sumar" class="bl-tldr-t">Sumár</h2>
       <p>{inline(m.get("tldr", ""))}</p>
       <h3 class="bl-tldr-t">Kľúčové body</h3>
       <ul>{kp}</ul>
     </section>
     <div class="bl-body">
-{render_blocks(body_blocks, pre)}
+{body_html}
     </div>
+    {offer_html(end, pre, end=True)}
+    {fn_html}
     {src_html}
-    {log_html}
   </div>
-  <div class="wrap bl-col">{offer_html(end, pre, end=True)}</div>
 </article>"""
 
 
@@ -746,13 +787,17 @@ def load_posts():
             posts.append({"file": "granula/blog/_src/" + fn, "slug": slug, "meta": meta, "blocks": [], "sections": [],
                           "lint": [], "words": 0, "status": "namet", "wanted": "namet"})
             continue
+        body, notes = split_footnotes(body)
         blocks = md_blocks(body)
         secs = sections(blocks)
         results, total = lint(meta, secs, body)
+        missing_fn = sorted(set(re.findall(r"\[\^([^\]]+)\]", body)) - set(notes))
+        results.append({"id": "footnotes", "level": "error", "ok": not missing_fn,
+                        "msg": "Každá poznámka [^id] v texte má definíciu „[^id]: text“", "details": missing_fn})
         errors = [r for r in results if r["level"] == "error" and not r["ok"]]
         want = meta.get("status", "draft")
         status = "published" if want == "published" and not errors else ("blocked" if want == "published" else "draft")
-        posts.append({"file": "granula/blog/_src/" + fn, "slug": slug, "meta": meta, "blocks": blocks, "sections": secs,
+        posts.append({"file": "granula/blog/_src/" + fn, "slug": slug, "meta": meta, "blocks": blocks, "sections": secs, "notes": notes,
                       "lint": results, "words": total, "status": status, "wanted": want})
     slugs = [p["slug"] for p in posts]
     for s in set(slugs):

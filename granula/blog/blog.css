@@ -127,6 +127,17 @@
 .bl-body .bl-offer .btn-o{color:var(--n);text-decoration:none}
 .bl-body .bl-offer .btn-o:hover{color:var(--o)}
 
+/* zvýraznenie, malé poznámky, poznámky pod čiarou */
+.bl-hl{background:linear-gradient(transparent 45%,rgba(255,105,0,.35) 45%);color:inherit;padding:0 1px}
+.bl-note{font-size:14px;line-height:1.5;padding-left:12px;border-left:2px solid var(--n)}
+.bl-fn{font-size:.7em;line-height:0;margin-left:1px}
+.bl-fn a{color:var(--k);text-decoration:none;font-weight:800}
+.bl-notes{margin-top:48px;border-top:2px solid var(--n);padding-top:20px}
+.bl-notes h2{font-size:18px;font-weight:900;text-transform:uppercase}
+.bl-notes ol{margin:12px 0 0;padding-left:22px;font-size:14px;line-height:1.5;display:flex;flex-direction:column;gap:6px}
+.bl-notes a{color:var(--k)}
+.bl-notes + .bl-sources{margin-top:28px}
+
 /* tlač a PDF náhľad (Zdieľať → Tlačiť na iPade, PDF z buildu) */
 @media print{
   @page{size:A4;margin:14mm 12mm 16mm}
@@ -138,7 +149,7 @@
   .bl-body{font-size:11.5pt;line-height:1.5}
   .bl-head h1{font-size:24pt}
   .bl-body h2{font-size:15pt;margin-top:22px;break-after:avoid}
-  .bl-body h3{break-after:avoid}
+  .bl-body h3,.bl-notes h2,.bl-sources h2{break-after:avoid}
   .bl-fig,.bl-chart,.bl-offer,.tbl,blockquote,.bl-body li,.bl-tldr li{break-inside:avoid}
   .bl-fig .bl-ph{aspect-ratio:4/1}
   .bl-hero .bl-ph{aspect-ratio:3/1}
