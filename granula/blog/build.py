@@ -570,7 +570,7 @@ def jsonld(post, url):
     return {"@context": "https://schema.org", "@type": "BlogPosting", "headline": m["title"], "description": m.get("description", ""),
             "datePublished": str(m.get("published", "")), "dateModified": str(m.get("updated", "")),
             "author": {"@type": "Person", "name": m.get("author", ""), "description": m.get("author_bio", "")},
-            "publisher": {"@type": "Organization", "name": "Carbone Company s. r. o. (Granula!)", "url": BASE_URL + "/"},
+            "publisher": {"@type": "Organization", "name": "Spark Link, s. r. o. (Granula!)", "url": BASE_URL + "/"},
             "mainEntityOfPage": url, "inLanguage": "sk"}
 
 

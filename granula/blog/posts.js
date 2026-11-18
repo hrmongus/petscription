@@ -1,6 +1,6 @@
 /* vygenerované build.py — needitovať */
 window.GRANULA_POSTS = {
- "built": "2026-11-18 07:56",
+ "built": "2026-11-18 08:12",
  "base": "https://granula.sk/granula",
  "problems": [],
  "posts": [
