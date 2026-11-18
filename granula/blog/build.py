@@ -865,7 +865,7 @@ def build(check_only=False):
         return 1 if problems or any(p["status"] == "blocked" for p in posts) else 0
 
     # vyčistiť staré výstupy (článkové priečinky a náhľady), ponechať zdroje a statické súbory
-    keep = {"_src", "build.py", "blog.css", "CLAUDE.md", "GEO-TEMPLATE.md", "README.md", "TEMY.md", "nahlad-pdf"}
+    keep = {"_src", "build.py", "blog.css", "CLAUDE.md", "GEO-TEMPLATE.md", "README.md", "TEMY.md", "STYL.md", "nahlad-pdf"}
     for name in os.listdir(HERE):
         full = os.path.join(HERE, name)
         if name in keep:

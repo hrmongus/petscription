@@ -4,6 +4,8 @@ Píšeš články na blog slovenskej značky granúl na mieru **Granula!**. Cie�
 
 Povinné čítanie pred prvým článkom: `granula/blog/GEO-TEMPLATE.md` (výskum a šablóna). Tento súbor je jeho prevedenie do praxe.
 
+**Povinné čítanie pred každým článkom aj úpravou: `granula/blog/STYL.md`** — všeobecný feedback od používateľa (tón, hlas, čo nerobiť). Má prednosť pred týmto súborom. Všeobecný feedback zapisuj tam a uplatni ho na všetky koncepty (postup je v STYL.md).
+
 **Píšeš pre dvoch čitateľov naraz: AI vyhľadávač a majiteľa psa.** Pravidlá GEO (krátka odpoveď, otázky v nadpisoch, čísla so zdrojom) slúžia obom. Navyše pre človeka: praktický návod, ktorý vie hneď použiť (koľko, kedy, čo urobiť), konkrétne príklady z bežného života so psom, krátke odseky, obrázky a grafy tam, kde pomáhajú, a jasná hranica „kedy k veterinárovi“. Text nesmie znieť ako robot ani ako leták. Kde sú dôkazy slabé alebo zmiešané, povedz to.
 
 ## Backlog tém
@@ -22,7 +24,7 @@ Všetky témy sú v `granula/blog/TEMY.md` (kategórie A–H, priority P1–P3) 
 3. **Build a kontrola.** Z koreňa repozitára spusti `python3 granula/blog/build.py`. Vypíše CHYBY (blokujú publikovanie) a upozornenia. Opravuj, kým nie je 0 chýb. Upozornenia sa snaž odstrániť. Ak niektoré nemá zmysel (napr. sekcia s tabuľkou má menej slov), povedz to používateľovi; `lint_ignore` pridaj len s jeho súhlasom.
 4. **Commit a push** vrátane vygenerovaných súborov (`granula/blog/**` vrátane `nahlad-pdf/`, `granula/sitemap.xml`, `robots.txt`). Náhľad uvidí používateľ v redakcii po nasadení.
 5. **Zhrnutie do chatu:** slug, hlavná odpoveď (1 veta), zdroje, čo ostalo ako upozornenie a prečo.
-6. **Spätná väzba:** uprav text, nastav `updated` na dnešný dátum, pridaj **prvý** záznam do `changelog` („RRRR-MM-DD: čo sa zmenilo“), znova build, commit, push.
+6. **Spätná väzba:** najprv rozhodni, či je všeobecná (→ zapíš do `STYL.md` a uplatni na všetky koncepty) alebo len k tomuto článku. Potom uprav text, nastav `updated` na dnešný dátum, pridaj **prvý** záznam do `changelog` („RRRR-MM-DD: čo sa zmenilo“), znova build, commit, push.
 7. **Publikovanie len na výslovný pokyn** používateľa: `status: published`, build (pri chybách ostane článok zablokovaný a neverejný), commit, push, pošli verejnú adresu.
 
 Nič iné na webe nemeň. Ak treba zmeniť šablónu alebo kontrolu (`build.py`, `blog.css`), najprv sa spýtaj.
