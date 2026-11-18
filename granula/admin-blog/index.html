@@ -150,7 +150,7 @@ table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
     return "Napíš nový článok na blog Granula z backlogu: " + p.id + " „" + p.title + "“ (" + p.priority + ", " + p.category + ").\n" +
       "Súbor: " + p.file + " (teraz námet; doplň ho podľa _template.md, zmeň na `status: draft`, nechaj id, category a priority).\n" +
       "Čo musí článok pokryť: " + p.brief + "\n" + (p.angle ? "Uhol Granuly: " + p.angle + "\n" : "") +
-      "\nPostupuj presne podľa granula/blog/CLAUDE.md: najprv výskum s primárnymi zdrojmi, uhol Granuly píš len tak, ako to naozaj je (engine.js, README, schválené tvrdenia). " +
+      "\nPostupuj presne podľa granula/blog/CLAUDE.md a granula/blog/STYL.md: najprv výskum s primárnymi zdrojmi, uhol Granuly píš len tak, ako to naozaj je (engine.js, README, schválené tvrdenia). " +
       "Spusti `python3 granula/blog/build.py`, oprav všetky CHYBY, commitni a pushni. Pošli mi zhrnutie: slug, hlavná odpoveď, zdroje a čo z kontroly ostalo ako upozornenie.";
   }
   var MANUAL = ["Fakty overené voči zdrojom", "Zdroje sú primárne (štúdie, oficiálne dokumenty)", "Obsahuje vlastné dáta alebo skúsenosť",
@@ -193,7 +193,8 @@ table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
       "Náhľad: " + abs(p.preview) + "\n\n" +
       "Moje poznámky:\n" + (notes.trim() || "(bez poznámok, oprav len body z kontroly)") + "\n\n" +
       (f.length ? "Neprešlo v kontrole GEO:\n" + f.join("\n") + "\n\n" : "Kontrola GEO: bez chýb a upozornení.\n\n") +
-      "Postup: uprav článok podľa poznámok a pravidiel v granula/blog/CLAUDE.md. Fakty nemeň bez zdroja. " +
+      "Postup: najprv rozhodni, ktoré poznámky sú všeobecné (platia pre všetky články) — tie zapíš do granula/blog/STYL.md a uplatni na všetky koncepty; ostatné len na tento článok. " +
+      "Uprav článok podľa poznámok, granula/blog/STYL.md a granula/blog/CLAUDE.md. Fakty nemeň bez zdroja. " +
       "Nastav `updated` na dnešný dátum a pridaj záznam do `changelog`, spusti `python3 granula/blog/build.py`, " +
       "oprav všetky CHYBY, commitni a pushni. Status nechaj `draft`, kým ho neschválim.";
   }
@@ -234,6 +235,7 @@ table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
         "<h2>" + esc(p.title) + "</h2>" + why +
         '<div class="d-meta"><span>Autor: ' + esc(p.author || "—") + "</span><span>Publikované: " + esc(p.published) + "</span><span>Aktualizované: " + esc(p.updated) + "</span><span>" + p.words + " slov</span><span>Zdroj: <code>" + esc(p.file) + "</code></span></div>" +
         '<div class="acts"><a class="btn btn-o" href="' + esc(p.preview) + '" target="_blank" rel="noopener">Otvoriť náhľad ↗</a>' +
+        (p.pdf ? '<a class="btn btn-line" href="' + esc(p.pdf) + '" target="_blank" rel="noopener" download>Stiahnuť PDF</a>' : "") +
         (p.live ? '<a class="btn btn-k" href="' + esc(p.live) + '" target="_blank" rel="noopener">Verejná verzia ↗</a>' : "") +
         '<button type="button" class="btn btn-line" id="approve">Kopírovať schválenie</button> <span class="copied" id="ap-ok" hidden>Skopírované</span></div></div>' +
       '<div class="panel"><h2>Kontrola GEO</h2><div class="score"><strong>' + c.ok + " z " + c.n + ' pravidiel</strong><span class="bar"><i style="width:' + Math.round(c.ok / Math.max(1, c.n) * 100) + '%"></i></span>' +
@@ -242,7 +244,7 @@ table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
         (groups.ok.length ? '<details class="okc"><summary>Splnené (' + groups.ok.length + ")</summary><ul class=\"checks\">" + groups.ok.map(function (r) { return row(r, "ok"); }).join("") + "</ul></details>" : "") + "</div></div>" +
       '<div class="panel"><h2>Sekcie</h2><table class="secs"><thead><tr><th>Nadpis H2</th><th>Typ</th><th>Slová</th><th>Čísla</th><th>Otázka</th><th>Tučná 1. veta</th><th>Vizuály</th></tr></thead><tbody>' +
         p.sections.map(function (s) {
-          var main = s.kind === "main", lenBad = main && (s.words < 150 || s.words > 450);
+          var main = s.kind === "main", lenBad = main && (s.words < 80 || s.words > 450);
           return "<tr><td>" + esc(s.title) + "</td><td>" + ({ main: "hlavná", definition: "definícia", faq: "otázky", summary: "zhrnutie", sources: "zdroje" })[s.kind] +
             '</td><td class="num' + (lenBad ? " bad" : "") + '">' + s.words + '</td><td class="num' + (main && !s.numbers ? " bad" : "") + '">' + s.numbers + "</td><td>" + (s.question ? "✓" : "—") + "</td><td>" + (s.firstBold ? "✓" : (main || s.kind === "definition") ? '<span class="bad">—</span>' : "—") + "</td><td>" + (
               [s.images ? s.images + "× obrázok" : "", s.charts ? s.charts + "× graf" : "", s.offers ? s.offers + "× ponuka" : ""].filter(Boolean).join(", ") || "—") + "</td></tr>";
@@ -270,7 +272,7 @@ table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
   $("n-copy").addEventListener("click", function () {
     var q = $("n-q").value.trim(), n = $("n-notes").value.trim();
     copy("Napíš nový článok na blog Granula.\nHlavná otázka: " + (q || "[doplň]") + "\n" + (n ? "Poznámky: " + n + "\n" : "") +
-      "\nPostupuj presne podľa granula/blog/CLAUDE.md: najprv výskum s primárnymi zdrojmi, potom koncept v granula/blog/_src/<slug>.md " +
+      "\nPostupuj presne podľa granula/blog/CLAUDE.md a granula/blog/STYL.md: najprv výskum s primárnymi zdrojmi, potom koncept v granula/blog/_src/<slug>.md " +
       "zo šablóny _template.md, `status: draft`. Spusti `python3 granula/blog/build.py`, oprav všetky CHYBY, commitni a pushni. " +
       "Pošli mi zhrnutie: slug, hlavná odpoveď, zdroje a čo z kontroly ostalo ako upozornenie.", $("n-ok"));
   });

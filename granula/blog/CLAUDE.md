@@ -4,6 +4,8 @@ Píšeš články na blog slovenskej značky granúl na mieru **Granula!**. Cie�
 
 Povinné čítanie pred prvým článkom: `granula/blog/GEO-TEMPLATE.md` (výskum a šablóna). Tento súbor je jeho prevedenie do praxe.
 
+**Povinné čítanie pred každým článkom aj úpravou: `granula/blog/STYL.md`** — všeobecný feedback od používateľa (tón, hlas, čo nerobiť). Má prednosť pred týmto súborom. Všeobecný feedback zapisuj tam a uplatni ho na všetky koncepty (postup je v STYL.md).
+
 **Píšeš pre dvoch čitateľov naraz: AI vyhľadávač a majiteľa psa.** Pravidlá GEO (krátka odpoveď, otázky v nadpisoch, čísla so zdrojom) slúžia obom. Navyše pre človeka: praktický návod, ktorý vie hneď použiť (koľko, kedy, čo urobiť), konkrétne príklady z bežného života so psom, krátke odseky, obrázky a grafy tam, kde pomáhajú, a jasná hranica „kedy k veterinárovi“. Text nesmie znieť ako robot ani ako leták. Kde sú dôkazy slabé alebo zmiešané, povedz to.
 
 ## Backlog tém
@@ -20,9 +22,9 @@ Všetky témy sú v `granula/blog/TEMY.md` (kategórie A–H, priority P1–P3) 
 1. **Výskum.** Zisti, čo ľudia reálne pýtajú (presné znenie otázky), a nájdi **primárne zdroje**: štúdie (PubMed, JAVMA, WSAVA, FEDIAF, NRC), oficiálne dokumenty, údaje výrobcu. Nie iné blogy. Každé číslo v článku musí mať zdroj. Ak číslo nevieš overiť, nepíš ho.
 2. **Koncept.** Skopíruj `granula/blog/_src/_template.md` do `granula/blog/_src/<slug>.md` a vyplň. `status: draft`.
 3. **Build a kontrola.** Z koreňa repozitára spusti `python3 granula/blog/build.py`. Vypíše CHYBY (blokujú publikovanie) a upozornenia. Opravuj, kým nie je 0 chýb. Upozornenia sa snaž odstrániť. Ak niektoré nemá zmysel (napr. sekcia s tabuľkou má menej slov), povedz to používateľovi; `lint_ignore` pridaj len s jeho súhlasom.
-4. **Commit a push** vrátane vygenerovaných súborov (`granula/blog/**`, `granula/sitemap.xml`, `robots.txt`). Náhľad uvidí používateľ v redakcii po nasadení.
+4. **Commit a push** vrátane vygenerovaných súborov (`granula/blog/**` vrátane `nahlad-pdf/`, `granula/sitemap.xml`, `robots.txt`). Náhľad uvidí používateľ v redakcii po nasadení.
 5. **Zhrnutie do chatu:** slug, hlavná odpoveď (1 veta), zdroje, čo ostalo ako upozornenie a prečo.
-6. **Spätná väzba:** uprav text, nastav `updated` na dnešný dátum, pridaj **prvý** záznam do `changelog` („RRRR-MM-DD: čo sa zmenilo“), znova build, commit, push.
+6. **Spätná väzba:** najprv rozhodni, či je všeobecná (→ zapíš do `STYL.md` a uplatni na všetky koncepty) alebo len k tomuto článku. Potom uprav text, nastav `updated` na dnešný dátum, pridaj **prvý** záznam do `changelog` („RRRR-MM-DD: čo sa zmenilo“), znova build, commit, push.
 7. **Publikovanie len na výslovný pokyn** používateľa: `status: published`, build (pri chybách ostane článok zablokovaný a neverejný), commit, push, pošli verejnú adresu.
 
 Nič iné na webe nemeň. Ak treba zmeniť šablónu alebo kontrolu (`build.py`, `blog.css`), najprv sa spýtaj.
@@ -47,7 +49,7 @@ Frontmatter (podmnožina YAML, každá hodnota na jednom riadku, dlhý text cez 
 | `changelog` | najnovší záznam prvý, začína dátumom `updated` |
 | `sources` | aspoň 3, tvar `"Názov – vydavateľ, rok \| https://…"` (primárne zdroje) |
 
-Telo (markdown): `##` nadpisy sekcií, `###` podčasti, odseky, `**tučné**`, `*kurzíva*`, `[odkaz](url)`, zoznamy `-` a `1.`, tabuľky `| … |`, citát `>`. Žiadne HTML. Titulok `#` nepíš, robí ho build. Zdroje nepíš do tela, build ich vykreslí z `sources`.
+Telo (markdown): `##` nadpisy sekcií, `###` podčasti, odseky, `**tučné**`, `*kurzíva*`, `[odkaz](url)`, zoznamy `-` a `1.`, tabuľky `| … |`, citát `>`. Navyše: `==zvýraznenie==` (najdôležitejšia veta), poznámka pod čiarou `[^id]` v texte + riadok `[^id]: text` kdekoľvek v tele (vykreslí sa v časti Poznámky nad zdrojmi), malá poznámka = odsek začínajúci `^ `. Žiadne HTML. Titulok `#` nepíš, robí ho build. Zdroje nepíš do tela, build ich vykreslí z `sources`.
 
 ### Obrázky, grafy a ponuky
 
@@ -79,12 +81,13 @@ odkaz: granule-na-mieru.html
 obrazok: img/produkty/hovadzie-s-ryzou.webp
 :::
 ```
+- **Vizuál ponuky:** každá ponuka ho má. Bez `obrazok:` build doplní vejár troch vreciek. **Vlastný obrázok produktu** (`obrazok:`) daj len vtedy, keď presne zodpovedá textu ponuky (napr. text o monoproteíne → len receptúra s `monoprotein: true` v `engine.js`; Jeleň & králik nie je monoproteín). Keď ponuka nesľubuje konkrétnu receptúru, `obrazok:` vynechaj (ostane vejár).
 - **Záverečnú ponuku** prispôsob téme cez `cta_title`, `cta_text`, `cta_button`.
 
 ## Štruktúra tela (poradie)
 
 1. `## Čo je [pojem]?` prvá veta tučná vo forme **„[Pojem] je [kategória], ktorá [čo robí] pre [koho].“**
-2. **3–6 hlavných sekcií.** Nadpis H2 = otázka, ktorú ľudia reálne píšu. **200–400 slov**, jedna myšlienka. **Prvá veta tučná = odpoveď na nadpis.** Aspoň 1 číslo so zdrojom („Podľa [zdroj, rok] …“). Max. 1 citát experta s menom a funkciou.
+2. **3–6 hlavných sekcií.** Nadpis H2 = otázka, ktorú ľudia reálne píšu. **80–400 slov (kratšie je lepšie)**, jedna myšlienka. **Prvá veta tučná = odpoveď na nadpis.** Aspoň 1 číslo so zdrojom („Podľa [zdroj, rok] …“). Max. 1 citát experta s menom a funkciou.
 3. Podľa témy: porovnanie (`## A vs B: porovnanie` + tabuľka + 1 veta verdiktu), postup (`## Ako …: N krokov`, číslovaný zoznam, každý krok začína **tučným imperatívom**), `## Čo ukázali naše dáta` (len so skutočnými dátami od používateľa), `## Najčastejšie chyby pri …`.
 4. `## Časté otázky`, 3–6 otázok, ktoré nie sú v hlavných sekciách, tvar `**Otázka?** Odpoveď v 1–3 vetách.` (každá otázka samostatný odsek).
 5. `## Zhrnutie`, zoznam: hlavný záver, kedy áno / kedy nie, ďalší krok. Bez výzvy na nákup; záverečnú ponuku pridáva šablóna z `cta_*`.
@@ -107,7 +110,7 @@ obrazok: img/produkty/hovadzie-s-ryzou.webp
 - **Ponuka a výzva vedú vždy na dotazník** (`granule-na-mieru.html`), nie na konkrétny produkt.
 - **Konkurenciu nemenujeme.** Kritizujeme kategórie surovín a praktiky, nie značky.
 - Priateľsky a priamo, ako kamarát, ktorý rozumie psom a výžive. Nie laboratórium, nie batoľa. Odborne, ale ľudskými slovami.
-- **Nikdy:** pes hovoriaci v prvej osobe, zdrobneniny (psíček, mňamka, papať), vynútené slovné hry, superlatívy a žargón („superprémiová holistická výživa“), emoji.
+- **Nikdy:** pes hovoriaci v prvej osobe, zdrobneniny (psíček, mňamka, papať; „psík“ občas áno, viď STYL.md), vynútené slovné hry, superlatívy a žargón („superprémiová holistická výživa“), emoji.
 - Typografia: slovenské úvodzovky „…“, desatinná čiarka (2,4 kg), **nezalomiteľná medzera pred % a €** (build ju doplní sám).
 - Tvrdenia o produkte len schválené, doslova: Bez pšenice · Bez sóje · Bez hrachu a strukovín · Bez kuracieho tuku · Bez pridaného cukru · Bez palmového oleja · Čerstvé mäso · Vysoký podiel mäsa · Zelenina · Podpora trávenia · Prírodné antioxidanty · Receptúry navrhnuté s veterinármi · Bez umelých farbív, konzervantov a aróm · Bez GMO · Vyrobené na Slovensku. Vyradené (nepoužívať): „Bez obilnín“, „Mäso zo Slovenska“, „Hovädzie zo Slovenska“, „Recept od MVDr.“.
 - Zdravotné tvrdenia opatrne: výživa nie je liečba. Pri zdravotných problémoch odkáž na veterinára.
@@ -115,9 +118,10 @@ obrazok: img/produkty/hovadzie-s-ryzou.webp
 
 ## Čo build robí za teba
 
-- Statické HTML (server-side, bez JavaScriptu), sémantické `h1/h2/table/ol`, viditeľný autor, dátumy a história zmien, zdroje, JSON-LD BlogPosting (len SEO hygiena, nie GEO páka).
+- Statické HTML (server-side, bez JavaScriptu), sémantické `h1/h2/table/ol`, viditeľný autor, dátumy (história zmien len v redakcii, na stránke nie), zdroje, JSON-LD BlogPosting (len SEO hygiena, nie GEO páka).
 - `granula/blog/<slug>/`: verejný článok (len `published` bez chýb). `granula/blog/nahlad/<slug>/`: náhľad každého článku (noindex).
 - `granula/blog/index.html`, `granula/sitemap.xml`, `robots.txt` (AI crawlery povolené, redakcia a náhľady zakázané), `granula/blog/posts.js` (dáta redakcie).
+- `granula/blog/nahlad-pdf/<slug>.pdf`: PDF náhľadu na review (tlačidlo „Stiahnuť PDF“ v redakcii). Prerenderuje sa len zmenený článok; potrebuje Node + Playwright, `--no-pdf` ho preskočí. Commituj aj PDF.
 - `granula/index.html`: sekcia „Blog“ na úvodnej stránke (najnovších 8 publikovaných článkov + karta „Všetky články“) medzi značkami `blog-home:start/end`. Generuje ju build, ručne ju needituj. Kým nie je publikovaný žiadny článok, je skrytá.
 - `--check` len skontroluje bez zápisu.
 

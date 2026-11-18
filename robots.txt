@@ -13,12 +13,14 @@ User-agent: Bingbot
 User-agent: Googlebot
 Disallow: /granula/admin-blog/
 Disallow: /granula/blog/nahlad/
+Disallow: /granula/blog/nahlad-pdf/
 Disallow: /granula/admin-vypocet.html
 Allow: /
 
 User-agent: *
 Disallow: /granula/admin-blog/
 Disallow: /granula/blog/nahlad/
+Disallow: /granula/blog/nahlad-pdf/
 Disallow: /granula/admin-vypocet.html
 Allow: /
 

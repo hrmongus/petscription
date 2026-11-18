@@ -81,10 +81,9 @@
 .bl-fig .bl-img,.bl-fig .bl-ph{position:relative;aspect-ratio:3/2;border:2px solid var(--n);overflow:hidden;background:var(--ml)}
 .bl-fig img{width:100%;height:100%;object-fit:cover;display:block}
 .bl-fig figcaption{margin-top:10px;font-size:14px;line-height:1.45}
-.bl-hero{margin:0 0 36px;padding:0 14px 14px 0;position:relative}
-.bl-hero::before{content:"";position:absolute;left:14px;top:14px;right:0;bottom:0;background:var(--o)}
-.bl-hero .bl-img,.bl-hero .bl-ph{aspect-ratio:16/9}
-.bl-hero figcaption{position:relative}
+.bl-hero{margin:0 0 36px}
+.bl-hero .bl-img,.bl-hero .bl-ph{aspect-ratio:16/9;margin-right:14px;box-shadow:14px 14px 0 0 var(--o)}
+.bl-hero figcaption{margin-top:24px}
 .bl-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;text-align:center;font-size:15px;line-height:1.4;
   background:repeating-linear-gradient(135deg,var(--ml) 0 14px,var(--m) 14px 28px) !important}
 .bl-ph span{max-width:440px;background:var(--ml);padding:2px 8px}
@@ -107,11 +106,16 @@
 .bl-offer{position:relative;margin:36px 0 0;padding:0 10px 10px 0}
 .bl-offer::before{content:"";position:absolute;left:10px;top:10px;right:0;bottom:0;background:var(--o)}
 .bl-offer-in,.bl-offer-img{position:relative}
-.bl-offer.has-img{display:grid;grid-template-columns:minmax(0,1fr) 180px}
+.bl-offer.has-img{display:grid;grid-template-columns:minmax(0,1fr) 240px}
 .bl-offer-in{display:flex;flex-direction:column;align-items:flex-start;gap:10px;background:var(--ml);border:2px solid var(--n);padding:22px 24px 24px}
 .bl-offer.has-img .bl-offer-in{border-right:0}
 .bl-offer-img{border:2px solid var(--n);background:var(--m);display:grid;place-items:center;padding:12px}
 .bl-offer-img img{width:100%;height:100%;max-height:220px;object-fit:contain}
+.bl-offer-bags{position:relative;min-height:220px;overflow:hidden}
+.bl-offer-bags img{position:absolute;top:50%;width:52%;height:auto;max-height:none;object-fit:contain}
+.bl-offer-bags .b0{left:-2%;transform:translateY(-46%) rotate(-10deg)}
+.bl-offer-bags .b1{right:-2%;transform:translateY(-46%) rotate(9deg)}
+.bl-offer-bags .b2{left:20%;width:60%;z-index:1;transform:translateY(-50%)}
 .bl-offer-k{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--k)}
 .bl-offer .bl-offer-h{margin:0;max-width:none;font-size:clamp(20px,2.2vw,26px);line-height:1.1;font-weight:900;text-transform:uppercase;text-wrap:balance}
 .bl-offer p:not(.bl-offer-h){font-size:16px;line-height:1.5;margin:0;max-width:520px}
@@ -123,7 +127,51 @@
 .bl-card-img{display:block;margin:-20px -22px 4px;aspect-ratio:3/2;border-bottom:2px solid var(--n);overflow:hidden}
 .bl-card-img img{width:100%;height:100%;object-fit:cover;display:block}
 @media (max-width:640px){.bl-offer.has-img{grid-template-columns:minmax(0,1fr)}.bl-offer.has-img .bl-offer-in{border-right:2px solid var(--n);border-bottom:0}
-  .bl-offer-img img{max-height:160px}.bl-chart{padding:14px}.bl-chart th{width:38%;font-size:14px}.bl-av{width:52px;height:52px}}
+  .bl-offer-img img{max-height:160px}.bl-offer-bags{min-height:220px}.bl-offer-bags img{width:40%}.bl-offer-bags .b0{left:6%}.bl-offer-bags .b1{right:6%}.bl-offer-bags .b2{left:29%;width:42%}.bl-chart{padding:14px}.bl-chart th{width:38%;font-size:14px}.bl-av{width:52px;height:52px}}
+/* tabuľky s 3+ stĺpcami: na mobile karty (riadok = karta, pri hodnote popis stĺpca) */
+@media (max-width:640px){
+  .tbl-cards{border:0;overflow:visible}
+  .tbl-cards table,.tbl-cards tbody,.tbl-cards tr,.tbl-cards th,.tbl-cards td{display:block;width:auto}
+  .tbl-cards thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .tbl-cards table{background:none}
+  .tbl-cards tr{background:var(--ml);border:2px solid var(--n)}
+  .tbl-cards tr + tr{margin-top:12px}
+  .tbl-cards tbody th{background:var(--k);color:var(--m);border:0;padding:10px 12px}
+  .tbl-cards td{border:0;border-top:2px solid var(--m);padding:8px 12px;display:grid;grid-template-columns:40% minmax(0,1fr);gap:10px}
+  .tbl-cards td::before{content:attr(data-label);font-weight:800}
+  .tbl-cards th + th,.tbl-cards td,.tbl-cards tbody th + td{border-left:0}
+}
 @media (max-width:640px){.bl-body{font-size:16px}.bl-tldr{padding:16px 16px 18px}.bl-tldr p{font-size:16px}}
 .bl-body .bl-offer .btn-o{color:var(--n);text-decoration:none}
 .bl-body .bl-offer .btn-o:hover{color:var(--o)}
+
+/* zvýraznenie, malé poznámky, poznámky pod čiarou */
+.bl-hl{background:linear-gradient(transparent 45%,rgba(255,105,0,.35) 45%);color:inherit;padding:0 1px}
+.bl-note{font-size:14px;line-height:1.5;padding-left:12px;border-left:2px solid var(--n)}
+.bl-fn{font-size:.7em;line-height:0;margin-left:1px}
+.bl-fn a{color:var(--k);text-decoration:none;font-weight:800}
+.bl-notes{margin-top:48px;border-top:2px solid var(--n);padding-top:20px}
+.bl-notes h2{font-size:18px;font-weight:900;text-transform:uppercase}
+.bl-notes ol{margin:12px 0 0;padding-left:22px;font-size:14px;line-height:1.5;display:flex;flex-direction:column;gap:6px}
+.bl-notes a{color:var(--k)}
+.bl-notes + .bl-sources{margin-top:28px}
+
+/* tlač a PDF náhľad (Zdieľať → Tlačiť na iPade, PDF z buildu) */
+@media print{
+  @page{size:A4;margin:14mm 12mm 16mm}
+  html,body{background:#fff !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .topbar,.site-head,.foot,.cookie-bar,.bl-crumbs,.bl-preview a{display:none !important}
+  .bl-preview{border:2px solid var(--n);margin:0 0 12px}
+  .bl-article{padding:0}
+  .bl-col{max-width:none;padding:0}
+  .bl-body{font-size:11.5pt;line-height:1.5}
+  .bl-head h1{font-size:24pt}
+  .bl-body h2{font-size:15pt;margin-top:22px;break-after:avoid}
+  .bl-body h3,.bl-notes h2,.bl-sources h2{break-after:avoid}
+  .bl-fig,.bl-chart,.bl-offer,.tbl,blockquote,.bl-body li,.bl-tldr li{break-inside:avoid}
+  .bl-fig .bl-ph{aspect-ratio:4/1}
+  .bl-hero .bl-ph{aspect-ratio:3/1}
+  .bl-log{display:block}
+  .bl-log ul{display:block}
+  .bl-sources a::after{content:none}
+}
