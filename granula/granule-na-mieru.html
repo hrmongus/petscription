@@ -524,6 +524,12 @@
 .prof-help dt{font-size:13px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--k)}
 .prof-help dd{margin:2px 0 0;font-size:14px;line-height:1.4}
 .ph-note{font-size:12.5px;margin-top:14px;opacity:.8}
+/* porovnanie pod výsledkom (rovnaké ako na úvodnej stránke, receptúra podľa výberu) */
+.rm-cp{display:flex;flex-direction:column;gap:28px;padding:16px 80px 56px;max-width:1440px;width:100%;margin-inline:auto}
+.rm-cp .rm-h{text-align:center}
+.rm-cp .rm-h span{color:var(--k)}
+@media (max-width:1100px){.rm-cp{padding:16px 32px 48px}}
+@media (max-width:760px){.rm-cp{padding:8px 16px 40px;gap:18px}}
 /* recenzie pod výsledkom (rovnaké ako na úvodnej stránke) */
 .rm-rw{display:flex;flex-direction:column;gap:24px;padding:8px 0 64px}
 .rm-rw .rm-h{padding:0 80px}
@@ -973,6 +979,14 @@
       </details>
     </div>
   </main>
+  <section class="rm-cp" aria-labelledby="t-cp">
+    <h2 class="rm-h" id="t-cp">Rozrež vrecko. <span>Uvidíš rozdiel.</span></h2>
+    <div id="r-compare"></div>
+    <div class="cp-foot">
+      <a class="btn btn-o" href="#objednavka">K platbe →</a>
+      <p class="cp-note">Bežné granule = ilustrácia typického zloženia lacných granúl z regálu, nie konkrétna značka.</p>
+    </div>
+  </section>
   <section class="rm-rw rw" aria-labelledby="t-rw">
     <h2 class="rm-h" id="t-rw">Staň sa súčasťou svorky <span>spokojných zákazníkov</span></h2>
     <div class="rw-wrap" data-reviews tabindex="0" aria-label="Recenzie zákazníkov (posúvajú sa samy, pri prejdení myšou sa zastavia)"></div>
@@ -1096,6 +1110,7 @@
 <script src="icons.js"></script>
 <script src="engine.js"></script>
 <script src="radar.js"></script>
+<script src="compare.js"></script>
 <script src="kviz.js"></script>
 <script src="reviews.js"></script>
 <script src="site.js"></script>

@@ -378,6 +378,7 @@
 
     $("r-pack").src = p.img;
     $("r-pack").alt = "Vrece Granula: " + p.name;
+    if (window.GranulaCompare) GranulaCompare.render($("r-compare"), p.id);
     paintBag(r);
   }
   /* „Netoleruje tento proteín?“ — receptúry bez mäsa súčasnej, porovnanie a zmena */
