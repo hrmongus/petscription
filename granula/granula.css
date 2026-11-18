@@ -74,6 +74,12 @@ h1,h2,h3,p{margin:0}
 .btn-line{background:transparent;color:var(--n);font-weight:600;text-transform:none;letter-spacing:0}
 .btn-line:hover{background:var(--n);color:var(--m)}
 .btn:disabled,.btn[aria-disabled="true"]{opacity:.4;cursor:not-allowed}
+/* dotykové obrazovky: hover farba neostane „zaseknutá“ po ťuknutí */
+@media (hover:none){
+  .btn-o:hover{background:var(--o);color:var(--n);border-color:var(--n)}
+  .btn-k:hover{background:var(--k);color:var(--m);border-color:var(--k)}
+  .btn-n:hover{background:var(--n);color:var(--o);border-color:var(--n)}
+}
 .btn-sm{min-height:46px;padding:12px 20px;font-size:14px}
 /* textový odkaz: Kobalt s 2px podčiarknutím rovnakej farby */
 .link-under{font-weight:700;font-size:15px;color:var(--k);text-decoration:none;border-bottom:2px solid currentColor;padding-bottom:2px}

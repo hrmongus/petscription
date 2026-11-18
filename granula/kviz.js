@@ -16,13 +16,14 @@
   /* ---------------- stav ---------------- */
   var KEY = "granula-quiz";
   var BLANK = { dogname: "", sex: "", breed: "krizenec-stredny", kg: 17, years: "", months: "", weeks: "",
-    activity: "", neutered: "", pregnant: "", body: "", focus: [], bag: "", plan: "mesiac", ordered: false, recipe: "", recipeFor: "", bagKey: "" };
+    activity: "", neutered: "", pregnant: "", body: "", focus: [], breedSet: false, bag: "", plan: "mesiac", ordered: false, recipe: "", recipeFor: "", bagKey: "" };
   var state = JSON.parse(JSON.stringify(BLANK));
   try { Object.assign(state, JSON.parse(sessionStorage.getItem(KEY)) || {}); } catch (e) {}
-  if (!(state.plan in E.PARAMS.plans)) state.plan = "mesiac"; // napr. zrušená možnosť „na 3 mesiace“
+  if (!(state.plan in E.PARAMS.plans)) state.plan = "mesiac";
+  if (state.breed !== BLANK.breed) state.breedSet = true; // starší uložený stav bez príznaku // napr. zrušená možnosť „na 3 mesiace“
   // dokončené odpovede si pamätáme aj po zatvorení prehliadača (len v tomto prehliadači, max. 3 psy)
   var SAVED_KEY = "granula-psy";
-  var ANSWERS = ["dogname", "sex", "breed", "kg", "years", "months", "weeks", "activity", "neutered", "pregnant", "body", "focus", "bag", "bagKey", "plan", "recipe", "recipeFor"];
+  var ANSWERS = ["dogname", "sex", "breed", "breedSet", "kg", "years", "months", "weeks", "activity", "neutered", "pregnant", "body", "focus", "bag", "bagKey", "plan", "recipe", "recipeFor"];
   function savedDogs() {
     try { var l = JSON.parse(localStorage.getItem(SAVED_KEY)); return Array.isArray(l) ? l : []; } catch (e) { return []; }
   }
@@ -119,6 +120,7 @@
     blist.hidden = true; bq.setAttribute("aria-expanded", "false"); bwrap.classList.remove("is-open"); setActive(-1);
   }
   function pickBreed(b) {
+    state.breedSet = true; // plemeno vybrané (aj kríženec): os Veľkosť granule sa odomkne
     sel.value = b.id;
     sel.dispatchEvent(new Event("change", { bubbles: true }));
     closeList(); paintBreed();
@@ -183,6 +185,7 @@
   /* ---------------- krok 6: exkluzívne „Nič konkrétne“ ---------------- */
   quiz.addEventListener("change", function (e) {
     var t = e.target;
+
     if (t.name === "focus") {
       var boxes = quiz.querySelectorAll('input[name="focus"]');
       if (t.value === "nic" && t.checked) boxes.forEach(function (b) { if (b !== t) b.checked = false; });
@@ -211,6 +214,7 @@
     save();
     var err = quiz.querySelector('[data-err="' + current + '"]');
     if (err && valid(current)) err.hidden = true;
+    profChange();
   }
   /* pokračovať s uloženým psom */
   var PAW = '<svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16.5" rx="5.2" ry="4.3"/><ellipse cx="5.2" cy="10.6" rx="2.2" ry="2.8"/><ellipse cx="9.3" cy="6.2" rx="2.2" ry="2.9"/><ellipse cx="14.7" cy="6.2" rx="2.2" ry="2.9"/><ellipse cx="18.8" cy="10.6" rx="2.2" ry="2.8"/></svg>';
@@ -230,7 +234,7 @@
     var d = all.filter(function (x) { return x.dogname === name; })[0];
     if (t.dataset.forget) { storeDogs(all.filter(function (x) { return x !== d; })); paintResume(); return; }
     if (!d) return;
-    Object.assign(state, d, { ordered: false });
+    Object.assign(state, d, { ordered: false, breedSet: true });
     fill(); save();
     go(firstInvalid() || "vysledok");
   });
@@ -252,6 +256,8 @@
     paintConditional();
     paintResume();
   }
+  // zameranie: zapamätať, na čo sa kliklo, skôr než sa prepočíta profil
+  quiz.addEventListener("input", function (e) { if (e.target.name === "focus") noteFocus = e.target.checked ? e.target.value : ""; }, true);
   quiz.addEventListener("input", read);
 
   // meno v nominatíve sa dá vložiť bez skloňovania („Kto je Bruno?“)
@@ -554,6 +560,55 @@
   }
 
   /* ---------------- smerovanie cez #hash ---------------- */
+
+  /* ---------------- profil psa (radar) ----------------
+     Hodnoty len z E.profilPsa(); graf nikdy neukazuje receptúry. */
+  var profCard = $("prof"), profHome = $("prof-home"), profCh = $("prof-ch");
+  var radar = new GranulaRadar($("prof-radar"), { axes: E.PROFILE_AXES });
+  var lastProf = null, noteFocus = "";
+  var NOTE_ONLY = { kby: "kĺby", srst: "srsť a koža", imunita: "imunita", vyberavy: "vyberavý jedák", vaha: "váha" };
+  var mobileQ = window.matchMedia("(max-width:900px)");
+  function krokNo(id) { var i = STEPS.indexOf(id); return i !== -1 ? i + 1 : (id === "vysledok" ? 7 : 0); }
+  function profNow() { return E.profilPsa(state, krokNo(current), params); }
+  function placeProf() {
+    var scr = screens[current], slot = null;
+    if (scr && STEPS.indexOf(current) !== -1) slot = scr.querySelector(mobileQ.matches ? "[data-prof-m]" : "aside.side-prof");
+    if (current === "vysledok") slot = scr.querySelector("[data-prof-res]");
+    (slot || profHome).appendChild(profCard);
+  }
+  // odpoveď v aktuálnom kroku: graf sa hneď pohne a riadok povie, čo sa zmenilo
+  // jeden klik vyvolá „input“ aj „change“: spojiť do jednej zmeny
+  var profPending = false;
+  function profChange() {
+    if (profPending) return;
+    profPending = true;
+    setTimeout(function () { profPending = false; profRun(); }, 0);
+  }
+  function profRun() {
+    if (krokNo(current) < 1 || krokNo(current) > 6) return;
+    var after = profNow();
+    if (current !== "krok-1" && lastProf) {
+      var msg = GranulaRadar.describe(lastProf, after);
+      // kĺby, srsť, imunita…: na graf nič nepridávajú, len poznámku vo výsledku
+      if (NOTE_ONLY[noteFocus]) msg = "Profil sa nezmenil · " + NOTE_ONLY[noteFocus] + (noteFocus === "kby" ? " pridajú" : " pridá") + " len poznámku";
+      profCh.textContent = msg;
+    }
+    noteFocus = "";
+    radar.update(after); lastProf = after;
+  }
+  // presun medzi krokmi: riadok sa nemení (okrem začiatku a výsledku)
+  function profRoute() {
+    placeProf();
+    var k = krokNo(current);
+    if (!k) return;
+    var after = profNow();
+    if (k === 1 && !lastProf) profCh.textContent = "Odpovedz na prvú otázku";
+    else if (k === 7) profCh.textContent = "Hotovo · profil je kompletný";
+    else if (!lastProf) profCh.textContent = "";
+    radar.update(after); lastProf = after;
+  }
+  (mobileQ.addEventListener ? mobileQ.addEventListener.bind(mobileQ, "change") : mobileQ.addListener.bind(mobileQ))(placeProf);
+
   var current = null;
   var screens = {};
   document.querySelectorAll("[data-screen]").forEach(function (s) { screens[s.dataset.screen] = s; });
@@ -577,6 +632,7 @@
     if (id === "vysledok") renderResult();
     if (id === "objednavka") { renderOrder(); shipUI(); }
     if (id === "hotovo") renderDone();
+    profRoute();
     window.scrollTo(0, 0);
     var h = screens[id].querySelector(".q-title");
     if (h) h.focus({ preventScroll: true });

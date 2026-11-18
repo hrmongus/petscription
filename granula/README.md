@@ -10,7 +10,8 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 | `suroviny.html` | podstránka Suroviny | Suroviny |
 | `granule-na-mieru.html` | funkčný dotazník: 6 krokov (meno a pohlavie, plemeno s vyhľadávaním, váha a vek, deň, kastrácia a postava, zameranie) → miešanie → výsledok → objednávka → hotovo (smerovanie cez `#krok-1` … `#hotovo`) | Formulár 1–5 + nový krok s menom, Vyberáme granule, Výsledok, Checkout, Hotovo |
 | `admin-vypocet.html` | dočasná kontrolná stránka výpočtu (všetky otázky, vhodnosť, pravidlá, dávka krok za krokom, parametre, katalóg) | |
-| `engine.js` | výber granúl a dávka; jediný zdroj pravdy | |
+| `engine.js` | výber granúl, dávka a profil psa pre graf; jediný zdroj pravdy | |
+| `radar.js` | radarový graf „Profil tvojho psa“ (dotazník aj kontrolná stránka) | |
 | `kviz.js` | ovládanie dotazníka | |
 | `granula.css` | spoločné tokeny a komponenty (logo-nálepka, tlačidlá, foto s posunutým farebným poľom, pásky, karty mäsa, pätička) | |
 | `icons.js` | ikony surovín z návrhu; `<span data-icon="jelen" data-ink="#F4EBE2">` | |
@@ -28,6 +29,14 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 - `BASE_URL` v `blog/build.py` (kanonické adresy, sitemap) je zatiaľ `https://granula.sk/granula`; upraviť podľa skutočnej domény.
 - Obrázky: hero (`hero`), fotka autora (`author_photo`, `img/autori/`), obrázky v texte `![alt](cesta)`, grafy `::: graf` a ponuky k téme `::: ponuka` (syntax v `blog/CLAUDE.md`). Fotky článkov patria do `img/blog/<slug>/`. Zástupné obrázky (`placeholder`) a chýbajúca fotka autora blokujú publikovanie.
 - `blog/_src/vzor-struktury.md` je vzorový koncept; po prvom skutočnom článku zmazať.
+
+## Profil psa (radar v dotazníku)
+
+- Vedľa otázok (desktop vpravo, mobil hore pod lištou krokov) je graf „Profil tvojho psa“ so 6 osami: Energia, Bielkoviny, Tuk, Jednoduché zloženie, Rast, Veľkosť granule. Ukazuje **potreby psa, nikdy receptúry**; tie sú až vo výsledku. Vo výsledku je graf kompletný (všetky osi odomknuté).
+- Hodnoty počíta `engine.js` → `profilPsa(odpovede, krok)` z rovnakých odvodených údajov ako odporúčanie (veľkosť z tabuľky plemien, fáza, násobok RER cez spoločnú `factorFor()`, príznaky). Kreslí `radar.js`. Kontrola čísel: `admin-vypocet.html`, sekcia 1b.
+- Os je zamknutá (stred, sivá, prerušovaná), kým nie je zodpovedaný jej krok: veľkosť granule → plemeno, rast → vek, energia a bielkoviny → bežný deň, tuk → kastrácia/postava, zloženie → zameranie. Odpovede z neskorších krokov sa nepočítajú (návrat späť). Riadok nad grafom hovorí, čo sa zmenilo.
+- Hodnoty osí sú návrh na zobrazenie smeru potreby, nie výživové pravidlo; neoveril ich veterinár.
+- Na mobile je navigácia krokov (Späť / Ďalej) stále na spodnej lište. Fotky a „Vedel si?“ z bočných panelov sú zatiaľ odstránené.
 
 ## Vyhľadávanie plemena (krok 2)
 
