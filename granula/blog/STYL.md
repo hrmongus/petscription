@@ -63,7 +63,7 @@ Najväčší problém prvých konceptov (review 2026-11-18): text znel ako doslo
 
 - **Ponuka predáva prínos, nie ovládanie dotazníka.** Nepíš názvy volieb ani tlačidiel („zaškrtni Nesedí mu každé mäso“, „cez Netoleruje tento typ proteínu porovnáš…“). Napíš, čo majiteľ získa (napr. „Granule vyberieme podľa toho, čo tvoj pes potrebuje, a dennú dávku spočítame na gramy.“). Prínos musí byť pravdivý: nesľubuj funkciu, ktorú dotazník nemá. Štítok ponuky je „Granule na mieru“ (robí build). (review 2026-11-18)
 - **Ponuky:** 1 v prvej polovici článku (za sekciou, s ktorou súvisí) + záverečná pod zhrnutím (build ju dáva nad zdroje). Viac nie; na konci článku je ich málokto uvidí. (review 2026-11-18)
-- Obrázok produktu v ponuke len vtedy, keď presne sedí s textom ponuky (monoproteín → len receptúra s `monoprotein: true`). Inak bez obrázka produktu. (redakcia, 2026-11-18)
+- **Každá ponuka má vizuál, ktorý zaujme.** Bez `obrazok:` ho build doplní sám: vejár troch vreciek granúl (nesľubuje konkrétnu receptúru). Vlastný `obrazok:` (konkrétne vrecko, grafika) daj len vtedy, keď presne sedí s textom ponuky (monoproteín → len receptúra s `monoprotein: true`). (používateľ + redakcia, 2026-11-18)
 - Ponuka nesľubuje konkrétnu receptúru, ak ju dotazník nemusí vybrať (pravidlá R1–R10 majú poradie). (redakcia, 2026-11-18)
 
 ## Čo nerobiť
@@ -84,3 +84,4 @@ _Sem zapisuj všeobecný feedback v poradí, ako prišiel: dátum, čo používa
 
 - **2026-11-18, review F6 (ručné poznámky v PDF + správa):** „Najväčší problém je, že to znie ako doslovný preklad z angličtiny, ťažko sa to číta, niektoré vety nedávajú zmysel. Treba to skorigovať v slovenčine.“ Ďalej: titulok je len pracovný názov z backlogu; „Krátka odpoveď“ → „Sumár“; „láp“ → „labiek“; kľúčové body zjednodušiť; percentá na začiatok, „až“ → pomlčka; technikálie do poznámok pod čiarou; zvýrazniť najdôležitejšie; ponuka bez názvov volieb dotazníka, štítok „Granule na mieru“; záverečná ponuka nad zdroje; história zmien zo stránky preč; dlhý článok s viacerými ponukami málokto dočíta. → sekcie Jazyk, Nadpis, Štruktúra, Obrázky/ponuky vyššie.
 - **2026-11-18, odpovede na otvorené otázky:** v článku o čerstvom mäse vyhodiť vetu o význame „čerstvé“ (stret so schváleným tvrdením); „je“ namiesto „žerie“; väčšinou „psa“, občas „psíka“; viditeľnú históriu zmien nevracať; v chate spomínať články názvom. → Tón a hlas, Čo nerobiť, Komunikácia.
+- **2026-11-18:** „Ten offer vždy potrebuje vizuál ako vrecko granúl alebo grafiku alebo niečo, čo zaujme.“ → predvolený vejár vreciek v builde, pravidlo v Obrázky, grafy, ponuky.

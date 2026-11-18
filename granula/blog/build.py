@@ -275,12 +275,19 @@ def chart_html(d):
             % (inline(d.get("nazov", "")), html.escape(d.get("os", "Položka")), html.escape(d.get("hodnota", unit or "Hodnota")), trs, note, src))
 
 
+OFFER_BAGS = ["hovadzie-morka-jahna-s-ryzou", "morka-hus-kacica-s-tekvicou", "jahna-s-batatmi-cucoriedkami"]
+
+
 def offer_html(d, pre, end=False):
     """Ponuka k téme článku. Mimo textu sekcie (nepočíta sa do slov ani citácií)."""
     link = d.get("odkaz") or "granule-na-mieru.html"
     href = link if re.match(r"^(https?:|#)", link) else pre + link
     img = d.get("obrazok", "")
-    pic = ('<div class="bl-offer-img"><img src="%s%s" alt="" loading="lazy"></div>' % (pre, html.escape(img))) if img and not is_placeholder(img) else ""
+    if img and not is_placeholder(img):
+        pic = '<div class="bl-offer-img"><img src="%s%s" alt="" loading="lazy"></div>' % (pre, html.escape(img))
+    else:  # predvolený vizuál: vejár vreciek, nesľubuje konkrétnu receptúru
+        pic = '<div class="bl-offer-img bl-offer-bags" aria-hidden="true">%s</div>' % "".join(
+            '<img class="b%d" src="%simg/produkty/%s.webp" alt="" loading="lazy">' % (i, pre, f) for i, f in enumerate(OFFER_BAGS))
     tag = "section" if end else "aside"
     return ('<%s class="bl-offer%s%s" aria-label="Ponuka Granula"><div class="bl-offer-in"><span class="bl-offer-k">%s</span><p class="bl-offer-h">%s</p><p>%s</p>'
             '<div><a class="btn btn-o" href="%s">%s</a></div></div>%s</%s>'
