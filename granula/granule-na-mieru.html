@@ -497,6 +497,101 @@
   .split .q-nav .next{min-height:48px;padding:12px 22px}
   .q-body{justify-content:flex-start}
 }
+
+/* ---------- výsledok (návrh „výsledok desktop / mobil“) ---------- */
+.screen.on.res2{flex-direction:column}
+.rh{background:var(--k);color:var(--m);padding:28px 80px 48px;display:flex;flex-direction:column;gap:20px}
+.rh-top{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.rh-top .logo{font-size:26px;padding:5px 9px 4px}
+.rh-edit{font-weight:700;font-size:15px;color:var(--m);text-decoration:underline;text-underline-offset:4px}
+.rh-edit:hover{color:var(--m);opacity:.8}
+.rh-grid{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:56px;align-items:center}
+.rh-pack{position:relative;height:min(460px,56vh);display:flex;align-items:center;justify-content:center}
+.rh-pack img{height:100%;width:auto}
+.rh-badge{position:absolute;right:8%;bottom:9%;width:96px;height:96px;background:var(--o);color:var(--n);border:2px solid var(--n);transform:rotate(5deg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+.rh-badge b{font-size:40px;font-weight:900}
+.rh-badge b.long{font-size:26px}
+.rh-badge span{font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.rh-copy{display:flex;flex-direction:column;gap:18px;min-width:0}
+.rh-kick{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.rh-name{font-size:clamp(34px,4.6vw,64px);line-height:1;color:var(--m);text-wrap:balance}
+.rh-name:focus{outline:none}
+.rh-why{font-size:16px}
+.rh-chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.rh-chips li{display:flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border:2px solid var(--n);background:var(--ml);color:var(--n);font-size:14px;font-weight:700}
+.rh-chips li b{font-weight:900}
+.rh-ico{width:28px;height:28px;flex:none;border:2px solid var(--n);background:var(--m);color:var(--m);display:flex;align-items:center;justify-content:center}
+.rh-ico svg{width:20px;height:20px}
+.rh-ico.g{color:var(--k);font-size:13px;font-weight:900}
+.rh .swap-q{color:var(--m);font-weight:600;border-bottom-color:var(--m)}
+.rh .swap-q:hover{color:var(--m);opacity:.8}
+.rh .swap-note{color:var(--m)}
+.rh .swap-note button{color:var(--m)}
+.rh .swap-list button small{color:var(--n)}
+.rh .swap-list button[aria-pressed="true"]{border-color:var(--n)}
+.rh .swap-cmp{color:var(--n)}
+.rm{padding:48px 80px 64px;display:flex;flex-direction:column;gap:32px;max-width:1120px;width:100%}
+.rm-bags{display:flex;flex-direction:column;gap:16px}
+.rm-h{font-size:28px;font-weight:900;text-transform:uppercase}
+.rm-opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding-top:6px}
+.ro{position:relative;display:flex;flex-direction:column;gap:10px;padding:20px 22px;border:2px solid var(--n);background:var(--ml);color:var(--n);min-height:160px;cursor:pointer}
+@media (hover:hover){.ro:hover{border-color:var(--k)}}
+.ro-box{order:0}.ro-kg{order:1}.ro-price{order:2}.ro-days{order:3}.ro-save{order:4}
+.ro input{position:absolute;opacity:0;pointer-events:none}
+.ro:has(input:checked){background:var(--k);color:var(--m);border-color:var(--n)}
+.ro:has(input:focus-visible){outline:3px solid var(--n);outline-offset:2px}
+.ro-head{display:flex;align-items:center;gap:12px}
+.ro-box{width:22px;height:22px;flex:none;border:2px solid currentColor;display:flex;align-items:center;justify-content:center}
+.ro:has(input:checked) .ro-box::after{content:"";width:10px;height:10px;background:var(--m)}
+.ro-kg{font-size:22px;font-weight:900;text-transform:uppercase;margin-top:-34px;padding-left:34px}
+.ro-price{font-size:32px;font-weight:900;line-height:1}
+.ro-days{font-size:14px}
+.ro-save{align-self:flex-start;background:var(--n);color:var(--m);font-size:12px;font-weight:800;padding:4px 8px}
+.ro:has(input:checked) .ro-save{background:var(--m);color:var(--n)}
+.ro-rec{position:absolute;right:-10px;top:-16px;background:var(--o);color:var(--n);font-weight:900;text-transform:uppercase;line-height:1;transform:rotate(3deg);font-size:14px;padding:8px 12px 7px}
+.ro-txt{display:contents}
+.rm-pay{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0;border-top:2px solid var(--n);border-bottom:2px solid var(--n)}
+.rm-price{display:flex;flex-direction:column;gap:4px}
+.rm-price b{font-size:30px;font-weight:900}
+.rm-price span{font-size:14px}
+.rm-cta{min-height:58px;padding:16px 34px;font-size:17px}
+.rm-facts details{border-bottom:2px solid var(--n);padding:14px 0}
+.rm-facts summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;font-weight:700;font-size:16px}
+.rm-facts summary::-webkit-details-marker{display:none}
+.rm-facts summary:hover{color:var(--k)}
+.rm-facts summary i{font-style:normal;font-weight:900;font-size:20px;line-height:1;transition:transform .2s ease}
+.rm-facts details[open] summary i{transform:rotate(45deg)}
+.rm-facts p{margin-top:10px;font-size:14px;line-height:1.55}
+.rm-facts .feed-rows{max-width:480px}
+@media (max-width:1100px){.rh,.rm{padding-left:32px;padding-right:32px}.rh-grid{gap:32px;grid-template-columns:minmax(0,340px) minmax(0,1fr)}}
+@media (max-width:760px){
+  .rh{padding:18px 16px 26px;gap:16px}
+  .rh-top .logo{font-size:20px}
+  .rh-edit{font-size:14px}
+  .rh-grid{grid-template-columns:minmax(0,1fr);gap:16px}
+  .rh-pack{height:260px}
+  .rh-badge{width:68px;height:68px;right:14%;bottom:6%}
+  .rh-badge b{font-size:28px}.rh-badge b.long{font-size:18px}.rh-badge span{font-size:10px}
+  .rh-copy{gap:14px}
+  .rh-kick{font-size:11px}
+  .rh-name{font-size:32px;line-height:1.02}
+  .rh-chips{gap:8px}
+  .rh-chips li{font-size:13px}
+  .rh-ico{width:24px;height:24px}.rh-ico svg{width:18px;height:18px}
+  .rm{padding:26px 16px 32px;gap:22px}
+  .rm-h{font-size:22px}
+  .rm-opts{grid-template-columns:minmax(0,1fr);gap:12px}
+  .ro{flex-direction:row;align-items:center;gap:14px;padding:16px;min-height:0}
+  .ro-txt{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}
+  .ro-kg{font-size:20px;margin:0;padding:0}
+  .ro-price{font-size:20px;order:3}
+  .ro-days{font-size:13px}
+  .rm-pay{border:0;padding:0;gap:14px}
+  .rm-price{flex:none;gap:2px}.rm-price b{font-size:22px}.rm-price span{font-size:12px}
+  .rm-cta{flex:1;padding:14px 16px;font-size:16px}
+  .rm-facts summary{font-size:15px}
+}
 @media (prefers-reduced-motion:reduce){.drop{animation:none;opacity:1}}
 </style>
 </head>
@@ -795,80 +890,57 @@
 </section>
 
 <!-- ============ VÝSLEDOK ============ -->
-<section class="screen split res" data-screen="vysledok" data-title="Tvoje granule na mieru — Granula">
-  <div class="pane">
-    <div class="topline">
+<section class="screen res2" data-screen="vysledok" data-title="Tvoje granule na mieru — Granula">
+  <header class="rh on-brand">
+    <div class="rh-top">
       <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
-      <a class="edit" href="#krok-1">Upraviť odpovede</a>
+      <a class="rh-edit" href="#krok-1">Upraviť odpovede</a>
     </div>
-    <div class="kicker" style="margin-top:8px" id="r-kicker">Tvoje granule na mieru</div>
-    <h1 class="display q-title" tabindex="-1">Hotovo. <span>Granule sú vybrané.</span></h1>
-    <div class="plabel"><span class="t">Receptúra:</span><h2 class="display pname" id="r-name"></h2></div>
-    <!-- vrece len na mobile (na desktope je v bočnom paneli), suroviny pod ním -->
-    <div class="pack-inline" aria-hidden="true"><div class="pack-stage"><img class="pack" id="r-pack-m" src="" alt="" width="896" height="1200"></div><span class="sticker st-o" id="r-stage-m">Na mieru</span></div>
-    <div class="pack-chips" id="r-chips" aria-hidden="true"></div>
-    <div class="swap" id="r-swap">
-      <p class="swap-note" id="swap-note" hidden></p>
-      <button type="button" class="swap-q" id="swap-q" aria-expanded="false" aria-controls="swap-panel"></button>
-      <div class="swap-panel" id="swap-panel" hidden>
-        <div class="swap-list" id="swap-list" role="group" aria-label="Ostatné receptúry"></div>
-        <div class="swap-cmp" id="swap-cmp" hidden></div>
+    <div class="rh-grid">
+      <div class="rh-pack">
+        <img id="r-pack" src="" alt="" width="896" height="1200">
+        <span class="rh-badge" aria-hidden="true"><b id="r-badge-kg">4</b><span>kg</span></span>
+      </div>
+      <div class="rh-copy">
+        <div class="rh-kick" id="r-kicker">Hotovo · granule sú vybrané</div>
+        <h1 class="display rh-name" id="r-name" tabindex="-1"></h1>
+        <p class="rh-why" id="r-why" hidden></p>
+        <ul class="rh-chips" id="r-chips" aria-label="Hlavné suroviny a denná dávka"></ul>
+        <div class="swap" id="r-swap">
+          <p class="swap-note" id="swap-note" hidden></p>
+          <button type="button" class="swap-q" id="swap-q" aria-expanded="false" aria-controls="swap-panel"></button>
+          <div class="swap-panel" id="swap-panel" hidden>
+            <div class="swap-list" id="swap-list" role="group" aria-label="Ostatné receptúry"></div>
+            <div class="swap-cmp" id="swap-cmp" hidden></div>
+          </div>
+        </div>
       </div>
     </div>
-    <p class="why" id="r-why"></p>
-    <ul class="sr-only" id="r-recipe" aria-label="Hlavné suroviny"></ul>
-    <div class="kpis">
-      <div><b id="r-dose"></b><span>denná dávka</span></div>
-      <div><b id="r-macro"></b><span>bielkoviny / tuk</span></div>
-      <div><b id="r-month"></b><span>za mesiac</span></div>
+  </header>
+  <main class="rm" id="r-main">
+    <div class="rm-bags">
+      <h2 class="rm-h" id="t-bag">Vyber veľkosť vreca</h2>
+      <div class="rm-opts" role="radiogroup" aria-labelledby="t-bag" id="r-bags"></div>
     </div>
-    <details class="feed">
-      <summary><span class="ft">Ako kŕmiť prvé 2 týždne?</span><i aria-hidden="true">+</i></summary>
-      <p>Štartovacia dávka je vypočítaná na mieru. Každý pes je ale originál: prvé 2 týždne ho pravidelne váž a dávku podľa potreby dolaď o ±10&nbsp;%.</p>
-      <ul class="feed-rows">
-        <li><b>Drží váhu</b><span class="fv">nechaj <em id="f-keep"></em> / deň</span></li>
-        <li><b>Chudne</b><span class="fv">pridaj až na <em id="f-up"></em> / deň</span></li>
-        <li><b>Priberá</b><span class="fv">uber až na <em id="f-down"></em> / deň</span></li>
-      </ul>
-    </details>
-    <div class="prof-res" data-prof-res></div>
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <div class="sub-lbl" id="t-bag">VRECE · POŠLEME HO SKÔR, NEŽ SA MINIE</div>
-      <div class="opts c3 bags" role="radiogroup" aria-labelledby="t-bag" id="r-bags" style="padding-top:12px"></div>
+    <div class="rm-pay">
+      <div class="rm-price"><b id="r-perday"></b><span>s predplatným</span></div>
+      <a class="btn btn-o rm-cta" href="#objednavka">K platbe →</a>
     </div>
-    <div class="facts" id="r-facts">
+    <div class="rm-facts">
       <details><summary>Zloženie<i aria-hidden="true">+</i></summary><p id="f-comp"></p></details>
       <details><summary>Analytické zložky<i aria-hidden="true">+</i></summary><p id="f-anal"></p></details>
       <details><summary>Nutričné doplnkové látky v 1 kg<i aria-hidden="true">+</i></summary><p id="f-add"></p></details>
       <details><summary>Stopové prvky v 1 kg<i aria-hidden="true">+</i></summary><p id="f-trace"></p></details>
+      <details><summary>Ako kŕmiť prvé 2 týždne<i aria-hidden="true">+</i></summary>
+        <p>Štartovacia dávka je vypočítaná na mieru. Každý pes je ale originál: prvé 2 týždne ho pravidelne váž a dávku podľa potreby dolaď o ±10&nbsp;%.</p>
+        <ul class="feed-rows">
+          <li><b>Drží váhu</b><span class="fv">nechaj <em id="f-keep"></em> / deň</span></li>
+          <li><b>Chudne</b><span class="fv">pridaj až na <em id="f-up"></em> / deň</span></li>
+          <li><b>Priberá</b><span class="fv">uber až na <em id="f-down"></em> / deň</span></li>
+        </ul>
+      </details>
     </div>
-    <div class="paybar">
-      <div><b id="r-perday"></b><span>s predplatným · prvé vrece aj každé ďalšie</span></div>
-      <a class="btn btn-o next" href="#objednavka">K platbe →</a>
-    </div>
-  </div>
-  <aside class="side-blue on-brand pack-aside">
-  <div class="pa-sticky">
-    <div class="pa-top"><span class="sticker st-o" aria-hidden="true" id="r-stage">Na mieru</span><span class="pa-kicker">Tvoje vrece</span></div>
-    <div class="pa-stage">
-      
-      <div class="pack-stage"><img class="pack" id="r-pack" src="" alt="" width="896" height="1200"></div>
-      <span class="pa-badge" aria-hidden="true"><b id="r-badge-kg">9</b>kg</span>
-    </div>
-    <dl class="pa-facts" id="r-facts-side"></dl>
-    <div class="pa-pay"><div><b id="r-perday-side"></b><span>s predplatným</span></div><a class="btn btn-o" href="#objednavka">K platbe →</a></div>
-    </div>
-</aside>
-  <section class="rvs" data-carousel aria-labelledby="rv-title">
-    <div class="rvs-head"><h2 class="display" id="rv-title">Miska plná. <span>Chvost v pohybe.</span></h2>
-      <div class="rv-arrows"><button type="button" class="rv-arrow" aria-label="Predchádzajúce recenzie" data-carousel-prev>←</button><button type="button" class="rv-arrow dark" aria-label="Ďalšie recenzie" data-carousel-next>→</button></div></div>
-    <div class="rv-row" data-carousel-row tabindex="0" aria-label="Recenzie zákazníkov">
-      <article class="rv"><b class="display rv-name">Bruno</b><span class="rate" role="img" aria-label="5 z 5 hviezdičiek"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><div class="rv-pic"><img src="img/recenzia-bruno.jpg" alt="Bruno, kokršpaniel" width="736" height="981" loading="lazy"></div><span class="rv-recipe">Morka, hus &amp; kačica s tekvicou</span><blockquote>„Prvé granule, pri ktorých nevyberá. Miska je prázdna skôr, než si stihnem obuť topánky.“</blockquote><span class="rv-by">Tomáš, Bratislava</span></article>
-      <article class="rv"><b class="display rv-name">Fifi</b><span class="rate" role="img" aria-label="5 z 5 hviezdičiek"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><div class="rv-pic"><img src="img/recenzia-fifi.jpg" alt="Fifi, vyžla" width="736" height="920" loading="lazy"></div><span class="rv-recipe">Hovädzie s ryžou</span><blockquote>„Pri vyžle sledujeme každý gram. Dávka na gramy konečne sedí a váha sa ustálila.“</blockquote><span class="rv-by">Lucia, Košice</span></article>
-      <article class="rv"><b class="display rv-name">Ája a Bady</b><span class="rate" role="img" aria-label="5 z 5 hviezdičiek"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><div class="rv-pic"><img src="img/recenzia-aja-bady.jpg" alt="Ája a Bady, retrievery" width="1080" height="1350" loading="lazy" style="object-position:center 88%"></div><span class="rv-recipe">Hovädzie, morka &amp; jahňa s ryžou</span><blockquote>„Dva psy, dvoje granule, jedno doručenie. Srsť sa leskne a vrecko nestrážim.“</blockquote><span class="rv-by">Zuzana, Žilina</span></article>
-      <article class="rv"><b class="display rv-name">Kakao</b><span class="rate" role="img" aria-label="5 z 5 hviezdičiek"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><div class="rv-pic"><img src="img/recenzia-kakao.jpg" alt="Kakao, kokršpaniel" width="736" height="1104" loading="lazy"></div><span class="rv-recipe">Jahňa s batátmi &amp; čučoriedkami</span><blockquote>„Citlivé brucho a roky skúšania. S jahňacími granulami máme pokoj už tretí mesiac.“</blockquote><span class="rv-by">Martin, Trnava</span></article>
-    </div>
-  </section>
+  </main>
 </section>
 
 <!-- ============ OBJEDNÁVKA ============ -->
