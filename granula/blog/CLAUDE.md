@@ -4,6 +4,17 @@ Píšeš články na blog slovenskej značky granúl na mieru **Granula!**. Cie�
 
 Povinné čítanie pred prvým článkom: `granula/blog/GEO-TEMPLATE.md` (výskum a šablóna). Tento súbor je jeho prevedenie do praxe.
 
+**Píšeš pre dvoch čitateľov naraz: AI vyhľadávač a majiteľa psa.** Pravidlá GEO (krátka odpoveď, otázky v nadpisoch, čísla so zdrojom) slúžia obom. Navyše pre človeka: praktický návod, ktorý vie hneď použiť (koľko, kedy, čo urobiť), konkrétne príklady z bežného života so psom, krátke odseky, obrázky a grafy tam, kde pomáhajú, a jasná hranica „kedy k veterinárovi“. Text nesmie znieť ako robot ani ako leták. Kde sú dôkazy slabé alebo zmiešané, povedz to.
+
+## Backlog tém
+
+Všetky témy sú v `granula/blog/TEMY.md` (kategórie A–H, priority P1–P3) a každá má súbor v `_src/<slug>.md` so `status: namet` (polia `id`, `category`, `priority`, `brief`, `angle`). Build námety nekontroluje ani nepublikuje, redakcia ich ukazuje s tlačidlom na zadanie.
+
+- **Poradie:** P1 z kategórie F (Problémy: F1 prechod, F2 hnačka, F3 nechce jesť), potom P1 z A (Zloženie), potom ostatné P1, potom P2 a P3.
+- **Keď píšeš tému:** ten istý súbor doplň podľa `_template.md`, zmeň `status: draft` a nechaj `id`, `category`, `priority`. `brief` a `angle` môžeš zmazať. Slug nemeň, ak na to nie je dôvod.
+- `brief` je zadanie, nie fakty. Čísla v ňom (napr. „zhruba o 20–30 %, overiť“) over v primárnom zdroji, inak ich nepíš. „Uhol Granuly“ píš len tak, ako to naozaj je v `engine.js`, README a schválených tvrdeniach. Ak niečo z uhla nesedí (napr. plánovaný prechodový plán v zásielke), nepíš to ako fakt a spýtaj sa.
+- SEO magnety (H) s kalkulačkou alebo interaktívnym testom: napíš článok; nástroj je samostatná práca na webe, navrhni ho používateľovi.
+
 ## Postup
 
 1. **Výskum.** Zisti, čo ľudia reálne pýtajú (presné znenie otázky), a nájdi **primárne zdroje**: štúdie (PubMed, JAVMA, WSAVA, FEDIAF, NRC), oficiálne dokumenty, údaje výrobcu. Nie iné blogy. Každé číslo v článku musí mať zdroj. Ak číslo nevieš overiť, nepíš ho.
@@ -26,7 +37,10 @@ Frontmatter (podmnožina YAML, každá hodnota na jednom riadku, dlhý text cez 
 | `slug` | malé písmená bez diakritiky a pomlčky, napr. `kolko-granul-denne-pes` |
 | `status` | `draft` alebo `published` |
 | `description` | meta popis 120–160 znakov, priama odpoveď s číslom |
-| `author`, `author_bio` | meno a 1 veta, prečo mu veriť. Skutočného autora dodá používateľ; dovtedy nechaj zástupný text a upozorni na to. |
+| `author`, `author_bio` | meno a 1 veta, prečo mu veriť. **Každý článok môže mať iného autora**; meno, vetu a fotku dodá používateľ. Dovtedy nechaj zástupný text v `[…]` a upozorni na to (zástupný text blokuje publikovanie). |
+| `author_photo` | štvorcová fotka autora, `img/autori/<meno-priezvisko>.webp`. Kým ju nemáš, `placeholder` (blokuje publikovanie). |
+| `hero`, `hero_alt`, `hero_caption` | obrázok v hlavičke (16:9), cesta od `granula/` (`img/blog/<slug>/hero.webp` alebo existujúca fotka z `img/`). Bez fotky `placeholder` a v `hero_alt` presne opíš, čo má byť na fotke. |
+| `cta_title`, `cta_text`, `cta_button` (`cta_link`, `cta_image`) | záverečná ponuka napísaná k téme článku. Bez nich sa použije všeobecná. |
 | `published`, `updated` | RRRR-MM-DD |
 | `tldr` | **Krátka odpoveď, 40–60 slov.** Prvá veta = priama odpoveď. Žiadne „v tomto článku sa dozvieš“. Najcitovanejší blok článku. |
 | `key_points` | 3–5 bodov, spolu s `tldr` aspoň 3 čísla, posledný bod = najčastejšia chyba alebo mýtus |
@@ -35,13 +49,45 @@ Frontmatter (podmnožina YAML, každá hodnota na jednom riadku, dlhý text cez 
 
 Telo (markdown): `##` nadpisy sekcií, `###` podčasti, odseky, `**tučné**`, `*kurzíva*`, `[odkaz](url)`, zoznamy `-` a `1.`, tabuľky `| … |`, citát `>`. Žiadne HTML. Titulok `#` nepíš, robí ho build. Zdroje nepíš do tela, build ich vykreslí z `sources`.
 
+### Obrázky, grafy a ponuky
+
+- **Obrázok** (samostatný riadok): `![Čo je na fotke](img/blog/<slug>/subor.webp "Popis pod obrázkom")`. Cesta od `granula/`. Bez fotky napíš `placeholder` namiesto cesty a do alt textu presne, čo má byť na fotke (pes, situácia, detail), aby ju používateľ vedel nafotiť alebo vybrať. Zástupné obrázky blokujú publikovanie.
+- **Koľko:** hero + aspoň 1 obrázok alebo graf na každé 2 hlavné sekcie, najmenej 2. Obrázok dávaj tam, kde niečo ukazuje (porcia, obal, postava psa, surovina), nie ako dekoráciu. Existujúce fotky webu sú v `img/` (psy, suroviny, produkty) a smieš ich použiť, ak sedia.
+- **Graf** všade, kde článok porovnáva čísla (dávky podľa hmotnosti, energia, podiely, ceny). Vykreslí sa ako statický stĺpcový graf a zároveň tabuľka, takže ho AI prečíta. Každé číslo v grafe musí mať zdroj (`zdroj:`); čísla, ktoré nepoznáš, do grafu nedávaj.
+
+```
+::: graf
+nazov: Denná energia dospelého psa podľa hmotnosti
+jednotka: kcal
+os: Hmotnosť psa
+zdroj: NRC 2006
+zvyraznit: 20 kg
+10 kg | 400
+20 kg | 670
+:::
+```
+  (čísla v ukážke sú len ilustračné, nepreberaj ich)
+
+- **Ponuka uprostred článku**: 1, najviac 2 bloky `::: ponuka`, za sekciou, s ktorou súvisí. Musí nadväzovať na tému sekcie (článok o dávkach → „Dávku na gramy ti spočítame z hmotnosti, veku a aktivity“; o citlivom trávení → receptúra s jedným druhom mäsa), nie všeobecné „kúp granule“. Píš len to, čo Granula naozaj robí (`engine.js`, README) a schválené tvrdenia. Ponuka sa vykreslí mimo textu sekcie, nepočíta sa do slov a nenarúša citovateľnosť.
+
+```
+::: ponuka
+nadpis: Nechceš to rátať ručne?
+text: Z hmotnosti, veku, aktivity a postavy tvojho psa spočítame dennú dávku na gramy.
+tlacidlo: Spočítaj dávku pre svojho psa
+odkaz: granule-na-mieru.html
+obrazok: img/produkty/hovadzie-s-ryzou.webp
+:::
+```
+- **Záverečnú ponuku** prispôsob téme cez `cta_title`, `cta_text`, `cta_button`.
+
 ## Štruktúra tela (poradie)
 
 1. `## Čo je [pojem]?` prvá veta tučná vo forme **„[Pojem] je [kategória], ktorá [čo robí] pre [koho].“**
 2. **3–6 hlavných sekcií.** Nadpis H2 = otázka, ktorú ľudia reálne píšu. **200–400 slov**, jedna myšlienka. **Prvá veta tučná = odpoveď na nadpis.** Aspoň 1 číslo so zdrojom („Podľa [zdroj, rok] …“). Max. 1 citát experta s menom a funkciou.
 3. Podľa témy: porovnanie (`## A vs B: porovnanie` + tabuľka + 1 veta verdiktu), postup (`## Ako …: N krokov`, číslovaný zoznam, každý krok začína **tučným imperatívom**), `## Čo ukázali naše dáta` (len so skutočnými dátami od používateľa), `## Najčastejšie chyby pri …`.
 4. `## Časté otázky`, 3–6 otázok, ktoré nie sú v hlavných sekciách, tvar `**Otázka?** Odpoveď v 1–3 vetách.` (každá otázka samostatný odsek).
-5. `## Zhrnutie`, zoznam: hlavný záver, kedy áno / kedy nie, ďalší krok. Bez výzvy na nákup; výzvu ku konfigurátoru pridáva šablóna.
+5. `## Zhrnutie`, zoznam: hlavný záver, kedy áno / kedy nie, ďalší krok. Bez výzvy na nákup; záverečnú ponuku pridáva šablóna z `cta_*`.
 
 ## Pravidlá písania (GEO)
 
@@ -56,6 +102,10 @@ Telo (markdown): `##` nadpisy sekcií, `###` podčasti, odseky, `**tučné**`, `
 ## Hlas značky (dizajn systém Granula)
 
 - **Tykanie:** „tvoj pes“, „spočítaš“. Značka hovorí ako „my“.
+- Píšeme **„granule na mieru“**, nikdy „recept na mieru“ ani nič, čo naznačuje miešanie receptúr.
+- Receptúry pomenúvame **podľa mäsa** (presné názvy v `granula/README.md`, napr. „Jeleň & králik s batátmi“), nikdy Puppy, Energy a pod. **Nikdy neuvádzame počet receptúr.**
+- **Ponuka a výzva vedú vždy na dotazník** (`granule-na-mieru.html`), nie na konkrétny produkt.
+- **Konkurenciu nemenujeme.** Kritizujeme kategórie surovín a praktiky, nie značky.
 - Priateľsky a priamo, ako kamarát, ktorý rozumie psom a výžive. Nie laboratórium, nie batoľa. Odborne, ale ľudskými slovami.
 - **Nikdy:** pes hovoriaci v prvej osobe, zdrobneniny (psíček, mňamka, papať), vynútené slovné hry, superlatívy a žargón („superprémiová holistická výživa“), emoji.
 - Typografia: slovenské úvodzovky „…“, desatinná čiarka (2,4 kg), **nezalomiteľná medzera pred % a €** (build ju doplní sám).

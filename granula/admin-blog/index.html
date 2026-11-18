@@ -32,6 +32,11 @@ body{font-size:15px}
 .badge.blocked{background:var(--err);color:#fff;border-color:var(--err)}
 .badge.draft{background:var(--o)}
 .badge.example{background:var(--m)}
+.badge.namet{background:var(--m);border-style:dashed}
+.badge.p1{background:var(--n);color:var(--o);border-color:var(--n)}
+.idea dl{display:grid;grid-template-columns:140px minmax(0,1fr);gap:8px 16px;margin:0}
+.idea dt{font-weight:800}
+.idea dd{margin:0;line-height:1.5}
 .cnt-e{color:var(--err);font-weight:800}
 .cnt-w{font-weight:800}
 .posts button[aria-current="true"] .cnt-e{color:var(--m)}
@@ -98,6 +103,7 @@ table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
         <button type="button" class="chip-f" aria-pressed="false" data-f="draft">Koncepty</button>
         <button type="button" class="chip-f" aria-pressed="false" data-f="blocked">Zablokované</button>
         <button type="button" class="chip-f" aria-pressed="false" data-f="published">Publikované</button>
+        <button type="button" class="chip-f" aria-pressed="false" data-f="namet">Námety</button>
       </div>
       <ul class="posts" id="posts"></ul>
     </div>
@@ -131,7 +137,22 @@ table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
     get: function (k, d) { try { var v = localStorage.getItem("granula-blog:" + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
     set: function (k, v) { try { localStorage.setItem("granula-blog:" + k, JSON.stringify(v)); } catch (e) {} }
   };
-  var ST = { draft: "Koncept", published: "Publikované", blocked: "Zablokované" };
+  var ST = { draft: "Koncept", published: "Publikované", blocked: "Zablokované", namet: "Námet" };
+  function order(a, b) {
+    var ia = a.status === "namet", ib = b.status === "namet";
+    if (ia !== ib) return ia ? 1 : -1;
+    if (!ia) return (b.updated || "").localeCompare(a.updated || "");
+    var k = function (p) { var m = /^([A-Z])(\d+)/.exec(p.id || "") || ["", "Z", "99"]; return [p.priority || "P9", "FABCDEGHZ".indexOf(m[1]), +m[2]]; };
+    var x = k(a), y = k(b);
+    return x[0] < y[0] ? -1 : x[0] > y[0] ? 1 : x[1] < y[1] ? -1 : x[1] > y[1] ? 1 : x[2] - y[2];
+  }
+  function ideaPrompt(p) {
+    return "Napíš nový článok na blog Granula z backlogu: " + p.id + " „" + p.title + "“ (" + p.priority + ", " + p.category + ").\n" +
+      "Súbor: " + p.file + " (teraz námet; doplň ho podľa _template.md, zmeň na `status: draft`, nechaj id, category a priority).\n" +
+      "Čo musí článok pokryť: " + p.brief + "\n" + (p.angle ? "Uhol Granuly: " + p.angle + "\n" : "") +
+      "\nPostupuj presne podľa granula/blog/CLAUDE.md: najprv výskum s primárnymi zdrojmi, uhol Granuly píš len tak, ako to naozaj je (engine.js, README, schválené tvrdenia). " +
+      "Spusti `python3 granula/blog/build.py`, oprav všetky CHYBY, commitni a pushni. Pošli mi zhrnutie: slug, hlavná odpoveď, zdroje a čo z kontroly ostalo ako upozornenie.";
+  }
   var MANUAL = ["Fakty overené voči zdrojom", "Zdroje sú primárne (štúdie, oficiálne dokumenty)", "Obsahuje vlastné dáta alebo skúsenosť",
     "Tvrdenia o produkte sedia s dizajn systémom", "Indexované v Google Search Console", "Indexované v Bing Webmaster Tools",
     "Video verzia na YouTube", "Post na LinkedIn", "Zmienka na Reddite alebo v médiách"];
@@ -144,9 +165,10 @@ table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
   }
   function list() {
     var sel = location.hash.slice(1);
-    var shown = posts.filter(function (p) { return filter === "all" || p.status === filter; })
-      .sort(function (a, b) { return (b.updated || "").localeCompare(a.updated || ""); });
+    var shown = posts.filter(function (p) { return filter === "all" || p.status === filter; }).sort(order);
     $("posts").innerHTML = shown.length ? shown.map(function (p) {
+      if (p.status === "namet") return '<li><button type="button" data-slug="' + esc(p.slug) + '" aria-current="' + (p.slug === sel) + '"><b>' + esc(p.title) + "</b>" +
+        '<span class="row"><span class="badge namet">Námet</span><span class="badge' + (p.priority === "P1" ? " p1" : "") + '">' + esc(p.priority) + "</span><span>" + esc(p.id) + " · " + esc(p.category) + "</span></span></button></li>";
       var c = counts(p);
       return '<li><button type="button" data-slug="' + esc(p.slug) + '" aria-current="' + (p.slug === sel) + '"><b>' + esc(p.title) + "</b>" +
         '<span class="row"><span class="badge ' + p.status + '">' + ST[p.status] + "</span>" + (p.example ? '<span class="badge example">Vzor</span>' : "") +
@@ -188,6 +210,14 @@ table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
         '<div class="panel empty">' + (posts.length ? "Vyber článok vľavo." : "Zatiaľ žiadne články. Zadaj prvý cez „Nový článok“.") + "</div>";
       return;
     }
+    if (p.status === "namet") {
+      $("detail").innerHTML = '<div class="panel d-head"><div class="row" style="display:flex;gap:8px;flex-wrap:wrap"><span class="badge namet">Námet</span><span class="badge' + (p.priority === "P1" ? " p1" : "") + '">' + esc(p.priority) + "</span><span class=\"badge\">" + esc(p.id) + "</span></div>" +
+        "<h2>" + esc(p.title) + '</h2><div class="d-meta"><span>' + esc(p.category) + "</span><span>Súbor: <code>" + esc(p.file) + "</code></span></div></div>" +
+        '<div class="panel idea"><h2>Zadanie z backlogu</h2><dl><dt>Čo pokryť</dt><dd>' + esc(p.brief) + "</dd><dt>Uhol Granuly</dt><dd>" + esc(p.angle || "—") + "</dd></dl></div>" +
+        '<div class="panel"><h2>Poslať autorovi</h2><div class="acts"><button type="button" class="btn btn-o" id="i-copy">Kopírovať zadanie pre Claude</button><span class="copied" id="i-ok" hidden>Skopírované, vlož do chatu s autorom</span></div></div>';
+      $("i-copy").addEventListener("click", function () { copy(ideaPrompt(p), $("i-ok")); });
+      return;
+    }
     var c = counts(p), groups = { error: [], warn: [], info: [], ok: [] };
     p.lint.forEach(function (r) { (r.ok ? groups.ok : groups[r.level]).push(r); });
     var row = function (r, cls) {
@@ -210,11 +240,12 @@ table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
         '<span class="cnt-e">' + c.e + ' chýb</span><span class="cnt-w">' + c.w + " upozornení</span></div><div style=\"margin-top:12px\">" +
         grp("Chyby — blokujú publikovanie", groups.error, "error") + grp("Upozornenia", groups.warn, "warn") + grp("Odporúčania", groups.info, "info") +
         (groups.ok.length ? '<details class="okc"><summary>Splnené (' + groups.ok.length + ")</summary><ul class=\"checks\">" + groups.ok.map(function (r) { return row(r, "ok"); }).join("") + "</ul></details>" : "") + "</div></div>" +
-      '<div class="panel"><h2>Sekcie</h2><table class="secs"><thead><tr><th>Nadpis H2</th><th>Typ</th><th>Slová</th><th>Čísla</th><th>Otázka</th><th>Tučná 1. veta</th></tr></thead><tbody>' +
+      '<div class="panel"><h2>Sekcie</h2><table class="secs"><thead><tr><th>Nadpis H2</th><th>Typ</th><th>Slová</th><th>Čísla</th><th>Otázka</th><th>Tučná 1. veta</th><th>Vizuály</th></tr></thead><tbody>' +
         p.sections.map(function (s) {
           var main = s.kind === "main", lenBad = main && (s.words < 150 || s.words > 450);
           return "<tr><td>" + esc(s.title) + "</td><td>" + ({ main: "hlavná", definition: "definícia", faq: "otázky", summary: "zhrnutie", sources: "zdroje" })[s.kind] +
-            '</td><td class="num' + (lenBad ? " bad" : "") + '">' + s.words + '</td><td class="num' + (main && !s.numbers ? " bad" : "") + '">' + s.numbers + "</td><td>" + (s.question ? "✓" : "—") + "</td><td>" + (s.firstBold ? "✓" : (main || s.kind === "definition") ? '<span class="bad">—</span>' : "—") + "</td></tr>";
+            '</td><td class="num' + (lenBad ? " bad" : "") + '">' + s.words + '</td><td class="num' + (main && !s.numbers ? " bad" : "") + '">' + s.numbers + "</td><td>" + (s.question ? "✓" : "—") + "</td><td>" + (s.firstBold ? "✓" : (main || s.kind === "definition") ? '<span class="bad">—</span>' : "—") + "</td><td>" + (
+              [s.images ? s.images + "× obrázok" : "", s.charts ? s.charts + "× graf" : "", s.offers ? s.offers + "× ponuka" : ""].filter(Boolean).join(", ") || "—") + "</td></tr>";
         }).join("") + "</tbody></table></div>" +
       '<div class="panel"><h2>Ručná kontrola a distribúcia</h2><ul class="manual">' + MANUAL.map(function (m, i) {
           return '<li><label><input type="checkbox" data-m="' + i + '"' + (man[i] ? " checked" : "") + "> " + esc(m) + "</label></li>"; }).join("") + "</ul></div>" +
@@ -244,7 +275,7 @@ table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
       "Pošli mi zhrnutie: slug, hlavná odpoveď, zdroje a čo z kontroly ostalo ako upozornenie.", $("n-ok"));
   });
   window.addEventListener("hashchange", show);
-  if (!location.hash && posts.length) { var first = posts.slice().sort(function (a, b) { return (b.updated || "").localeCompare(a.updated || ""); })[0]; history.replaceState(null, "", "#" + first.slug); }
+  if (!location.hash && posts.length) { var first = posts.slice().sort(order)[0]; history.replaceState(null, "", "#" + first.slug); }
   show();
 })();
 </script>
