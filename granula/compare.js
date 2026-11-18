@@ -21,6 +21,24 @@
   ];
   // [obrázok, názov, krátky názov na mobil, podnadpis, %]
   var RECIPES = {
+    "morka-hus-kacica": {
+      name: "Morka, hus & kačica",
+      full: "Morka, hus a kačica s tekvicou",
+      bag: { src: D + "vrece-morka-hus-kacica.webp", w: 598, h: 1014, alt: "Rozrezané vrecko Granula Morka, hus a kačica s tekvicou: hydina, tekvica, ryža, pečeň, ovocie a bylinky" },
+      items: [
+        ["g-morka", "Morčacie mäso", null, null, 25],
+        ["g-hus", "Husacie mäso", null, null, 15],
+        ["g-tekvica", "Tekvica", null, null, 15],
+        ["g-ryza", "Ryža", null, null, 13],
+        ["g-bravcovy-tuk", "Kačací a bravčový tuk", null, null, 9],
+        ["g-kacka", "Kačacie mäso", null, null, 8],
+        ["g-maliny", "Ovocie, bylinky a funkčné zložky", "Ovocie a bylinky", "jablká, maliny, ľan, pestrec, hliva, rozmarín, petržlen, yucca, kvasnice, kolagén, chondroitín, glukozamín", 5],
+        ["g-pecen", "Kuracia pečeň", null, null, 3],
+        ["g-lososovy-olej", "Lososový olej", null, null, 3],
+        ["g-konope", "Konopná múka", null, null, 2],
+        ["g-vajcia", "Celé vajcia", null, null, 2]
+      ]
+    },
     "jelen-kralik": {
       name: "Jeleň & králik",
       full: "Jeleň a králik s batátmi",
