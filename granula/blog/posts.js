@@ -1,6 +1,6 @@
 /* vygenerované build.py — needitovať */
 window.GRANULA_POSTS = {
- "built": "2026-11-18 08:30",
+ "built": "2026-11-18 08:31",
  "base": "https://granula.sk/granula",
  "problems": [],
  "posts": [
@@ -2340,26 +2340,484 @@ window.GRANULA_POSTS = {
   {
    "slug": "preco-moj-pes-nechce-jest-nove-granule",
    "file": "granula/blog/_src/preco-moj-pes-nechce-jest-nove-granule.md",
-   "title": "Prečo môj pes nechce jesť nové granule?",
-   "status": "namet",
-   "wanted": "namet",
+   "title": "Prečo môj pes nechce jesť nové granule? Príčiny a čo robiť",
+   "status": "draft",
+   "wanted": "draft",
    "example": false,
-   "published": "",
-   "updated": "",
-   "author": "",
-   "authorPhoto": "",
-   "hero": "",
-   "words": 0,
-   "description": "",
+   "published": "2026-11-18",
+   "updated": "2026-11-18",
+   "author": "[Meno Priezvisko]",
+   "authorPhoto": "placeholder",
+   "hero": "placeholder",
+   "words": 1852,
+   "description": "Zdravý pes nové granule často odmieta zo strachu z novej potravy. V štúdii to odznelo do 8–9 dní. Bez jedla dlhšie ako 24 hodín patrí k veterinárovi.",
    "id": "F3",
    "category": "Problémy",
    "priority": "P1",
-   "brief": "Neofóbia vs. vyberavosť naučená maškrtami, chuťovosť (tuk, vôňa), zdravotné príčiny; 15-minútové pravidlo",
+   "brief": "",
    "angle": "",
-   "preview": null,
+   "preview": "../blog/nahlad/preco-moj-pes-nechce-jest-nove-granule/index.html",
    "live": null,
-   "lint": [],
-   "sections": []
+   "lint": [
+    {
+     "id": "title",
+     "level": "error",
+     "ok": true,
+     "msg": "Titulok je vyplnený",
+     "details": []
+    },
+    {
+     "id": "title-length",
+     "level": "warn",
+     "ok": true,
+     "msg": "Titulok má najviac 70 znakov (má 58)",
+     "details": []
+    },
+    {
+     "id": "title-year",
+     "level": "warn",
+     "ok": true,
+     "msg": "Rok v titulku len pri téme, ktorá sa mení, a len ak sedí s dátumom aktualizácie",
+     "details": []
+    },
+    {
+     "id": "description",
+     "level": "warn",
+     "ok": true,
+     "msg": "Meta popis má 120–160 znakov (má 149)",
+     "details": []
+    },
+    {
+     "id": "author",
+     "level": "error",
+     "ok": false,
+     "msg": "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)",
+     "details": []
+    },
+    {
+     "id": "author-photo",
+     "level": "error",
+     "ok": false,
+     "msg": "Fotka autora (author_photo, súbor v granula/img/autori/)",
+     "details": []
+    },
+    {
+     "id": "dates",
+     "level": "error",
+     "ok": true,
+     "msg": "Dátumy published a updated (RRRR-MM-DD), updated ≥ published",
+     "details": []
+    },
+    {
+     "id": "changelog",
+     "level": "warn",
+     "ok": true,
+     "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
+     "details": [
+      "2026-11-18: Prvá verzia"
+     ]
+    },
+    {
+     "id": "tldr",
+     "level": "error",
+     "ok": true,
+     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 52)",
+     "details": []
+    },
+    {
+     "id": "tldr-range",
+     "level": "warn",
+     "ok": true,
+     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 52)",
+     "details": []
+    },
+    {
+     "id": "tldr-intro",
+     "level": "error",
+     "ok": true,
+     "msg": "Krátka odpoveď začína priamou odpoveďou, nie úvodom („v tomto článku…“)",
+     "details": []
+    },
+    {
+     "id": "key-points",
+     "level": "error",
+     "ok": true,
+     "msg": "Aspoň 3 kľúčové body (má 5)",
+     "details": []
+    },
+    {
+     "id": "tldr-numbers",
+     "level": "warn",
+     "ok": true,
+     "msg": "Krátka odpoveď a kľúčové body obsahujú aspoň 3 čísla (majú 11)",
+     "details": []
+    },
+    {
+     "id": "definition",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcia „Čo je …?“ s definíciou vo forme „X je Y, ktoré Z“",
+     "details": []
+    },
+    {
+     "id": "sections",
+     "level": "warn",
+     "ok": true,
+     "msg": "3–6 hlavných sekcií (má 7)",
+     "details": []
+    },
+    {
+     "id": "h2-questions",
+     "level": "warn",
+     "ok": true,
+     "msg": "Aspoň polovica nadpisov H2 sú otázky (6 z 8)",
+     "details": [
+      "Neofóbia vs. naučená vyberavosť vs. zdravotný problém: porovnanie",
+      "Ako naučiť psa jesť nové granule: 7 krokov"
+     ]
+    },
+    {
+     "id": "section-length",
+     "level": "warn",
+     "ok": true,
+     "msg": "Hlavné sekcie majú 200–400 slov",
+     "details": []
+    },
+    {
+     "id": "first-sentence",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každá sekcia začína tučnou prvou vetou = odpoveď na nadpis",
+     "details": []
+    },
+    {
+     "id": "section-numbers",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každá hlavná sekcia má aspoň 1 číslo (ideálne so zdrojom)",
+     "details": []
+    },
+    {
+     "id": "standalone",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcie obstoja samy (žiadne „vyššie“, „ako sme spomenuli“, odsek začínajúci „Toto/To“)",
+     "details": []
+    },
+    {
+     "id": "hero",
+     "level": "warn",
+     "ok": true,
+     "msg": "Obrázok v hlavičke článku (hero, hero_alt)",
+     "details": []
+    },
+    {
+     "id": "images",
+     "level": "warn",
+     "ok": true,
+     "msg": "Obrázky v texte: aspoň 4 obrázky alebo grafy (1 na 2 hlavné sekcie), má 4",
+     "details": []
+    },
+    {
+     "id": "chart",
+     "level": "warn",
+     "ok": false,
+     "msg": "Aspoň 1 graf (blok ::: graf), keď článok porovnáva čísla",
+     "details": []
+    },
+    {
+     "id": "img-alt",
+     "level": "error",
+     "ok": true,
+     "msg": "Každý obrázok má popis (alt)",
+     "details": []
+    },
+    {
+     "id": "img-placeholder",
+     "level": "error",
+     "ok": false,
+     "msg": "Zástupné obrázky sú nahradené skutočnými (pred publikovaním)",
+     "details": [
+      "hero: Dospelý pes strednej veľkosti stojí nad plnou miskou nových granúl, ovoniava ich, ale neje; v pozadí kuchyňa, prirodzené denné svetlo",
+      "obrázok: Pes opatrne ovoniava jednu granulu na dlani majiteľa, telo trochu vzadu, uši nastražené; detailný záber",
+      "obrázok: Otvorené vrece granúl zrolované a zopnuté štipcom, uložené v suchej špajzi mimo slnka; vedľa čistá prázdna miska",
+      "obrázok: Veterinárka pri prehliadke pozerá psovi do papule na zuby a ďasná, pes sedí na vyšetrovacom stole",
+      "obrázok: Majiteľ odváži dennú dávku granúl na kuchynskej váhe, vedľa stojí miska a malá kôpka maškŕt odložená bokom"
+     ]
+    },
+    {
+     "id": "img-files",
+     "level": "error",
+     "ok": true,
+     "msg": "Súbory obrázkov existujú (cesta od granula/, napr. img/blog/<slug>/…)",
+     "details": []
+    },
+    {
+     "id": "offer-mid",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka uprostred článku, ktorá sedí k téme (blok ::: ponuka)",
+     "details": []
+    },
+    {
+     "id": "offer-fields",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka má nadpis a text",
+     "details": []
+    },
+    {
+     "id": "offer-link",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka vedie na dotazník (granule-na-mieru.html), nie na konkrétny produkt",
+     "details": []
+    },
+    {
+     "id": "offer-count",
+     "level": "warn",
+     "ok": true,
+     "msg": "Najviac 2 ponuky v texte (má 1), inak to pôsobí ako reklama",
+     "details": []
+    },
+    {
+     "id": "table",
+     "level": "info",
+     "ok": true,
+     "msg": "Porovnávacia tabuľka (odporúčané pri „X vs Y“)",
+     "details": []
+    },
+    {
+     "id": "steps",
+     "level": "info",
+     "ok": true,
+     "msg": "Postup krok za krokom (číslovaný zoznam)",
+     "details": []
+    },
+    {
+     "id": "own-data",
+     "level": "info",
+     "ok": false,
+     "msg": "Vlastné dáta alebo skúsenosť (najväčší diferenciátor)",
+     "details": []
+    },
+    {
+     "id": "faq",
+     "level": "warn",
+     "ok": true,
+     "msg": "Časté otázky: 3–6 otázok v tvare **Otázka?** odpoveď, odpoveď najviac 3 vety (má 4)",
+     "details": []
+    },
+    {
+     "id": "summary",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcia „Zhrnutie“ ako zoznam (hlavný záver, kedy áno/nie, ďalší krok)",
+     "details": []
+    },
+    {
+     "id": "sources",
+     "level": "error",
+     "ok": true,
+     "msg": "Aspoň 3 zdroje s URL (má 6)",
+     "details": []
+    },
+    {
+     "id": "sources-format",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každý zdroj v tvare „Názov – vydavateľ, rok | https://…“",
+     "details": []
+    },
+    {
+     "id": "first-third",
+     "level": "info",
+     "ok": true,
+     "msg": "Kľúčové fakty (čísla) sú v prvej tretine textu",
+     "details": []
+    },
+    {
+     "id": "atomic",
+     "level": "info",
+     "ok": true,
+     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 26)",
+     "details": []
+    },
+    {
+     "id": "self-promo",
+     "level": "warn",
+     "ok": true,
+     "msg": "„Najlepšie X“ len s transparentnou metodikou a bez Granuly na prvom mieste",
+     "details": []
+    },
+    {
+     "id": "claims",
+     "level": "warn",
+     "ok": true,
+     "msg": "Žiadne vyradené tvrdenia a superlatívy z dizajn systému",
+     "details": []
+    },
+    {
+     "id": "recipe-names",
+     "level": "warn",
+     "ok": true,
+     "msg": "Receptúry podľa mäsa (napr. „Jeleň & králik“), nie interné názvy Puppy/Energy",
+     "details": []
+    },
+    {
+     "id": "ty-form",
+     "level": "warn",
+     "ok": true,
+     "msg": "Tykanie („tvoj pes“), nie vykanie",
+     "details": []
+    },
+    {
+     "id": "emoji",
+     "level": "warn",
+     "ok": true,
+     "msg": "Bez emoji",
+     "details": []
+    },
+    {
+     "id": "length",
+     "level": "info",
+     "ok": true,
+     "msg": "Dĺžka článku: 1852 slov (dĺžka nerozhoduje, hustota áno)",
+     "details": []
+    }
+   ],
+   "sections": [
+    {
+     "title": "Čo je neofóbia voči krmivu u psa?",
+     "kind": "definition",
+     "words": 75,
+     "numbers": 1,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 1,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Prečo pes odmieta nové granule, aj keď je zdravý?",
+     "kind": "main",
+     "words": 231,
+     "numbers": 11,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Ako maškrty a jedlo zo stola naučia psa byť vyberavý?",
+     "kind": "main",
+     "words": 213,
+     "numbers": 5,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 1
+    },
+    {
+     "title": "Záleží na vôni a čerstvosti granúl?",
+     "kind": "main",
+     "words": 229,
+     "numbers": 3,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 1,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Kedy nechuť do jedla znamená zdravotný problém?",
+     "kind": "main",
+     "words": 236,
+     "numbers": 6,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 1,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Neofóbia vs. naučená vyberavosť vs. zdravotný problém: porovnanie",
+     "kind": "main",
+     "words": 190,
+     "numbers": 5,
+     "question": false,
+     "firstBold": true,
+     "table": true,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Funguje „15-minútové pravidlo“ pri kŕmení psa?",
+     "kind": "main",
+     "words": 196,
+     "numbers": 12,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Ako naučiť psa jesť nové granule: 7 krokov",
+     "kind": "main",
+     "words": 199,
+     "numbers": 6,
+     "question": false,
+     "firstBold": true,
+     "table": false,
+     "steps": true,
+     "images": 1,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Časté otázky",
+     "kind": "faq",
+     "words": 149,
+     "numbers": 2,
+     "question": false,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Zhrnutie",
+     "kind": "summary",
+     "words": 82,
+     "numbers": 5,
+     "question": false,
+     "firstBold": false,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    }
+   ]
   },
   {
    "slug": "preco-su-premiove-granule-drahsie",
