@@ -101,7 +101,7 @@
 .opt.body{align-items:center;text-align:center;gap:10px;padding:14px}
 .opt.body b{font-size:15px}
 .opt.body small{font-size:13px}
-.opt.body .shape{height:40px;display:flex;align-items:center;justify-content:center}
+.opt.body .shape{height:40px;display:flex;align-items:center;justify-content:center;align-self:stretch}
 .opt.body .shape i{width:110px;background:currentColor}
 .chips{display:flex;flex-wrap:wrap;gap:10px}
 .chip{position:relative;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;background:transparent;color:var(--n);border:2px solid var(--n);font-size:14px;font-weight:600}
@@ -475,8 +475,8 @@
   .split .progress .bars i{width:16px}
   .opts.c3:not(.bags){grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
   .opt.body{padding:10px 6px;gap:6px}
-  .opt.body .shape{height:28px}
-  .opt.body .shape i{width:70%}
+  .opt.body .shape{height:28px;align-self:stretch}
+  .opt.body .shape i{width:64%;transform:scaleY(.7)}
   .opt.body b{font-size:13px}
   .opt.body small{font-size:11px}
   .split .row2{flex-direction:row;gap:10px}
@@ -498,6 +498,32 @@
   .q-body{justify-content:flex-start}
 }
 
+
+/* ikony v odpovediach */
+.opt.ic{flex-direction:row;align-items:center;gap:16px}
+.opt.ic .oi{flex:none;display:flex}
+.opt.ic .ot{display:flex;flex-direction:column;gap:5px;min-width:0}
+.chip .ci{display:flex;flex:none}
+.chip{--icon-cut:var(--ml)}
+.chip:has(input:checked){--icon-cut:var(--k)}
+.chip:has(.ci):has(input:checked)::before{content:none}
+/* vysvetlivky osí grafu */
+.prof{position:relative}
+.prof-i{position:absolute;top:0;right:0;width:24px;height:24px;border-radius:50%;border:2px solid currentColor;background:transparent;color:inherit;
+  font:italic 800 13px/1 Georgia,serif;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;z-index:2}
+.side-prof .prof-i{color:var(--m)}
+.prof-i:hover{background:var(--o);color:var(--n);border-color:var(--n)}
+.prof-help{margin:auto;inset:0;width:min(440px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;padding:22px 22px 18px;background:var(--ml);color:var(--n);border:2px solid var(--n);box-shadow:6px 6px 0 var(--n)}
+.prof-help::backdrop{background:rgba(0,0,0,.45)}
+.ph-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.ph-head h2{font-size:20px;font-weight:900;text-transform:uppercase;line-height:1.1}
+.ph-x{border:0;background:none;font-size:28px;line-height:.8;cursor:pointer;color:var(--n);padding:0 2px}
+.ph-lead{font-size:14px;margin:10px 0 14px}
+.prof-help dl{display:flex;flex-direction:column;gap:10px;margin:0}
+.prof-help dl div{border-top:2px solid var(--n);padding-top:8px}
+.prof-help dt{font-size:13px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--k)}
+.prof-help dd{margin:2px 0 0;font-size:14px;line-height:1.4}
+.ph-note{font-size:12.5px;margin-top:14px;opacity:.8}
 /* ---------- výsledok (návrh „výsledok desktop / mobil“) ---------- */
 .screen.on.res2{flex-direction:column}
 .rh{background:var(--k);color:var(--m);padding:28px 80px 48px;display:flex;flex-direction:column;gap:20px}
@@ -741,10 +767,10 @@
       <h1 class="display q-title" tabindex="-1" id="t-activity">Ako vyzerá <span>bežný deň?</span></h1>
       <p class="q-lead">Na gauči potrebuje inú dávku než pri behu v lese.</p>
       <div class="opts c2" role="radiogroup" aria-labelledby="t-activity">
-        <label class="opt"><input type="radio" name="activity" value="doma"><b>Prevažne doma</b><small>krátke vychádzky</small></label>
-        <label class="opt"><input type="radio" name="activity" value="mesto"><b>1–2 prechádzky denne</b><small>bežný mestský pes</small></label>
-        <label class="opt"><input type="radio" name="activity" value="sport"><b>Beh, túry, šport</b><small>pravidelne a intenzívne</small></label>
-        <label class="opt"><input type="radio" name="activity" value="praca"><b>Pracovný pes</b><small>služobný, pastiersky</small></label>
+        <label class="opt ic"><input type="radio" name="activity" value="doma"><span class="oi" data-icon="a-doma" data-size="30" data-ink="currentColor"></span><span class="ot"><b>Prevažne doma</b><small>krátke vychádzky</small></span></label>
+        <label class="opt ic"><input type="radio" name="activity" value="mesto"><span class="oi" data-icon="a-mesto" data-size="30" data-ink="currentColor"></span><span class="ot"><b>1–2 prechádzky denne</b><small>bežný mestský pes</small></span></label>
+        <label class="opt ic"><input type="radio" name="activity" value="sport"><span class="oi" data-icon="a-sport" data-size="30" data-ink="currentColor"></span><span class="ot"><b>Beh, túry, šport</b><small>pravidelne a intenzívne</small></span></label>
+        <label class="opt ic"><input type="radio" name="activity" value="praca"><span class="oi" data-icon="a-praca" data-size="30" data-ink="currentColor"></span><span class="ot"><b>Pracovný pes</b><small>služobný, pastiersky</small></span></label>
       </div>
       <p class="err" role="alert" hidden data-err="krok-4">Vyber, ako vyzerá bežný deň tvojho psa.</p>
     </div>
@@ -831,17 +857,17 @@
       <h1 class="display q-title" tabindex="-1" id="t-focus">Na čo sa <span>máme zamerať?</span></h1>
       <p class="q-lead">Vyber všetko, čo platí. Podľa toho vyberieme granule.</p>
       <div class="card chips" role="group" aria-labelledby="t-focus" style="flex-direction:row;gap:12px">
-        <label class="chip"><input type="checkbox" name="focus" value="travenie">Citlivé trávenie</label>
-        <label class="chip"><input type="checkbox" name="focus" value="kby">Kĺby a pohyb</label>
-        <label class="chip"><input type="checkbox" name="focus" value="srst">Srsť a koža</label>
-        <label class="chip"><input type="checkbox" name="focus" value="vaha">Váha</label>
-        <label class="chip"><input type="checkbox" name="focus" value="vyberavy">Vyberavý jedák</label>
-        <label class="chip"><input type="checkbox" name="focus" value="energia">Energia</label>
-        <label class="chip"><input type="checkbox" name="focus" value="svaly">Svaly</label>
-        <label class="chip"><input type="checkbox" name="focus" value="imunita">Imunita</label>
-        <label class="chip"><input type="checkbox" name="focus" value="alergia">Nesedí mu každé mäso</label>
-        <label class="chip"><input type="checkbox" name="focus" value="pankreas">Problémy s pankreasom</label>
-        <label class="chip"><input type="checkbox" name="focus" value="nic">Nič konkrétne</label>
+        <label class="chip"><input type="checkbox" name="focus" value="travenie"><span class="ci" data-icon="f-travenie" data-size="18" data-ink="currentColor"></span>Citlivé trávenie</label>
+        <label class="chip"><input type="checkbox" name="focus" value="kby"><span class="ci" data-icon="f-kby" data-size="18" data-ink="currentColor"></span>Kĺby a pohyb</label>
+        <label class="chip"><input type="checkbox" name="focus" value="srst"><span class="ci" data-icon="f-srst" data-size="18" data-ink="currentColor"></span>Srsť a koža</label>
+        <label class="chip"><input type="checkbox" name="focus" value="vaha"><span class="ci" data-icon="f-vaha" data-size="18" data-ink="currentColor"></span>Váha</label>
+        <label class="chip"><input type="checkbox" name="focus" value="vyberavy"><span class="ci" data-icon="f-vyberavy" data-size="18" data-ink="currentColor"></span>Vyberavý jedák</label>
+        <label class="chip"><input type="checkbox" name="focus" value="energia"><span class="ci" data-icon="f-energia" data-size="18" data-ink="currentColor"></span>Energia</label>
+        <label class="chip"><input type="checkbox" name="focus" value="svaly"><span class="ci" data-icon="f-svaly" data-size="18" data-ink="currentColor"></span>Svaly</label>
+        <label class="chip"><input type="checkbox" name="focus" value="imunita"><span class="ci" data-icon="f-imunita" data-size="18" data-ink="currentColor"></span>Imunita</label>
+        <label class="chip"><input type="checkbox" name="focus" value="alergia"><span class="ci" data-icon="f-alergia" data-size="18" data-ink="currentColor"></span>Nesedí mu každé mäso</label>
+        <label class="chip"><input type="checkbox" name="focus" value="pankreas"><span class="ci" data-icon="f-pankreas" data-size="18" data-ink="currentColor"></span>Problémy s pankreasom</label>
+        <label class="chip"><input type="checkbox" name="focus" value="nic"><span class="ci" data-icon="f-nic" data-size="18" data-ink="currentColor"></span>Nič konkrétne</label>
       </div>
       <p class="err" role="alert" hidden data-err="krok-6">Vyber aspoň jednu možnosť. Ak nič nerieši, daj „Nič konkrétne“.</p>
     </div>
@@ -1041,7 +1067,21 @@
 <div hidden id="prof-home">
   <section class="prof" id="prof" aria-label="Profil tvojho psa">
     <div class="prof-radar" id="prof-radar"></div>
+    <button type="button" class="prof-i" popovertarget="prof-help" aria-label="Čo znamenajú osi grafu">i</button>
   </section>
+</div>
+<div class="prof-help" id="prof-help" popover role="dialog" aria-labelledby="prof-help-h">
+  <div class="ph-head"><h2 id="prof-help-h">Profil tvojho psa</h2><button type="button" class="ph-x" popovertarget="prof-help" popovertargetaction="hide" aria-label="Zavrieť">×</button></div>
+  <p class="ph-lead">Graf ukazuje potreby psa, nie receptúru. Čím ďalej od stredu, tým viac toho pes potrebuje.</p>
+  <dl>
+    <div><dt>Energia</dt><dd>Koľko energie denne spáli. Podľa veku, aktivity, kastrácie a postavy.</dd></div>
+    <div><dt>Bielkoviny</dt><dd>Koľko bielkovín potrebuje. Viac šteňa, športovec a pracovný pes, menej senior.</dd></div>
+    <div><dt>Tuk</dt><dd>Koľko tuku mu prospeje. Menej pri sklone priberať, po kastrácii, pri pankrease a u seniora.</dd></div>
+    <div><dt>Jednoduché zloženie</dt><dd>Ako veľmi potrebuje málo surovín a jeden druh mäsa. Vysoko, keď mu nesedí každé mäso.</dd></div>
+    <div><dt>Rast</dt><dd>Či ešte rastie. Najviac u šteniat, najmenej u seniorov.</dd></div>
+    <div><dt>Veľkosť granule</dt><dd>Akú veľkú granulu pohodlne zje. Podľa veľkosti plemena.</dd></div>
+  </dl>
+  <p class="ph-note">Prerušovaná os znamená, že ju ešte nepoznáme. Doplní sa po odpovedi v ďalšom kroku.</p>
 </div>
 <script src="icons.js"></script>
 <script src="engine.js"></script>
