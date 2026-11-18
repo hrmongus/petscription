@@ -70,6 +70,60 @@
 .bl-log summary{cursor:pointer;font-weight:800}
 .bl-log ul{margin:8px 0 0;padding-left:20px}
 
-.bl-cta .wrap{display:flex;flex-direction:column;align-items:flex-start;gap:16px;padding-top:clamp(40px,5vw,64px);padding-bottom:clamp(40px,5vw,64px)}
-.bl-cta .h2{font-size:clamp(26px,3vw,40px)}
+/* autor */
+.bl-byline{display:flex;align-items:flex-start;gap:14px}
+.bl-av{flex:none;width:64px;height:64px;border:2px solid var(--n);object-fit:cover;background:var(--ml)}
+.bl-av-ph{display:grid;place-items:center;background:var(--k);color:var(--m);font-weight:900;font-size:22px}
+.bl-bio{display:inline-block;max-width:560px}
+
+/* obrázky */
+.bl-fig{margin:28px 0 0}
+.bl-fig .bl-img,.bl-fig .bl-ph{position:relative;aspect-ratio:3/2;border:2px solid var(--n);overflow:hidden;background:var(--ml)}
+.bl-fig img{width:100%;height:100%;object-fit:cover;display:block}
+.bl-fig figcaption{margin-top:10px;font-size:14px;line-height:1.45}
+.bl-hero{margin:0 0 36px;padding:0 14px 14px 0;position:relative}
+.bl-hero::before{content:"";position:absolute;left:14px;top:14px;right:0;bottom:0;background:var(--o)}
+.bl-hero .bl-img,.bl-hero .bl-ph{aspect-ratio:16/9}
+.bl-hero figcaption{position:relative}
+.bl-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;text-align:center;font-size:15px;line-height:1.4;
+  background:repeating-linear-gradient(135deg,var(--ml) 0 14px,var(--m) 14px 28px) !important}
+.bl-ph span{max-width:440px;background:var(--ml);padding:2px 8px}
+.bl-ph-t{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--k)}
+
+/* graf */
+.bl-chart{margin:28px 0 0;border:2px solid var(--n);background:var(--ml);padding:18px 20px 16px}
+.bl-chart figcaption{font-size:15px;font-weight:900;text-transform:uppercase;line-height:1.2;margin-bottom:12px}
+.bl-chart table{width:100%;border-collapse:collapse;font-size:15px}
+.bl-chart thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.bl-chart th{text-align:left;font-weight:700;padding:6px 14px 6px 0;width:32%;vertical-align:middle;line-height:1.25}
+.bl-chart td{padding:6px 0;display:flex;align-items:center;gap:10px}
+.bl-bar{display:block;height:22px;width:max(4px,calc(var(--w) * .8));background:var(--k);border:2px solid var(--n)}
+.bl-chart tr.hl .bl-bar{background:var(--o)}
+.bl-val{font-weight:800;white-space:nowrap}
+.bl-chart-note,.bl-chart-src{margin:10px 0 0;font-size:13px;line-height:1.45}
+.bl-chart-src{font-style:italic}
+
+/* ponuka k téme */
+.bl-offer{position:relative;margin:36px 0 0;padding:0 10px 10px 0}
+.bl-offer::before{content:"";position:absolute;left:10px;top:10px;right:0;bottom:0;background:var(--o)}
+.bl-offer-in,.bl-offer-img{position:relative}
+.bl-offer.has-img{display:grid;grid-template-columns:minmax(0,1fr) 180px}
+.bl-offer-in{display:flex;flex-direction:column;align-items:flex-start;gap:10px;background:var(--ml);border:2px solid var(--n);padding:22px 24px 24px}
+.bl-offer.has-img .bl-offer-in{border-right:0}
+.bl-offer-img{border:2px solid var(--n);background:var(--m);display:grid;place-items:center;padding:12px}
+.bl-offer-img img{width:100%;height:100%;max-height:220px;object-fit:contain}
+.bl-offer-k{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--k)}
+.bl-offer .bl-offer-h{margin:0;max-width:none;font-size:clamp(20px,2.2vw,26px);line-height:1.1;font-weight:900;text-transform:uppercase;text-wrap:balance}
+.bl-offer p:not(.bl-offer-h){font-size:16px;line-height:1.5;margin:0;max-width:520px}
+.bl-offer .btn{margin-top:4px}
+.bl-offer-end{margin-top:48px}
+.bl-offer-end .bl-offer-h{font-size:clamp(24px,3vw,34px)}
+
+/* karta v zozname s obrázkom */
+.bl-card-img{display:block;margin:-20px -22px 4px;aspect-ratio:3/2;border-bottom:2px solid var(--n);overflow:hidden}
+.bl-card-img img{width:100%;height:100%;object-fit:cover;display:block}
+@media (max-width:640px){.bl-offer.has-img{grid-template-columns:minmax(0,1fr)}.bl-offer.has-img .bl-offer-in{border-right:2px solid var(--n);border-bottom:0}
+  .bl-offer-img img{max-height:160px}.bl-chart{padding:14px}.bl-chart th{width:38%;font-size:14px}.bl-av{width:52px;height:52px}}
 @media (max-width:640px){.bl-body{font-size:16px}.bl-tldr{padding:16px 16px 18px}.bl-tldr p{font-size:16px}}
+.bl-body .bl-offer .btn-o{color:var(--n);text-decoration:none}
+.bl-body .bl-offer .btn-o:hover{color:var(--o)}

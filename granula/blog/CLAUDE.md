@@ -26,7 +26,10 @@ Frontmatter (podmnožina YAML, každá hodnota na jednom riadku, dlhý text cez 
 | `slug` | malé písmená bez diakritiky a pomlčky, napr. `kolko-granul-denne-pes` |
 | `status` | `draft` alebo `published` |
 | `description` | meta popis 120–160 znakov, priama odpoveď s číslom |
-| `author`, `author_bio` | meno a 1 veta, prečo mu veriť. Skutočného autora dodá používateľ; dovtedy nechaj zástupný text a upozorni na to. |
+| `author`, `author_bio` | meno a 1 veta, prečo mu veriť. **Každý článok môže mať iného autora**; meno, vetu a fotku dodá používateľ. Dovtedy nechaj zástupný text v `[…]` a upozorni na to (zástupný text blokuje publikovanie). |
+| `author_photo` | štvorcová fotka autora, `img/autori/<meno-priezvisko>.webp`. Kým ju nemáš, `placeholder` (blokuje publikovanie). |
+| `hero`, `hero_alt`, `hero_caption` | obrázok v hlavičke (16:9), cesta od `granula/` (`img/blog/<slug>/hero.webp` alebo existujúca fotka z `img/`). Bez fotky `placeholder` a v `hero_alt` presne opíš, čo má byť na fotke. |
+| `cta_title`, `cta_text`, `cta_button` (`cta_link`, `cta_image`) | záverečná ponuka napísaná k téme článku. Bez nich sa použije všeobecná. |
 | `published`, `updated` | RRRR-MM-DD |
 | `tldr` | **Krátka odpoveď, 40–60 slov.** Prvá veta = priama odpoveď. Žiadne „v tomto článku sa dozvieš“. Najcitovanejší blok článku. |
 | `key_points` | 3–5 bodov, spolu s `tldr` aspoň 3 čísla, posledný bod = najčastejšia chyba alebo mýtus |
@@ -35,13 +38,45 @@ Frontmatter (podmnožina YAML, každá hodnota na jednom riadku, dlhý text cez 
 
 Telo (markdown): `##` nadpisy sekcií, `###` podčasti, odseky, `**tučné**`, `*kurzíva*`, `[odkaz](url)`, zoznamy `-` a `1.`, tabuľky `| … |`, citát `>`. Žiadne HTML. Titulok `#` nepíš, robí ho build. Zdroje nepíš do tela, build ich vykreslí z `sources`.
 
+### Obrázky, grafy a ponuky
+
+- **Obrázok** (samostatný riadok): `![Čo je na fotke](img/blog/<slug>/subor.webp "Popis pod obrázkom")`. Cesta od `granula/`. Bez fotky napíš `placeholder` namiesto cesty a do alt textu presne, čo má byť na fotke (pes, situácia, detail), aby ju používateľ vedel nafotiť alebo vybrať. Zástupné obrázky blokujú publikovanie.
+- **Koľko:** hero + aspoň 1 obrázok alebo graf na každé 2 hlavné sekcie, najmenej 2. Obrázok dávaj tam, kde niečo ukazuje (porcia, obal, postava psa, surovina), nie ako dekoráciu. Existujúce fotky webu sú v `img/` (psy, suroviny, produkty) a smieš ich použiť, ak sedia.
+- **Graf** všade, kde článok porovnáva čísla (dávky podľa hmotnosti, energia, podiely, ceny). Vykreslí sa ako statický stĺpcový graf a zároveň tabuľka, takže ho AI prečíta. Každé číslo v grafe musí mať zdroj (`zdroj:`); čísla, ktoré nepoznáš, do grafu nedávaj.
+
+```
+::: graf
+nazov: Denná energia dospelého psa podľa hmotnosti
+jednotka: kcal
+os: Hmotnosť psa
+zdroj: NRC 2006
+zvyraznit: 20 kg
+10 kg | 400
+20 kg | 670
+:::
+```
+  (čísla v ukážke sú len ilustračné, nepreberaj ich)
+
+- **Ponuka uprostred článku**: 1, najviac 2 bloky `::: ponuka`, za sekciou, s ktorou súvisí. Musí nadväzovať na tému sekcie (článok o dávkach → „Dávku na gramy ti spočítame z hmotnosti, veku a aktivity“; o citlivom trávení → receptúra s jedným druhom mäsa), nie všeobecné „kúp granule“. Píš len to, čo Granula naozaj robí (`engine.js`, README) a schválené tvrdenia. Ponuka sa vykreslí mimo textu sekcie, nepočíta sa do slov a nenarúša citovateľnosť.
+
+```
+::: ponuka
+nadpis: Nechceš to rátať ručne?
+text: Z hmotnosti, veku, aktivity a postavy tvojho psa spočítame dennú dávku na gramy.
+tlacidlo: Spočítaj dávku pre svojho psa
+odkaz: granule-na-mieru.html
+obrazok: img/produkty/hovadzie-s-ryzou.webp
+:::
+```
+- **Záverečnú ponuku** prispôsob téme cez `cta_title`, `cta_text`, `cta_button`.
+
 ## Štruktúra tela (poradie)
 
 1. `## Čo je [pojem]?` prvá veta tučná vo forme **„[Pojem] je [kategória], ktorá [čo robí] pre [koho].“**
 2. **3–6 hlavných sekcií.** Nadpis H2 = otázka, ktorú ľudia reálne píšu. **200–400 slov**, jedna myšlienka. **Prvá veta tučná = odpoveď na nadpis.** Aspoň 1 číslo so zdrojom („Podľa [zdroj, rok] …“). Max. 1 citát experta s menom a funkciou.
 3. Podľa témy: porovnanie (`## A vs B: porovnanie` + tabuľka + 1 veta verdiktu), postup (`## Ako …: N krokov`, číslovaný zoznam, každý krok začína **tučným imperatívom**), `## Čo ukázali naše dáta` (len so skutočnými dátami od používateľa), `## Najčastejšie chyby pri …`.
 4. `## Časté otázky`, 3–6 otázok, ktoré nie sú v hlavných sekciách, tvar `**Otázka?** Odpoveď v 1–3 vetách.` (každá otázka samostatný odsek).
-5. `## Zhrnutie`, zoznam: hlavný záver, kedy áno / kedy nie, ďalší krok. Bez výzvy na nákup; výzvu ku konfigurátoru pridáva šablóna.
+5. `## Zhrnutie`, zoznam: hlavný záver, kedy áno / kedy nie, ďalší krok. Bez výzvy na nákup; záverečnú ponuku pridáva šablóna z `cta_*`.
 
 ## Pravidlá písania (GEO)
 

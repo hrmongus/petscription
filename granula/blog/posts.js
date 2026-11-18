@@ -1,6 +1,6 @@
 /* vygenerované build.py — needitovať */
 window.GRANULA_POSTS = {
- "built": "2026-11-18 07:56",
+ "built": "2026-11-18 08:19",
  "base": "https://granula.sk/granula",
  "problems": [],
  "posts": [
@@ -14,6 +14,8 @@ window.GRANULA_POSTS = {
    "published": "2026-11-18",
    "updated": "2026-11-18",
    "author": "[Meno autora]",
+   "authorPhoto": "placeholder",
+   "hero": "img/hero-jack-russell.jpg",
    "words": 263,
    "description": "Vzorový koncept, ktorý ukazuje rozloženie článku: krátka odpoveď, definícia, sekcie s otázkami, tabuľka, postup, časté otázky a zdroje.",
    "preview": "../blog/nahlad/vzor-struktury/index.html",
@@ -50,8 +52,15 @@ window.GRANULA_POSTS = {
     {
      "id": "author",
      "level": "error",
-     "ok": true,
-     "msg": "Autor a jedna veta, prečo mu veriť (author, author_bio)",
+     "ok": false,
+     "msg": "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)",
+     "details": []
+    },
+    {
+     "id": "author-photo",
+     "level": "error",
+     "ok": false,
+     "msg": "Fotka autora (author_photo, súbor v granula/img/autori/)",
      "details": []
     },
     {
@@ -164,6 +173,71 @@ window.GRANULA_POSTS = {
      "details": []
     },
     {
+     "id": "hero",
+     "level": "warn",
+     "ok": true,
+     "msg": "Obrázok v hlavičke článku (hero, hero_alt)",
+     "details": []
+    },
+    {
+     "id": "images",
+     "level": "warn",
+     "ok": true,
+     "msg": "Obrázky v texte: aspoň 2 obrázky alebo grafy (1 na 2 hlavné sekcie), má 2",
+     "details": []
+    },
+    {
+     "id": "chart",
+     "level": "warn",
+     "ok": true,
+     "msg": "Aspoň 1 graf (blok ::: graf), keď článok porovnáva čísla",
+     "details": []
+    },
+    {
+     "id": "img-alt",
+     "level": "error",
+     "ok": true,
+     "msg": "Každý obrázok má popis (alt)",
+     "details": []
+    },
+    {
+     "id": "img-placeholder",
+     "level": "error",
+     "ok": false,
+     "msg": "Zástupné obrázky sú nahradené skutočnými (pred publikovaním)",
+     "details": [
+      "obrázok: Majiteľ odváži dennú dávku granúl na kuchynskej váhe, vedľa sedí pes strednej veľkosti"
+     ]
+    },
+    {
+     "id": "img-files",
+     "level": "error",
+     "ok": true,
+     "msg": "Súbory obrázkov existujú (cesta od granula/, napr. img/blog/<slug>/…)",
+     "details": []
+    },
+    {
+     "id": "offer-mid",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka uprostred článku, ktorá sedí k téme (blok ::: ponuka)",
+     "details": []
+    },
+    {
+     "id": "offer-fields",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka má nadpis a text",
+     "details": []
+    },
+    {
+     "id": "offer-count",
+     "level": "warn",
+     "ok": true,
+     "msg": "Najviac 2 ponuky v texte (má 1), inak to pôsobí ako reklama",
+     "details": []
+    },
+    {
      "id": "table",
      "level": "info",
      "ok": true,
@@ -271,7 +345,10 @@ window.GRANULA_POSTS = {
      "question": true,
      "firstBold": true,
      "table": false,
-     "steps": false
+     "steps": false,
+     "images": 1,
+     "charts": 0,
+     "offers": 0
     },
     {
      "title": "Ako vyzerá sekcia, ktorú AI dokáže citovať?",
@@ -281,7 +358,10 @@ window.GRANULA_POSTS = {
      "question": true,
      "firstBold": true,
      "table": false,
-     "steps": false
+     "steps": false,
+     "images": 0,
+     "charts": 1,
+     "offers": 1
     },
     {
      "title": "Šablóna A vs šablóna B: porovnanie",
@@ -291,7 +371,10 @@ window.GRANULA_POSTS = {
      "question": false,
      "firstBold": true,
      "table": true,
-     "steps": false
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
     },
     {
      "title": "Ako napísať článok: 3 kroky",
@@ -301,7 +384,10 @@ window.GRANULA_POSTS = {
      "question": false,
      "firstBold": true,
      "table": false,
-     "steps": true
+     "steps": true,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
     },
     {
      "title": "Časté otázky",
@@ -311,7 +397,10 @@ window.GRANULA_POSTS = {
      "question": false,
      "firstBold": true,
      "table": false,
-     "steps": false
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
     },
     {
      "title": "Zhrnutie",
@@ -321,7 +410,10 @@ window.GRANULA_POSTS = {
      "question": false,
      "firstBold": false,
      "table": false,
-     "steps": false
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
     }
    ]
   }

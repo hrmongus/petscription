@@ -8,6 +8,13 @@ example: true
 description: "Vzorový koncept, ktorý ukazuje rozloženie článku: krátka odpoveď, definícia, sekcie s otázkami, tabuľka, postup, časté otázky a zdroje."
 author: "[Meno autora]"
 author_bio: "[1 veta, prečo mu veriť]"
+author_photo: placeholder
+hero: img/hero-jack-russell.jpg
+hero_alt: "Jack russell teriér na lúke"
+hero_caption: "Vzor: hero obrázok z existujúcej fotky webu."
+cta_title: "Vzor: záverečná ponuka k téme článku"
+cta_text: "Text záverečnej ponuky sa píše ku každému článku zvlášť cez polia cta_title, cta_text a cta_button."
+cta_button: "Nájdi granule pre svojho psa"
 published: 2026-11-18
 updated: 2026-11-18
 tldr: >
@@ -31,9 +38,29 @@ sources:
 
 **Vzorový článok je zástupný koncept, ktorý ukazuje rozloženie článku pre AI citácie.** Nemá skutočný obsah. Slúži na kontrolu, ako šablóna vyzerá na webe a ako ju hodnotí redakcia.
 
+![Majiteľ odváži dennú dávku granúl na kuchynskej váhe, vedľa sedí pes strednej veľkosti](placeholder "Vzor: zástupný obrázok. Alt text hovorí, čo má byť na fotke.")
+
 ## Ako vyzerá sekcia, ktorú AI dokáže citovať?
 
 **Sekcia, ktorú AI dokáže citovať, začína tučnou vetou s odpoveďou na nadpis.** Za ňou nasleduje vysvetlenie, dôkaz a príklad. Zástupný text: podľa [zdroj, rok] tvorí 44 % citácií text z prvých 30 % článku. Sekcia má mať 200 až 400 slov, preto tu redakcia ukáže upozornenie na dĺžku.
+
+::: graf
+nazov: Vzor grafu (zástupné čísla, nie fakty)
+jednotka: %
+os: Časť článku
+zdroj: zástupný zdroj
+zvyraznit: Prvých 30 %
+Prvých 30 % | 44
+Stred článku | 31
+Záver článku | 25
+:::
+
+::: ponuka
+nadpis: Vzor: ponuka, ktorá nadväzuje na sekciu
+text: V skutočnom článku tu bude 1–2 vety o tom, ako Granula rieši práve túto tému, napríklad dávku na gramy.
+tlacidlo: Spočítaj dávku pre svojho psa
+obrazok: img/produkty/hovadzie-s-ryzou.webp
+:::
 
 ## Šablóna A vs šablóna B: porovnanie
 

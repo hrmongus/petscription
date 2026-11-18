@@ -155,6 +155,30 @@ def md_blocks(md):
                 i += 1
             out.append(("ul", items))
             continue
+        m = IMG.match(ln.strip())
+        if m:
+            out.append(("img", {"alt": m.group(1).strip(), "src": m.group(2).strip(), "caption": (m.group(3) or "").strip()}))
+            i += 1
+            continue
+        m = re.match(r"^:::\s*(graf|ponuka)\s*$", ln.strip())
+        if m:
+            kind, fields, rows = m.group(1), {}, []
+            i += 1
+            while i < len(lines) and lines[i].strip() != ":::":
+                t = lines[i].strip()
+                i += 1
+                if not t:
+                    continue
+                f = re.match(r"^([a-zžščťďňľáéíóúýô_]+):\s*(.*)$", t)
+                if f and "|" not in t:
+                    fields[f.group(1)] = f.group(2).strip()
+                elif "|" in t:
+                    label, val = [x.strip() for x in t.rsplit("|", 1)]
+                    rows.append((label, val))
+            i += 1
+            fields["rows"] = rows
+            out.append((kind, fields))
+            continue
         if ln.startswith(">"):
             buf = []
             while i < len(lines) and lines[i].startswith(">"):
@@ -163,14 +187,75 @@ def md_blocks(md):
             out.append(("quote", " ".join(buf)))
             continue
         buf = []
-        while i < len(lines) and lines[i].strip() and not re.match(r"^(#{1,4}\s|\||>|[-*]\s|\d+[.)]\s|-{3,}$)", lines[i]):
+        while i < len(lines) and lines[i].strip() and not re.match(r"^(#{1,4}\s|\||>|[-*]\s|\d+[.)]\s|-{3,}$|:::|!\[)", lines[i]):
             buf.append(lines[i].strip())
             i += 1
         out.append(("p", " ".join(buf)))
     return out
 
 
-def render_blocks(blocks):
+IMG = re.compile(r'^!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)$')
+PLACEHOLDER = ("placeholder", "zastupny")
+
+
+def is_placeholder(src):
+    return not src or src.lower() in PLACEHOLDER
+
+
+def num(v):
+    try:
+        return float(str(v).replace("\u00a0", "").replace(" ", "").replace(",", "."))
+    except ValueError:
+        return None
+
+
+def fmt_num(v):
+    x = num(v)
+    if x is None:
+        return v
+    s = ("%d" % x) if x == int(x) else ("%.1f" % x).replace(".", ",")
+    return re.sub(r"(\d)(?=(\d{3})+(?!\d))", "\\1\u00a0", s) if len(s.split(",")[0]) > 4 else s
+
+
+def figure_html(d, pre, cls=""):
+    """Obrázok alebo zástupný rámik (placeholder) s popisom, čo má byť na fotke."""
+    cap = '<figcaption>%s</figcaption>' % inline(d["caption"]) if d.get("caption") else ""
+    if is_placeholder(d["src"]):
+        inner = '<div class="bl-ph" role="img" aria-label="%s"><span class="bl-ph-t">Zástupný obrázok</span><span>%s</span></div>' % (
+            html.escape(d["alt"]), inline(d["alt"] or "doplň popis"))
+    else:
+        inner = '<div class="bl-img"><img src="%s%s" alt="%s" loading="lazy" decoding="async"></div>' % (pre, html.escape(d["src"]), html.escape(d["alt"]))
+    return '<figure class="bl-fig %s">%s%s</figure>' % (cls, inner, cap)
+
+
+def chart_html(d):
+    """Vodorovný stĺpcový graf ako tabuľka (statické HTML, čitateľné pre AI aj čítačky)."""
+    rows = [(l, v, num(v)) for l, v in d.get("rows", [])]
+    mx = max([x for _, _, x in rows if x is not None] or [1]) or 1
+    unit = d.get("jednotka", "")
+    hl = {x.strip() for x in d.get("zvyraznit", "").split(",") if x.strip()}
+    trs = "".join('<tr%s><th scope="row">%s</th><td><span class="bl-bar" style="--w:%.1f%%"></span><span class="bl-val">%s%s</span></td></tr>' % (
+        ' class="hl"' if l in hl else "", inline(l), (x or 0) / mx * 100, typo(fmt_num(v)), ("\u00a0" + html.escape(unit)) if unit else "") for l, v, x in rows)
+    src = '<p class="bl-chart-src">Zdroj: %s</p>' % inline(d["zdroj"]) if d.get("zdroj") else ""
+    note = '<p class="bl-chart-note">%s</p>' % inline(d["popis"]) if d.get("popis") else ""
+    return ('<figure class="bl-chart"><figcaption>%s</figcaption><table><thead><tr><th scope="col">%s</th><th scope="col">%s</th></tr></thead><tbody>%s</tbody></table>%s%s</figure>'
+            % (inline(d.get("nazov", "")), html.escape(d.get("os", "Položka")), html.escape(d.get("hodnota", unit or "Hodnota")), trs, note, src))
+
+
+def offer_html(d, pre, end=False):
+    """Ponuka k téme článku. Mimo textu sekcie (nepočíta sa do slov ani citácií)."""
+    link = d.get("odkaz") or "granule-na-mieru.html"
+    href = link if re.match(r"^(https?:|#)", link) else pre + link
+    img = d.get("obrazok", "")
+    pic = ('<div class="bl-offer-img"><img src="%s%s" alt="" loading="lazy"></div>' % (pre, html.escape(img))) if img and not is_placeholder(img) else ""
+    tag = "section" if end else "aside"
+    return ('<%s class="bl-offer%s%s" aria-label="Ponuka Granula"><div class="bl-offer-in"><span class="bl-offer-k">%s</span><p class="bl-offer-h">%s</p><p>%s</p>'
+            '<div><a class="btn btn-o" href="%s">%s</a></div></div>%s</%s>'
+            % (tag, " bl-offer-end" if end else "", " has-img" if pic else "", html.escape(d.get("stitok") or "Granula na mieru"),
+               inline(d.get("nadpis", "")), inline(d.get("text", "")), html.escape(href), html.escape(d.get("tlacidlo") or "Nájdi granule pre svojho psa"), pic, tag))
+
+
+def render_blocks(blocks, pre=""):
     h = []
     for t, d in blocks:
         if t in ("h2", "h3", "h4"):
@@ -191,6 +276,12 @@ def render_blocks(blocks):
             h.append('<div class="tbl"><table><thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>' % (th, trs))
         elif t == "hr":
             h.append("<hr>")
+        elif t == "img":
+            h.append(figure_html(d, pre))
+        elif t == "graf":
+            h.append(chart_html(d))
+        elif t == "ponuka":
+            h.append(offer_html(d, pre))
     return "\n".join(h)
 
 
@@ -250,6 +341,9 @@ def sections(blocks):
         s["first_bold"] = first.startswith("**")
         s["has_table"] = any(t == "table" for t, _ in s["blocks"])
         s["has_ol"] = any(t == "ol" for t, _ in s["blocks"])
+        s["images"] = sum(1 for t, _ in s["blocks"] if t == "img")
+        s["charts"] = sum(1 for t, _ in s["blocks"] if t == "graf")
+        s["offers"] = sum(1 for t, _ in s["blocks"] if t == "ponuka")
         s["first"] = first
     return secs
 
@@ -260,6 +354,10 @@ PRONOUN_START = re.compile(r"^(Toto|To|Tento|Táto|Tieto|Ten|Tá)\s", re.U)
 RETIRED = ["bez obilnín", "mäso zo slovenska", "hovädzie zo slovenska", "recept od mvdr", "superprémiov", "holistick"]
 VY_FORM = [r"\bvášho\b", r"\bvášmu\b", r"\bváš\b", r"\bvaša\b", r"\bvaše\b", r"\bbudete\b", r"\bmáte\b", r"\bviete\b", r"\bnájdete\b"]
 EMOJI = re.compile("[\U0001F300-\U0001FAFF\u2600-\u27BF]")
+
+
+def blocks_of(secs):
+    return [b for s in secs for b in s["blocks"]]
 
 
 def lint(meta, secs, body):
@@ -281,7 +379,11 @@ def lint(meta, secs, body):
         ["titulok: %s, aktualizované: %s" % (years[0], upd)] if years else [])
     desc = meta.get("description", "")
     add("description", "warn", 120 <= len(desc) <= 160, "Meta popis má 120–160 znakov (má %d)" % len(desc))
-    add("author", "error", bool(meta.get("author")) and bool(meta.get("author_bio")), "Autor a jedna veta, prečo mu veriť (author, author_bio)")
+    au, bio = str(meta.get("author", "")), str(meta.get("author_bio", ""))
+    add("author", "error", au and bio and "[" not in au + bio, "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)")
+    photo = str(meta.get("author_photo", ""))
+    add("author-photo", "error", photo and not is_placeholder(photo) and os.path.isfile(os.path.join(SITE_DIR, photo)),
+        "Fotka autora (author_photo, súbor v granula/img/autori/)", [photo] if photo and not is_placeholder(photo) else [])
 
     def date(v):
         try:
@@ -332,6 +434,29 @@ def lint(meta, secs, body):
                 refs.append("%s: odsek začína „%s“" % (s["title"], plain(d).strip()[:40]))
     add("standalone", "warn", not refs, "Sekcie obstoja samy (žiadne „vyššie“, „ako sme spomenuli“, odsek začínajúci „Toto/To“)", refs[:8])
 
+    hero = str(meta.get("hero", ""))
+    add("hero", "warn", bool(hero), "Obrázok v hlavičke článku (hero, hero_alt)")
+    imgs = [d for t, d in blocks_of(secs) if t == "img"]
+    n_charts = sum(s["charts"] for s in secs)
+    want = max(2, (len(main) + 1) // 2)
+    add("images", "warn", len(imgs) + n_charts >= want,
+        "Obrázky v texte: aspoň %d obrázky alebo grafy (1 na 2 hlavné sekcie), má %d" % (want, len(imgs) + n_charts))
+    add("chart", "warn", n_charts >= 1, "Aspoň 1 graf (blok ::: graf), keď článok porovnáva čísla")
+    every = [("hero", hero, meta.get("hero_alt", ""))] + [("obrázok", d["src"], d["alt"]) for d in imgs]
+    no_alt = ["%s: %s" % (k, src) for k, src, alt in every if src and not str(alt).strip()]
+    add("img-alt", "error", not no_alt, "Každý obrázok má popis (alt)", no_alt)
+    ph = ["%s: %s" % (k, alt) for k, src, alt in every if src and is_placeholder(src)]
+    add("img-placeholder", "error", not ph, "Zástupné obrázky sú nahradené skutočnými (pred publikovaním)", ph[:6])
+    missing = [src for k, src, alt in every if src and not is_placeholder(src) and not os.path.isfile(os.path.join(SITE_DIR, src))]
+    missing += [d.get("obrazok") for t, d in blocks_of(secs) if t == "ponuka" and d.get("obrazok") and not is_placeholder(d["obrazok"])
+                and not os.path.isfile(os.path.join(SITE_DIR, d["obrazok"]))]
+    add("img-files", "error", not missing, "Súbory obrázkov existujú (cesta od granula/, napr. img/blog/<slug>/…)", missing)
+    offers = [(s["kind"], d) for s in secs for t, d in s["blocks"] if t == "ponuka"]
+    mid = [d for k, d in offers if k in ("main", "definition")]
+    add("offer-mid", "warn", len(mid) >= 1, "Ponuka uprostred článku, ktorá sedí k téme (blok ::: ponuka)")
+    bad_offer = [d.get("nadpis", "?") for k, d in offers if not (d.get("nadpis") and d.get("text"))]
+    add("offer-fields", "warn", not bad_offer, "Ponuka má nadpis a text", bad_offer)
+    add("offer-count", "warn", len(offers) <= 2, "Najviac 2 ponuky v texte (má %d), inak to pôsobí ako reklama" % len(offers))
     add("table", "info", any(s["has_table"] for s in secs), "Porovnávacia tabuľka (odporúčané pri „X vs Y“)")
     add("steps", "info", any(s["has_ol"] for s in secs), "Postup krok za krokom (číslovaný zoznam)")
     own = [s for s in secs if re.search(r"naše dáta|naša skúsenos|z našej praxe|čo ukázali", s["title"], re.I)]
@@ -359,7 +484,7 @@ def lint(meta, secs, body):
     add("first-third", "info", len(re.findall(r"\d", first_third)) >= 5, "Kľúčové fakty (čísla) sú v prvej tretine textu")
     atomic = [x for x in sentences(" ".join(s["text"] for s in secs)) if 6 <= len(x.split()) <= 20 and NUM.search(x)]
     add("atomic", "info", len(atomic) >= 5, "Atomické fakty: vety so 6–20 slovami a číslom (má %d)" % len(atomic))
-    all_text = (title + " " + tldr + " " + " ".join(kp) + " " + body).lower()
+    all_text = (title + " " + tldr + " " + " ".join(kp) + " " + body + " " + " ".join(str(meta.get(k, "")) for k in ("cta_title", "cta_text"))).lower()
     add("self-promo", "warn", not (re.match(r"^(najlepš|top \d)", title.lower()) and "granul" in body.lower()),
         "„Najlepšie X“ len s transparentnou metodikou a bez Granuly na prvom mieste")
     retired = [w for w in RETIRED if w in all_text]
@@ -392,13 +517,14 @@ def relink(fragment, pre):
     return re.sub(r'(href|src)="([^"]*)"', fix, fragment)
 
 
-def page(*, pre, title, description, canonical, body, noindex=False, jsonld=None, current_blog=True):
+def page(*, pre, title, description, canonical, body, noindex=False, jsonld=None, current_blog=True, image=None):
     topbar, header, footer = site_parts()
     header = relink(header, pre)
     if current_blog:
         header = header.replace('href="%sblog/">Blog</a>' % pre, 'href="%sblog/" aria-current="page">Blog</a>' % pre)
     head_ld = '<script type="application/ld+json">%s</script>\n' % json.dumps(jsonld, ensure_ascii=False) if jsonld else ""
     robots = '<meta name="robots" content="noindex, nofollow">\n' if noindex else ""
+    og_img = '\n<meta property="og:image" content="%s/%s">' % (BASE_URL, html.escape(image)) if image and not is_placeholder(image) else ""
     return f"""<!doctype html>
 <html lang="sk">
 <head>
@@ -410,7 +536,7 @@ def page(*, pre, title, description, canonical, body, noindex=False, jsonld=None
 <meta property="og:type" content="article">
 <meta property="og:title" content="{html.escape(title)}">
 <meta property="og:description" content="{html.escape(description)}">
-<meta property="og:url" content="{canonical}">
+<meta property="og:url" content="{canonical}">{og_img}
 <link rel="icon" href="{pre}favicon.ico" sizes="any">
 <link rel="icon" href="{pre}favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -468,14 +594,28 @@ def article_html(post, pre, preview):
     src_html = ('<section class="bl-sources" aria-labelledby="zdroje"><h2 id="zdroje">Zdroje</h2><ol>%s</ol></section>'
                 % "".join("<li>%s</li>" % source_html(x) for x in src)) if src else ""
     body_blocks = [b for b in post["blocks"] if not (b[0] == "h2" and kind_of(b[1]) == "sources")]
+    photo = str(m.get("author_photo", ""))
+    if photo and not is_placeholder(photo):
+        avatar = '<img class="bl-av" src="%s%s" alt="%s" width="64" height="64">' % (pre, html.escape(photo), html.escape(m.get("author", "")))
+    else:
+        ini = "".join(w[0] for w in re.findall(r"[^\W\d_]+", m.get("author", ""))[:2]).upper() or "?"
+        avatar = '<span class="bl-av bl-av-ph" role="img" aria-label="Zástupná fotka autora">%s</span>' % html.escape(ini)
+    hero_html = ""
+    if m.get("hero"):
+        hero_html = figure_html({"src": str(m["hero"]), "alt": m.get("hero_alt", ""), "caption": m.get("hero_caption", "")}, pre, "bl-hero")
+    end = {"stitok": "Granula na mieru", "nadpis": m.get("cta_title") or "Granule na mieru pre tvojho psa",
+           "text": m.get("cta_text") or "Povedz nám o ňom za dve minúty. Granule aj dávku na gramy vyberieme my.",
+           "tlacidlo": m.get("cta_button") or "Nájdi granule pre svojho psa", "odkaz": m.get("cta_link") or "granule-na-mieru.html",
+           "obrazok": m.get("cta_image", "")}
     return f"""{banner}<article class="bl-article">
   <div class="wrap bl-col">
     <nav class="bl-crumbs" aria-label="Omrvinky"><a href="{pre}index.html">Granula</a> / <a href="{pre}blog/">Blog</a></nav>
     <header class="bl-head">
       <h1>{inline(m["title"])}</h1>
-      <p class="bl-meta">Autor: <b>{inline(m.get("author", ""))}</b>, {inline(m.get("author_bio", ""))}<br>
-      Publikované: <time datetime="{m.get("published", "")}">{sk_date(m.get("published", ""))}</time> · Aktualizované: <time datetime="{m.get("updated", "")}">{sk_date(m.get("updated", ""))}</time> · {read_min}&nbsp;min čítania</p>
+      <div class="bl-byline">{avatar}<p class="bl-meta"><b>{inline(m.get("author", ""))}</b><br><span class="bl-bio">{inline(m.get("author_bio", ""))}</span><br>
+      Publikované: <time datetime="{m.get("published", "")}">{sk_date(m.get("published", ""))}</time> · Aktualizované: <time datetime="{m.get("updated", "")}">{sk_date(m.get("updated", ""))}</time> · {read_min}&nbsp;min čítania</p></div>
     </header>
+    {hero_html}
     <section class="bl-tldr" aria-labelledby="kratka-odpoved">
       <h2 id="kratka-odpoved" class="bl-tldr-t">Krátka odpoveď</h2>
       <p>{inline(m.get("tldr", ""))}</p>
@@ -483,19 +623,13 @@ def article_html(post, pre, preview):
       <ul>{kp}</ul>
     </section>
     <div class="bl-body">
-{render_blocks(body_blocks)}
+{render_blocks(body_blocks, pre)}
     </div>
     {src_html}
     {log_html}
   </div>
-</article>
-<section class="bl-cta bt">
-  <div class="wrap">
-    <h2 class="h2">Granule na mieru <span class="ac">pre tvojho psa</span></h2>
-    <p class="lead">Povedz nám o ňom za dve minúty. Granule aj dávku na gramy vyberieme my.</p>
-    <div><a class="btn btn-o" href="{pre}granule-na-mieru.html">Nájdi granule pre svojho psa</a></div>
-  </div>
-</section>"""
+  <div class="wrap bl-col">{offer_html(end, pre, end=True)}</div>
+</article>"""
 
 
 def index_html(posts):
@@ -505,7 +639,9 @@ def index_html(posts):
         m = p["meta"]
         excerpt = plain(m.get("tldr", ""))
         excerpt = excerpt if len(excerpt) <= 190 else excerpt[:185].rsplit(" ", 1)[0] + "…"
-        cards.append(f"""<li class="bl-card"><a href="{p["slug"]}/">
+        hero = str(m.get("hero", ""))
+        thumb = ('<span class="bl-card-img"><img src="%s%s" alt="" loading="lazy"></span>' % (pre, html.escape(hero))) if hero and not is_placeholder(hero) else ""
+        cards.append(f"""<li class="bl-card"><a href="{p["slug"]}/">{thumb}
   <span class="bl-card-date">Aktualizované {sk_date(m.get("updated", ""))}</span>
   <h2>{inline(m["title"])}</h2>
   <p>{html.escape(excerpt)}</p>
@@ -569,7 +705,9 @@ def jsonld(post, url):
     m = post["meta"]
     return {"@context": "https://schema.org", "@type": "BlogPosting", "headline": m["title"], "description": m.get("description", ""),
             "datePublished": str(m.get("published", "")), "dateModified": str(m.get("updated", "")),
-            "author": {"@type": "Person", "name": m.get("author", ""), "description": m.get("author_bio", "")},
+            "author": dict({"@type": "Person", "name": m.get("author", ""), "description": m.get("author_bio", "")},
+                           **({"image": "%s/%s" % (BASE_URL, m["author_photo"])} if m.get("author_photo") and not is_placeholder(str(m["author_photo"])) else {})),
+            **({"image": "%s/%s" % (BASE_URL, m["hero"])} if m.get("hero") and not is_placeholder(str(m["hero"])) else {}),
             "publisher": {"@type": "Organization", "name": "Carbone Company s. r. o. (Granula!)", "url": BASE_URL + "/"},
             "mainEntityOfPage": url, "inLanguage": "sk"}
 
@@ -612,17 +750,18 @@ def build(check_only=False):
         if p["status"] == "published":
             write(os.path.join(HERE, p["slug"], "index.html"),
                   page(pre="../../", title=title, description=m.get("description", ""), canonical=url,
-                       body=article_html(p, "../../", False), jsonld=jsonld(p, url)))
+                       body=article_html(p, "../../", False), jsonld=jsonld(p, url), image=str(m.get("hero", ""))))
     write(os.path.join(HERE, "index.html"), index_html(pub))
 
     manifest = {"built": dt.datetime.now().strftime("%Y-%m-%d %H:%M"), "base": BASE_URL, "problems": problems, "posts": [{
         "slug": p["slug"], "file": p["file"], "title": p["meta"].get("title", ""), "status": p["status"], "wanted": p["wanted"],
         "example": bool(p["meta"].get("example")), "published": str(p["meta"].get("published", "")), "updated": str(p["meta"].get("updated", "")),
-        "author": p["meta"].get("author", ""), "words": p["words"], "description": p["meta"].get("description", ""),
+        "author": p["meta"].get("author", ""), "authorPhoto": str(p["meta"].get("author_photo", "")), "hero": str(p["meta"].get("hero", "")), "words": p["words"], "description": p["meta"].get("description", ""),
         "preview": "../blog/nahlad/%s/index.html" % p["slug"], "live": "../blog/%s/index.html" % p["slug"] if p["status"] == "published" else None,
         "lint": p["lint"],
         "sections": [{"title": s["title"], "kind": s["kind"], "words": s["words"], "numbers": s["numbers"], "question": s["question"],
-                      "firstBold": s["first_bold"], "table": s["has_table"], "steps": s["has_ol"]} for s in p["sections"]],
+                      "firstBold": s["first_bold"], "table": s["has_table"], "steps": s["has_ol"],
+                      "images": s["images"], "charts": s["charts"], "offers": s["offers"]} for s in p["sections"]],
     } for p in posts]}
     write(os.path.join(HERE, "posts.js"), "/* vygenerované build.py — needitovať */\nwindow.GRANULA_POSTS = %s;\n" % json.dumps(manifest, ensure_ascii=False, indent=1))
 

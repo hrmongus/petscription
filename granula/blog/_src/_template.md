@@ -7,6 +7,10 @@ status: draft
 description: "[Meta popis 120–160 znakov: priama odpoveď s jedným číslom.]"
 author: "[Meno Priezvisko]"
 author_bio: "[1 veta, prečo mu veriť: napr. veterinárka so zameraním na výživu psov, 12 rokov praxe]"
+author_photo: placeholder   # img/autori/<meno-priezvisko>.webp, štvorcová fotka; každý článok môže mať iného autora
+hero: placeholder           # img/blog/<slug>/hero.webp (16:9) alebo existujúca fotka z img/
+hero_alt: "[Čo je na fotke: napr. labrador pri miske s odváženou dennou dávkou granúl]"
+hero_caption: ""            # voliteľný popis pod obrázkom
 published: 2026-11-18
 updated: 2026-11-18
 tldr: >
@@ -23,6 +27,12 @@ sources:
   - "[Názov – vydavateľ, rok] | https://..."
   - "[Názov – vydavateľ, rok] | https://..."
   - "[Názov – vydavateľ, rok] | https://..."
+# Záverečná ponuka (voliteľné, inak všeobecná): napíš ju k téme článku
+cta_title: "[Nadpis ponuky k téme, napr. Dávku na gramy ti spočítame my]"
+cta_text: "[1–2 vety: čo konkrétne Granula rieši v tejto téme. Len schválené tvrdenia.]"
+cta_button: "[Text tlačidla, napr. Spočítaj dávku pre svojho psa]"
+# cta_link: granule-na-mieru.html
+# cta_image: img/produkty/hovadzie-s-ryzou.webp
 # lint_ignore: [section-length]   # vypne konkrétne pravidlo, len so súhlasom používateľa
 ---
 
@@ -30,9 +40,30 @@ sources:
 
 **[Pojem] je [kategória], ktorá [čo robí] pre [koho].** [1–2 vety kontextu. Odlíšenie od podobného pojmu.]
 
+![[Čo má byť na fotke, konkrétne]](placeholder "[Popis pod obrázkom, voliteľný]")
+
 ## [Nadpis ako otázka, ktorú ľudia reálne píšu]?
 
 **[Prvá veta = odpoveď na nadpis.]** [Vysvetlenie, dôkaz, príklad. 200–400 slov. Aspoň 1 číslo so zdrojom: „Podľa [zdroj, rok] …“. Žiadne „vyššie“, „ako sme spomenuli“, odsek nezačína „Toto“.]
+
+::: graf
+nazov: [Čo graf ukazuje, napr. Denná energia dospelého psa podľa hmotnosti]
+jednotka: [kcal]
+os: [Hmotnosť psa]
+zdroj: [Zdroj čísel – vydavateľ, rok]
+zvyraznit: [20 kg]
+[5 kg] | [0]
+[20 kg] | [0]
+[40 kg] | [0]
+:::
+
+::: ponuka
+nadpis: [Ponuka, ktorá nadväzuje na túto sekciu, napr. Nechceš to rátať ručne?]
+text: [1–2 vety, ako to konkrétne rieši Granula. Len to, čo je naozaj v engine.js a schválených tvrdeniach.]
+tlacidlo: [Text tlačidla]
+odkaz: granule-na-mieru.html
+obrazok: [img/produkty/… (voliteľné)]
+:::
 
 ## [A] vs [B] vs [C]: porovnanie
 
