@@ -20,7 +20,7 @@ Všetky témy sú v `granula/blog/TEMY.md` (kategórie A–H, priority P1–P3) 
 1. **Výskum.** Zisti, čo ľudia reálne pýtajú (presné znenie otázky), a nájdi **primárne zdroje**: štúdie (PubMed, JAVMA, WSAVA, FEDIAF, NRC), oficiálne dokumenty, údaje výrobcu. Nie iné blogy. Každé číslo v článku musí mať zdroj. Ak číslo nevieš overiť, nepíš ho.
 2. **Koncept.** Skopíruj `granula/blog/_src/_template.md` do `granula/blog/_src/<slug>.md` a vyplň. `status: draft`.
 3. **Build a kontrola.** Z koreňa repozitára spusti `python3 granula/blog/build.py`. Vypíše CHYBY (blokujú publikovanie) a upozornenia. Opravuj, kým nie je 0 chýb. Upozornenia sa snaž odstrániť. Ak niektoré nemá zmysel (napr. sekcia s tabuľkou má menej slov), povedz to používateľovi; `lint_ignore` pridaj len s jeho súhlasom.
-4. **Commit a push** vrátane vygenerovaných súborov (`granula/blog/**`, `granula/sitemap.xml`, `robots.txt`). Náhľad uvidí používateľ v redakcii po nasadení.
+4. **Commit a push** vrátane vygenerovaných súborov (`granula/blog/**` vrátane `nahlad-pdf/`, `granula/sitemap.xml`, `robots.txt`). Náhľad uvidí používateľ v redakcii po nasadení.
 5. **Zhrnutie do chatu:** slug, hlavná odpoveď (1 veta), zdroje, čo ostalo ako upozornenie a prečo.
 6. **Spätná väzba:** uprav text, nastav `updated` na dnešný dátum, pridaj **prvý** záznam do `changelog` („RRRR-MM-DD: čo sa zmenilo“), znova build, commit, push.
 7. **Publikovanie len na výslovný pokyn** používateľa: `status: published`, build (pri chybách ostane článok zablokovaný a neverejný), commit, push, pošli verejnú adresu.
@@ -118,6 +118,7 @@ obrazok: img/produkty/hovadzie-s-ryzou.webp
 - Statické HTML (server-side, bez JavaScriptu), sémantické `h1/h2/table/ol`, viditeľný autor, dátumy a história zmien, zdroje, JSON-LD BlogPosting (len SEO hygiena, nie GEO páka).
 - `granula/blog/<slug>/`: verejný článok (len `published` bez chýb). `granula/blog/nahlad/<slug>/`: náhľad každého článku (noindex).
 - `granula/blog/index.html`, `granula/sitemap.xml`, `robots.txt` (AI crawlery povolené, redakcia a náhľady zakázané), `granula/blog/posts.js` (dáta redakcie).
+- `granula/blog/nahlad-pdf/<slug>.pdf`: PDF náhľadu na review (tlačidlo „Stiahnuť PDF“ v redakcii). Prerenderuje sa len zmenený článok; potrebuje Node + Playwright, `--no-pdf` ho preskočí. Commituj aj PDF.
 - `granula/index.html`: sekcia „Blog“ na úvodnej stránke (najnovších 8 publikovaných článkov + karta „Všetky články“) medzi značkami `blog-home:start/end`. Generuje ju build, ručne ju needituj. Kým nie je publikovaný žiadny článok, je skrytá.
 - `--check` len skontroluje bez zápisu.
 

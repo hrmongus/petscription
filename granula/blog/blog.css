@@ -81,10 +81,9 @@
 .bl-fig .bl-img,.bl-fig .bl-ph{position:relative;aspect-ratio:3/2;border:2px solid var(--n);overflow:hidden;background:var(--ml)}
 .bl-fig img{width:100%;height:100%;object-fit:cover;display:block}
 .bl-fig figcaption{margin-top:10px;font-size:14px;line-height:1.45}
-.bl-hero{margin:0 0 36px;padding:0 14px 14px 0;position:relative}
-.bl-hero::before{content:"";position:absolute;left:14px;top:14px;right:0;bottom:0;background:var(--o)}
-.bl-hero .bl-img,.bl-hero .bl-ph{aspect-ratio:16/9}
-.bl-hero figcaption{position:relative}
+.bl-hero{margin:0 0 36px}
+.bl-hero .bl-img,.bl-hero .bl-ph{aspect-ratio:16/9;margin-right:14px;box-shadow:14px 14px 0 0 var(--o)}
+.bl-hero figcaption{margin-top:24px}
 .bl-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;text-align:center;font-size:15px;line-height:1.4;
   background:repeating-linear-gradient(135deg,var(--ml) 0 14px,var(--m) 14px 28px) !important}
 .bl-ph span{max-width:440px;background:var(--ml);padding:2px 8px}
@@ -127,3 +126,23 @@
 @media (max-width:640px){.bl-body{font-size:16px}.bl-tldr{padding:16px 16px 18px}.bl-tldr p{font-size:16px}}
 .bl-body .bl-offer .btn-o{color:var(--n);text-decoration:none}
 .bl-body .bl-offer .btn-o:hover{color:var(--o)}
+
+/* tlač a PDF náhľad (Zdieľať → Tlačiť na iPade, PDF z buildu) */
+@media print{
+  @page{size:A4;margin:14mm 12mm 16mm}
+  html,body{background:#fff !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .topbar,.site-head,.foot,.cookie-bar,.bl-crumbs,.bl-preview a{display:none !important}
+  .bl-preview{border:2px solid var(--n);margin:0 0 12px}
+  .bl-article{padding:0}
+  .bl-col{max-width:none;padding:0}
+  .bl-body{font-size:11.5pt;line-height:1.5}
+  .bl-head h1{font-size:24pt}
+  .bl-body h2{font-size:15pt;margin-top:22px;break-after:avoid}
+  .bl-body h3{break-after:avoid}
+  .bl-fig,.bl-chart,.bl-offer,.tbl,blockquote,.bl-body li,.bl-tldr li{break-inside:avoid}
+  .bl-fig .bl-ph{aspect-ratio:4/1}
+  .bl-hero .bl-ph{aspect-ratio:3/1}
+  .bl-log{display:block}
+  .bl-log ul{display:block}
+  .bl-sources a::after{content:none}
+}

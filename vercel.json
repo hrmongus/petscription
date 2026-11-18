@@ -1,5 +1,20 @@
 {
   "redirects": [
-    { "source": "/", "destination": "/granula/", "permanent": false }
+    {
+      "source": "/",
+      "destination": "/granula/",
+      "permanent": false
+    }
+  ],
+  "headers": [
+    {
+      "source": "/granula/blog/nahlad-pdf/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
   ]
 }

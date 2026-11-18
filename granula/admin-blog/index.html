@@ -234,6 +234,7 @@ table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
         "<h2>" + esc(p.title) + "</h2>" + why +
         '<div class="d-meta"><span>Autor: ' + esc(p.author || "—") + "</span><span>Publikované: " + esc(p.published) + "</span><span>Aktualizované: " + esc(p.updated) + "</span><span>" + p.words + " slov</span><span>Zdroj: <code>" + esc(p.file) + "</code></span></div>" +
         '<div class="acts"><a class="btn btn-o" href="' + esc(p.preview) + '" target="_blank" rel="noopener">Otvoriť náhľad ↗</a>' +
+        (p.pdf ? '<a class="btn btn-line" href="' + esc(p.pdf) + '" target="_blank" rel="noopener" download>Stiahnuť PDF</a>' : "") +
         (p.live ? '<a class="btn btn-k" href="' + esc(p.live) + '" target="_blank" rel="noopener">Verejná verzia ↗</a>' : "") +
         '<button type="button" class="btn btn-line" id="approve">Kopírovať schválenie</button> <span class="copied" id="ap-ok" hidden>Skopírované</span></div></div>' +
       '<div class="panel"><h2>Kontrola GEO</h2><div class="score"><strong>' + c.ok + " z " + c.n + ' pravidiel</strong><span class="bar"><i style="width:' + Math.round(c.ok / Math.max(1, c.n) * 100) + '%"></i></span>' +

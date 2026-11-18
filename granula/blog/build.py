@@ -767,6 +767,70 @@ def write(path, text):
         f.write(text)
 
 
+PDF_JS = r"""
+const { chromium } = require('playwright');
+const jobs = JSON.parse(process.argv[1]);
+(async () => {
+  const b = await chromium.launch();
+  for (const j of jobs) {
+    const p = await b.newPage();
+    await p.goto(j.url, { waitUntil: 'networkidle', timeout: 60000 }).catch(() => {});
+    await p.evaluate(() => { document.querySelectorAll('img[loading=lazy]').forEach(i => i.loading = 'eager'); document.querySelectorAll('.cookie-bar').forEach(e => e.remove()); document.querySelectorAll('details').forEach(d => d.open = true); });
+    await p.waitForTimeout(400);
+    await p.pdf({ path: j.out, format: 'A4', printBackground: true, margin: { top: '14mm', bottom: '16mm', left: '12mm', right: '12mm' },
+      displayHeaderFooter: true, headerTemplate: '<span></span>',
+      footerTemplate: '<div style="font-size:8px;width:100%;text-align:center;font-family:sans-serif">' + j.label + ' · <span class="pageNumber"></span>/<span class="totalPages"></span></div>' });
+    await p.close();
+  }
+  await b.close();
+})().catch(e => { console.error(e.message); process.exit(1); });
+"""
+
+
+def export_pdfs(posts, skip=False):
+    """PDF náhľadu každého článku na review (napr. na iPade). Prerenderuje len zmenené články (hash HTML + CSS).
+    Potrebuje Node + Playwright; bez nich ostanú existujúce PDF a build pokračuje."""
+    import hashlib, subprocess
+    out_dir = os.path.join(HERE, "nahlad-pdf")
+    os.makedirs(out_dir, exist_ok=True)
+    idx_path = os.path.join(out_dir, "hashes.json")
+    try:
+        old = json.load(open(idx_path, encoding="utf-8"))
+    except (OSError, ValueError):
+        old = {}
+    css = "".join(open(os.path.join(d, f), encoding="utf-8").read() for d, f in ((HERE, "blog.css"), (SITE_DIR, "granula.css")))
+    new, jobs = {}, []
+    for p in posts:
+        html_path = os.path.join(HERE, "nahlad", p["slug"], "index.html")
+        h = hashlib.sha256((open(html_path, encoding="utf-8").read() + css).encode()).hexdigest()[:16]
+        new[p["slug"]] = h
+        pdf = os.path.join(out_dir, p["slug"] + ".pdf")
+        if old.get(p["slug"]) != h or not os.path.isfile(pdf):
+            label = "Granula blog · náhľad · %s · %s" % (p["slug"], p["meta"].get("updated", ""))
+            jobs.append({"url": "file://" + html_path, "out": pdf, "label": html.escape(label)})
+    for f in os.listdir(out_dir):
+        if f.endswith(".pdf") and f[:-4] not in new:
+            os.remove(os.path.join(out_dir, f))
+    stale = False
+    if jobs and not skip:
+        try:
+            subprocess.run(["node", "-e", PDF_JS, json.dumps(jobs)], check=True, timeout=600)
+            print("PDF náhľady: %d prerenderované" % len(jobs))
+        except (OSError, subprocess.SubprocessError) as e:
+            print("PDF náhľady sa nevygenerovali (%s); existujúce ostávajú." % e)
+            stale = True
+    else:
+        stale = bool(jobs)
+        if jobs:
+            print("PDF náhľady preskočené (--no-pdf), %d zastaraných" % len(jobs))
+    if jobs and (skip or stale):
+        for j in jobs:  # starý hash = pri ďalšom builde sa PDF prerenderuje
+            slug = os.path.basename(j["out"])[:-4]
+            new[slug] = old.get(slug, "")
+    write(idx_path, json.dumps(new, indent=1, sort_keys=True) + "\n")
+    return {s for s in new if os.path.isfile(os.path.join(out_dir, s + ".pdf"))}
+
+
 def jsonld(post, url):
     m = post["meta"]
     return {"@context": "https://schema.org", "@type": "BlogPosting", "headline": m["title"], "description": m.get("description", ""),
@@ -801,7 +865,7 @@ def build(check_only=False):
         return 1 if problems or any(p["status"] == "blocked" for p in posts) else 0
 
     # vyčistiť staré výstupy (článkové priečinky a náhľady), ponechať zdroje a statické súbory
-    keep = {"_src", "build.py", "blog.css", "CLAUDE.md", "GEO-TEMPLATE.md", "README.md", "TEMY.md"}
+    keep = {"_src", "build.py", "blog.css", "CLAUDE.md", "GEO-TEMPLATE.md", "README.md", "TEMY.md", "nahlad-pdf"}
     for name in os.listdir(HERE):
         full = os.path.join(HERE, name)
         if name in keep:
@@ -825,6 +889,7 @@ def build(check_only=False):
                   page(pre="../../", title=title, description=m.get("description", ""), canonical=url,
                        body=article_html(p, "../../", False), jsonld=jsonld(p, url), image=str(m.get("hero", ""))))
     write(os.path.join(HERE, "index.html"), index_html(pub))
+    pdfs = export_pdfs([p for p in posts if p["status"] != "namet"], skip="--no-pdf" in sys.argv)
     write_home(pub)
 
     manifest = {"built": dt.datetime.now().strftime("%Y-%m-%d %H:%M"), "base": BASE_URL, "problems": problems, "posts": [{
@@ -833,7 +898,8 @@ def build(check_only=False):
         "author": p["meta"].get("author", ""), "authorPhoto": str(p["meta"].get("author_photo", "")), "hero": str(p["meta"].get("hero", "")), "words": p["words"], "description": p["meta"].get("description", ""),
         "id": p["meta"].get("id", ""), "category": p["meta"].get("category", ""), "priority": p["meta"].get("priority", ""),
         "brief": p["meta"].get("brief", ""), "angle": p["meta"].get("angle", ""),
-        "preview": "../blog/nahlad/%s/index.html" % p["slug"] if p["status"] != "namet" else None, "live": "../blog/%s/index.html" % p["slug"] if p["status"] == "published" else None,
+        "preview": "../blog/nahlad/%s/index.html" % p["slug"] if p["status"] != "namet" else None,
+        "pdf": ("../blog/nahlad-pdf/%s.pdf" % p["slug"]) if p["slug"] in pdfs else None, "live": "../blog/%s/index.html" % p["slug"] if p["status"] == "published" else None,
         "lint": p["lint"],
         "sections": [{"title": s["title"], "kind": s["kind"], "words": s["words"], "numbers": s["numbers"], "question": s["question"],
                       "firstBold": s["first_bold"], "table": s["has_table"], "steps": s["has_ol"],
@@ -850,7 +916,7 @@ def build(check_only=False):
     bots = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "PerplexityBot", "ClaudeBot", "Claude-User", "Claude-SearchBot", "Google-Extended", "Bingbot", "Googlebot"]
     path = BASE_URL.split("://", 1)[1].split("/", 1)[1] if BASE_URL.count("/") > 2 else ""
     pfx = "/" + path if path else ""
-    dis = ["%s/admin-blog/" % pfx, "%s/blog/nahlad/" % pfx, "%s/admin-vypocet.html" % pfx]
+    dis = ["%s/admin-blog/" % pfx, "%s/blog/nahlad/" % pfx, "%s/blog/nahlad-pdf/" % pfx, "%s/admin-vypocet.html" % pfx]
     robots = "# vygenerované granula/blog/build.py\n# AI vyhľadávače sú výslovne povolené (GEO); súkromné stránky zakázané všetkým.\n\n"
     robots += "".join("User-agent: %s\n" % b for b in bots) + "".join("Disallow: %s\n" % d for d in dis) + "Allow: /\n\n"
     robots += "User-agent: *\n" + "".join("Disallow: %s\n" % d for d in dis) + "Allow: /\n\nSitemap: %s/sitemap.xml\n" % BASE_URL

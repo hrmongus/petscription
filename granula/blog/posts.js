@@ -1,6 +1,6 @@
 /* vygenerované build.py — needitovať */
 window.GRANULA_POSTS = {
- "built": "2026-11-18 08:39",
+ "built": "2026-11-18 08:43",
  "base": "https://granula.sk/granula",
  "problems": [],
  "posts": [
@@ -24,6 +24,7 @@ window.GRANULA_POSTS = {
    "brief": "Poradie podľa hmotnosti pred spracovaním; „splitting“ surovín (ryža, ryžové otruby, ryžová múčka); „s kuracinou“ vs. „kuracie“ (pravidlá pomenovania v EU)",
    "angle": "Naša etiketa = zloženie na celej A4",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -48,6 +49,7 @@ window.GRANULA_POSTS = {
    "brief": "Oxidácia tukov, roztoče, vlhkosť; nesypáť do plastovej nádoby bez vreca; spotrebovať do ~4–6 týždňov",
    "angle": "Prečo posielame balenie na mesiac (čerstvosť)",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -72,6 +74,7 @@ window.GRANULA_POSTS = {
    "brief": "",
    "angle": "",
    "preview": "../blog/nahlad/ako-spravne-prejst-na-nove-granule/index.html",
+   "pdf": "../blog/nahlad-pdf/ako-spravne-prejst-na-nove-granule.pdf",
    "live": null,
    "lint": [
     {
@@ -525,6 +528,7 @@ window.GRANULA_POSTS = {
    "brief": "Škála 1–9 s obrázkami; štúdia Purina (Kealy 2002): štíhle psy žili v priemere ~1,8 roka dlhšie",
    "angle": "Emočný hook dlhovekosti",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -549,6 +553,7 @@ window.GRANULA_POSTS = {
    "brief": "Energia z tuku, bielkoviny na regeneráciu, načasovanie kŕmenia pred výkonom",
    "angle": "Hovädzie s ryžou (Energy)",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -573,6 +578,7 @@ window.GRANULA_POSTS = {
    "brief": "Sacharidový zdroj v grain-free; vláknina; výhrady (DCM debata)",
    "angle": "Jahňa a jeleň s batátmi",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -597,6 +603,7 @@ window.GRANULA_POSTS = {
    "brief": "Prepojiť s C7",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -621,6 +628,7 @@ window.GRANULA_POSTS = {
    "brief": "Obsah vody a poradie na etikete; „70 % mäsa“ pred a po sušení; kvalita múčok",
    "angle": "Transparentnosť zloženia",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -645,6 +653,7 @@ window.GRANULA_POSTS = {
    "brief": "Formát: Pilier + tlačitelný PDF na chladničku za e-mail",
    "angle": "Lead magnet; prepojí sa na všetky stránky z H1",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -669,6 +678,7 @@ window.GRANULA_POSTS = {
    "brief": "Analytické zložky, prepočet na sušinu, porovnávanie krmív s rôznou vlhkosťou, výpočet sacharidov (NFE)",
    "angle": "Interaktívna kalkulačka ako lead magnet",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -693,6 +703,7 @@ window.GRANULA_POSTS = {
    "brief": "Malé plemená ~9–12 mes., veľké a obrie 12–24 mes.; podľa dospelej váhy, nie veľkosti",
    "angle": "Dotazník prepne recept automaticky podľa veku",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -717,6 +728,7 @@ window.GRANULA_POSTS = {
    "brief": "Kde cena korešponduje s kvalitou a kde je to marketing a distribúcia",
    "angle": "Priamy D2C model bez obchodnej marže",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -741,6 +753,7 @@ window.GRANULA_POSTS = {
    "brief": "Min. 8 týždňov (Olivry 2015), žiadne maškrty, provokácia, ako viesť denník",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -765,6 +778,7 @@ window.GRANULA_POSTS = {
    "brief": "Formát: Infografika + vysvetlivky, kedy k veterinárovi",
    "angle": "Vysoký objem, vracajú sa k nej; prepojenie na F2 a F8",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -789,6 +803,7 @@ window.GRANULA_POSTS = {
    "brief": "Kvalita dôkazov (zmiešaná, skôr slabá); dávky v krmive vs. terapeutické dávky; čo funguje lepšie (omega-3, váha)",
    "angle": "Morka, hus & kačica so zvýšeným obsahom; úprimne o dôkazoch",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -813,6 +828,7 @@ window.GRANULA_POSTS = {
    "brief": "Prečo vznikol trend, čo hovoria dôkazy, pre koho má zmysel",
    "angle": "Prepojiť s A1",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -837,6 +853,7 @@ window.GRANULA_POSTS = {
    "brief": "Prepojiť s A1 a C5",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -861,6 +878,7 @@ window.GRANULA_POSTS = {
    "brief": "Nutričná kompletnosť, bakteriálne riziko BARF (Salmonella, Listeria), cena, pohodlie; doma varené recepty často nekompletné",
    "angle": "Prečo granule s vysokým podielom mäsa",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -885,6 +903,7 @@ window.GRANULA_POSTS = {
    "brief": "Prepojiť s F14",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -909,6 +928,7 @@ window.GRANULA_POSTS = {
    "brief": "Energia rastie najmä v posledných 3 týždňoch gravidity a pri laktácii; prechod na energeticky hutnejšie krmivo",
    "angle": "Hovädzie s ryžou (Energy)",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -933,6 +953,7 @@ window.GRANULA_POSTS = {
    "brief": "",
    "angle": "",
    "preview": "../blog/nahlad/hnacka-po-novych-granulach-co-robit/index.html",
+   "pdf": "../blog/nahlad-pdf/hnacka-po-novych-granulach-co-robit.pdf",
    "live": null,
    "lint": [
     {
@@ -1373,6 +1394,7 @@ window.GRANULA_POSTS = {
    "brief": "Porfyríny, anatómia, mýty o „toxinách“ v krmive",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1397,6 +1419,7 @@ window.GRANULA_POSTS = {
    "brief": "DCM, taurín, aktuálny stav dôkazov (FDA, Tufts, ACVIM)",
    "angle": "Overiť, či máme strukoviny",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1421,6 +1444,7 @@ window.GRANULA_POSTS = {
    "brief": "Ktoré pojmy nemajú právnu definíciu; ako rozoznať reálnu kvalitu",
    "angle": "Priamy, skeptický tón = náš brand",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1445,6 +1469,7 @@ window.GRANULA_POSTS = {
    "brief": "Formát: Interaktívny test s obrázkami",
    "angle": "Emočný hook dlhovekosti; prepojenie na E2 a F11",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1452,26 +1477,469 @@ window.GRANULA_POSTS = {
   {
    "slug": "je-kukurica-v-granulach-zla",
    "file": "granula/blog/_src/je-kukurica-v-granulach-zla.md",
-   "title": "Je kukurica v granulách zlá?",
-   "status": "namet",
-   "wanted": "namet",
+   "title": "Je kukurica v granulách zlá? Stráviteľnosť, glutén a aflatoxín",
+   "status": "draft",
+   "wanted": "draft",
    "example": false,
-   "published": "",
-   "updated": "",
-   "author": "",
-   "authorPhoto": "",
-   "hero": "",
-   "words": 0,
-   "description": "",
+   "published": "2026-11-18",
+   "updated": "2026-11-18",
+   "author": "[Meno Priezvisko]",
+   "authorPhoto": "placeholder",
+   "hero": "placeholder",
+   "words": 1758,
+   "description": "Kukurica v granulách nie je jed: škrob z varenej kukurice pes strávi z viac ako 98 %. Riziká sú kukuričný glutén namiesto mäsa a aflatoxín z plesní.",
    "id": "A2",
    "category": "Zloženie a suroviny",
    "priority": "P1",
-   "brief": "Kukurica ako lacný plnáč vs. stráviteľný zdroj energie; kukuričný gluten ako lacný „proteín“; mykotoxíny (aflatoxín, prípady sťahovania krmív)",
-   "angle": "Bez kukurice, ak platí pre všetky recepty (overiť zloženia)",
-   "preview": null,
+   "brief": "",
+   "angle": "",
+   "preview": "../blog/nahlad/je-kukurica-v-granulach-zla/index.html",
+   "pdf": "../blog/nahlad-pdf/je-kukurica-v-granulach-zla.pdf",
    "live": null,
-   "lint": [],
-   "sections": []
+   "lint": [
+    {
+     "id": "title",
+     "level": "error",
+     "ok": true,
+     "msg": "Titulok je vyplnený",
+     "details": []
+    },
+    {
+     "id": "title-length",
+     "level": "warn",
+     "ok": true,
+     "msg": "Titulok má najviac 70 znakov (má 62)",
+     "details": []
+    },
+    {
+     "id": "title-year",
+     "level": "warn",
+     "ok": true,
+     "msg": "Rok v titulku len pri téme, ktorá sa mení, a len ak sedí s dátumom aktualizácie",
+     "details": []
+    },
+    {
+     "id": "description",
+     "level": "warn",
+     "ok": true,
+     "msg": "Meta popis má 120–160 znakov (má 148)",
+     "details": []
+    },
+    {
+     "id": "author",
+     "level": "error",
+     "ok": false,
+     "msg": "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)",
+     "details": []
+    },
+    {
+     "id": "author-photo",
+     "level": "error",
+     "ok": false,
+     "msg": "Fotka autora (author_photo, súbor v granula/img/autori/)",
+     "details": []
+    },
+    {
+     "id": "dates",
+     "level": "error",
+     "ok": true,
+     "msg": "Dátumy published a updated (RRRR-MM-DD), updated ≥ published",
+     "details": []
+    },
+    {
+     "id": "changelog",
+     "level": "warn",
+     "ok": true,
+     "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
+     "details": [
+      "2026-11-18: Prvá verzia"
+     ]
+    },
+    {
+     "id": "tldr",
+     "level": "error",
+     "ok": true,
+     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 57)",
+     "details": []
+    },
+    {
+     "id": "tldr-range",
+     "level": "warn",
+     "ok": true,
+     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 57)",
+     "details": []
+    },
+    {
+     "id": "tldr-intro",
+     "level": "error",
+     "ok": true,
+     "msg": "Krátka odpoveď začína priamou odpoveďou, nie úvodom („v tomto článku…“)",
+     "details": []
+    },
+    {
+     "id": "key-points",
+     "level": "error",
+     "ok": true,
+     "msg": "Aspoň 3 kľúčové body (má 5)",
+     "details": []
+    },
+    {
+     "id": "tldr-numbers",
+     "level": "warn",
+     "ok": true,
+     "msg": "Krátka odpoveď a kľúčové body obsahujú aspoň 3 čísla (majú 14)",
+     "details": []
+    },
+    {
+     "id": "definition",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcia „Čo je …?“ s definíciou vo forme „X je Y, ktoré Z“",
+     "details": []
+    },
+    {
+     "id": "sections",
+     "level": "warn",
+     "ok": true,
+     "msg": "3–6 hlavných sekcií (má 6)",
+     "details": []
+    },
+    {
+     "id": "h2-questions",
+     "level": "warn",
+     "ok": true,
+     "msg": "Aspoň polovica nadpisov H2 sú otázky (6 z 7)",
+     "details": [
+      "Ako posúdiť, či je kukurica v granulách problém: 5 krokov"
+     ]
+    },
+    {
+     "id": "section-length",
+     "level": "warn",
+     "ok": true,
+     "msg": "Hlavné sekcie majú 200–400 slov",
+     "details": []
+    },
+    {
+     "id": "first-sentence",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každá sekcia začína tučnou prvou vetou = odpoveď na nadpis",
+     "details": []
+    },
+    {
+     "id": "section-numbers",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každá hlavná sekcia má aspoň 1 číslo (ideálne so zdrojom)",
+     "details": []
+    },
+    {
+     "id": "standalone",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcie obstoja samy (žiadne „vyššie“, „ako sme spomenuli“, odsek začínajúci „Toto/To“)",
+     "details": []
+    },
+    {
+     "id": "hero",
+     "level": "warn",
+     "ok": true,
+     "msg": "Obrázok v hlavičke článku (hero, hero_alt)",
+     "details": []
+    },
+    {
+     "id": "images",
+     "level": "warn",
+     "ok": true,
+     "msg": "Obrázky v texte: aspoň 3 obrázky alebo grafy (1 na 2 hlavné sekcie), má 3",
+     "details": []
+    },
+    {
+     "id": "chart",
+     "level": "warn",
+     "ok": true,
+     "msg": "Aspoň 1 graf (blok ::: graf), keď článok porovnáva čísla",
+     "details": []
+    },
+    {
+     "id": "img-alt",
+     "level": "error",
+     "ok": true,
+     "msg": "Každý obrázok má popis (alt)",
+     "details": []
+    },
+    {
+     "id": "img-placeholder",
+     "level": "error",
+     "ok": false,
+     "msg": "Zástupné obrázky sú nahradené skutočnými (pred publikovaním)",
+     "details": [
+      "hero: Detail zadnej strany vreca granúl so zoznamom zloženia, v ktorom je zvýraznené slovo kukurica; vedľa vreca leží na drevenej doske hrsť granúl a niekoľko suchých kukuričných zŕn",
+      "obrázok: Na drevenom stole vedľa seba štyri misky so surovinami s popiskami: celé kukuričné zrná, žltá kukuričná múka, biely kukuričný škrob a zlatistý prášok kukuričného gluténu",
+      "obrázok: Ruka s perom podčiarkuje na zadnej strane vreca granúl všetky kukuričné zložky v zozname zloženia, prvé tri zložky sú zakrúžkované"
+     ]
+    },
+    {
+     "id": "img-files",
+     "level": "error",
+     "ok": true,
+     "msg": "Súbory obrázkov existujú (cesta od granula/, napr. img/blog/<slug>/…)",
+     "details": []
+    },
+    {
+     "id": "offer-mid",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka uprostred článku, ktorá sedí k téme (blok ::: ponuka)",
+     "details": []
+    },
+    {
+     "id": "offer-fields",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka má nadpis a text",
+     "details": []
+    },
+    {
+     "id": "offer-link",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka vedie na dotazník (granule-na-mieru.html), nie na konkrétny produkt",
+     "details": []
+    },
+    {
+     "id": "offer-count",
+     "level": "warn",
+     "ok": true,
+     "msg": "Najviac 2 ponuky v texte (má 2), inak to pôsobí ako reklama",
+     "details": []
+    },
+    {
+     "id": "table",
+     "level": "info",
+     "ok": true,
+     "msg": "Porovnávacia tabuľka (odporúčané pri „X vs Y“)",
+     "details": []
+    },
+    {
+     "id": "steps",
+     "level": "info",
+     "ok": true,
+     "msg": "Postup krok za krokom (číslovaný zoznam)",
+     "details": []
+    },
+    {
+     "id": "own-data",
+     "level": "info",
+     "ok": false,
+     "msg": "Vlastné dáta alebo skúsenosť (najväčší diferenciátor)",
+     "details": []
+    },
+    {
+     "id": "faq",
+     "level": "warn",
+     "ok": true,
+     "msg": "Časté otázky: 3–6 otázok v tvare **Otázka?** odpoveď, odpoveď najviac 3 vety (má 5)",
+     "details": []
+    },
+    {
+     "id": "summary",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcia „Zhrnutie“ ako zoznam (hlavný záver, kedy áno/nie, ďalší krok)",
+     "details": []
+    },
+    {
+     "id": "sources",
+     "level": "error",
+     "ok": true,
+     "msg": "Aspoň 3 zdroje s URL (má 9)",
+     "details": []
+    },
+    {
+     "id": "sources-format",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každý zdroj v tvare „Názov – vydavateľ, rok | https://…“",
+     "details": []
+    },
+    {
+     "id": "first-third",
+     "level": "info",
+     "ok": true,
+     "msg": "Kľúčové fakty (čísla) sú v prvej tretine textu",
+     "details": []
+    },
+    {
+     "id": "atomic",
+     "level": "info",
+     "ok": true,
+     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 15)",
+     "details": []
+    },
+    {
+     "id": "self-promo",
+     "level": "warn",
+     "ok": true,
+     "msg": "„Najlepšie X“ len s transparentnou metodikou a bez Granuly na prvom mieste",
+     "details": []
+    },
+    {
+     "id": "claims",
+     "level": "warn",
+     "ok": true,
+     "msg": "Žiadne vyradené tvrdenia a superlatívy z dizajn systému",
+     "details": []
+    },
+    {
+     "id": "recipe-names",
+     "level": "warn",
+     "ok": true,
+     "msg": "Receptúry podľa mäsa (napr. „Jeleň & králik“), nie interné názvy Puppy/Energy",
+     "details": []
+    },
+    {
+     "id": "ty-form",
+     "level": "warn",
+     "ok": true,
+     "msg": "Tykanie („tvoj pes“), nie vykanie",
+     "details": []
+    },
+    {
+     "id": "emoji",
+     "level": "warn",
+     "ok": true,
+     "msg": "Bez emoji",
+     "details": []
+    },
+    {
+     "id": "length",
+     "level": "info",
+     "ok": true,
+     "msg": "Dĺžka článku: 1758 slov (dĺžka nerozhoduje, hustota áno)",
+     "details": []
+    }
+   ],
+   "sections": [
+    {
+     "title": "Čo je kukurica v granulách?",
+     "kind": "definition",
+     "words": 114,
+     "numbers": 3,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 1,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Je kukurica v granulách len lacný plnáč?",
+     "kind": "main",
+     "words": 248,
+     "numbers": 9,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Prečo je kukuričný glutén slabší zdroj bielkovín ako mäso?",
+     "kind": "main",
+     "words": 244,
+     "numbers": 7,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Sú psy často alergické na kukuricu?",
+     "kind": "main",
+     "words": 200,
+     "numbers": 14,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 1,
+     "offers": 1
+    },
+    {
+     "title": "Aké riziko predstavujú mykotoxíny v kukurici?",
+     "kind": "main",
+     "words": 270,
+     "numbers": 15,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Ako rozoznať formy kukurice na etikete?",
+     "kind": "main",
+     "words": 208,
+     "numbers": 2,
+     "question": true,
+     "firstBold": true,
+     "table": true,
+     "steps": false,
+     "images": 1,
+     "charts": 0,
+     "offers": 1
+    },
+    {
+     "title": "Ako posúdiť, či je kukurica v granulách problém: 5 krokov",
+     "kind": "main",
+     "words": 174,
+     "numbers": 1,
+     "question": false,
+     "firstBold": true,
+     "table": false,
+     "steps": true,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Časté otázky",
+     "kind": "faq",
+     "words": 155,
+     "numbers": 2,
+     "question": false,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Zhrnutie",
+     "kind": "summary",
+     "words": 88,
+     "numbers": 2,
+     "question": false,
+     "firstBold": false,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    }
+   ]
   },
   {
    "slug": "jedovate-rastliny-pre-psov",
@@ -1493,6 +1961,7 @@ window.GRANULA_POSTS = {
    "brief": "Formát: Zoznam s fotkami",
    "angle": "Sezónne špičky (jar, Vianoce: vianočná hviezda, imelo)",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1517,6 +1986,7 @@ window.GRANULA_POSTS = {
    "brief": "Formát: Interaktívny nástroj (váha, vek, aktivita, kastrácia)",
    "angle": "Najbližšie k produktu: výsledok = „presnú dávku a granule na mieru ti vypočítame tu“",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1541,6 +2011,7 @@ window.GRANULA_POSTS = {
    "brief": "Pokles energetickej potreby po kastrácii (zhruba o 20–30 %, overiť), úprava dávky",
    "angle": "Dávka sa prepočíta v dotazníku",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1565,6 +2036,7 @@ window.GRANULA_POSTS = {
    "brief": "Potravinová alergia/intolerancia, eliminačná diéta, citlivé trávenie; limity (krížová kontaminácia vo výrobe, živočíšny tuk z iného druhu)",
    "angle": "Jahňa s batátmi a čučoriedkami",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1589,6 +2061,7 @@ window.GRANULA_POSTS = {
    "brief": "Vek podľa plemena (malé ~10, veľké ~6–7 rokov), známky starnutia",
    "angle": "Morka, hus & kačica pre seniorov",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1613,6 +2086,7 @@ window.GRANULA_POSTS = {
    "brief": "Kŕmne tabuľky sú len štart; RER/MER výpočet, aktivita, kastrácia, vek; vážiť, nie odmerka",
    "angle": "Hlavný argument pre dávku na mieru",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1637,6 +2111,7 @@ window.GRANULA_POSTS = {
    "brief": "Formát: Tabuľka + odkaz na kalkulačku H3",
    "angle": "Vysoký zámer, priamo k šteňaciemu receptu",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1661,6 +2136,7 @@ window.GRANULA_POSTS = {
    "brief": "Orientačne ~50–60 ml/kg/deň, známky dehydratácie, nadmerné pitie ako varovný signál",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1685,6 +2161,7 @@ window.GRANULA_POSTS = {
    "brief": "Formát: Kalkulačka nákladov (krmivo, veterinár, poistenie, poplatok za psa)",
    "angle": "Položka krmivo = naša cena na deň",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1709,6 +2186,7 @@ window.GRANULA_POSTS = {
    "brief": "Legálne definície, čo musí spĺňať kompletné krmivo, nutričné smernice FEDIAF",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1733,6 +2211,7 @@ window.GRANULA_POSTS = {
    "brief": "Tokoferoly, extrakt z rozmarínu vs. BHA/BHT, etoxychín; trvanlivosť",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1757,6 +2236,7 @@ window.GRANULA_POSTS = {
    "brief": "Šteňatá 3–4x; dospelí 1–2x; Dog Aging Project (2022) a kŕmenie raz denne (korelácia, nie kauzalita); veľké plemená a riziko torzie",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1781,6 +2261,7 @@ window.GRANULA_POSTS = {
    "brief": "Aké časté sú alergie na kuracie (Mueller 2016: hovädzie, mléčne, kuracie, pšenica); kvalita kuracieho mäsa vs. kuracej múčky; prečo je kuracie všade",
    "angle": "Jeleň, králik, jahňa, morka, hus, kačica",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1805,6 +2286,7 @@ window.GRANULA_POSTS = {
    "brief": "Výroba (extrúzia vs. lisovanie za studena), veľkosť podľa plemena a stráviteľnosť",
    "angle": "Veľkosti 6, 8, 10 mm (overiť pri finálnych receptoch)",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1829,6 +2311,7 @@ window.GRANULA_POSTS = {
    "brief": "Metabolická potreba, hypoglykémia u šteňiat toy plemien",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1853,6 +2336,7 @@ window.GRANULA_POSTS = {
    "brief": "Pravidlo 10 % denného príjmu energie, odpočítať z dávky",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1877,6 +2361,7 @@ window.GRANULA_POSTS = {
    "brief": "Omega-3, zinok, bielkoviny; koľko trvá vidieť zmenu (cyklus srsti ~4–6 týždňov)",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1901,6 +2386,7 @@ window.GRANULA_POSTS = {
    "brief": "Formát: Generátor alebo dlhý zoznam",
    "angle": "Obrovský objem, slabý nákupný zámer; zachytáva nových majiteľov hneď na začiatku",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1925,6 +2411,7 @@ window.GRANULA_POSTS = {
    "brief": "Rozdiely, kedy stačí bežné krmivo a kedy treba veterinárnu diétu",
    "angle": "Úprimne: na diagnostiku hydrolyzát od veterinára",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1949,6 +2436,7 @@ window.GRANULA_POSTS = {
    "brief": "Formát: Séria krátkych stránok na jednej šablóne: áno/nie, koľko, riziká",
    "angle": "Long-tail s veľkým objemom; každá stránka končí vetou „základ má byť kompletné krmivo“ a CTA na dotazník",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -1973,6 +2461,7 @@ window.GRANULA_POSTS = {
    "brief": "",
    "angle": "",
    "preview": "../blog/nahlad/nadvaha-ako-s-psom-bezpecne-schudnut/index.html",
+   "pdf": "../blog/nahlad-pdf/nadvaha-ako-s-psom-bezpecne-schudnut.pdf",
    "live": null,
    "lint": [
     {
@@ -2439,6 +2928,7 @@ window.GRANULA_POSTS = {
    "brief": "Kedy áno (šteňatá, seniori, zuby, pitný režim), riziko pokazenia, teplota vody",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -2463,6 +2953,7 @@ window.GRANULA_POSTS = {
    "brief": "Princíp „novel protein“ = bielkovina, s ktorou sa pes ešte nestretol; prečo zver",
    "angle": "Jeleň & králik ako vlajkový recept",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -2487,6 +2978,7 @@ window.GRANULA_POSTS = {
    "brief": "Formát: Tlačitelný kalendár (besnota povinná v SR)",
    "angle": "Silný objem; obsah overuje veterinár z rady (aj ako dôvod na partnerstvo)",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -2511,6 +3003,7 @@ window.GRANULA_POSTS = {
    "brief": "Čučoriedky, brusnice v malých % = často etiketa; kedy majú zmysel",
    "angle": "Úprimne aj o našich čučoriedkach",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -2535,6 +3028,7 @@ window.GRANULA_POSTS = {
    "brief": "Prečo nízky tuk, ktoré recepty áno a nie, súradnosť s veterinárom",
    "angle": "Podľa matice: Puppy a Morka/hus/kačica nevhodné",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -2559,6 +3053,7 @@ window.GRANULA_POSTS = {
    "brief": "",
    "angle": "",
    "preview": "../blog/nahlad/patria-obilniny-do-granul/index.html",
+   "pdf": "../blog/nahlad-pdf/patria-obilniny-do-granul.pdf",
    "live": null,
    "lint": [
     {
@@ -3037,6 +3532,7 @@ window.GRANULA_POSTS = {
    "brief": "Domestikácia, kópie génu AMY2B (Axelsson 2013), čo pes reálne potrebuje vs. čo znáša",
    "angle": "Vyvážený, nie dogmatický post",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -3061,6 +3557,7 @@ window.GRANULA_POSTS = {
    "brief": "Prepojiť s C8",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -3085,6 +3582,7 @@ window.GRANULA_POSTS = {
    "brief": "Aké suroviny vyberať, stráviteľnosť, kedy k veterinárovi",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -3109,6 +3607,7 @@ window.GRANULA_POSTS = {
    "brief": "Plemenná genetika (POMC u labradorov, Raffan 2016), dávka vs. pocit sýtosti, zdravotné príčiny",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -3133,6 +3632,7 @@ window.GRANULA_POSTS = {
    "brief": "Behaviorálne vs. nutričné vysvetlenia, čo hovoria dôkazy",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -3157,6 +3657,7 @@ window.GRANULA_POSTS = {
    "brief": "Formát: Urgentný návod + kalkulačka toxicity čokolády (mg teobromínu na kg)",
    "angle": "Veľký objem, zdieľateľné; zdravotná téma, takže nutná kontrola veterinárom z rady",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -3181,6 +3682,7 @@ window.GRANULA_POSTS = {
    "brief": "Regurgitácia vs. zvracanie, príliš rýchle jedenie (pomalé misky), žlčový syndróm nalačno, varovné známky",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -3205,6 +3707,7 @@ window.GRANULA_POSTS = {
    "brief": "Fermentovateľné suroviny (strukoviny, sója), rýchle jedenie, prechod krmiva",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -3229,6 +3732,7 @@ window.GRANULA_POSTS = {
    "brief": "Minerálny podiel, vysoký popol = veľa kostí/múčok, typické rozpätia",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -3253,6 +3757,7 @@ window.GRANULA_POSTS = {
    "brief": "",
    "angle": "",
    "preview": "../blog/nahlad/preco-moj-pes-nechce-jest-nove-granule/index.html",
+   "pdf": "../blog/nahlad-pdf/preco-moj-pes-nechce-jest-nove-granule.pdf",
    "live": null,
    "lint": [
     {
@@ -3735,6 +4240,7 @@ window.GRANULA_POSTS = {
    "brief": "Cena surovín, % mäsa, cena za deň kŕmenia (nie za kg), objem stolice",
    "angle": "Cena na deň podľa dávky z dotazníka",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -3759,6 +4265,7 @@ window.GRANULA_POSTS = {
    "brief": "Formát: Checklist na stiahnutie za e-mail",
    "angle": "Získame zákazníka na roky od šteňaťa",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -3783,6 +4290,7 @@ window.GRANULA_POSTS = {
    "brief": "Formát: Sezónny návod",
    "angle": "Sezónna špička, nenáročné na výrobu",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -3807,6 +4315,7 @@ window.GRANULA_POSTS = {
    "brief": "Stráviteľnosť, citlivé trávenie, glykemický index (čo je pre psa relevantné)",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -3831,6 +4340,7 @@ window.GRANULA_POSTS = {
    "brief": "Vápnik, energia, ortopedické ochorenia (dysplazia), nedoplňovať vápnik",
    "angle": "Pre veľké šteňatá nie šteňací recept (podľa matice dodávateľa)",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -3855,6 +4365,7 @@ window.GRANULA_POSTS = {
    "brief": "",
    "angle": "",
    "preview": "../blog/nahlad/svrbenie-skrabanie-alergia-na-krmivo/index.html",
+   "pdf": "../blog/nahlad-pdf/svrbenie-skrabanie-alergia-na-krmivo.pdf",
    "live": null,
    "lint": [
     {
@@ -4322,6 +4833,7 @@ window.GRANULA_POSTS = {
    "brief": "Syntetizuje si ich, kedy doplňovať, plemená s rizikom",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -4346,6 +4858,7 @@ window.GRANULA_POSTS = {
    "brief": "Rizikové faktory (jedno veľké jedlo, rýchle jedenie, vyvýšená miska podľa Glickman 2000), pohyb po jedle",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -4370,6 +4883,7 @@ window.GRANULA_POSTS = {
    "brief": "Argumenty pre a proti, riziko trvalej zmeny vs. pestrosť, citlivé psy",
    "angle": "Prirodzený súvis so subskripciou: keby sa stav psa zmenil, dotazník prepočíta",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -4394,6 +4908,7 @@ window.GRANULA_POSTS = {
    "brief": "EPA/DHA a koža, srsť, klúč a zápaly; pomer omega-6:3; oxidácia tukov",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -4418,6 +4933,7 @@ window.GRANULA_POSTS = {
    "brief": "Pomer Ca:P, riziká pre šteňatá veľkých plemien, nedoplňovať popri kompletnom krmive",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -4442,6 +4958,7 @@ window.GRANULA_POSTS = {
    "brief": "Formát: Kalkulačka (epigenetický vzorec Wang 2019 vs. mýtus „1 rok = 7 rokov“)",
    "angle": "Virálna a zdieľateľná; prepojenie na životné fázy a dlhovekosť",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -4466,6 +4983,7 @@ window.GRANULA_POSTS = {
    "brief": "Stráviteľnosť krmiva, Purina fecal score, vláknina",
    "angle": "Menej stolice ako dôkaz kvality (ak to vieme podložiť)",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -4490,6 +5008,7 @@ window.GRANULA_POSTS = {
    "brief": "Kedy sú veterinárne diéty nutné a kedy nie; ohľaduplný tón k veterinárom (budú naši ambasádori)",
    "angle": "Pozor na tón: súlad s plánom veterinárnej rady",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -4514,6 +5033,7 @@ window.GRANULA_POSTS = {
    "brief": "Formát: Sezónny článok + karusel",
    "angle": "Launch je 20. 11., takže Vianoce sú prvá sezónna príležitosť, ktorá sa dá stihnúť",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -4538,6 +5058,7 @@ window.GRANULA_POSTS = {
    "brief": "Konzistencia stolice, mikrobióm, čo je marketing",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -4562,6 +5083,7 @@ window.GRANULA_POSTS = {
    "brief": "Pečeň, srdce = nutrične hodnotné; nejasné „vedľajšie produkty“ = nekontrolovateľné; legálna definícia v EU",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -4586,6 +5108,7 @@ window.GRANULA_POSTS = {
    "brief": "Ako vzniká (ľudské jedlo, stále dopĺňanie misky), režim a pevné časy",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -4610,6 +5133,7 @@ window.GRANULA_POSTS = {
    "brief": "Zdravý pes vs. ochorenie obličiek (IRIS štádia); kvalita bielkoviny vs. množstvo",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -4634,6 +5158,7 @@ window.GRANULA_POSTS = {
    "brief": "Formát: Séria stránok na jednej šablóne: typické zdravotné riziká, váha, dávka, čo sledovať",
    "angle": "Plemeno je vstup v dotazníku; vysoký nákupný zámer",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -4658,6 +5183,7 @@ window.GRANULA_POSTS = {
    "brief": "Sarkopénia, potreba kvalitnej bielkoviny u zdravých seniorov, kognitívne starnutie (MCT, antioxidanty)",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -4682,6 +5208,7 @@ window.GRANULA_POSTS = {
    "brief": "",
    "angle": "",
    "preview": "../blog/nahlad/vzor-struktury/index.html",
+   "pdf": "../blog/nahlad-pdf/vzor-struktury.pdf",
    "live": null,
    "lint": [
     {
@@ -5114,6 +5641,7 @@ window.GRANULA_POSTS = {
    "brief": "Krátky slovník menších prísad, čo je podložené a čo nie",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
@@ -5138,6 +5666,7 @@ window.GRANULA_POSTS = {
    "brief": "Dôkazy (bez VOHC-certifikácie granule zuby neochránia), čistenie zubov, dentálne žuvátka",
    "angle": "",
    "preview": null,
+   "pdf": null,
    "live": null,
    "lint": [],
    "sections": []
