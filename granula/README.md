@@ -7,6 +7,7 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 | Súbor | Čo je v ňom | Artboardy v návrhu |
 | --- | --- | --- |
 | `index.html` | úvodná stránka: hero, čísla, piliere, 1,8 roka, mäso, suroviny, porovnanie, ako to funguje, Granula = nula, recenzie, odborníci, otázky, výzva, pätička | Homepage + Homepage — pokračovanie |
+| `obchodne-podmienky.html`, `reklamacny-poriadok.html`, `ochrana-sukromia.html` | právne stránky, zatiaľ lorem ipsum (noindex, mimo sitemap); pred spustením doplniť text a odstrániť noindex | |
 | `podpora.html` | podpora: e-mail podpora@granula.sk, témy s predvyplneným predmetom, časté otázky | |
 | `suroviny.html` | podstránka Suroviny | Suroviny |
 | `granule-na-mieru.html` | funkčný dotazník: 6 krokov (meno a pohlavie, plemeno s vyhľadávaním, váha a vek, deň, kastrácia a postava, zameranie) → miešanie → výsledok → objednávka → hotovo (smerovanie cez `#krok-1` … `#hotovo`) | Formulár 1–5 + nový krok s menom, Vyberáme granule, Výsledok, Checkout, Hotovo |
