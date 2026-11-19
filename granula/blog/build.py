@@ -30,7 +30,7 @@ REPO = os.path.dirname(SITE_DIR)
 SRC = os.path.join(HERE, "_src")
 
 # Verejná adresa webu (bez lomky na konci). Zmeniť, keď bude doména nasmerovaná inak.
-BASE_URL = "https://granula.sk"  # web je v granula/, Vercel ho servíruje z koreňa (vercel.json)
+BASE_URL = "https://www.granula.sk"  # web je v granula/, Vercel ho servíruje z koreňa (vercel.json)
 SITE_NAME = "Granula!"
 BLOG_TITLE = "Blog"
 BLOG_LEAD = "Výživa, kŕmenie a zdravie psov. Konkrétne čísla, zdroje a odpovede bez omáčky."

@@ -24,4 +24,4 @@ Disallow: /blog/nahlad-pdf/
 Disallow: /admin-vypocet
 Allow: /
 
-Sitemap: https://granula.sk/sitemap.xml
+Sitemap: https://www.granula.sk/sitemap.xml
