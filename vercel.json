@@ -7,8 +7,23 @@
       "permanent": true
     },
     {
+      "source": "/granula/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/granula/:path*",
       "destination": "/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/blog",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/admin-blog",
+      "destination": "/admin-blog/",
       "permanent": true
     }
   ],
