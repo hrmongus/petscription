@@ -117,8 +117,8 @@
       <details><summary>Ako prejsť na nové granule?<i aria-hidden="true">+</i></summary><p>Postupne. Približne 7 až 10 dní pridávaj do starého krmiva čoraz viac Granuly, kým nezostane len ona.</p></details>
       <details><summary>Kto granule vyrába?<i aria-hidden="true">+</i></summary><p>Slovenský výrobca krmív, ktorý sa im venuje od roku 1992. Receptúry navrhli veterinári so zameraním na výživu psov.</p></details>
           <details><summary>Ako zmením alebo zruším predplatné?<i aria-hidden="true">+</i></summary><p>Napíš nám na <a href="mailto:podpora@granula.sk">podpora@granula.sk</a> z e-mailu, ktorý si zadal pri objednávke. Doručenie posunieme, zmeníme veľkosť vreca či receptúru, alebo predplatné zrušíme.</p></details>
-      <details><summary>Ako dlho trvá doručenie a koľko stojí?<i aria-hidden="true">+</i></summary><p>Na výdajné miesto Packeta 2 až 3 pracovné dni, kuriérom na adresu 1 až 2 pracovné dni. Doprava stojí 4,90&nbsp;€ za každé doručenie.</p></details>
-      <details><summary>Prišlo poškodené alebo nesprávne vrecko. Čo teraz?<i aria-hidden="true">+</i></summary><p>Odfoť ho aj s etiketou a pošli nám fotku na <a href="mailto:podpora@granula.sk">podpora@granula.sk</a> spolu s číslom objednávky. Ozveme sa s riešením.</p></details>
+      <details id="doprava"><summary>Ako dlho trvá doručenie a koľko stojí?<i aria-hidden="true">+</i></summary><p>Na výdajné miesto Packeta 2 až 3 pracovné dni, kuriérom na adresu 1 až 2 pracovné dni. Doprava stojí 4,90&nbsp;€ za každé doručenie.</p></details>
+      <details id="reklamacia"><summary>Prišlo poškodené alebo nesprávne vrecko. Čo teraz?<i aria-hidden="true">+</i></summary><p>Odfoť ho aj s etiketou a pošli nám fotku na <a href="mailto:podpora@granula.sk">podpora@granula.sk</a> spolu s číslom objednávky. Ozveme sa s riešením. Podrobnosti sú v <a href="reklamacny-poriadok.html">reklamačnom poriadku</a>.</p></details>
     </div>
   </div>
 </section>
@@ -132,8 +132,8 @@
     </div>
     <div class="cols">
       <nav aria-label="Granula"><span class="t">GRANULA</span><a href="suroviny.html">Suroviny</a><a href="index.html#ako">Ako to funguje</a><a href="granule-na-mieru.html">Granule na mieru</a><a href="blog/">Blog</a></nav>
-      <nav aria-label="Pomoc"><span class="t">POMOC</span><a href="index.html#otazky">Otázky</a><a href="#">Doprava</a><a href="podpora.html">Podpora</a></nav>
-      <nav aria-label="Právne"><span class="t">PRÁVNE</span><a href="obchodne-podmienky.html">Obchodné podmienky</a><a href="reklamacny-poriadok.html">Reklamačný poriadok</a><a href="ochrana-sukromia.html">Ochrana súkromia</a><a href="#" data-cookie-settings>Nastavenia cookies</a></nav>
+      <nav aria-label="Pomoc"><span class="t">POMOC</span><a href="index.html#otazky">Otázky</a><a href="podpora.html#doprava">Doprava</a><a href="podpora.html">Podpora</a></nav>
+      <nav aria-label="Právne"><span class="t">PRÁVNE</span><a href="obchodne-podmienky.html">Všeobecné obchodné podmienky</a><a href="reklamacny-poriadok.html">Reklamačný poriadok</a><a href="ochrana-sukromia.html">Zásady ochrany súkromia</a><a href="#" data-cookie-settings>Nastavenia cookies</a></nav>
       <div class="foot-co"><span class="t">PREVÁDZKOVATEĽ</span><address><b>Spark Link, s. r. o.</b><br>Lermontovova 911/3<br>811 05 Bratislava – mestská časť Staré Mesto<br>IČO 55615597 · DIČ 2122032979<br><a href="mailto:info@granula.sk">info@granula.sk</a></address></div>
     </div>
   </div>
@@ -143,6 +143,9 @@
 <script src="icons.js"></script>
 <script src="site.js"></script>
 <script>
+// odkaz na konkrétnu otázku (#doprava, #reklamacia) ju otvorí
+function openHash() { var d = location.hash && document.getElementById(location.hash.slice(1)); if (d && d.tagName === "DETAILS") { d.open = true; d.scrollIntoView({ block: "center" }); } }
+openHash(); window.addEventListener("hashchange", openHash);
 document.querySelectorAll("[data-copy]").forEach(function (b) {
   b.addEventListener("click", function () {
     var t = b.textContent, v = b.getAttribute("data-copy");

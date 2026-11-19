@@ -534,6 +534,13 @@
 .rm-cp .rm-h span{color:var(--k)}
 @media (max-width:1100px){.rm-cp{padding:16px 32px 48px}}
 @media (max-width:760px){.rm-cp{padding:8px 16px 40px;gap:18px}}
+/* malá pätička pod výsledkom */
+.rm-foot{border-top:2px solid var(--n);padding:22px 80px 28px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;font-size:13px}
+.rm-foot nav{display:flex;flex-wrap:wrap;gap:8px 22px}
+.rm-foot a{color:var(--n);font-weight:700;text-decoration:none}
+.rm-foot a:hover{color:var(--k)}
+@media (max-width:1100px){.rm-foot{padding:20px 32px 26px}}
+@media (max-width:760px){.rm-foot{padding:18px 16px 24px;flex-direction:column}.rm-foot nav{flex-direction:column;gap:10px}}
 /* recenzie pod výsledkom (rovnaké ako na úvodnej stránke) */
 .rm-rw{display:flex;flex-direction:column;gap:24px;padding:8px 0 64px}
 .rm-rw .rm-h{padding:0 80px}
@@ -1101,6 +1108,10 @@
     <h2 class="rm-h" id="t-rw">Staň sa súčasťou svorky <span>spokojných zákazníkov</span></h2>
     <div class="rw-wrap" data-reviews tabindex="0" aria-label="Recenzie zákazníkov (posúvajú sa samy, pri prejdení myšou sa zastavia)"></div>
   </section>
+  <footer class="rm-foot">
+    <nav aria-label="Právne"><a href="obchodne-podmienky.html">Všeobecné obchodné podmienky</a><a href="reklamacny-poriadok.html">Reklamačný poriadok</a><a href="ochrana-sukromia.html">Zásady ochrany súkromia</a><a href="podpora.html">Podpora</a><a href="#" data-cookie-settings>Nastavenia cookies</a></nav>
+    <span>© 2026 Spark Link, s. r. o. · IČO 55615597</span>
+  </footer>
 </section>
 
 <!-- ============ OBJEDNÁVKA (platba) ============ -->
@@ -1194,7 +1205,7 @@
       <div class="pay-act">
         <button type="submit" class="btn btn-o pay-cta" id="s-submit"></button>
         <p class="pay-fine" id="s-fine">Platbu bezpečne spracuje Stripe. Predplatné zrušíš jedným klikom v účte.</p>
-        <p class="pay-fine">Objednávkou súhlasíš s <a href="obchodne-podmienky.html" target="_blank">obchodnými podmienkami</a> a berieš na vedomie <a href="ochrana-sukromia.html" target="_blank">zásady ochrany súkromia</a>.</p>
+        <p class="pay-fine">Objednávkou súhlasíš s <a href="obchodne-podmienky.html" target="_blank">obchodnými podmienkami</a> a <a href="reklamacny-poriadok.html" target="_blank">reklamačným poriadkom</a> a berieš na vedomie <a href="ochrana-sukromia.html" target="_blank">zásady ochrany súkromia</a>.</p>
         <p class="pay-fine">Potrebuješ pomôcť? <a href="podpora.html">podpora@granula.sk</a></p>
         <div class="co-ann" id="s-ann" hidden><b>Štartujeme 20. novembra</b> <span class="star" aria-hidden="true"></span> Prvé vrecko −30&nbsp;% pre tých, čo sa zapíšu vopred <button type="button" class="co-ann-cta" data-klaviyo-open="YcSYzw">Chcem byť prvý →</button></div>
       </div>
