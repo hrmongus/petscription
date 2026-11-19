@@ -11,17 +11,17 @@ User-agent: Claude-SearchBot
 User-agent: Google-Extended
 User-agent: Bingbot
 User-agent: Googlebot
-Disallow: /granula/admin-blog/
-Disallow: /granula/blog/nahlad/
-Disallow: /granula/blog/nahlad-pdf/
-Disallow: /granula/admin-vypocet.html
+Disallow: /admin-blog/
+Disallow: /blog/nahlad/
+Disallow: /blog/nahlad-pdf/
+Disallow: /admin-vypocet
 Allow: /
 
 User-agent: *
-Disallow: /granula/admin-blog/
-Disallow: /granula/blog/nahlad/
-Disallow: /granula/blog/nahlad-pdf/
-Disallow: /granula/admin-vypocet.html
+Disallow: /admin-blog/
+Disallow: /blog/nahlad/
+Disallow: /blog/nahlad-pdf/
+Disallow: /admin-vypocet
 Allow: /
 
-Sitemap: https://granula.sk/granula/sitemap.xml
+Sitemap: https://granula.sk/sitemap.xml

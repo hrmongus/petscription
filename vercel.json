@@ -1,12 +1,33 @@
 {
+  "cleanUrls": true,
   "redirects": [
     {
-      "source": "/",
-      "destination": "/granula/",
-      "permanent": false
+      "source": "/granula",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/granula/:path*",
+      "destination": "/:path*",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/:path*",
+      "destination": "/granula/:path*"
     }
   ],
   "headers": [
+    {
+      "source": "/blog/nahlad-pdf/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
     {
       "source": "/granula/blog/nahlad-pdf/(.*)",
       "headers": [

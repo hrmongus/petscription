@@ -30,7 +30,7 @@ REPO = os.path.dirname(SITE_DIR)
 SRC = os.path.join(HERE, "_src")
 
 # Verejná adresa webu (bez lomky na konci). Zmeniť, keď bude doména nasmerovaná inak.
-BASE_URL = "https://granula.sk/granula"
+BASE_URL = "https://granula.sk"  # web je v granula/, Vercel ho servíruje z koreňa (vercel.json)
 SITE_NAME = "Granula!"
 BLOG_TITLE = "Blog"
 BLOG_LEAD = "Výživa, kŕmenie a zdravie psov. Konkrétne čísla, zdroje a odpovede bez omáčky."
@@ -964,14 +964,14 @@ def build(check_only=False):
 
     # statické stránky bez lastmod (dátum buildu by klamal); blog podľa najnovšieho článku, články podľa `updated`
     last = str(pub[0]["meta"].get("updated", "")) if pub else ""
-    urls = [(BASE_URL + "/", ""), (BASE_URL + "/suroviny.html", ""), (BASE_URL + "/granule-na-mieru.html", ""), (BASE_URL + "/podpora.html", ""), (BASE_URL + "/blog/", last)]
+    urls = [(BASE_URL + "/", ""), (BASE_URL + "/suroviny", ""), (BASE_URL + "/granule-na-mieru", ""), (BASE_URL + "/podpora", ""), (BASE_URL + "/blog/", last)]
     urls += [("%s/blog/%s/" % (BASE_URL, p["slug"]), str(p["meta"].get("updated", ""))) for p in pub]
     write(os.path.join(SITE_DIR, "sitemap.xml"), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n%s</urlset>\n'
           % "".join("  <url><loc>%s</loc>%s</url>\n" % (html.escape(u), "<lastmod>%s</lastmod>" % d if d else "") for u, d in urls))
     bots = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "PerplexityBot", "ClaudeBot", "Claude-User", "Claude-SearchBot", "Google-Extended", "Bingbot", "Googlebot"]
     path = BASE_URL.split("://", 1)[1].split("/", 1)[1] if BASE_URL.count("/") > 2 else ""
     pfx = "/" + path if path else ""
-    dis = ["%s/admin-blog/" % pfx, "%s/blog/nahlad/" % pfx, "%s/blog/nahlad-pdf/" % pfx, "%s/admin-vypocet.html" % pfx]
+    dis = ["%s/admin-blog/" % pfx, "%s/blog/nahlad/" % pfx, "%s/blog/nahlad-pdf/" % pfx, "%s/admin-vypocet" % pfx]
     robots = "# vygenerované granula/blog/build.py\n# AI vyhľadávače sú výslovne povolené (GEO); súkromné stránky zakázané všetkým.\n\n"
     robots += "".join("User-agent: %s\n" % b for b in bots) + "".join("Disallow: %s\n" % d for d in dis) + "Allow: /\n\n"
     robots += "User-agent: *\n" + "".join("Disallow: %s\n" % d for d in dis) + "Allow: /\n\nSitemap: %s/sitemap.xml\n" % BASE_URL
