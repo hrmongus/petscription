@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<title>Podpora — Granula</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="Podpora Granula: napíš nám na podpora@granula.sk. Pomôžeme s objednávkou, doručením, predplatným aj kŕmením.">
+<script>document.documentElement.classList.add("js")</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,900&display=swap">
+<link rel="stylesheet" href="granula.css">
+<style>
+.sp-hero .wrap{padding-top:56px;padding-bottom:56px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:center}
+.sp-hero .copy{display:flex;flex-direction:column;gap:22px}
+.sp-hero h1{font-size:clamp(40px,5vw,72px)}
+.sp-hero h1 span{color:var(--k)}
+.sp-hero p{font-size:16px;line-height:1.5;max-width:520px}
+.sp-mail{position:relative;background:var(--k);color:var(--m);border:2px solid var(--n);padding:36px 32px;display:flex;flex-direction:column;gap:16px}
+.sp-mail .t{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.sp-mail a.addr{font-size:clamp(24px,2.8vw,38px);font-weight:900;color:var(--m);text-decoration:none;word-break:break-word;line-height:1.1}
+.sp-mail a.addr:hover{text-decoration:underline;text-underline-offset:6px}
+.sp-mail .btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+.sp-mail .copy-btn{border:2px solid var(--m);background:transparent;color:var(--m);font:800 14px Montserrat,sans-serif;text-transform:uppercase;padding:12px 16px;cursor:pointer}
+.sp-mail .copy-btn:hover{background:var(--m);color:var(--k)}
+.sp-mail .sticker{position:absolute;right:-12px;top:-18px}
+.sp-mail p{font-size:14px;line-height:1.5}
+.sp-topics .wrap{display:flex;flex-direction:column;gap:24px}
+.sp-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.sp-topic{position:relative;display:flex;flex-direction:column;gap:8px;padding:22px 20px 48px;border:2px solid var(--n);background:var(--ml);color:var(--n);text-decoration:none}
+.sp-topic b{font-size:17px;font-weight:900;text-transform:uppercase;line-height:1.15}
+.sp-topic span{font-size:14px;line-height:1.45}
+.sp-topic i{position:absolute;left:20px;bottom:16px;font-style:normal;font-weight:900;font-size:20px}
+.sp-topic:hover{background:var(--k);color:var(--m)}
+.sp-tips{font-size:14px;line-height:1.5}
+.sp-tips b{font-weight:800}
+.qa{border-bottom:2px solid var(--n)}
+.qa details{border-top:2px solid var(--n);padding:16px 0}
+.qa summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:24px;font-weight:800;font-size:17px;line-height:1.35}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary:hover{color:var(--k)}
+.qa summary i{font-style:normal;font-weight:900;font-size:26px;line-height:1;transition:transform .2s ease}
+.qa details[open] summary i{transform:rotate(45deg)}
+.qa p{margin-top:10px;font-size:15px;line-height:1.5;max-width:640px}
+.qa p a{color:var(--k);font-weight:700}
+.faq .wrap{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:64px;align-items:start}
+.faq .h2{font-size:clamp(30px,3.4vw,44px)}
+@media (max-width:960px){
+  .faq .wrap{grid-template-columns:minmax(0,1fr);gap:28px}
+  .sp-hero .wrap{grid-template-columns:minmax(0,1fr);gap:40px;padding-top:40px;padding-bottom:40px}
+  .sp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){.sp-grid{grid-template-columns:minmax(0,1fr)}.sp-mail{padding:28px 20px}}
+</style>
+</head>
+<body>
+
+<div class="topbar"><span>Štartujeme 20.&nbsp;novembra</span><span class="star" aria-hidden="true"></span><span>Prvé vrecko −30&nbsp;% pre tých, čo sa zapíšu vopred</span><button type="button" class="topbar-cta" data-klaviyo-open="YcSYzw">Chcem byť prvý →</button></div>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
+    <nav class="menu" aria-label="Hlavné menu">
+      <a href="suroviny.html">Suroviny</a>
+      <a href="index.html#ako">Ako to funguje</a>
+      <a href="index.html#recenzie">Recenzie</a>
+      <a href="index.html#otazky">Otázky</a>
+      <a href="blog/">Blog</a>
+    </nav>
+    <a class="btn btn-k btn-sm btn-head" href="granule-na-mieru.html">Granule na mieru →</a>
+  </div>
+</header>
+
+<main>
+<section class="sp-hero bb">
+  <div class="wrap">
+    <div class="copy">
+      <div class="eyebrow">Podpora</div>
+      <h1 class="display">Sme tu <span>pre teba aj psa.</span></h1>
+      <p>Objednávka, doručenie, predplatné alebo otázka ku kŕmeniu. Napíš nám a pomôžeme.</p>
+      <p class="sp-tips"><b>Aby sme ti vedeli pomôcť rýchlejšie,</b> pošli e-mail z adresy, ktorú si zadal pri objednávke, a pridaj číslo objednávky a meno psa.</p>
+    </div>
+    <div class="sp-mail">
+      <span class="sticker st-o" style="--t:5deg">Píš nám!</span>
+      <span class="t">E-mail podpory</span>
+      <a class="addr" href="mailto:podpora@granula.sk">podpora@granula.sk</a>
+      <div class="btns">
+        <a class="btn btn-o" href="mailto:podpora@granula.sk">Napísať e-mail →</a>
+        <button type="button" class="copy-btn" data-copy="podpora@granula.sk">Kopírovať adresu</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sp-topics">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">S čím potrebuješ pomôcť?</div>
+      <h2 class="h2">Vyber tému, <span class="ac">predmet doplníme.</span></h2>
+    </div>
+    <div class="sp-grid"><a class="sp-topic" href="mailto:podpora@granula.sk?subject=Objedn%C3%A1vka%20a%20doru%C4%8Denie"><b>Objednávka a doručenie</b><span>Kde je moje vrecko, zmena adresy alebo výdajného miesta.</span><i aria-hidden="true">→</i></a><a class="sp-topic" href="mailto:podpora@granula.sk?subject=Predplatn%C3%A9"><b>Predplatné</b><span>Posunúť doručenie, zmeniť veľkosť vreca alebo receptúru, pozastaviť či zrušiť.</span><i aria-hidden="true">→</i></a><a class="sp-topic" href="mailto:podpora@granula.sk?subject=K%C5%95menie%20a%20prechod"><b>Kŕmenie a prechod</b><span>Dávka, prechod na nové granule, citlivé bruško alebo vyberavý jedák.</span><i aria-hidden="true">→</i></a><a class="sp-topic" href="mailto:podpora@granula.sk?subject=Reklam%C3%A1cia"><b>Reklamácia</b><span>Poškodené alebo nesprávne vrecko. Pripoj fotku, vyriešime to.</span><i aria-hidden="true">→</i></a></div>
+  </div>
+</section>
+
+<section id="otazky" class="sec faq bt">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Časté otázky</div>
+      <h2 class="h2">Možno nájdeš <span class="ac">odpoveď tu.</span></h2>
+    </div>
+    <div class="qa">
+      <details><summary>Ako viete, čo je pre môjho psa najlepšie?<i aria-hidden="true">+</i></summary><p>Z plemena, veku, váhy, postavy a pohybu tvojho psa. Granule vyberieme podľa odporúčaní, ktoré vznikli s veterinármi, a dávku spočítame na gramy.</p></details>
+      <details><summary>Čím sú granule na mieru iné?<i aria-hidden="true">+</i></summary><p>Granule aj dávka sedia konkrétnemu psovi, nie „priemernému psovi“ z tabuľky na vrecku.</p></details>
+      <details><summary>Ako často mi príde nové vrecko?<i aria-hidden="true">+</i></summary><p>Podľa toho, koľko denne zje. Ďalšie pošleme tak, aby prišlo skôr, než sa to staré minie.</p></details>
+      <details><summary>Ako prejsť na nové granule?<i aria-hidden="true">+</i></summary><p>Postupne. Približne 7 až 10 dní pridávaj do starého krmiva čoraz viac Granuly, kým nezostane len ona.</p></details>
+      <details><summary>Kto granule vyrába?<i aria-hidden="true">+</i></summary><p>Slovenský výrobca krmív, ktorý sa im venuje od roku 1992. Receptúry navrhli veterinári so zameraním na výživu psov.</p></details>
+          <details><summary>Ako zmením alebo zruším predplatné?<i aria-hidden="true">+</i></summary><p>Napíš nám na <a href="mailto:podpora@granula.sk">podpora@granula.sk</a> z e-mailu, ktorý si zadal pri objednávke. Doručenie posunieme, zmeníme veľkosť vreca či receptúru, alebo predplatné zrušíme.</p></details>
+      <details><summary>Ako dlho trvá doručenie a koľko stojí?<i aria-hidden="true">+</i></summary><p>Na výdajné miesto Packeta 2 až 3 pracovné dni, kuriérom na adresu 1 až 2 pracovné dni. Doprava stojí 4,90&nbsp;€ za každé doručenie.</p></details>
+      <details><summary>Prišlo poškodené alebo nesprávne vrecko. Čo teraz?<i aria-hidden="true">+</i></summary><p>Odfoť ho aj s etiketou a pošli nám fotku na <a href="mailto:podpora@granula.sk">podpora@granula.sk</a> spolu s číslom objednávky. Ozveme sa s riešením.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap top">
+    <div class="about">
+      <span class="logo">Granula!</span>
+      <p>Granule na mieru pre jedného konkrétneho psa. Receptúry navrhnuté s veterinármi, dávka na gramy, vrecko až k dverám.</p>
+    </div>
+    <div class="cols">
+      <nav aria-label="Granula"><span class="t">GRANULA</span><a href="suroviny.html">Suroviny</a><a href="index.html#ako">Ako to funguje</a><a href="granule-na-mieru.html">Granule na mieru</a><a href="blog/">Blog</a></nav>
+      <nav aria-label="Pomoc"><span class="t">POMOC</span><a href="index.html#otazky">Otázky</a><a href="#">Doprava</a><a href="podpora.html">Podpora</a></nav>
+      <nav aria-label="Právne"><span class="t">PRÁVNE</span><a href="#">Obchodné podmienky</a><a href="#">Ochrana údajov</a><a href="#" data-cookie-settings>Nastavenia cookies</a></nav>
+      <div class="foot-co"><span class="t">PREVÁDZKOVATEĽ</span><address><b>Spark Link, s. r. o.</b><br>Lermontovova 911/3<br>811 05 Bratislava – mestská časť Staré Mesto<br>IČO 55615597 · DIČ 2122032979<br><a href="mailto:info@granula.sk">info@granula.sk</a></address></div>
+    </div>
+  </div>
+  <div class="wrap bottom"><span>© 2026 Spark Link, s. r. o. · IČO 55615597</span><span>granula.sk</span></div>
+</footer>
+
+<script src="icons.js"></script>
+<script src="site.js"></script>
+<script>
+document.querySelectorAll("[data-copy]").forEach(function (b) {
+  b.addEventListener("click", function () {
+    var t = b.textContent, v = b.getAttribute("data-copy");
+    (navigator.clipboard ? navigator.clipboard.writeText(v) : Promise.reject()).then(function () { b.textContent = "Skopírované"; }, function () { b.textContent = v; })
+      .then(function () { setTimeout(function () { b.textContent = t; }, 2000); });
+  });
+});
+</script>
+<!-- Klaviyo onsite: vypnutý (type="text/plain"), cookies.js ho zapne až po súhlase s marketingovými cookies -->
+<script type="text/plain" data-cookie-category="marketing" async src="https://static.klaviyo.com/onsite/js/Yf7K2A/klaviyo.js?company_id=Yf7K2A"></script>
+<script src="cookies.js"></script>
+</body>
+</html>
