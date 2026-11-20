@@ -131,7 +131,7 @@ def inline(s):
     def link(m):
         text, url = m.group(1), m.group(2).replace('"', "%22")
         ext = url.startswith("http")
-        return '<a href="%s"%s>%s</a>' % (url, ' rel="noopener"' if ext else "", text)
+        return '<a href="%s"%s>%s</a>' % (url, ' target="_blank" rel="noopener"' if ext else "", text)
     s = re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", link, s)
     return s
 
@@ -634,10 +634,18 @@ def sk_date(v):
     return "%d.\u00a0%s %d" % (d.day, SK_MONTHS[d.month - 1], d.year)
 
 
+def num_date(v):
+    try:
+        d = dt.date.fromisoformat(str(v))
+    except ValueError:
+        return str(v)
+    return "%d.\u00a0%d.\u00a0%d" % (d.day, d.month, d.year)
+
+
 def source_html(x):
     m = re.match(r"^(.*?)\s*\|\s*(https?://\S+)\s*$", x)
     if m:
-        return '%s – <a href="%s" rel="noopener">%s</a>' % (inline(m.group(1)), html.escape(m.group(2)), html.escape(re.sub(r"^https?://(www\.)?", "", m.group(2))[:60]))
+        return '%s – <a href="%s" target="_blank" rel="noopener">%s</a>' % (inline(m.group(1)), html.escape(m.group(2)), html.escape(re.sub(r"^https?://(www\.)?", "", m.group(2))[:60]))
     return inline(x)
 
 
@@ -668,6 +676,10 @@ def article_html(post, pre, preview):
     else:
         ini = "".join(w[0] for w in re.findall(r"[^\W\d_]+", re.sub(r"^\w+\.\s*", "", str(m.get("author", ""))))[:2]).upper() or "?"
         avatar = '<span class="bl-av bl-av-ph" role="img" aria-label="Zástupná fotka autora">%s</span>' % html.escape(ini)
+    pub_d, upd_d = str(m.get("published", "")), str(m.get("updated", ""))
+    dates_html = '<time datetime="%s">%s</time>' % (pub_d, num_date(pub_d))
+    if upd_d and upd_d != pub_d:
+        dates_html += ' · Aktualizované <time datetime="%s">%s</time>' % (upd_d, num_date(upd_d))
     author_name = inline(m.get("author", ""))
     if m.get("author_id"):
         author_name = '<a class="bl-author" href="%sblog/autori/%s/">%s</a>' % (pre, m["author_id"], author_name)
@@ -682,9 +694,9 @@ def article_html(post, pre, preview):
   <div class="wrap bl-col">
     <nav class="bl-crumbs" aria-label="Omrvinky"><a href="{pre}index.html">Granula</a> / <a href="{pre}blog/">Blog</a></nav>
     <header class="bl-head">
+      <p class="bl-date">{dates_html} · {read_min}&nbsp;min čítania</p>
       <h1>{inline(m["title"])}</h1>
-      <div class="bl-byline">{avatar}<p class="bl-meta"><b>{author_name}</b><br><span class="bl-bio">{inline(m.get("author_bio", ""))}</span><br>
-      Publikované: <time datetime="{m.get("published", "")}">{sk_date(m.get("published", ""))}</time> · Aktualizované: <time datetime="{m.get("updated", "")}">{sk_date(m.get("updated", ""))}</time> · {read_min}&nbsp;min čítania</p></div>
+      <div class="bl-byline">{avatar}<p class="bl-meta"><b>{author_name}</b><br><span class="bl-bio">{inline(m.get("author_bio", ""))}</span></p></div>
     </header>
     {hero_html}
     <section class="bl-tldr" aria-labelledby="sumar">
@@ -713,7 +725,7 @@ def author_page(a, posts):
         ini = "".join(w[0] for w in re.findall(r"[^\W\d_]+", re.sub(r"^\w+\.\s*", "", name))[:2]).upper() or "?"
         av = '<span class="bl-av bl-av-lg bl-av-ph" role="img" aria-label="Fotka autora">%s</span>' % html.escape(ini)
     intro = render_blocks(md_blocks(a.get("intro", "")), pre)
-    web = ('<p class="bl-author-web"><a href="%s" rel="noopener">%s</a></p>' % (html.escape(a["web"]), html.escape(a.get("web_label") or a["web"]))) if a.get("web") else ""
+    web = ('<p class="bl-author-web"><a href="%s" target="_blank" rel="noopener">%s</a></p>' % (html.escape(a["web"]), html.escape(a.get("web_label") or a["web"]))) if a.get("web") else ""
     items = "".join('<li class="bl-card"><a href="%sblog/%s/"><span class="bl-card-date">Aktualizované %s</span><h2>%s</h2></a></li>'
                     % (pre, p["slug"], sk_date(p["meta"].get("updated", "")), inline(p["meta"]["title"])) for p in posts)
     lst = '<h2 class="bl-author-h">Články</h2><ul class="bl-list">%s</ul>' % items if items else '<p class="bl-empty">Články pripravujeme.</p>'
