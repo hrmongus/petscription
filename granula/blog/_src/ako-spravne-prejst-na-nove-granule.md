@@ -6,14 +6,12 @@ id: F1
 category: "Problémy"
 priority: P1
 description: "Na nové granule prechádzaj postupne aspoň 7 dní. Nové krmivo pridávaj po krokoch 10, 25, 50, 75 a 90 %. Citlivý pes potrebuje 2 týždne aj viac."
-author: "[Meno Priezvisko]"
-author_bio: "[1 veta, prečo mu veriť: napr. veterinárka so zameraním na výživu psov]"
-author_photo: placeholder
+author: marcela-glezgova
 hero: placeholder
 hero_alt: "Dve misky vedľa seba na kuchynskej linke: v jednej staré granule, v druhej nové granule s inou farbou a tvarom, pri nich kuchynská váha a pes strednej veľkosti, ktorý sa na misky pozerá"
 hero_caption: "Pri prechode na nové granule pomáha hlavne trpezlivosť. Staré krmivo uberáš a nové pridávaš po malých krokoch."
 published: 2026-11-18
-updated: 2026-11-18
+updated: 2026-11-20
 tldr: >
   Na nové granule prechádzaj postupne, zvyčajne aspoň 7 dní. Nové krmivo primiešavaj do starého
   a jeho podiel zvyšuj približne od 10 % cez 50 % až na 100 %. Citlivý pes môže potrebovať
@@ -25,6 +23,7 @@ key_points:
   - "Staré a nové granule miešaj podľa gramov, nie podľa odmerky."
   - "Najčastejšia chyba: držať sa kalendára. Ďalší krok urob, až keď má pes pevnú stolicu."
 changelog:
+  - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
 sources:

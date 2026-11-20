@@ -1,6 +1,8 @@
 # Blog Granula — pokyny pre autora (Claude Code)
 
-Píšeš články na blog slovenskej značky granúl na mieru **Granula!**. Cieľ: aby ich citovali AI vyhľadávače (ChatGPT, Perplexity, Google AI Overviews, Claude) a zároveň boli užitočné pre majiteľov psov. Spätnú väzbu dáva používateľ cez redakciu `/granula/admin-blog/`. Do chatu ti vkladá skopírované bloky „Spätná väzba k článku…“, „Napíš nový článok…“ alebo „…schvaľujem na publikovanie“.
+Píšeš články na blog slovenskej značky granúl na mieru **Granula!**. Cieľ: aby ich citovali AI vyhľadávače (ChatGPT, Perplexity, Google AI Overviews, Claude) a zároveň boli užitočné pre majiteľov psov. Spätnú väzbu dáva používateľ alebo jeho kolegyňa z redakcie (`https://www.granula.sk/admin-blog/`): priamo v chate, ako text, PDF s ručnými poznámkami, snímky a fotky. Návod pre nich je v `granula/blog/NAVOD.md`, zadanie a povolený rozsah zmien pre session kolegyne v `granula/blog/HANDOVER.md`. Pokyn od kolegyne má rovnakú váhu ako od používateľa, vrátane schválenia na publikovanie.
+
+**Git:** zmeny pushuj priamo na `main` (web sa nasadzuje z `main`). Ak ti prostredie určí inú vetvu, pushni aj na `main`, keď o to človek v chate požiada, inak sa spýtaj.
 
 Povinné čítanie pred prvým článkom: `granula/blog/GEO-TEMPLATE.md` (výskum a šablóna). Tento súbor je jeho prevedenie do praxe.
 
@@ -27,7 +29,7 @@ Všetky témy sú v `granula/blog/TEMY.md` (kategórie A–H, priority P1–P3) 
 6. **Spätná väzba:** najprv rozhodni, či je všeobecná (→ zapíš do `STYL.md` a uplatni na všetky koncepty) alebo len k tomuto článku. Potom uprav text, nastav `updated` na dnešný dátum, pridaj **prvý** záznam do `changelog` („RRRR-MM-DD: čo sa zmenilo“), znova build, commit, push.
 7. **Publikovanie len na výslovný pokyn** používateľa: `status: published`, build (pri chybách ostane článok zablokovaný a neverejný), commit, push, pošli verejnú adresu.
 
-Nič iné na webe nemeň. Ak treba zmeniť šablónu alebo kontrolu (`build.py`, `blog.css`), najprv sa spýtaj.
+Nič iné na webe nemeň. Povolený rozsah zmien (blog, prostredie redakcie) a čo je zakázané (landing, konfigurátor, dizajn webu) je v `granula/blog/HANDOVER.md`. Zmeny prostredia redakcie (`admin-blog/`, `build.py`, `blog.css`, `foto.py`) rob, keď je niečo mätúce alebo nefunguje; zmenu vzhľadu verejných článkov najprv ukáž v náhľade.
 
 ## Formát súboru
 
@@ -39,8 +41,7 @@ Frontmatter (podmnožina YAML, každá hodnota na jednom riadku, dlhý text cez 
 | `slug` | malé písmená bez diakritiky a pomlčky, napr. `kolko-granul-denne-pes` |
 | `status` | `draft` alebo `published` |
 | `description` | meta popis 120–160 znakov, priama odpoveď s číslom |
-| `author`, `author_bio` | meno a 1 veta, prečo mu veriť. **Každý článok môže mať iného autora**; meno, vetu a fotku dodá používateľ. Dovtedy nechaj zástupný text v `[…]` a upozorni na to (zástupný text blokuje publikovanie). |
-| `author_photo` | štvorcová fotka autora, `img/autori/<meno-priezvisko>.webp`. Kým ju nemáš, `placeholder` (blokuje publikovanie). |
+| `author` | **id autora z registra** `granula/blog/_autori/<id>.md`, napr. `author: marcela-glezgova`. Meno, vetu, fotku a web doplní build z registra a meno odkáže na stránku autora `/blog/autori/<id>/`. `author_bio` a `author_photo` v článku vtedy vynechaj (alebo nimi prepíš register len pre tento článok). Kým autor nie je určený, nechaj `"[Meno Priezvisko]"` a zástupný text v `author_bio` (blokuje publikovanie). Nového autora pridaj ako nový súbor v `_autori/` (name, bio s odkazom, photo, web, web_label + predstavenie v tele), fotku cez `foto.py … autor <id>`. |
 | `hero`, `hero_alt`, `hero_caption` | obrázok v hlavičke (16:9), cesta od `granula/` (`img/blog/<slug>/hero.webp` alebo existujúca fotka z `img/`). Bez fotky `placeholder` a v `hero_alt` presne opíš, čo má byť na fotke. |
 | `cta_title`, `cta_text`, `cta_button` (`cta_link`, `cta_image`) | záverečná ponuka napísaná k téme článku. Bez nich sa použije všeobecná. |
 | `published`, `updated` | RRRR-MM-DD |
@@ -50,6 +51,18 @@ Frontmatter (podmnožina YAML, každá hodnota na jednom riadku, dlhý text cez 
 | `sources` | aspoň 3, tvar `"Názov – vydavateľ, rok \| https://…"` (primárne zdroje) |
 
 Telo (markdown): `##` nadpisy sekcií, `###` podčasti, odseky, `**tučné**`, `*kurzíva*`, `[odkaz](url)`, zoznamy `-` a `1.`, tabuľky `| … |`, citát `>`. Navyše: `==zvýraznenie==` (najdôležitejšia veta), poznámka pod čiarou `[^id]` v texte + riadok `[^id]: text` kdekoľvek v tele (vykreslí sa v časti Poznámky nad zdrojmi), malá poznámka = odsek začínajúci `^ `. Žiadne HTML. Titulok `#` nepíš, robí ho build. Zdroje nepíš do tela, build ich vykreslí z `sources`.
+
+### Fotky od redakcie
+
+Keď ti niekto pošle fotku, priprav ju skriptom (oreže, zmenší, uloží ako WebP do 300 KB):
+
+```
+python3 granula/blog/foto.py <subor> hero <slug>
+python3 granula/blog/foto.py <subor> text <slug> <kratky-nazov>
+python3 granula/blog/foto.py <subor> autor <meno-priezvisko>
+```
+
+Voliteľne `--focus x,y` (0–1), keď hlavná vec nie je v strede. Skript vypíše cestu: daj ju do `hero:`, do `![alt](cesta "popis")` namiesto `placeholder`, alebo do `author_photo:`. Alt text uprav podľa toho, čo je naozaj na fotke. **Zdroj obrázka daj do popisu pod obrázkom** (`hero_caption` alebo text v úvodzovkách pri `![…](…)`): „Foto: Meno, fotobanka“ alebo „Ilustrácia vygenerovaná AI“. Fotky z fotobánk len s licenciou na komerčné použitie. Obrázky majú pôsobiť prirodzene, nie „AI“ (divné ruky, labky, texty). Keď skript hlási malé rozlíšenie, povedz to. Fotky z chatu si najprv ulož do scratchpadu, nie do repozitára. Commitni len výstup skriptu.
 
 ### Obrázky, grafy a ponuky
 

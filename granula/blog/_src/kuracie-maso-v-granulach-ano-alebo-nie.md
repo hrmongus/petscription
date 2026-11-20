@@ -6,14 +6,12 @@ id: A3
 category: "Zloženie a suroviny"
 priority: P1
 description: "Kuracie mäso je pre väčšinu psov dobrá bielkovina. Vyhýbaj sa mu len pri potvrdenej alergii. Tá sa týka 15 % psov s alergiou na krmivo."
-author: "[Meno Priezvisko]"
-author_bio: "[1 veta, prečo mu veriť: napr. veterinárka so zameraním na výživu psov]"
-author_photo: placeholder
+author: marcela-glezgova
 hero: placeholder
 hero_alt: "Majiteľ drží v ruke vrece granúl a číta zloženie na zadnej strane, prstom ukazuje na riadok so slovom kuracie, pri nohách mu sedí pes strednej veľkosti"
 hero_caption: "Pri kuracom mäse rozhoduje, či ho tvoj pes znáša a ako je napísané na obale."
 published: 2026-11-18
-updated: 2026-11-18
+updated: 2026-11-20
 tldr: >
   Kuracie mäso je pre väčšinu psov kvalitná a dobre stráviteľná bielkovina. Vyhnúť sa mu treba len
   vtedy, keď veterinár potvrdí alergiu na kuracie. Na kuracie reaguje 15 % psov s alergiou na krmivo,
@@ -24,6 +22,7 @@ key_points:
   - "Na nápis „s kuracím“ stačia v krmive 4 % kuracieho mäsa, na „bohaté na kuracie“ 14 %."
   - "Častý omyl: „hydina“ na obale môže znamenať aj kuracie."
 changelog:
+  - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: upravený opis čerstvého mäsa v tabuľke"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"

@@ -6,14 +6,12 @@ id: A4
 category: "Zloženie a suroviny"
 priority: P1
 description: "Surové mäso je zo 67–75 % voda, múčka z menej ako 10 %. Zloženie sa radí podľa hmotnosti pri miešaní, preto je čerstvé mäso na obale často prvé."
-author: "[Meno Priezvisko]"
-author_bio: "[1 veta, prečo mu veriť: napr. veterinárka so zameraním na výživu psov]"
-author_photo: placeholder
+author: marcela-glezgova
 hero: placeholder
 hero_alt: "Tri biele misky vedľa seba na svetlom stole: v prvej kocky surového červeného mäsa, v druhej tmavšie suché kúsky sušeného mäsa, v tretej jemný hnedosivý prášok mäsovej múčky; pred miskami ležia granule a obal granúl otočený zadnou stranou so zložením"
 hero_caption: "Čerstvé mäso, sušené mäso a mäsová múčka sa líšia hlavne obsahom vody. Preto ich v zložení nájdeš na rôznych miestach."
 published: 2026-11-18
-updated: 2026-11-18
+updated: 2026-11-20
 tldr: >
   Čerstvé mäso, sušené mäso a mäsová múčka sa líšia hlavne obsahom vody. Surové mäso je asi
   zo 67–75 % voda, múčka z menej ako 10 %. Zloženie sa radí podľa hmotnosti pri miešaní.
@@ -25,6 +23,7 @@ key_points:
   - "Kvalita mäsovej múčky kolíše. Z krmív s rôznymi múčkami psy strávili 62–82 % aminokyselín."
   - "Najčastejší omyl: čerstvé mäso na prvom mieste neznamená, že v granulách je najviac mäsa."
 changelog:
+  - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: odstránený výklad slova „čerstvé“"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"

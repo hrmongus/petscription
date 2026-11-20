@@ -1,6 +1,28 @@
 /* vygenerované build.py — needitovať */
 window.GRANULA_POSTS = {
- "built": "2026-11-20 05:11",
+ "authors": [
+  {
+   "id": "marcela-glezgova",
+   "name": "MVDr. Marcela Glezgová",
+   "bio": "Veterinárka a majiteľka veterinárnej kliniky KiraVet v Handlovej.",
+   "web": "https://kiravet.sk/",
+   "photo": "placeholder",
+   "photoOk": false,
+   "page": "../blog/autori/marcela-glezgova/index.html",
+   "articles": [
+    "ako-spravne-prejst-na-nove-granule",
+    "cerstve-maso-dehydrovane-maso-masova-mucka",
+    "hnacka-po-novych-granulach-co-robit",
+    "je-kukurica-v-granulach-zla",
+    "kuracie-maso-v-granulach-ano-alebo-nie",
+    "nadvaha-ako-s-psom-bezpecne-schudnut",
+    "patria-obilniny-do-granul",
+    "preco-moj-pes-nechce-jest-nove-granule",
+    "svrbenie-skrabanie-alergia-na-krmivo"
+   ]
+  }
+ ],
+ "built": "2026-11-20 05:14",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -14,6 +36,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -39,6 +62,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -62,8 +86,9 @@ window.GRANULA_POSTS = {
    "wanted": "draft",
    "example": false,
    "published": "2026-11-18",
-   "updated": "2026-11-18",
-   "author": "[Meno Priezvisko]",
+   "updated": "2026-11-20",
+   "author": "MVDr. Marcela Glezgová",
+   "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "placeholder",
    "words": 1117,
@@ -108,7 +133,7 @@ window.GRANULA_POSTS = {
     {
      "id": "author",
      "level": "error",
-     "ok": false,
+     "ok": true,
      "msg": "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)",
      "details": []
     },
@@ -132,6 +157,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-20: Autorka MVDr. Marcela Glezgová",
       "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok",
       "2026-11-18: Prvá verzia"
      ]
@@ -526,6 +552,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -551,6 +578,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -576,6 +604,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -601,6 +630,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -624,8 +654,9 @@ window.GRANULA_POSTS = {
    "wanted": "draft",
    "example": false,
    "published": "2026-11-18",
-   "updated": "2026-11-18",
-   "author": "[Meno Priezvisko]",
+   "updated": "2026-11-20",
+   "author": "MVDr. Marcela Glezgová",
+   "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "placeholder",
    "words": 1471,
@@ -670,7 +701,7 @@ window.GRANULA_POSTS = {
     {
      "id": "author",
      "level": "error",
-     "ok": false,
+     "ok": true,
      "msg": "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)",
      "details": []
     },
@@ -694,9 +725,9 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-20: Autorka MVDr. Marcela Glezgová",
       "2026-11-18: odstránený výklad slova „čerstvé“",
-      "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok",
-      "2026-11-18: Prvá verzia"
+      "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
      ]
     },
     {
@@ -1102,6 +1133,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -1127,6 +1159,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -1152,6 +1185,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -1177,6 +1211,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -1202,6 +1237,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -1227,6 +1263,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -1252,6 +1289,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -1277,6 +1315,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -1302,6 +1341,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -1327,6 +1367,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -1352,6 +1393,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -1377,6 +1419,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -1400,8 +1443,9 @@ window.GRANULA_POSTS = {
    "wanted": "draft",
    "example": false,
    "published": "2026-11-18",
-   "updated": "2026-11-18",
-   "author": "[Meno Priezvisko]",
+   "updated": "2026-11-20",
+   "author": "MVDr. Marcela Glezgová",
+   "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "placeholder",
    "words": 1059,
@@ -1446,7 +1490,7 @@ window.GRANULA_POSTS = {
     {
      "id": "author",
      "level": "error",
-     "ok": false,
+     "ok": true,
      "msg": "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)",
      "details": []
     },
@@ -1470,9 +1514,9 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-20: Autorka MVDr. Marcela Glezgová",
       "2026-11-18: „žerie“ nahradené",
-      "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok",
-      "2026-11-18: Prvá verzia"
+      "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
      ]
     },
     {
@@ -1852,6 +1896,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -1877,6 +1922,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -1902,6 +1948,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -1927,6 +1974,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -1950,8 +1998,9 @@ window.GRANULA_POSTS = {
    "wanted": "draft",
    "example": false,
    "published": "2026-11-18",
-   "updated": "2026-11-18",
-   "author": "[Meno Priezvisko]",
+   "updated": "2026-11-20",
+   "author": "MVDr. Marcela Glezgová",
+   "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "placeholder",
    "words": 1233,
@@ -1996,7 +2045,7 @@ window.GRANULA_POSTS = {
     {
      "id": "author",
      "level": "error",
-     "ok": false,
+     "ok": true,
      "msg": "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)",
      "details": []
     },
@@ -2020,6 +2069,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-20: Autorka MVDr. Marcela Glezgová",
       "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok",
       "2026-11-18: Prvá verzia"
      ]
@@ -2427,6 +2477,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -2452,6 +2503,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -2477,6 +2529,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -2502,6 +2555,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -2527,6 +2581,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -2552,6 +2607,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -2577,6 +2633,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -2602,6 +2659,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -2627,6 +2685,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -2652,6 +2711,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -2677,6 +2737,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -2702,6 +2763,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -2725,8 +2787,9 @@ window.GRANULA_POSTS = {
    "wanted": "draft",
    "example": false,
    "published": "2026-11-18",
-   "updated": "2026-11-18",
-   "author": "[Meno Priezvisko]",
+   "updated": "2026-11-20",
+   "author": "MVDr. Marcela Glezgová",
+   "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "placeholder",
    "words": 1577,
@@ -2771,7 +2834,7 @@ window.GRANULA_POSTS = {
     {
      "id": "author",
      "level": "error",
-     "ok": false,
+     "ok": true,
      "msg": "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)",
      "details": []
     },
@@ -2795,9 +2858,9 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-20: Autorka MVDr. Marcela Glezgová",
       "2026-11-18: upravený opis čerstvého mäsa v tabuľke",
-      "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok",
-      "2026-11-18: Prvá verzia"
+      "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
      ]
     },
     {
@@ -3216,6 +3279,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -3241,6 +3305,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -3266,6 +3331,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -3291,6 +3357,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -3316,6 +3383,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -3341,6 +3409,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -3366,6 +3435,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -3389,8 +3459,9 @@ window.GRANULA_POSTS = {
    "wanted": "draft",
    "example": false,
    "published": "2026-11-18",
-   "updated": "2026-11-18",
-   "author": "[Meno Priezvisko]",
+   "updated": "2026-11-20",
+   "author": "MVDr. Marcela Glezgová",
+   "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "placeholder",
    "words": 1380,
@@ -3435,7 +3506,7 @@ window.GRANULA_POSTS = {
     {
      "id": "author",
      "level": "error",
-     "ok": false,
+     "ok": true,
      "msg": "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)",
      "details": []
     },
@@ -3459,6 +3530,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-20: Autorka MVDr. Marcela Glezgová",
       "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok",
       "2026-11-18: Prvá verzia"
      ]
@@ -3866,6 +3938,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -3891,6 +3964,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -3916,6 +3990,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -3941,6 +4016,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -3966,6 +4042,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -3989,8 +4066,9 @@ window.GRANULA_POSTS = {
    "wanted": "draft",
    "example": false,
    "published": "2026-11-18",
-   "updated": "2026-11-18",
-   "author": "[Meno Priezvisko]",
+   "updated": "2026-11-20",
+   "author": "MVDr. Marcela Glezgová",
+   "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "placeholder",
    "words": 1568,
@@ -4035,7 +4113,7 @@ window.GRANULA_POSTS = {
     {
      "id": "author",
      "level": "error",
-     "ok": false,
+     "ok": true,
      "msg": "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)",
      "details": []
     },
@@ -4059,6 +4137,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-20: Autorka MVDr. Marcela Glezgová",
       "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok",
       "2026-11-18: Prvá verzia"
      ]
@@ -4478,6 +4557,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -4503,6 +4583,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -4528,6 +4609,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -4553,6 +4635,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -4578,6 +4661,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -4603,6 +4687,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -4628,6 +4713,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -4653,6 +4739,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -4678,6 +4765,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -4701,8 +4789,9 @@ window.GRANULA_POSTS = {
    "wanted": "draft",
    "example": false,
    "published": "2026-11-18",
-   "updated": "2026-11-18",
-   "author": "[Meno Priezvisko]",
+   "updated": "2026-11-20",
+   "author": "MVDr. Marcela Glezgová",
+   "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "placeholder",
    "words": 1517,
@@ -4747,7 +4836,7 @@ window.GRANULA_POSTS = {
     {
      "id": "author",
      "level": "error",
-     "ok": false,
+     "ok": true,
      "msg": "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)",
      "details": []
     },
@@ -4771,9 +4860,9 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-20: Autorka MVDr. Marcela Glezgová",
       "2026-11-18: „žerie“ nahradené",
-      "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok",
-      "2026-11-18: Prvá verzia"
+      "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
      ]
     },
     {
@@ -5195,6 +5284,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -5220,6 +5310,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -5245,6 +5336,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -5270,6 +5362,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -5295,6 +5388,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -5318,8 +5412,9 @@ window.GRANULA_POSTS = {
    "wanted": "draft",
    "example": false,
    "published": "2026-11-18",
-   "updated": "2026-11-18",
-   "author": "[Meno Priezvisko]",
+   "updated": "2026-11-20",
+   "author": "MVDr. Marcela Glezgová",
+   "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "placeholder",
    "words": 1074,
@@ -5364,7 +5459,7 @@ window.GRANULA_POSTS = {
     {
      "id": "author",
      "level": "error",
-     "ok": false,
+     "ok": true,
      "msg": "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)",
      "details": []
     },
@@ -5388,6 +5483,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-20: Autorka MVDr. Marcela Glezgová",
       "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok, jedna ponuka v texte",
       "2026-11-18: Prvá verzia"
      ]
@@ -5797,6 +5893,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -5822,6 +5919,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -5847,6 +5945,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -5872,6 +5971,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -5897,6 +5997,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -5922,6 +6023,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -5947,6 +6049,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -5972,6 +6075,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -5997,6 +6101,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -6022,6 +6127,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -6047,6 +6153,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -6072,6 +6179,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -6097,6 +6205,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -6122,6 +6231,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -6147,6 +6257,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -6163,446 +6274,6 @@ window.GRANULA_POSTS = {
    "sections": []
   },
   {
-   "slug": "vzor-struktury",
-   "file": "granula/blog/_src/vzor-struktury.md",
-   "title": "Vzor štruktúry článku – ako vyzerá článok pre AI citácie",
-   "status": "draft",
-   "wanted": "draft",
-   "example": true,
-   "published": "2026-11-18",
-   "updated": "2026-11-18",
-   "author": "[Meno autora]",
-   "authorPhoto": "placeholder",
-   "hero": "img/hero-jack-russell.jpg",
-   "words": 263,
-   "description": "Vzorový koncept, ktorý ukazuje rozloženie článku: krátka odpoveď, definícia, sekcie s otázkami, tabuľka, postup, časté otázky a zdroje.",
-   "id": "",
-   "category": "",
-   "priority": "",
-   "brief": "",
-   "angle": "",
-   "preview": "../blog/nahlad/vzor-struktury/index.html",
-   "pdf": "../blog/nahlad-pdf/vzor-struktury.pdf",
-   "live": null,
-   "lint": [
-    {
-     "id": "title",
-     "level": "error",
-     "ok": true,
-     "msg": "Titulok je vyplnený",
-     "details": []
-    },
-    {
-     "id": "title-length",
-     "level": "warn",
-     "ok": true,
-     "msg": "Titulok má najviac 70 znakov (má 56)",
-     "details": []
-    },
-    {
-     "id": "title-year",
-     "level": "warn",
-     "ok": true,
-     "msg": "Rok v titulku len pri téme, ktorá sa mení, a len ak sedí s dátumom aktualizácie",
-     "details": []
-    },
-    {
-     "id": "description",
-     "level": "warn",
-     "ok": true,
-     "msg": "Meta popis má 120–160 znakov (má 135)",
-     "details": []
-    },
-    {
-     "id": "author",
-     "level": "error",
-     "ok": false,
-     "msg": "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)",
-     "details": []
-    },
-    {
-     "id": "author-photo",
-     "level": "error",
-     "ok": false,
-     "msg": "Fotka autora (author_photo, súbor v granula/img/autori/)",
-     "details": []
-    },
-    {
-     "id": "dates",
-     "level": "error",
-     "ok": true,
-     "msg": "Dátumy published a updated (RRRR-MM-DD), updated ≥ published",
-     "details": []
-    },
-    {
-     "id": "changelog",
-     "level": "warn",
-     "ok": true,
-     "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
-     "details": [
-      "2026-11-18: Vzorový koncept"
-     ]
-    },
-    {
-     "id": "tldr",
-     "level": "error",
-     "ok": true,
-     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 44)",
-     "details": []
-    },
-    {
-     "id": "tldr-range",
-     "level": "warn",
-     "ok": true,
-     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 44)",
-     "details": []
-    },
-    {
-     "id": "tldr-intro",
-     "level": "error",
-     "ok": true,
-     "msg": "Krátka odpoveď začína priamou odpoveďou, nie úvodom („v tomto článku…“)",
-     "details": []
-    },
-    {
-     "id": "key-points",
-     "level": "error",
-     "ok": true,
-     "msg": "Aspoň 3 kľúčové body (má 4)",
-     "details": []
-    },
-    {
-     "id": "tldr-numbers",
-     "level": "warn",
-     "ok": true,
-     "msg": "Krátka odpoveď a kľúčové body obsahujú aspoň 3 čísla (majú 10)",
-     "details": []
-    },
-    {
-     "id": "definition",
-     "level": "warn",
-     "ok": true,
-     "msg": "Sekcia „Čo je …?“ s definíciou vo forme „X je Y, ktoré Z“",
-     "details": []
-    },
-    {
-     "id": "sections",
-     "level": "warn",
-     "ok": true,
-     "msg": "3–6 hlavných sekcií (má 3)",
-     "details": []
-    },
-    {
-     "id": "h2-questions",
-     "level": "warn",
-     "ok": true,
-     "msg": "Aspoň polovica nadpisov H2 sú otázky (2 z 4)",
-     "details": [
-      "Šablóna A vs šablóna B: porovnanie",
-      "Ako napísať článok: 3 kroky"
-     ]
-    },
-    {
-     "id": "section-length",
-     "level": "warn",
-     "ok": false,
-     "msg": "Hlavné sekcie majú 80–400 slov (kratšie je lepšie, viď STYL.md)",
-     "details": [
-      "Ako vyzerá sekcia, ktorú AI dokáže citovať?: 48 slov",
-      "Šablóna A vs šablóna B: porovnanie: 38 slov",
-      "Ako napísať článok: 3 kroky: 41 slov"
-     ]
-    },
-    {
-     "id": "first-sentence",
-     "level": "warn",
-     "ok": true,
-     "msg": "Každá sekcia začína tučnou prvou vetou = odpoveď na nadpis",
-     "details": []
-    },
-    {
-     "id": "section-numbers",
-     "level": "warn",
-     "ok": false,
-     "msg": "Každá hlavná sekcia má aspoň 1 číslo alebo poznámku so zdrojom",
-     "details": [
-      "Šablóna A vs šablóna B: porovnanie"
-     ]
-    },
-    {
-     "id": "standalone",
-     "level": "warn",
-     "ok": true,
-     "msg": "Sekcie obstoja samy (žiadne „vyššie“, „ako sme spomenuli“, odsek začínajúci „Toto/To“)",
-     "details": []
-    },
-    {
-     "id": "hero",
-     "level": "warn",
-     "ok": true,
-     "msg": "Obrázok v hlavičke článku (hero, hero_alt)",
-     "details": []
-    },
-    {
-     "id": "images",
-     "level": "warn",
-     "ok": true,
-     "msg": "Obrázky v texte: aspoň 2 obrázky alebo grafy (1 na 2 hlavné sekcie), má 2",
-     "details": []
-    },
-    {
-     "id": "chart",
-     "level": "warn",
-     "ok": true,
-     "msg": "Aspoň 1 graf (blok ::: graf), keď článok porovnáva čísla",
-     "details": []
-    },
-    {
-     "id": "img-alt",
-     "level": "error",
-     "ok": true,
-     "msg": "Každý obrázok má popis (alt)",
-     "details": []
-    },
-    {
-     "id": "img-placeholder",
-     "level": "error",
-     "ok": false,
-     "msg": "Zástupné obrázky sú nahradené skutočnými (pred publikovaním)",
-     "details": [
-      "obrázok: Majiteľ odváži dennú dávku granúl na kuchynskej váhe, vedľa sedí pes strednej veľkosti"
-     ]
-    },
-    {
-     "id": "img-files",
-     "level": "error",
-     "ok": true,
-     "msg": "Súbory obrázkov existujú (cesta od granula/, napr. img/blog/<slug>/…)",
-     "details": []
-    },
-    {
-     "id": "offer-mid",
-     "level": "warn",
-     "ok": true,
-     "msg": "Ponuka uprostred článku, ktorá sedí k téme (blok ::: ponuka)",
-     "details": []
-    },
-    {
-     "id": "offer-fields",
-     "level": "warn",
-     "ok": true,
-     "msg": "Ponuka má nadpis a text",
-     "details": []
-    },
-    {
-     "id": "offer-link",
-     "level": "warn",
-     "ok": true,
-     "msg": "Ponuka vedie na dotazník (granule-na-mieru.html), nie na konkrétny produkt",
-     "details": []
-    },
-    {
-     "id": "offer-count",
-     "level": "warn",
-     "ok": true,
-     "msg": "Najviac 2 ponuky v texte (má 1), inak to pôsobí ako reklama",
-     "details": []
-    },
-    {
-     "id": "table",
-     "level": "info",
-     "ok": true,
-     "msg": "Porovnávacia tabuľka (odporúčané pri „X vs Y“)",
-     "details": []
-    },
-    {
-     "id": "steps",
-     "level": "info",
-     "ok": true,
-     "msg": "Postup krok za krokom (číslovaný zoznam)",
-     "details": []
-    },
-    {
-     "id": "own-data",
-     "level": "info",
-     "ok": false,
-     "msg": "Vlastné dáta alebo skúsenosť (najväčší diferenciátor)",
-     "details": []
-    },
-    {
-     "id": "faq",
-     "level": "warn",
-     "ok": true,
-     "msg": "Časté otázky: 3–6 otázok v tvare **Otázka?** odpoveď, odpoveď najviac 3 vety (má 3)",
-     "details": []
-    },
-    {
-     "id": "summary",
-     "level": "warn",
-     "ok": true,
-     "msg": "Sekcia „Zhrnutie“ ako zoznam (hlavný záver, kedy áno/nie, ďalší krok)",
-     "details": []
-    },
-    {
-     "id": "sources",
-     "level": "error",
-     "ok": true,
-     "msg": "Aspoň 3 zdroje s URL (má 3)",
-     "details": []
-    },
-    {
-     "id": "sources-format",
-     "level": "warn",
-     "ok": true,
-     "msg": "Každý zdroj v tvare „Názov – vydavateľ, rok | https://…“",
-     "details": []
-    },
-    {
-     "id": "first-third",
-     "level": "info",
-     "ok": true,
-     "msg": "Kľúčové fakty (čísla) sú v prvej tretine textu",
-     "details": []
-    },
-    {
-     "id": "atomic",
-     "level": "info",
-     "ok": true,
-     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 6)",
-     "details": []
-    },
-    {
-     "id": "self-promo",
-     "level": "warn",
-     "ok": true,
-     "msg": "„Najlepšie X“ len s transparentnou metodikou a bez Granuly na prvom mieste",
-     "details": []
-    },
-    {
-     "id": "claims",
-     "level": "warn",
-     "ok": true,
-     "msg": "Žiadne vyradené tvrdenia a superlatívy z dizajn systému",
-     "details": []
-    },
-    {
-     "id": "recipe-names",
-     "level": "warn",
-     "ok": true,
-     "msg": "Receptúry podľa mäsa (napr. „Jeleň & králik“), nie interné názvy Puppy/Energy",
-     "details": []
-    },
-    {
-     "id": "ty-form",
-     "level": "warn",
-     "ok": true,
-     "msg": "Tykanie („tvoj pes“), nie vykanie",
-     "details": []
-    },
-    {
-     "id": "emoji",
-     "level": "warn",
-     "ok": true,
-     "msg": "Bez emoji",
-     "details": []
-    },
-    {
-     "id": "length",
-     "level": "info",
-     "ok": true,
-     "msg": "Dĺžka článku: 263 slov (dĺžka nerozhoduje, hustota áno)",
-     "details": []
-    },
-    {
-     "id": "footnotes",
-     "level": "error",
-     "ok": true,
-     "msg": "Každá poznámka [^id] v texte má definíciu „[^id]: text“",
-     "details": []
-    }
-   ],
-   "sections": [
-    {
-     "title": "Čo je vzorový článok?",
-     "kind": "definition",
-     "words": 28,
-     "numbers": 0,
-     "question": true,
-     "firstBold": true,
-     "table": false,
-     "steps": false,
-     "images": 1,
-     "charts": 0,
-     "offers": 0
-    },
-    {
-     "title": "Ako vyzerá sekcia, ktorú AI dokáže citovať?",
-     "kind": "main",
-     "words": 48,
-     "numbers": 4,
-     "question": true,
-     "firstBold": true,
-     "table": false,
-     "steps": false,
-     "images": 0,
-     "charts": 1,
-     "offers": 1
-    },
-    {
-     "title": "Šablóna A vs šablóna B: porovnanie",
-     "kind": "main",
-     "words": 38,
-     "numbers": 0,
-     "question": false,
-     "firstBold": true,
-     "table": true,
-     "steps": false,
-     "images": 0,
-     "charts": 0,
-     "offers": 0
-    },
-    {
-     "title": "Ako napísať článok: 3 kroky",
-     "kind": "main",
-     "words": 41,
-     "numbers": 2,
-     "question": false,
-     "firstBold": true,
-     "table": false,
-     "steps": true,
-     "images": 0,
-     "charts": 0,
-     "offers": 0
-    },
-    {
-     "title": "Časté otázky",
-     "kind": "faq",
-     "words": 45,
-     "numbers": 5,
-     "question": false,
-     "firstBold": true,
-     "table": false,
-     "steps": false,
-     "images": 0,
-     "charts": 0,
-     "offers": 0
-    },
-    {
-     "title": "Zhrnutie",
-     "kind": "summary",
-     "words": 19,
-     "numbers": 0,
-     "question": false,
-     "firstBold": false,
-     "table": false,
-     "steps": false,
-     "images": 0,
-     "charts": 0,
-     "offers": 0
-    }
-   ]
-  },
-  {
    "slug": "yucca-zeolit-kvasnice-chelatove-mineraly",
    "file": "granula/blog/_src/yucca-zeolit-kvasnice-chelatove-mineraly.md",
    "title": "Yucca, zeolit, kvasnice, chelátové minerály: čo robia?",
@@ -6612,6 +6283,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
@@ -6637,6 +6309,7 @@ window.GRANULA_POSTS = {
    "published": "",
    "updated": "",
    "author": "",
+   "authorId": "",
    "authorPhoto": "",
    "hero": "",
    "words": 0,
