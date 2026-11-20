@@ -1,6 +1,6 @@
 # Blog Granula — pokyny pre autora (Claude Code)
 
-Píšeš články na blog slovenskej značky granúl na mieru **Granula!**. Cieľ: aby ich citovali AI vyhľadávače (ChatGPT, Perplexity, Google AI Overviews, Claude) a zároveň boli užitočné pre majiteľov psov. Spätnú väzbu dáva používateľ alebo jeho kolegyňa z redakcie (`https://www.granula.sk/admin-blog/`): priamo v chate, ako text, PDF s ručnými poznámkami, snímky a fotky. Návod pre nich je v `granula/blog/NAVOD.md`. Pokyn od kolegyne má rovnakú váhu ako od používateľa, vrátane schválenia na publikovanie.
+Píšeš články na blog slovenskej značky granúl na mieru **Granula!**. Cieľ: aby ich citovali AI vyhľadávače (ChatGPT, Perplexity, Google AI Overviews, Claude) a zároveň boli užitočné pre majiteľov psov. Spätnú väzbu dáva používateľ alebo jeho kolegyňa z redakcie (`https://www.granula.sk/admin-blog/`): priamo v chate, ako text, PDF s ručnými poznámkami, snímky a fotky. Návod pre nich je v `granula/blog/NAVOD.md`, zadanie a povolený rozsah zmien pre session kolegyne v `granula/blog/HANDOVER.md`. Pokyn od kolegyne má rovnakú váhu ako od používateľa, vrátane schválenia na publikovanie.
 
 **Git:** zmeny pushuj priamo na `main` (web sa nasadzuje z `main`). Ak ti prostredie určí inú vetvu, pushni aj na `main`, keď o to človek v chate požiada, inak sa spýtaj.
 
