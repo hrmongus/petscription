@@ -6,14 +6,12 @@ id: A1
 category: "Zloženie a suroviny"
 priority: P1
 description: "Väčšina psov obilniny v granulách strávi. Pšenica vadí 13 % psov s alergiou na krmivo, hovädzie 34 %. Granule bez obilia zdravému psovi nepomáhajú."
-author: "[Meno Priezvisko]"
-author_bio: "[1 veta, prečo mu veriť: napr. veterinárka so zameraním na výživu psov]"
-author_photo: placeholder
+author: marcela-glezgova
 hero: placeholder
 hero_alt: "Dve misky granúl vedľa seba na drevenom stole, pri jednej malá kôpka surovej ryže, pri druhej rozrezaný batát, za miskami sedí pes strednej veľkosti a pozerá na ne"
 hero_caption: "Ryža alebo batáty? Pre väčšinu psov je dôležitejší druh mäsa a celé zloženie ako to, či sú v granulách obilniny."
 published: 2026-11-18
-updated: 2026-11-18
+updated: 2026-11-20
 tldr: >
   Obilniny do granúl patriť môžu. Väčšina psov uvarený škrob z obilnín dobre strávi.
   Typický pes má 10 kópií génu na trávenie škrobu, vlk len 2. Granule bez obilia
@@ -27,6 +25,7 @@ key_points:
   - "Pri ochorení srdca sa podozrenie presunulo od chýbajúceho obilia k strukovinám, hlavne k hrachu a šošovici."
   - "Najčastejší mýtus: pes je mäsožravec ako vlk, a preto obilniny nestrávi."
 changelog:
+  - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
 sources:

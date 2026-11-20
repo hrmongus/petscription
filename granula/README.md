@@ -33,7 +33,7 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 - Redakcia: `admin-blog/` (noindex, nie je pod heslom): stav článkov, kontrola GEO, sekcie, ručný checklist, náhľad a spätná väzba, ktorú skopíruješ do chatu s autorom.
 - `BASE_URL` v `blog/build.py` (kanonické adresy, sitemap) je zatiaľ `https://granula.sk/granula`; upraviť podľa skutočnej domény.
 - Obrázky: hero (`hero`), fotka autora (`author_photo`, `img/autori/`), obrázky v texte `![alt](cesta)`, grafy `::: graf` a ponuky k téme `::: ponuka` (syntax v `blog/CLAUDE.md`). Fotky článkov patria do `img/blog/<slug>/`. Zástupné obrázky (`placeholder`) a chýbajúca fotka autora blokujú publikovanie.
-- `blog/_src/vzor-struktury.md` je vzorový koncept; po prvom skutočnom článku zmazať.
+- Autori: register v `blog/_autori/<id>.md`, stránky autorov `blog/autori/<id>/`; v článku `author: <id>`.
 
 ## Profil psa (radar v dotazníku)
 

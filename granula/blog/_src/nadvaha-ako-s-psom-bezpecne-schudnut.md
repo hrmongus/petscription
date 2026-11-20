@@ -6,14 +6,12 @@ id: F11
 category: "Problémy"
 priority: P1
 description: "Pes s nadváhou má chudnúť o 1–2 % hmotnosti týždenne. Dávku počítaj z ideálnej hmotnosti, maškrty drž pod 10 % energie a psa váž každé 2 týždne."
-author: "[Meno Priezvisko]"
-author_bio: "[1 veta, prečo mu veriť: napr. veterinárka so zameraním na výživu psov]"
-author_photo: placeholder
+author: marcela-glezgova
 hero: placeholder
 hero_alt: "Labrador s viditeľnou nadváhou (bez pása pri pohľade zhora) stojí na digitálnej váhe vo veterinárnej ambulancii, majiteľ sa skláňa a odčítava hmotnosť z displeja"
 hero_caption: "Chudnutie psa trvá mesiace. Pravidelné váženie ukáže, či ide správnym tempom."
 published: 2026-11-18
-updated: 2026-11-18
+updated: 2026-11-20
 tldr: >
   Pes s nadváhou má chudnúť pomaly, o 1–2 % hmotnosti týždenne. Pri 20 kg psovi
   je to 200–400 g. Dennú dávku počítaj z ideálnej hmotnosti, nie zo súčasnej.
@@ -25,6 +23,7 @@ key_points:
   - "V praxi psy chudnú pomalšie, v priemere o 0,9 % týždenne."
   - "Najčastejšia chyba: rátať dávku zo súčasnej hmotnosti alebo len ubrať granule a maškrty nechať tak."
 changelog:
+  - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
 sources:

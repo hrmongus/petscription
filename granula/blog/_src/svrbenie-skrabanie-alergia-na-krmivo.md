@@ -6,14 +6,12 @@ id: F6
 category: "Problémy"
 priority: P1
 description: "Alergiu na krmivo má len 9–40 % psov, ktorých trápi svrbenie. Potvrdí ju eliminačná diéta aspoň 8 týždňov, nie test z krvi ani zo srsti."
-author: "[Meno Priezvisko]"
-author_bio: "[1 veta, prečo mu veriť: napr. veterinárka so zameraním na dermatológiu a výživu psov]"
-author_photo: placeholder
+author: marcela-glezgova
 hero: placeholder
 hero_alt: "Pes strednej veľkosti leží na koberci v obývačke a olizuje si prednú labku, medzi prstami je vidieť začervenanú kožu a srsť sfarbenú do hneda od slín"
 hero_caption: "Olizovanie labiek a škrabanie môže spôsobiť krmivo. Častejšie však za ním sú blchy alebo alergia na peľ a roztoče."
 published: 2026-11-18
-updated: 2026-11-18
+updated: 2026-11-20
 tldr: >
   Svrbenie a olizovanie labiek spôsobuje krmivo len zriedka. Medzi psami, ktorých trápi svrbenie,
   má alergiu na krmivo 9–40 %. Častejšie ho spôsobujú blchy alebo alergia na peľ a roztoče.
@@ -25,6 +23,7 @@ key_points:
   - "Eliminačná diéta trvá aspoň 8 týždňov. Kratšia nemusí nič ukázať."
   - "Najčastejší omyl: test zo srsti. V štúdii označil za „alergickú“ aj umelú kožušinu."
 changelog:
+  - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok, jedna ponuka v texte"
   - "2026-11-18: Prvá verzia"
 sources:

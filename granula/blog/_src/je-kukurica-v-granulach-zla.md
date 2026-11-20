@@ -6,14 +6,12 @@ id: A2
 category: "Zloženie a suroviny"
 priority: P1
 description: "Varenú kukuricu pes dobre strávi, škrob z nej z viac ako 98 %. Problém je, keď v granulách nahrádza mäso alebo keď je zrno plesnivé."
-author: "[Meno Priezvisko]"
-author_bio: "[1 veta, prečo mu veriť: napr. veterinárka so zameraním na výživu psov]"
-author_photo: placeholder
+author: marcela-glezgova
 hero: placeholder
 hero_alt: "Detail zadnej strany vreca granúl so zoznamom zloženia, v ktorom je zvýraznené slovo kukurica; vedľa vreca leží na drevenej doske hrsť granúl a niekoľko suchých kukuričných zŕn"
 hero_caption: "Nerozhoduje samotné slovo kukurica na obale, ale jej forma, množstvo a kvalita."
 published: 2026-11-18
-updated: 2026-11-18
+updated: 2026-11-20
 tldr: >
   Kukurica v granulách psovi zvyčajne neškodí. Varenú kukuricu pes dobre strávi.
   Škrob z nej strávi z viac ako 98 %. Problém nastáva, keď kukurica v granulách nahrádza mäso. Riziko je aj plesnivé
@@ -26,6 +24,7 @@ key_points:
   - "Plesnivá kukurica môže obsahovať aflatoxín. V USA po takom krmive zomrelo viac ako 110 zvierat."
   - "Najčastejší mýtus: kukurica je len plnáč. Problém je, keď nahrádza mäso alebo keď je zle skladovaná."
 changelog:
+  - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
 sources:

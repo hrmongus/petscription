@@ -6,14 +6,12 @@ id: F3
 category: "Problémy"
 priority: P1
 description: "Zdravý pes nové granule často odmieta zo strachu z neznámeho jedla. V štúdii to prešlo do 8–9 dní. Ak neje viac ako 24 hodín, patrí k veterinárovi."
-author: "[Meno Priezvisko]"
-author_bio: "[1 veta, prečo mu veriť: napr. veterinárka so zameraním na výživu psov]"
-author_photo: placeholder
+author: marcela-glezgova
 hero: placeholder
 hero_alt: "Dospelý pes strednej veľkosti stojí nad plnou miskou nových granúl, ovoniava ich, ale neje; v pozadí kuchyňa, prirodzené denné svetlo"
 hero_caption: "Zdravý pes pri novom krmive často najprv len ovoniava a váha. Najmä v prvý deň je to bežné."
 published: 2026-11-18
-updated: 2026-11-18
+updated: 2026-11-20
 tldr: >
   Zdravý pes nové granule najčastejšie odmieta, lebo je opatrný voči neznámemu jedlu.
   Odborne sa to volá neofóbia. Druhou častou príčinou sú maškrty, ktoré ho naučili čakať
@@ -26,6 +24,7 @@ key_points:
   - "„Pravidlo 15 minút“ je praktický tip, nie veterinárna norma."
   - "Najčastejšia chyba: po odmietnutej miske dať psovi niečo lepšie. Tak sa naučí granule odmietať."
 changelog:
+  - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: „žerie“ nahradené"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
