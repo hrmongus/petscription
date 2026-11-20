@@ -6,7 +6,7 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 
 | Súbor | Čo je v ňom | Artboardy v návrhu |
 | --- | --- | --- |
-| `index.html` | úvodná stránka: hero, čísla, piliere, 1,8 roka, mäso, suroviny, porovnanie, ako to funguje, Granula = nula, recenzie, odborníci, otázky, výzva, pätička | Homepage + Homepage — pokračovanie |
+| `index.html` | úvodná stránka: hero, čísla, piliere, 1,8 roka, mäso, suroviny, porovnanie, ako to funguje, Granula = nula, recenzie, blog, otázky, predregistrácia, výzva, pätička | Homepage + Homepage — pokračovanie |
 | `obchodne-podmienky.html`, `reklamacny-poriadok.html`, `ochrana-sukromia.html` | právne stránky, zatiaľ lorem ipsum (noindex, mimo sitemap); pred spustením doplniť text a odstrániť noindex | |
 | `podpora.html` | podpora: e-mail podpora@granula.sk, témy s predvyplneným predmetom, časté otázky | |
 | `suroviny.html` | podstránka Suroviny | Suroviny |
@@ -37,9 +37,9 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 
 ## Profil psa (radar v dotazníku)
 
-- Vedľa otázok (desktop hore v modrom pravom stĺpci nad „Vedel si?“, mobil malý v pravom hornom rohu vedľa loga a krokov, bez popisov osí) je graf „Profil tvojho psa“ (len graf, bez rámu a textu) so 6 osami: Energia, Bielkoviny, Tuk, Jednoduché zloženie, Rast, Veľkosť granule. Ukazuje **potreby psa, nikdy receptúry**; tie sú až vo výsledku. Vo výsledku je graf kompletný (všetky osi odomknuté).
+- Vedľa otázok (desktop hore v modrom pravom stĺpci nad „Vedel si?“, mobil malý v pravom hornom rohu vedľa loga a krokov, s krátkymi popismi osí a tlačidlom „i“ s vysvetlením) je graf „Profil tvojho psa“ (len graf, bez rámu a textu) so 6 osami: Energia, Bielkoviny, Tuk, Jednoduché zloženie, Rast, Veľkosť granule. Ukazuje **potreby psa, nikdy receptúry**; tie sú až vo výsledku. Vo výsledku je graf kompletný (všetky osi odomknuté).
 - Hodnoty počíta `engine.js` → `profilPsa(odpovede, krok)` z rovnakých odvodených údajov ako odporúčanie (veľkosť z tabuľky plemien, fáza, násobok RER cez spoločnú `factorFor()`, príznaky). Kreslí `radar.js`. Kontrola čísel: `admin-vypocet.html`, sekcia 1b.
-- Os je zamknutá (stred, sivá, prerušovaná), kým nie je zodpovedaný jej krok: veľkosť granule → plemeno, rast → vek, energia a bielkoviny → bežný deň, tuk → kastrácia/postava, zloženie → zameranie. Odpovede z neskorších krokov sa nepočítajú (návrat späť). Riadok „čo sa zmenilo“ je v kóde pripravený, ale zatiaľ skrytý.
+- Os je zamknutá (stred, sivá, prerušovaná), kým nie je zodpovedaný jej krok: veľkosť granule → plemeno, rast → vek, energia a bielkoviny → bežný deň, tuk → kastrácia/postava, zloženie → zameranie. Odpovede z neskorších krokov sa nepočítajú (návrat späť).
 - Hodnoty osí sú návrh na zobrazenie smeru potreby, nie výživové pravidlo; neoveril ich veterinár.
 - Na mobile je navigácia krokov (Späť / Ďalej) stále na spodnej lište. Fotky z bočných panelov sú zatiaľ odstránené; „Vedel si?“ je pod grafom (len desktop).
 
@@ -115,11 +115,11 @@ Všetky čísla sú v `PARAMS` a na kontrolnej stránke sa dajú meniť naživo
 Odpovede sa držia v `sessionStorage`. Dokončené odpovede (bez údajov z objednávky) sa navyše uložia do `localStorage` (`granula-psy`, max. 3 psy); na 1. kroku sa potom ukáže „Alebo pokračuj s: [meno psa]“ s možnosťou psa zabudnúť (×). Nič z toho neopustí prehliadač, cookies sa nepoužívajú. Údaje z objednávky sa **nikam
 neposielajú** a čísla karty sa po odoslaní mažú.
 
-## Predregistrácia (do 20. 11.)
+## Predregistrácia (do 1. 12.)
 - Oranžová lišta hore (`.topbar`) s CTA „Chcem byť prvý“ otvorí Klaviyo pop-up `YcSYzw` (`data-klaviyo-open`).
 - Embed `klaviyo-form-RuSXNc` je na úvode (sekcia `#zapis`) a v objednávke pod možnosťami doručovania.
 - Bez súhlasu s marketingovými cookies sa Klaviyo nenačíta: CTA najprv ukáže cookie lištu, embed ukáže tlačidlo „Povoliť a zobraziť formulár“.
-- Objednávka je vypnutá: možnosti predplatného sú sivé a neaktívne, tlačidlo „Objednávky od 20. 11.“ je `disabled`. Po štarte odstrániť `disabled` (plan inputy, `#s-submit`, `fieldset.co-locked` okolo doručenia, kontaktu a platby), triedu `locked`, pásku `.soon-tape` a vrátiť text tlačidla v `renderOrder`.
+- Objednávka je vypnutá: možnosti predplatného sú sivé a neaktívne, tlačidlo „Objednávky od 1. 12.“ je `disabled`. Po štarte odstrániť `disabled` (plan inputy, `#s-submit`, `fieldset.co-locked` okolo doručenia, kontaktu a platby), triedu `locked`, pásku `.soon-tape` a vrátiť text tlačidla v `renderOrder`.
 
 ## Čo treba doplniť pred spustením
 1. **Výživa.** Násobky, hranice veku a veľkosti a pravidlá výberu má potvrdiť
@@ -134,12 +134,12 @@ neposielajú** a čísla karty sa po odoslaní mažú.
    Apple Pay / G Pay → Express Checkout Element, karta / bankový prevod → Payment Element.
    Polia sú zatiaľ len vizuál a nič sa neodosiela; surové čísla kariet nesmú ísť cez vlastný server.
    Treba backend (PaymentIntent / Subscription pre predplatné). Pokladňu otvára prepínač
-   `CHECKOUT_OPEN` v `kviz.js` (teraz `false`: tlačidlo „Objednávky od 20. 11.“ + rezervácia cez Klaviyo).
+   `CHECKOUT_OPEN` v `kviz.js` (teraz `false`: tlačidlo „Objednávky od 1. 12.“ + rezervácia cez Klaviyo).
    Zľavové kódy zatiaľ neplatia žiadne. Doprava: Packeta aj kuriér `PARAMS.shipping` (4,90 €).
 5. **Výdajné miesta.** Tlačidlo „Vyber výdajné miesto“ zatiaľ otvorí
    textové pole; patrí sem widget Packeta.
 6. **Recenzie a odborníci.** Mená, citácie a hodnotenia sú z návrhu, nie od
-   reálnych ľudí. Pred spustením nahradiť skutočnými. Sekcia odborníkov je skrytá.
+   reálnych ľudí. Pred spustením nahradiť skutočnými. Sekcia odborníkov je odstránená; ak bude treba, vznikne nanovo so skutočnými ľuďmi.
 7. **Tvrdenia na webe.** „62 % mäsa“ je nahradené textom „Kvalitné mäso“ a páska
    „Diviak“ je odstránená. „Receptúry navrhnuté s veterinármi“ a výrobca od 1992 treba overiť.
 8. **Texty zloženia** sú s opravenými preklepmi z podkladov (zoznam na kontrolnej

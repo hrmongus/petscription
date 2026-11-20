@@ -257,7 +257,6 @@
     paintResume();
   }
   // zameranie: zapamätať, na čo sa kliklo, skôr než sa prepočíta profil
-  quiz.addEventListener("input", function (e) { if (e.target.name === "focus") noteFocus = e.target.checked ? e.target.value : ""; }, true);
   quiz.addEventListener("input", read);
 
   // meno v nominatíve sa dá vložiť bez skloňovania („Kto je Bruno?“)
@@ -507,7 +506,7 @@
     var btn = $("s-submit");
     btn.disabled = !CHECKOUT_OPEN;
     btn.setAttribute("aria-disabled", String(!CHECKOUT_OPEN));
-    btn.textContent = CHECKOUT_OPEN ? (total == null ? "Objednať" : "Zaplatiť " + eur(total)) : "Objednávky od 20. 11.";
+    btn.textContent = CHECKOUT_OPEN ? (total == null ? "Objednať" : "Zaplatiť " + eur(total)) : "Objednávky od 1. 12.";
     $("s-ann").hidden = CHECKOUT_OPEN;
     order.querySelectorAll(".wallet").forEach(function (w) { w.disabled = !CHECKOUT_OPEN; });
   }
@@ -568,10 +567,9 @@
 
   /* ---------------- profil psa (radar) ----------------
      Hodnoty len z E.profilPsa(); graf nikdy neukazuje receptúry. */
-  var profCard = $("prof"), profHome = $("prof-home"), profCh = $("prof-ch") || {}; // riadok so zmenou je zatiaľ skrytý
+  var profCard = $("prof"), profHome = $("prof-home");
   var radar = new GranulaRadar($("prof-radar"), { axes: E.PROFILE_AXES });
-  var lastProf = null, noteFocus = "";
-  var NOTE_ONLY = { kby: "kĺby", srst: "srsť a koža", imunita: "imunita", vyberavy: "vyberavý jedák", vaha: "váha" };
+  var lastProf = null;
   var mobileQ = window.matchMedia("(max-width:900px)");
   function krokNo(id) { var i = STEPS.indexOf(id); return i !== -1 ? i + 1 : (id === "vysledok" ? 7 : 0); }
   function profNow() { return E.profilPsa(state, krokNo(current), params); }
@@ -591,24 +589,13 @@
   function profRun() {
     if (krokNo(current) < 1 || krokNo(current) > 6) return;
     var after = profNow();
-    if (current !== "krok-1" && lastProf) {
-      var msg = GranulaRadar.describe(lastProf, after);
-      // kĺby, srsť, imunita…: na graf nič nepridávajú, len poznámku vo výsledku
-      if (NOTE_ONLY[noteFocus]) msg = "Profil sa nezmenil · " + NOTE_ONLY[noteFocus] + (noteFocus === "kby" ? " pridajú" : " pridá") + " len poznámku";
-      profCh.textContent = msg;
-    }
-    noteFocus = "";
     radar.update(after); lastProf = after;
   }
-  // presun medzi krokmi: riadok sa nemení (okrem začiatku a výsledku)
+  // presun medzi krokmi: graf sa presunie do slotu aktuálnej obrazovky
   function profRoute() {
     placeProf();
-    var k = krokNo(current);
-    if (!k) return;
+    if (!krokNo(current)) return;
     var after = profNow();
-    if (k === 1 && !lastProf) profCh.textContent = "Odpovedz na prvú otázku";
-    else if (k === 7) profCh.textContent = "Hotovo · profil je kompletný";
-    else if (!lastProf) profCh.textContent = "";
     radar.update(after); lastProf = after;
   }
   (mobileQ.addEventListener ? mobileQ.addEventListener.bind(mobileQ, "change") : mobileQ.addListener.bind(mobileQ))(placeProf);
