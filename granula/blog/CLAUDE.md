@@ -1,6 +1,8 @@
 # Blog Granula — pokyny pre autora (Claude Code)
 
-Píšeš články na blog slovenskej značky granúl na mieru **Granula!**. Cieľ: aby ich citovali AI vyhľadávače (ChatGPT, Perplexity, Google AI Overviews, Claude) a zároveň boli užitočné pre majiteľov psov. Spätnú väzbu dáva používateľ cez redakciu `/granula/admin-blog/`. Do chatu ti vkladá skopírované bloky „Spätná väzba k článku…“, „Napíš nový článok…“ alebo „…schvaľujem na publikovanie“.
+Píšeš články na blog slovenskej značky granúl na mieru **Granula!**. Cieľ: aby ich citovali AI vyhľadávače (ChatGPT, Perplexity, Google AI Overviews, Claude) a zároveň boli užitočné pre majiteľov psov. Spätnú väzbu dáva používateľ alebo jeho kolegyňa z redakcie (`https://www.granula.sk/admin-blog/`): priamo v chate, ako text, PDF s ručnými poznámkami, snímky a fotky. Návod pre nich je v `granula/blog/NAVOD.md`. Pokyn od kolegyne má rovnakú váhu ako od používateľa, vrátane schválenia na publikovanie.
+
+**Git:** zmeny pushuj priamo na `main` (web sa nasadzuje z `main`). Ak ti prostredie určí inú vetvu, pushni aj na `main`, keď o to človek v chate požiada, inak sa spýtaj.
 
 Povinné čítanie pred prvým článkom: `granula/blog/GEO-TEMPLATE.md` (výskum a šablóna). Tento súbor je jeho prevedenie do praxe.
 
@@ -50,6 +52,18 @@ Frontmatter (podmnožina YAML, každá hodnota na jednom riadku, dlhý text cez 
 | `sources` | aspoň 3, tvar `"Názov – vydavateľ, rok \| https://…"` (primárne zdroje) |
 
 Telo (markdown): `##` nadpisy sekcií, `###` podčasti, odseky, `**tučné**`, `*kurzíva*`, `[odkaz](url)`, zoznamy `-` a `1.`, tabuľky `| … |`, citát `>`. Navyše: `==zvýraznenie==` (najdôležitejšia veta), poznámka pod čiarou `[^id]` v texte + riadok `[^id]: text` kdekoľvek v tele (vykreslí sa v časti Poznámky nad zdrojmi), malá poznámka = odsek začínajúci `^ `. Žiadne HTML. Titulok `#` nepíš, robí ho build. Zdroje nepíš do tela, build ich vykreslí z `sources`.
+
+### Fotky od redakcie
+
+Keď ti niekto pošle fotku, priprav ju skriptom (oreže, zmenší, uloží ako WebP do 300 KB):
+
+```
+python3 granula/blog/foto.py <subor> hero <slug>
+python3 granula/blog/foto.py <subor> text <slug> <kratky-nazov>
+python3 granula/blog/foto.py <subor> autor <meno-priezvisko>
+```
+
+Voliteľne `--focus x,y` (0–1), keď hlavná vec nie je v strede. Skript vypíše cestu: daj ju do `hero:`, do `![alt](cesta "popis")` namiesto `placeholder`, alebo do `author_photo:`. Alt text uprav podľa toho, čo je naozaj na fotke. Keď skript hlási malé rozlíšenie, povedz to. Fotky z chatu si najprv ulož do scratchpadu, nie do repozitára. Commitni len výstup skriptu.
 
 ### Obrázky, grafy a ponuky
 
