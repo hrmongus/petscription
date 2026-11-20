@@ -111,8 +111,17 @@ def split_footnotes(body):
     return "\n".join(keep), notes
 
 
+DEGREES = re.compile(r"(?<![\w>])(MVDr\.|MUDr\.|RNDr\.|PharmDr\.|PaedDr\.|PhDr\.|JUDr\.|Ing\.|Mgr\.|Bc\.|PhD\.|CSc\.|DrSc\.|doc\.|prof\.)")
+
+
+def keep_case(s):
+    """Akademické tituly si v nadpisoch s verzálkami zachovajú písmená (MVDr., nie MVDR.)."""
+    return DEGREES.sub(r'<span class="nc">\1</span>', s)
+
+
 def inline(s):
     s = html.escape(typo(s), quote=False)
+    s = keep_case(s)
     s = re.sub(r"\[\^([^\]]+)\]", fn_ref, s)
     s = re.sub(r"==(.+?)==", r'<mark class="bl-hl">\1</mark>', s)
     s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
@@ -711,7 +720,7 @@ def author_page(a, posts):
     body = f"""<section class="sec bl-index">
   <div class="wrap">
     <nav class="bl-crumbs" aria-label="Omrvinky"><a href="{pre}index.html">Granula</a> / <a href="{pre}blog/">Blog</a> / Autori</nav>
-    <div class="bl-author-head">{av}<div><div class="eyebrow">Autor</div><h1 class="h2">{html.escape(name)}</h1><div class="bl-body">{intro}</div>{web}</div></div>
+    <div class="bl-author-head">{av}<div><div class="eyebrow">Autor</div><h1 class="h2">{keep_case(html.escape(name))}</h1><div class="bl-body">{intro}</div>{web}</div></div>
     {lst}
   </div>
 </section>"""
