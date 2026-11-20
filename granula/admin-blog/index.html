@@ -72,10 +72,17 @@ table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
 .manual{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 16px}
 .manual label{display:flex;gap:8px;align-items:flex-start;cursor:pointer}
 .manual input{width:18px;height:18px;accent-color:var(--k);flex:none;margin-top:1px}
-.fb textarea{min-height:120px}
+details.panel > summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--k)}
+details.panel > summary::-webkit-details-marker{display:none}
+details.panel > summary::before{content:"+";width:20px;height:20px;border:2px solid var(--n);display:inline-flex;align-items:center;justify-content:center;font-size:14px;color:var(--n);letter-spacing:0}
+details.panel[open] > summary::before{content:"–"}
+details.panel > summary .sum-x{margin-left:auto;font-size:12px;letter-spacing:.04em;text-transform:none;color:var(--n);font-weight:700}
+details.panel[open] > summary{margin-bottom:12px}
+details.panel.side-d > summary{margin:0}
+details.panel.side-d[open] > summary{margin-bottom:10px}
 .fb .acts{margin-top:10px}
 .copied{font-size:13px;font-weight:800;color:var(--k)}
-.frame-wrap{border:2px solid var(--n);background:#fff;height:80vh}
+.frame-wrap{border:2px solid var(--n);background:#fff;height:calc(100vh - 140px);min-height:560px}
 .frame-wrap iframe{width:100%;height:100%;border:0;display:block}
 .empty{padding:32px;text-align:center}
 .probs{background:var(--err);color:#fff;padding:10px 14px;border:2px solid var(--n)}
@@ -99,7 +106,7 @@ table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
     <div class="panel">
       <h2>Články</h2>
       <div class="filters" role="group" aria-label="Filtrovať">
-        <button type="button" class="chip-f" aria-pressed="true" data-f="all">Všetky</button>
+        <button type="button" class="chip-f" aria-pressed="true" data-f="all">Články</button>
         <button type="button" class="chip-f" aria-pressed="false" data-f="draft">Koncepty</button>
         <button type="button" class="chip-f" aria-pressed="false" data-f="blocked">Zablokované</button>
         <button type="button" class="chip-f" aria-pressed="false" data-f="published">Publikované</button>
@@ -107,20 +114,20 @@ table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
       </div>
       <ul class="posts" id="posts"></ul>
     </div>
-    <div class="panel new">
-      <h2>Nový článok</h2>
+    <details class="panel new side-d">
+      <summary>Nový článok</summary>
       <label>Hlavná otázka, na ktorú článok odpovedá
         <input id="n-q" placeholder="napr. Koľko granúl denne pre psa?"></label>
       <label>Poznámky pre autora (publikum, uhol, zdroje, vlastné dáta)
         <textarea id="n-notes" rows="3"></textarea></label>
       <button type="button" class="btn btn-k btn-sm" id="n-copy">Kopírovať zadanie pre Claude</button>
       <span class="copied" id="n-ok" hidden>Skopírované</span>
-    </div>
-    <div class="panel help">
-      <h2>Ako to funguje</h2>
-      <p>Články píše druhá session Claude Code podľa <code>granula/blog/CLAUDE.md</code>. Spätnú väzbu napíš tu, skopíruj a vlož jej do chatu. Kontrolu GEO robí <code>python3 granula/blog/build.py</code>; táto stránka zobrazuje jej výsledok z posledného buildu.</p>
+    </details>
+    <details class="panel help side-d">
+      <summary>Ako to funguje</summary>
+      <p>Články píše Claude Code podľa <code>granula/blog/CLAUDE.md</code> a <code>granula/blog/STYL.md</code>. Kontrolu robí <code>python3 granula/blog/build.py</code>; táto stránka ukazuje výsledok posledného buildu.</p>
       <p>Stránka aj náhľady sú <b>noindex</b> a zakázané v robots.txt, ale nie sú pod heslom: kto pozná adresu, otvorí ich.</p>
-    </div>
+    </details>
   </aside>
 
   <section class="detail" id="detail" aria-live="polite"></section>
@@ -165,7 +172,7 @@ table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
   }
   function list() {
     var sel = location.hash.slice(1);
-    var shown = posts.filter(function (p) { return filter === "all" || p.status === filter; }).sort(order);
+    var shown = posts.filter(function (p) { return filter === "all" ? p.status !== "namet" : p.status === filter; }).sort(order);
     $("posts").innerHTML = shown.length ? shown.map(function (p) {
       if (p.status === "namet") return '<li><button type="button" data-slug="' + esc(p.slug) + '" aria-current="' + (p.slug === sel) + '"><b>' + esc(p.title) + "</b>" +
         '<span class="row"><span class="badge namet">Námet</span><span class="badge' + (p.priority === "P1" ? " p1" : "") + '">' + esc(p.priority) + "</span><span>" + esc(p.id) + " · " + esc(p.category) + "</span></span></button></li>";
@@ -185,18 +192,6 @@ table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
     return p.lint.filter(function (r) { return !r.ok && r.level !== "info"; }).map(function (r) {
       return "- [" + (r.level === "error" ? "CHYBA" : "upozornenie") + "] " + r.id + ": " + r.msg + (r.details.length ? " (" + r.details.slice(0, 4).join("; ") + ")" : "");
     });
-  }
-  function feedbackPrompt(p, notes) {
-    var f = failing(p);
-    return "Spätná väzba k článku „" + p.title + "“\n" +
-      "Súbor: " + p.file + " (verzia " + p.updated + ", stav: " + ST[p.status] + ")\n" +
-      "Náhľad: " + abs(p.preview) + "\n\n" +
-      "Moje poznámky:\n" + (notes.trim() || "(bez poznámok, oprav len body z kontroly)") + "\n\n" +
-      (f.length ? "Neprešlo v kontrole GEO:\n" + f.join("\n") + "\n\n" : "Kontrola GEO: bez chýb a upozornení.\n\n") +
-      "Postup: najprv rozhodni, ktoré poznámky sú všeobecné (platia pre všetky články) — tie zapíš do granula/blog/STYL.md a uplatni na všetky koncepty; ostatné len na tento článok. " +
-      "Uprav článok podľa poznámok, granula/blog/STYL.md a granula/blog/CLAUDE.md. Fakty nemeň bez zdroja. " +
-      "Nastav `updated` na dnešný dátum a pridaj záznam do `changelog`, spusti `python3 granula/blog/build.py`, " +
-      "oprav všetky CHYBY, commitni a pushni. Status nechaj `draft`, kým ho neschválim.";
   }
   function approvePrompt(p) {
     return "Článok „" + p.title + "“ (" + p.file + ") schvaľujem na publikovanie.\n" +
@@ -227,38 +222,37 @@ table.secs td.num{text-align:right;font-variant-numeric:tabular-nums}
     };
     var grp = function (t, arr, cls) { return arr.length ? '<div class="grp-t">' + t + " (" + arr.length + ")</div><ul class=\"checks\">" + arr.map(function (r) { return row(r, cls); }).join("") + "</ul>" : ""; };
     var man = store.get("manual:" + p.slug, {});
-    var notes = store.get("notes:" + p.slug, "");
     var why = p.status === "blocked" ? "<p class=\"bad\">Článok má status published, ale kvôli chybám v kontrole ostáva neverejný.</p>" : "";
+    var manDone = MANUAL.filter(function (m, i) { return man[i]; }).length;
     $("detail").innerHTML =
-      '<div class="panel d-head"><div class="row" style="display:flex;gap:8px;flex-wrap:wrap"><span class="badge ' + p.status + '">' + ST[p.status] + "</span>" +
-        (p.example ? '<span class="badge example">Vzor — po prvom článku zmazať</span>' : "") + "</div>" +
+      '<div class="panel d-head"><div class="row" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span class="badge ' + p.status + '">' + ST[p.status] + "</span>" +
+        (p.example ? '<span class="badge example">Vzor — po prvom článku zmazať</span>' : "") +
+        '<span class="cnt-e">' + c.e + ' chýb</span><span class="cnt-w">' + c.w + " upozornení</span></div>" +
         "<h2>" + esc(p.title) + "</h2>" + why +
-        '<div class="d-meta"><span>Autor: ' + esc(p.author || "—") + "</span><span>Publikované: " + esc(p.published) + "</span><span>Aktualizované: " + esc(p.updated) + "</span><span>" + p.words + " slov</span><span>Zdroj: <code>" + esc(p.file) + "</code></span></div>" +
+        '<div class="d-meta"><span>Autor: ' + esc(p.author || "—") + "</span><span>Aktualizované: " + esc(p.updated) + "</span><span>" + p.words + " slov</span></div>" +
         '<div class="acts"><a class="btn btn-o" href="' + esc(p.preview) + '" target="_blank" rel="noopener">Otvoriť náhľad ↗</a>' +
         (p.pdf ? '<a class="btn btn-line" href="' + esc(p.pdf) + '" target="_blank" rel="noopener" download>Stiahnuť PDF</a>' : "") +
         (p.live ? '<a class="btn btn-k" href="' + esc(p.live) + '" target="_blank" rel="noopener">Verejná verzia ↗</a>' : "") +
         '<button type="button" class="btn btn-line" id="approve">Kopírovať schválenie</button> <span class="copied" id="ap-ok" hidden>Skopírované</span></div></div>' +
-      '<div class="panel"><h2>Kontrola GEO</h2><div class="score"><strong>' + c.ok + " z " + c.n + ' pravidiel</strong><span class="bar"><i style="width:' + Math.round(c.ok / Math.max(1, c.n) * 100) + '%"></i></span>' +
-        '<span class="cnt-e">' + c.e + ' chýb</span><span class="cnt-w">' + c.w + " upozornení</span></div><div style=\"margin-top:12px\">" +
+      '<div class="frame-wrap"><iframe title="Náhľad článku" src="' + esc(p.preview) + '?embed"></iframe></div>' +
+      '<details class="panel"><summary>Kontrola GEO<span class="sum-x">' + c.ok + " z " + c.n + " pravidiel · " + c.e + " chýb · " + c.w + ' upozornení</span></summary><div class="score"><strong>' + c.ok + " z " + c.n + ' pravidiel</strong><span class="bar"><i style="width:' + Math.round(c.ok / Math.max(1, c.n) * 100) + '%"></i></span></div><div style="margin-top:12px">' +
         grp("Chyby — blokujú publikovanie", groups.error, "error") + grp("Upozornenia", groups.warn, "warn") + grp("Odporúčania", groups.info, "info") +
-        (groups.ok.length ? '<details class="okc"><summary>Splnené (' + groups.ok.length + ")</summary><ul class=\"checks\">" + groups.ok.map(function (r) { return row(r, "ok"); }).join("") + "</ul></details>" : "") + "</div></div>" +
-      '<div class="panel"><h2>Sekcie</h2><table class="secs"><thead><tr><th>Nadpis H2</th><th>Typ</th><th>Slová</th><th>Čísla</th><th>Otázka</th><th>Tučná 1. veta</th><th>Vizuály</th></tr></thead><tbody>' +
+        (groups.ok.length ? '<details class="okc"><summary>Splnené (' + groups.ok.length + ")</summary><ul class=\"checks\">" + groups.ok.map(function (r) { return row(r, "ok"); }).join("") + "</ul></details>" : "") + "</div></details>" +
+      '<details class="panel"><summary>Sekcie<span class="sum-x">' + p.sections.length + ' nadpisov</span></summary><table class="secs"><thead><tr><th>Nadpis H2</th><th>Typ</th><th>Slová</th><th>Čísla</th><th>Otázka</th><th>Tučná 1. veta</th><th>Vizuály</th></tr></thead><tbody>' +
         p.sections.map(function (s) {
           var main = s.kind === "main", lenBad = main && (s.words < 80 || s.words > 450);
           return "<tr><td>" + esc(s.title) + "</td><td>" + ({ main: "hlavná", definition: "definícia", faq: "otázky", summary: "zhrnutie", sources: "zdroje" })[s.kind] +
             '</td><td class="num' + (lenBad ? " bad" : "") + '">' + s.words + '</td><td class="num' + (main && !s.numbers ? " bad" : "") + '">' + s.numbers + "</td><td>" + (s.question ? "✓" : "—") + "</td><td>" + (s.firstBold ? "✓" : (main || s.kind === "definition") ? '<span class="bad">—</span>' : "—") + "</td><td>" + (
               [s.images ? s.images + "× obrázok" : "", s.charts ? s.charts + "× graf" : "", s.offers ? s.offers + "× ponuka" : ""].filter(Boolean).join(", ") || "—") + "</td></tr>";
-        }).join("") + "</tbody></table></div>" +
-      '<div class="panel"><h2>Ručná kontrola a distribúcia</h2><ul class="manual">' + MANUAL.map(function (m, i) {
-          return '<li><label><input type="checkbox" data-m="' + i + '"' + (man[i] ? " checked" : "") + "> " + esc(m) + "</label></li>"; }).join("") + "</ul></div>" +
-      '<div class="panel fb"><h2>Spätná väzba pre autora</h2><textarea id="notes" placeholder="Čo zmeniť: tón, fakty, chýbajúce otázky, poradie sekcií…">' + esc(notes) + "</textarea>" +
-        '<div class="acts"><button type="button" class="btn btn-o" id="fb-copy">Kopírovať spätnú väzbu pre Claude</button><span class="copied" id="fb-ok" hidden>Skopírované, vlož do chatu s autorom</span></div></div>' +
-      '<div class="panel"><h2>Náhľad</h2><div class="frame-wrap"><iframe title="Náhľad článku" src="' + esc(p.preview) + '" loading="lazy"></iframe></div></div>';
-    $("notes").addEventListener("input", function () { store.set("notes:" + p.slug, this.value); });
-    $("fb-copy").addEventListener("click", function () { copy(feedbackPrompt(p, $("notes").value), $("fb-ok")); });
+        }).join("") + "</tbody></table></details>" +
+      '<details class="panel"><summary>Ručná kontrola a distribúcia<span class="sum-x" id="man-x">' + manDone + " z " + MANUAL.length + '</span></summary><ul class="manual">' + MANUAL.map(function (m, i) {
+          return '<li><label><input type="checkbox" data-m="' + i + '"' + (man[i] ? " checked" : "") + "> " + esc(m) + "</label></li>"; }).join("") + "</ul></details>";
     $("approve").addEventListener("click", function () { copy(approvePrompt(p), $("ap-ok")); });
     document.querySelectorAll("[data-m]").forEach(function (cb) {
-      cb.addEventListener("change", function () { man[cb.dataset.m] = cb.checked; store.set("manual:" + p.slug, man); });
+      cb.addEventListener("change", function () {
+        man[cb.dataset.m] = cb.checked; store.set("manual:" + p.slug, man);
+        $("man-x").textContent = MANUAL.filter(function (m, i) { return man[i]; }).length + " z " + MANUAL.length;
+      });
     });
   }
   $("posts").addEventListener("click", function (e) { var b = e.target.closest("[data-slug]"); if (b) location.hash = b.dataset.slug; });

@@ -578,6 +578,7 @@ def page(*, pre, title, description, canonical, body, noindex=False, jsonld=None
         header = header.replace('href="%sblog/">Blog</a>' % pre, 'href="%sblog/" aria-current="page">Blog</a>' % pre)
     head_ld = '<script type="application/ld+json">%s</script>\n' % json.dumps(jsonld, ensure_ascii=False) if jsonld else ""
     robots = '<meta name="robots" content="noindex, nofollow">\n' if noindex else ""
+    embed = ('<script>if(/[?&]embed\\b/.test(location.search))document.documentElement.className+=" embed"</script>\n' if noindex else "")
     og_img = '\n<meta property="og:image" content="%s/%s">' % (BASE_URL, html.escape(image)) if image and not is_placeholder(image) else ""
     return f"""<!doctype html>
 <html lang="sk">
@@ -586,7 +587,7 @@ def page(*, pre, title, description, canonical, body, noindex=False, jsonld=None
 <title>{html.escape(title)}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="{html.escape(description)}">
-{robots}<link rel="canonical" href="{canonical}">
+{robots}{embed}<link rel="canonical" href="{canonical}">
 <meta property="og:type" content="article">
 <meta property="og:title" content="{html.escape(title)}">
 <meta property="og:description" content="{html.escape(description)}">

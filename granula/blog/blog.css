@@ -156,6 +156,9 @@
 .bl-notes a{color:var(--k)}
 .bl-notes + .bl-sources{margin-top:28px}
 
+/* náhľad vložený v redakcii (?embed): bez menu webu */
+html.embed .topbar,html.embed .site-head,html.embed .foot,html.embed .cookie-bar,html.embed .bl-preview{display:none !important}
+
 /* tlač a PDF náhľad (Zdieľať → Tlačiť na iPade, PDF z buildu) */
 @media print{
   @page{size:A4;margin:14mm 12mm 16mm}
