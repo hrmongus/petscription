@@ -1,12 +1,56 @@
 {
+  "cleanUrls": true,
   "redirects": [
     {
+      "source": "/granula",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/granula/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/granula/:path*",
+      "destination": "/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/blog",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/admin-blog",
+      "destination": "/admin-blog/",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
       "source": "/",
-      "destination": "/granula/",
-      "permanent": false
+      "destination": "/granula/index"
+    },
+    {
+      "source": "/(.+)/",
+      "destination": "/granula/$1/index"
+    },
+    {
+      "source": "/:path*",
+      "destination": "/granula/:path*"
     }
   ],
   "headers": [
+    {
+      "source": "/blog/nahlad-pdf/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
     {
       "source": "/granula/blog/nahlad-pdf/(.*)",
       "headers": [

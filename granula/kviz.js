@@ -16,13 +16,14 @@
   /* ---------------- stav ---------------- */
   var KEY = "granula-quiz";
   var BLANK = { dogname: "", sex: "", breed: "krizenec-stredny", kg: 17, years: "", months: "", weeks: "",
-    activity: "", neutered: "", pregnant: "", body: "", focus: [], bag: "", plan: "mesiac", ordered: false, recipe: "", recipeFor: "", bagKey: "" };
+    activity: "", neutered: "", pregnant: "", body: "", focus: [], breedSet: false, bag: "", plan: "mesiac", ordered: false, recipe: "", recipeFor: "", bagKey: "" };
   var state = JSON.parse(JSON.stringify(BLANK));
   try { Object.assign(state, JSON.parse(sessionStorage.getItem(KEY)) || {}); } catch (e) {}
-  if (!(state.plan in E.PARAMS.plans)) state.plan = "mesiac"; // napr. zrušená možnosť „na 3 mesiace“
+  if (!(state.plan in E.PARAMS.plans)) state.plan = "mesiac";
+  if (state.breed !== BLANK.breed) state.breedSet = true; // starší uložený stav bez príznaku // napr. zrušená možnosť „na 3 mesiace“
   // dokončené odpovede si pamätáme aj po zatvorení prehliadača (len v tomto prehliadači, max. 3 psy)
   var SAVED_KEY = "granula-psy";
-  var ANSWERS = ["dogname", "sex", "breed", "kg", "years", "months", "weeks", "activity", "neutered", "pregnant", "body", "focus", "bag", "bagKey", "plan", "recipe", "recipeFor"];
+  var ANSWERS = ["dogname", "sex", "breed", "breedSet", "kg", "years", "months", "weeks", "activity", "neutered", "pregnant", "body", "focus", "bag", "bagKey", "plan", "recipe", "recipeFor"];
   function savedDogs() {
     try { var l = JSON.parse(localStorage.getItem(SAVED_KEY)); return Array.isArray(l) ? l : []; } catch (e) { return []; }
   }
@@ -119,6 +120,7 @@
     blist.hidden = true; bq.setAttribute("aria-expanded", "false"); bwrap.classList.remove("is-open"); setActive(-1);
   }
   function pickBreed(b) {
+    state.breedSet = true; // plemeno vybrané (aj kríženec): os Veľkosť granule sa odomkne
     sel.value = b.id;
     sel.dispatchEvent(new Event("change", { bubbles: true }));
     closeList(); paintBreed();
@@ -183,6 +185,7 @@
   /* ---------------- krok 6: exkluzívne „Nič konkrétne“ ---------------- */
   quiz.addEventListener("change", function (e) {
     var t = e.target;
+
     if (t.name === "focus") {
       var boxes = quiz.querySelectorAll('input[name="focus"]');
       if (t.value === "nic" && t.checked) boxes.forEach(function (b) { if (b !== t) b.checked = false; });
@@ -211,6 +214,7 @@
     save();
     var err = quiz.querySelector('[data-err="' + current + '"]');
     if (err && valid(current)) err.hidden = true;
+    profChange();
   }
   /* pokračovať s uloženým psom */
   var PAW = '<svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16.5" rx="5.2" ry="4.3"/><ellipse cx="5.2" cy="10.6" rx="2.2" ry="2.8"/><ellipse cx="9.3" cy="6.2" rx="2.2" ry="2.9"/><ellipse cx="14.7" cy="6.2" rx="2.2" ry="2.9"/><ellipse cx="18.8" cy="10.6" rx="2.2" ry="2.8"/></svg>';
@@ -230,7 +234,7 @@
     var d = all.filter(function (x) { return x.dogname === name; })[0];
     if (t.dataset.forget) { storeDogs(all.filter(function (x) { return x !== d; })); paintResume(); return; }
     if (!d) return;
-    Object.assign(state, d, { ordered: false });
+    Object.assign(state, d, { ordered: false, breedSet: true });
     fill(); save();
     go(firstInvalid() || "vysledok");
   });
@@ -252,6 +256,8 @@
     paintConditional();
     paintResume();
   }
+  // zameranie: zapamätať, na čo sa kliklo, skôr než sa prepočíta profil
+  quiz.addEventListener("input", function (e) { if (e.target.name === "focus") noteFocus = e.target.checked ? e.target.value : ""; }, true);
   quiz.addEventListener("input", read);
 
   // meno v nominatíve sa dá vložiť bez skloňovania („Kto je Bruno?“)
@@ -341,31 +347,26 @@
     var bagKey = p.id + "|" + r.dose.grams;
     if (state.bagKey !== bagKey || !r.bags.some(function (x) { return x.bag.id === state.bag; })) { state.bag = r.recBag; state.bagKey = bagKey; save(); }
     var I = GranulaIcons.svg;
-    $("r-kicker").textContent = "Tvoje granule na mieru · " + state.dogname;
+    $("r-kicker").textContent = "Hotovo · granule sú vybrané";
     $("r-name").textContent = p.name;
     rememberDog();
-    // hlavné suroviny: nálepky pod názvom receptúry (jedna farba dlaždíc v rade) a textový zoznam pre čítačky
-    var chips = p.highlights.map(function (h) {
-      return '<span class="it"><span style="background:var(--ml);color:var(--ml)">' + I(h[0], 30, "#0047BB") + "</span>" + h[1] + " " + h[2] + "\u00a0%</span>";
-    }).join("");
-    $("r-chips").innerHTML = chips;
+    // hlavné suroviny receptúry + denná dávka (nálepky v hlavičke)
+    $("r-chips").innerHTML = p.highlights.map(function (h) {
+      return '<li><span class="rh-ico" aria-hidden="true">' + I(h[0], 20, "#0047BB") + "</span><span>" + h[1] + " <b>" + h[2] + "\u00a0%</b></span></li>";
+    }).join("") + '<li><span class="rh-ico g" aria-hidden="true">g</span><span>Denná dávka <b>' + r.dose.grams + "\u00a0g</b></span></li>";
     renderSwap(r);
-    $("r-recipe").innerHTML = p.highlights.map(function (h) { return "<li>" + h[1] + " " + h[2] + "\u00a0%</li>"; }).join("");
-    $("r-dose").textContent = r.dose.grams + " g";
     $("f-keep").textContent = r.dose.grams + " g";
     $("f-up").textContent = Math.round(r.dose.grams * 1.1) + " g";
     $("f-down").textContent = Math.round(r.dose.grams * 0.9) + " g";
-    $("r-macro").textContent = p.protein + " / " + p.fat + "\u00a0%";
-    var month = r.dose.grams * 30 / 1000;
-    $("r-month").textContent = "~" + (month >= 3 ? num(month) : num(month, 1)) + " kg";
 
     $("r-bags").innerHTML = r.bags.map(function (x) {
-      return '<label class="opt bagopt"><input type="radio" name="bag" value="' + x.bag.id + '"' + (x.bag.id === state.bag ? " checked" : "") + ">" +
-        "<b>" + x.bag.label + "</b>" +
-        '<span class="price">' + (x.price == null ? "cena —" : eur(x.price)) + "</span>" +
-        "<small>vydrží " + x.days + " " + plural(x.days, "deň", "dni", "dní") + "</small>" +
-        (x.saving > 0 ? '<span class="save">−' + x.saving + "\u00a0% za kg</span>" : "") +
-        (x.bag.id === r.recBag ? '<span class="rec">Odporúčame</span>' : "") + "</label>";
+      return '<label class="ro"><input type="radio" name="bag" value="' + x.bag.id + '"' + (x.bag.id === state.bag ? " checked" : "") + ">" +
+        '<span class="ro-box" aria-hidden="true"></span>' +
+        '<span class="ro-txt"><span class="ro-kg">' + x.bag.label + "</span>" +
+        '<span class="ro-days">vydrží ' + x.days + " " + plural(x.days, "deň", "dni", "dní") + "</span>" +
+        (x.saving > 0 ? '<span class="ro-save">−' + x.saving + "\u00a0% za kg</span>" : "") + "</span>" +
+        '<span class="ro-price">' + (x.price == null ? "cena —" : eur(x.price)) + "</span>" +
+        (x.bag.id === r.recBag ? '<span class="ro-rec">Odporúčame</span>' : "") + "</label>";
     }).join("");
 
     $("f-comp").textContent = p.composition;
@@ -377,18 +378,7 @@
 
     $("r-pack").src = p.img;
     $("r-pack").alt = "Vrece Granula: " + p.name;
-    $("r-pack-m").src = p.img;
-    // fakty v bočnom paneli (len tie, ktoré o produkte vieme)
-    $("r-facts-side").innerHTML = [
-      ["Mäso", p.monoprotein ? "Monoproteín" : "Viac druhov"],
-      ["Bielkoviny / tuk", p.protein + " / " + p.fat + "\u00a0%"],
-      ["Granula", p.kibbleMm ? p.kibbleMm + " mm" : null],
-      ["Glukozamín", p.glucosamine ? p.glucosamine + " mg/kg" : null],
-      ["Chondroitín", p.chondroitin ? p.chondroitin + " mg/kg" : null]
-    ].filter(function (f) { return f[1]; }).slice(0, 4).map(function (f) {
-      return "<div><dt>" + f[0] + "</dt><dd>" + f[1] + "</dd></div>";
-    }).join("");
-    $("r-stage").textContent = $("r-stage-m").textContent = d.isPuppy ? "Pre šteňa" : d.stage === "senior" ? "Pre seniora" : "Na mieru";
+    if (window.GranulaCompare) GranulaCompare.render($("r-compare"), p.id);
     paintBag(r);
   }
   /* „Netoleruje tento proteín?“ — receptúry bez mäsa súčasnej, porovnanie a zmena */
@@ -409,7 +399,7 @@
     var note = $("swap-note");
     note.hidden = !r.swapped;
     if (r.swapped) note.innerHTML = "Zmenené z odporúčanej receptúry „" + rec.name + "“. <button type=\"button\" id=\"swap-back\">Vrátiť</button>";
-    $("swap-q").textContent = "Netoleruje " + state.dogname + " tento typ proteínu?";
+    $("swap-q").textContent = state.dogname + " neznáša tento proteín?";
     // všetky ostatné receptúry; spoločné mäso so súčasnou je pri nich vyznačené
     var alts = E.PRODUCTS.filter(function (x) { return x !== p; });
     $("r-swap").hidden = !alts.length;
@@ -480,68 +470,89 @@
     var kg = x.bag.id === "18" ? "2×9" : String(x.bag.kg);
     $("r-badge-kg").textContent = kg;
     $("r-badge-kg").classList.toggle("long", kg.length > 2);
-    $("r-perday").textContent = $("r-perday-side").textContent = x.price == null ? "Cena sa doplní" : eur(x.price * (1 - r.params.plans.mesiac) / x.days) + " na deň";
+    $("r-perday").textContent = x.price == null ? "Cena sa doplní" : eur(x.price * (1 - r.params.plans.mesiac) / x.days) + " na deň";
   }
   $("r-bags").addEventListener("change", function (e) {
     state.bag = e.target.value; save(); rememberDog(); paintBag(result());
   });
 
   /* ---------------- objednávka ---------------- */
+  // Objednávky sa otvoria, keď bude napojená platobná brána (Stripe) — dovtedy tlačidlo len informuje o štarte.
+  var CHECKOUT_OPEN = false;
+  function days(n) { return n + " " + plural(n, "deň", "dni", "dní"); }
   function renderOrder() {
-    var r = result(), p = r.product, x = bagOf(r), plans = r.params.plans, d = plans[state.plan];
+    var r = result(), p = r.product, x = bagOf(r), plans = r.params.plans;
+    var d = plans[state.plan] || 0, ship = r.params.shipping;
+    order.querySelectorAll('input[name="plan"]').forEach(function (i) { i.checked = i.value === state.plan; });
     Object.keys(plans).forEach(function (k) {
-      order.querySelector('[data-plan-price="' + k + '"]').textContent =
-        x.price == null ? "cena doplniť" : eur(x.price * (1 - plans[k])) + (k === "raz" ? "" : " / vrece");
+      order.querySelector('[data-plan-price="' + k + '"]').textContent = x.price == null ? "cena —" : eur(x.price * (1 - plans[k]));
     });
-    // predplatné: interval podľa veľkosti balenia
-    $("plan-every").textContent = "Každých " + x.days + " " + plural(x.days, "deň", "dni", "dní");
-    $("plan-note").textContent = "Ďalšie " + x.bag.label + " balenie pošleme " + r.params.reorderLeadDays + " " + plural(r.params.reorderLeadDays, "deň", "dni", "dní") + " predtým, ako sa minie.";
+    order.querySelectorAll("[data-plan-kg]").forEach(function (e) { e.textContent = "za " + x.bag.label; });
+    $("plan-note").textContent = "každých " + days(x.days) + " · zrušíš kedykoľvek";
+    order.querySelectorAll("[data-ship-price]").forEach(function (e) { e.textContent = eur(ship); });
     $("s-pack").src = p.img;
+    $("s-pack").alt = "Vrece Granula: " + p.name;
     $("s-name").textContent = p.name;
-    $("s-meta").textContent = x.bag.label + " · " + r.dose.grams + " g denne · vydrží " + x.days + " " + plural(x.days, "deň", "dni", "dní");
+    $("s-meta").textContent = x.bag.label + " · denná dávka " + r.dose.grams + " g";
     $("s-bag-l").textContent = "Vrece " + x.bag.label;
-    $("s-bag").textContent = eur(x.price);
+    $("s-bag").textContent = x.price == null ? "—" : eur(x.price);
     $("s-disc-row").hidden = !d || x.price == null;
     $("s-disc-l").textContent = "Zľava predplatného −" + Math.round(d * 100) + "\u00a0%";
     $("s-disc").textContent = x.price == null ? "" : "−" + eur(x.price * d);
-    $("s-total").textContent = x.price == null ? "—" : eur(Math.round((x.price * (1 - d) + r.params.shipping) * 100) / 100);
-    // objednávky sú do štartu (20. 11.) vypnuté, tlačidlo má pevný text
-    $("s-note").textContent = d
-      ? "Platíš pri každom doručení. Vrece " + x.bag.label + " posielame každých " + x.days + " " + plural(x.days, "deň", "dni", "dní") + ", vždy " + r.params.reorderLeadDays + " " + plural(r.params.reorderLeadDays, "deň", "dni", "dní") + " predtým, ako sa minie."
-      : "Platíš raz. Ďalšie vrece si objednáš, keď budeš chcieť.";
+    $("s-ship").textContent = eur(ship);
+    var total = x.price == null ? null : Math.round((x.price * (1 - d) + ship) * 100) / 100;
+    $("s-total").textContent = total == null ? "—" : eur(total);
+    $("s-note").textContent = d ? "Potom " + eur(total) + " každých " + days(x.days) + ". Ďalšie vrece pošleme " + days(r.params.reorderLeadDays) + " predtým, ako sa minie." : "Platíš raz. Ďalšie vrece si objednáš, keď budeš chcieť.";
+    $("s-fine").textContent = "Platbu bezpečne spracuje Stripe." + (d ? " Predplatné zrušíš jedným klikom v účte." : "");
+    var btn = $("s-submit");
+    btn.disabled = !CHECKOUT_OPEN;
+    btn.setAttribute("aria-disabled", String(!CHECKOUT_OPEN));
+    btn.textContent = CHECKOUT_OPEN ? (total == null ? "Objednať" : "Zaplatiť " + eur(total)) : "Objednávky od 20. 11.";
+    $("s-ann").hidden = CHECKOUT_OPEN;
+    order.querySelectorAll(".wallet").forEach(function (w) { w.disabled = !CHECKOUT_OPEN; });
   }
   function shipUI() {
     var v = order.ship.value;
-    $("ship-point").hidden = v === "adresa";
-    $("ship-addr").hidden = v !== "adresa";
+    $("ship-point").hidden = v !== "packeta";
+    $("tel-f").hidden = v !== "kurier";
+    var bank = order.pm.value === "prevod";
+    $("pm-card").hidden = bank; $("pm-bank").hidden = !bank;
   }
   $("pick-btn").addEventListener("click", function () {
-    // sem príde widget dopravcu (SPS / Packeta); dovtedy textové pole
-    var f = $("point"); f.hidden = false; this.setAttribute("aria-expanded", "true"); f.focus();
+    // sem príde widget Packety (výber výdajného miesta na mape); dovtedy textové pole
+    $("point-f").hidden = false; this.setAttribute("aria-expanded", "true"); $("point").focus();
+  });
+  $("promo-btn").addEventListener("click", function () {
+    var v = $("promo").value.trim(), m = $("promo-msg");
+    m.hidden = !v;
+    m.textContent = v ? "Kód „" + v + "“ nepoznáme." : "";
   });
   order.addEventListener("change", function (e) {
     if (e.target.name === "plan") { state.plan = e.target.value; save(); renderOrder(); }
-    if (e.target.name === "ship") shipUI();
+    if (e.target.name === "ship" || e.target.name === "pm") shipUI();
   });
-  order.addEventListener("submit", function (e) {
-    e.preventDefault();
-    if ($("s-submit").disabled) return; // pred štartom sa neobjednáva
-    var addr = order.ship.value === "adresa";
-    var need = ["email", "fullname", "tel", "cc", "exp", "cvc"].concat(addr ? ["street", "zip", "city"] : ["point"]);
+  function checkout(wallet) {
+    if (!CHECKOUT_OPEN) return; // pred štartom sa neobjednáva
+    var need = ["email", "fname", "lname", "street", "zip", "city"];
+    if (order.ship.value === "packeta") need.push("point");
+    if (order.ship.value === "kurier") need.push("tel");
+    if (!wallet && order.pm.value === "karta") need = need.concat(["cc", "exp", "cvc"]);
     var bad = need.filter(function (n) {
       var f = order.elements[n];
       return !f.value.trim() || (f.type === "email" && !f.checkValidity());
     });
-    order.querySelectorAll(".input").forEach(function (f) { f.style.borderColor = ""; f.removeAttribute("aria-invalid"); });
-    bad.forEach(function (n) { var f = order.elements[n]; f.style.borderColor = "var(--err)"; f.setAttribute("aria-invalid", "true"); });
-    if (bad.length && bad.indexOf("point") !== -1) { $("point").hidden = false; }
+    order.querySelectorAll(".input").forEach(function (f) { f.removeAttribute("aria-invalid"); });
+    bad.forEach(function (n) { order.elements[n].setAttribute("aria-invalid", "true"); });
+    if (bad.indexOf("point") !== -1) $("point-f").hidden = false;
     order.querySelector('[data-err="objednavka"]').hidden = !bad.length;
     if (bad.length) { order.elements[bad[0]].focus(); return; }
-    // Žiadne dáta sa nikam neposielajú: platba sa napojí cez platobnú bránu (pozri README).
+    // Žiadne dáta sa nikam neposielajú: platbu spracuje Stripe po napojení backendu (pozri README).
     order.querySelectorAll("#cc,#exp,#cvc").forEach(function (f) { f.value = ""; });
     state.ordered = true; save();
     location.hash = "hotovo";
-  });
+  }
+  order.addEventListener("submit", function (e) { e.preventDefault(); checkout(false); });
+  order.querySelectorAll(".wallet").forEach(function (w) { w.addEventListener("click", function () { checkout(true); }); });
 
   /* ---------------- hotovo ---------------- */
   function renderDone() {
@@ -554,6 +565,54 @@
   }
 
   /* ---------------- smerovanie cez #hash ---------------- */
+
+  /* ---------------- profil psa (radar) ----------------
+     Hodnoty len z E.profilPsa(); graf nikdy neukazuje receptúry. */
+  var profCard = $("prof"), profHome = $("prof-home"), profCh = $("prof-ch") || {}; // riadok so zmenou je zatiaľ skrytý
+  var radar = new GranulaRadar($("prof-radar"), { axes: E.PROFILE_AXES });
+  var lastProf = null, noteFocus = "";
+  var NOTE_ONLY = { kby: "kĺby", srst: "srsť a koža", imunita: "imunita", vyberavy: "vyberavý jedák", vaha: "váha" };
+  var mobileQ = window.matchMedia("(max-width:900px)");
+  function krokNo(id) { var i = STEPS.indexOf(id); return i !== -1 ? i + 1 : (id === "vysledok" ? 7 : 0); }
+  function profNow() { return E.profilPsa(state, krokNo(current), params); }
+  function placeProf() {
+    var scr = screens[current], slot = null;
+    if (scr && STEPS.indexOf(current) !== -1) slot = scr.querySelector(mobileQ.matches ? "[data-prof-m]" : "[data-prof-d]");
+    (slot || profHome).appendChild(profCard);
+  }
+  // odpoveď v aktuálnom kroku: graf sa hneď pohne a riadok povie, čo sa zmenilo
+  // jeden klik vyvolá „input“ aj „change“: spojiť do jednej zmeny
+  var profPending = false;
+  function profChange() {
+    if (profPending) return;
+    profPending = true;
+    setTimeout(function () { profPending = false; profRun(); }, 0);
+  }
+  function profRun() {
+    if (krokNo(current) < 1 || krokNo(current) > 6) return;
+    var after = profNow();
+    if (current !== "krok-1" && lastProf) {
+      var msg = GranulaRadar.describe(lastProf, after);
+      // kĺby, srsť, imunita…: na graf nič nepridávajú, len poznámku vo výsledku
+      if (NOTE_ONLY[noteFocus]) msg = "Profil sa nezmenil · " + NOTE_ONLY[noteFocus] + (noteFocus === "kby" ? " pridajú" : " pridá") + " len poznámku";
+      profCh.textContent = msg;
+    }
+    noteFocus = "";
+    radar.update(after); lastProf = after;
+  }
+  // presun medzi krokmi: riadok sa nemení (okrem začiatku a výsledku)
+  function profRoute() {
+    placeProf();
+    var k = krokNo(current);
+    if (!k) return;
+    var after = profNow();
+    if (k === 1 && !lastProf) profCh.textContent = "Odpovedz na prvú otázku";
+    else if (k === 7) profCh.textContent = "Hotovo · profil je kompletný";
+    else if (!lastProf) profCh.textContent = "";
+    radar.update(after); lastProf = after;
+  }
+  (mobileQ.addEventListener ? mobileQ.addEventListener.bind(mobileQ, "change") : mobileQ.addListener.bind(mobileQ))(placeProf);
+
   var current = null;
   var screens = {};
   document.querySelectorAll("[data-screen]").forEach(function (s) { screens[s.dataset.screen] = s; });
@@ -577,8 +636,9 @@
     if (id === "vysledok") renderResult();
     if (id === "objednavka") { renderOrder(); shipUI(); }
     if (id === "hotovo") renderDone();
+    profRoute();
     window.scrollTo(0, 0);
-    var h = screens[id].querySelector(".q-title");
+    var h = screens[id].querySelector(".q-title, .rh-name");
     if (h) h.focus({ preventScroll: true });
     save();
   }

@@ -43,44 +43,7 @@
 .stat .v{font-size:clamp(26px,2.4vw,36px);color:var(--k)}
 .stat span:last-child{font-size:14px;font-weight:700;line-height:1.4;max-width:220px}
 
-/* ---------- 01 recenzie: dva rady, ktoré sa samy posúvajú opačným smerom ---------- */
 .rw .wrap{margin-bottom:32px}
-.rw-wrap{display:flex;flex-direction:column;gap:12px;overflow:hidden}
-.rw-row{list-style:none;margin:0;padding:0;display:flex;gap:12px;width:max-content;animation:rw-left 80s linear infinite}
-.rw-row.rw-b{animation-name:rw-right;animation-duration:95s}
-.rw-wrap:hover .rw-row,.rw-wrap:focus-within .rw-row{animation-play-state:paused}
-@keyframes rw-left{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 6px))}}
-@keyframes rw-right{from{transform:translateX(calc(-50% - 6px))}to{transform:translateX(0)}}
-.rw-c{flex:none;height:240px;border:2px solid var(--n);background:var(--ml)}
-.rw-ph{position:relative;width:240px;overflow:hidden}
-.rw-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.rw-prod{position:absolute;left:8px;right:8px;bottom:8px;min-height:48px;display:flex;align-items:center;gap:8px;padding:6px 10px 6px 58px;
-  background:var(--m);border:2px solid var(--n);color:var(--n)}
-.rw-prod img{position:absolute;left:8px;bottom:3px;height:76px;width:auto}
-.rw-pt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-/* foto recenzia: pes, plemeno; pod tým menšie a tenšie majiteľ */
-.rw-pt b{font-size:12px;font-weight:800;line-height:1.25}
-.rw-pt small{font-size:11px;font-weight:400;line-height:1.25}
-.rw-tx{padding:18px 20px 14px;display:flex;flex-direction:column;gap:10px}
-.rw-w1{width:300px}.rw-w2{width:360px}.rw-w3{width:420px}
-.rate{display:flex;gap:4px;color:var(--o)}
-.rw-tx .rate{font-size:15px}
-.star.off{opacity:.25}
-.rw-tx p{flex:1;font-size:14px;line-height:1.45;font-weight:600}
-.rw-by{display:flex;align-items:flex-end;gap:12px;font-size:12px;line-height:1.35}
-.rw-by img{height:54px;width:auto;flex:none}
-.rw-by b{font-weight:800}
-@media (max-width:640px){
-  .rw-c{height:220px}.rw-ph{width:200px}.rw-tx{padding:14px 14px 12px;gap:8px}
-  .rw-w1{width:240px}.rw-w2{width:280px}.rw-w3{width:320px}
-  .rw-tx p{font-size:12.5px}.rw-by img{height:44px}
-  .rw-prod{min-height:44px;padding-left:50px}.rw-prod img{height:62px}
-  .rw-pt b{font-size:11px}.rw-pt small{font-size:10px}
-}
-@media (prefers-reduced-motion:reduce){
-  .rw-wrap{overflow-x:auto}.rw-row{animation:none}
-  .rw-row [aria-hidden="true"]{display:none}
-}
 
 /* ---------- 02 dlhovekosť ---------- */
 /* Mlieko sekcia; číslo v orámovanom Kobaltovom paneli, Limetka ako jediný akcent */
@@ -92,57 +55,6 @@
 .longevity .txt .big{font-size:clamp(18px,1.6vw,22px);line-height:1.4;font-weight:700}
 .longevity .src{font-size:13px;line-height:1.4}
 .longevity .txt p:not(.big):not(.src){font-size:16px;line-height:1.5;max-width:500px}
-
-/* ---------- 04 porovnanie: rozrezané vrecká + zloženie ---------- */
-/* desktop: zoznam, vrece, VS, vrece, zoznam v jednom riadku */
-.cp-wrap{display:grid;grid-template-columns:minmax(0,1fr) auto 72px auto minmax(0,1fr);grid-template-areas:"lb bb vs bg lg";gap:0 20px;align-items:center}
-.cp-bag-b{grid-area:bb}.cp-bag-g{grid-area:bg}.cp-vs{grid-area:vs}.cp-bad{grid-area:lb}.cp-good{grid-area:lg}
-.cp-bag{display:flex;flex-direction:column;align-items:center;gap:16px}
-.cp-bag img{height:290px;width:auto}
-.cp-cap{min-height:64px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
-.cp-cap .plain{font-size:22px;font-weight:400}
-.cp-cap .logo{font-size:22px}
-.cp-cap .rec{font-size:15px}
-/* VS medzi vreckami: štvorcový odznak Mlieka s rámom */
-.cp-vs{justify-self:center;margin-bottom:60px;width:72px;height:72px;background:var(--ml);color:var(--n);border:2px solid var(--n);
-  display:flex;align-items:center;justify-content:center;font-size:26px;transform:rotate(6deg)}
-.cp-list{list-style:none;margin:0;background:var(--ml);border:2px solid var(--n);padding:14px 18px 14px;display:flex;flex-direction:column;gap:6px}
-.cp-list li{display:flex;align-items:center;gap:12px}
-.cp-list img{width:30px;height:30px;flex:none;object-fit:cover;border:2px solid var(--n)}
-.cp-nm{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-.cp-nm b{font-size:14px;font-weight:700;line-height:1.25}
-.cp-nm b .sh{display:none}
-.cp-nm small{font-size:12px;line-height:1.35}
-.cp-v{flex:none;font-weight:900;white-space:nowrap;font-size:15px}
-.cp-v.l{font-size:22px}.cp-v.m{font-size:18px}
-.cp-good .cp-v{color:var(--k)}
-.cp-good .cp-v.l{font-size:22px}.cp-good .cp-v.m{font-size:18px}
-.cp-foot{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
-.cp-note{font-size:12px;line-height:1.4;max-width:600px}
-@media (max-width:1100px){
-  .cp-wrap{grid-template-columns:minmax(0,1fr) 96px minmax(0,1fr);grid-template-areas:"bb vs bg" "lb . lg";gap:24px 16px;align-items:start}
-  .cp-vs{align-self:center}
-}
-@media (max-width:760px){
-  .cp-wrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"bb bg" "lb lg";gap:16px 8px;position:relative}
-  .cp-bag{gap:12px}
-  .cp-bag img{height:190px}
-  .cp-cap{min-height:60px;gap:8px}
-  .cp-cap .plain{font-size:17px}
-  .cp-cap .logo{font-size:19px}
-  .cp-cap .rec{font-size:11px}
-  .cp-vs{position:absolute;left:50%;top:70px;margin:0;align-self:auto;width:56px;height:56px;font-size:22px;transform:translateX(-50%) rotate(6deg);z-index:2}
-  .cp-list{padding:10px 8px;gap:8px}
-  .cp-list li{gap:7px;min-height:30px}
-  .cp-list img{width:26px;height:26px}
-  .cp-nm b{font-size:11.5px;line-height:1.2}
-  .cp-nm b .lg,.cp-nm small{display:none}
-  .cp-nm b .sh{display:inline}
-  .cp-v,.cp-good .cp-v{font-size:13px}
-  .cp-v.l,.cp-good .cp-v.l{font-size:17px}
-  .cp-v.m,.cp-good .cp-v.m{font-size:15px}
-  .cp-foot .btn{width:100%}
-}
 
 /* ---------- 06 ako to funguje ---------- */
 .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:2px solid var(--n)}
@@ -294,10 +206,7 @@
       <h2 class="h2">Staň sa súčasťou svorky <span class="ac">spokojných zákazníkov</span></h2>
     </div>
   </div>
-  <div class="rw-wrap" tabindex="0" aria-label="Recenzie zákazníkov (posúvajú sa samy, pri prejdení myšou sa zastavia)">
-    <ul class="rw-row rw-a"><li class="rw-c rw-ph"><img class="rw-img" src="img/recenzie/dievca-dalmatin.webp" alt="Dalmatínka Zara so zlatým retrieverom na prechádzke v meste" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/morka-hus-kacica-s-tekvicou.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Zara, dalmatín</b><small>Juraj K.</small></span></div></li><li class="rw-c rw-ph"><img class="rw-img" src="img/recenzie/pes-v-rukach.webp" alt="Šteňa weimarského stavača Brix zdvihnuté v rukách proti modrej oblohe" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/jahna-s-batatmi-cucoriedkami.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Brix, weimarský stavač</b><small>Peter V.</small></span></div></li><li class="rw-c rw-tx rw-w2"><span class="rate" role="img" aria-label="Hodnotenie 5 z 5"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><p>„Ako prvé sme si všimli, že Ranakin prestal smrdieť. Predtým som ho musela kúpať každé dva týždne, teraz ani nie. PS nesmrdia ani granule, čo je pri mojom nose plus.“</p><div class="rw-by"><img src="img/produkty/morka-hus-kacica-s-tekvicou.webp" alt="" width="896" height="1200" loading="lazy"><span><b>Júlia L.</b><br>Ranakin, zlatý retriever</span></div></li><li class="rw-c rw-ph"><img class="rw-img" src="img/recenzie/pes-luka.webp" alt="Austrálsky ovčiak Tobi beží cez rozkvitnutú lúku" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/hovadzie-s-ryzou.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Tobi, austrálsky ovčiak</b><small>Tomáš R.</small></span></div></li><li class="rw-c rw-ph"><img class="rw-img" src="img/recenzie/pes-zlta-stena.webp" alt="Kríženka Šuška sedí pred žltou drevenou stenou" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/jelen-kralik-s-batatmi.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Šuška, kríženec z útulku</b><small>Jakub F.</small></span></div></li><li class="rw-c rw-ph"><img class="rw-img" src="img/recenzie/pes-banan.webp" alt="Šteňa Bimbo hryzie banán z ruky majiteľa" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/morka-hus-kacica-s-tekvicou.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Bimbo, kríženec</b><small>Martin B.</small></span></div></li><li class="rw-c rw-ph" aria-hidden="true"><img class="rw-img" src="img/recenzie/dievca-dalmatin.webp" alt="" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/morka-hus-kacica-s-tekvicou.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Zara, dalmatín</b><small>Juraj K.</small></span></div></li><li class="rw-c rw-ph" aria-hidden="true"><img class="rw-img" src="img/recenzie/pes-v-rukach.webp" alt="" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/jahna-s-batatmi-cucoriedkami.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Brix, weimarský stavač</b><small>Peter V.</small></span></div></li><li class="rw-c rw-tx rw-w2" aria-hidden="true"><span class="rate" role="img" aria-label="Hodnotenie 5 z 5"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><p>„Ako prvé sme si všimli, že Ranakin prestal smrdieť. Predtým som ho musela kúpať každé dva týždne, teraz ani nie. PS nesmrdia ani granule, čo je pri mojom nose plus.“</p><div class="rw-by"><img src="img/produkty/morka-hus-kacica-s-tekvicou.webp" alt="" width="896" height="1200" loading="lazy"><span><b>Júlia L.</b><br>Ranakin, zlatý retriever</span></div></li><li class="rw-c rw-ph" aria-hidden="true"><img class="rw-img" src="img/recenzie/pes-luka.webp" alt="" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/hovadzie-s-ryzou.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Tobi, austrálsky ovčiak</b><small>Tomáš R.</small></span></div></li><li class="rw-c rw-ph" aria-hidden="true"><img class="rw-img" src="img/recenzie/pes-zlta-stena.webp" alt="" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/jelen-kralik-s-batatmi.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Šuška, kríženec z útulku</b><small>Jakub F.</small></span></div></li><li class="rw-c rw-ph" aria-hidden="true"><img class="rw-img" src="img/recenzie/pes-banan.webp" alt="" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/morka-hus-kacica-s-tekvicou.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Bimbo, kríženec</b><small>Martin B.</small></span></div></li></ul>
-    <ul class="rw-row rw-b"><li class="rw-c rw-ph"><img class="rw-img" src="img/recenzie/border-kolia.webp" alt="Border kólia Max s vyplazeným jazykom na lúke" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/jahna-s-batatmi-cucoriedkami.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Max, border kólia</b><small>Juraj H.</small></span></div></li><li class="rw-c rw-ph"><img class="rw-img" src="img/recenzie/psi-nos.webp" alt="Detail nosa a jazyka kríženca Badyho" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/jahna-s-batatmi-cucoriedkami.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Bady, kríženec, 9 rokov</b><small>Laura B.</small></span></div></li><li class="rw-c rw-ph"><img class="rw-img" src="img/recenzie/pes-banan.webp" alt="Šteňa Bimbo hryzie banán z ruky majiteľa" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/morka-hus-kacica-s-tekvicou.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Bimbo, kríženec</b><small>Martin B.</small></span></div></li><li class="rw-c rw-tx rw-w2"><span class="rate" role="img" aria-label="Hodnotenie 5 z 5"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><p>„Som typ čo číta zloženie. Mäso na prvom mieste a reálne ho cítiť, nie len na papieri. Bruno je vyberavý a toto zje bez prehrabávania.“</p><div class="rw-by"><img src="img/produkty/hovadzie-morka-jahna-s-ryzou.webp" alt="" width="896" height="1200" loading="lazy"><span><b>Rasťo C.</b><br>Bruno, francúzsky buldoček</span></div></li><li class="rw-c rw-ph"><img class="rw-img" src="img/recenzie/pes-v-rukach.webp" alt="Šteňa weimarského stavača Brix zdvihnuté v rukách proti modrej oblohe" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/jahna-s-batatmi-cucoriedkami.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Brix, weimarský stavač</b><small>Peter V.</small></span></div></li><li class="rw-c rw-ph"><img class="rw-img" src="img/recenzie/pes-zlta-stena.webp" alt="Kríženka Šuška sedí pred žltou drevenou stenou" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/jelen-kralik-s-batatmi.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Šuška, kríženec z útulku</b><small>Jakub F.</small></span></div></li><li class="rw-c rw-ph" aria-hidden="true"><img class="rw-img" src="img/recenzie/border-kolia.webp" alt="" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/jahna-s-batatmi-cucoriedkami.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Max, border kólia</b><small>Juraj H.</small></span></div></li><li class="rw-c rw-ph" aria-hidden="true"><img class="rw-img" src="img/recenzie/psi-nos.webp" alt="" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/jahna-s-batatmi-cucoriedkami.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Bady, kríženec, 9 rokov</b><small>Laura B.</small></span></div></li><li class="rw-c rw-ph" aria-hidden="true"><img class="rw-img" src="img/recenzie/pes-banan.webp" alt="" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/morka-hus-kacica-s-tekvicou.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Bimbo, kríženec</b><small>Martin B.</small></span></div></li><li class="rw-c rw-tx rw-w2" aria-hidden="true"><span class="rate" role="img" aria-label="Hodnotenie 5 z 5"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><p>„Som typ čo číta zloženie. Mäso na prvom mieste a reálne ho cítiť, nie len na papieri. Bruno je vyberavý a toto zje bez prehrabávania.“</p><div class="rw-by"><img src="img/produkty/hovadzie-morka-jahna-s-ryzou.webp" alt="" width="896" height="1200" loading="lazy"><span><b>Rasťo C.</b><br>Bruno, francúzsky buldoček</span></div></li><li class="rw-c rw-ph" aria-hidden="true"><img class="rw-img" src="img/recenzie/pes-v-rukach.webp" alt="" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/jahna-s-batatmi-cucoriedkami.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Brix, weimarský stavač</b><small>Peter V.</small></span></div></li><li class="rw-c rw-ph" aria-hidden="true"><img class="rw-img" src="img/recenzie/pes-zlta-stena.webp" alt="" width="600" height="720" loading="lazy"><div class="rw-prod"><img src="img/produkty/jelen-kralik-s-batatmi.webp" alt="" width="896" height="1200" loading="lazy"><span class="rw-pt"><b>Šuška, kríženec z útulku</b><small>Jakub F.</small></span></div></li></ul>
-  </div>
+  <div class="rw-wrap" data-reviews tabindex="0" aria-label="Recenzie zákazníkov (posúvajú sa samy, pri prejdení myšou sa zastavia)"></div>
 </section>
 
 <!-- 02 dlhovekosť -->
@@ -341,7 +250,7 @@
         <li class="ig-it" data-cat="ovo"><span class="ig-ph"><img src="img/suroviny/cucoriedky.webp" alt="" width="640" height="640" loading="lazy"></span><span class="ig-nm">Čučoriedky</span></li>
         <li class="ig-it" data-cat="maso"><span class="ig-ph"><img src="img/suroviny/vajcia.webp" alt="" width="640" height="640" loading="lazy"></span><span class="ig-nm">Vajcia</span></li>
         <li class="ig-it" data-cat="maso"><span class="ig-ph"><img src="img/suroviny/jahnacie.webp" alt="" width="640" height="640" loading="lazy"></span><span class="ig-nm">Jahňacie</span></li>
-        <li class="ig-it" data-cat="fun"><span class="ig-ph"><img src="img/suroviny/hliva-ustricova.webp" alt="" width="640" height="640" loading="lazy"></span><span class="ig-nm">Hliva ustricová</span></li>
+        <li class="ig-it" data-cat="zel"><span class="ig-ph"><img src="img/suroviny/hliva-ustricova.webp" alt="" width="640" height="640" loading="lazy"></span><span class="ig-nm">Hliva ustricová</span></li>
         <li class="ig-it" data-cat="byl"><span class="ig-ph"><img src="img/suroviny/pestrec-mariansky.webp" alt="" width="640" height="640" loading="lazy"></span><span class="ig-nm">Pestrec mariánsky</span></li>
         <li class="ig-it" data-cat="tuky"><span class="ig-ph"><img src="img/suroviny/lososovy-olej.webp" alt="" width="640" height="640" loading="lazy"></span><span class="ig-nm">Lososový olej</span></li>
         <li class="ig-it" data-cat="maso"><span class="ig-ph"><img src="img/suroviny/kacka.webp" alt="" width="640" height="640" loading="lazy"></span><span class="ig-nm">Kačka</span></li>
@@ -361,7 +270,7 @@
         <li class="ig-it" data-cat="tuky"><span class="ig-ph"><img src="img/suroviny/kacaci-tuk.webp" alt="" width="640" height="640" loading="lazy"></span><span class="ig-nm">Kačací tuk</span></li>
         <li class="ig-it" data-cat="ovo"><span class="ig-ph"><img src="img/suroviny/maliny.webp" alt="" width="640" height="640" loading="lazy"></span><span class="ig-nm">Maliny</span></li>
         <li class="ig-it" data-cat="byl"><span class="ig-ph"><img src="img/suroviny/rozmarin.webp" alt="" width="640" height="640" loading="lazy"></span><span class="ig-nm">Rozmarín</span></li>
-        <li class="ig-it" data-cat="fun"><span class="ig-ph"><img src="img/suroviny/yucca.webp" alt="" width="640" height="640" loading="lazy"></span><span class="ig-nm">Yucca</span></li>
+        <li class="ig-it" data-cat="zel"><span class="ig-ph"><img src="img/suroviny/yucca.webp" alt="" width="640" height="640" loading="lazy"></span><span class="ig-nm">Yucca</span></li>
         <li class="ig-it" data-cat="fun"><span class="ig-ph"><img src="img/suroviny/huminove-latky.webp" alt="" width="640" height="640" loading="lazy"></span><span class="ig-nm">Humínové látky</span></li>
         <li class="ig-it" data-cat="zel"><span class="ig-ph"><img src="img/suroviny/mrkva.webp" alt="" width="640" height="640" loading="lazy"></span><span class="ig-nm">Mrkva</span></li>
         <li class="ig-it" data-cat="byl"><span class="ig-ph"><img src="img/suroviny/lan.webp" alt="" width="640" height="640" loading="lazy"></span><span class="ig-nm">Ľan</span></li>
@@ -389,38 +298,7 @@
       <div class="eyebrow">04. Porovnanie</div>
       <h2 class="h2">Rozrež vrecko. <span class="ac">Uvidíš rozdiel.</span></h2>
     </div>
-    <div class="cp-wrap">
-      <div class="cp-bag cp-bag-b">
-        <img src="img/porovnanie/vrece-bezne.webp" alt="Rozrezané vrecko bežných granúl: obilniny, sója, múčka, oleje, cukor a farbivá" width="660" height="1060" loading="lazy">
-        <div class="cp-cap"><span class="plain">Bežné granule</span></div>
-      </div>
-      <div class="cp-vs display" aria-hidden="true">vs</div>
-      <div class="cp-bag cp-bag-g">
-        <img src="img/porovnanie/vrece-granula.webp" alt="Rozrezané vrecko Granula Jeleň a králik s batátmi: mäso, batáty, zelenina, bylinky a čučoriedky" width="640" height="947" loading="lazy">
-        <div class="cp-cap"><span class="logo">Granula!</span><span class="display rec">Jeleň &amp; králik</span></div>
-      </div>
-      <ul class="cp-list cp-bad" aria-label="Zloženie bežných granúl">
-          <li><img src="img/porovnanie/b-obilniny.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b>Obilniny</b><small>pšenica, kukurica</small></span><span class="cp-v l">45&nbsp;%</span></li>
-          <li><img src="img/porovnanie/b-masove-produkty.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b><span class="lg">Mäsové vedľajšie produkty</span><span class="sh">Mäsokostná múčka</span></b><small>mäsokostná múčka</small></span><span class="cp-v l">15&nbsp;%</span></li>
-          <li><img src="img/porovnanie/b-soja.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b><span class="lg">Rastlinné bielkovinové extrakty</span><span class="sh">Sójové extrakty</span></b><small>sója</small></span><span class="cp-v m">12&nbsp;%</span></li>
-          <li><img src="img/porovnanie/b-oleje.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b><span class="lg">Rastlinné oleje</span><span class="sh">Oleje bez pôvodu</span></b><small>neurčený zdroj</small></span><span class="cp-v m">9&nbsp;%</span></li>
-          <li><img src="img/porovnanie/b-repne-rezky.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b><span class="lg">Produkty rastlinného pôvodu</span><span class="sh">Repné rezky</span></b><small>repné rezky</small></span><span class="cp-v m">8&nbsp;%</span></li>
-          <li><img src="img/porovnanie/b-mineraly.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b>Minerálne látky</b></span><span class="cp-v">5&nbsp;%</span></li>
-          <li><img src="img/porovnanie/b-cukry.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b>Cukry a melasa</b></span><span class="cp-v">3&nbsp;%</span></li>
-          <li><img src="img/porovnanie/b-farbiva.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b><span class="lg">Farbivá, arómy, konzervanty</span><span class="sh">Farbivá a arómy</span></b></span><span class="cp-v">2&nbsp;%</span></li>
-          <li><img src="img/porovnanie/b-zelenina.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b><span class="lg">Zelenina</span><span class="sh">Sušená zelenina</span></b><small>sušená</small></span><span class="cp-v">1&nbsp;%</span></li>
-        </ul>
-      <ul class="cp-list cp-good" aria-label="Zloženie Granula Jeleň a králik s batátmi">
-          <li><img src="img/porovnanie/g-jelen.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b>Jelenie mäso</b></span><span class="cp-v l">35&nbsp;%</span></li>
-          <li><img src="img/porovnanie/g-bataty.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b>Batáty</b></span><span class="cp-v l">23&nbsp;%</span></li>
-          <li><img src="img/porovnanie/g-kralik.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b>Králičie mäso</b></span><span class="cp-v l">15&nbsp;%</span></li>
-          <li><img src="img/porovnanie/g-loj-tuk.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b><span class="lg">Jelení loj a bravčový tuk</span><span class="sh">Loj a tuk</span></b></span><span class="cp-v m">10&nbsp;%</span></li>
-          <li><img src="img/porovnanie/g-zelenina.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b>Zelenina</b><small>mrkva, petržlen, špenát</small></span><span class="cp-v">7&nbsp;%</span></li>
-          <li><img src="img/porovnanie/g-bylinky.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b><span class="lg">Bylinky a funkčné zložky</span><span class="sh">Bylinky</span></b><small>pestrec, fenikel, šípky, harmanček, kolagén, konope, kvasnice</small></span><span class="cp-v">5&nbsp;%</span></li>
-          <li><img src="img/porovnanie/g-cucoriedky.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b>Čučoriedky</b></span><span class="cp-v">3&nbsp;%</span></li>
-          <li><img src="img/porovnanie/g-repna-vlaknina.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b>Repná vláknina</b></span><span class="cp-v">2&nbsp;%</span></li>
-        </ul>
-    </div>
+    <div data-compare></div>
     <div class="cp-foot">
       <a class="btn btn-o" href="granule-na-mieru.html">Chcem takúto misku</a>
       <p class="cp-note">Bežné granule = ilustrácia typického zloženia lacných granúl z regálu, nie konkrétna značka.</p>
@@ -563,8 +441,8 @@
     </div>
     <div class="cols">
       <nav aria-label="Granula"><span class="t">GRANULA</span><a href="suroviny.html">Suroviny</a><a href="#ako">Ako to funguje</a><a href="granule-na-mieru.html">Granule na mieru</a><a href="blog/">Blog</a></nav>
-      <nav aria-label="Pomoc"><span class="t">POMOC</span><a href="#otazky">Otázky</a><a href="#">Doprava</a><a href="mailto:info@granula.sk">Kontakt</a></nav>
-      <nav aria-label="Právne"><span class="t">PRÁVNE</span><a href="#">Obchodné podmienky</a><a href="#">Ochrana údajov</a><a href="#" data-cookie-settings>Nastavenia cookies</a></nav>
+      <nav aria-label="Pomoc"><span class="t">POMOC</span><a href="#otazky">Otázky</a><a href="podpora.html#doprava">Doprava</a><a href="podpora.html">Podpora</a></nav>
+      <nav aria-label="Právne"><span class="t">PRÁVNE</span><a href="obchodne-podmienky.html">Všeobecné obchodné podmienky</a><a href="reklamacny-poriadok.html">Reklamačný poriadok</a><a href="ochrana-sukromia.html">Zásady ochrany súkromia</a><a href="#" data-cookie-settings>Nastavenia cookies</a></nav>
       <div class="foot-co"><span class="t">PREVÁDZKOVATEĽ</span><address><b>Spark Link, s. r. o.</b><br>Lermontovova 911/3<br>811 05 Bratislava – mestská časť Staré Mesto<br>IČO 55615597 · DIČ 2122032979<br><a href="mailto:info@granula.sk">info@granula.sk</a></address></div>
     </div>
   </div>
@@ -572,6 +450,8 @@
 </footer>
 
 <script src="icons.js"></script>
+<script src="compare.js"></script>
+<script src="reviews.js"></script>
 <script src="site.js"></script>
 <!-- Klaviyo onsite: vypnutý (type="text/plain"), cookies.js ho zapne až po súhlase s marketingovými cookies -->
 <script type="text/plain" data-cookie-category="marketing" async src="https://static.klaviyo.com/onsite/js/Yf7K2A/klaviyo.js?company_id=Yf7K2A"></script>

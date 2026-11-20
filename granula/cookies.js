@@ -4,6 +4,8 @@
    Lištu znova otvorí akýkoľvek odkaz s atribútom data-cookie-settings. */
 (function () {
   var KEY = "granula-cookies", KLAVIYO_ID = "Yf7K2A";
+  // stránky vedľa cookies.js (funguje aj z blogu v podpriečinku)
+  var BASE = ((document.currentScript && document.currentScript.src) || "").replace(/cookies\.js[^/]*$/, "");
 
   function get() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
   function set(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
@@ -34,7 +36,7 @@
     bar.innerHTML =
       '<p><span class="cookie-form-note">Na zápis potrebujeme Klaviyo, a to beží len s marketingovými cookies. </span><b>Cookies? Len s tvojím súhlasom.</b> Nevyhnutné potrebujeme, aby web fungoval. ' +
       "Marketingové (Klaviyo) nám pomáhajú posielať ti ponuky na mieru. " +
-      '<a href="#" data-privacy>Ochrana údajov</a></p>' +
+      '<a href="' + BASE + 'ochrana-sukromia.html" data-privacy>Ochrana súkromia</a></p>' +
       '<div class="cookie-btns"><button type="button" class="btn btn-o btn-sm" data-cookie="all">Prijať všetky</button>' +
       '<button type="button" class="btn btn-sm cookie-min" data-cookie="necessary">Len nevyhnutné</button></div>';
     bar.addEventListener("click", function (e) {

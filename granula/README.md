@@ -7,15 +7,20 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 | Súbor | Čo je v ňom | Artboardy v návrhu |
 | --- | --- | --- |
 | `index.html` | úvodná stránka: hero, čísla, piliere, 1,8 roka, mäso, suroviny, porovnanie, ako to funguje, Granula = nula, recenzie, odborníci, otázky, výzva, pätička | Homepage + Homepage — pokračovanie |
+| `obchodne-podmienky.html`, `reklamacny-poriadok.html`, `ochrana-sukromia.html` | právne stránky, zatiaľ lorem ipsum (noindex, mimo sitemap); pred spustením doplniť text a odstrániť noindex | |
+| `podpora.html` | podpora: e-mail podpora@granula.sk, témy s predvyplneným predmetom, časté otázky | |
 | `suroviny.html` | podstránka Suroviny | Suroviny |
 | `granule-na-mieru.html` | funkčný dotazník: 6 krokov (meno a pohlavie, plemeno s vyhľadávaním, váha a vek, deň, kastrácia a postava, zameranie) → miešanie → výsledok → objednávka → hotovo (smerovanie cez `#krok-1` … `#hotovo`) | Formulár 1–5 + nový krok s menom, Vyberáme granule, Výsledok, Checkout, Hotovo |
 | `admin-vypocet.html` | dočasná kontrolná stránka výpočtu (všetky otázky, vhodnosť, pravidlá, dávka krok za krokom, parametre, katalóg) | |
-| `engine.js` | výber granúl a dávka; jediný zdroj pravdy | |
+| `engine.js` | výber granúl, dávka a profil psa pre graf; jediný zdroj pravdy | |
+| `radar.js` | radarový graf „Profil tvojho psa“ (dotazník aj kontrolná stránka) | |
 | `kviz.js` | ovládanie dotazníka | |
 | `granula.css` | spoločné tokeny a komponenty (logo-nálepka, tlačidlá, foto s posunutým farebným poľom, pásky, karty mäsa, pätička) | |
 | `icons.js` | ikony surovín z návrhu; `<span data-icon="jelen" data-ink="#F4EBE2">` | |
 | `blog/`, `admin-blog/` | blog a redakcia, pozri časť Blog (GEO) | |
 | `cookies.js` | cookie lišta; Klaviyo (marketing) sa načíta až po „Prijať všetky“, voľba v `localStorage` (`granula-cookies`), lištu znova otvorí odkaz „Nastavenia cookies“ v pätičke | |
+| `compare.js` | porovnanie „Rozrež vrecko“: jediný zdroj pre úvodnú stránku aj výsledok konfigurátora; prierez a zloženie podľa receptúry (`RECIPES`, chýbajúce zatiaľ = Jeleň & králik) | |
+| `reviews.js` | recenzie: jediný zdroj pre úvodnú stránku aj výsledok konfigurátora (dáta + skladanie radov bez opakovania) | |
 | `site.js` | objavovanie pri scrolle, karusel recenzií, sekcia surovín (filtre a šípky) | |
 | `img/` | fotky z návrhu, pomenované podľa obsahu; `img/suroviny/` 38 fotiek surovín (WebP 640 px) | |
 
@@ -29,6 +34,14 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 - `BASE_URL` v `blog/build.py` (kanonické adresy, sitemap) je zatiaľ `https://granula.sk/granula`; upraviť podľa skutočnej domény.
 - Obrázky: hero (`hero`), fotka autora (`author_photo`, `img/autori/`), obrázky v texte `![alt](cesta)`, grafy `::: graf` a ponuky k téme `::: ponuka` (syntax v `blog/CLAUDE.md`). Fotky článkov patria do `img/blog/<slug>/`. Zástupné obrázky (`placeholder`) a chýbajúca fotka autora blokujú publikovanie.
 - `blog/_src/vzor-struktury.md` je vzorový koncept; po prvom skutočnom článku zmazať.
+
+## Profil psa (radar v dotazníku)
+
+- Vedľa otázok (desktop hore v modrom pravom stĺpci nad „Vedel si?“, mobil malý v pravom hornom rohu vedľa loga a krokov, bez popisov osí) je graf „Profil tvojho psa“ (len graf, bez rámu a textu) so 6 osami: Energia, Bielkoviny, Tuk, Jednoduché zloženie, Rast, Veľkosť granule. Ukazuje **potreby psa, nikdy receptúry**; tie sú až vo výsledku. Vo výsledku je graf kompletný (všetky osi odomknuté).
+- Hodnoty počíta `engine.js` → `profilPsa(odpovede, krok)` z rovnakých odvodených údajov ako odporúčanie (veľkosť z tabuľky plemien, fáza, násobok RER cez spoločnú `factorFor()`, príznaky). Kreslí `radar.js`. Kontrola čísel: `admin-vypocet.html`, sekcia 1b.
+- Os je zamknutá (stred, sivá, prerušovaná), kým nie je zodpovedaný jej krok: veľkosť granule → plemeno, rast → vek, energia a bielkoviny → bežný deň, tuk → kastrácia/postava, zloženie → zameranie. Odpovede z neskorších krokov sa nepočítajú (návrat späť). Riadok „čo sa zmenilo“ je v kóde pripravený, ale zatiaľ skrytý.
+- Hodnoty osí sú návrh na zobrazenie smeru potreby, nie výživové pravidlo; neoveril ich veterinár.
+- Na mobile je navigácia krokov (Späť / Ďalej) stále na spodnej lište. Fotky z bočných panelov sú zatiaľ odstránené; „Vedel si?“ je pod grafom (len desktop).
 
 ## Vyhľadávanie plemena (krok 2)
 
@@ -117,10 +130,14 @@ neposielajú** a čísla karty sa po odoslaní mažú.
 3. **Ceny.** Jednotné pre všetky receptúry (`PARAMS.bagPrices`): 4 kg 35 €, 9 kg 75 €
    (−5 % za kg), 2 × 9 kg 140 € (−11 % za kg). Ceny €/kg bez DPH z podkladov výrobcu
    ostávajú v katalógu len ako informácia. Predplatné (doručenie každých X dní podľa veľkosti balenia, 3 dni pred minutím) dáva navyše −10 %; ďalšia možnosť je jednorazový nákup.
-4. **Platba.** Polia karty sú len vizuál. Nahradiť ich iframe platobnej brány;
-   surové čísla kariet nesmú ísť cez vlastný server.
-5. **Výdajné miesta.** Tlačidlo „Vyber výdajné miesto na mape“ zatiaľ otvorí
-   textové pole; patrí sem widget SPS / Packeta.
+4. **Platba (Stripe).** Stránka platby je podľa návrhu pripravená na Stripe: adresa → Address Element,
+   Apple Pay / G Pay → Express Checkout Element, karta / bankový prevod → Payment Element.
+   Polia sú zatiaľ len vizuál a nič sa neodosiela; surové čísla kariet nesmú ísť cez vlastný server.
+   Treba backend (PaymentIntent / Subscription pre predplatné). Pokladňu otvára prepínač
+   `CHECKOUT_OPEN` v `kviz.js` (teraz `false`: tlačidlo „Objednávky od 20. 11.“ + rezervácia cez Klaviyo).
+   Zľavové kódy zatiaľ neplatia žiadne. Doprava: Packeta aj kuriér `PARAMS.shipping` (4,90 €).
+5. **Výdajné miesta.** Tlačidlo „Vyber výdajné miesto“ zatiaľ otvorí
+   textové pole; patrí sem widget Packeta.
 6. **Recenzie a odborníci.** Mená, citácie a hodnotenia sú z návrhu, nie od
    reálnych ľudí. Pred spustením nahradiť skutočnými. Sekcia odborníkov je skrytá.
 7. **Tvrdenia na webe.** „62 % mäsa“ je nahradené textom „Kvalitné mäso“ a páska

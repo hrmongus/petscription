@@ -472,6 +472,17 @@
   /* ======================================================================
      8. DENNÁ POTREBA ENERGIE — RER × násobok (WSAVA / AAHA).
      ====================================================================== */
+  /* násobok RER: jedno poradie pre dávku aj pre profil psa (graf) */
+  function factorFor(a, d, F) {
+    if (d.pregnant) return d.pregnant === "late" ? { factor: F.gestationLate, basis: "gravidita – posledné 3 týždne", key: "pregnant" } : { factor: F.gestationEarly, basis: "gravidita – prvých 6 týždňov", key: "pregnant" };
+    if (d.isPuppy) return d.ageMonths < 4 ? { factor: F.puppyUnder4m, basis: "šteňa do 4 mesiacov", key: "puppy" } : { factor: F.puppyOver4m, basis: "šteňa od 4 mesiacov do dospelosti", key: "puppy" };
+    if (d.obese) return { factor: F.weightLoss, basis: "redukcia hmotnosti (1,0 × RER ideálnej hmotnosti)", key: "obese" };
+    if (a.activity === "praca") return { factor: F.moderateWork, basis: "pracovný pes (stredná záťaž)", key: "work" };
+    if (a.activity === "sport") return { factor: F.lightWork, basis: "beh, túry, šport (ľahká práca)", key: "sport" };
+    if (a.activity === "doma" || d.stage === "senior") return { factor: F.inactive, basis: d.stage === "senior" && a.activity !== "doma" ? "senior bez športu" : "prevažne doma (nízka aktivita)", key: "inactive" };
+    return a.neutered === "ano" ? { factor: F.adultNeutered, basis: "dospelý kastrovaný", key: "adult" } : { factor: F.adultIntact, basis: "dospelý nekastrovaný", key: "adult" };
+  }
+
   function energy(a, d, P) {
     var F = P.factor, steps = [];
     var weight = d.kg, factor, basis;
@@ -482,24 +493,7 @@
     var rer = 70 * Math.pow(weight, 0.75);
     steps.push("RER = 70 × " + fmt(weight, 2) + "^0,75 = " + fmt(rer, 1) + " kcal");
 
-    if (d.pregnant) {
-      factor = d.pregnant === "late" ? F.gestationLate : F.gestationEarly;
-      basis = d.pregnant === "late" ? "gravidita – posledné 3 týždne" : "gravidita – prvých 6 týždňov";
-    } else if (d.isPuppy) {
-      factor = d.ageMonths < 4 ? F.puppyUnder4m : F.puppyOver4m;
-      basis = d.ageMonths < 4 ? "šteňa do 4 mesiacov" : "šteňa od 4 mesiacov do dospelosti";
-    } else if (d.obese) {
-      factor = F.weightLoss; basis = "redukcia hmotnosti (1,0 × RER ideálnej hmotnosti)";
-    } else if (a.activity === "praca") {
-      factor = F.moderateWork; basis = "pracovný pes (stredná záťaž)";
-    } else if (a.activity === "sport") {
-      factor = F.lightWork; basis = "beh, túry, šport (ľahká práca)";
-    } else if (a.activity === "doma" || d.stage === "senior") {
-      factor = F.inactive; basis = d.stage === "senior" && a.activity !== "doma" ? "senior bez športu" : "prevažne doma (nízka aktivita)";
-    } else {
-      factor = a.neutered === "ano" ? F.adultNeutered : F.adultIntact;
-      basis = a.neutered === "ano" ? "dospelý kastrovaný" : "dospelý nekastrovaný";
-    }
+    var fb = factorFor(a, d, F); factor = fb.factor; basis = fb.basis;
     steps.push("Násobok: " + fmt(factor, 2) + " (" + basis + ")");
 
     var mult = 1;
@@ -512,6 +506,62 @@
     steps.push("Energia = " + fmt(rer, 1) + " × " + fmt(factor, 2) + (mult !== 1 ? " × " + fmt(mult, 2) : "") +
       (P.calibration !== 1 ? " × " + fmt(P.calibration, 2) : "") + " = " + fmt(kcal, 0) + " kcal/deň");
     return { weight: weight, rer: rer, factor: factor, basis: basis, mult: mult, kcal: kcal, steps: steps };
+  }
+
+  /* ======================================================================
+     8b. PROFIL PSA — 6 osí potrieb (0–1) pre graf v dotazníku.
+         Berie odvodené údaje z derive() a násobok z factorFor(), takže graf
+         a odporúčanie stoja na rovnakých údajoch. Žiadne receptúry.
+         krok: 1–6 = aktuálny krok dotazníka, 7 = hotovo (všetko odomknuté).
+     ====================================================================== */
+  var PROFILE_AXES = [
+    { key: "energia", short: "Energia", label: "Energia", at: 4 },
+    { key: "bielkoviny", short: "Bielkoviny", label: "Bielkoviny", at: 4 },
+    { key: "tuk", short: "Tuk", label: "Tuk", at: 5 },
+    { key: "zlozenie", short: "Zloženie", label: "Jednoduché zloženie", at: 6 },
+    { key: "rast", short: "Rast", label: "Rast", at: 3 },
+    { key: "granula", short: "Granula", label: "Veľkosť granule", at: 2 }
+  ];
+  function touched(a, step) {
+    if (step === 2) return !!a.breedSet;
+    if (step === 3) return (a.years !== "" && a.years != null) || (a.months !== "" && a.months != null);
+    if (step === 4) return !!a.activity;
+    if (step === 5) return !!(a.neutered || a.body || a.pregnant);
+    if (step === 6) return (a.focus || []).length > 0;
+    return true;
+  }
+  function profilPsa(a, krok, params) {
+    var P = merge(PARAMS, params || {}), k = krok || 1;
+    var counts = function (step) { return k > 6 || step < k || (step === k && touched(a, step)); };
+    // odpovede z krokov, ktoré sa ešte nepočítajú, nahradí neutrálny predpoklad
+    var x = merge({}, {}); Object.keys(a).forEach(function (key) { x[key] = a[key]; });
+    if (!counts(2)) x.breed = null;
+    if (!counts(3)) { x.years = "3"; x.months = "0"; x.weeks = ""; }
+    if (!counts(4)) x.activity = "mesto";
+    if (!counts(5)) { x.neutered = ""; x.pregnant = ""; x.body = "akurat"; }
+    if (!counts(6)) x.focus = [];
+    var d = derive(x, P), fb = factorFor(x, d, P.factor);
+    var n = fb.key === "adult" && !x.neutered ? 1.7 : fb.factor;
+    if (x.body === "chudsi" && !d.pregnant) n *= 1 + P.underweightBonus;
+    var clamp = function (v, lo, hi) { return Math.max(lo == null ? 0 : lo, Math.min(hi == null ? 1 : hi, v)); };
+    var young = d.stage === "starter" || (d.stage === "puppy" && d.ageMonths < 4);
+    var protein = young ? 0.85 : d.stage === "puppy" ? 0.80 : x.activity === "praca" ? 0.95 : d.active ? 0.85 : d.pregnant ? 0.85 : d.stage === "senior" ? 0.40 : 0.50;
+    var ubrat = d.pancreas ? 0.95 : d.obese ? 0.90 : clamp(0.30 + (x.neutered === "ano" ? 0.10 : 0) + (x.activity === "doma" ? 0.10 : 0) +
+      (d.stage === "senior" ? 0.15 : 0) - (d.isPuppy ? 0.15 : 0) - (x.body === "chudsi" ? 0.15 : 0), 0.05, 0.80);
+    var raw = {
+      energia: clamp(0.1 + 0.9 * (n - 1) / 2),
+      bielkoviny: protein,
+      tuk: 1 - ubrat,
+      zlozenie: d.intolerance ? 0.90 : 0.20,
+      rast: d.stage === "starter" ? 1.00 : d.stage === "puppy" ? (d.ageMonths < 4 ? 0.95 : 0.75) : d.stage === "senior" ? 0.10 : 0.30,
+      granula: { trpaslicie: 0.10, male: 0.20, stredne: 0.50, velke: 0.85, obrie: 1.00 }[d.size]
+    };
+    var hodnoty = {}, zamknute = {};
+    PROFILE_AXES.forEach(function (ax) {
+      zamknute[ax.key] = !counts(ax.at);
+      hodnoty[ax.key] = zamknute[ax.key] ? 0.5 : Math.round(raw[ax.key] * 1000) / 1000;
+    });
+    return { hodnoty: hodnoty, zamknute: zamknute, osi: PROFILE_AXES, nasobok: n, odvodene: d };
   }
 
   function grams(kcal, product, P) {
@@ -584,7 +634,7 @@
   window.GranulaEngine = {
     PARAMS: PARAMS, BREEDS: BREEDS, PRODUCTS: PRODUCTS, BAGS: BAGS, RULES: RULES,
     ACTIVITY_TEXT: ACTIVITY_TEXT, SIZE_TEXT: SIZE_TEXT, STAGE_TEXT: STAGE_TEXT,
-    compute: compute, metabolizable: metabolizable, bagPrice: bagPrice, bagSaving: bagSaving, merge: merge, fmt: fmt,
+    compute: compute, profilPsa: profilPsa, PROFILE_AXES: PROFILE_AXES, metabolizable: metabolizable, bagPrice: bagPrice, bagSaving: bagSaving, merge: merge, fmt: fmt,
     OVERRIDE_KEY: "granula-engine-params"
   };
 })();
