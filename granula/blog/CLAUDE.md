@@ -41,8 +41,7 @@ Frontmatter (podmnožina YAML, každá hodnota na jednom riadku, dlhý text cez 
 | `slug` | malé písmená bez diakritiky a pomlčky, napr. `kolko-granul-denne-pes` |
 | `status` | `draft` alebo `published` |
 | `description` | meta popis 120–160 znakov, priama odpoveď s číslom |
-| `author`, `author_bio` | meno a 1 veta, prečo mu veriť. **Každý článok môže mať iného autora**; meno, vetu a fotku dodá používateľ. Dovtedy nechaj zástupný text v `[…]` a upozorni na to (zástupný text blokuje publikovanie). |
-| `author_photo` | štvorcová fotka autora, `img/autori/<meno-priezvisko>.webp`. Kým ju nemáš, `placeholder` (blokuje publikovanie). |
+| `author` | **id autora z registra** `granula/blog/_autori/<id>.md`, napr. `author: marcela-glezgova`. Meno, vetu, fotku a web doplní build z registra a meno odkáže na stránku autora `/blog/autori/<id>/`. `author_bio` a `author_photo` v článku vtedy vynechaj (alebo nimi prepíš register len pre tento článok). Kým autor nie je určený, nechaj `"[Meno Priezvisko]"` a zástupný text v `author_bio` (blokuje publikovanie). Nového autora pridaj ako nový súbor v `_autori/` (name, bio s odkazom, photo, web, web_label + predstavenie v tele), fotku cez `foto.py … autor <id>`. |
 | `hero`, `hero_alt`, `hero_caption` | obrázok v hlavičke (16:9), cesta od `granula/` (`img/blog/<slug>/hero.webp` alebo existujúca fotka z `img/`). Bez fotky `placeholder` a v `hero_alt` presne opíš, čo má byť na fotke. |
 | `cta_title`, `cta_text`, `cta_button` (`cta_link`, `cta_image`) | záverečná ponuka napísaná k téme článku. Bez nich sa použije všeobecná. |
 | `published`, `updated` | RRRR-MM-DD |

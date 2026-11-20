@@ -34,6 +34,12 @@ body{font-size:15px}
 .badge.example{background:var(--m)}
 .badge.namet{background:var(--m);border-style:dashed}
 .badge.p1{background:var(--n);color:var(--o);border-color:var(--n)}
+.authors{list-style:none;margin:0 0 10px;padding:0;display:flex;flex-direction:column;gap:10px}
+.authors li{display:grid;grid-template-columns:48px minmax(0,1fr);gap:10px;align-items:start;background:var(--m);border:2px solid var(--n);padding:10px}
+.authors .av{width:48px;height:48px;border:2px solid var(--n);background:var(--k);color:var(--m);display:grid;place-items:center;font-weight:900;object-fit:cover}
+.authors b{display:block;line-height:1.2}
+.authors small{display:block;font-size:12px;line-height:1.4;margin-top:3px}
+.authors a{color:var(--k);font-weight:700;font-size:12px}
 .idea dl{display:grid;grid-template-columns:140px minmax(0,1fr);gap:8px 16px;margin:0}
 .idea dt{font-weight:800}
 .idea dd{margin:0;line-height:1.5}
@@ -114,6 +120,11 @@ details.panel.side-d[open] > summary{margin-bottom:10px}
       </div>
       <ul class="posts" id="posts"></ul>
     </div>
+    <details class="panel side-d" id="authors-d">
+      <summary>Autori</summary>
+      <ul class="authors" id="authors"></ul>
+      <p class="help">Autora v článku nastavíš v Claude Code: „V článku <i>názov</i> nastav autora <i>meno</i>.“ Nového autora pridáš súborom v <code>granula/blog/_autori/</code> (meno, jedna veta, web, štvorcová fotka).</p>
+    </details>
     <details class="panel new side-d">
       <summary>Nový článok</summary>
       <label>Hlavná otázka, na ktorú článok odpovedá
@@ -165,6 +176,14 @@ details.panel.side-d[open] > summary{margin-bottom:10px}
     "Tvrdenia o produkte sedia s dizajn systémom", "Indexované v Google Search Console", "Indexované v Bing Webmaster Tools",
     "Video verzia na YouTube", "Post na LinkedIn", "Zmienka na Reddite alebo v médiách"];
 
+  (D.authors || []).length ? ($("authors").innerHTML = D.authors.map(function (a) {
+    var ini = a.name.replace(/^\S+\.\s*/, "").split(/\s+/).map(function (w) { return w[0]; }).join("").slice(0, 2).toUpperCase();
+    var t = posts.filter(function (p) { return a.articles.indexOf(p.slug) !== -1; });
+    return "<li>" + (a.photoOk ? '<img class="av" src="../' + esc(a.photo) + '" alt="">' : '<span class="av">' + esc(ini) + "</span>") +
+      "<div><b>" + esc(a.name) + "</b><small>" + esc(a.bio) + "</small><small>" + (a.photoOk ? "" : '<span class="bad">Chýba fotka.</span> ') +
+      t.length + (t.length === 1 ? " článok" : t.length > 1 && t.length < 5 ? " články" : " článkov") + "</small>" +
+      '<a href="' + esc(a.page) + '" target="_blank" rel="noopener">Stránka autora ↗</a>' + (a.web ? ' · <a href="' + esc(a.web) + '" target="_blank" rel="noopener">web ↗</a>' : "") + "</div></li>";
+  }).join("")) : ($("authors-d").hidden = true);
   $("built").textContent = D.built ? "Posledný build: " + D.built : "Build ešte nebežal";
   function counts(p) {
     var e = 0, w = 0, ok = 0, n = 0;

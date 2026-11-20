@@ -39,7 +39,9 @@ Ideálne rozmery: hlavná fotka na šírku (16:9), fotky v texte na šírku (3:2
 
 ## 5. Autor
 
-Každý článok potrebuje skutočného autora: **meno, jednu vetu, prečo mu veriť** (napr. „veterinárka so zameraním na výživu psov, 12 rokov praxe“) a **štvorcovú fotku**. Bez toho sa článok nedá publikovať.
+Autori sú v redakcii v časti **Autori** (vľavo). Autora článku nastavíš vetou: „V článku *…* nastav autorku MVDr. Marcelu Glezgovú.“
+
+Nového autora pridáš tak, že Claude napíšeš meno, jednu vetu, prečo mu veriť, prípadne odkaz na web, a pošleš štvorcovú fotku. Bez autora s fotkou sa článok nedá publikovať.
 
 ## 6. Publikovanie
 

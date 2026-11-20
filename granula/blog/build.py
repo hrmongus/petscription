@@ -428,7 +428,7 @@ def lint(meta, secs, body):
     desc = meta.get("description", "")
     add("description", "warn", 120 <= len(desc) <= 160, "Meta popis má 120–160 znakov (má %d)" % len(desc))
     au, bio = str(meta.get("author", "")), str(meta.get("author_bio", ""))
-    add("author", "error", au and bio and "[" not in au + bio, "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)")
+    add("author", "error", au and bio and not has_placeholder(au + " " + bio), "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)")
     photo = str(meta.get("author_photo", ""))
     add("author-photo", "error", photo and not is_placeholder(photo) and os.path.isfile(os.path.join(SITE_DIR, photo)),
         "Fotka autora (author_photo, súbor v granula/img/autori/)", [photo] if photo and not is_placeholder(photo) else [])
@@ -657,8 +657,11 @@ def article_html(post, pre, preview):
     if photo and not is_placeholder(photo):
         avatar = '<img class="bl-av" src="%s%s" alt="%s" width="64" height="64">' % (pre, html.escape(photo), html.escape(m.get("author", "")))
     else:
-        ini = "".join(w[0] for w in re.findall(r"[^\W\d_]+", m.get("author", ""))[:2]).upper() or "?"
+        ini = "".join(w[0] for w in re.findall(r"[^\W\d_]+", re.sub(r"^\w+\.\s*", "", str(m.get("author", ""))))[:2]).upper() or "?"
         avatar = '<span class="bl-av bl-av-ph" role="img" aria-label="Zástupná fotka autora">%s</span>' % html.escape(ini)
+    author_name = inline(m.get("author", ""))
+    if m.get("author_id"):
+        author_name = '<a class="bl-author" href="%sblog/autori/%s/">%s</a>' % (pre, m["author_id"], author_name)
     hero_html = ""
     if m.get("hero"):
         hero_html = figure_html({"src": str(m["hero"]), "alt": m.get("hero_alt", ""), "caption": m.get("hero_caption", "")}, pre, "bl-hero")
@@ -671,7 +674,7 @@ def article_html(post, pre, preview):
     <nav class="bl-crumbs" aria-label="Omrvinky"><a href="{pre}index.html">Granula</a> / <a href="{pre}blog/">Blog</a></nav>
     <header class="bl-head">
       <h1>{inline(m["title"])}</h1>
-      <div class="bl-byline">{avatar}<p class="bl-meta"><b>{inline(m.get("author", ""))}</b><br><span class="bl-bio">{inline(m.get("author_bio", ""))}</span><br>
+      <div class="bl-byline">{avatar}<p class="bl-meta"><b>{author_name}</b><br><span class="bl-bio">{inline(m.get("author_bio", ""))}</span><br>
       Publikované: <time datetime="{m.get("published", "")}">{sk_date(m.get("published", ""))}</time> · Aktualizované: <time datetime="{m.get("updated", "")}">{sk_date(m.get("updated", ""))}</time> · {read_min}&nbsp;min čítania</p></div>
     </header>
     {hero_html}
@@ -689,6 +692,34 @@ def article_html(post, pre, preview):
     {src_html}
   </div>
 </article>"""
+
+
+def author_page(a, posts):
+    pre = "../../../"
+    aid, name = a["id"], a.get("name", a["id"])
+    photo = str(a.get("photo", ""))
+    if photo and not is_placeholder(photo):
+        av = '<img class="bl-av bl-av-lg" src="%s%s" alt="%s" width="160" height="160">' % (pre, html.escape(photo), html.escape(name))
+    else:
+        ini = "".join(w[0] for w in re.findall(r"[^\W\d_]+", re.sub(r"^\w+\.\s*", "", name))[:2]).upper() or "?"
+        av = '<span class="bl-av bl-av-lg bl-av-ph" role="img" aria-label="Fotka autora">%s</span>' % html.escape(ini)
+    intro = render_blocks(md_blocks(a.get("intro", "")), pre)
+    web = ('<p class="bl-author-web"><a href="%s" rel="noopener">%s</a></p>' % (html.escape(a["web"]), html.escape(a.get("web_label") or a["web"]))) if a.get("web") else ""
+    items = "".join('<li class="bl-card"><a href="%sblog/%s/"><span class="bl-card-date">Aktualizované %s</span><h2>%s</h2></a></li>'
+                    % (pre, p["slug"], sk_date(p["meta"].get("updated", "")), inline(p["meta"]["title"])) for p in posts)
+    lst = '<h2 class="bl-author-h">Články</h2><ul class="bl-list">%s</ul>' % items if items else '<p class="bl-empty">Články pripravujeme.</p>'
+    body = f"""<section class="sec bl-index">
+  <div class="wrap">
+    <nav class="bl-crumbs" aria-label="Omrvinky"><a href="{pre}index.html">Granula</a> / <a href="{pre}blog/">Blog</a> / Autori</nav>
+    <div class="bl-author-head">{av}<div><div class="eyebrow">Autor</div><h1 class="h2">{html.escape(name)}</h1><div class="bl-body">{intro}</div>{web}</div></div>
+    {lst}
+  </div>
+</section>"""
+    url = "%s/blog/autori/%s/" % (BASE_URL, aid)
+    ld = dict({"@context": "https://schema.org", "@type": "Person", "name": name, "description": plain(a.get("bio", "")), "url": url},
+              **({"sameAs": [a["web"]]} if a.get("web") else {}))
+    return page(pre=pre, title="%s — Granula" % name, description=plain(a.get("bio", ""))[:160], canonical=url, body=body,
+                jsonld=ld, noindex=not posts)
 
 
 def index_html(posts):
@@ -777,8 +808,52 @@ def write_home(posts):
 
 # ---------------------------------------------------------------- build
 
+AUTHORS_DIR = os.path.join(HERE, "_autori")
+AUTH = {}
+
+
+def load_authors():
+    """Register autorov: granula/blog/_autori/<id>.md (name, bio, photo, web, web_label + predstavenie v tele)."""
+    authors, problems = {}, []
+    if not os.path.isdir(AUTHORS_DIR):
+        return authors, problems
+    for fn in sorted(os.listdir(AUTHORS_DIR)):
+        if not fn.endswith(".md"):
+            continue
+        try:
+            meta, body = parse_frontmatter(open(os.path.join(AUTHORS_DIR, fn), encoding="utf-8").read())
+        except ValueError as e:
+            problems.append("autor %s: %s" % (fn, e))
+            continue
+        aid = fn[:-3]
+        meta["id"], meta["intro"] = aid, body.strip()
+        authors[aid] = meta
+    return authors, problems
+
+
+def has_placeholder(t):
+    """Zástupný text v [hranatých zátvorkách]; markdown odkaz [text](url) sa nepočíta."""
+    return bool(re.search(r"\[[^\]]*\](?!\()", t))
+
+
+def apply_author(meta, authors):
+    """`author: <id>` z registra doplní meno, vetu, fotku a web (polia v článku majú prednosť)."""
+    aid = str(meta.get("author", "")).strip()
+    a = authors.get(aid)
+    if not a:
+        return
+    meta["author_id"] = aid
+    meta["author"] = a.get("name", aid)
+    if not meta.get("author_bio") or has_placeholder(str(meta.get("author_bio"))):
+        meta["author_bio"] = a.get("bio", "")
+    if not meta.get("author_photo") or is_placeholder(str(meta.get("author_photo"))):
+        meta["author_photo"] = a.get("photo", "placeholder")
+    meta["author_web"] = a.get("web", "")
+
+
 def load_posts():
     posts, problems = [], []
+    AUTH.update(load_authors()[0])
     if not os.path.isdir(SRC):
         return posts, problems
     for fn in sorted(os.listdir(SRC)):
@@ -798,6 +873,9 @@ def load_posts():
             posts.append({"file": "granula/blog/_src/" + fn, "slug": slug, "meta": meta, "blocks": [], "sections": [],
                           "lint": [], "words": 0, "status": "namet", "wanted": "namet"})
             continue
+        apply_author(meta, AUTH)
+        if re.match(r"^[a-z0-9]+(-[a-z0-9]+)+$", str(meta.get("author", ""))) and "author_id" not in meta:
+            problems.append("%s: autor „%s“ nie je v registri granula/blog/_autori/" % (fn, meta["author"]))
         body, notes = split_footnotes(body)
         blocks = md_blocks(body)
         secs = sections(blocks)
@@ -891,7 +969,9 @@ def jsonld(post, url):
     m = post["meta"]
     return {"@context": "https://schema.org", "@type": "BlogPosting", "headline": m["title"], "description": m.get("description", ""),
             "datePublished": str(m.get("published", "")), "dateModified": str(m.get("updated", "")),
-            "author": dict({"@type": "Person", "name": m.get("author", ""), "description": m.get("author_bio", "")},
+            "author": dict({"@type": "Person", "name": m.get("author", ""), "description": plain(m.get("author_bio", ""))},
+                           **({"url": "%s/blog/autori/%s/" % (BASE_URL, m["author_id"])} if m.get("author_id") else {}),
+                           **({"sameAs": [m["author_web"]]} if m.get("author_web") else {}),
                            **({"image": "%s/%s" % (BASE_URL, m["author_photo"])} if m.get("author_photo") and not is_placeholder(str(m["author_photo"])) else {})),
             **({"image": "%s/%s" % (BASE_URL, m["hero"])} if m.get("hero") and not is_placeholder(str(m["hero"])) else {}),
             "publisher": {"@type": "Organization", "name": "Spark Link, s. r. o. (Granula!)", "url": BASE_URL + "/"},
@@ -921,7 +1001,7 @@ def build(check_only=False):
         return 1 if problems or any(p["status"] == "blocked" for p in posts) else 0
 
     # vyčistiť staré výstupy (článkové priečinky a náhľady), ponechať zdroje a statické súbory
-    keep = {"_src", "build.py", "blog.css", "CLAUDE.md", "GEO-TEMPLATE.md", "README.md", "TEMY.md", "STYL.md", "nahlad-pdf"}
+    keep = {"_src", "build.py", "blog.css", "CLAUDE.md", "GEO-TEMPLATE.md", "README.md", "TEMY.md", "STYL.md", "NAVOD.md", "foto.py", "_autori", "nahlad-pdf"}
     for name in os.listdir(HERE):
         full = os.path.join(HERE, name)
         if name in keep:
@@ -945,13 +1025,20 @@ def build(check_only=False):
                   page(pre="../../", title=title, description=m.get("description", ""), canonical=url,
                        body=article_html(p, "../../", False), jsonld=jsonld(p, url), image=str(m.get("hero", ""))))
     write(os.path.join(HERE, "index.html"), index_html(pub))
+    for aid, a in AUTH.items():
+        mine = [p for p in pub if p["meta"].get("author_id") == aid]
+        write(os.path.join(HERE, "autori", aid, "index.html"), author_page(a, mine))
     pdfs = export_pdfs([p for p in posts if p["status"] != "namet"], skip="--no-pdf" in sys.argv)
     write_home(pub)
 
-    manifest = {"built": dt.datetime.now().strftime("%Y-%m-%d %H:%M"), "base": BASE_URL, "problems": problems, "posts": [{
+    authors_m = [{"id": aid, "name": a.get("name", aid), "bio": plain(a.get("bio", "")), "web": a.get("web", ""),
+                  "photo": str(a.get("photo", "")), "photoOk": bool(a.get("photo")) and not is_placeholder(str(a.get("photo"))),
+                  "page": "../blog/autori/%s/index.html" % aid,
+                  "articles": [p["slug"] for p in posts if p["meta"].get("author_id") == aid]} for aid, a in AUTH.items()]
+    manifest = {"authors": authors_m, "built": dt.datetime.now().strftime("%Y-%m-%d %H:%M"), "base": BASE_URL, "problems": problems, "posts": [{
         "slug": p["slug"], "file": p["file"], "title": p["meta"].get("title", ""), "status": p["status"], "wanted": p["wanted"],
         "example": bool(p["meta"].get("example")), "published": str(p["meta"].get("published", "")), "updated": str(p["meta"].get("updated", "")),
-        "author": p["meta"].get("author", ""), "authorPhoto": str(p["meta"].get("author_photo", "")), "hero": str(p["meta"].get("hero", "")), "words": p["words"], "description": p["meta"].get("description", ""),
+        "author": p["meta"].get("author", ""), "authorId": p["meta"].get("author_id", ""), "authorPhoto": str(p["meta"].get("author_photo", "")), "hero": str(p["meta"].get("hero", "")), "words": p["words"], "description": p["meta"].get("description", ""),
         "id": p["meta"].get("id", ""), "category": p["meta"].get("category", ""), "priority": p["meta"].get("priority", ""),
         "brief": p["meta"].get("brief", ""), "angle": p["meta"].get("angle", ""),
         "preview": "../blog/nahlad/%s/index.html" % p["slug"] if p["status"] != "namet" else None,
@@ -967,6 +1054,7 @@ def build(check_only=False):
     last = str(pub[0]["meta"].get("updated", "")) if pub else ""
     urls = [(BASE_URL + "/", ""), (BASE_URL + "/suroviny", ""), (BASE_URL + "/granule-na-mieru", ""), (BASE_URL + "/podpora", ""), (BASE_URL + "/blog/", last)]
     urls += [("%s/blog/%s/" % (BASE_URL, p["slug"]), str(p["meta"].get("updated", ""))) for p in pub]
+    urls += [("%s/blog/autori/%s/" % (BASE_URL, aid), "") for aid in AUTH if any(p["meta"].get("author_id") == aid for p in pub)]
     write(os.path.join(SITE_DIR, "sitemap.xml"), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n%s</urlset>\n'
           % "".join("  <url><loc>%s</loc>%s</url>\n" % (html.escape(u), "<lastmod>%s</lastmod>" % d if d else "") for u, d in urls))
     bots = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "PerplexityBot", "ClaudeBot", "Claude-User", "Claude-SearchBot", "Google-Extended", "Bingbot", "Googlebot"]
