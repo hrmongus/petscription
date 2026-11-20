@@ -2,8 +2,7 @@
    .rg (mriežka), .rs (os, .locked), .rshape (tvar), .rd (bod, .locked), .radar-lbl (.locked). */
 /* Granula — radarový graf „Profil tvojho psa“ (dotazník aj admin-vypocet.html).
    Hodnoty vždy z GranulaEngine.profilPsa(); tento súbor len kreslí.
-   var r = new GranulaRadar(el); r.update(profil)   // profil = { hodnoty, zamknute, osi }
-   GranulaRadar.describe(pred, po) → text riadku „čo sa zmenilo“ */
+   var r = new GranulaRadar(el); r.update(profil)   // profil = { hodnoty, zamknute, osi } */
 (function () {
   "use strict";
   var NS = "http://www.w3.org/2000/svg", NEUTRAL = 0.5;
@@ -82,17 +81,6 @@
       self.raf = t < 1 ? requestAnimationFrame(tick) : null;
     }
     this.raf = requestAnimationFrame(tick);
-  };
-
-  // text nad grafom: čo sa zmenilo poslednou odpoveďou
-  Radar.describe = function (before, after) {
-    var axes = after.osi;
-    var fresh = axes.filter(function (ax) { return before.zamknute[ax.key] && !after.zamknute[ax.key]; }).map(function (ax) { return ax.label; });
-    if (fresh.length) return (fresh.length > 1 ? "Nové osi: " : "Nová os: ") + fresh.join(", ");
-    var best = 0, bi = null;
-    axes.forEach(function (ax) { var dd = Math.abs(after.hodnoty[ax.key] - before.hodnoty[ax.key]); if (dd > best) { best = dd; bi = ax; } });
-    if (best < 0.04) return "Profil sa nezmenil";
-    return "Najviac sa pohla os " + bi.label + (after.hodnoty[bi.key] > before.hodnoty[bi.key] ? " ↑" : " ↓");
   };
 
   window.GranulaRadar = Radar;

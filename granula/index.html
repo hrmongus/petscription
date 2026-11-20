@@ -85,16 +85,6 @@
 /* dve oranžové pásky do X: horná oddelená pruhom Mlieka */
 .nula-tapes .dark .tape{outline:3px solid var(--m)}
 
-/* ---------- odborníci ---------- */
-.experts-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.expert{background:var(--ml);border:2px solid var(--n);padding:32px;display:flex;flex-direction:column;gap:26px}
-.expert .who{display:flex;align-items:center;gap:20px}
-.expert .frame{--off:10px;width:112px;height:112px;flex:none}
-.expert .frame .ph{color:var(--m);display:flex;align-items:center;justify-content:center;text-align:center;font-size:10px;font-weight:700;padding:8px}
-.expert .who b{font-size:18px;display:block}
-.expert .who span{display:block;font-size:13px;font-weight:700;color:var(--k);margin-top:6px}
-.expert blockquote{margin:0;font-size:20px;line-height:1.45;font-weight:600}
-
 /* ---------- otázky ---------- */
 .faq .wrap{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:64px;align-items:start}
 .faq .h2{font-size:clamp(30px,3.4vw,44px)}
@@ -128,7 +118,6 @@
   .stats .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}
   .stat:nth-child(3){border-left:0}
   .stat:nth-child(n+3){border-top:2px solid var(--n)}
-  .experts-grid{grid-template-columns:minmax(0,1fr)}
   .lg-panel{padding:28px 24px 32px}
   .steps{grid-template-columns:minmax(0,1fr)}
   .step + .step{border-left:0;border-top:2px solid var(--n)}
@@ -147,7 +136,7 @@
 </head>
 <body>
 
-<div class="topbar"><span>Štartujeme 20.&nbsp;novembra</span><span class="star" aria-hidden="true"></span><span>Prvé vrecko −30&nbsp;% pre tých, čo sa zapíšu vopred</span><button type="button" class="topbar-cta" data-klaviyo-open="YcSYzw">Chcem byť prvý →</button></div>
+<div class="topbar"><span>Štartujeme 1.&nbsp;decembra</span><span class="star" aria-hidden="true"></span><span>Prvé vrecko −30&nbsp;% pre tých, čo sa zapíšu vopred</span><button type="button" class="topbar-cta" data-klaviyo-open="YcSYzw">Chcem byť prvý →</button></div>
 <header class="site-head">
   <div class="wrap">
     <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
@@ -171,7 +160,7 @@
       <p>Prémiové granule z diviny a slovenského hovädzieho, vybrané presne podľa veku, váhy a temperamentu tvojho psa. Pre dlhý a nabehaný život.</p>
       <div class="ctas">
         <a class="btn btn-o" href="granule-na-mieru.html">Nájdi granule pre svojho psa</a>
-        <span class="sticker st-k start-sticker">Štart 20. 11.</span>
+        <span class="sticker st-k start-sticker">Štart 1. 12.</span>
       </div>
     </div>
     <div class="visual">
@@ -350,22 +339,6 @@
   <span>Šach mat, miska</span><span class="star"></span><span>Receptúry navrhnuté s veterinármi</span><span class="star"></span><span>Zdravý pes</span><span class="star"></span><span>Hravý chvost</span><span class="star"></span><span>Ingrediencie, čo budeš závidieť</span><span class="star"></span>
 </div></div></div>
 
-<!-- odborníci -->
-<!-- Odborníci: dočasne skryté, kým nebudú reálni ľudia a fotky. Odstrániť atribút hidden. -->
-<section class="sec experts bt" hidden>
-  <div class="wrap" style="display:flex;flex-direction:column;gap:32px">
-    <div class="head">
-      <div class="eyebrow">Odborníci</div>
-      <h2 class="h2">Čo hovoria tí, <span class="ac">čo psom rozumejú.</span></h2>
-    </div>
-    <div class="experts-grid">
-      <article class="expert" data-reveal><div class="who"><div class="frame" style="--off:10px"><div class="ph">Foto: veterinárka</div></div><div><b class="display">MVDr. Katarína Holubová</b><span>Veterinárka, výživa psov</span></div></div><blockquote>„Najčastejšia chyba, ktorú vidím v ambulancii, je dávka od oka. Krmivo odvážené na konkrétneho psa je najjednoduchšia prevencia nadváhy.“</blockquote></article>
-      <article class="expert" data-reveal style="--d:.08s"><div class="who"><div class="frame" style="--off:10px;--field:var(--k)"><div class="ph">Foto: cvičiteľ</div></div><div><b class="display">Peter Malík</b><span>Cvičiteľ psov</span></div></div><blockquote>„Pes, ktorý má energiu na celý tréning a pritom nie je ťažký, sa učí rýchlejšie. Na tom, čo je v miske, sa to pozná.“</blockquote></article>
-      <article class="expert" data-reveal style="--d:.16s"><div class="who"><div class="frame" style="--off:10px"><div class="ph">Foto: chovateľka</div></div><div><b class="display">Ivana Šimková</b><span>Chovateľka border kólií, agility</span></div></div><blockquote>„Pri športových psoch riešim každú surovinu. Konkrétne mäso namiesto mäsových derivátov je pre mňa základ.“</blockquote></article>
-    </div>
-  </div>
-</section>
-
 <!-- blog-home:start (generuje blog/build.py) -->
 <section id="blog" class="sec hb bt" data-carousel hidden>
   <div class="wrap">
@@ -409,7 +382,7 @@
 <section id="zapis" class="sec signup bt">
   <div class="wrap">
     <div class="head">
-      <div class="eyebrow">Štartujeme 20. novembra</div>
+      <div class="eyebrow">Štartujeme 1. decembra</div>
       <h2 class="h2">Buď pri tom <span class="ac">prvý.</span></h2>
       <p class="lead">Momentálne vyrábame prvú várku. Zapíš sa vopred a prvé vrecko dostaneš o 30&nbsp;% lacnejšie. Rezervácia je nezáväzná.</p>
     </div>
