@@ -5,10 +5,13 @@ title: "[Presná otázka alebo entita] – [konkrétny prísľub]"
 slug: presna-otazka-bez-diakritiky
 status: draft
 description: "[Meta popis 120–160 znakov: priama odpoveď s jedným číslom.]"
-author: marcela-glezgova   # id autora z granula/blog/_autori/ (meno, vetu a fotku doplní build)
-hero: placeholder           # img/blog/<slug>/hero.webp (16:9) alebo existujúca fotka z img/
+# author = id autora z granula/blog/_autori/ (meno, vetu a fotku doplní build)
+author: marcela-glezgova
+# hero: img/blog/<slug>/hero.webp (16:9) alebo existujúca fotka z img/
+hero: placeholder
 hero_alt: "[Čo je na fotke: napr. labrador pri miske s odváženou dennou dávkou granúl]"
-hero_caption: ""            # voliteľný popis pod obrázkom
+# hero_caption: voliteľný popis pod obrázkom
+hero_caption: ""
 published: 2026-11-18
 updated: 2026-11-18
 tldr: >
