@@ -29,7 +29,7 @@ Všetky témy sú v `granula/blog/TEMY.md` (kategórie A–H, priority P1–P3) 
 6. **Spätná väzba:** najprv rozhodni, či je všeobecná (→ zapíš do `STYL.md` a uplatni na všetky koncepty) alebo len k tomuto článku. Potom uprav text, nastav `updated` na dnešný dátum, pridaj **prvý** záznam do `changelog` („RRRR-MM-DD: čo sa zmenilo“), znova build, commit, push.
 7. **Publikovanie len na výslovný pokyn** používateľa: `status: published`, build (pri chybách ostane článok zablokovaný a neverejný), commit, push, pošli verejnú adresu.
 
-Nič iné na webe nemeň. Ak treba zmeniť šablónu alebo kontrolu (`build.py`, `blog.css`), najprv sa spýtaj.
+Nič iné na webe nemeň. Povolený rozsah zmien (blog, prostredie redakcie) a čo je zakázané (landing, konfigurátor, dizajn webu) je v `granula/blog/HANDOVER.md`. Zmeny prostredia redakcie (`admin-blog/`, `build.py`, `blog.css`, `foto.py`) rob, keď je niečo mätúce alebo nefunguje; zmenu vzhľadu verejných článkov najprv ukáž v náhľade.
 
 ## Formát súboru
 
@@ -62,7 +62,7 @@ python3 granula/blog/foto.py <subor> text <slug> <kratky-nazov>
 python3 granula/blog/foto.py <subor> autor <meno-priezvisko>
 ```
 
-Voliteľne `--focus x,y` (0–1), keď hlavná vec nie je v strede. Skript vypíše cestu: daj ju do `hero:`, do `![alt](cesta "popis")` namiesto `placeholder`, alebo do `author_photo:`. Alt text uprav podľa toho, čo je naozaj na fotke. Keď skript hlási malé rozlíšenie, povedz to. Fotky z chatu si najprv ulož do scratchpadu, nie do repozitára. Commitni len výstup skriptu.
+Voliteľne `--focus x,y` (0–1), keď hlavná vec nie je v strede. Skript vypíše cestu: daj ju do `hero:`, do `![alt](cesta "popis")` namiesto `placeholder`, alebo do `author_photo:`. Alt text uprav podľa toho, čo je naozaj na fotke. **Zdroj obrázka daj do popisu pod obrázkom** (`hero_caption` alebo text v úvodzovkách pri `![…](…)`): „Foto: Meno, fotobanka“ alebo „Ilustrácia vygenerovaná AI“. Fotky z fotobánk len s licenciou na komerčné použitie. Obrázky majú pôsobiť prirodzene, nie „AI“ (divné ruky, labky, texty). Keď skript hlási malé rozlíšenie, povedz to. Fotky z chatu si najprv ulož do scratchpadu, nie do repozitára. Commitni len výstup skriptu.
 
 ### Obrázky, grafy a ponuky
 

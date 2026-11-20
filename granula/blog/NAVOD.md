@@ -33,7 +33,7 @@ Fotky jednoducho vlož do chatu a napíš, kam patria:
 - „Toto je fotka do sekcie o testoch zo srsti (namiesto zástupného obrázka).“
 - „Toto je fotka autorky MVDr. Jana Nováková, do článkov X a Y.“
 
-Formát je jedno (JPG, PNG, HEIC). Claude ich oreže, zmenší a uloží. Čo má byť na ktorej fotke, vidíš v náhľade v pruhovaných rámikoch „Zástupný obrázok“.
+Ku každému obrázku napíš **zdroj** (autor fotky a fotobanka, alebo „vygenerované v AI“), Claude ho dá do popisu. Obrázky majú byť pekné a prirodzené, nie príliš „AI“. Formát je jedno (JPG, PNG, HEIC). Claude ich oreže, zmenší a uloží. Čo má byť na ktorej fotke, vidíš v náhľade v pruhovaných rámikoch „Zástupný obrázok“.
 
 Ideálne rozmery: hlavná fotka na šírku (16:9), fotky v texte na šírku (3:2), fotka autora štvorec. Najmenej 1600 px na šírku, aby neboli rozmazané. Hlavnú vec (psa, detail) maj v strede.
 
