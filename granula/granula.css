@@ -436,3 +436,59 @@ section[id]{scroll-margin-top:96px}
 .foot .bottom address b{font-weight:700}
 .foot .bottom address a{color:var(--k)}
 .foot .top{align-items:flex-start}
+
+/* ---------- produktová sekcia na úvodnej stránke (produkt.js) ---------- */
+.pd-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:56px;align-items:start;justify-content:center}
+.pd-gal{position:sticky;top:110px;display:flex;flex-direction:column;gap:14px}
+.pd-main{aspect-ratio:1/1;border:2px solid var(--n);background:var(--ml);overflow:hidden}
+.pd-main img{width:100%;height:100%;object-fit:cover;display:block}
+.pd-thumbs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.pd-thumbs button{aspect-ratio:1/1;padding:0;border:2px solid var(--n);background:var(--ml);cursor:pointer;overflow:hidden}
+.pd-thumbs button[aria-pressed="true"]{outline:3px solid var(--k);outline-offset:2px}
+.pd-thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+.pd-info{display:flex;flex-direction:column;gap:30px;min-width:0}
+.pd-rate{display:inline-flex;align-items:center;gap:12px;color:var(--n);text-decoration:none;align-self:flex-start;margin-bottom:-14px}
+.pd-rate .rate{display:flex;gap:4px;color:var(--o);font-size:17px}
+.pd-rcount{font-size:15px;font-weight:800;border-bottom:2px solid currentColor}
+.pd-rate:hover{color:var(--k)}
+.pd-h{font-size:clamp(36px,4vw,56px);line-height:.98}
+.pd-form{display:flex;flex-direction:column;gap:18px}
+.pd-f{display:flex;flex-direction:column;gap:8px;min-width:0}
+.pd-f > span:first-child{font-size:13px;font-weight:800}
+.pd-sel{position:relative;display:block}
+.pd-sel select{width:100%;height:48px;appearance:none;-webkit-appearance:none;border:2px solid var(--n);background:var(--ml);border-radius:0;padding:0 40px 0 14px;font:600 15px Montserrat,sans-serif;color:var(--n);cursor:pointer}
+.pd-sel select:focus{outline:3px solid var(--k);outline-offset:1px}
+.pd-chev{position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none}
+.pd-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pd-price{display:flex;align-items:center;gap:18px;margin-top:4px}
+.pd-bag{width:76px;height:76px;flex:none;border:2px solid var(--n);background:var(--ml);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pd-bag img{height:64px;width:auto}
+.pd-price > div{display:flex;flex-direction:column;gap:2px}
+.pd-from{font-size:14px;font-weight:800}
+.pd-price b{font-size:32px;font-weight:900;color:var(--k);line-height:1}
+.pd-price b small{font-size:15px;color:var(--n);font-weight:700}
+.pd-note{font-size:12px}
+.pd-cta{width:100%;min-height:54px}
+.pd-gar{position:relative;display:flex;flex-direction:column;gap:12px;background:var(--k);color:var(--m);border:2px solid var(--n);padding:30px 28px;text-decoration:none}
+.pd-gar b{font-size:clamp(24px,2.4vw,30px);line-height:1;text-transform:uppercase}
+.pd-gar b span{color:var(--l)}
+.pd-gar > span:not(.pd-gar-fl){font-size:15px}
+.pd-gar .pd-gar-l{font-weight:800;text-decoration:underline;text-underline-offset:4px;margin-top:6px}
+.pd-gar:hover{color:var(--m)}
+.pd-gar:hover .pd-gar-l{color:var(--l)}
+.pd-gar-fl{position:absolute;right:18px;top:18px;width:34px;height:34px;color:var(--o);transform:rotate(12deg)}
+.pd-h3{font-size:20px;font-weight:900;text-transform:uppercase}
+.pd-join{display:flex;flex-direction:column;gap:16px;min-width:0}
+.pd-strip{list-style:none;margin:0;padding:0 0 4px;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.pd-strip li{position:relative;flex:0 0 116px;aspect-ratio:116/206;border:2px solid var(--n);overflow:hidden;scroll-snap-align:start;background:var(--k)}
+.pd-strip img{width:100%;height:100%;object-fit:cover;display:block}
+.pd-strip span{position:absolute;left:6px;right:6px;bottom:6px;background:var(--m);border:2px solid var(--n);font-size:11px;font-weight:800;padding:3px 6px;text-align:center}
+@media (max-width:960px){
+  .pd-grid{grid-template-columns:minmax(0,1fr);gap:32px}
+  .pd-gal{position:static}
+  .pd-info{gap:24px}
+}
+@media (max-width:480px){
+  .pd-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+  .pd-sel select{font-size:14px;padding-right:32px}
+}

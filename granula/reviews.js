@@ -32,6 +32,8 @@
     { w: 2, stars: 5, text: "Bady má 9 rokov a citlivé brucho odjakživa. Po prechode žiadne nafukovanie ani hnačky ako predtým. Veterinárka sa pýtala, čo sme zmenili.", bag: "jahna-s-batatmi-cucoriedkami", by: "Laura B.", dog: "Bady, kríženec, 9 rokov" },
     { w: 1, stars: 5, text: "dlho sme hladali nieco co mu sadne, vsetko skoncilo hnackou. tu konecne pevne hovienka a ziadne behanie von o 3 rano 😅", bag: "jahna-s-batatmi-cucoriedkami", by: "Juraj H.", dog: "Max, border kólia" }
   ];
+  // pre produktovú sekciu (počet recenzií, fotky zákazníkov)
+  window.GranulaReviews = { count: PHOTOS.length + TEXTS.length, photos: PHOTOS };
   var SPEED = [30, 25]; // px za sekundu (rady idú opačne a rôzne rýchlo)
 
   function bagImg(b) { return '<img src="' + P + b + '.webp" alt="" width="896" height="1200" loading="lazy">'; }

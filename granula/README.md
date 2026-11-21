@@ -22,6 +22,7 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 | `cookies.js` | cookie lišta; Klaviyo (marketing) sa načíta až po „Prijať všetky“, voľba v `localStorage` (`granula-cookies`), lištu znova otvorí odkaz „Nastavenia cookies“ v pätičke | |
 | `compare.js` | porovnanie „Rozrež vrecko“: jediný zdroj pre úvodnú stránku aj výsledok konfigurátora; prierez a zloženie podľa receptúry (`RECIPES`, chýbajúce zatiaľ = Jeleň & králik) | |
 | `ingrediencie.js` | detail suroviny (pop-up po kliknutí v sekcii surovín na úvodnej stránke aj na suroviny): texty, nálepka, „V recepte“ zo zloženia receptúr, listovanie v rámci kategórie | |
+| `produkt.js` | produktová sekcia pod hero: galéria, plemeno/vek/váha → cena za deň (engine.js, odporúčané vrece, predplatné), tlačidlo predvyplní konfigurátor (`?plemeno=&vek=&kg=`) | |
 | `reviews.js` | recenzie: jediný zdroj pre úvodnú stránku aj výsledok konfigurátora (dáta + skladanie radov bez opakovania) | |
 | `site.js` | objavovanie pri scrolle, karusel recenzií, sekcia surovín (filtre a šípky) | |
 | `img/` | fotky z návrhu, pomenované podľa obsahu; `img/suroviny/` 38 fotiek surovín (WebP 640 px) | |

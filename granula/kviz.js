@@ -637,6 +637,18 @@
     state = JSON.parse(JSON.stringify(BLANK));
     try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
   }
+  // predvyplnenie z produktovej sekcie na úvodnej stránke: ?plemeno=…&vek=r2|m6&kg=…
+  (function () {
+    var q = new URLSearchParams(location.search);
+    if (!q.has("plemeno")) return;
+    if (E.BREEDS.some(function (b) { return b.id === q.get("plemeno"); })) { state.breed = q.get("plemeno"); state.breedSet = true; }
+    var v = /^([rm])(\d+)$/.exec(q.get("vek") || "");
+    if (v) { state.years = v[1] === "r" ? v[2] : "0"; state.months = v[1] === "m" ? v[2] : "0"; state.weeks = ""; }
+    var kg = parseFloat(q.get("kg"));
+    if (kg > 0 && kg <= 90) state.kg = kg;
+    save();
+    history.replaceState(null, "", location.pathname + location.hash);
+  })();
   fill();
   window.addEventListener("hashchange", route);
   route();

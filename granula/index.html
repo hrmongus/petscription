@@ -189,6 +189,49 @@
     <span>Čerstvé mäso</span><span class="star"></span><span>Bez pšenice</span><span class="star"></span><span>Zelenina</span><span class="star"></span><span>Vyrobené na Slovensku</span><span class="star"></span><span>Receptúry navrhnuté s veterinármi</span><span class="star"></span>
   </div></div></div>
 
+<!-- produkt -->
+<section id="produkt" class="sec pd" data-product>
+  <div class="wrap pd-grid">
+    <div class="pd-gal">
+      <div class="pd-main"><img id="pd-main" src="img/produkt/pes-granula.webp" alt="Pes s granulou v papuli" width="960" height="1200" loading="lazy"></div>
+      <!-- ďalšie fotky produktu: pridať <button> s obrázkom; s jednou fotkou sa riadok skryje -->
+      <div class="pd-thumbs" role="group" aria-label="Fotky produktu">
+        <button type="button" aria-pressed="true" data-src="img/produkt/pes-granula.webp" data-alt="Pes s granulou v papuli"><img src="img/produkt/pes-granula.webp" alt="" width="960" height="1200" loading="lazy"></button>
+      </div>
+    </div>
+    <div class="pd-info">
+      <a class="pd-rate" href="#recenzie"><span class="rate" aria-hidden="true"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span><span class="pd-rcount" data-review-count>17 recenzií</span></a>
+      <h2 class="display pd-h">Granule na mieru</h2>
+      <form class="pd-form" action="granule-na-mieru.html" method="get">
+        <label class="pd-f"><span>Plemeno tvojho psa</span><span class="pd-sel"><select name="plemeno" id="pd-breed"></select><svg class="pd-chev" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></span></label>
+        <div class="pd-row">
+          <label class="pd-f"><span>Vek tvojho psa</span><span class="pd-sel"><select name="vek" id="pd-age"></select><svg class="pd-chev" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></span></label>
+          <label class="pd-f"><span>Váha tvojho psa</span><span class="pd-sel"><select name="kg" id="pd-kg"></select><svg class="pd-chev" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></span></label>
+        </div>
+        <div class="pd-price">
+          <span class="pd-bag"><img id="pd-bag" src="img/produkty/jelen-kralik-s-batatmi.webp" alt="" width="896" height="1200" loading="lazy"></span>
+          <div><span class="pd-from">Už od:</span><b><span id="pd-perday">—</span><small>/deň</small></b><span class="pd-note" id="pd-note">s predplatným</span></div>
+        </div>
+        <button type="submit" class="btn btn-o pd-cta">Granule na mieru →</button>
+      </form>
+      <a class="pd-gar" href="garancia.html">
+        <span class="pd-gar-fl"><svg viewBox="-52 -52 104 104" aria-hidden="true"><g fill="currentColor"><rect x="-50" y="-15" width="100" height="30" rx="15" transform="rotate(90)"/><rect x="-50" y="-15" width="100" height="30" rx="15" transform="rotate(30)"/><rect x="-50" y="-15" width="100" height="30" rx="15" transform="rotate(150)"/></g></svg></span>
+        <b class="display">Garancia <span>spokojného</span> psa</b>
+        <span>Ak mu nebude chutiť, vrátime ti peniaze.</span>
+        <span class="pd-gar-l">Ako to funguje?</span>
+      </a>
+      <!-- Vytvorené s veterinármi: zobraziť (odstrániť hidden), keď bude citát a fotka skutočného veterinára -->
+      <div class="pd-vet" hidden>
+        <h3 class="pd-h3">Vytvorené s veterinármi</h3>
+      </div>
+      <div class="pd-join">
+        <h3 class="pd-h3">Pridaj sa k zdravým psom</h3>
+        <ul class="pd-strip" id="pd-strip" aria-label="Psy našich zákazníkov"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- čísla -->
 <section class="stats bb">
   <div class="wrap">
@@ -448,7 +491,9 @@
 <script src="icons.js"></script>
 <script src="ingrediencie.js"></script>
 <script src="compare.js"></script>
+<script src="engine.js"></script>
 <script src="reviews.js"></script>
+<script src="produkt.js"></script>
 <script src="site.js"></script>
 <!-- Klaviyo onsite: vypnutý (type="text/plain"), cookies.js ho zapne až po súhlase s marketingovými cookies -->
 <script type="text/plain" data-cookie-category="marketing" async src="https://static.klaviyo.com/onsite/js/Yf7K2A/klaviyo.js?company_id=Yf7K2A"></script>
