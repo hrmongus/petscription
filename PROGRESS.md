@@ -8,7 +8,7 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 | 2. FHB klient (P2) | ✅ hotové, na main |
 | 3. Doprava v checkoute (P1b) | ✅ hotové, na main / granula.sk |
 | 4. Checkout a predplatné (P1) | ✅ otestované naživo na granula.sk (test mode, FHB sandbox) a na test clocku vrátane obnovenia |
-| 5. FHB stavy a emaily | — |
+| 5. FHB stavy a emaily | ✅ postavené a nasadené na granula.sk; emaily čakajú na Resend kľúč, crony na `CRON_SECRET` |
 | 6. Test celého toku | — |
 
 ## Pred spustením predaja
@@ -21,6 +21,10 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 - [ ] Stripe → Settings → Payment methods: zvážiť vypnutie Bancontact (belgická metóda, ponúka sa pri jednorazovom nákupe) a overiť doménu pre Apple Pay (Stripe.js varuje, že doména nie je overená).
 - [ ] **Čiarový kód na etikete:** EAN od GS1 Slovakia, alebo interný Code 128 s SKU, ak ho FHB akceptuje (spýtať sa FHB). Potom doplniť `ean` do FHB produktov (dnes sa nevypĺňa, identifikátor je SKU; sync skript ean zámerne neposiela, treba ho na to upraviť alebo zadať v ZOE).
 - [ ] Pri premazaní testovacích dát **neresetovať sekvenciu `orders.number`** (FHB id `GR-000123` musí ostať unikátne), iba zmazať riadky.
+- [ ] **Vercel env pre krok 5:** `CRON_SECRET` (`openssl rand -hex 32`; bez neho crony vrátia 503), `ADMIN_EMAIL` (interné upozornenia), `RESEND_API_KEY` + `EMAIL_FROM` (napr. `Granula <objednavky@granula.sk>`) + `EMAIL_REPLY_TO` (`podpora@granula.sk`) po overení domény granula.sk v Resend. Do vtedy sa emaily iba zapisujú do `email_log` ako `skipped` (po nastavení kľúča sa staré neposielajú).
+- [ ] **Stránka `/odstupenie`** (P4) musí existovať pred spustením: potvrdzovací email už odkazuje na `/odstupenie?objednavka=<číslo>`.
+- [ ] **Vercel plán:** crony bežia 1× denne (Hobby). Hodinový `fhb-orders` (SPEC P2) vyžaduje Pro: potom vo `vercel.json` zmeniť na napr. `17 6-20 * * *`.
+- [ ] Opýtať sa FHB na formát notifikácií objednávok (route prijme čokoľvek a loguje do `fhb_events`; po prvej skutočnej notifikácii pozrieť payload).
 - [ ] Stripe účet vedený na Spark Link, s. r. o.
 - [ ] Zmazať staré branche (Carbone Company)
 - [ ] Záverečná bezpečnostná kontrola: kľúče v histórii gitu, webhooky (podpis, idempotencia), RLS
@@ -296,3 +300,34 @@ Prvý beh (pred opravou id) dal objednávky #1 a #2 so stavom `fhb_error` (`TOO_
 - Pri jednorazovom nákupe Checkout ponúka aj Bancontact (nastavenie účtu), karta je v akordeóne. Pozri „Pred spustením predaja“.
 - Drafty (zákazník/pes/adresa) zo zamietnutých alebo nedokončených platieb ostávajú v DB. Upratovanie starých draftov: návrh do P3 (admin) alebo cron.
 - `checkout.session.async_payment_failed` je na endpointe (7. event), kód ho zatiaľ nespracúva (200).
+
+---
+
+## Krok 5: FHB stavy a emaily (21. 11. 2026)
+
+Plán schválený vopred („approve everything“). Rozhodnutia v SPEC §10.14. Predvolené voľby, ktoré som urobil sám: potvrdenie objednávky aj pri obnovení, `ADMIN_EMAIL` pre interné upozornenia, odkaz na `/odstupenie` v emaile už teraz, crony iba denne, `vercel.json` s `crons`.
+
+### Najprv (zadanie používateľa 21. 11.)
+- **FHB id = `GR-000123`** (z `orders.number`, rovnaké číslo ako na stránke Hotovo a v emaile). Poistka proti kolízii: ak POST zlyhá a vo FHB už objednávka s týmto id je, za odoslanú sa berie iba pri zhode VS, e-mailu a položiek, inak `fhb_error` `ID_COLLISION`. Sekvencia `orders.number` sa nesmie resetovať. Overené: smoke test v sandboxe, živý nákup #9 → FHB `GR-000009`, #10 → `GR-000010`.
+- **EAN:** pole `ean` sa do FHB nikdy neposiela (sync skript aj klient), identifikátor je SKU. Úloha na čiarový kód v „Pred spustením predaja“.
+
+### Hotové
+- **`lib/fhb/sync.ts` `applyFhbOrder`:** stav z FHB → DB (iba dopredu), tracking, `shipped_at`, `delivered_at`, audit; pri `sent` email s trackingom; pri `delivered` `last_delivered_at` a pri prvej objednávke prepočet prvého obnovenia (Stripe `trial_end`).
+- **`/api/fhb/notify/<typ>/<orders.id>?t=`** (GET aj POST, akékoľvek telo) → `fhb_events` → overenie `GET /order` → `applyFhbOrder`. **`/api/fhb/stock-notify?t=`** → `fhb_events` + kontrola skladu.
+- **Cron** (`vercel.json`, `Authorization: Bearer CRON_SECRET`): `fhb-orders` (znova odoslať `paid` + `order/history`), `fhb-rma` (vrátené zásielky), `fhb-stock` (nízky sklad z `free_quantity` vs. spotreba predplatných × 35 dní).
+- **Emaily** (`lib/email.ts`, `lib/emails.ts`, Resend): potvrdenie objednávky (first, one_off, renewal) s tlačidlom **„Odstúpiť od zmluvy tu“**, zásielka odoslaná, neúspešná platba (odkaz na faktúru Stripe), interné: chyba FHB, vrátená zásielka, nízky sklad. Idempotencia cez `email_log` (nová tabuľka, migrácia `p5_email_log` aplikovaná) + Idempotency-Key. Bez kľúča `skipped`, chyba emailu webhook neprerušuje (`audit_log` `email.failed`).
+- **Testy:** 101 ✅ (18 nových: stavy FHB, prepočet obnovenia, emaily a šablóny, mailer, sklad, cron autorizácia, emaily z webhooku). `typecheck` ✅, `build` ✅.
+
+### Overené
+- **Lokálne (`next start` proti DB a FHB sandboxu):** notifikácia so zlým tokenom 401, neznámy typ 404, POST s JSON → `fhb_events` (`notify.confirmed`, telo aj query uložené) a overenie cez FHB; stock-notify → `fhb_events` (`stock`) a nízky sklad `GRAN-morka-hus-kacica-9` (sandbox má 0 ks, test predplatné sú aktívne); crony bez autorizácie 401, s ňou `fhb-orders` / `fhb-rma` / `fhb-stock` prebehli.
+- **Produkcia (nasadenie `1462d1f`, crony vo `vercel.json` Vercel prijal):** cron bez `CRON_SECRET` 503 (vo Verceli ešte nie je), notifikácia 401 / 200 `verified: true`. Živý nákup jednorazovo **#10** → FHB `GR-000010`, potvrdenie v `email_log` (`skipped`, chýba Resend kľúč). E2E test clock: first **#11**, renewal **#12** (`in_1UeHup1U0mpiDjfiWnHxdlkd`), obe vo FHB, potvrdenie oboch v `email_log`. Zlyhané doručenia webhooku: 0 (2 prechodné počas prepnutia nasadenia, Stripe ich doručil na druhý pokus).
+- **Náhľady emailov:** potvrdenie, odoslané, neúspešná platba (Granula štýl, Mlieko/Kobalt/Oranž, bez „DPH“).
+
+### Neoverené (chýba v sandboxe alebo v env)
+- **Prechody `sent` / `delivered` / `returned` naživo:** FHB sandbox objednávky sám neposúva (všetky ostávajú `pending`). Logika je pokrytá testami; naživo sa overí pri teste s FHB (ich testovací portál) v kroku 6.
+- **Skutočné odoslanie emailu** (chýba `RESEND_API_KEY`, doména).
+- **Cron na Verceli** (chýba `CRON_SECRET`).
+
+### Poznámky
+- Testovacie objednávky #3–#8 sú vo FHB sandboxe pod starými base36 id; synchronizácia ich ignoruje (iba testovacie dáta, premažú sa).
+- `invoice.payment_failed` posiela email pri každom pokuse (kľúč faktúra + pokus); Stripe Smart Retries skúša ~4×.
