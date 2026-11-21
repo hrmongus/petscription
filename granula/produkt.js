@@ -19,6 +19,14 @@
     });
   });
 
+  // garancia: „Ako to funguje?“ otvorí okno s podmienkami
+  var gd = $("gd"), gdBtn = root.querySelector(".pd-gar-l");
+  if (gd && gd.showModal) {
+    gdBtn.addEventListener("click", function () { gd.showModal(); document.documentElement.classList.add("sd-open"); });
+    gd.addEventListener("close", function () { document.documentElement.classList.remove("sd-open"); gdBtn.focus(); });
+    gd.addEventListener("click", function (e) { if (e.target === gd || e.target.closest("[data-gd-close]")) gd.close(); });
+  }
+
   // počet recenzií a fotky zákazníkov z reviews.js
   var R = window.GranulaReviews;
   if (R) {

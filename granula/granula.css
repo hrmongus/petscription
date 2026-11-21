@@ -473,9 +473,9 @@ section[id]{scroll-margin-top:96px}
 .pd-gar b{font-size:clamp(24px,2.4vw,30px);line-height:1;text-transform:uppercase}
 .pd-gar b span{color:var(--l)}
 .pd-gar > span:not(.pd-gar-fl){font-size:15px}
-.pd-gar .pd-gar-l{font-weight:800;text-decoration:underline;text-underline-offset:4px;margin-top:6px}
-.pd-gar:hover{color:var(--m)}
-.pd-gar:hover .pd-gar-l{color:var(--l)}
+.pd-gar .pd-gar-l{align-self:flex-start;margin-top:6px;padding:0 0 2px;border:0;border-bottom:2px solid var(--l);background:none;color:var(--l);font:800 15px Montserrat,sans-serif;cursor:pointer}
+.pd-gar .pd-gar-l:hover{color:var(--m);border-color:var(--m)}
+.pd-gar .pd-gar-l:focus-visible{outline:3px solid var(--m);outline-offset:3px}
 .pd-gar-fl{position:absolute;right:18px;top:18px;width:34px;height:34px;color:var(--o);transform:rotate(12deg)}
 .pd-h3{font-size:20px;font-weight:900;text-transform:uppercase}
 .pd-join{display:flex;flex-direction:column;gap:16px;min-width:0}
@@ -491,4 +491,37 @@ section[id]{scroll-margin-top:96px}
 @media (max-width:480px){
   .pd-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
   .pd-sel select{font-size:14px;padding-right:32px}
+}
+
+/* okno „Garancia spokojného psa“ (produktová sekcia) */
+.gd{width:min(760px,calc(100% - 32px));max-width:none;max-height:calc(100dvh - 32px);margin:auto;padding:0;border:2px solid var(--n);background:var(--m);color:var(--n);overflow:auto}
+.gd::backdrop{background:rgba(0,0,0,.55)}
+.gd-top{position:relative;background:var(--ml);border-bottom:2px solid var(--n);padding:40px 44px 32px;display:flex;flex-direction:column;gap:14px}
+.gd-x{position:absolute;right:16px;top:16px;width:46px;height:46px;border:2px solid var(--n);background:var(--ml);color:var(--n);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.gd-x:hover{background:var(--n);color:var(--m)}
+.gd-tag{align-self:flex-start;background:var(--k);color:var(--m);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px}
+.gd-top h2{font-size:clamp(28px,4.4vw,46px);line-height:1;padding-right:48px}
+.gd-top h2 span{color:var(--k)}
+.gd-fl{display:inline-block;width:.8em;height:.8em;color:var(--o);vertical-align:.02em;transform:rotate(12deg)}
+.gd-fl svg{width:100%;height:100%}
+.gd-top p{font-size:16px;line-height:1.55;max-width:600px}
+.gd-body{padding:28px 44px 32px;display:flex;flex-direction:column;gap:22px}
+.gd-steps{list-style:none;margin:0;padding:0}
+.gd-steps li{display:flex;gap:20px;padding:20px 0;border-top:2px solid var(--n)}
+.gd-steps li:first-child{border-top:0;padding-top:4px}
+.gd-n{flex:none;min-width:44px;text-align:center;background:var(--o);color:var(--n);font-weight:900;font-size:20px;line-height:1;padding:8px 8px 6px;transform:rotate(-4deg);align-self:flex-start}
+.gd-steps b{display:block;font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:6px}
+.gd-steps p{font-size:15px;line-height:1.55}
+.gd-note{display:flex;gap:12px;align-items:flex-start;background:var(--ml);border:2px solid var(--n);padding:16px 18px;font-size:13px;line-height:1.55}
+.gd-g{flex:none;background:var(--o);color:var(--n);font-weight:900;font-style:italic;font-size:12px;padding:3px 6px 2px;transform:rotate(-4deg)}
+.gd-act{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.gd-act .link-under{color:var(--k);font-weight:800}
+@media (max-width:640px){
+  .gd{width:100%;max-height:100dvh;height:100dvh;border:0}
+  .gd-top{padding:28px 16px 22px}
+  .gd-x{position:fixed;right:12px;top:12px;z-index:2}
+  .gd-body{padding:20px 16px 24px}
+  .gd-steps li{gap:14px;padding:16px 0}
+  .gd-steps b{font-size:16px}
+  .gd-act{flex-direction:column-reverse;align-items:stretch;text-align:center}
 }
