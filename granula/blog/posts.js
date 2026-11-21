@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-20 05:16",
+ "built": "2026-11-21 09:11",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -1356,6 +1356,506 @@ window.GRANULA_POSTS = {
    "live": null,
    "lint": [],
    "sections": []
+  },
+  {
+   "slug": "granula-vs-psi-bufet",
+   "file": "granula/blog/_src/granula-vs-psi-bufet.md",
+   "title": "Granula alebo PsiBufet? Zloženie, cena na deň a skladovanie",
+   "status": "draft",
+   "wanted": "draft",
+   "example": false,
+   "published": "2026-11-21",
+   "updated": "2026-11-21",
+   "author": "[Meno Priezvisko]",
+   "authorId": "",
+   "authorPhoto": "",
+   "hero": "placeholder",
+   "words": 1611,
+   "description": "Granula a PsiBufet: zloženie, cena na deň a skladovanie. V príkladoch PsiBufetu stojí deň 3,35–4,65 €, rovnaká energia z granúl 0,96–1,83 €.",
+   "id": "X1",
+   "category": "Porovnania",
+   "priority": "P1",
+   "brief": "",
+   "angle": "",
+   "preview": "../blog/nahlad/granula-vs-psi-bufet/index.html",
+   "pdf": "../blog/nahlad-pdf/granula-vs-psi-bufet.pdf",
+   "live": null,
+   "lint": [
+    {
+     "id": "title",
+     "level": "error",
+     "ok": true,
+     "msg": "Titulok je vyplnený",
+     "details": []
+    },
+    {
+     "id": "title-length",
+     "level": "warn",
+     "ok": true,
+     "msg": "Titulok má najviac 70 znakov (má 59)",
+     "details": []
+    },
+    {
+     "id": "title-year",
+     "level": "warn",
+     "ok": true,
+     "msg": "Rok v titulku len pri téme, ktorá sa mení, a len ak sedí s dátumom aktualizácie",
+     "details": []
+    },
+    {
+     "id": "description",
+     "level": "warn",
+     "ok": true,
+     "msg": "Meta popis má 120–160 znakov (má 140)",
+     "details": []
+    },
+    {
+     "id": "author",
+     "level": "error",
+     "ok": false,
+     "msg": "Skutočný autor a jedna veta, prečo mu veriť (author, author_bio, bez zástupného textu)",
+     "details": []
+    },
+    {
+     "id": "author-photo",
+     "level": "error",
+     "ok": false,
+     "msg": "Fotka autora (author_photo, súbor v granula/img/autori/)",
+     "details": []
+    },
+    {
+     "id": "dates",
+     "level": "error",
+     "ok": true,
+     "msg": "Dátumy published a updated (RRRR-MM-DD), updated ≥ published",
+     "details": []
+    },
+    {
+     "id": "changelog",
+     "level": "warn",
+     "ok": true,
+     "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
+     "details": [
+      "2026-11-21: Prvá verzia"
+     ]
+    },
+    {
+     "id": "tldr",
+     "level": "error",
+     "ok": true,
+     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 55)",
+     "details": []
+    },
+    {
+     "id": "tldr-range",
+     "level": "warn",
+     "ok": true,
+     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 55)",
+     "details": []
+    },
+    {
+     "id": "tldr-intro",
+     "level": "error",
+     "ok": true,
+     "msg": "Krátka odpoveď začína priamou odpoveďou, nie úvodom („v tomto článku…“)",
+     "details": []
+    },
+    {
+     "id": "key-points",
+     "level": "error",
+     "ok": true,
+     "msg": "Aspoň 3 kľúčové body (má 4)",
+     "details": []
+    },
+    {
+     "id": "tldr-numbers",
+     "level": "warn",
+     "ok": true,
+     "msg": "Krátka odpoveď a kľúčové body obsahujú aspoň 3 čísla (majú 18)",
+     "details": []
+    },
+    {
+     "id": "definition",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcia „Čo je …?“ s definíciou vo forme „X je Y, ktoré Z“",
+     "details": []
+    },
+    {
+     "id": "sections",
+     "level": "warn",
+     "ok": true,
+     "msg": "3–6 hlavných sekcií (má 7)",
+     "details": []
+    },
+    {
+     "id": "h2-questions",
+     "level": "warn",
+     "ok": true,
+     "msg": "Aspoň polovica nadpisov H2 sú otázky (9 z 9)",
+     "details": []
+    },
+    {
+     "id": "section-length",
+     "level": "warn",
+     "ok": true,
+     "msg": "Hlavné sekcie majú 80–400 slov (kratšie je lepšie, viď STYL.md)",
+     "details": []
+    },
+    {
+     "id": "first-sentence",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každá sekcia začína tučnou prvou vetou = odpoveď na nadpis",
+     "details": []
+    },
+    {
+     "id": "section-numbers",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každá hlavná sekcia má aspoň 1 číslo alebo poznámku so zdrojom",
+     "details": []
+    },
+    {
+     "id": "standalone",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcie obstoja samy (žiadne „vyššie“, „ako sme spomenuli“, odsek začínajúci „Toto/To“)",
+     "details": []
+    },
+    {
+     "id": "hero",
+     "level": "warn",
+     "ok": true,
+     "msg": "Obrázok v hlavičke článku (hero, hero_alt)",
+     "details": []
+    },
+    {
+     "id": "images",
+     "level": "warn",
+     "ok": true,
+     "msg": "Obrázky v texte: aspoň 4 obrázky alebo grafy (1 na 2 hlavné sekcie), má 4",
+     "details": []
+    },
+    {
+     "id": "chart",
+     "level": "warn",
+     "ok": true,
+     "msg": "Aspoň 1 graf (blok ::: graf), keď článok porovnáva čísla",
+     "details": []
+    },
+    {
+     "id": "img-alt",
+     "level": "error",
+     "ok": true,
+     "msg": "Každý obrázok má popis (alt)",
+     "details": []
+    },
+    {
+     "id": "img-placeholder",
+     "level": "error",
+     "ok": false,
+     "msg": "Zástupné obrázky sú nahradené skutočnými (pred publikovaním)",
+     "details": [
+      "hero: Dve misky vedľa seba na kuchynskej linke: v jednej suché granule, v druhej varené jedlo s kúskami mäsa, mrkvy a šošovice. Bez obalov, log a nápisov, za miskami sedí pes strednej veľkosti.",
+      "obrázok: Kuchynská váha s dvoma porciami pre toho istého psa: malá kôpka suchých granúl a vedľa nej asi trikrát väčšia kôpka vareného jedla s mäsom a zeleninou, bez obalov a značiek",
+      "obrázok: Detail ruky, ktorá prstom ukazuje na riadok v zložení vytlačenom na zadnej strane vrecka s krmivom pre psov, text je rozmazaný okrem slov „kuracia pečeň“, bez loga a názvu značky",
+      "obrázok: Otvorená mraznička s naskladanými plochými kapsičkami vareného jedla bez nápisov a vedľa nej v špajzi zrolované vrece granúl so štipcom"
+     ]
+    },
+    {
+     "id": "img-files",
+     "level": "error",
+     "ok": true,
+     "msg": "Súbory obrázkov existujú (cesta od granula/, napr. img/blog/<slug>/…)",
+     "details": []
+    },
+    {
+     "id": "offer-mid",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka uprostred článku, ktorá sedí k téme (blok ::: ponuka)",
+     "details": []
+    },
+    {
+     "id": "offer-fields",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka má nadpis a text",
+     "details": []
+    },
+    {
+     "id": "offer-link",
+     "level": "warn",
+     "ok": true,
+     "msg": "Ponuka vedie na dotazník (granule-na-mieru.html), nie na konkrétny produkt",
+     "details": []
+    },
+    {
+     "id": "offer-count",
+     "level": "warn",
+     "ok": true,
+     "msg": "Najviac 2 ponuky v texte (má 1), inak to pôsobí ako reklama",
+     "details": []
+    },
+    {
+     "id": "table",
+     "level": "info",
+     "ok": true,
+     "msg": "Porovnávacia tabuľka (odporúčané pri „X vs Y“)",
+     "details": []
+    },
+    {
+     "id": "steps",
+     "level": "info",
+     "ok": false,
+     "msg": "Postup krok za krokom (číslovaný zoznam)",
+     "details": []
+    },
+    {
+     "id": "own-data",
+     "level": "info",
+     "ok": false,
+     "msg": "Vlastné dáta alebo skúsenosť (najväčší diferenciátor)",
+     "details": []
+    },
+    {
+     "id": "faq",
+     "level": "warn",
+     "ok": true,
+     "msg": "Časté otázky: 3–6 otázok v tvare **Otázka?** odpoveď, odpoveď najviac 3 vety (má 5)",
+     "details": []
+    },
+    {
+     "id": "summary",
+     "level": "warn",
+     "ok": true,
+     "msg": "Sekcia „Zhrnutie“ ako zoznam (hlavný záver, kedy áno/nie, ďalší krok)",
+     "details": []
+    },
+    {
+     "id": "sources",
+     "level": "error",
+     "ok": true,
+     "msg": "Aspoň 3 zdroje s URL (má 13)",
+     "details": []
+    },
+    {
+     "id": "sources-format",
+     "level": "warn",
+     "ok": true,
+     "msg": "Každý zdroj v tvare „Názov – vydavateľ, rok | https://…“",
+     "details": []
+    },
+    {
+     "id": "first-third",
+     "level": "info",
+     "ok": true,
+     "msg": "Kľúčové fakty (čísla) sú v prvej tretine textu",
+     "details": []
+    },
+    {
+     "id": "atomic",
+     "level": "info",
+     "ok": true,
+     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 31)",
+     "details": []
+    },
+    {
+     "id": "self-promo",
+     "level": "warn",
+     "ok": true,
+     "msg": "„Najlepšie X“ len s transparentnou metodikou a bez Granuly na prvom mieste",
+     "details": []
+    },
+    {
+     "id": "claims",
+     "level": "warn",
+     "ok": true,
+     "msg": "Žiadne vyradené tvrdenia a superlatívy z dizajn systému",
+     "details": []
+    },
+    {
+     "id": "recipe-names",
+     "level": "warn",
+     "ok": true,
+     "msg": "Receptúry podľa mäsa (napr. „Jeleň & králik“), nie interné názvy Puppy/Energy",
+     "details": []
+    },
+    {
+     "id": "ty-form",
+     "level": "warn",
+     "ok": true,
+     "msg": "Tykanie („tvoj pes“), nie vykanie",
+     "details": []
+    },
+    {
+     "id": "emoji",
+     "level": "warn",
+     "ok": true,
+     "msg": "Bez emoji",
+     "details": []
+    },
+    {
+     "id": "length",
+     "level": "info",
+     "ok": true,
+     "msg": "Dĺžka článku: 1611 slov (dĺžka nerozhoduje, hustota áno)",
+     "details": []
+    },
+    {
+     "id": "footnotes",
+     "level": "error",
+     "ok": true,
+     "msg": "Každá poznámka [^id] v texte má definíciu „[^id]: text“",
+     "details": []
+    }
+   ],
+   "sections": [
+    {
+     "title": "Čo je Granula a čo PsiBufet?",
+     "kind": "definition",
+     "words": 137,
+     "numbers": 7,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 1,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Aké mäso, strukoviny a oleje majú jednotlivé receptúry?",
+     "kind": "main",
+     "words": 238,
+     "numbers": 9,
+     "question": true,
+     "firstBold": true,
+     "table": true,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Je v PsiBufete a Granule kuracie mäso?",
+     "kind": "main",
+     "words": 129,
+     "numbers": 7,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 1,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Vadí psovi šošovica v krmive?",
+     "kind": "main",
+     "words": 135,
+     "numbers": 7,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Je slnečnicový olej v krmive pre psa zlý?",
+     "kind": "main",
+     "words": 155,
+     "numbers": 17,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Koľko stojí kŕmenie Granulou a PsiBufetom na deň?",
+     "kind": "main",
+     "words": 90,
+     "numbers": 6,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 1,
+     "offers": 1
+    },
+    {
+     "title": "Čo je praktickejšie: kapsičky z mrazničky alebo vrece granúl?",
+     "kind": "definition",
+     "words": 172,
+     "numbers": 15,
+     "question": true,
+     "firstBold": true,
+     "table": true,
+     "steps": false,
+     "images": 1,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Je čerstvé varené jedlo lepšie ako granule?",
+     "kind": "main",
+     "words": 134,
+     "numbers": 2,
+     "question": true,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Pre koho je vhodná Granula a pre koho PsiBufet?",
+     "kind": "main",
+     "words": 135,
+     "numbers": 6,
+     "question": true,
+     "firstBold": true,
+     "table": true,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Časté otázky",
+     "kind": "faq",
+     "words": 116,
+     "numbers": 6,
+     "question": false,
+     "firstBold": true,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    },
+    {
+     "title": "Zhrnutie",
+     "kind": "summary",
+     "words": 115,
+     "numbers": 10,
+     "question": false,
+     "firstBold": false,
+     "table": false,
+     "steps": false,
+     "images": 0,
+     "charts": 0,
+     "offers": 0
+    }
+   ]
   },
   {
    "slug": "granule-barf-konzervy-alebo-varene",

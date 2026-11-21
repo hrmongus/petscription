@@ -121,7 +121,7 @@ obrazok: img/produkty/hovadzie-s-ryzou.webp
 - Píšeme **„granule na mieru“**, nikdy „recept na mieru“ ani nič, čo naznačuje miešanie receptúr.
 - Receptúry pomenúvame **podľa mäsa** (presné názvy v `granula/README.md`, napr. „Jeleň & králik s batátmi“), nikdy Puppy, Energy a pod. **Nikdy neuvádzame počet receptúr.**
 - **Ponuka a výzva vedú vždy na dotazník** (`granule-na-mieru.html`), nie na konkrétny produkt.
-- **Konkurenciu nemenujeme.** Kritizujeme kategórie surovín a praktiky, nie značky.
+- **Konkurenciu nemenujeme.** Kritizujeme kategórie surovín a praktiky, nie značky. **Výnimka:** porovnávací článok (kategória „Porovnania“), keď ho výslovne zadá majiteľ projektu. Vtedy: len overiteľné údaje z webu konkurenta s dátumom, rovnaké vlastnosti, bez hanlivých slov (porovnávacia reklama, smernica 2006/114/ES), hneď na začiatku veta, že článok píše Granula, férovo aj výhody konkurenta, záver „pre koho je čo“, nie „kto vyhral“. Nepoužívaj logo ani fotky konkurenta.
 - Priateľsky a priamo, ako kamarát, ktorý rozumie psom a výžive. Nie laboratórium, nie batoľa. Odborne, ale ľudskými slovami.
 - **Nikdy:** pes hovoriaci v prvej osobe, zdrobneniny (psíček, mňamka, papať; „psík“ občas áno, viď STYL.md), vynútené slovné hry, superlatívy a žargón („superprémiová holistická výživa“), emoji.
 - Typografia: slovenské úvodzovky „…“, desatinná čiarka (2,4 kg), **nezalomiteľná medzera pred % a €** (build ju doplní sám).
