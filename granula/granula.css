@@ -105,7 +105,9 @@ h1,h2,h3,p{margin:0}
 .menu a{color:var(--n);text-decoration:none;padding:4px 0}
 .menu a:hover{color:var(--k)}
 .menu a[aria-current="page"]{border-bottom:2px solid var(--o);padding-bottom:2px}
-@media (max-width:860px){.menu{display:none}.logo{font-size:26px}}
+@media (max-width:1300px){.menu{gap:18px;font-size:13px;letter-spacing:.05em}}
+@media (max-width:1100px){.site-head .wrap{gap:14px}.menu{gap:14px;font-size:12px;letter-spacing:.03em}.btn-head{font-size:12px;padding:10px 14px}}
+@media (max-width:1023px){.menu{display:none}.logo{font-size:26px}}
 @media (max-width:640px){.topbar{font-size:10.5px;letter-spacing:.04em;gap:4px 8px;padding:8px 12px}.topbar > span[aria-hidden]{display:none}.topbar-cta{padding:4px 8px}}
 @media (max-width:480px){.site-head .wrap{gap:12px}.btn-head{font-size:11px;letter-spacing:.03em;padding:10px 12px;min-height:42px}.site-head .logo{font-size:21px}}
 
