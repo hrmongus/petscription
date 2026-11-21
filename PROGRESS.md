@@ -5,8 +5,8 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 | Krok | Stav |
 |---|---|
 | 1. Základ (SPEC P0) | ✅ hotové, preview skontrolované |
-| 2. FHB klient (P2) | ✅ hotové, čaká na „ok“ |
-| 3. Doprava v checkoute (P1b) | ✅ hotové, čaká na „ok“ |
+| 2. FHB klient (P2) | ✅ hotové, na main |
+| 3. Doprava v checkoute (P1b) | ✅ hotové, na main / granula.sk |
 | 4. Checkout a predplatné (P1) | — |
 | 5. FHB stavy a emaily | — |
 | 6. Test celého toku | — |
@@ -204,5 +204,23 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 2. **18 kg do DPD boxov** (limit veľkosti a 2 balíky) a **`dpd_sk` vs `dpd_eu_pudo`** → doplniť do emailu pre FHB.
 3. **`PACKETA_API_KEY`** (používateľ zisťuje u FHB) a kód SPS kuriéra od FHB.
 
+### Nasadenie na main / granula.sk (21. 11.)
+- **Nasadenie:** `main` fast-forward na `f507e98`, Vercel nasadil za ~40 s.
+- **`/api/delivery-points?service=dpd`** na produkcii vracia skutočné miesta z FHB sandboxu (`source: fhb`, 3 961). `/api/checkout/status` → `closed`.
+- **Porovnanie so záznamom spred nasadenia (214 URL):** zmenili sa iba `granule-na-mieru` a `kviz.js` a pribudli `doprava.js`, `doprava.css`, `doprava-config.js`.
+- **Vizuálne:** 11 stránok × desktop/mobil, 0 rozdielnych pixelov. Krok objednávky pri zatvorenom predaji: pôvodné tlačidlo „Objednávky od 1. 12.“, nový výber skrytý.
+  - Jedno meranie ukázalo drobné rozdiely aj na nezmenených stránkach (načítanie písma). Opakované meranie dalo 0.
+
 ### Ostáva (ďalšie kroky)
-- Krok 4: checkout a predplatné (Stripe test mode, Embedded Checkout, webhooky, `lib/subscription-schedule.ts`).
+- **Krok 4: checkout a predplatné** (Stripe TEST MODE). Odovzdanie pre ďalší chat:
+  - **Chýba v env:** `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `STRIPE_WEBHOOK_SECRET` (test). DPH ostáva otvorená (TODO, opýtať sa).
+  - **Vzory:** `reference/fanpagekit/lib/stripe.ts` (APP_METADATA app=granula, isOurs), `app/api/stripe/webhook/route.ts` (podpis, idempotencia cez `stripe_events`).
+  - **`POST /api/checkout`:**
+    - na začiatku `gateFromRequest` (prepínač predaja),
+    - `quote()` z `lib/engine-server.ts` (dávka, D, cena),
+    - overenie doručenia: `isMethodAllowed(delivery.method, bag)` a pri výdajnom mieste `findPoint('packeta'|'dpd', point.id)`,
+    - telefón cez `normalizePhone`, cena dopravy `shippingPrice(method, bag, PARAMS.shipping)`,
+    - draft customer/dog/address v DB, Checkout Session `ui_mode: embedded`.
+  - **Klient:** `kviz.js` → `checkout()`; miesto `// TODO krok 4` pošle `{ answers, plan, bag, delivery }`. V otvorenom režime odstrániť pôvodné platobné polia (`#pm-card`, peňaženky, prevod) a napojiť Embedded Checkout.
+  - **Objednávka:** položky `skuItems(productId, bag)` (18 kg = sada `GRAN-<receptúra>-18`). Do FHB cez `sendOrderToFhb` (`lib/fhb/send.ts`); `ship_to` podľa typu `ShipTo` (`lib/fhb/build-order.ts`, pri výdajnom mieste `point_address`).
+  - **Vercel URL pre preview:** návratovú URL pre Stripe brať z adresy požiadavky, nie z `NEXT_PUBLIC_SITE_URL`.
