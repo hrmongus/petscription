@@ -5,6 +5,9 @@ import { quote } from './engine-server';
 import type { ShipTo } from './fhb/build-order';
 import { skuItems, type BagId } from './engine-server';
 import { idOf } from './stripe';
+import type { Mail, Mailer } from './email';
+import { orderConfirmationEmail, paymentFailedEmail } from './emails';
+import { notifyFhbError } from './notify';
 import { addDays, changePlan, chargeTime, estimatedDelivery, firstRenewal, type CycleParams } from './subscription-schedule';
 import { productIdFor, SHIPPING_PRODUCT_ID } from './checkout';
 
@@ -46,6 +49,11 @@ export type Deps = {
   sendToFhb?: (orderId: string) => Promise<unknown>;
   cycle: CycleParams;
   now?: () => Date;
+  /** transakčné emaily (lib/email.ts); bez neho sa neposielajú */
+  mail?: Mailer;
+  siteUrl?: string;
+  /** interné upozornenia (ADMIN_EMAIL) */
+  adminTo?: string | null;
 };
 
 const nowOf = (d: Deps) => (d.now ? d.now() : new Date());
@@ -68,7 +76,8 @@ export function shipToOf(c: Customer, a: Address): ShipTo {
 async function sendSafely(deps: Deps, order: Order) {
   if (!deps.sendToFhb || !['paid', 'fhb_error'].includes(order.status)) return;
   try {
-    await deps.sendToFhb(order.id);
+    const r = (await deps.sendToFhb(order.id)) as { state?: string; error?: unknown } | undefined;
+    if (r?.state === 'fhb_error') await notifyFhbError(deps, order, r.error);
   } catch (e) {
     // sieť / 5xx: objednávka ostáva paid, odoslanie zopakuje cron (krok 5) alebo admin
     console.error('[fulfillment] FHB odoslanie zlyhalo', order.id, e);
@@ -76,6 +85,22 @@ async function sendSafely(deps: Deps, order: Order) {
 }
 
 const unixDate = (s: number | null | undefined) => (s ? new Date(s * 1000) : null);
+
+/** Email zákazníkovi: chyba emailu NIKDY neprerušuje webhook (objednávka je hotová), ostane stopa v audit_log. */
+async function mailSafely(deps: Deps, mail: Mail, entity: { type: string; id: string }) {
+  if (!deps.mail) return;
+  try {
+    await deps.mail(mail);
+  } catch (e) {
+    console.error('[fulfillment] email zlyhal', mail.key, e);
+    await deps.store.audit({ actor: 'system', action: 'email.failed', entity: entity.type, entity_id: mail.key, after: { [entity.type]: entity.id, kind: mail.kind, error: String((e as Error).message ?? e).slice(0, 500) } as Json }).catch(() => {});
+  }
+}
+
+async function sendConfirmation(deps: Deps, order: Order, customer: Customer, sub?: { days: number; nextChargeAt: Date | null } | null) {
+  if (!deps.mail || !deps.siteUrl) return;
+  await mailSafely(deps, orderConfirmationEmail({ order, to: customer.email, name: customer.name, siteUrl: deps.siteUrl, subscription: sub ?? null }), { type: 'order', id: order.id });
+}
 
 export async function handleCheckoutCompleted(session: Stripe.Checkout.Session, deps: Deps): Promise<Order | null> {
   if (session.payment_status === 'unpaid') return null; // napr. oneskorená platba; príde async_payment_succeeded
@@ -87,6 +112,7 @@ export async function handleCheckoutCompleted(session: Stripe.Checkout.Session, 
   const now = nowOf(deps);
 
   let subscriptionId: string | null = null;
+  let subInfo: { days: number; nextChargeAt: Date } | null = null;
   if (session.mode === 'subscription') {
     const stripeSubId = idOf(session.subscription);
     if (!stripeSubId) throw new Error(`checkout ${session.id}: chýba subscription`);
@@ -108,6 +134,7 @@ export async function handleCheckoutCompleted(session: Stripe.Checkout.Session, 
       engine_snapshot: { answers: dog.answers, product_id: md.product_id, bag_id: bag, grams: Number(md.grams), days, at: now.toISOString() } as Json,
     });
     subscriptionId = sub.id;
+    subInfo = { days, nextChargeAt: next };
     await deps.stripe.subscriptions.update(stripeSubId, { trial_end: Math.floor(next.getTime() / 1000), proration_behavior: 'none' });
   }
 
@@ -122,6 +149,7 @@ export async function handleCheckoutCompleted(session: Stripe.Checkout.Session, 
     status: 'paid',
   });
   await sendSafely(deps, order);
+  await sendConfirmation(deps, order, customer, subInfo);
   return order;
 }
 
@@ -189,6 +217,8 @@ export async function handleInvoicePaid(invoice: Stripe.Invoice, deps: Deps): Pr
     });
   }
   await sendSafely(deps, order);
+  const fresh = await deps.store.findSubscriptionByStripeId(stripeSubId);
+  await sendConfirmation(deps, order, customer, { days: fresh?.days_per_bag ?? sub.days_per_bag, nextChargeAt: fresh?.next_charge_at ? new Date(fresh.next_charge_at) : null });
   return order;
 }
 
@@ -205,8 +235,23 @@ export async function handlePaymentFailed(invoice: Stripe.Invoice, deps: Deps) {
   const stripeSubId = idOf(invoice.parent?.subscription_details?.subscription);
   if (!stripeSubId) return;
   const sub = await deps.store.findSubscriptionByStripeId(stripeSubId);
-  if (sub) await deps.store.updateSubscription(sub.id, { status: 'past_due' });
-  // email zákazníkovi: krok 5
+  if (!sub) return;
+  await deps.store.updateSubscription(sub.id, { status: 'past_due' });
+  const customer = await deps.store.getCustomer(sub.customer_id);
+  if (!customer || !invoice.id) return;
+  await mailSafely(
+    deps,
+    paymentFailedEmail({
+      invoiceId: invoice.id,
+      attempt: invoice.attempt_count ?? 1,
+      to: customer.email,
+      name: customer.name,
+      amountCents: invoice.amount_due,
+      payUrl: invoice.hosted_invoice_url,
+      nextAttempt: unixDate(invoice.next_payment_attempt),
+    }),
+    { type: 'subscription', id: sub.id },
+  );
 }
 
 /** Stripe stav → náš: trialing/active → active, past_due/unpaid → past_due, pauza → paused, canceled → cancelled */

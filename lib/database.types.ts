@@ -179,6 +179,44 @@ export type Database = {
           },
         ]
       }
+      email_log: {
+        Row: {
+          key: string
+          kind: string
+          order_id: string | null
+          provider_id: string | null
+          sent_at: string
+          status: string
+          to_email: string
+        }
+        Insert: {
+          key: string
+          kind: string
+          order_id?: string | null
+          provider_id?: string | null
+          sent_at?: string
+          status: string
+          to_email: string
+        }
+        Update: {
+          key?: string
+          kind?: string
+          order_id?: string | null
+          provider_id?: string | null
+          sent_at?: string
+          status?: string
+          to_email?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_log_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       fhb_events: {
         Row: {
           id: string

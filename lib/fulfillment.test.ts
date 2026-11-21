@@ -156,3 +156,36 @@ describe('neúspešná platba a zmeny predplatného', () => {
     expect(statusOf({ status: 'unpaid', pause_collection: null } as never)).toBe('past_due');
   });
 });
+
+describe('emaily z webhooku (krok 5)', () => {
+  const mailer = () => {
+    const sent = new Map<string, { kind: string; to: string; text: string }>();
+    const mail = vi.fn(async (x: { key: string; kind: string; to: string; text: string }) => (sent.has(x.key) ? 'duplicate' : (sent.set(x.key, x), 'sent')) as 'sent');
+    return { mail, sent };
+  };
+  test('potvrdenie po zaplatení (raz aj pri opakovanom evente), renewal tiež; chyba FHB → interné upozornenie', async () => {
+    const m = memStore(), f = fakeStripe(), x = mailer();
+    const send = vi.fn(async () => ({ state: 'fhb_error', error: { status: 400 } }));
+    const deps = { store: m.store, stripe: f.s, cycle: CYCLE, now: () => NOW, sendToFhb: send, mail: x.mail as never, siteUrl: 'https://www.granula.sk', adminTo: 'admin@granula.sk' };
+    const o = await handleCheckoutCompleted(session(), deps);
+    await handleCheckoutCompleted(session(), deps);
+    const confirm = x.sent.get(`order-confirm:${o!.id}`)!;
+    expect(confirm).toMatchObject({ kind: 'order_confirmation', to: 'jan@example.sk' });
+    expect(confirm.text).toContain('Odstúpiť od zmluvy tu: https://www.granula.sk/odstupenie?objednavka=');
+    expect(confirm.text).toContain('každých 37 dní');
+    expect(x.sent.get(`admin-fhb-error:${o!.id}`)).toMatchObject({ kind: 'admin_fhb_error', to: 'admin@granula.sk' });
+    const later = new Date('2027-01-03T06:00:00Z');
+    const r = await handleInvoicePaid(invoice(), { ...deps, now: () => later });
+    expect(x.sent.get(`order-confirm:${r!.id}`)?.text).toContain('ďalšie vrece');
+  });
+  test('neúspešná platba → email s odkazom na zaplatenie; zlyhanie emailu webhook neprerušuje (audit)', async () => {
+    const m = memStore(), f = fakeStripe(), x = mailer();
+    const deps = { store: m.store, stripe: f.s, cycle: CYCLE, now: () => NOW, mail: x.mail as never, siteUrl: 'https://www.granula.sk' };
+    await handleCheckoutCompleted(session(), deps);
+    await handlePaymentFailed(invoice({ id: 'in_9', attempt_count: 1, amount_due: 7240, hosted_invoice_url: 'https://invoice.stripe.com/i/abc' }), deps);
+    expect(x.sent.get('payment-failed:in_9:1')?.text).toContain('https://invoice.stripe.com/i/abc');
+    const broken = { ...deps, mail: vi.fn(async () => { throw new Error('Resend 500'); }) as never };
+    await expect(handlePaymentFailed(invoice({ id: 'in_10', attempt_count: 1, amount_due: 7240 }), broken)).resolves.toBeUndefined();
+    expect(m.audits.some((a) => (a as { action: string }).action === 'email.failed')).toBe(true);
+  });
+});

@@ -3,6 +3,7 @@ import { handleCheckoutCompleted, handleInvoicePaid, handlePaymentFailed, handle
 import { FhbClient } from '@/lib/fhb/client';
 import { sendOptionsFromEnv, sendOrderToFhb, supabaseOrderStore } from '@/lib/fhb/send';
 import { serverParams } from '@/lib/engine-server';
+import { defaultMailer } from '@/lib/email';
 import { eventMetadata, isOurs, stripe } from '@/lib/stripe';
 import { eventProcessed, markEvent, supabaseStore } from '@/lib/store';
 
@@ -13,7 +14,7 @@ import { eventProcessed, markEvent, supabaseStore } from '@/lib/store';
  */
 export const dynamic = 'force-dynamic';
 
-function deps(): Deps {
+async function deps(): Promise<Deps> {
   const P = serverParams();
   const fhbReady = !!(process.env.FHB_API_URL && process.env.FHB_APP_ID && process.env.FHB_SECRET && process.env.FHB_NOTIFY_TOKEN && process.env.NEXT_PUBLIC_SITE_URL);
   return {
@@ -23,6 +24,9 @@ function deps(): Deps {
     sendToFhb: fhbReady
       ? async (orderId) => sendOrderToFhb(orderId, { client: FhbClient.fromEnv(), store: await supabaseOrderStore(), options: sendOptionsFromEnv() })
       : undefined,
+    mail: await defaultMailer(),
+    siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
+    adminTo: process.env.ADMIN_EMAIL || null,
   };
 }
 
@@ -43,7 +47,7 @@ export async function POST(req: Request) {
 
   try {
     if (await eventProcessed(event.id)) return Response.json({ received: true, duplicate: true });
-    const d = deps();
+    const d = await deps();
     switch (event.type) {
       case 'checkout.session.completed':
       case 'checkout.session.async_payment_succeeded':

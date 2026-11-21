@@ -16,7 +16,7 @@
 
 ## Štruktúra
 
-- **Web:** `public/granula/` (statické HTML, popis v `public/granula/README.md`). Next.js ho servíruje z koreňa domény: `granula.sk/podpora` = `public/granula/podpora.html`. Všetky URL pravidlá (pôvodný `vercel.json`: cleanUrls, presmerovania, hlavičky) sú v `lib/site-routes.ts` + `proxy.ts` (koncová lomka). `vercel.json` obsahuje iba `{ "framework": "nextjs" }`.
+- **Web:** `public/granula/` (statické HTML, popis v `public/granula/README.md`). Next.js ho servíruje z koreňa domény: `granula.sk/podpora` = `public/granula/podpora.html`. Všetky URL pravidlá (pôvodný `vercel.json`: cleanUrls, presmerovania, hlavičky) sú v `lib/site-routes.ts` + `proxy.ts` (koncová lomka). `vercel.json` obsahuje iba `framework` a `crons` (Vercel Cron sa inde nastaviť nedá; SPEC §10.14).
 - **Overenie URL:** `npm run check:urls` porovná produkciu s lokálnym `next start` (status, presmerovanie, obsah).
 - **Engine:** `public/granula/engine.js` (UMD: prehliadač aj Node), na serveri `lib/engine-server.ts`.
 - **Databáza:** `supabase/migrations/`, typy `lib/database.types.ts`, klient `lib/db.ts` (service role, iba server).
