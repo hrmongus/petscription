@@ -9,7 +9,7 @@
     opts = opts || {};
     var E = window.GranulaEngine, n = ++uid;
     var bq = wrap.querySelector(".bs-input"), blist = wrap.querySelector(".bs-list"), btyped = wrap.querySelector(".bs-typed");
-    var EMPTY = opts.emptyId || "krizenec-stredny"; // predvolené plemeno sa v poli neukazuje (pole je prázdne)
+    var EMPTY = "emptyId" in opts ? opts.emptyId : "krizenec-stredny"; // predvolené plemeno sa v poli neukazuje (pole je prázdne)
     var GROUPS = [["Kríženec", function (b) { return b.mix; }]].concat(["trpaslicie", "male", "stredne", "velke", "obrie"].map(function (s) {
       return [E.SIZE_TEXT[s].charAt(0).toUpperCase() + E.SIZE_TEXT[s].slice(1) + " plemená", function (b) { return !b.mix && b.size === s; }];
     }));

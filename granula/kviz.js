@@ -16,14 +16,14 @@
   /* ---------------- stav ---------------- */
   var KEY = "granula-quiz";
   var BLANK = { dogname: "", sex: "", breed: "krizenec-stredny", kg: 17, years: "", months: "", weeks: "",
-    activity: "", neutered: "", pregnant: "", body: "", focus: [], breedSet: false, bag: "", plan: "mesiac", ordered: false, recipe: "", recipeFor: "", bagKey: "" };
+    activity: "", neutered: "", pregnant: "", body: "", focus: [], allergies: [], breedSet: false, bag: "", plan: "mesiac", ordered: false, recipe: "", recipeFor: "", bagKey: "" };
   var state = JSON.parse(JSON.stringify(BLANK));
   try { Object.assign(state, JSON.parse(sessionStorage.getItem(KEY)) || {}); } catch (e) {}
   if (!(state.plan in E.PARAMS.plans)) state.plan = "mesiac";
   if (state.breed !== BLANK.breed) state.breedSet = true; // starší uložený stav bez príznaku // napr. zrušená možnosť „na 3 mesiace“
   // dokončené odpovede si pamätáme aj po zatvorení prehliadača (len v tomto prehliadači, max. 3 psy)
   var SAVED_KEY = "granula-psy";
-  var ANSWERS = ["dogname", "sex", "breed", "breedSet", "kg", "years", "months", "weeks", "activity", "neutered", "pregnant", "body", "focus", "bag", "bagKey", "plan", "recipe", "recipeFor"];
+  var ANSWERS = ["dogname", "sex", "breed", "breedSet", "kg", "years", "months", "weeks", "activity", "neutered", "pregnant", "body", "focus", "allergies", "bag", "bagKey", "plan", "recipe", "recipeFor"];
   function savedDogs() {
     try { var l = JSON.parse(localStorage.getItem(SAVED_KEY)); return Array.isArray(l) ? l : []; } catch (e) { return []; }
   }
@@ -88,6 +88,12 @@
       if (t.value === "nic" && t.checked) boxes.forEach(function (b) { if (b !== t) b.checked = false; });
       if (t.value !== "nic" && t.checked) quiz.querySelector('input[value="nic"]').checked = false;
     }
+    // krok 7: „Na nič nie je alergický“ sa vylučuje s ostatnými
+    if (t.name === "allergies") {
+      var al = quiz.querySelectorAll('input[name="allergies"]');
+      if (t.value === "ziadne" && t.checked) al.forEach(function (b) { if (b !== t) b.checked = false; });
+      if (t.value !== "ziadne" && t.checked) quiz.querySelector('input[name="allergies"][value="ziadne"]').checked = false;
+    }
     read();
   });
 
@@ -106,6 +112,7 @@
     state.pregnant = fd.get("pregnant") || "";
     state.body = fd.get("body") || "";
     state.focus = fd.getAll("focus");
+    state.allergies = fd.getAll("allergies");
     paintName();
     paintConditional();
     save();
@@ -148,6 +155,8 @@
       quiz.querySelectorAll('input[name="' + n + '"]').forEach(function (r) { r.checked = r.value === state[n]; });
     });
     quiz.querySelectorAll('input[name="focus"]').forEach(function (c) { c.checked = state.focus.indexOf(c.value) !== -1; });
+    if (!Array.isArray(state.allergies)) state.allergies = [];
+    quiz.querySelectorAll('input[name="allergies"]').forEach(function (c) { c.checked = state.allergies.indexOf(c.value) !== -1; });
     order.querySelectorAll('input[name="plan"]').forEach(function (r) { r.checked = r.value === state.plan; });
     paintName();
     paintConditional();
@@ -174,10 +183,11 @@
       case "krok-4": return !!state.activity;
       case "krok-5": return !!state.neutered && !!state.body && (!needPreg() || !!state.pregnant);
       case "krok-6": return state.focus.length > 0;
+      case "krok-7": return (state.allergies || []).length > 0;
       default: return true;
     }
   }
-  var STEPS = ["krok-1", "krok-2", "krok-3", "krok-4", "krok-5", "krok-6"];
+  var STEPS = ["krok-1", "krok-2", "krok-3", "krok-4", "krok-5", "krok-6", "krok-7"];
   function firstInvalid() {
     for (var i = 0; i < STEPS.length; i++) if (!valid(STEPS[i])) return STEPS[i];
     return null;
@@ -238,7 +248,12 @@
     var r = result(), d = r.derived, p = r.product;
     // vysvetľujúci text sa ukazuje len vtedy, keď pre psa nemáme vhodné granule
     $("r-why").hidden = !!p;
-    if (!p) { $("r-swap").hidden = true; $("r-name").textContent = "Pre tohto psa nemáme vhodné granule"; $("r-why").textContent = "Napíš nám, poradíme osobne."; return; }
+    var algs = (d.allergies || []).map(function (id) { return E.ALLERGENS.filter(function (x) { return x.id === id; })[0]; }).filter(Boolean);
+    if (!p) {
+      $("r-swap").hidden = true; $("r-name").textContent = "Pre tohto psa nemáme vhodné granule";
+      $("r-why").textContent = algs.length ? "Každá naša receptúra obsahuje niečo, na čo je " + state.dogname + " alergický (" + algs.map(function (a) { return a.label.toLowerCase(); }).join(", ") + "). Napíš nám na podpora@granula.sk, poradíme osobne." : "Napíš nám, poradíme osobne.";
+      return;
+    }
     // odporúčané vrece je predvolené; vlastný výber platí, kým sa nezmení receptúra alebo dávka
     var bagKey = p.id + "|" + r.dose.grams;
     if (state.bagKey !== bagKey || !r.bags.some(function (x) { return x.bag.id === state.bag; })) { state.bag = r.recBag; state.bagKey = bagKey; save(); }
@@ -250,6 +265,8 @@
     $("r-chips").innerHTML = p.highlights.map(function (h) {
       return '<li><span class="rh-ico" aria-hidden="true">' + I(h[0], 20, "#0047BB") + "</span><span>" + h[1] + " <b>" + h[2] + "\u00a0%</b></span></li>";
     }).join("") + '<li><span class="rh-ico g" aria-hidden="true">g</span><span>Denná dávka <b>' + r.dose.grams + "\u00a0g</b></span></li>";
+    $("r-allergy").hidden = !algs.length;
+    $("r-allergy").textContent = algs.length ? "Bez alergénov: " + algs.map(function (a) { return a.label.toLowerCase(); }).join(", ") : "";
     renderSwap(r);
     $("f-keep").textContent = r.dose.grams + " g";
     $("f-up").textContent = Math.round(r.dose.grams * 1.1) + " g";
@@ -287,6 +304,8 @@
   function lower(s) { return s.charAt(0).toLowerCase() + s.slice(1); }
   function swapWhy(e) {
     var blocked = e.unfitFor.filter(function (x) { return x.ok; });
+    var alg = blocked.filter(function (x) { return /^alergia: /.test(x.label); });
+    if (alg.length) return "Obsahuje, na čo je " + state.dogname + " alergický: " + alg.map(function (x) { return x.label.replace(/^alergia: /, ""); }).join(", ") + ".";
     if (blocked.length) return "Výrobca ju neodporúča pri: " + blocked.map(function (x) { return lower(x.label); }).join(", ") + ".";
     return "Výrobca ju určuje pre: " + e.fitFor.map(function (x) { return lower(x.label); }).join("; ") + ".";
   }
@@ -468,7 +487,7 @@
   var radar = new GranulaRadar($("prof-radar"), { axes: E.PROFILE_AXES });
   var lastProf = null;
   var mobileQ = window.matchMedia("(max-width:900px)");
-  function krokNo(id) { var i = STEPS.indexOf(id); return i !== -1 ? i + 1 : (id === "vysledok" ? 7 : 0); }
+  function krokNo(id) { var i = STEPS.indexOf(id); return i !== -1 ? i + 1 : (id === "vysledok" ? 8 : 0); }
   function profNow() { return E.profilPsa(state, krokNo(current), params); }
   function placeProf() {
     var scr = screens[current], slot = null;
@@ -484,7 +503,7 @@
     setTimeout(function () { profPending = false; profRun(); }, 0);
   }
   function profRun() {
-    if (krokNo(current) < 1 || krokNo(current) > 6) return;
+    if (krokNo(current) < 1 || krokNo(current) > 7) return;
     var after = profNow();
     radar.update(after); lastProf = after;
   }

@@ -134,7 +134,7 @@ code{font-size:12px;background:var(--m);padding:1px 4px}
   <div class="panels">
     <section class="panel"><h2>1 · Odporúčanie</h2><div id="o-reco"></div></section>
     <section class="panel"><h2>1b · Profil psa (graf v dotazníku)</h2>
-      <p class="lead2">Hodnoty z <code>profilPsa(odpovede, 7)</code>, teda po celom dotazníku, keď sú všetky osi odomknuté. Rovnaká funkcia kreslí graf v dotazníku; čísla sa ukazujú len tu.</p>
+      <p class="lead2">Hodnoty z <code>profilPsa(odpovede, 8)</code>, teda po celom dotazníku, keď sú všetky osi odomknuté. Rovnaká funkcia kreslí graf v dotazníku; čísla sa ukazujú len tu.</p>
       <div class="prof-grid"><div class="scroll" id="o-prof"></div><div id="o-radar"></div></div></section>
     <section class="panel"><h2>2 · Odvodené vstupy</h2><div class="scroll" id="o-derived"></div></section>
     <section class="panel"><h2>3 · Vhodnosť produktov (tvrdé kritériá)</h2>
@@ -278,7 +278,7 @@ code{font-size:12px;background:var(--m);padding:1px 4px}
     var a = answers(), r = E.compute(a, override), d = r.derived, P = r.params;
 
     // 1b profil psa (graf): rovnaká funkcia ako v dotazníku, všetky kroky zodpovedané
-    var pr = E.profilPsa(Object.assign({ breedSet: true }, a), 7, override);
+    var pr = E.profilPsa(Object.assign({ breedSet: true }, a), 8, override);
     $("o-prof").innerHTML = "<table><thead><tr><th>Os</th><th>Hodnota</th><th>Z čoho</th></tr></thead><tbody>" + pr.osi.map(function (ax) {
       var why = { energia: "násobok RER " + fmt(pr.nasobok, 2) + " (bez kalibrácie)", bielkoviny: "fáza " + d.stage + (d.active ? ", aktívny" : "") + (a.activity === "praca" ? ", pracovný" : ""),
         tuk: (d.pancreas ? "pankreas" : d.obese ? "nadváha" : "kastrácia, aktivita, fáza, postava"), zlozenie: d.intolerance ? "intolerancia / citlivé trávenie" : "bez intolerancie",

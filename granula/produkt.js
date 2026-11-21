@@ -44,13 +44,15 @@
   var KG = [[2, "do 3 kg"], [4, "3–5 kg"], [6.5, "5–8 kg"], [10, "8–12 kg"], [13.5, "12–15 kg"], [17.5, "15–20 kg"], [22.5, "20–25 kg"], [27.5, "25–30 kg"], [35, "30–40 kg"], [45, "40–50 kg"], [55, "50+ kg"]];
   kg.innerHTML = KG.map(function (k) { return '<option value="' + k[0] + '">' + k[1] + "</option>"; }).join("");
   function kgFor(avg) { var best = KG[0][0]; KG.forEach(function (k) { if (Math.abs(k[0] - avg) < Math.abs(best - avg)) best = k[0]; }); return best; }
-  GranulaBreedSearch(root.querySelector(".pd-bs"), breed);
-  breed.value = "krizenec-stredny"; age.value = "r2"; kg.value = String(kgFor(17));
+  // plemeno nie je predvybrané: pole je prázdne (píšu sa príklady), cena sa dovtedy ráta z veku a váhy
+  var breedUI = GranulaBreedSearch(root.querySelector(".pd-bs"), breed, { emptyId: "" });
+  breed.selectedIndex = -1; breedUI.paint();
+  age.value = "r2"; kg.value = String(kgFor(17));
 
   function eur(x) { return x.toFixed(2).replace(".", ",") + " €"; }
   function update() {
     var v = /^([rm])(\d+)$/.exec(age.value);
-    var a = { dogname: "", sex: "pes", breed: breed.value, breedSet: true, kg: parseFloat(kg.value),
+    var a = { dogname: "", sex: "pes", breed: breed.value || null, breedSet: !!breed.value, kg: parseFloat(kg.value),
       years: v[1] === "r" ? v[2] : "0", months: v[1] === "m" ? v[2] : "0", weeks: "",
       activity: "mesto", neutered: "nie", pregnant: "", body: "akurat", focus: [] };
     var r = E.compute(a), p = r.product;

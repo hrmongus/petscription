@@ -92,7 +92,10 @@ Jeleň & králik s batátmi.
    (`BREEDS`; trpasličie / malé / stredné / veľké / obrie), životná fáza (štartér < 9 týž., šteňa, dospelý,
    senior; hranice podľa veľkosti), nadváha, pankreas, intolerancia, aktivita, gravidita.
 2. *Vhodnosť*: každý produkt má kritériá „vhodné pre“ a „nevhodné pre“ prepísané
-   z popisu výrobcu (`ELIGIBILITY`).
+   z popisu výrobcu (`ELIGIBILITY`). **Alergie** (krok 7 dotazníka): receptúra, ktorá obsahuje
+   označenú surovinu (`allergens` pri produkte, zoznam `ALLERGENS`), je vylúčená. Alergia zároveň
+   zapne intoleranciu (pravidlo R4 → monoproteín). Hydrolyzovaný hovädzí kolagén sa za hovädzie
+   nepočíta, výsledok to pri alergii na hovädzie pripomenie. Bravčový tuk majú všetky receptúry.
 3. *Pravidlá* R1–R10 v poradí (`RULES`): štartér → gravidita → nadváha/pankreas
    (najmenej tuku) → intolerancia (monoproteín) → šteňa malé/stredné → šteňa
    veľké/obrie → aktívny → senior → dospelý malý → dospelý. Vyhrá prvé pravidlo,

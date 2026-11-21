@@ -63,6 +63,25 @@
         Kategóriu berieme priamo z tabuľky; „trpasličie“ sa pri výbere granúl ráta ako malé.
         Priemer predvyplní hmotnosť v dotazníku. Psy bývajú o 10–25 % ťažšie ako suky.
      ====================================================================== */
+  /* Alergie (krok 7 dotazníka): receptúra, ktorá obsahuje surovinu, na ktorú je pes alergický, sa nevyberie.
+     Hydrolyzovaný hovädzí kolagén (v Morka/hus/kačica, Jahňa, Jeleň/králik) sa za hovädzie mäso nepočíta; pri alergii na hovädzie to výsledok pripomenie. */
+  var ALLERGENS = [
+    { id: "kuracie", label: "Kuracie", in: "kuracia pečeň" },
+    { id: "hovadzie", label: "Hovädzie", in: "hovädzie mäso a tuk" },
+    { id: "bravcove", label: "Bravčové", in: "bravčový tuk" },
+    { id: "morka", label: "Morka", in: "morčacie mäso" },
+    { id: "kacica", label: "Kačica", in: "kačacie mäso a tuk" },
+    { id: "hus", label: "Hus", in: "husacie mäso" },
+    { id: "jahna", label: "Jahňacie", in: "jahňacie mäso a tuk" },
+    { id: "jelen", label: "Jeleň", in: "jelenie mäso a loj" },
+    { id: "kralik", label: "Králik", in: "králičie mäso" },
+    { id: "ryby", label: "Ryby", in: "lososový olej" },
+    { id: "vajcia", label: "Vajcia", in: "sušené vajcia" },
+    { id: "ryza", label: "Ryža", in: "ryža" },
+    { id: "zemiaky", label: "Zemiaky", in: "zemiakové vločky" }
+  ];
+  function allergiesOf(a) { return (a.allergies || []).filter(function (x) { return x !== "ziadne"; }); }
+
   var BREEDS = [
     { id: "krizenec-maly", name: "Kríženec – malý", size: "male", mix: true, range: "do 10", avg: 7 },
     { id: "krizenec-stredny", name: "Kríženec – stredný", size: "stredne", mix: true, range: "10–25", avg: 17 },
@@ -158,6 +177,7 @@
   var PRODUCTS = [
     {
       id: "hovadzie-morka-jahna",
+      allergens: ["hovadzie", "bravcove", "morka", "jahna", "ryby", "ryza", "zemiaky"], // suroviny pre otázku „alergie“ (kľúče ALLERGENS); z mäsa, tukov, rýb, vajec, ryže a zemiakov
       proteins: ["Hovädzie", "Morka", "Jahňa"], // druhy mäsa (pre „Netoleruje tento proteín?“)
       name: "Hovädzie, morka & jahňa s ryžou",
       img: "img/produkty/hovadzie-morka-jahna-s-ryzou.webp",
@@ -174,6 +194,7 @@
     },
     {
       id: "morka-hus-kacica",
+      allergens: ["morka", "hus", "kacica", "kuracie", "bravcove", "ryby", "vajcia", "ryza"], // suroviny pre otázku „alergie“ (kľúče ALLERGENS); z mäsa, tukov, rýb, vajec, ryže a zemiakov
       proteins: ["Morka", "Hus", "Kačica"], // druhy mäsa (pre „Netoleruje tento proteín?“)
       name: "Morka, hus & kačica s tekvicou",
       img: "img/produkty/morka-hus-kacica-s-tekvicou.webp",
@@ -190,6 +211,7 @@
     },
     {
       id: "hovadzie",
+      allergens: ["hovadzie", "bravcove", "ryza", "zemiaky"], // suroviny pre otázku „alergie“ (kľúče ALLERGENS); z mäsa, tukov, rýb, vajec, ryže a zemiakov
       proteins: ["Hovädzie"], // druhy mäsa (pre „Netoleruje tento proteín?“)
       name: "Hovädzie s ryžou",
       img: "img/produkty/hovadzie-s-ryzou.webp",
@@ -208,6 +230,7 @@
     },
     {
       id: "jahna",
+      allergens: ["jahna", "bravcove"], // suroviny pre otázku „alergie“ (kľúče ALLERGENS); z mäsa, tukov, rýb, vajec, ryže a zemiakov
       proteins: ["Jahňa"], // druhy mäsa (pre „Netoleruje tento proteín?“)
       name: "Jahňa s batátmi & čučoriedkami",
       img: "img/produkty/jahna-s-batatmi-cucoriedkami.webp",
@@ -224,6 +247,7 @@
     },
     {
       id: "jelen-kralik",
+      allergens: ["jelen", "kralik", "bravcove"], // suroviny pre otázku „alergie“ (kľúče ALLERGENS); z mäsa, tukov, rýb, vajec, ryže a zemiakov
       proteins: ["Jeleň", "Králik"], // druhy mäsa (pre „Netoleruje tento proteín?“)
       name: "Jeleň & králik s batátmi",
       img: "img/produkty/jelen-kralik-s-batatmi.webp",
@@ -309,7 +333,8 @@
       small: size === "trpaslicie" || size === "male", smallMid: size === "trpaslicie" || size === "male" || size === "stredne", largeGiant: size === "velke" || size === "obrie",
       obese: a.body === "navyse",
       pancreas: has(a, "pankreas"),
-      intolerance: has(a, "alergia") || has(a, "travenie"),
+      allergies: allergiesOf(a),
+      intolerance: has(a, "alergia") || has(a, "travenie") || allergiesOf(a).length > 0,
       active: a.activity === "sport" || a.activity === "praca" || has(a, "svaly") || has(a, "energia"),
       pregnant: pregnant
     };
@@ -384,6 +409,11 @@
   function eligibility(d) {
     return PRODUCTS.map(function (p) {
       var e = ELIGIBILITY[p.id](d);
+      // alergie: obsahuje surovinu, na ktorú je pes alergický → vylúčené
+      (d.allergies || []).forEach(function (id) {
+        var al = ALLERGENS.filter(function (x) { return x.id === id; })[0];
+        if (al) e.unfitFor = e.unfitFor.concat([{ label: "alergia: " + al.label.toLowerCase() + " (" + al.in + ")", ok: (p.allergens || []).indexOf(id) !== -1 }]);
+      });
       var fits = e.fitFor.some(function (x) { return x.ok; });
       var blocked = e.unfitFor.filter(function (x) { return x.ok; });
       return { product: p, fitFor: e.fitFor, unfitFor: e.unfitFor, eligible: fits && !blocked.length,
@@ -528,11 +558,12 @@
     if (step === 4) return !!a.activity;
     if (step === 5) return !!(a.neutered || a.body || a.pregnant);
     if (step === 6) return (a.focus || []).length > 0;
+    if (step === 7) return (a.allergies || []).length > 0;
     return true;
   }
   function profilPsa(a, krok, params) {
     var P = merge(PARAMS, params || {}), k = krok || 1;
-    var counts = function (step) { return k > 6 || step < k || (step === k && touched(a, step)); };
+    var counts = function (step) { return k > 7 || step < k || (step === k && touched(a, step)); };
     // odpovede z krokov, ktoré sa ešte nepočítajú, nahradí neutrálny predpoklad
     var x = merge({}, {}); Object.keys(a).forEach(function (key) { x[key] = a[key]; });
     if (!counts(2)) x.breed = null;
@@ -540,6 +571,7 @@
     if (!counts(4)) x.activity = "mesto";
     if (!counts(5)) { x.neutered = ""; x.pregnant = ""; x.body = "akurat"; }
     if (!counts(6)) x.focus = [];
+    if (!counts(7)) x.allergies = [];
     var d = derive(x, P), fb = factorFor(x, d, P.factor);
     var n = fb.key === "adult" && !x.neutered ? 1.7 : fb.factor;
     if (x.body === "chudsi" && !d.pregnant) n *= 1 + P.underweightBonus;
@@ -611,6 +643,7 @@
     if (has(a, "imunita")) notes.push("Imunita: hlivu ustricovú obsahujú „Hovädzie, morka & jahňa“, „Morka, hus & kačica“ a „Hovädzie s ryžou“.");
     if (has(a, "vyberavy")) notes.push("Vyberavý jedák: výber granúl nemení, dáta o chutnosti nemáme.");
     if (has(a, "vaha") && !d.obese) notes.push("Zameranie „váha“ samo nemení výber ani dávku; mení ich až postava „kilo navyše“.");
+    if ((d.allergies || []).indexOf("hovadzie") !== -1 && product && /bovinn/.test(product.composition)) notes.push("Alergia na hovädzie: tieto granule obsahujú hydrolyzovaný hovädzí kolagén. Pri silnej alergii sa poraď s veterinárom.");
     if (d.pregnant) notes.push("Gravidná fena: dávku priebežne upravuj podľa veterinára.");
 
     var second = dec.second ? PRODUCTS.filter(function (p) { return p.id === dec.second.id; })[0] : null;
@@ -632,7 +665,7 @@
   function fmt(n, d) { return n == null || isNaN(n) ? "—" : n.toFixed(d).replace(".", ","); }
 
   window.GranulaEngine = {
-    PARAMS: PARAMS, BREEDS: BREEDS, PRODUCTS: PRODUCTS, BAGS: BAGS, RULES: RULES,
+    PARAMS: PARAMS, BREEDS: BREEDS, ALLERGENS: ALLERGENS, PRODUCTS: PRODUCTS, BAGS: BAGS, RULES: RULES,
     ACTIVITY_TEXT: ACTIVITY_TEXT, SIZE_TEXT: SIZE_TEXT, STAGE_TEXT: STAGE_TEXT,
     compute: compute, profilPsa: profilPsa, PROFILE_AXES: PROFILE_AXES, metabolizable: metabolizable, bagPrice: bagPrice, bagSaving: bagSaving, merge: merge, fmt: fmt,
     OVERRIDE_KEY: "granula-engine-params"
