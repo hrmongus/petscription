@@ -8,8 +8,9 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 | --- | --- | --- |
 | `index.html` | úvodná stránka: hero, čísla, piliere, 1,8 roka, mäso, suroviny, porovnanie, ako to funguje, Granula = nula, recenzie, blog, otázky, predregistrácia, výzva, pätička | Homepage + Homepage — pokračovanie |
 | `obchodne-podmienky.html`, `reklamacny-poriadok.html`, `ochrana-sukromia.html` | právne stránky, zatiaľ lorem ipsum (noindex, mimo sitemap); pred spustením doplniť text a odstrániť noindex | |
+| `garancia.html` | Garancia spokojného psíka — zatiaľ prázdna (noindex), odkaz v pätičke PRÁVNE | |
+| `nas-pribeh.html` | Náš príbeh — zatiaľ prázdna (noindex, mimo sitemap), odkaz v pätičke | |
 | `podpora.html` | podpora: e-mail podpora@granula.sk, témy s predvyplneným predmetom, časté otázky | |
-| `suroviny.html` | podstránka Suroviny | Suroviny |
 | `granule-na-mieru.html` | funkčný dotazník: 6 krokov (meno a pohlavie, plemeno s vyhľadávaním, váha a vek, deň, kastrácia a postava, zameranie) → miešanie → výsledok → objednávka → hotovo (smerovanie cez `#krok-1` … `#hotovo`) | Formulár 1–5 + nový krok s menom, Vyberáme granule, Výsledok, Checkout, Hotovo |
 | `admin-vypocet.html` | dočasná kontrolná stránka výpočtu (všetky otázky, vhodnosť, pravidlá, dávka krok za krokom, parametre, katalóg) | |
 | `engine.js` | výber granúl, dávka a profil psa pre graf; jediný zdroj pravdy | |
@@ -20,6 +21,7 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 | `blog/`, `admin-blog/` | blog a redakcia, pozri časť Blog (GEO) | |
 | `cookies.js` | cookie lišta; Klaviyo (marketing) sa načíta až po „Prijať všetky“, voľba v `localStorage` (`granula-cookies`), lištu znova otvorí odkaz „Nastavenia cookies“ v pätičke | |
 | `compare.js` | porovnanie „Rozrež vrecko“: jediný zdroj pre úvodnú stránku aj výsledok konfigurátora; prierez a zloženie podľa receptúry (`RECIPES`, chýbajúce zatiaľ = Jeleň & králik) | |
+| `ingrediencie.js` | detail suroviny (pop-up po kliknutí v sekcii surovín na úvodnej stránke aj na suroviny): texty, nálepka, „V recepte“ zo zloženia receptúr, listovanie v rámci kategórie | |
 | `reviews.js` | recenzie: jediný zdroj pre úvodnú stránku aj výsledok konfigurátora (dáta + skladanie radov bez opakovania) | |
 | `site.js` | objavovanie pri scrolle, karusel recenzií, sekcia surovín (filtre a šípky) | |
 | `img/` | fotky z návrhu, pomenované podľa obsahu; `img/suroviny/` 38 fotiek surovín (WebP 640 px) | |

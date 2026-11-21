@@ -88,7 +88,7 @@ Pracuješ pre kolegyňu z redakcie blogu značky **Granula!** (slovenské granul
 
 **Nesmieš meniť (ani „len drobnosť“):**
 
-- úvodnú stránku (landing) a ostatné stránky webu: `granula/index.html` (okrem sekcie, ktorú vygeneruje build), `suroviny.html`, `podpora.html`, právne stránky (`obchodne-podmienky.html`, `ochrana-sukromia.html`, `reklamacny-poriadok.html`)
+- úvodnú stránku (landing) a ostatné stránky webu: `granula/index.html` (okrem sekcie, ktorú vygeneruje build), `podpora.html`, právne stránky (`obchodne-podmienky.html`, `ochrana-sukromia.html`, `reklamacny-poriadok.html`)
 - konfigurátor a výpočet: `granule-na-mieru.html`, `kviz.js`, `engine.js`, `admin-vypocet.html`
 - dizajn a skripty webu: `granula.css` a všetky `.js` v `granula/`, `img/` mimo `img/blog` a `img/autori`
 - nasadenie: `vercel.json`
