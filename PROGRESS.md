@@ -12,7 +12,12 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 | 6. Test celého toku | — |
 
 ## Pred spustením predaja
-- [ ] **Premazať testovacie dáta** (Supabase: zákazníci, psy, adresy, predplatné, objednávky, eventy z testov na granula.sk; Stripe test objekty; FHB sandbox) a **prepnúť Production env na live kľúče** (Stripe live + live webhook secret, FHB produkcia `https://api.fhb.sk/v3`). Až potom `CHECKOUT_ENABLED=true`.
+- [ ] Prepnúť repo na privátne
+- [ ] Zapnúť Vercel Deployment Protection (Settings → Deployment Protection → Vercel Authentication; na kontrolu preview bola 21. 11. vypnutá)
+- [ ] Premazať testovacie dáta a prepnúť na live kľúče: Supabase (zákazníci, psy, adresy, predplatné, objednávky, eventy z testov na granula.sk), Stripe test objekty, FHB sandbox (aj 10 testovacích produktov `GRAN-*`); Production env → Stripe live + live webhook secret, FHB produkcia `https://api.fhb.sk/v3`. Až potom `CHECKOUT_ENABLED=true`.
+- [ ] Stripe účet vedený na Spark Link, s. r. o.
+- [ ] Zmazať staré branche (Carbone Company)
+- [ ] Záverečná bezpečnostná kontrola: kľúče v histórii gitu, webhooky (podpis, idempotencia), RLS
 
 ---
 
@@ -135,6 +140,14 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 5. **Adresa pri výdajnom mieste:** `recipient.address` je povinná aj pri výdajnom mieste. Stačí adresa výdajného miesta, alebo chcete adresu zákazníka?
 6. **Sandbox URL:** v emaile uvádzate `api-stage`, v dokumentácii `api-dev` (presmeruje 302). Platí `api-stage`?
 7. **Dĺžka `product.id`:** naše SKU má až 27 znakov (`GRAN-hovadzie-morka-jahna-9`). Je to v poriadku? (Sandbox ho prijal.)
+
+### Nasadenie kroku 1 na main / granula.sk (21. 11.)
+- **Nasadenie:** `main` fast-forward na `129465c` (krok 1 + prepínač predaja + Supabase), Vercel nasadil za ~30 s.
+- **Overenie proti záznamu granula.sk spred nasadenia** (`npm run check:urls -- --against`):
+  - 211 URL; status/presmerovanie sa líši iba pri 4 skrytých interných súboroch a `/SUROVINY` (SPEC §10.6),
+  - `noindex` pribudol iba na náhľadoch blogu a admin stránkach.
+- **Vizuálne:** 11 stránok × desktop/mobil, 0 rozdielnych pixelov oproti stavu pred nasadením.
+- **Predaj:** `/api/checkout/status` → `closed`; dotazník bez tokenu aj so zlým tokenom → „Objednávky od 1. 12.“.
 
 ### Ostáva (ďalšie kroky)
 - Krok 3: doprava v checkoute (Packeta widget, SPS pop-up nad `GET /api/delivery-points?service=sps` z FHB `sps_pudo`).
