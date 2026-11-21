@@ -142,7 +142,7 @@ neposielajú** a čísla karty sa po odoslaní mažú.
    textové pole; patrí sem widget Packeta.
 6. **Recenzie a odborníci.** Mená, citácie a hodnotenia sú z návrhu, nie od
    reálnych ľudí. Pred spustením nahradiť skutočnými. Sekcia odborníkov je odstránená; ak bude treba, vznikne nanovo so skutočnými ľuďmi.
-7. **Tvrdenia na webe.** „62 % mäsa“ je nahradené textom „Kvalitné mäso“ a páska
+7. **Tvrdenia na webe.** „62 % mäsa“ nesedí so zložením (mäso 50–60 % podľa receptúry); v hero je „50 %+ mäsa v každom vrecku“. Páska
    „Diviak“ je odstránená. „Receptúry navrhnuté s veterinármi“ a výrobca od 1992 treba overiť.
 8. **Texty zloženia** sú s opravenými preklepmi z podkladov (zoznam na kontrolnej
    stránke, bod 11). Pred tlačou overiť s výrobcom.

@@ -14,25 +14,40 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,900&display=swap">
 <link rel="stylesheet" href="granula.css">
 <style>
-/* ---------- hero ---------- */
-.hero .wrap{padding-top:48px;padding-bottom:64px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:64px;align-items:center}
-.hero .copy{display:flex;flex-direction:column;gap:24px}
-.hero h1{font-size:clamp(40px,5vw,72px)}
+/* ---------- hero: polovica text (Mlieko), polovica fotka na celú výšku ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:clamp(560px,calc(100vh - 150px),760px);border-bottom:0}
+.hero-copy{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:30px;padding:56px clamp(24px,4vw,64px) 88px}
+.hero-badge{display:inline-flex;align-items:center;gap:10px;border:2px solid var(--n);background:var(--ml);padding:6px 12px 6px 6px;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.hero-badge .sk{width:26px;height:26px;background:var(--k);color:var(--m);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;letter-spacing:0}
+.hero h1{font-size:clamp(44px,5.4vw,84px);line-height:.98}
 .hero h1 span{color:var(--k)}
-.hero .copy p{font-size:17px;line-height:1.5;max-width:500px}
-.hero .ctas{display:flex;flex-wrap:wrap;align-items:center;gap:22px}
-.hero .note{font-size:14px;font-weight:700}
-.start-sticker{font-size:20px;--t:3deg}
-.hero .visual{position:relative}
+.hero-flower{position:absolute;right:12%;top:20%;width:44px;height:44px;color:var(--o);transform:rotate(12deg)}
+.hero-copy .btn{min-width:260px}
+.hero-stats{display:flex;align-items:stretch;justify-content:center}
+.hero-stats > div{display:flex;flex-direction:column;align-items:center;gap:6px;padding:0 24px;max-width:180px}
+.hero-stats > div + div{border-left:2px solid var(--n)}
+.hero-stats b{font-size:clamp(24px,2.2vw,32px);font-weight:900;line-height:1;text-transform:uppercase;white-space:nowrap}
+.hero-stats span{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;line-height:1.35}
+.hero-pic{position:relative;background:var(--k);overflow:hidden;border-left:2px solid var(--n)}
+.hero-pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 55%}
+.hero-vet{position:absolute;left:6%;top:7%;background:var(--o);color:var(--n);font-weight:900;text-transform:uppercase;font-size:clamp(16px,1.6vw,22px);line-height:1;padding:10px 14px 9px;transform:rotate(-4deg)}
+.hero-star{position:absolute;right:7%;bottom:16%;width:60px;height:60px;color:var(--m);transform:rotate(12deg)}
+.hero + .tape-solo{margin-top:-42px;padding:0}
+@media (max-width:960px){
+  .hero{grid-template-columns:minmax(0,1fr);min-height:0}
+  .hero-copy{padding:40px 16px 48px;gap:24px}
+  .hero-flower{right:8%;top:14%;width:34px;height:34px}
+  .hero-pic{height:min(420px,95vw);border-left:0;border-top:2px solid var(--n)}
+  .hero + .tape-solo{margin-top:-28px}
+}
+@media (max-width:480px){
+  .hero-stats > div{padding:0 10px}
+  .hero-stats span{font-size:9.5px;letter-spacing:.03em}
+  .hero-copy .btn{min-width:0;width:100%}
+}
 .signup .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:center}
 .signup .kl-embed{background:var(--ml);border:2px solid var(--n);padding:20px;min-height:120px}
 @media (max-width:960px){.signup .wrap{grid-template-columns:minmax(0,1fr);gap:32px}}
-.hero .frame{height:min(480px,calc(100vh - 220px))}
-.hero .frame img{object-position:62% center}
-/* nálepka na fotke: malý nadpis + veľké slovo; Oranž, lebo pole fotky je Kobalt */
-.s-vet{position:absolute;left:-36px;top:48px;background:var(--o);color:var(--n);padding:14px 20px 12px;transform:rotate(-6deg);text-align:center}
-.s-vet small{display:block;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;line-height:1.35}
-.s-vet b{display:block;font-size:34px;margin-top:4px}
 
 /* ---------- čísla ---------- */
 .stats,.faq{overflow-x:clip}
@@ -111,11 +126,8 @@
 
 /* ---------- menšie obrazovky ---------- */
 @media (max-width:960px){
-  .hero .wrap,.longevity .wrap,.faq .wrap,.final .wrap{grid-template-columns:minmax(0,1fr)}
-  .hero .wrap{gap:56px;padding-top:48px}
-  .hero .frame{height:min(600px,110vw)}
-  .s-vet{left:-8px}
-  .stats .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .longevity .wrap,.faq .wrap,.final .wrap{grid-template-columns:minmax(0,1fr)}
+      .stats .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}
   .stat:nth-child(3){border-left:0}
   .stat:nth-child(n+3){border-top:2px solid var(--n)}
   .lg-panel{padding:28px 24px 32px}
@@ -126,10 +138,7 @@
   .final .sticker{left:-8px}
 }
 @media (max-width:640px){
-  .s-vet{top:20px;padding:10px 14px 8px}
-  .s-vet small{font-size:9px}
-  .s-vet b{font-size:22px}
-  .stat{padding:28px 14px}
+        .stat{padding:28px 14px}
   .stat .v{font-size:28px}
 }
 </style>
@@ -155,27 +164,29 @@
 <main>
 <!-- hero -->
 <section class="hero">
-  <div class="wrap">
-    <div class="copy">
-      <h1 class="display">Jedlo, čo drží krok <span>s tvojím psom.</span></h1>
-      <p>Prémiové granule z diviny a slovenského hovädzieho, vybrané presne podľa veku, váhy a temperamentu tvojho psa. Pre dlhý a nabehaný život.</p>
-      <div class="ctas">
-        <a class="btn btn-o" href="granule-na-mieru.html">Nájdi granule pre svojho psa</a>
-        <span class="sticker st-k start-sticker">Štart 1. 12.</span>
-      </div>
+  <div class="hero-copy">
+    <span class="hero-badge"><span class="sk" aria-hidden="true">SK</span>Vyrobené na Slovensku</span>
+    <span class="hero-flower"><svg viewBox="-52 -52 104 104" aria-hidden="true"><g fill="currentColor"><rect x="-50" y="-15" width="100" height="30" rx="15" transform="rotate(90)"/><rect x="-50" y="-15" width="100" height="30" rx="15" transform="rotate(30)"/><rect x="-50" y="-15" width="100" height="30" rx="15" transform="rotate(150)"/></g></svg></span>
+    <h1 class="display">Kvalitné granule, <span>zdravý pes</span></h1>
+    <a class="btn btn-o" href="granule-na-mieru.html">Granule na mieru →</a>
+    <div class="hero-stats">
+      <div><b>50&nbsp;%+</b><span>mäsa v každom vrecku</span></div>
+      <div><b>0&nbsp;%</b><span>pšenice, kukurice a sóje</span></div>
+      <div><b>Na mieru</b><span>vypočítaná dávka</span></div>
     </div>
-    <div class="visual">
-      <div class="frame" style="--field:var(--k)"><div class="ph"><img src="img/hero-jack-russell.jpg" alt="Jack russell na tenisovom kurte" width="880" height="1168" fetchpriority="high"></div></div>
-      <div class="s-vet"><small>Receptúry<br>navrhnuté s</small><b class="display">veterinármi</b></div>
-    </div>
+  </div>
+  <div class="hero-pic">
+    <img src="img/hero-jack-russell.jpg" alt="Jack russell s tenisovými loptičkami na kurte" width="880" height="1168" fetchpriority="high">
+    <span class="hero-vet">Vytvorené s veterinármi</span>
+    <span class="hero-star"><svg viewBox="-52 -52 104 104" aria-hidden="true"><g fill="currentColor"><rect x="-50" y="-15" width="100" height="30" rx="15" transform="rotate(90)"/><rect x="-50" y="-15" width="100" height="30" rx="15" transform="rotate(30)"/><rect x="-50" y="-15" width="100" height="30" rx="15" transform="rotate(150)"/></g></svg></span>
   </div>
 </section>
 
-<div class="tape-solo" aria-hidden="true" style="padding:32px 0"><div class="tape"><div class="track">
-    <span>Jeleň</span><span class="star"></span><span>Hovädzie zo Slovenska</span><span class="star"></span><span>Zelenina</span><span class="star"></span><span>Bez pšenice</span><span class="star"></span>
-    <span>Jeleň</span><span class="star"></span><span>Hovädzie zo Slovenska</span><span class="star"></span><span>Zelenina</span><span class="star"></span><span>Bez pšenice</span><span class="star"></span>
-    <span>Jeleň</span><span class="star"></span><span>Hovädzie zo Slovenska</span><span class="star"></span><span>Zelenina</span><span class="star"></span><span>Bez pšenice</span><span class="star"></span>
-    <span>Jeleň</span><span class="star"></span><span>Hovädzie zo Slovenska</span><span class="star"></span><span>Zelenina</span><span class="star"></span><span>Bez pšenice</span><span class="star"></span>
+<div class="tape-solo" aria-hidden="true"><div class="tape"><div class="track">
+    <span>Čerstvé mäso</span><span class="star"></span><span>Bez pšenice</span><span class="star"></span><span>Zelenina</span><span class="star"></span><span>Vyrobené na Slovensku</span><span class="star"></span><span>Receptúry navrhnuté s veterinármi</span><span class="star"></span>
+    <span>Čerstvé mäso</span><span class="star"></span><span>Bez pšenice</span><span class="star"></span><span>Zelenina</span><span class="star"></span><span>Vyrobené na Slovensku</span><span class="star"></span><span>Receptúry navrhnuté s veterinármi</span><span class="star"></span>
+    <span>Čerstvé mäso</span><span class="star"></span><span>Bez pšenice</span><span class="star"></span><span>Zelenina</span><span class="star"></span><span>Vyrobené na Slovensku</span><span class="star"></span><span>Receptúry navrhnuté s veterinármi</span><span class="star"></span>
+    <span>Čerstvé mäso</span><span class="star"></span><span>Bez pšenice</span><span class="star"></span><span>Zelenina</span><span class="star"></span><span>Vyrobené na Slovensku</span><span class="star"></span><span>Receptúry navrhnuté s veterinármi</span><span class="star"></span>
   </div></div></div>
 
 <!-- čísla -->
