@@ -55,15 +55,6 @@
 .rw .wrap{margin-bottom:32px}
 
 /* ---------- 02 dlhovekosť ---------- */
-/* Mlieko sekcia; číslo v orámovanom Kobaltovom paneli, Limetka ako jediný akcent */
-.longevity .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:center}
-.lg-panel{background:var(--k);color:var(--m);border:2px solid var(--n);padding:28px 32px 32px;display:flex;flex-direction:column;gap:10px}
-.longevity .num{font-size:clamp(100px,11vw,170px);color:var(--l);letter-spacing:0}
-.longevity .unit{font-size:clamp(24px,2.4vw,36px)}
-.longevity .txt{display:flex;flex-direction:column;gap:24px}
-.longevity .txt .big{font-size:clamp(18px,1.6vw,22px);line-height:1.4;font-weight:700}
-.longevity .src{font-size:13px;line-height:1.4}
-.longevity .txt p:not(.big):not(.src){font-size:16px;line-height:1.5;max-width:500px}
 
 /* ---------- 06 ako to funguje ---------- */
 .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:2px solid var(--n)}
@@ -120,8 +111,7 @@
 
 /* ---------- menšie obrazovky ---------- */
 @media (max-width:960px){
-  .longevity .wrap,.faq .wrap,.final .wrap{grid-template-columns:minmax(0,1fr)}
-  .lg-panel{padding:28px 24px 32px}
+  .faq .wrap,.final .wrap{grid-template-columns:minmax(0,1fr)}
   .steps{grid-template-columns:minmax(0,1fr)}
   .step + .step{border-left:0;border-top:2px solid var(--n)}
   .bagpanel{grid-template-columns:minmax(0,1fr);justify-items:center;padding:40px 24px}
@@ -232,29 +222,12 @@
   <div class="rw-wrap" data-reviews tabindex="0" aria-label="Recenzie zákazníkov (posúvajú sa samy, pri prejdení myšou sa zastavia)"></div>
 </section>
 
-<!-- 02 dlhovekosť -->
-<section id="dlhovekost" class="sec longevity bt bb">
-  <div class="wrap">
-    <div class="lg-panel">
-      <div class="eyebrow">02. Roky navyše spolu</div>
-      <div class="display num">1,8</div>
-      <div class="display unit">roka navyše</div>
-    </div>
-    <div class="txt">
-      <p class="big">Toľko dlhšie žijú psy, ktoré držia ideálnu váhu.</p>
-      <p class="src">Kealy a kol., JAVMA, 2002</p>
-      <p>Preto dávku nerátame od oka, ale na gramy.</p>
-      <div><a class="btn btn-o" href="granule-na-mieru.html">Spočítať dávku</a></div>
-    </div>
-  </div>
-</section>
-
-<!-- 03 suroviny -->
+<!-- 02 suroviny -->
 <section id="suroviny" class="sec ig" data-ingredients>
   <div class="wrap">
     <div class="ig-head">
       <div class="head">
-        <div class="eyebrow">03. Suroviny</div>
+        <div class="eyebrow">02. Suroviny</div>
         <h2 class="h2">Ingrediencie, <span class="ac">čo budeš závidieť.</span></h2>
         <p class="lead">Žiadne „mäso a mäsové deriváty“. Každá surovina má meno.</p>
       </div>
@@ -313,11 +286,11 @@
   <span>Šach mat, miska</span><span class="star"></span><span>Zdravý pes</span><span class="star"></span><span>Hravý chvost</span><span class="star"></span><span>Jedlo, čo drží krok</span><span class="star"></span><span>Ingrediencie, čo budeš závidieť</span><span class="star"></span>
 </div></div></div>
 
-<!-- 04 porovnanie -->
+<!-- 03 porovnanie -->
 <section class="sec">
   <div class="wrap" style="display:flex;flex-direction:column;gap:28px">
     <div class="head" style="align-items:center;text-align:center">
-      <div class="eyebrow">04. Porovnanie</div>
+      <div class="eyebrow">03. Porovnanie</div>
       <h2 class="h2">Rozrež vrecko. <span class="ac">Uvidíš rozdiel.</span></h2>
     </div>
     <div data-compare></div>
@@ -327,11 +300,11 @@
     </div>
   </div>
 </section>
-<!-- 05 ako to funguje -->
+<!-- 04 ako to funguje -->
 <section id="ako" class="sec bt">
   <div class="wrap" style="display:flex;flex-direction:column;gap:32px">
     <div class="head">
-      <div class="eyebrow">05. Ako to funguje</div>
+      <div class="eyebrow">04. Ako to funguje</div>
       <h2 class="h2">Ty venčíš. <span class="ac">My vozíme.</span></h2>
     </div>
     <ol class="steps" style="list-style:none;margin:0;padding:0">
