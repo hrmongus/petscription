@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test } from 'vitest';
-import { buildFhbOrder, FhbBuildError, fhbOrderId, normalizePhone, orderIdFromFhb, parcelServicesFromEnv, type ShipTo } from './build-order';
+import { buildFhbOrder, FhbBuildError, fhbOrderId, normalizePhone, orderNumberFromFhbId, parcelServicesFromEnv, type ShipTo } from './build-order';
 import { _resetFhbTokenCache, FhbClient, FhbError } from './client';
 import { sendOrderToFhb, type OrderForFhb, type OrderStore } from './send';
 
@@ -126,19 +126,19 @@ const OPTS = { siteUrl: 'https://granula.sk/', notifyToken: 'tok123', services: 
 const ORDER = { id: '6f1c2b1e-0000-4000-8000-000000000001', number: 42, items: [{ sku: 'GRAN-hovadzie-9', qty: 2 }], amountCents: 14490, shipTo: SHIP };
 
 describe('buildFhbOrder', () => {
-  test('FHB id: UUID v base36, 25 znakov (limit FHB 30), spätne prevoditeľné', () => {
-    const id = fhbOrderId(ORDER.id);
-    expect(id).toMatch(/^[0-9a-z]{25}$/);
-    expect(orderIdFromFhb(id)).toBe(ORDER.id);
-    expect(fhbOrderId('00000000-0000-0000-0000-000000000000')).toBe('0'.repeat(25));
-    expect(fhbOrderId('ffffffff-ffff-ffff-ffff-ffffffffffff')).toHaveLength(25);
-    expect(orderIdFromFhb('ffffffff-ffff-ffff-ffff-ffffffffffff'.replace(/-/g, ''))).toBeNull();
-    expect(() => fhbOrderId('o1')).toThrow(FhbBuildError);
+  test('FHB id: GR-000123 z čísla objednávky (limit FHB 30 znakov)', () => {
+    expect(fhbOrderId(42)).toBe('GR-000042');
+    expect(fhbOrderId(1234567)).toBe('GR-1234567');
+    expect(fhbOrderId(9_999_999_999)).toHaveLength(13);
+    expect(orderNumberFromFhbId('GR-000042')).toBe(42);
+    expect(orderNumberFromFhbId('x')).toBeNull();
+    expect(() => fhbOrderId(0)).toThrow(FhbBuildError);
+    expect(() => fhbOrderId(1.5)).toThrow(FhbBuildError);
   });
   test('DPD odberné miesto: služba dpd_sk, výdajné miesto, adresa miesta, telefón +421', () => {
     const b = buildFhbOrder(ORDER, OPTS);
     expect(b).toMatchObject({
-      id: fhbOrderId(ORDER.id), variable_symbol: '42', parcel_service: 'dpd_sk', delivery_point: 'SK21286', cod: 0, value: 144.9, validate: false,
+      id: 'GR-000042', variable_symbol: '42', parcel_service: 'dpd_sk', delivery_point: 'SK21286', cod: 0, value: 144.9, validate: false,
       recipient: { address: { name: 'Ján Novák', street: 'Mierová 17', city: 'Tornaľa', zip: '98201', country: 'SK' }, contact: { email: 'jan@example.sk', phone: '+421905123456' } },
       items: [{ id: 'GRAN-hovadzie-9', quantity: 2 }],
     });
@@ -199,10 +199,20 @@ describe('sendOrderToFhb', () => {
   });
   test('objednávka už vo FHB (prvý POST prešiel, zápis do DB nie) → already_in_fhb', async () => {
     const m = mockFhb();
-    m.orders.set(fhbOrderId(ROW.id), { id: fhbOrderId(ROW.id), status: 'pending' });
+    // prvý POST prešiel (rovnaký obsah), DB zápis nie
+    const first = memStore({ ...ROW });
+    await sendOrderToFhb(ROW.id, { client: client(m), store: first.store, options: OPTS });
     const s = memStore({ ...ROW, status: 'fhb_error' });
     expect(await sendOrderToFhb(ROW.id, { client: client(m), store: s.store, options: OPTS })).toMatchObject({ ok: true, state: 'already_in_fhb' });
     expect(s.row().status).toBe('sent_to_fhb');
+  });
+  test('kolízia id (vo FHB je iná objednávka s tým istým GR-…) → fhb_error ID_COLLISION, nie „odoslaná“', async () => {
+    const m = mockFhb();
+    m.orders.set(fhbOrderId(ROW.number), { id: fhbOrderId(ROW.number), status: 'pending', variable_symbol: String(ROW.number), recipient: { contact: { email: 'iny@zakaznik.sk' } }, items: [{ id: 'GRAN-jahna-4', quantity: 1 }] });
+    const s = memStore({ ...ROW });
+    const r = await sendOrderToFhb(ROW.id, { client: client(m), store: s.store, options: OPTS });
+    expect(r).toMatchObject({ ok: false, state: 'fhb_error' });
+    expect(s.row()).toMatchObject({ status: 'fhb_error', fhb_error: { violations: { id: [{ code: 'ID_COLLISION' }] } } });
   });
   test('400 od FHB → fhb_error so štruktúrou violations', async () => {
     const m = mockFhb();

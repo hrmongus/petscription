@@ -42,10 +42,11 @@ async function main() {
   const point = (await fhb.deliveryPoints(dpd, 'sk'))[0];
   const sku = ours[0]?.id ?? '000000';
   const orderId = randomUUID();
-  const id = fhbOrderId(orderId); // rovnaký tvar ako skutočné objednávky (base36, 25 znakov)
+  const number = 900_000_000 + (Math.floor(Date.now() / 1000) % 99_999_999); // GR-9xxxxxxxx, mimo rozsahu skutočných objednávok
+  const id = fhbOrderId(number); // rovnaký tvar ako skutočné objednávky (GR-…)
   const body = buildFhbOrder(
     {
-      id: orderId, number: Math.floor(Date.now() / 1000) % 1e9, items: [{ sku, qty: 1 }], amountCents: 100,
+      id: orderId, number, items: [{ sku, qty: 1 }], amountCents: 100,
       shipTo: { name: 'Test Granula', email: 'test@granula.sk', phone: '+421900000000', country: 'SK', delivery_method: 'dpd_pickup',
         point_id: point?.external_code /* FHB delivery_point = external_code */, point_address: point ? { street: point.street, city: point.city, zip: point.zip } : null },
     },

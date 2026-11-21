@@ -162,7 +162,7 @@ async function main() {
         const o = (await sb.from('orders').select('*').eq('id', order.id).single()).data!;
         return o.status !== 'paid' ? o : null;
       }, 60_000);
-      const fhb = await FhbClient.fromEnv().getOrder(fhbOrderId(order.id));
+      const fhb = await FhbClient.fromEnv().getOrder(fhbOrderId(order.number));
       console.log(`   objednávka #${order.number} ${order.id} | ${order.kind} | ${(order.amount_cents ?? 0) / 100} € | DB ${sent.status} | FHB ${fhb?.id} ${fhb?.status} ${fhb?.parcel_service} ${fhb?.delivery_point ?? ''}`);
       console.log(`   položky ${JSON.stringify(order.items)} | Hotovo: „${(hotovo.match(/Číslo objednávky[^.]*\./)?.[0] ?? hotovo.slice(0, 140))}“`);
       check(order.kind === (plan === 'raz' ? 'one_off' : 'first'), `kind ${order.kind}`);

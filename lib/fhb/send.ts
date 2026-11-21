@@ -7,7 +7,8 @@ import { FhbClient, FhbError, type FhbOrder } from './client';
  *
  * Bezpečné opakovanie (webhook retry, cron, tlačidlo v admine):
  *   - posiela sa iba objednávka v stave `paid` alebo `fhb_error`; iné stavy sa preskočia,
- *   - FHB `id` = fhbOrderId(orders.id) (base36, limit FHB 30 znakov): ak POST zlyhá, lebo objednávka už vo FHB je, overí sa GET /order a berie sa ako odoslaná.
+ *   - FHB `id` = fhbOrderId(orders.number) = `GR-000123`: ak POST zlyhá, lebo objednávka už vo FHB je, overí sa GET /order;
+ *     za odoslanú sa berie IBA ak sedí obsah (VS, e-mail, položky), inak `fhb_error` ID_COLLISION (napr. reset sekvencie).
  * Výsledok:
  *   - OK → status `sent_to_fhb`, fhb_error = null,
  *   - 400 / lokálna validácia → status `fhb_error`, fhb_error = { status, message, violations } (úloha v admine),
@@ -76,7 +77,12 @@ export async function sendOrderToFhb(orderId: string, deps: { client: FhbClient;
   } catch (e) {
     if (!(e instanceof FhbError)) throw e;
     // už vo FHB? (opakované odoslanie po výpadku, keď prvý POST prešiel)
-    const existing = await client.getOrder(fhbOrderId(order.id)).catch(() => null);
+    const existing = await client.getOrder(fhbOrderId(order.number)).catch(() => null);
+    if (existing && !sameOrder(existing, body)) {
+      const error = { status: 400, message: `FHB už má inú objednávku s id ${body.id}`, endpoint: 'POST /order', violations: { id: [{ code: 'ID_COLLISION', message: 'Objednávka s týmto id vo FHB má iný obsah (VS, e-mail alebo položky).' }] }, at: new Date().toISOString() };
+      await store.update(order.id, { status: 'fhb_error', fhb_error: error as unknown as Json });
+      return { ok: false, state: 'fhb_error', error: error as never };
+    }
     if (existing) {
       await store.update(order.id, { status: 'sent_to_fhb', fhb_error: null });
       return { ok: true, state: 'already_in_fhb', fhb: existing };
@@ -89,6 +95,15 @@ export async function sendOrderToFhb(orderId: string, deps: { client: FhbClient;
     await store.update(order.id, { status: 'fhb_error', fhb_error: error as unknown as Json });
     return { ok: false, state: 'fhb_error', error };
   }
+}
+
+/** Je objednávka vo FHB naozaj tá naša? (VS, e-mail príjemcu, položky) */
+export function sameOrder(existing: FhbOrder, body: { variable_symbol?: string | null; recipient: { contact: { email?: string | null } }; items: { id: string; quantity: number }[] }) {
+  const e = existing as unknown as { variable_symbol?: string | null; recipient?: { contact?: { email?: string | null } }; items?: { id: string; quantity: number }[] };
+  const items = (l: { id: string; quantity: number }[] = []) => l.map((i) => `${i.id}×${i.quantity}`).sort().join(',');
+  return String(e.variable_symbol ?? '') === String(body.variable_symbol ?? '')
+    && (e.recipient?.contact?.email ?? '').toLowerCase() === (body.recipient.contact.email ?? '').toLowerCase()
+    && items(e.items) === items(body.items);
 }
 
 /** Store nad Supabase (service role). */

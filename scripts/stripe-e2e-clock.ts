@@ -141,7 +141,7 @@ async function main() {
       const o = (await sb.from('orders').select('*').eq('id', first.id).single()).data!;
       return o.status !== 'paid' ? o : null;
     }, 60_000);
-    const fhbFirst = await fhb.getOrder(fhbOrderId(first.id));
+    const fhbFirst = await fhb.getOrder(fhbOrderId(first.number));
     console.log(`4. objednávka first #${first.number} ${first.id} | DB ${firstSent.status} | FHB ${fhbFirst?.status ?? '—'} | predplatné ${sub.id} ${sub.stripe_subscription_id}`);
     check(first.kind === 'first' && first.amount_cents === session.amount_total, `first: suma ${(first.amount_cents ?? 0) / 100} € = Session`);
     check(firstSent.status === 'sent_to_fhb' && !!fhbFirst, 'first je vo FHB sandboxe (sent_to_fhb)');
@@ -164,7 +164,7 @@ async function main() {
       const o = (await sb.from('orders').select('*').eq('id', renewal.id).single()).data!;
       return o.status !== 'paid' ? o : null;
     }, 60_000);
-    const fhbRenewal = await fhb.getOrder(fhbOrderId(renewal.id));
+    const fhbRenewal = await fhb.getOrder(fhbOrderId(renewal.number));
     console.log(`   objednávka renewal #${renewal.number} ${renewal.id} | DB ${renewalSent.status} | FHB ${fhbRenewal?.status ?? '—'} | stripe_ref ${renewal.stripe_ref}`);
     check(renewal.stripe_ref === inv?.id && renewal.amount_cents === inv?.amount_paid, 'renewal: stripe_ref = faktúra, suma = zaplatená suma');
     check(JSON.stringify(renewal.items) === JSON.stringify(first.items), `renewal: rovnaké položky ${JSON.stringify(renewal.items)}`);

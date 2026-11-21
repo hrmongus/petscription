@@ -19,6 +19,8 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 - [ ] **Vymeniť (roll) testovací Stripe secret key** (Developers → API keys → Roll) a nový dať do Vercelu aj do prostredia Claude Code.
 - [ ] `NEXT_PUBLIC_SITE_URL=https://www.granula.sk` vo Verceli (✅ hotové 21. 11.) a pri FHB produkcii `npm run fhb:sync -- --apply --production` (notify_url na www).
 - [ ] Stripe → Settings → Payment methods: zvážiť vypnutie Bancontact (belgická metóda, ponúka sa pri jednorazovom nákupe) a overiť doménu pre Apple Pay (Stripe.js varuje, že doména nie je overená).
+- [ ] **Čiarový kód na etikete:** EAN od GS1 Slovakia, alebo interný Code 128 s SKU, ak ho FHB akceptuje (spýtať sa FHB). Potom doplniť `ean` do FHB produktov (dnes sa nevypĺňa, identifikátor je SKU; sync skript ean zámerne neposiela, treba ho na to upraviť alebo zadať v ZOE).
+- [ ] Pri premazaní testovacích dát **neresetovať sekvenciu `orders.number`** (FHB id `GR-000123` musí ostať unikátne), iba zmazať riadky.
 - [ ] Stripe účet vedený na Spark Link, s. r. o.
 - [ ] Zmazať staré branche (Carbone Company)
 - [ ] Záverečná bezpečnostná kontrola: kľúče v histórii gitu, webhooky (podpis, idempotencia), RLS
