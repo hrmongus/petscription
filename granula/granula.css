@@ -548,3 +548,23 @@ section[id]{scroll-margin-top:96px}
 .bs-list .none{padding:12px 18px;font-size:15px}
 .pd-bs .bs-input{font-size:15px;font-weight:600;padding-top:11px;padding-bottom:11px}
 .pd-bs .bs-ph{font-size:15px}
+
+/* ---------- sticky navigácia sekcií na úvodnej stránke (Zloženie … Otázky) ---------- */
+:root{--hh:86px}
+.subnav{position:sticky;top:var(--hh);z-index:30;background:var(--m)}
+.subnav-row{display:flex;gap:clamp(18px,3.4vw,52px);overflow-x:auto;scrollbar-width:none;border-bottom:2px solid var(--n);padding-top:18px}
+.subnav-row::-webkit-scrollbar{display:none}
+.subnav a{flex:none;color:var(--n);text-decoration:none;font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:6px 0 12px;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap}
+.subnav a:hover{color:var(--k)}
+.subnav a[aria-current="true"]{border-bottom-color:var(--o)}
+.sub-wrap section[id]{scroll-margin-top:calc(var(--hh) + 64px)}
+@media (max-width:760px){.subnav-row{padding-top:12px;gap:22px}.subnav a{font-size:11.5px;padding-bottom:10px}}
+/* odborníci */
+.od-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:center}
+.od .lead{font-size:16px;line-height:1.55;max-width:520px}
+.od-facts{list-style:none;margin:0;padding:0;border:2px solid var(--n);background:var(--k);color:var(--m)}
+.od-facts li{display:flex;flex-direction:column;gap:6px;padding:22px 26px}
+.od-facts li + li{border-top:2px solid var(--m)}
+.od-facts b{font-size:clamp(24px,2.4vw,32px);color:var(--l);line-height:1}
+.od-facts span{font-size:15px;font-weight:600}
+@media (max-width:960px){.od-grid{grid-template-columns:minmax(0,1fr);gap:28px}}

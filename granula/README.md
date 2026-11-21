@@ -6,7 +6,7 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 
 | Súbor | Čo je v ňom | Artboardy v návrhu |
 | --- | --- | --- |
-| `index.html` | úvodná stránka: hero, produkt, recenzie, suroviny, porovnanie, ako to funguje, Granula = nula, blog, otázky, predregistrácia, výzva, pätička | Homepage + Homepage — pokračovanie |
+| `index.html` | úvodná stránka: hero, produkt, potom so sticky navigáciou sekcií (subnav.js): suroviny, recenzie, porovnanie, ako to funguje, Granula = nula, odborníci, otázky; nakoniec blog, otázky, predregistrácia, výzva, pätička | Homepage + Homepage — pokračovanie |
 | `obchodne-podmienky.html`, `reklamacny-poriadok.html`, `ochrana-sukromia.html` | právne stránky, zatiaľ lorem ipsum (noindex, mimo sitemap); pred spustením doplniť text a odstrániť noindex | |
 | `garancia.html` | Garancia spokojného psíka — zatiaľ prázdna (noindex), odkaz v pätičke PRÁVNE | |
 | `nas-pribeh.html` | Náš príbeh — zatiaľ prázdna (noindex, mimo sitemap), odkaz v pätičke | |
@@ -23,6 +23,7 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 | `compare.js` | porovnanie „Rozrež vrecko“: jediný zdroj pre úvodnú stránku aj výsledok konfigurátora; prierez a zloženie podľa receptúry (`RECIPES`, chýbajúce zatiaľ = Jeleň & králik) | |
 | `ingrediencie.js` | detail suroviny (pop-up po kliknutí v sekcii surovín na úvodnej stránke aj na suroviny): texty, nálepka, „V recepte“ zo zloženia receptúr, listovanie v rámci kategórie | |
 | `breed-search.js` | vyhľadávanie plemena (lupa, skupiny, filtrovanie bez diakritiky, „písané“ príklady) — dotazník aj produktová sekcia | |
+| `subnav.js` | sticky navigácia sekcií na úvodnej stránke (Zloženie … Otázky): výška hlavičky, zvýraznenie aktuálnej sekcie | |
 | `produkt.js` | produktová sekcia pod hero: galéria, plemeno/vek/váha → odporúčaná receptúra (obrázok); cena „už od“ = najnižšia cena za kg (najväčšie vrece, predplatné), tlačidlo predvyplní konfigurátor (`?plemeno=&vek=&kg=`) | |
 | `reviews.js` | recenzie: jediný zdroj pre úvodnú stránku aj výsledok konfigurátora (dáta + skladanie radov bez opakovania) | |
 | `site.js` | objavovanie pri scrolle, karusel recenzií, sekcia surovín (filtre a šípky) | |
