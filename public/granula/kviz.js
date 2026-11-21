@@ -414,6 +414,11 @@
       .then(function (s) {
         if (!s || !s.open) return;
         CHECKOUT_OPEN = true;
+        // výber doručenia (doprava.js): Packeta, SPS výdajné miesto, SPS kuriér
+        if (window.GranulaDelivery) {
+          GranulaDelivery.init(order, { onChange: function () { order.querySelector('[data-err="objednavka"]').hidden = true; } });
+          GranulaDelivery.enable({ packetaKey: s.packetaKey || "", mode: s.mode, saved: state.delivery });
+        }
         if (current === "objednavka") renderOrder();
       })
       .catch(function () {});
@@ -472,6 +477,18 @@
   });
   function checkout(wallet) {
     if (!CHECKOUT_OPEN) return; // pred štartom sa neobjednáva
+    if (window.GranulaDelivery && GranulaDelivery.active()) {
+      // nový tok: doručenie → (krok 4) platba cez Stripe. Údaje o platbe sa tu nezbierajú.
+      var res = GranulaDelivery.validate(), err = order.querySelector('[data-err="objednavka"]');
+      err.textContent = res.ok ? "" : res.message;
+      err.hidden = res.ok;
+      if (!res.ok) { if (res.focus) res.focus.focus(); return; }
+      state.delivery = res.delivery; save();
+      // TODO krok 4: POST /api/checkout { answers, plan, bag, delivery } → Stripe Embedded Checkout
+      err.textContent = "Doručenie je pripravené (" + res.delivery.name + ", " + (res.delivery.point ? res.delivery.point.name : res.delivery.address.city) + "). Platba sa napojí v ďalšom kroku.";
+      err.hidden = false;
+      return;
+    }
     var need = ["email", "fname", "lname", "street", "zip", "city"];
     if (order.ship.value === "packeta") need.push("point");
     if (order.ship.value === "kurier") need.push("tel");

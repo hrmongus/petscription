@@ -6,7 +6,7 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 |---|---|
 | 1. Základ (SPEC P0) | ✅ hotové, preview skontrolované |
 | 2. FHB klient (P2) | ✅ hotové, čaká na „ok“ |
-| 3. Doprava v checkoute (P1b) | — |
+| 3. Doprava v checkoute (P1b) | ✅ hotové, čaká na „ok“ |
 | 4. Checkout a predplatné (P1) | — |
 | 5. FHB stavy a emaily | — |
 | 6. Test celého toku | — |
@@ -168,5 +168,43 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 - **Vizuálne:** 11 stránok × desktop/mobil, 0 rozdielnych pixelov oproti stavu pred nasadením.
 - **Predaj:** `/api/checkout/status` → `closed`; dotazník bez tokenu aj so zlým tokenom → „Objednávky od 1. 12.“.
 
+---
+
+## Krok 3: Doprava v checkoute (21. 11. 2026)
+
+### Hotové
+- **Krok objednávky** (`granule-na-mieru.html`), iba pri otvorenom predaji (`CHECKOUT_ENABLED` alebo `?test=`):
+  - výber Packeta výdajné miesto / Z-BOX, SPS výdajné miesto, SPS kuriér na adresu,
+  - povinný telefón (+421) a e-mail (≤ 50 znakov), meno a priezvisko, adresa iba pri kuriérovi,
+  - výsledok ako jeden objekt `delivery` (`GranulaDelivery.validate()`), uložený v stave dotazníka. Krok 4 ho pošle na server.
+- **Packeta:** oficiálny widget v6 (`Packeta.Widget.pick`, krajina SK, výdajné miesta aj Z-BOXy). Kľúč z `PACKETA_API_KEY` cez `/api/checkout/status`; bez kľúča v teste testovacie miesto.
+- **SPS pop-up** (`doprava.js`, `doprava.css`, Granula dizajn):
+  - hľadanie podľa mesta alebo PSČ bez diakritiky, zoznam, mapa Leaflet + OSM (keď sú súradnice),
+  - na mobile celá obrazovka s prepínačom Zoznam/Mapa,
+  - focus trap, Esc, návrat fokusu na tlačidlo.
+- **`GET /api/delivery-points?service=sps&q=…` / `&id=…`:** dáta z FHB `sps_pudo`, cache 12 h v pamäti, CDN 1 h, pri výpadku FHB stará cache; bez FHB kľúčov testovacie miesta `TEST-…` so súradnicami. `lib/delivery-points.ts` (`findSpsPoint` na overenie pred platbou v kroku 4).
+- **Testy:** 47 ✅ (5 nových: normalizácia, hľadanie, limit, mock, cache a výpadok). `typecheck` ✅, `build` ✅.
+
+### Overené v prehliadači (Playwright, mobil 390 px aj desktop)
+- **Zatvorený predaj:** krok objednávky má 0 rozdielnych pixelov oproti granula.sk (desktop aj mobil).
+- **Otvorený predaj so skutočnými dátami z FHB sandboxu:**
+  - prázdne odoslanie vypíše všetky chýbajúce údaje,
+  - SPS: hľadanie „Žilina“ → zoznam, Tab ostáva v okne, Esc zavrie a vráti fokus, výber miesta → karta s adresou,
+  - `delivery` = `{ method: "sps_parcelshop", carrier: "sps", name, email, phone: "+421905123456", point: { id: "PS-ZAJV1471", … }, address: null }`,
+  - kuriér: kontrola adresy a PSČ, OK s adresou,
+  - Packeta bez kľúča → testovacie miesto,
+  - zlý telefón a e-mail nad 50 znakov → hlášky.
+- **Mapa** na testovacích dátach so súradnicami: značky, výber priamo z mapy (desktop vedľa zoznamu, mobil cez prepínač).
+
+### Otvorené otázky
+1. **Súradnice SPS miest pre mapu** (FHB ich neposiela). Možnosti:
+   - a) požiadať SPS alebo FHB o export so súradnicami (odporúčam),
+   - b) platený geokódovací servis (Mapbox/Google) raz denne pre nové miesta,
+   - c) nechať iba zoznam.
+   Hromadné geokódovanie cez bezplatný OSM Nominatim jeho pravidlá nepovoľujú.
+2. **Doby doručenia v texte:** Packeta a SPS výdajné miesto 2–3, kuriér 1–2 pracovné dni. Sedí to?
+3. **`PACKETA_API_KEY`** z klientskej sekcie Packety (client.packeta.com) do Vercelu. Bez neho sa Packeta dá skúšať iba s testovacím miestom.
+4. **Formát Packeta `delivery_point` pre FHB** (otázka 2 v emaile FHB). Widget vracia číselné `id` miesta.
+
 ### Ostáva (ďalšie kroky)
-- Krok 3: doprava v checkoute (Packeta widget, SPS pop-up nad `GET /api/delivery-points?service=sps` z FHB `sps_pudo`).
+- Krok 4: checkout a predplatné (Stripe test mode, Embedded Checkout, webhooky, `lib/subscription-schedule.ts`).

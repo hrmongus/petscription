@@ -323,5 +323,13 @@ Každá položka čaká na potvrdenie, kým nie je označená ✅.
     - **`validate`:** SPEC hovorí `validate: true`. Sandbox však odmieta každú adresu („Failed to validate address“). Preto `validate` platí iba pri kuriérovi a dá sa vypnúť cez `FHB_VALIDATE_ADDRESS=false`. Pri výdajnom mieste sa adresa nekontroluje.
     - **Adresa pri výdajnom mieste:** FHB vyžaduje `recipient.address` aj pri výdajnom mieste. Ak zákazník adresu nezadá, pošle sa adresa výdajného miesta (`ship_to.point_address`).
     - **Názvy produktov vo FHB:** „Granula! <receptúra> <kg> kg“.
+11. **Doprava v checkoute (krok 3, 21. 11.):**
+    - **Mapa SPS:** FHB `GET /delivery-point` **neposiela GPS súradnice** (iba `id, external_code, name, street, city, zip, country`) a verejný zdroj súradníc SPS sa nepodarilo nájsť. Pop-up preto zatiaľ ukazuje vyhľadávanie (mesto/PSČ) a zoznam. Mapa (Leaflet + OSM) je hotová a zobrazí sa, keď budú mať miesta `lat/lng` (overené na testovacích dátach). ⚠️ Rozhodnúť zdroj súradníc.
+    - **Rozsah dát:** FHB `sps_pudo` má ~2 900 miest (635 ParcelShopov `PS-…` + ~2 240 balíkovo boxov `SPS-…`), nie ~340.
+    - **Adresa:** pri výdajnom mieste sa zákazníkova adresa nepýta (do FHB ide adresa miesta), pri kuriérovi áno.
+    - **Telefón:** povinný pri každom spôsobe doručenia, prijímame SK a CZ čísla (+421/+420, aj v tvare 09…). **E-mail:** najviac 50 znakov (limit FHB).
+    - **Packeta bez API kľúča:** v testovacom režime sa ponúkne testovacie miesto `TEST-PK01`, pri verejnom predaji hláška. Kľúč widgetu ide do prehliadača cez `/api/checkout/status` (je verejný, tajné je iba API heslo).
+    - **Cena dopravy** je pre všetky spôsoby rovnaká (`PARAMS.shipping` 4,90 €). **Doby doručenia** v texte (Packeta a SPS výdajné miesto 2–3, kuriér 1–2 pracovné dni) ⚠️ potvrdiť.
+    - **Pôvodný formulár** (adresa, Packeta, kuriér, platobné polia) ostáva pri zatvorenom predaji bez zmeny. Platobné polia sa odstránia v kroku 4.
 8. **Receptúra v checkoute:** server prijme akúkoľvek receptúru z `PRODUCTS`, rovnako ako dnešné UI (menej vhodné len označí). V snapshote sa ukladá `eligible`. Pre `/ucet` (P4) platí SPEC: iba vhodné.
 

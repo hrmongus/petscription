@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,900&display=swap">
 <link rel="stylesheet" href="granula.css">
+<link rel="stylesheet" href="doprava.css">
 <style>
 /* ---------- obrazovky ---------- */
 .screen{display:none;min-height:100vh;min-height:100svh}
@@ -977,6 +978,7 @@
       <section class="pay-sec" aria-labelledby="t-contact">
         <div class="ps-h"><span class="ps-n" aria-hidden="true">1</span><h2 id="t-contact">Kontakt</h2></div>
         <label class="pf"><span>E-mail</span><input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="meno@email.sk" required></label>
+        <label class="pf" id="phone-f" hidden><span>Telefón</span><input class="input" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+421 9XX XXX XXX"><small class="pf-hint">Dopravca ti dá vedieť, kedy balík príde.</small></label>
       </section>
       <section class="pay-sec" aria-labelledby="t-ship">
         <div class="ps-h"><span class="ps-n" aria-hidden="true">2</span><h2 id="t-ship">Doručenie</h2></div>
@@ -984,11 +986,14 @@
           <label class="pf"><span>Meno</span><input class="input" id="fname" name="fname" autocomplete="given-name" required></label>
           <label class="pf"><span>Priezvisko</span><input class="input" id="lname" name="lname" autocomplete="family-name" required></label>
         </div>
+        <div class="dc" id="addr-f">
         <label class="pf"><span>Ulica a číslo</span><input class="input" id="street" name="street" autocomplete="street-address" required></label>
         <div class="pf2 zip">
           <label class="pf"><span>PSČ</span><input class="input" id="zip" name="zip" autocomplete="postal-code" inputmode="numeric" required></label>
           <label class="pf"><span>Mesto</span><input class="input" id="city" name="city" autocomplete="address-level2" required></label>
         </div>
+        </div>
+        <div class="dc" id="ship-legacy">
         <div class="ship-opts" role="radiogroup" aria-label="Spôsob doručenia">
           <label class="so"><input type="radio" name="ship" value="packeta" checked><span class="so-box" aria-hidden="true"></span>
             <span class="so-txt"><b>Packeta – výdajné miesto</b><span>2–3 pracovné dni</span></span><b class="so-pr" data-ship-price></b></label>
@@ -999,6 +1004,20 @@
           <label class="so"><input type="radio" name="ship" value="kurier"><span class="so-box" aria-hidden="true"></span>
             <span class="so-txt"><b>Kuriér na adresu</b><span>1–2 pracovné dni</span></span><b class="so-pr" data-ship-price></b></label>
           <label class="pf" id="tel-f" hidden><span>Telefón pre kuriéra</span><input class="input" id="tel" name="tel" type="tel" autocomplete="tel" placeholder="+421"></label>
+        </div>
+        </div>
+        <!-- výber doručenia pri otvorenom predaji (doprava.js, SPEC P1b) -->
+        <div class="dl-new" id="ship-new" hidden>
+          <div class="ship-opts" role="radiogroup" aria-label="Spôsob doručenia">
+            <label class="so"><input type="radio" name="dmethod" value="packeta_point"><span class="so-box" aria-hidden="true"></span>
+              <span class="so-txt"><b>Packeta – výdajné miesto alebo Z-BOX</b><span>2–3 pracovné dni</span></span><b class="so-pr" data-ship-price></b></label>
+            <div class="dl-pick" data-for="packeta_point" hidden><button type="button" class="link-under" data-pick="packeta"></button><div class="dl-chosen" hidden></div></div>
+            <label class="so"><input type="radio" name="dmethod" value="sps_parcelshop"><span class="so-box" aria-hidden="true"></span>
+              <span class="so-txt"><b>SPS – výdajné miesto</b><span>2–3 pracovné dni</span></span><b class="so-pr" data-ship-price></b></label>
+            <div class="dl-pick" data-for="sps_parcelshop" hidden><button type="button" class="link-under" data-pick="sps" aria-haspopup="dialog"></button><div class="dl-chosen" hidden></div></div>
+            <label class="so"><input type="radio" name="dmethod" value="sps_courier"><span class="so-box" aria-hidden="true"></span>
+              <span class="so-txt"><b>SPS – kuriér na adresu</b><span>1–2 pracovné dni</span></span><b class="so-pr" data-ship-price></b></label>
+          </div>
         </div>
       </section>
       <section class="pay-sec" aria-labelledby="t-payment">
@@ -1098,6 +1117,7 @@
 <script src="radar.js"></script>
 <script src="breed-search.js"></script>
 <script src="compare.js"></script>
+<script src="doprava.js"></script>
 <script src="kviz.js"></script>
 <script src="reviews.js"></script>
 <script src="site.js"></script>
