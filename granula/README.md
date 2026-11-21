@@ -6,7 +6,7 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 
 | Súbor | Čo je v ňom | Artboardy v návrhu |
 | --- | --- | --- |
-| `index.html` | úvodná stránka: hero, produkt, potom so sticky navigáciou sekcií (subnav.js): suroviny, recenzie, porovnanie, ako to funguje, Granula = nula, odborníci, otázky; nakoniec blog, otázky, predregistrácia, výzva, pätička | Homepage + Homepage — pokračovanie |
+| `index.html` | úvodná stránka: hero, produkt, potom so sticky navigáciou sekcií (subnav.js): suroviny, recenzie, porovnanie, Granula = nula, odborníci, otázky; nakoniec blog a predregistrácia, otázky, predregistrácia, výzva, pätička | Homepage + Homepage — pokračovanie |
 | `obchodne-podmienky.html`, `reklamacny-poriadok.html`, `ochrana-sukromia.html` | právne stránky, zatiaľ lorem ipsum (noindex, mimo sitemap); pred spustením doplniť text a odstrániť noindex | |
 | `garancia.html` | Garancia spokojného psíka — zatiaľ prázdna (noindex), odkaz v pätičke PRÁVNE | |
 | `nas-pribeh.html` | Náš príbeh — zatiaľ prázdna (noindex, mimo sitemap), odkaz v pätičke | |
