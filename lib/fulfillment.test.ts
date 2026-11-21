@@ -121,6 +121,14 @@ describe('invoice.paid (obnovenie)', () => {
     const m = memStore(), f = fakeStripe();
     expect(await handleInvoicePaid(invoice({ billing_reason: 'subscription_create' }), { store: m.store, stripe: f.s, cycle: CYCLE })).toBeNull();
   });
+  test('predplatné mimo DB: bez draftu (test clock) ignorovať, s draftom 500 (checkout ešte nespracovaný)', async () => {
+    const m = memStore(), f = fakeStripe();
+    const d = { store: m.store, stripe: f.s, cycle: CYCLE };
+    const orphan = invoice({ parent: { subscription_details: { subscription: 'sub_x', metadata: { app: 'granula', test_clock: '1' } } } });
+    expect(await handleInvoicePaid(orphan, d)).toBeNull();
+    const pending = invoice({ parent: { subscription_details: { subscription: 'sub_x', metadata: META } } });
+    await expect(handleInvoicePaid(pending, d)).rejects.toThrow(/nie je v DB/);
+  });
 });
 
 describe('neúspešná platba a zmeny predplatného', () => {

@@ -128,7 +128,15 @@ export async function handleInvoicePaid(invoice: Stripe.Invoice, deps: Deps): Pr
   const stripeSubId = idOf(invoice.parent?.subscription_details?.subscription);
   if (!stripeSubId || !invoice.id) return null;
   const sub = await deps.store.findSubscriptionByStripeId(stripeSubId);
-  if (!sub) throw new Error(`invoice ${invoice.id}: predplatné ${stripeSubId} nie je v DB`);
+  if (!sub) {
+    // predplatné bez draftu z checkoutu (napr. scripts/stripe-test-clock.ts) sa nikdy v DB neobjaví → ignorovať;
+    // s draftom ešte nebol spracovaný checkout.session.completed → 500, Stripe zopakuje
+    if (!invoice.parent?.subscription_details?.metadata?.customer_id) {
+      console.warn(`[webhook] invoice ${invoice.id}: predplatné ${stripeSubId} nie je z checkoutu, ignorujem`);
+      return null;
+    }
+    throw new Error(`invoice ${invoice.id}: predplatné ${stripeSubId} nie je v DB`);
+  }
   const [customer, dog, address] = await Promise.all([deps.store.getCustomer(sub.customer_id), deps.store.getDog(sub.dog_id), deps.store.getAddress(sub.address_id)]);
   if (!customer || !dog || !address) throw new Error(`invoice ${invoice.id}: chýba zákazník, pes alebo adresa`);
   const now = nowOf(deps);
