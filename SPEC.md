@@ -90,9 +90,12 @@ Paralelná práca = samostatné Claude Code chaty na samostatných branchoch (gi
 - Admin rola: Supabase Auth `app_metadata.role = "admin"`; admin dotazy cez service role iba na serveri.
 
 ### SKU (FHB produkty)
-- `GRAN-<receptúra>-4`, `GRAN-<receptúra>-9` → 5 receptúr × 2 = **10 SKU**.
-- Balenie 18 kg = `GRAN-<receptúra>-9` × 2 (nie samostatné SKU).
-- Receptúry = `PRODUCTS` v `engine.js` (id ako v engine).
+_(zmenené 21. 11. 2026 podľa zadania používateľa: 18 kg je sada, nie 9 kg × 2 v objednávke)_
+- **15 produktov:** 10 bežných (`type: "single"`) `GRAN-<receptúra>-4` a `GRAN-<receptúra>-9` + 5 sád `GRAN-<receptúra>-18` (`type: "multi"`, `items: [{ id: "GRAN-<receptúra>-9", quantity: 2 }]`).
+- Objednávka obsahuje vždy jeden produkt podľa balenia (18 kg = sada `GRAN-<receptúra>-18` × 1, nie `-9` × 2).
+- Receptúry = `PRODUCTS` v `engine.js` (id ako v engine): `hovadzie-morka-jahna`, `morka-hus-kacica`, `hovadzie`, `jahna`, `jelen-kralik`.
+- **ID sa po založení nikdy nemení.** Produkty sa vo FHB nedajú zmazať, iba archivovať (`GET /product/archive`), a archivovaný produkt nemôže byť zložkou sady. Preto sa id receptúr v `engine.js` nesmú premenovať. Nové ID sa pred založením ukážu používateľovi.
+- **Názov vo FHB:** „Granula! <receptúra> <kg> kg“, pri sade „… 18 kg (2 × 9 kg)“.
 
 ---
 
@@ -158,7 +161,10 @@ Produkcia: `https://api.fhb.sk/v3` · Sandbox: ⚠️ docs uvádzajú `https://a
 
 - **Auth:** `POST /login` `{ app_id, secret }` → `{ token, expiration }`. Hlavička `X-Authentication-Simple: base64(token)`. Token cachovať na serveri, pri expirácii / 401 znova login. Kľúče generované v ZOE (https://zoe2.fhb.sk), zvlášť sandbox a produkcia.
 - **Klient** `lib/fhb/` (typovaný, testy s mockom): login, products, orders, parcel services, delivery points, history, rma, stock.
-- **Produkty:** skript `scripts/fhb-sync-products.ts` → `POST /product` / `PUT /product` pre 10 SKU (`id`, `name`, `ean`, `notify_url` na skladové notifikácie). Nikdy neprepisovať `ean`, ktorý FHB upravil.
+- **Produkty:** skript `scripts/fhb-sync-products.ts` → `POST /product` / `PUT /product` pre 15 produktov (najprv bežné, potom sady). Posiela `id`, `name`, `type`, `items` (sady) a `notify_url`.
+  - **EAN sa nikdy neposiela ani neprepisuje.** FHB ho upraví podľa skutočného vrecka.
+  - **`notify_url`** pri každom produkte = `https://granula.sk/api/fhb/stock-notify?t=<FHB_NOTIFY_TOKEN>` (skladové notifikácie: POST JSON `id, type, qty, stockQuantity, reason`, `serialNumbers[]`).
+- **Príjem tovaru (stock receipt):** `POST/PUT/GET/DELETE /stock-receipt` v klientovi. Úprava a zmazanie sú možné iba v stave `created`. Položky sú iba bežné produkty (4 kg, 9 kg); sada 18 kg v príjemke byť nemôže (FHB vráti 400 „is multi product“). Prvý príjem tovaru pôjde cez príjemku.
 - **Vytvorenie objednávky** (`POST /order`) po `paid`:
   - `id` = `orders.id`, `variable_symbol` = `orders.number` (iba číslice, ≤ 10, unikátne),
   - `parcel_service` = kód SPS / Packeta (z `GET /parcel-service`), `delivery_point` = Packeta box,
@@ -172,6 +178,8 @@ Produkcia: `https://api.fhb.sk/v3` · Sandbox: ⚠️ docs uvádzajú `https://a
 - **Cron (Vercel Cron), denne + každú hodinu počas dňa:** `GET /order/history` (stavy, tracking, `delivered_at`), `GET /rma/list` (vrátené zásielky), `GET /stock/all` (sklad).
 - Pri `sent` → tracking do DB + email (P5). Pri `delivered` → `delivered_at`, prepočet prvého obnovenia (§1).
 - **Sklad:** upozornenie na nízky stav = spotreba za 4–5 týždňov (dodávateľ má lead time min. 3 týždne) → email + admin.
+  - Počíta sa z **`free_quantity`** (voľné, nerezervované kusy) z `GET /product` / `GET /product/all`, **nie** zo `stock_quantity`. `/stock/all` a skladová notifikácia majú iba celkový stav; notifikácia slúži ako podnet na prečítanie `free_quantity`.
+  - Sledujú sa iba bežné produkty (4 kg, 9 kg). Dostupnosť sady 18 kg = `free_quantity` zložky 9 kg / 2.
 - Stavy FHB: `pending → confirmed → sent → delivered`, `rejected`, vrátené (`returned_at`, `return_type`).
 
 ---

@@ -17,6 +17,9 @@ type Body<P extends keyof paths, M extends keyof paths[P]> = paths[P][M] extends
 export type FhbOrderInput = Body<'/order', 'post'>;
 export type FhbOrderUpdate = Body<'/order', 'put'>;
 export type FhbProductInput = Body<'/product', 'post'>;
+export type FhbStockReceiptInput = Body<'/stock-receipt', 'post'>;
+export type FhbStockReceiptUpdate = Body<'/stock-receipt', 'put'>;
+export type FhbStockReceipt = components['schemas']['StockReceiptResponse'];
 export type FhbOrder = components['schemas']['OrderView'];
 export type FhbProduct = components['schemas']['StockItemView'];
 export type FhbStock = components['schemas']['StockView'];
@@ -177,6 +180,12 @@ export class FhbClient {
       throw e;
     }
   }
+  /**
+   * GET /product/archive?id= – produkty sa nedajú zmazať, iba archivovať. Archivovaný produkt nemôže byť zložkou sady.
+   */
+  async archiveProduct(id: string): Promise<void> {
+    await this.request<null>('GET', `/product/archive?id=${encodeURIComponent(id)}`);
+  }
   /** GET /product/all (stránkované, sandbox vracia {page,total,products}). */
   async listProducts(page = 1): Promise<FhbPage<'products', FhbProduct>> {
     const r = await this.request<FhbPage<'products', FhbProduct> | FhbProduct[]>('GET', `/product/all?page=${page}`);
@@ -231,6 +240,33 @@ export class FhbClient {
   rmaList(q: { from?: string; to?: string; page?: number } = {}) {
     return this.request<FhbPage<'items', FhbOrder>>('GET', `/rma/list${qs(q)}`);
   }
+  // ---------------------------------------------------------------- príjemky tovaru (stock receipt)
+  /** POST /stock-receipt – príjem tovaru na sklad. Položky iba bežné produkty (sada 18 kg nie: FHB vráti 400). */
+  createStockReceipt(r: FhbStockReceiptInput) {
+    return this.request<FhbStockReceipt>('POST', '/stock-receipt', r);
+  }
+  /** PUT /stock-receipt?id= – iba v stave `created`. */
+  updateStockReceipt(id: string, r: FhbStockReceiptUpdate) {
+    return this.request<FhbStockReceipt>('PUT', `/stock-receipt?id=${encodeURIComponent(id)}`, r);
+  }
+  /** GET /stock-receipt?id= ; null keď neexistuje. */
+  async getStockReceipt(id: string): Promise<FhbStockReceipt | null> {
+    try {
+      return await this.request<FhbStockReceipt>('GET', `/stock-receipt?id=${encodeURIComponent(id)}`);
+    } catch (e) {
+      if (e instanceof FhbError && e.status === 404) return null;
+      throw e;
+    }
+  }
+  /** DELETE /stock-receipt?id= – iba v stave `created`. */
+  async deleteStockReceipt(id: string): Promise<void> {
+    await this.request<null>('DELETE', `/stock-receipt?id=${encodeURIComponent(id)}`);
+  }
+
+  /**
+   * Stav skladu. Pozor: /stock/all a /stock vracajú iba `quantity` (celkový stav). Na upozornenie na nízky sklad
+   * používať `free_quantity` z produktov (listProducts / getProduct), nie stock_quantity (SPEC P2).
+   */
   stockAll() {
     return this.request<FhbStock[]>('GET', '/stock/all');
   }

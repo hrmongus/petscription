@@ -32,7 +32,7 @@ async function main() {
   }
   const prods = await fhb.listProducts();
   const ours = prods.products.filter((p) => p.id?.startsWith('GRAN-'));
-  (ours.length === 10 ? ok : warn)(`produkty: ${prods.total} spolu, naše GRAN-*: ${ours.length}/10`);
+  (ours.length === 15 ? ok : warn)(`produkty: ${prods.total} spolu, naše GRAN-*: ${ours.length}/15 (10 vriec + 5 sád 18 kg)`);
   ok(`sklad: ${(await fhb.stockAll()).length} položiek`);
   ok(`história objednávok: ${(await fhb.orderHistory()).total}`);
   ok(`RMA: ${(await fhb.rmaList()).total}`);

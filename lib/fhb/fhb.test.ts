@@ -208,3 +208,66 @@ describe('sendOrderToFhb', () => {
     expect(m.calls).toHaveLength(0);
   });
 });
+
+/* ------------------------------------------------------------ príjemky tovaru a archivácia */
+describe('FhbClient: stock-receipt a archive', () => {
+  function receiptMock() {
+    const receipts = new Map<string, Record<string, unknown>>();
+    const calls: string[] = [];
+    const f = (async (url: string | URL | Request, init?: RequestInit) => {
+      const u = new URL(String(url));
+      const path = u.pathname.replace(/^\/v3/, '');
+      const m = init?.method ?? 'GET';
+      calls.push(`${m} ${path}${u.search}`);
+      const body = init?.body ? JSON.parse(String(init.body)) : undefined;
+      const res = (s: number, b: unknown) => new Response(b == null ? null : JSON.stringify(b), { status: s });
+      if (path === '/login') return res(200, { token: 't', expiration: new Date(Date.now() + 3600e3).toISOString() });
+      const id = u.searchParams.get('id') ?? body?.id;
+      if (path === '/product/archive') return id === 'GRAN-x-4' ? res(204, null) : res(400, { message: 'Invalid request', violations: { id: [{ code: 'NOT_EXISTING_PRODUCT_ERROR', message: 'Product does not exist.' }] } });
+      if (path !== '/stock-receipt') return res(404, { message: 'nie' });
+      if (m === 'POST') {
+        if (body.items.some((i: { id: string }) => i.id.endsWith('-18'))) return res(400, { message: 'Invalid request', violations: { 'items[0].id': [{ code: '', message: `Product "${body.items[0].id}" is multi product` }] } });
+        const r = { ...body, status: 'created', items: body.items.map((i: object) => ({ ...i, received: 0 })) };
+        receipts.set(id, r);
+        return res(200, r);
+      }
+      const r = receipts.get(id);
+      if (!r) return res(404, { message: `Stock receipt ${id} not found` });
+      if (m === 'GET') return res(200, r);
+      if (r.status !== 'created') return res(400, { message: 'Invalid request' });
+      if (m === 'PUT') { Object.assign(r, body); return res(200, r); }
+      receipts.delete(id);
+      return res(204, null);
+    }) as typeof fetch;
+    return { f, calls, receipts };
+  }
+  const c = (f: typeof fetch) => new FhbClient({ baseUrl: 'https://api-stage.fhb.sk/v3', appId: 'a', secret: 's', fetch: f });
+
+  test('založiť → prečítať → upraviť → zmazať', async () => {
+    const m = receiptMock();
+    const fhb = c(m.f);
+    const r = await fhb.createStockReceipt({ id: 'PRIJEM-1', name: 'Prvý príjem', items: [{ id: 'GRAN-hovadzie-9', quantity: 40 }] });
+    expect(r).toMatchObject({ status: 'created', items: [{ id: 'GRAN-hovadzie-9', quantity: 40, received: 0 }] });
+    expect((await fhb.getStockReceipt('PRIJEM-1'))?.name).toBe('Prvý príjem');
+    await fhb.updateStockReceipt('PRIJEM-1', { name: 'Prvý príjem', items: [{ id: 'GRAN-hovadzie-9', quantity: 50 }] });
+    expect((await fhb.getStockReceipt('PRIJEM-1'))?.items?.[0].quantity).toBe(50);
+    await fhb.deleteStockReceipt('PRIJEM-1');
+    expect(await fhb.getStockReceipt('PRIJEM-1')).toBeNull();
+    expect(m.calls).toContain('PUT /stock-receipt?id=PRIJEM-1');
+  });
+  test('sada 18 kg nemôže byť v príjemke (FHB 400)', async () => {
+    const e = await c(receiptMock().f).createStockReceipt({ id: 'P2', name: 'x', items: [{ id: 'GRAN-hovadzie-18', quantity: 1 }] }).catch((x) => x);
+    expect(e).toMatchObject({ status: 400 });
+    expect(JSON.stringify(e.violations)).toMatch(/multi product/);
+  });
+  test('archivácia produktu cez GET /product/archive', async () => {
+    const m = receiptMock();
+    await c(m.f).archiveProduct('GRAN-x-4');
+    expect(m.calls).toContain('GET /product/archive?id=GRAN-x-4');
+    await expect(c(m.f).archiveProduct('neni')).rejects.toMatchObject({ status: 400 });
+  });
+  test('skladová notifikácia: /api/fhb/stock-notify?t=…', async () => {
+    const { stockNotifyUrl } = await import('./build-order');
+    expect(stockNotifyUrl('https://granula.sk/', 'a b')).toBe('https://granula.sk/api/fhb/stock-notify?t=a%20b');
+  });
+});

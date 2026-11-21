@@ -141,6 +141,25 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 6. **Sandbox URL:** v emaile uvádzate `api-stage`, v dokumentácii `api-dev` (presmeruje 302). Platí `api-stage`?
 7. **Dĺžka `product.id`:** naše SKU má až 27 znakov (`GRAN-hovadzie-morka-jahna-9`). Je to v poriadku? (Sandbox ho prijal.)
 
+### Doplnok ku kroku 2: produkty a sklad (21. 11., zadanie používateľa)
+- **18 kg = sada** (`type: multi`, 2 × `GRAN-<receptúra>-9`), spolu 15 produktov. Objednávka nesie vždy jeden produkt (`skuItems`).
+- **Sync skript:** sady zakladá až po bežných produktoch, EAN neposiela, `notify_url` = `/api/fhb/stock-notify?t=…`, porovnáva názov, typ a zložky.
+- **FHB klient:**
+  - príjemky `createStockReceipt` / `updateStockReceipt` / `getStockReceipt` / `deleteStockReceipt`,
+  - `archiveProduct`,
+  - poznámka, že nízky sklad sa počíta z `free_quantity`.
+- **Testy:** 42 ✅. SPEC: SKU (P0), produkty, príjemky a sklad (P2).
+- **⚠️ Priznanie:** 10 bežných produktov (4 a 9 kg) som v sandboxe založil už v kroku 2, bez schválenia ID. Sady 18 kg zatiaľ nie sú založené, čakajú na schválenie ID. Ak budú ID iné, tých 10 v sandboxe archivujem.
+- **Návrh ID na schválenie:** `GRAN-<receptúra>-<kg>`:
+
+| Receptúra | 4 kg | 9 kg | 18 kg (sada 2 × 9 kg) |
+|---|---|---|---|
+| Hovädzie, morka & jahňa s ryžou | `GRAN-hovadzie-morka-jahna-4` | `GRAN-hovadzie-morka-jahna-9` | `GRAN-hovadzie-morka-jahna-18` |
+| Morka, hus & kačica s tekvicou | `GRAN-morka-hus-kacica-4` | `GRAN-morka-hus-kacica-9` | `GRAN-morka-hus-kacica-18` |
+| Hovädzie s ryžou | `GRAN-hovadzie-4` | `GRAN-hovadzie-9` | `GRAN-hovadzie-18` |
+| Jahňa s batátmi & čučoriedkami | `GRAN-jahna-4` | `GRAN-jahna-9` | `GRAN-jahna-18` |
+| Jeleň & králik s batátmi | `GRAN-jelen-kralik-4` | `GRAN-jelen-kralik-9` | `GRAN-jelen-kralik-18` |
+
 ### Nasadenie kroku 1 na main / granula.sk (21. 11.)
 - **Nasadenie:** `main` fast-forward na `129465c` (krok 1 + prepínač predaja + Supabase), Vercel nasadil za ~30 s.
 - **Overenie proti záznamu granula.sk spred nasadenia** (`npm run check:urls -- --against`):

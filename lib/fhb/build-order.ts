@@ -87,8 +87,13 @@ export function normalizePhone(raw: string, defaultCc = '421'): string | null {
   return s;
 }
 
-export function notifyUrl(siteUrl: string, type: NotifyType | 'stock', id: string, token: string) {
+export function notifyUrl(siteUrl: string, type: NotifyType, id: string, token: string) {
   return `${siteUrl.replace(/\/+$/, '')}/api/fhb/notify/${type}/${encodeURIComponent(id)}?t=${encodeURIComponent(token)}`;
+}
+
+/** Skladová notifikácia (notify_url produktu). FHB posiela POST JSON {id, type, qty, stockQuantity, reason}. */
+export function stockNotifyUrl(siteUrl: string, token: string) {
+  return `${siteUrl.replace(/\/+$/, '')}/api/fhb/stock-notify?t=${encodeURIComponent(token)}`;
 }
 
 const req = (field: string, v: string | null | undefined) => {

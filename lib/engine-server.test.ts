@@ -71,9 +71,15 @@ describe('quote', () => {
 });
 
 describe('SKU (SPEC P0)', () => {
-  test('10 SKU, 18 kg = 2 × 9 kg', () => {
-    expect(allSkus()).toHaveLength(10);
-    expect(skuItems('hovadzie', '18')).toEqual([{ sku: 'GRAN-hovadzie-9', qty: 2 }]);
+  test('15 produktov: 10 bežných + 5 sád 18 kg (2 × 9 kg); objednávka vždy jeden produkt', () => {
+    const all = allSkus();
+    expect(all).toHaveLength(15);
+    expect(all.filter((x) => x.type === 'single')).toHaveLength(10);
+    expect(all.find((x) => x.sku === 'GRAN-hovadzie-18')).toMatchObject({ type: 'multi', items: [{ id: 'GRAN-hovadzie-9', quantity: 2 }] });
+    // sady až po bežných produktoch (zložka musí existovať skôr)
+    expect(all.findIndex((x) => x.type === 'multi')).toBe(10);
+    expect(new Set(all.map((x) => x.sku)).size).toBe(15);
+    expect(skuItems('hovadzie', '18')).toEqual([{ sku: 'GRAN-hovadzie-18', qty: 1 }]);
     expect(skuItems('hovadzie', '4')).toEqual([{ sku: 'GRAN-hovadzie-4', qty: 1 }]);
     expect(() => skuItems('x', '4')).toThrow();
   });

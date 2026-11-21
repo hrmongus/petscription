@@ -116,13 +116,37 @@ export function quote(input: { answers: unknown; plan: unknown; bagId: unknown }
   };
 }
 
-/** FHB položky pre receptúru a balenie (SPEC P0 SKU): 18 kg = 2 × 9 kg, nie samostatné SKU. */
+/*
+ * FHB produkty (SPEC P0 → SKU): ID = `GRAN-<receptúra>-<kg>`, receptúra = PRODUCTS[].id v engine.js.
+ * ID sa po založení NIKDY nemení (FHB páruje podľa id, produkt sa nedá zmazať, iba archivovať) → id receptúr
+ * v engine.js sa nesmú premenovať.
+ *   4 kg a 9 kg = bežné produkty (single), 18 kg = sada (multi) z 2 × 9 kg. Spolu 15 produktov.
+ */
+export const sku = (productId: string, kg: 4 | 9 | 18) => `GRAN-${productId}-${kg}`;
+
+/** FHB položky objednávky pre receptúru a balenie: vždy jeden produkt (18 kg = sada GRAN-<receptúra>-18). */
 export function skuItems(productId: string, bagId: BagId): { sku: string; qty: number }[] {
   if (!engine.PRODUCTS.some((p) => p.id === productId)) throw new QuoteError(`neznáma receptúra ${productId}`);
-  return bagId === '18' ? [{ sku: `GRAN-${productId}-9`, qty: 2 }] : [{ sku: `GRAN-${productId}-${bagId}`, qty: 1 }];
+  return [{ sku: sku(productId, +bagId as 4 | 9 | 18), qty: 1 }];
 }
 
-/** Všetkých 10 SKU (5 receptúr × 4 kg a 9 kg) pre scripts/fhb-sync-products.ts. */
-export function allSkus(): { sku: string; productId: string; name: string; kg: 4 | 9 }[] {
-  return engine.PRODUCTS.flatMap((p) => ([4, 9] as const).map((kg) => ({ sku: `GRAN-${p.id}-${kg}`, productId: p.id, name: `${p.name} ${kg} kg`, kg })));
+export type FhbCatalogItem = {
+  sku: string;
+  productId: string;
+  name: string;
+  kg: 4 | 9 | 18;
+  type: 'single' | 'multi';
+  /** zložky sady (iba multi) */
+  items?: { id: string; quantity: number }[];
+};
+
+/** Všetkých 15 produktov pre scripts/fhb-sync-products.ts: najprv bežné (4, 9 kg), potom sady (18 kg). */
+export function allSkus(): FhbCatalogItem[] {
+  const singles = engine.PRODUCTS.flatMap((p) =>
+    ([4, 9] as const).map((kg): FhbCatalogItem => ({ sku: sku(p.id, kg), productId: p.id, name: `${p.name} ${kg} kg`, kg, type: 'single' })),
+  );
+  const sets = engine.PRODUCTS.map((p): FhbCatalogItem => ({
+    sku: sku(p.id, 18), productId: p.id, name: `${p.name} 18 kg (2 × 9 kg)`, kg: 18, type: 'multi', items: [{ id: sku(p.id, 9), quantity: 2 }],
+  }));
+  return [...singles, ...sets];
 }
