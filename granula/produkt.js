@@ -56,14 +56,18 @@
       years: v[1] === "r" ? v[2] : "0", months: v[1] === "m" ? v[2] : "0", weeks: "",
       activity: "mesto", neutered: "nie", pregnant: "", body: "akurat", focus: [] };
     var r = E.compute(a), p = r.product;
-    if (!p) { $("pd-perday").textContent = "—"; return; }
-    // vrece, ktoré odporučí aj konfigurátor (malému psovi nie 2 × 9 kg na rok)
-    var d = r.params.plans.mesiac, x = r.bags.filter(function (b) { return b.bag.id === r.recBag; })[0], best = null;
-    if (x && x.price != null) best = { pd: x.price * (1 - d) / x.days, bag: x.bag };
-    $("pd-bag").src = p.img; $("pd-bag").alt = "Vrece Granula: " + p.name;
-    $("pd-perday").textContent = best ? eur(best.pd) : "—";
-    $("pd-note").textContent = best ? "s predplatným, pri vreci " + best.bag.label : "";
+    if (p) { $("pd-bag").src = p.img; $("pd-bag").alt = "Vrece Granula: " + p.name; }
   }
+  // jediná cena: najnižšia cena za kg, akú máme (najväčšie vrece, s predplatným); ceny sú rovnaké pre všetky receptúry
+  (function () {
+    var P = E.PARAMS, best = null;
+    E.BAGS.forEach(function (b) {
+      var v = P.bagPrices[b.id];
+      if (v != null && !isNaN(v)) { var perKg = v * (1 - P.plans.mesiac) / b.kg; if (!best || perKg < best.v) best = { v: perKg, bag: b }; }
+    });
+    $("pd-perday").textContent = best ? eur(best.v) : "—";
+    $("pd-note").textContent = best ? "s predplatným, pri vreci " + best.bag.label : "";
+  })();
   breed.addEventListener("change", function () {
     var b = E.BREEDS.filter(function (x) { return x.id === breed.value; })[0];
     if (b) kg.value = String(kgFor(b.avg));
