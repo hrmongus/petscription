@@ -7,7 +7,9 @@
  *      trial_end = prvé obnovenie (doručenie + D − LEAD),
  *   5. posun hodín za prvé obnovenie → invoice.paid (subscription_cycle) → objednávka `renewal` v Supabase → FHB.
  *
- *   npx tsx scripts/stripe-e2e-clock.ts [--site=https://www.granula.sk] [--keep-clock]
+ *   npx tsx scripts/stripe-e2e-clock.ts [--site=https://www.granula.sk] [--keep-clock] [--no-delivery] [--fail-renewal]
+ *   4b (predvolene): SIMULÁCIA stavov FHB (odoslané, doručené o 5 dní) cez applyFhbOrder → prepočet prvého obnovenia
+ *   --fail-renewal: pred obnovením karta, ktorá zlyhá → past_due, email „platba neprešla“, žiadna objednávka
  * Iba so sk_test_ a FHB sandboxom. Na konci zmaže test clock (predplatné sa zruší → DB `cancelled`);
  * objednávky v DB a vo FHB sandboxe ostávajú ako dôkaz (premažú sa pred spustením predaja).
  */
@@ -16,6 +18,9 @@ import Stripe from 'stripe';
 import { db } from '../lib/db';
 import { FhbClient } from '../lib/fhb/client';
 import { fhbOrderId } from '../lib/fhb/build-order';
+import { jobDepsFromEnv } from '../lib/fhb/jobs';
+import { applyFhbOrder, type DbOrder } from '../lib/fhb/sync';
+import { addDays, chargeTime } from '../lib/subscription-schedule';
 import { fhbMode, stripeMode } from '../lib/env-mode';
 
 // Playwright je v prostredí predinštalovaný globálne (nie je v package.json)
@@ -25,6 +30,7 @@ const { chromium } = require('playwright') as { chromium: { launch(): Promise<an
 const arg = (k: string) => process.argv.find((a) => a.startsWith(`--${k}=`))?.split('=')[1];
 const SITE = arg('site') ?? 'https://www.granula.sk';
 const KEEP = process.argv.includes('--keep-clock');
+const FAIL = process.argv.includes('--fail-renewal');
 const unix = (d: Date) => Math.floor(d.getTime() / 1000);
 const iso = (s: number | null | undefined) => (s ? new Date(s * 1000).toISOString() : '—');
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -154,11 +160,59 @@ async function main() {
     const days = (unix(expected) - unix(start)) / 86400;
     check(Math.abs(days - (D - 7 + 3)) <= 1, `prvé obnovenie ≈ zaplatené + SHIP_DAYS + D − LEAD (${days.toFixed(1)} dní, D=${D})`);
 
+    // 4b. SIMULÁCIA FHB (sandbox stavy sám neposúva): odoslané s trackingom, doručené o 5 dní → skutočný applyFhbOrder
+    //     nad DB a Stripe test clockom; prvé obnovenie sa má prepočítať na doručené + D − LEAD
+    let renewalAt = expected;
+    if (!process.argv.includes('--no-delivery')) {
+      const deps = { ...(await jobDepsFromEnv()), stripe: s };
+      const shippedAt = new Date(start.getTime() + 1 * 86400_000);
+      const deliveredAt = new Date(start.getTime() + 5 * 86400_000);
+      const row = () => sb.from('orders').select('*').eq('id', first.id).single().then((r) => r.data as DbOrder);
+      await applyFhbOrder(await row(), { id: fhbOrderId(first.number), status: 'sent', shipped_at: shippedAt.toISOString(), tracking_numbers: ['SIM-123'], tracking_links: ['https://example.com/sledovanie/SIM-123'] } as never, deps);
+      const afterSent = await row();
+      const shippedMail = (await sb.from('email_log').select('key, status').eq('key', `shipped:${first.id}`).maybeSingle()).data;
+      check(afterSent.status === 'sent' && JSON.stringify(afterSent.tracking).includes('SIM-123'), '4b. simulované „odoslané“: stav sent + tracking v DB');
+      check(!!shippedMail, `4b. email „zásielka odoslaná“ v email_log (${shippedMail?.status})`);
+      await applyFhbOrder(afterSent, { id: fhbOrderId(first.number), status: 'delivered', shipped_at: shippedAt.toISOString(), delivered_at: deliveredAt.toISOString(), tracking_numbers: ['SIM-123'], tracking_links: ['https://example.com/sledovanie/SIM-123'] } as never, deps);
+      const afterDelivered = await row();
+      const subNow = (await sb.from('subscriptions').select('*').eq('id', sub.id).single()).data!;
+      const want = chargeTime(addDays(deliveredAt, D - 7));
+      const st = await s.subscriptions.retrieve(sub.stripe_subscription_id!);
+      console.log(`4b. SIMULÁCIA FHB: doručené ${deliveredAt.toISOString()} → prvé obnovenie ${subNow.next_charge_at} (pôvodne ${expected.toISOString()}), Stripe trial_end ${iso(st.trial_end)}`);
+      check(afterDelivered.status === 'delivered' && new Date(subNow.last_delivered_at ?? 0).getTime() === deliveredAt.getTime(), '4b. simulované „doručené“: stav delivered + last_delivered_at');
+      check(new Date(subNow.next_charge_at!).getTime() === want.getTime() && st.trial_end === unix(want), `4b. prvé obnovenie prepočítané na doručené + D − LEAD (${want.toISOString()}) v DB aj v Stripe`);
+      renewalAt = want;
+    }
+
     // 5. posun hodín za prvé obnovenie → renewal
-    await advance(s, clock.id, new Date(expected.getTime() + 2 * 3600_000));
+    const expectedRenewal = renewalAt;
+    if (FAIL) {
+      // karta, ktorá sa pripojí, ale každá platba zlyhá → obnovenie: invoice.payment_failed
+      const bad = await s.paymentMethods.attach('pm_card_chargeCustomerFail', { customer: sc.id });
+      await s.subscriptions.update(sub.stripe_subscription_id!, { default_payment_method: bad.id });
+      await s.customers.update(sc.id, { invoice_settings: { default_payment_method: bad.id } });
+      await advance(s, clock.id, new Date(renewalAt.getTime() + 2 * 3600_000));
+      const inv = (await s.invoices.list({ subscription: sub.stripe_subscription_id!, limit: 10 })).data.find((i) => i.billing_reason === 'subscription_cycle');
+      console.log(`5. ZLYHANÉ OBNOVENIE | faktúra ${inv?.id} ${inv?.status} pokus ${inv?.attempt_count}`);
+      check(inv?.status === 'open' && (inv?.amount_paid ?? 0) === 0, 'obnovenie: faktúra nezaplatená (open)');
+      const subPd = await poll('predplatné past_due', async () => {
+        const x = (await sb.from('subscriptions').select('status').eq('id', sub.id).single()).data!;
+        return x.status === 'past_due' ? x : null;
+      }, 90_000).catch(() => null);
+      check(!!subPd, 'predplatné v DB: past_due');
+      const mail = await poll('email neúspešná platba', async () => (await sb.from('email_log').select('key, status').like('key', `payment-failed:${inv?.id}:%`).maybeSingle()).data, 60_000).catch(() => null);
+      check(!!mail, `email „platba neprešla“ v email_log (${mail?.key} ${mail?.status})`);
+      const renewals = (await sb.from('orders').select('id').eq('subscription_id', sub.id).eq('kind', 'renewal')).data ?? [];
+      check(renewals.length === 0, 'žiadna renewal objednávka (nič nejde do FHB)');
+      if (failures.length) throw new Error(`${failures.length} kontrol zlyhalo`);
+      console.log('VÝSLEDOK: všetky kontroly OK');
+      return;
+    }
+    await advance(s, clock.id, new Date(renewalAt.getTime() + 2 * 3600_000));
     const inv = (await s.invoices.list({ subscription: sub.stripe_subscription_id!, limit: 10 })).data.find((i) => i.billing_reason === 'subscription_cycle');
-    console.log(`5. hodiny ${iso(unix(expected) + 7200)} | faktúra ${inv?.id} ${inv?.status} ${(inv?.amount_paid ?? 0) / 100} €`);
+    console.log(`5. hodiny ${iso(unix(expectedRenewal) + 7200)} | faktúra ${inv?.id} ${inv?.status} ${(inv?.amount_paid ?? 0) / 100} €`);
     check(inv?.status === 'paid', 'obnovenie: faktúra subscription_cycle zaplatená');
+    check(Math.abs((inv?.created ?? 0) - unix(expectedRenewal)) < 3600, `obnovenie v plánovaný deň ${expectedRenewal.toISOString()}`);
     const renewal = await poll('objednávka renewal v DB', async () => (await sb.from('orders').select('*').eq('subscription_id', sub.id).eq('kind', 'renewal').maybeSingle()).data, 180_000);
     const renewalSent = await poll('renewal odoslaná do FHB', async () => {
       const o = (await sb.from('orders').select('*').eq('id', renewal.id).single()).data!;

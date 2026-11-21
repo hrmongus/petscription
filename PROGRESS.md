@@ -9,7 +9,7 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 | 3. Doprava v checkoute (P1b) | ✅ hotové, na main / granula.sk |
 | 4. Checkout a predplatné (P1) | ✅ otestované naživo na granula.sk (test mode, FHB sandbox) a na test clocku vrátane obnovenia |
 | 5. FHB stavy a emaily | ✅ postavené a nasadené na granula.sk; emaily čakajú na Resend kľúč, crony na `CRON_SECRET` |
-| 6. Test celého toku | — |
+| 6. Test celého toku | 🟡 väčšina overená (pozri nižšie); čaká na FHB testovací portál, Resend a P3/P4 akcie |
 
 ## Pred spustením predaja
 - [ ] Prepnúť repo na privátne
@@ -331,3 +331,28 @@ Plán schválený vopred („approve everything“). Rozhodnutia v SPEC §10.14.
 ### Poznámky
 - Testovacie objednávky #3–#8 sú vo FHB sandboxe pod starými base36 id; synchronizácia ich ignoruje (iba testovacie dáta, premažú sa).
 - `invoice.payment_failed` posiela email pri každom pokuse (kľúč faktúra + pokus); Stripe Smart Retries skúša ~4×.
+
+---
+
+## Krok 6: Test celého toku (priebežne, 21. 11. 2026)
+
+Spustené automaticky v noci („do as much as possible“). Opakovateľné skripty:
+- `npx tsx scripts/e2e-checkout.ts <predplatne|jednorazovo|zamietnuta>`: živý nákup cez dotazník na www.granula.sk,
+- `npx tsx scripts/stripe-e2e-clock.ts [--fail-renewal] [--no-delivery]`: skutočný checkout na test clocku + obnovenie.
+
+| Časť toku | Stav | Dôkaz |
+|---|---|---|
+| Dotazník → doručenie → platba (predplatné, DPD) | ✅ | #7, #9 (FHB `GR-000009`) |
+| Jednorazový nákup (Packeta) | ✅ | #8, #10 (FHB `GR-000010`) |
+| Zamietnutá karta | ✅ | Session `cs_test_b0XEwDzU…` open/unpaid, žiadna objednávka |
+| Objednávka v DB → FHB sandbox | ✅ | všetky `sent_to_fhb`, FHB `pending`, VS = číslo objednávky |
+| Potvrdzovací email | ✅ zapísaný (`skipped`, chýba Resend) | `email_log` `order-confirm:*` pre #10–#15 |
+| Odoslané → email s trackingom | ✅ **simulované** (sandbox stav neposúva) | #13, #15: stav `sent`, tracking, `email_log` `shipped:*` |
+| Doručené → prepočet prvého obnovenia | ✅ **simulované** doručenie, skutočný Stripe | #13: doručené +5 dní → obnovenie 24. 12. → **26. 12.** v DB aj v Stripe `trial_end` |
+| Obnovenie na test clocku → renewal → FHB | ✅ | #14 (`in_1UeHxC1U0mpiDjfirbv7ylgb`) v nový deň 26. 12., vo FHB; ďalšia platba o 37 dní |
+| Zlyhané obnovenie | ✅ | `in_1UeHyM1U0mpiDjfiAFQuVGOt` open, predplatné `past_due`, `email_log` `payment-failed:…:1`, žiadna renewal objednávka |
+| Zmena D bez okamžitej platby | ✅ | `npm run stripe:test-clock` |
+| Skutočné `sent`/`delivered` z FHB | ⏳ | treba FHB testovací portál (posunúť stav objednávky) alebo FHB produkciu |
+| Posun, preskočenie, zmena váhy, storno v `pending`, refund | ⏳ | funkcie v `lib/subscription-schedule.ts` sú, akcie (UI/API) prídu v P3 (admin) a P4 (portál) |
+| Odstúpenie od zmluvy | ⏳ | P4 (`/odstupenie`) |
+| Vrátená zásielka (RMA) | ⏳ | cron `fhb-rma` hotový; sandbox RMA prázdne |
