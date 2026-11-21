@@ -1,386 +1,580 @@
-/* Vygenerované zo supabase/migrations (lokálny Postgres, formát `supabase gen types typescript`).
-   Po pripojení Supabase projektu pregenerovať: npx supabase gen types typescript --project-id <id> > lib/database.types.ts */
-export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
+// Vygenerované zo Supabase projektu granula (Supabase MCP generate_typescript_types). Needitovať ručne;
+// po každej migrácii pregenerovať.
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
 
 export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "14.18"
+  }
   public: {
     Tables: {
       addresses: {
         Row: {
-          id: string;
-          customer_id: string;
-          name: string;
-          street: string | null;
-          city: string | null;
-          zip: string | null;
-          country: string;
-          carrier: string;
-          delivery_method: string;
-          point_id: string | null;
-          point_label: string | null;
-          is_default: boolean;
-          created_at: string;
-        };
+          carrier: string
+          city: string | null
+          country: string
+          created_at: string
+          customer_id: string
+          delivery_method: string
+          id: string
+          is_default: boolean
+          name: string
+          point_id: string | null
+          point_label: string | null
+          street: string | null
+          zip: string | null
+        }
         Insert: {
-          id?: string;
-          customer_id: string;
-          name: string;
-          street?: string | null;
-          city?: string | null;
-          zip?: string | null;
-          country?: string;
-          carrier: string;
-          delivery_method: string;
-          point_id?: string | null;
-          point_label?: string | null;
-          is_default?: boolean;
-          created_at?: string;
-        };
+          carrier: string
+          city?: string | null
+          country?: string
+          created_at?: string
+          customer_id: string
+          delivery_method: string
+          id?: string
+          is_default?: boolean
+          name: string
+          point_id?: string | null
+          point_label?: string | null
+          street?: string | null
+          zip?: string | null
+        }
         Update: {
-          id?: string;
-          customer_id?: string;
-          name?: string;
-          street?: string | null;
-          city?: string | null;
-          zip?: string | null;
-          country?: string;
-          carrier?: string;
-          delivery_method?: string;
-          point_id?: string | null;
-          point_label?: string | null;
-          is_default?: boolean;
-          created_at?: string;
-        };
+          carrier?: string
+          city?: string | null
+          country?: string
+          created_at?: string
+          customer_id?: string
+          delivery_method?: string
+          id?: string
+          is_default?: boolean
+          name?: string
+          point_id?: string | null
+          point_label?: string | null
+          street?: string | null
+          zip?: string | null
+        }
         Relationships: [
-          { foreignKeyName: "addresses_customer_id_fkey"; columns: ["customer_id"]; isOneToOne: false; referencedRelation: "customers"; referencedColumns: ["id"] },
-        ];
-      };
+          {
+            foreignKeyName: "addresses_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       audit_log: {
         Row: {
-          id: number;
-          actor: string;
-          action: string;
-          entity: string;
-          entity_id: string | null;
-          before: Json | null;
-          after: Json | null;
-          at: string;
-        };
+          action: string
+          actor: string
+          after: Json | null
+          at: string
+          before: Json | null
+          entity: string
+          entity_id: string | null
+          id: number
+        }
         Insert: {
-          id?: number;
-          actor: string;
-          action: string;
-          entity: string;
-          entity_id?: string | null;
-          before?: Json | null;
-          after?: Json | null;
-          at?: string;
-        };
+          action: string
+          actor: string
+          after?: Json | null
+          at?: string
+          before?: Json | null
+          entity: string
+          entity_id?: string | null
+          id?: never
+        }
         Update: {
-          id?: number;
-          actor?: string;
-          action?: string;
-          entity?: string;
-          entity_id?: string | null;
-          before?: Json | null;
-          after?: Json | null;
-          at?: string;
-        };
-        Relationships: [
-        ];
-      };
+          action?: string
+          actor?: string
+          after?: Json | null
+          at?: string
+          before?: Json | null
+          entity?: string
+          entity_id?: string | null
+          id?: never
+        }
+        Relationships: []
+      }
       customers: {
         Row: {
-          id: string;
-          auth_user_id: string | null;
-          email: string;
-          name: string | null;
-          phone: string | null;
-          stripe_customer_id: string | null;
-          created_at: string;
-          updated_at: string;
-        };
+          auth_user_id: string | null
+          created_at: string
+          email: string
+          id: string
+          name: string | null
+          phone: string | null
+          stripe_customer_id: string | null
+          updated_at: string
+        }
         Insert: {
-          id?: string;
-          auth_user_id?: string | null;
-          email: string;
-          name?: string | null;
-          phone?: string | null;
-          stripe_customer_id?: string | null;
-          created_at?: string;
-          updated_at?: string;
-        };
+          auth_user_id?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          name?: string | null
+          phone?: string | null
+          stripe_customer_id?: string | null
+          updated_at?: string
+        }
         Update: {
-          id?: string;
-          auth_user_id?: string | null;
-          email?: string;
-          name?: string | null;
-          phone?: string | null;
-          stripe_customer_id?: string | null;
-          created_at?: string;
-          updated_at?: string;
-        };
-        Relationships: [
-        ];
-      };
+          auth_user_id?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string | null
+          phone?: string | null
+          stripe_customer_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       dogs: {
         Row: {
-          id: string;
-          customer_id: string;
-          name: string;
-          answers: Json;
-          weight_kg: number | null;
-          birth_date: string | null;
-          created_at: string;
-          updated_at: string;
-        };
+          answers: Json
+          birth_date: string | null
+          created_at: string
+          customer_id: string
+          id: string
+          name: string
+          updated_at: string
+          weight_kg: number | null
+        }
         Insert: {
-          id?: string;
-          customer_id: string;
-          name: string;
-          answers: Json;
-          weight_kg?: number | null;
-          birth_date?: string | null;
-          created_at?: string;
-          updated_at?: string;
-        };
+          answers: Json
+          birth_date?: string | null
+          created_at?: string
+          customer_id: string
+          id?: string
+          name: string
+          updated_at?: string
+          weight_kg?: number | null
+        }
         Update: {
-          id?: string;
-          customer_id?: string;
-          name?: string;
-          answers?: Json;
-          weight_kg?: number | null;
-          birth_date?: string | null;
-          created_at?: string;
-          updated_at?: string;
-        };
+          answers?: Json
+          birth_date?: string | null
+          created_at?: string
+          customer_id?: string
+          id?: string
+          name?: string
+          updated_at?: string
+          weight_kg?: number | null
+        }
         Relationships: [
-          { foreignKeyName: "dogs_customer_id_fkey"; columns: ["customer_id"]; isOneToOne: false; referencedRelation: "customers"; referencedColumns: ["id"] },
-        ];
-      };
+          {
+            foreignKeyName: "dogs_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       fhb_events: {
         Row: {
-          id: string;
-          order_id: string | null;
-          type: string;
-          payload: Json | null;
-          received_at: string;
-        };
+          id: string
+          order_id: string | null
+          payload: Json | null
+          received_at: string
+          type: string
+        }
         Insert: {
-          id?: string;
-          order_id?: string | null;
-          type: string;
-          payload?: Json | null;
-          received_at?: string;
-        };
+          id?: string
+          order_id?: string | null
+          payload?: Json | null
+          received_at?: string
+          type: string
+        }
         Update: {
-          id?: string;
-          order_id?: string | null;
-          type?: string;
-          payload?: Json | null;
-          received_at?: string;
-        };
+          id?: string
+          order_id?: string | null
+          payload?: Json | null
+          received_at?: string
+          type?: string
+        }
         Relationships: [
-          { foreignKeyName: "fhb_events_order_id_fkey"; columns: ["order_id"]; isOneToOne: false; referencedRelation: "orders"; referencedColumns: ["id"] },
-        ];
-      };
+          {
+            foreignKeyName: "fhb_events_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       orders: {
         Row: {
-          id: string;
-          number: number;
-          customer_id: string;
-          subscription_id: string | null;
-          kind: string;
-          stripe_ref: string;
-          amount_cents: number;
-          items: Json;
-          ship_to: Json;
-          status: string;
-          fhb_error: Json | null;
-          tracking: Json | null;
-          shipped_at: string | null;
-          delivered_at: string | null;
-          created_at: string;
-          updated_at: string;
-        };
+          amount_cents: number
+          created_at: string
+          customer_id: string
+          delivered_at: string | null
+          fhb_error: Json | null
+          id: string
+          items: Json
+          kind: string
+          number: number
+          ship_to: Json
+          shipped_at: string | null
+          status: string
+          stripe_ref: string
+          subscription_id: string | null
+          tracking: Json | null
+          updated_at: string
+        }
         Insert: {
-          id?: string;
-          number?: number;
-          customer_id: string;
-          subscription_id?: string | null;
-          kind: string;
-          stripe_ref: string;
-          amount_cents: number;
-          items?: Json;
-          ship_to: Json;
-          status?: string;
-          fhb_error?: Json | null;
-          tracking?: Json | null;
-          shipped_at?: string | null;
-          delivered_at?: string | null;
-          created_at?: string;
-          updated_at?: string;
-        };
+          amount_cents: number
+          created_at?: string
+          customer_id: string
+          delivered_at?: string | null
+          fhb_error?: Json | null
+          id?: string
+          items?: Json
+          kind: string
+          number?: number
+          ship_to: Json
+          shipped_at?: string | null
+          status?: string
+          stripe_ref: string
+          subscription_id?: string | null
+          tracking?: Json | null
+          updated_at?: string
+        }
         Update: {
-          id?: string;
-          number?: number;
-          customer_id?: string;
-          subscription_id?: string | null;
-          kind?: string;
-          stripe_ref?: string;
-          amount_cents?: number;
-          items?: Json;
-          ship_to?: Json;
-          status?: string;
-          fhb_error?: Json | null;
-          tracking?: Json | null;
-          shipped_at?: string | null;
-          delivered_at?: string | null;
-          created_at?: string;
-          updated_at?: string;
-        };
+          amount_cents?: number
+          created_at?: string
+          customer_id?: string
+          delivered_at?: string | null
+          fhb_error?: Json | null
+          id?: string
+          items?: Json
+          kind?: string
+          number?: number
+          ship_to?: Json
+          shipped_at?: string | null
+          status?: string
+          stripe_ref?: string
+          subscription_id?: string | null
+          tracking?: Json | null
+          updated_at?: string
+        }
         Relationships: [
-          { foreignKeyName: "orders_customer_id_fkey"; columns: ["customer_id"]; isOneToOne: false; referencedRelation: "customers"; referencedColumns: ["id"] },
-          { foreignKeyName: "orders_subscription_id_fkey"; columns: ["subscription_id"]; isOneToOne: false; referencedRelation: "subscriptions"; referencedColumns: ["id"] },
-        ];
-      };
+          {
+            foreignKeyName: "orders_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "orders_subscription_id_fkey"
+            columns: ["subscription_id"]
+            isOneToOne: false
+            referencedRelation: "subscriptions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       stripe_events: {
         Row: {
-          event_id: string;
-          type: string;
-          processed_at: string;
-        };
+          event_id: string
+          processed_at: string
+          type: string
+        }
         Insert: {
-          event_id: string;
-          type: string;
-          processed_at?: string;
-        };
+          event_id: string
+          processed_at?: string
+          type: string
+        }
         Update: {
-          event_id?: string;
-          type?: string;
-          processed_at?: string;
-        };
-        Relationships: [
-        ];
-      };
+          event_id?: string
+          processed_at?: string
+          type?: string
+        }
+        Relationships: []
+      }
       subscriptions: {
         Row: {
-          id: string;
-          customer_id: string;
-          dog_id: string;
-          address_id: string;
-          stripe_subscription_id: string | null;
-          status: string;
-          product_id: string;
-          bag_id: string;
-          grams_per_day: number;
-          days_per_bag: number;
-          unit_amount_cents: number;
-          plan: string;
-          next_charge_at: string | null;
-          last_delivered_at: string | null;
-          engine_snapshot: Json | null;
-          created_at: string;
-          updated_at: string;
-        };
+          address_id: string
+          bag_id: string
+          created_at: string
+          customer_id: string
+          days_per_bag: number
+          dog_id: string
+          engine_snapshot: Json | null
+          grams_per_day: number
+          id: string
+          last_delivered_at: string | null
+          next_charge_at: string | null
+          plan: string
+          product_id: string
+          status: string
+          stripe_subscription_id: string | null
+          unit_amount_cents: number
+          updated_at: string
+        }
         Insert: {
-          id?: string;
-          customer_id: string;
-          dog_id: string;
-          address_id: string;
-          stripe_subscription_id?: string | null;
-          status?: string;
-          product_id: string;
-          bag_id: string;
-          grams_per_day: number;
-          days_per_bag: number;
-          unit_amount_cents: number;
-          plan?: string;
-          next_charge_at?: string | null;
-          last_delivered_at?: string | null;
-          engine_snapshot?: Json | null;
-          created_at?: string;
-          updated_at?: string;
-        };
+          address_id: string
+          bag_id: string
+          created_at?: string
+          customer_id: string
+          days_per_bag: number
+          dog_id: string
+          engine_snapshot?: Json | null
+          grams_per_day: number
+          id?: string
+          last_delivered_at?: string | null
+          next_charge_at?: string | null
+          plan?: string
+          product_id: string
+          status?: string
+          stripe_subscription_id?: string | null
+          unit_amount_cents: number
+          updated_at?: string
+        }
         Update: {
-          id?: string;
-          customer_id?: string;
-          dog_id?: string;
-          address_id?: string;
-          stripe_subscription_id?: string | null;
-          status?: string;
-          product_id?: string;
-          bag_id?: string;
-          grams_per_day?: number;
-          days_per_bag?: number;
-          unit_amount_cents?: number;
-          plan?: string;
-          next_charge_at?: string | null;
-          last_delivered_at?: string | null;
-          engine_snapshot?: Json | null;
-          created_at?: string;
-          updated_at?: string;
-        };
+          address_id?: string
+          bag_id?: string
+          created_at?: string
+          customer_id?: string
+          days_per_bag?: number
+          dog_id?: string
+          engine_snapshot?: Json | null
+          grams_per_day?: number
+          id?: string
+          last_delivered_at?: string | null
+          next_charge_at?: string | null
+          plan?: string
+          product_id?: string
+          status?: string
+          stripe_subscription_id?: string | null
+          unit_amount_cents?: number
+          updated_at?: string
+        }
         Relationships: [
-          { foreignKeyName: "subscriptions_address_id_fkey"; columns: ["address_id"]; isOneToOne: false; referencedRelation: "addresses"; referencedColumns: ["id"] },
-          { foreignKeyName: "subscriptions_customer_id_fkey"; columns: ["customer_id"]; isOneToOne: false; referencedRelation: "customers"; referencedColumns: ["id"] },
-          { foreignKeyName: "subscriptions_dog_id_fkey"; columns: ["dog_id"]; isOneToOne: false; referencedRelation: "dogs"; referencedColumns: ["id"] },
-        ];
-      };
+          {
+            foreignKeyName: "subscriptions_address_id_fkey"
+            columns: ["address_id"]
+            isOneToOne: false
+            referencedRelation: "addresses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "subscriptions_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "subscriptions_dog_id_fkey"
+            columns: ["dog_id"]
+            isOneToOne: false
+            referencedRelation: "dogs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       withdrawals: {
         Row: {
-          id: string;
-          order_id: string | null;
-          subscription_id: string | null;
-          name: string;
-          email: string;
-          contract_ref: string;
-          reason: string | null;
-          content: Json;
-          submitted_at: string;
-          confirmation_sent_at: string | null;
-          status: string;
-        };
+          confirmation_sent_at: string | null
+          content: Json
+          contract_ref: string
+          email: string
+          id: string
+          name: string
+          order_id: string | null
+          reason: string | null
+          status: string
+          submitted_at: string
+          subscription_id: string | null
+        }
         Insert: {
-          id?: string;
-          order_id?: string | null;
-          subscription_id?: string | null;
-          name: string;
-          email: string;
-          contract_ref: string;
-          reason?: string | null;
-          content: Json;
-          submitted_at?: string;
-          confirmation_sent_at?: string | null;
-          status?: string;
-        };
+          confirmation_sent_at?: string | null
+          content: Json
+          contract_ref: string
+          email: string
+          id?: string
+          name: string
+          order_id?: string | null
+          reason?: string | null
+          status?: string
+          submitted_at?: string
+          subscription_id?: string | null
+        }
         Update: {
-          id?: string;
-          order_id?: string | null;
-          subscription_id?: string | null;
-          name?: string;
-          email?: string;
-          contract_ref?: string;
-          reason?: string | null;
-          content?: Json;
-          submitted_at?: string;
-          confirmation_sent_at?: string | null;
-          status?: string;
-        };
+          confirmation_sent_at?: string | null
+          content?: Json
+          contract_ref?: string
+          email?: string
+          id?: string
+          name?: string
+          order_id?: string | null
+          reason?: string | null
+          status?: string
+          submitted_at?: string
+          subscription_id?: string | null
+        }
         Relationships: [
-          { foreignKeyName: "withdrawals_order_id_fkey"; columns: ["order_id"]; isOneToOne: false; referencedRelation: "orders"; referencedColumns: ["id"] },
-          { foreignKeyName: "withdrawals_subscription_id_fkey"; columns: ["subscription_id"]; isOneToOne: false; referencedRelation: "subscriptions"; referencedColumns: ["id"] },
-        ];
-      };
-    };
-    Views: { [_ in never]: never };
-    Functions: { [_ in never]: never };
-    Enums: { [_ in never]: never };
-    CompositeTypes: { [_ in never]: never };
-  };
-};
+          {
+            foreignKeyName: "withdrawals_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "withdrawals_subscription_id_fkey"
+            columns: ["subscription_id"]
+            isOneToOne: false
+            referencedRelation: "subscriptions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      [_ in never]: never
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+}
 
-type PublicSchema = Database["public"];
-export type Tables<T extends keyof PublicSchema["Tables"]> = PublicSchema["Tables"][T]["Row"];
-export type TablesInsert<T extends keyof PublicSchema["Tables"]> = PublicSchema["Tables"][T]["Insert"];
-export type TablesUpdate<T extends keyof PublicSchema["Tables"]> = PublicSchema["Tables"][T]["Update"];
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never) = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
+    : never
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never) = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
+    : never
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never) = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
+    : never
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends (DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never) = never,
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends (PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never) = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never
+
+export const Constants = {
+  public: {
+    Enums: {},
+  },
+} as const

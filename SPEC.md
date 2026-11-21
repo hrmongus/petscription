@@ -246,7 +246,7 @@ Marketing ostáva v Klaviyo (iba udalosti: objednávka, zrušenie).
 ## 7. Blokery mimo kódu (vybaviť hneď)
 
 - [ ] FHB: sandbox `app_id` + `secret` (ZOE), správna sandbox URL, formát notifikácií, kódy SPS a Packeta.
-- [ ] Supabase: prístup k existujúcemu projektu Granula (alebo nový projekt).
+- [x] Supabase: projekt `granula` (eu-central-1), migrácie P0 aplikované.
 - [ ] Stripe: test kľúče, webhook secret; pre live aktivácia účtu na Spark Link s. r. o.
 - [ ] Packeta: API kľúč pre widget výdajných miest (a povolené krajiny v klientskej sekcii).
 - [ ] SPS / FHB: má SPS oficiálny widget ParcelShopov? Akú formu kódu miesta čaká FHB pre SPS a pre Packetu?

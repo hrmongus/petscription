@@ -60,7 +60,7 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 - **Vercel preview:** vznikne po pushnutí branchu A. Treba overiť, či Vercel zoberie `framework` z `vercel.json` (pozri otázky).
 
 ### Otvorené otázky
-1. **Supabase:** projekt „Granula“ nie je. Vidím iba `crm` (us-east-1, aktívny) a `analyzer` (ap-northeast-1, neaktívny). Nový som nevytváral. Migrácia nie je aplikovaná nikde, typy sú z lokálneho Postgresu. Potrebujem súhlas na vytvorenie nového projektu (región napr. `eu-central-1`), alebo prístup k existujúcemu.
+1. ~~**Supabase**~~ ✅ vyriešené 21. 11.: projekt `granula` (ref `pqvnxxoblguckyetkwjd`, eu-central-1). Migrácie `p0_schema` a `p0_fk_indexes` sú aplikované, súbory v `supabase/migrations/` majú rovnaké verzie ako v databáze. Typy sú pregenerované zo Supabase. RLS overené cez REST API: anon číta aj zapisuje 401, service role 200. Security advisor hlási len zámerný stav (RLS bez policies, INFO).
 2. **Odchýlky v SPEC §10** (1–8) na potvrdenie. Najdôležitejšie sú `addresses.delivery_method/point_id` (SPS ParcelShop), interpretácia `nextDay` a nový text v súhrne objednávky.
 3. **`public/granula/README.md`** je verejný na `/README.md` (interná dokumentácia). Presunúť ho do `content/` alebo `docs/`?
 4. **Vercel preview:** framework je nastavený iba cez `vercel.json`. Ak preview zlyhá (napr. projekt má v dashboarde prepísaný Output Directory alebo Build Command), pošli mi build log. Riešenie bez zásahu do dashboardu a produkcie je doplniť do `vercel.json` `"buildCommand": "next build"` a `"outputDirectory": ".next"`.
@@ -76,6 +76,14 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 - **Overené v prehliadači:** bez tokenu a so zlým tokenom „Objednávky od 1. 12.“, so správnym „Zaplatiť 72,40 €“ a token zmizne z URL. 21 testov ✅.
 - **Vercel env (Production aj Preview):** nastav `CHECKOUT_TEST_TOKEN` (napr. `openssl rand -hex 24`) a `CHECKOUT_ENABLED=false`.
 - **Otázka:** platí výklad, že `CHECKOUT_ENABLED=true` = spustenie predaja pre všetkých a token = testovanie pred spustením? (SPEC §10.9)
+
+### Kontrola env (21. 11.)
+- **Overené z env tohto prostredia, hodnoty sa nevypisovali:**
+  - `NEXT_PUBLIC_SUPABASE_URL` ukazuje na projekt `granula`,
+  - service role aj anon kľúč fungujú (`/rest/v1/` 200, `/auth/v1/settings` 200),
+  - `FHB_API_URL` = `api-stage.fhb.sk`, `POST /login` s `FHB_APP_ID`/`FHB_SECRET` vráti 200 a token.
+- **`SUPABASE_URL`** (bez `NEXT_PUBLIC_`) ukazuje na iný projekt (`analyzer`, neaktívny). Kód ju nepoužíva, odporúčam ju zmazať, aby sa nepomýlila.
+- **Chýbajú:** `CHECKOUT_TEST_TOKEN`, `CHECKOUT_ENABLED`, Stripe test kľúče (`STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `STRIPE_WEBHOOK_SECRET`), `NEXT_PUBLIC_SITE_URL`, `FHB_NOTIFY_TOKEN`, `PACKETA_API_KEY`, Resend, `CRON_SECRET`.
 
 ### Ostáva (ďalšie kroky)
 - Krok 2: FHB klient (`lib/fhb/`, OpenAPI typy, `buildFhbOrder`, sync a smoke skripty na mockoch).
