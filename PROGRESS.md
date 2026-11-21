@@ -85,5 +85,14 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 - **`SUPABASE_URL`** (bez `NEXT_PUBLIC_`) ukazuje na iný projekt (`analyzer`, neaktívny). Kód ju nepoužíva, odporúčam ju zmazať, aby sa nepomýlila.
 - **Chýbajú:** `CHECKOUT_TEST_TOKEN`, `CHECKOUT_ENABLED`, Stripe test kľúče (`STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `STRIPE_WEBHOOK_SECRET`), `NEXT_PUBLIC_SITE_URL`, `FHB_NOTIFY_TOKEN`, `PACKETA_API_KEY`, Resend, `CRON_SECRET`.
 
+### Kontrola Vercel preview (21. 11.)
+- **Preview:** `granula-git-a-hrmo-9099s-projects.vercel.app` (commit `bcc035f`), build OK.
+- **Matica URL** (produkcia proti preview, 211 URL):
+  - status a presmerovanie sa líšia iba pri 4 zámerne skrytých interných súboroch a pri `/SUROVINY`: Vercel nedrží rozlíšenie veľkosti písmen v presmerovaniach, takže `/SUROVINY` vedie na `/#suroviny` namiesto 404. Neškodné, nechávam tak.
+  - `X-Robots-Tag: noindex` je na celom preview, pridáva ho Vercel automaticky (na granula.sk nebude).
+- **Vizuálne:** 0 rozdielnych pixelov na všetkých verejných stránkach (desktop aj mobil). Líšia sa iba zámerne zmenené `admin-vypocet` a `admin-blog`.
+- **Predaj:** `/api/checkout/status` vráti `closed`. V dotazníku je bez tokenu „Objednávky od 1. 12.“ ako dnes.
+- Vercel Authentication pre preview bolo na kontrolu vypnuté → **znova zapnúť**.
+
 ### Ostáva (ďalšie kroky)
 - Krok 2: FHB klient (`lib/fhb/`, OpenAPI typy, `buildFhbOrder`, sync a smoke skripty na mockoch).
