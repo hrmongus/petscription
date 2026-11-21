@@ -38,3 +38,17 @@ declare module '*/public/granula/engine.js' {
   };
   export default engine;
 }
+
+declare module '*/public/granula/doprava-config.js' {
+  const config: {
+    METHODS: Record<string, { label: string; eta: string; carrier: string; pickup: boolean; maxKg: number | null; fhbService: string }>;
+    BY_BAG: Record<string, { methods: string[]; default: string }>;
+    PRICE: Record<string, Record<string, number | null>>;
+    COST: Record<string, Record<string, number>>;
+    methodsFor(bagId: string): string[];
+    defaultFor(bagId: string): string;
+    allowed(method: string, bagId: string): boolean;
+    price(method: string, bagId: string, fallback: number): number;
+  };
+  export default config;
+}

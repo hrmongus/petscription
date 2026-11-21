@@ -416,8 +416,8 @@
         CHECKOUT_OPEN = true;
         // výber doručenia (doprava.js): Packeta, SPS výdajné miesto, SPS kuriér
         if (window.GranulaDelivery) {
-          GranulaDelivery.init(order, { onChange: function () { order.querySelector('[data-err="objednavka"]').hidden = true; } });
-          GranulaDelivery.enable({ packetaKey: s.packetaKey || "", mode: s.mode, saved: state.delivery });
+          GranulaDelivery.init(order, { onChange: function () { order.querySelector('[data-err="objednavka"]').hidden = true; if (current === "objednavka") renderOrder(); } });
+          GranulaDelivery.enable({ packetaKey: s.packetaKey || "", mode: s.mode, saved: state.delivery, bag: bagOf(result()).bag.id });
         }
         if (current === "objednavka") renderOrder();
       })
@@ -427,13 +427,20 @@
   function renderOrder() {
     var r = result(), p = r.product, x = bagOf(r), plans = r.params.plans;
     var d = plans[state.plan] || 0, ship = r.params.shipping;
+    // doprava podľa dopravcu a balenia (doprava-config.js); bez nového výberu doručenia cena z engine
+    if (window.GranulaDelivery && GranulaDelivery.active()) {
+      GranulaDelivery.setBag(x.bag.id);
+      var dm = GranulaDelivery.method();
+      if (dm) ship = GranulaCarriers.price(dm, x.bag.id, ship);
+      order.querySelectorAll("[data-method]").forEach(function (e) { e.textContent = eur(GranulaCarriers.price(e.getAttribute("data-method"), x.bag.id, r.params.shipping)); });
+    }
     order.querySelectorAll('input[name="plan"]').forEach(function (i) { i.checked = i.value === state.plan; });
     Object.keys(plans).forEach(function (k) {
       order.querySelector('[data-plan-price="' + k + '"]').textContent = x.price == null ? "cena —" : eur(x.price * (1 - plans[k]));
     });
     order.querySelectorAll("[data-plan-kg]").forEach(function (e) { e.textContent = "za " + x.bag.label; });
     $("plan-note").textContent = "každých " + days(x.days) + " · zrušíš kedykoľvek";
-    order.querySelectorAll("[data-ship-price]").forEach(function (e) { e.textContent = eur(ship); });
+    order.querySelectorAll("[data-ship-price]:not([data-method])").forEach(function (e) { e.textContent = eur(ship); });
     $("s-pack").src = p.img;
     $("s-pack").alt = "Vrece Granula: " + p.name;
     $("s-name").textContent = p.name;

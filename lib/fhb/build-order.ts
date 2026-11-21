@@ -1,3 +1,4 @@
+import { DELIVERY_METHODS, fhbServiceFor, METHODS, type DeliveryMethod } from '../carriers';
 import type { FhbOrderInput } from './client';
 
 /*
@@ -11,7 +12,7 @@ import type { FhbOrderInput } from './client';
  * Chyby, ktoré by FHB aj tak odmietol, hlási FhbBuildError skôr (bez volania FHB).
  */
 
-export type DeliveryMethod = 'packeta_point' | 'sps_parcelshop' | 'sps_courier';
+export type { DeliveryMethod };
 
 /** Snapshot adresy a kontaktu v orders.ship_to (jsonb). */
 export type ShipTo = {
@@ -65,16 +66,12 @@ export class FhbBuildError extends Error {
 }
 
 /**
- * Kódy služieb. Overené v sandboxe (api-stage, 21. 11. 2026): `sps_pudo` = SPS výdajné miesta (2 875 miest SK),
- * delivery_point = `external_code` miesta (napr. PS-BJRT0558), číselné `id` FHB neprijme.
- * SPS kuriér a Packeta: kódy zatiaľ nepoznáme (GET /parcel-service je v sandboxe prázdny) → ⚠️ od FHB, dovtedy z env.
+ * Kódy služieb FHB z public/granula/doprava-config.js (prepísateľné env FHB_SERVICE_*). Overené v sandboxe
+ * (api-stage, 21. 11. 2026): Packeta `zasielkovna_sk`, DPD `dpd_sk`; delivery_point = `external_code` miesta
+ * (číselné interné `id` FHB neprijme). SPS kuriér: kód zatiaľ nepoznáme → predvolená služba účtu.
  */
 export function parcelServicesFromEnv(env: Record<string, string | undefined> = process.env): ParcelServiceMap {
-  return {
-    sps_parcelshop: env.FHB_SERVICE_SPS_PARCELSHOP || 'sps_pudo',
-    sps_courier: env.FHB_SERVICE_SPS_COURIER || undefined,
-    packeta_point: env.FHB_SERVICE_PACKETA || undefined,
-  };
+  return Object.fromEntries(DELIVERY_METHODS.map((m) => [m, fhbServiceFor(m, env)]));
 }
 
 /** Slovenské a medzinárodné čísla → +421…; vráti null, keď to nie je platné číslo. */
@@ -116,9 +113,10 @@ export function buildFhbOrder(o: BuildOrderInput, opts: BuildOrderOptions): FhbO
   if (!phone) throw new FhbBuildError('recipient.contact.phone', 'neplatné telefónne číslo');
 
   const method = t.delivery_method;
-  const pickup = method === 'packeta_point' || method === 'sps_parcelshop';
+  if (!METHODS[method]) throw new FhbBuildError('delivery_method', `neznámy spôsob doručenia ${method}`);
+  const pickup = METHODS[method].pickup;
   const service = opts.services[method];
-  if (method === 'packeta_point' && !service) throw new FhbBuildError('parcel_service', 'kód služby Packeta nie je nastavený (FHB_SERVICE_PACKETA)');
+  if (pickup && !service) throw new FhbBuildError('parcel_service', `kód služby FHB pre ${method} nie je nastavený`);
   const point = pickup ? req('delivery_point', t.point_id) : undefined;
 
   // adresa: zákazníkova, pri výdajnom mieste bez adresy adresa miesta

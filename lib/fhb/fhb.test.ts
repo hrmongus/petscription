@@ -118,18 +118,18 @@ describe('FhbClient: chyby a 404', () => {
 
 /* ------------------------------------------------------------ buildFhbOrder */
 const SHIP: ShipTo = {
-  name: 'Ján Novák', email: 'jan@example.sk', phone: '0905 123 456', country: 'sk', delivery_method: 'sps_parcelshop',
-  point_id: 'PS-BJRT0558', point_label: 'BAJUS s.r.o., Bardejov', point_address: { street: 'Kpt. Nálepku 423/7', city: 'Bardejov', zip: '085 01' },
+  name: 'Ján Novák', email: 'jan@example.sk', phone: '0905 123 456', country: 'sk', delivery_method: 'dpd_pickup',
+  point_id: 'SK21286', point_label: 'Pavel Lóška Cyklo-Šport, Tornaľa', point_address: { street: 'Mierová 17', city: 'Tornaľa', zip: '982 01' },
 };
 const OPTS = { siteUrl: 'https://granula.sk/', notifyToken: 'tok123', services: parcelServicesFromEnv({}) };
 const ORDER = { id: '6f1c2b1e-0000-4000-8000-000000000001', number: 42, items: [{ sku: 'GRAN-hovadzie-9', qty: 2 }], amountCents: 14490, shipTo: SHIP };
 
 describe('buildFhbOrder', () => {
-  test('SPS ParcelShop: služba sps_pudo, výdajné miesto, adresa miesta, telefón +421', () => {
+  test('DPD odberné miesto: služba dpd_sk, výdajné miesto, adresa miesta, telefón +421', () => {
     const b = buildFhbOrder(ORDER, OPTS);
     expect(b).toMatchObject({
-      id: ORDER.id, variable_symbol: '42', parcel_service: 'sps_pudo', delivery_point: 'PS-BJRT0558', cod: 0, value: 144.9, validate: false,
-      recipient: { address: { name: 'Ján Novák', street: 'Kpt. Nálepku 423/7', city: 'Bardejov', zip: '08501', country: 'SK' }, contact: { email: 'jan@example.sk', phone: '+421905123456' } },
+      id: ORDER.id, variable_symbol: '42', parcel_service: 'dpd_sk', delivery_point: 'SK21286', cod: 0, value: 144.9, validate: false,
+      recipient: { address: { name: 'Ján Novák', street: 'Mierová 17', city: 'Tornaľa', zip: '98201', country: 'SK' }, contact: { email: 'jan@example.sk', phone: '+421905123456' } },
       items: [{ id: 'GRAN-hovadzie-9', quantity: 2 }],
     });
     expect(b.notification?.delivered).toBe(`https://granula.sk/api/fhb/notify/delivered/${ORDER.id}?t=tok123`);
@@ -143,10 +143,11 @@ describe('buildFhbOrder', () => {
     const off = buildFhbOrder({ ...ORDER, shipTo: { ...SHIP, delivery_method: 'sps_courier', point_id: null, street: 'Hlavná 1', city: 'Košice', zip: '04001' } }, { ...OPTS, validateAddress: false });
     expect(off.validate).toBe(false);
   });
-  test('Packeta bez nastaveného kódu služby → chyba skôr, než sa volá FHB', () => {
-    expect(() => buildFhbOrder({ ...ORDER, shipTo: { ...SHIP, delivery_method: 'packeta_point' } }, OPTS)).toThrow(FhbBuildError);
-    const b = buildFhbOrder({ ...ORDER, shipTo: { ...SHIP, delivery_method: 'packeta_point' } }, { ...OPTS, services: { packeta_point: 'packeta_x' } });
-    expect(b.parcel_service).toBe('packeta_x');
+  test('Packeta: kód zasielkovna_sk z konfigurácie; bez kódu služby chyba skôr, než sa volá FHB', () => {
+    const b = buildFhbOrder({ ...ORDER, shipTo: { ...SHIP, delivery_method: 'packeta_point', point_id: '33711' } }, OPTS);
+    expect(b).toMatchObject({ parcel_service: 'zasielkovna_sk', delivery_point: '33711' });
+    expect(() => buildFhbOrder({ ...ORDER, shipTo: { ...SHIP, delivery_method: 'packeta_point' } }, { ...OPTS, services: {} })).toThrow(FhbBuildError);
+    expect(() => buildFhbOrder({ ...ORDER, shipTo: { ...SHIP, delivery_method: 'sps_parcelshop' as never } }, OPTS)).toThrow(/delivery_method/);
   });
   test('lokálne validácie', () => {
     expect(() => buildFhbOrder({ ...ORDER, number: 12345678901 }, OPTS)).toThrow(/variable_symbol/);

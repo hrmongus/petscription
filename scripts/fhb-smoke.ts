@@ -38,14 +38,14 @@ async function main() {
   ok(`RMA: ${(await fhb.rmaList()).total}`);
 
   if (!write) return;
-  const sps = services.sps_parcelshop!;
-  const point = (await fhb.deliveryPoints(sps, 'sk'))[0];
+  const dpd = services.dpd_pickup!;
+  const point = (await fhb.deliveryPoints(dpd, 'sk'))[0];
   const sku = ours[0]?.id ?? '000000';
   const id = `SMOKE-${randomUUID().slice(0, 8)}`;
   const body = buildFhbOrder(
     {
       id, number: Math.floor(Date.now() / 1000) % 1e9, items: [{ sku, qty: 1 }], amountCents: 100,
-      shipTo: { name: 'Test Granula', email: 'test@granula.sk', phone: '+421900000000', country: 'SK', delivery_method: 'sps_parcelshop',
+      shipTo: { name: 'Test Granula', email: 'test@granula.sk', phone: '+421900000000', country: 'SK', delivery_method: 'dpd_pickup',
         point_id: point?.external_code /* FHB delivery_point = external_code */, point_address: point ? { street: point.street, city: point.city, zip: point.zip } : null },
     },
     { siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://granula.sk', notifyToken: 'smoke', services },

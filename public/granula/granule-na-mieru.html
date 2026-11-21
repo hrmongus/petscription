@@ -1006,18 +1006,9 @@
           <label class="pf" id="tel-f" hidden><span>Telefón pre kuriéra</span><input class="input" id="tel" name="tel" type="tel" autocomplete="tel" placeholder="+421"></label>
         </div>
         </div>
-        <!-- výber doručenia pri otvorenom predaji (doprava.js, SPEC P1b) -->
+        <!-- výber doručenia pri otvorenom predaji (doprava.js; pravidlá dopravcov v doprava-config.js, SPEC P1b) -->
         <div class="dl-new" id="ship-new" hidden>
-          <div class="ship-opts" role="radiogroup" aria-label="Spôsob doručenia">
-            <label class="so"><input type="radio" name="dmethod" value="packeta_point"><span class="so-box" aria-hidden="true"></span>
-              <span class="so-txt"><b>Packeta – výdajné miesto alebo Z-BOX</b><span>2–3 pracovné dni</span></span><b class="so-pr" data-ship-price></b></label>
-            <div class="dl-pick" data-for="packeta_point" hidden><button type="button" class="link-under" data-pick="packeta"></button><div class="dl-chosen" hidden></div></div>
-            <label class="so"><input type="radio" name="dmethod" value="sps_parcelshop"><span class="so-box" aria-hidden="true"></span>
-              <span class="so-txt"><b>SPS – výdajné miesto</b><span>2–3 pracovné dni</span></span><b class="so-pr" data-ship-price></b></label>
-            <div class="dl-pick" data-for="sps_parcelshop" hidden><button type="button" class="link-under" data-pick="sps" aria-haspopup="dialog"></button><div class="dl-chosen" hidden></div></div>
-            <label class="so"><input type="radio" name="dmethod" value="sps_courier"><span class="so-box" aria-hidden="true"></span>
-              <span class="so-txt"><b>SPS – kuriér na adresu</b><span>1–2 pracovné dni</span></span><b class="so-pr" data-ship-price></b></label>
-          </div>
+          <div class="ship-opts" id="ship-opts-new" role="radiogroup" aria-label="Spôsob doručenia"></div>
         </div>
       </section>
       <section class="pay-sec" aria-labelledby="t-payment">
@@ -1117,6 +1108,7 @@
 <script src="radar.js"></script>
 <script src="breed-search.js"></script>
 <script src="compare.js"></script>
+<script src="doprava-config.js"></script>
 <script src="doprava.js"></script>
 <script src="kviz.js"></script>
 <script src="reviews.js"></script>
