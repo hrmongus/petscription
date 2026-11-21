@@ -2,6 +2,11 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/suroviny",
+      "destination": "/#suroviny",
+      "permanent": true
+    },
+    {
       "source": "/granula",
       "destination": "/",
       "permanent": true

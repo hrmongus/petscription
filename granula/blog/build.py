@@ -1073,7 +1073,7 @@ def build(check_only=False):
 
     # statické stránky bez lastmod (dátum buildu by klamal); blog podľa najnovšieho článku, články podľa `updated`
     last = str(pub[0]["meta"].get("updated", "")) if pub else ""
-    urls = [(BASE_URL + "/", ""), (BASE_URL + "/suroviny", ""), (BASE_URL + "/granule-na-mieru", ""), (BASE_URL + "/podpora", ""), (BASE_URL + "/blog/", last)]
+    urls = [(BASE_URL + "/", ""), (BASE_URL + "/granule-na-mieru", ""), (BASE_URL + "/podpora", ""), (BASE_URL + "/blog/", last)]
     urls += [("%s/blog/%s/" % (BASE_URL, p["slug"]), str(p["meta"].get("updated", ""))) for p in pub]
     urls += [("%s/blog/autori/%s/" % (BASE_URL, aid), "") for aid in AUTH if any(p["meta"].get("author_id") == aid for p in pub)]
     write(os.path.join(SITE_DIR, "sitemap.xml"), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n%s</urlset>\n'
