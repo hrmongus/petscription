@@ -12,13 +12,15 @@
     "check:urls": "node scripts/check-urls.mjs",
     "fhb:types": "npx -y openapi-typescript@7.13.0 reference/fhb-openapi.json -o lib/fhb/openapi.d.ts",
     "fhb:smoke": "tsx scripts/fhb-smoke.ts",
-    "fhb:sync": "tsx scripts/fhb-sync-products.ts"
+    "fhb:sync": "tsx scripts/fhb-sync-products.ts",
+    "stripe:test-clock": "tsx scripts/stripe-test-clock.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.119.2",
     "next": "^16.4.6",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
+    "stripe": "^22.6.2",
     "zod": "^4.6.7"
   },
   "devDependencies": {

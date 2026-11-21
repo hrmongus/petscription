@@ -1013,6 +1013,10 @@
       </section>
       <section class="pay-sec" aria-labelledby="t-payment">
         <div class="ps-h"><span class="ps-n" aria-hidden="true">3</span><h2 id="t-payment">Platba</h2></div>
+        <!-- pri otvorenom predaji: Stripe Embedded Checkout (kviz.js); pôvodné platobné polia sa skryjú -->
+        <p class="pay-note" id="pay-note" hidden>Kartou, Apple Pay alebo Google Pay zaplatíš bezpečne cez Stripe hneď po kliknutí na „Pokračovať k platbe“.</p>
+        <div class="pay-embed" id="pay-embed" hidden></div>
+        <div class="dc" id="pay-legacy">
         <div class="wallets">
           <button type="button" class="wallet" data-wallet="apple">Apple Pay</button>
           <button type="button" class="wallet" data-wallet="google">G Pay</button>
@@ -1031,6 +1035,7 @@
             </div>
           </div>
           <p id="pm-bank" class="pm-bank" hidden>Po objednávke ti na e-mail pošleme údaje na prevod. Vrece odošleme, keď platba príde.</p>
+        </div>
         </div>
       </section>
       <p class="err" role="alert" hidden data-err="objednavka">Doplň zvýraznené polia.</p>
@@ -1069,6 +1074,7 @@
       <div class="kicker">Objednávka prijatá</div>
       <h1 class="display q-title" tabindex="-1">Hotovo. <span>Večera je vybavená.</span></h1>
       <p id="d-text"></p>
+      <p class="done-order" id="d-order" role="status" hidden></p>
       <div class="tiles">
         <div><div class="t">DÁVKA</div><div class="v" id="d-dose"></div></div>
         <div><div class="t">VRECE</div><div class="v" id="d-bag"></div></div>

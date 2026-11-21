@@ -340,5 +340,17 @@ Každá položka čaká na potvrdenie, kým nie je označená ✅.
     - Pravidlá a ceny podľa balenia sú v jednom súbore `public/granula/doprava-config.js`. Packeta sa pri 18 kg neponúka. Pri 18 kg platí tabuľka (DPD predvolené, iba odberné miesta, + SPS kuriér). ✅ Potvrdené 21. 11.
     - `addresses`: `carrier` ∈ `packeta`/`dpd`/`sps`, `delivery_method` ∈ `packeta_point`/`dpd_pickup`/`sps_courier` (migrácia `p1b_carriers_dpd`).
     - Pôvodný formulár ostáva pri zatvorenom predaji bez zmeny; platobné polia sa odstránia v kroku 4.
+12. **Checkout a predplatné (krok 4, 21. 11.):**
+    - **`ui_mode: 'embedded_page'`** (Stripe API `2026-08-26.dahlia`, SDK `stripe@22` ako FanpageKit; zadanie hovorí `embedded`, je to nový názov). V prehliadači `https://js.stripe.com/dahlia/stripe.js` a `createEmbeddedCheckoutPage`.
+    - **Stripe zákazník** sa vytvorí už v `POST /api/checkout` (jeden na e-mail, `customers.stripe_customer_id`) a Session dostane `customer`. Preto sa pri jednorazovom nákupe nepoužije `customer_creation: always` (Stripe ho s `customer` nedovolí). `invoice_creation` a `setup_future_usage: off_session` ostávajú.
+    - **Stripe Products** so stabilným ID: `granula-<SKU>` (recept × balenie, 18 kg = `granula-GRAN-<receptúra>-18`) a `granula-doprava`; založia sa pri prvom použití. Cena je v `price_data` (zo servera).
+    - **Doprava** je druhá položka (pri predplatnom opakovaná s rovnakým intervalom D). Cena podľa dopravcu a balenia z `doprava-config.js` (zatiaľ 4,90 €).
+    - **Návratová URL** = pôvod požiadavky (`/granule-na-mieru?session_id=…#hotovo`), takže preview ostane na preview. Stránka „Hotovo“ číta `GET /api/checkout/session` a nič nezakladá.
+    - **Draft** pri `POST /api/checkout`: zákazník (podľa e-mailu), pes (`answers` po validácii, `birth_date` odhadnutý z veku na prepočet pri obnovení), adresa (pri výdajnom mieste ulica/PSČ/mesto = adresa miesta, do FHB `recipient.address`). Predplatné a objednávka vznikajú iba vo webhooku.
+    - **Čas platby:** obnovenia o 06:00 UTC (7:00/8:00 SK), aby objednávka do FHB prišla ráno.
+    - **Prepočet D pri obnovení** (šteňatá): vek k dátumu platby z `birth_date`, engine s predvolenými PARAMS. Pri zmene D jeden `changePlan` a ďalšia platba = dnešná platba + D_nové (nové vrece sa začne používať o LEAD dní a vydrží D_nové). Hmotnosť (`kg`) sa nemení, nové vstupy príjme portál P4.
+    - **Webhook a FHB:** chyba odoslania do FHB webhook neprerušuje (objednávka ostane `paid`/`fhb_error`, zopakuje cron v kroku 5 alebo admin). Chýbajúci draft alebo chyba DB → 500 (Stripe zopakuje).
+    - **Stripe webhook eventy** (nastaviť v Stripe → Developers → Webhooks, endpoint `https://granula.sk/api/stripe/webhook`): `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `invoice.paid`, `invoice.payment_failed`, `customer.subscription.updated`, `customer.subscription.deleted`.
+    - **DPH:** ⚠️ TODO, rozhodnutie používateľa (engine má ceny s 23 % DPH, firma nie je platiteľ).
 8. **Receptúra v checkoute:** server prijme akúkoľvek receptúru z `PRODUCTS`, rovnako ako dnešné UI (menej vhodné len označí). V snapshote sa ukladá `eligible`. Pre `/ucet` (P4) platí SPEC: iba vhodné.
 

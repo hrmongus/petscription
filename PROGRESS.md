@@ -7,7 +7,7 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 | 1. Základ (SPEC P0) | ✅ hotové, preview skontrolované |
 | 2. FHB klient (P2) | ✅ hotové, na main |
 | 3. Doprava v checkoute (P1b) | ✅ hotové, na main / granula.sk |
-| 4. Checkout a predplatné (P1) | — |
+| 4. Checkout a predplatné (P1) | 🟡 postavené a otestované na mockoch; čaká na Stripe test kľúče (živý test, test clocks) |
 | 5. FHB stavy a emaily | — |
 | 6. Test celého toku | — |
 
@@ -214,16 +214,43 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 - **Vizuálne:** 11 stránok × desktop/mobil, 0 rozdielnych pixelov. Krok objednávky pri zatvorenom predaji: pôvodné tlačidlo „Objednávky od 1. 12.“, nový výber skrytý.
   - Jedno meranie ukázalo drobné rozdiely aj na nezmenených stránkach (načítanie písma). Opakované meranie dalo 0.
 
-### Ostáva (ďalšie kroky)
-- **Krok 4: checkout a predplatné** (Stripe TEST MODE). Odovzdanie pre ďalší chat:
-  - **Chýba v env:** `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `STRIPE_WEBHOOK_SECRET` (test). DPH ostáva otvorená (TODO, opýtať sa).
-  - **Vzory:** `reference/fanpagekit/lib/stripe.ts` (APP_METADATA app=granula, isOurs), `app/api/stripe/webhook/route.ts` (podpis, idempotencia cez `stripe_events`).
-  - **`POST /api/checkout`:**
-    - na začiatku `gateFromRequest` (prepínač predaja),
-    - `quote()` z `lib/engine-server.ts` (dávka, D, cena),
-    - overenie doručenia: `isMethodAllowed(delivery.method, bag)` a pri výdajnom mieste `findPoint('packeta'|'dpd', point.id)`,
-    - telefón cez `normalizePhone`, cena dopravy `shippingPrice(method, bag, PARAMS.shipping)`,
-    - draft customer/dog/address v DB, Checkout Session `ui_mode: embedded`.
-  - **Klient:** `kviz.js` → `checkout()`; miesto `// TODO krok 4` pošle `{ answers, plan, bag, delivery }`. V otvorenom režime odstrániť pôvodné platobné polia (`#pm-card`, peňaženky, prevod) a napojiť Embedded Checkout.
-  - **Objednávka:** položky `skuItems(productId, bag)` (18 kg = sada `GRAN-<receptúra>-18`). Do FHB cez `sendOrderToFhb` (`lib/fhb/send.ts`); `ship_to` podľa typu `ShipTo` (`lib/fhb/build-order.ts`, pri výdajnom mieste `point_address`).
-  - **Vercel URL pre preview:** návratovú URL pre Stripe brať z adresy požiadavky, nie z `NEXT_PUBLIC_SITE_URL`.
+---
+
+## Krok 4: Checkout a predplatné (21. 11. 2026)
+
+### Hotové
+- **`lib/stripe.ts`** (vzor FanpageKit): klient, `APP_METADATA = { app: "granula" }`, `isOurs`, `eventMetadata`, `idOf`.
+- **`lib/checkout.ts`** (`prepareCheckout`):
+  - validácia vstupu (zod), `quote()` zo servera (dávka, D, cena),
+  - doručenie: spôsob povolený pre balenie, výdajné miesto overené vo FHB (názov a adresa z FHB, nie z prehliadača), boxy pri 18 kg zamietnuté, telefón +421, e-mail ≤ 50,
+  - cena dopravy z `doprava-config.js`, položky `skuItems`.
+- **`sessionParams`:**
+  - predplatné: `mode: subscription`, krmivo + doprava ako opakované položky `interval: day, interval_count: D`, EUR, `subscription_data.metadata`,
+  - jednorazovo: `mode: payment`, `invoice_creation`, `setup_future_usage: off_session`,
+  - `ui_mode: embedded_page`, metadata `app=granula` + id draftu, produkt, balenie, D, ceny, spôsob doručenia.
+- **`POST /api/checkout`:** prepínač predaja → príprava → draft zákazník/pes/adresa → Stripe zákazník → Products → Session → `{ clientSecret, publishableKey }`.
+- **`GET /api/checkout/session`:** stav pre stránku Hotovo (`paid` s číslom objednávky / `processing` / `open`).
+- **`POST /api/stripe/webhook`:** podpis, cudzie eventy 200 bez spracovania, idempotencia (`stripe_events` + unikátne `stripe_ref` / `stripe_subscription_id`), chyba → 500.
+- **`lib/fulfillment.ts`:**
+  - `checkout.session.completed` → predplatné v DB + `trial_end` na prvé obnovenie (doručenie + D − 7) + objednávka `first`/`one_off` → FHB,
+  - `invoice.paid` (`subscription_cycle`) → prepočet D (vek šteňaťa) → `renewal` → FHB, pri zmene D jeden `changePlan`,
+  - `invoice.payment_failed` → `past_due`,
+  - `customer.subscription.updated` / `.deleted` → stav a dátum ďalšej platby.
+- **`lib/subscription-schedule.ts`:** dátumy (prvé obnovenie, zmena D, prepočet po doručení) a úpravy predplatného (posun, preskočenie, zmena D/ceny v JEDNOM update s `trial_end` a `proration_behavior: none`, pauza, obnovenie, zrušenie) pre projekty 2 a 3.
+- **Dotazník (iba pri otvorenom predaji):** pôvodné platobné polia skryté, „Pokračovať k platbe“ → Embedded Checkout pod krokom 3; zmena doručenia alebo plánu pripravenú platbu zruší. Hotovo: číslo objednávky zo servera.
+- **`scripts/stripe-test-clock.ts`** (`npm run stripe:test-clock`): overenie cyklu na test clocks, iba so `sk_test_`.
+- **Testy:** 80 ✅ (29 nových: dátumy, Stripe úpravy, príprava a Session, webhooky na pamäťovej DB, webhook route s podpisom). `typecheck` ✅, `build` ✅.
+
+### Overené bez kľúčov
+- **Zatvorený predaj:** krok objednávky 0 rozdielnych pixelov oproti granula.sk.
+- **API:** bez tokenu `/api/checkout` 403; s tokenom, ale bez Stripe kľúčov 503 „Platby momentálne nie sú dostupné.“ (dotazník ju zobrazí); webhook bez secretu 400.
+- **Dotazník** posiela `{ answers, plan, bag, delivery }` (bez ceny a dní). Hotovo s neznámou Session → „Platba nebola dokončená“.
+
+### Čaká na Stripe test kľúče
+1. **Do Vercelu** (Production aj Preview): `STRIPE_SECRET_KEY` (`sk_test_…`), `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` (`pk_test_…`). **Webhook** v Stripe (test mode) na `https://granula.sk/api/stripe/webhook` s eventmi zo SPEC §10.12 → `STRIPE_WEBHOOK_SECRET`.
+2. **Potom:**
+   - `npm run stripe:test-clock` (obnovenie po D dňoch, zmena intervalu bez okamžitej platby),
+   - živý test na granula.sk s `?test=` (predplatné, jednorazovo, zlyhaná karta `4000 0000 0000 0341`),
+   - kontrola objednávky v DB a vo FHB sandboxe.
+3. **DPH:** rozhodnúť (TODO v `lib/checkout.ts`).
+4. **Zľavový kód** v súhrne je zatiaľ maketa (Stripe `allow_promotion_codes` sa dá zapnúť neskôr).

@@ -62,3 +62,11 @@
   .dl-pick{padding-left:0}
 }
 @media (hover:none){.dp-x:hover{background:var(--m);color:var(--n)}}
+
+/* platba cez Stripe Embedded Checkout (kviz.js) */
+.pay-note{font-size:14px;line-height:1.5;margin:0}
+.pay-embed{min-height:120px;border:2px solid var(--n);background:#fff;padding:8px 0}
+.pay-embed[hidden],.pay-note[hidden],.done-order[hidden]{display:none}
+.pay-embed[aria-busy="true"]{display:flex;align-items:center;justify-content:center;font-weight:700;color:#5E5852}
+.done-order{font-weight:800;font-size:17px;margin:12px 0 0}
+.done-order a{color:inherit}
