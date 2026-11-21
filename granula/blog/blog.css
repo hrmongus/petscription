@@ -21,9 +21,11 @@
 .bl-col{max-width:calc(760px + 2 * var(--gutter))}
 .bl-crumbs{font-size:13px;font-weight:700;margin-bottom:20px}
 .bl-crumbs a{color:var(--k)}
-.bl-head{display:flex;flex-direction:column;gap:16px;margin-bottom:28px}
+.bl-head{display:flex;flex-direction:column;gap:16px;margin-bottom:32px}
+.bl-head .bl-byline{margin-top:6px}
 .bl-head h1{font-size:clamp(30px,4vw,48px);line-height:1.02;font-weight:900;text-transform:uppercase;text-wrap:balance}
 .bl-meta{font-size:14px;line-height:1.55}
+.bl-date{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--k);margin:0 0 -4px}
 .bl-meta b{font-weight:800}
 
 /* krátka odpoveď = najcitovanejší blok */
