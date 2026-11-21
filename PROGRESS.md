@@ -149,8 +149,8 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
   - `archiveProduct`,
   - poznámka, že nízky sklad sa počíta z `free_quantity`.
 - **Testy:** 42 ✅. SPEC: SKU (P0), produkty, príjemky a sklad (P2).
-- **⚠️ Priznanie:** 10 bežných produktov (4 a 9 kg) som v sandboxe založil už v kroku 2, bez schválenia ID. Sady 18 kg zatiaľ nie sú založené, čakajú na schválenie ID. Ak budú ID iné, tých 10 v sandboxe archivujem.
-- **Návrh ID na schválenie:** `GRAN-<receptúra>-<kg>`:
+- **ID schválené používateľom (21. 11.).** V sandboxe je všetkých 15 produktov (`fhb:sync` ukáže 15 × „bez zmeny“). 10 bežných bolo založených už v kroku 2, 5 sád po schválení.
+- **ID** `GRAN-<receptúra>-<kg>`:
 
 | Receptúra | 4 kg | 9 kg | 18 kg (sada 2 × 9 kg) |
 |---|---|---|---|
