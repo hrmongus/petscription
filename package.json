@@ -9,7 +9,10 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "blog": "python3 content/blog/build.py",
-    "check:urls": "node scripts/check-urls.mjs"
+    "check:urls": "node scripts/check-urls.mjs",
+    "fhb:types": "npx -y openapi-typescript@7.13.0 reference/fhb-openapi.json -o lib/fhb/openapi.d.ts",
+    "fhb:smoke": "tsx scripts/fhb-smoke.ts",
+    "fhb:sync": "tsx scripts/fhb-sync-products.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.119.2",
@@ -22,6 +25,7 @@
     "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "tsx": "^4.23.15",
     "typescript": "^6.0.3",
     "vitest": "^5.1.1"
   }

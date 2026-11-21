@@ -4,8 +4,8 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 
 | Krok | Stav |
 |---|---|
-| 1. Základ (SPEC P0) | ✅ hotové, čaká na „ok“ |
-| 2. FHB klient (P2) | — |
+| 1. Základ (SPEC P0) | ✅ hotové, preview skontrolované |
+| 2. FHB klient (P2) | ✅ hotové, čaká na „ok“ |
 | 3. Doprava v checkoute (P1b) | — |
 | 4. Checkout a predplatné (P1) | — |
 | 5. FHB stavy a emaily | — |
@@ -94,5 +94,47 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 - **Predaj:** `/api/checkout/status` vráti `closed`. V dotazníku je bez tokenu „Objednávky od 1. 12.“ ako dnes.
 - Vercel Authentication pre preview bolo na kontrolu vypnuté → **znova zapnúť**.
 
+---
+
+## Krok 2: FHB klient (21. 11. 2026)
+
+### Hotové
+- **OpenAPI:** `reference/fhb-openapi.json` (z `https://api.fhb.sk/v3/openapi`), typy `lib/fhb/openapi.d.ts` (`npm run fhb:types`).
+- **`lib/fhb/client.ts`** (`FhbClient`):
+  - login s cache tokenu do expirácie (rezerva 120 s), pri 401 jeden nový login,
+  - produkty (create, update bez EAN, get, list),
+  - objednávky (create, update, get podľa id aj trackingu, delete, history),
+  - `parcel-service`, `delivery-point`, `rma/list`, `stock/all`, `stock`,
+  - chyby ako `FhbError { status, message, violations, endpoint }` s príznakmi `isValidation` a `isRetryable`; `toJSON()` sa ukladá do `orders.fhb_error`.
+- **`lib/fhb/build-order.ts`** (`buildFhbOrder`, podľa SPEC P2):
+  - `id` = `orders.id`, `variable_symbol` = `orders.number`, `value`, `cod: 0`,
+  - parcel_service podľa spôsobu doručenia, `delivery_point`, notifikačné URL s tokenom,
+  - normalizácia telefónu na +421…,
+  - lokálne kontroly (VS ≤ 10 číslic, email ≤ 50, výdajné miesto, adresa, dĺžka URL ≤ 255).
+- **`lib/fhb/send.ts`** (`sendOrderToFhb`): posiela iba objednávku v stave `paid`/`fhb_error`. Ak je objednávka už vo FHB, overí sa cez `GET /order` a neduplikuje sa.
+  - 400 → `fhb_error` so štruktúrou `violations`,
+  - sieť/5xx → stav sa nemení, chyba sa vyhodí (zopakuje sa),
+  - úložisko nad Supabase.
+- **Skripty:**
+  - `npm run fhb:sync` (10 SKU; bez `--apply` iba náhľad; zápis do produkcie iba s `--production`),
+  - `npm run fhb:smoke` (čítanie; `--write` = testovacia objednávka POST → GET → DELETE, iba sandbox).
+- **Testy:** 17 nových testov na mock FHB serveri (spolu 38 ✅). `typecheck` ✅, `build` ✅.
+
+### Overené v sandboxe (api-stage, 21. 11.)
+- Login ✅. 10 produktov `GRAN-*` je vytvorených v sandboxe (`fhb:sync --apply`).
+- Testovacia objednávka cez SPS výdajné miesto: vytvorená (`pending`, `sps_pudo`, `PS-BJRT0558`) → prečítaná → zmazaná ✅.
+- `delivery_point` musí byť `external_code`, nie číselné `id`.
+- `validate: true` zlyhá pri každej adrese → pri výdajnom mieste sa nepoužíva, pri kuriérovi sa dá vypnúť (`FHB_VALIDATE_ADDRESS=false`). Pozri SPEC §10.10.
+- `notify_url` na produktoch zatiaľ nie je (chýba `FHB_NOTIFY_TOKEN`); po nastavení stačí `npm run fhb:sync -- --apply`.
+
+### Otázky pre FHB (poslať im)
+1. **Formát notifikácií objednávok** (`confirmed`, `sent`, `delivered`, `returned`): metóda, telo, podpis? Docs opisujú iba skladovú notifikáciu (POST JSON `id, type, qty, stockQuantity, reason`). Dovtedy notifikácii neveríme, iba ju zalogujeme a stav overíme cez `GET /order`.
+2. **Dopravcovia v sandboxe:** `GET /parcel-service` vracia prázdny zoznam. Prosíme povoliť SPS (výdajné miesta aj kuriér) a Packetu a poslať presné kódy. `sps_pudo` funguje, kódy SPS kuriéra a Packety nepoznáme.
+3. **Packeta:** aký kód služby a aký formát `delivery_point`? Je to priamo ID výdajného miesta z Packeta widgetu, alebo kód z `GET /delivery-point/<packeta>`? Treba `delivery_point_parameters`?
+4. **Kontrola adresy:** v sandboxe `validate: true` odmietne každú adresu („Failed to validate address“), aj bežnú domácu. Je to obmedzenie sandboxu? Ako sa správa produkcia?
+5. **Adresa pri výdajnom mieste:** `recipient.address` je povinná aj pri výdajnom mieste. Stačí adresa výdajného miesta, alebo chcete adresu zákazníka?
+6. **Sandbox URL:** v emaile uvádzate `api-stage`, v dokumentácii `api-dev` (presmeruje 302). Platí `api-stage`?
+7. **Dĺžka `product.id`:** naše SKU má až 27 znakov (`GRAN-hovadzie-morka-jahna-9`). Je to v poriadku? (Sandbox ho prijal.)
+
 ### Ostáva (ďalšie kroky)
-- Krok 2: FHB klient (`lib/fhb/`, OpenAPI typy, `buildFhbOrder`, sync a smoke skripty na mockoch).
+- Krok 3: doprava v checkoute (Packeta widget, SPS pop-up nad `GET /api/delivery-points?service=sps` z FHB `sps_pudo`).

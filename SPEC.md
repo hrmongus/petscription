@@ -271,6 +271,10 @@ FHB_API_URL=
 FHB_APP_ID=
 FHB_SECRET=
 FHB_NOTIFY_TOKEN=
+FHB_SERVICE_SPS_PARCELSHOP=
+FHB_SERVICE_SPS_COURIER=
+FHB_SERVICE_PACKETA=
+FHB_VALIDATE_ADDRESS=
 PACKETA_API_KEY=
 RESEND_API_KEY=
 EMAIL_FROM=
@@ -305,5 +309,11 @@ Každá položka čaká na potvrdenie, kým nie je označená ✅.
 6. **Routing:** pravidlá vo `lib/site-routes.ts` (next.config.ts). Koncovú lomku Next pri pravidlách ignoruje, preto `/blog` → `/blog/`, `/admin-blog` → `/admin-blog/` a 404 pre `/stranka/` rieši `proxy.ts`. `experimental.caseSensitiveRoutes` (ako Vercel; na Verceli sa pri presmerovaniach neuplatní, `/SUROVINY` → `/#suroviny`, neškodné). Navyše hlavička `X-Robots-Tag: noindex` pre `/admin-vypocet`, `/admin-blog/*`, `/blog/nahlad/*`.
 7. **`public/granula/README.md`** (interná dokumentácia webu) ostal v `public/` a je verejne dostupný na `/README.md` ⚠️ presunúť mimo `public/`?
 9. **Testovanie na produkcii + prepínač predaja** (zadanie od používateľa, 21. 11.): `CHECKOUT_ENABLED` + `?test=<CHECKOUT_TEST_TOKEN>`, `GET /api/checkout/status`, token sa z URL odstráni a drží v `sessionStorage` záložky, na server ide v hlavičke `X-Checkout-Test`. Výklad: `CHECKOUT_ENABLED=true` otvorí predaj pre všetkých (spustenie), token slúži na testovanie pred spustením.
+10. **FHB (krok 2, overené v sandboxe api-stage 21. 11.):**
+    - **Sandbox URL:** `https://api-stage.fhb.sk/v3` funguje. Docs uvádzajú `api-dev`, to však presmeruje (302).
+    - **SPS výdajné miesta:** `parcel_service = sps_pudo` (2 875 miest SK). `delivery_point` = `external_code` miesta (napr. `PS-BJRT0558`), číselné `id` FHB odmietne (`DELIVERY_POINT_DOES_NOT_EXISTS`). Kódy SPS kuriéra a Packety zatiaľ nie sú známe (`GET /parcel-service` je v sandboxe prázdny), sú v env `FHB_SERVICE_*`.
+    - **`validate`:** SPEC hovorí `validate: true`. Sandbox však odmieta každú adresu („Failed to validate address“). Preto `validate` platí iba pri kuriérovi a dá sa vypnúť cez `FHB_VALIDATE_ADDRESS=false`. Pri výdajnom mieste sa adresa nekontroluje.
+    - **Adresa pri výdajnom mieste:** FHB vyžaduje `recipient.address` aj pri výdajnom mieste. Ak zákazník adresu nezadá, pošle sa adresa výdajného miesta (`ship_to.point_address`).
+    - **Názvy produktov vo FHB:** „Granula! <receptúra> <kg> kg“.
 8. **Receptúra v checkoute:** server prijme akúkoľvek receptúru z `PRODUCTS`, rovnako ako dnešné UI (menej vhodné len označí). V snapshote sa ukladá `eligible`. Pre `/ucet` (P4) platí SPEC: iba vhodné.
 
