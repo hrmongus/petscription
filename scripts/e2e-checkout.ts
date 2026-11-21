@@ -110,7 +110,11 @@ async function main() {
     // Embedded Checkout
     await page.locator('#s-submit').click();
     const frame = page.frameLocator('iframe[name^="embedded-checkout"], iframe[src*="checkout.stripe.com"]').first();
-    await frame.locator('#cardNumber').waitFor({ timeout: 60_000 });
+    // pri viacerých spôsoboch platby (jednorazovo: karta, Bancontact, Link) je karta v akordeóne → klik na „Karta“
+    const cardLabel = frame.getByText('Karta', { exact: true }).first();
+    await frame.locator('#cardNumber').or(cardLabel).first().waitFor({ timeout: 60_000 });
+    if (!(await frame.locator('#cardNumber').isVisible())) await frame.locator('[data-testid="card-accordion-item-button"]').dispatchEvent('click');
+    await frame.locator('#cardNumber').waitFor({ timeout: 30_000 });
     check(!!sessionId, `Session ${sessionId}`);
     const session = await s.checkout.sessions.retrieve(sessionId!);
     console.log(`   Session: mode ${session.mode}, suma ${(session.amount_total ?? 0) / 100} €, D ${session.metadata?.days}, ${session.metadata?.method} | tlačidlo „${summary}“`);

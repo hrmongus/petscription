@@ -7,7 +7,7 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 | 1. Základ (SPEC P0) | ✅ hotové, preview skontrolované |
 | 2. FHB klient (P2) | ✅ hotové, na main |
 | 3. Doprava v checkoute (P1b) | ✅ hotové, na main / granula.sk |
-| 4. Checkout a predplatné (P1) | 🟡 postavené a otestované na mockoch; čaká na Stripe test kľúče (živý test, test clocks) |
+| 4. Checkout a predplatné (P1) | ✅ otestované naživo na granula.sk (test mode, FHB sandbox) a na test clocku vrátane obnovenia |
 | 5. FHB stavy a emaily | — |
 | 6. Test celého toku | — |
 
@@ -15,6 +15,10 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 - [ ] Prepnúť repo na privátne
 - [ ] Zapnúť Vercel Deployment Protection (Settings → Deployment Protection → Vercel Authentication; na kontrolu preview bola 21. 11. vypnutá)
 - [ ] Premazať testovacie dáta a prepnúť na live kľúče: Supabase (zákazníci, psy, adresy, predplatné, objednávky, eventy z testov na granula.sk), Stripe test objekty, FHB sandbox (aj 10 testovacích produktov `GRAN-*`); Production env → Stripe live + live webhook secret, FHB produkcia `https://api.fhb.sk/v3`. Až potom `CHECKOUT_ENABLED=true`.
+- [ ] **Stripe live webhook `charming-finesse`:** zapnúť ho, URL prepnúť na `https://www.granula.sk/api/stripe/webhook` (granula.sk presmeruje 308 na www a Stripe presmerovania nesleduje), API verzia `2026-08-26.dahlia`, rovnaké eventy ako test webhook `playful-spark`. Jeho `whsec_…`, `sk_live_…` a `pk_live_…` dať do Vercelu (Production).
+- [ ] **Vymeniť (roll) testovací Stripe secret key** (Developers → API keys → Roll) a nový dať do Vercelu aj do prostredia Claude Code.
+- [ ] `NEXT_PUBLIC_SITE_URL=https://www.granula.sk` vo Verceli (✅ hotové 21. 11.) a pri FHB produkcii `npm run fhb:sync -- --apply --production` (notify_url na www).
+- [ ] Stripe → Settings → Payment methods: zvážiť vypnutie Bancontact (belgická metóda, ponúka sa pri jednorazovom nákupe) a overiť doménu pre Apple Pay (Stripe.js varuje, že doména nie je overená).
 - [ ] Stripe účet vedený na Spark Link, s. r. o.
 - [ ] Zmazať staré branche (Carbone Company)
 - [ ] Záverečná bezpečnostná kontrola: kľúče v histórii gitu, webhooky (podpis, idempotencia), RLS
@@ -254,3 +258,39 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
    - kontrola objednávky v DB a vo FHB sandboxe.
 3. ~~DPH~~ ✅ firma nie je platiteľ, ceny sú konečné, „s DPH“ sa neuvádza (SPEC P1). Stripe API verzia `2026-08-26.dahlia` (webhook endpoint nastaviť na ňu).
 4. **Zľavový kód** v súhrne je zatiaľ maketa (Stripe `allow_promotion_codes` sa dá zapnúť neskôr).
+
+### Test kroku 4 (21. 11., test mode na granula.sk, FHB sandbox)
+
+**Premenné (overené bez vypisovania hodnôt):** Stripe `sk_test_`/`pk_test_`/`whsec_` ✅, Supabase = projekt `pqvnxxoblguckyetkwjd` ✅, FHB `api-stage` ✅ (login 200), `FHB_APP_ID` 32 alfanumerických znakov bez medzery či znaku navyše ✅, `FHB_NOTIFY_TOKEN`, `CHECKOUT_TEST_TOKEN`, `CHECKOUT_ENABLED=false`, `NEXT_PUBLIC_SITE_URL` ✅. Chýbajú (krok 5 a neskôr): `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_REPLY_TO`, `CRON_SECRET`, `PACKETA_API_KEY`, voliteľné `FHB_SERVICE_*`, `FHB_VALIDATE_ADDRESS`.
+
+**Nájdené a opravené chyby:**
+1. **Webhook nedostal ani jeden event:** `granula.sk` presmeruje 308 na `www.granula.sk` a Stripe presmerovania nesleduje (20 zlyhaných doručení z test clocku). Test webhook `playful-spark` je prepnutý cez API na `https://www.granula.sk/api/stripe/webhook`. `NEXT_PUBLIC_SITE_URL` je vo Verceli `https://www.granula.sk` (používateľ), `notify_url` 15 produktov vo FHB sandboxe prepísané na www (`fhb:sync --apply`), notifikačné URL objednávok už idú na www.
+2. **FHB odmietol každú objednávku:** `order.id` má limit 30 znakov (`TOO_LONG_ERROR`, OpenAPI ho neuvádza), UUID má 36. Teraz FHB id = `fhbOrderId(orders.id)` (UUID v base36, 25 znakov, spätne `orderIdFromFhb`). Mock FHB limit vynucuje. SPEC §10.13 ⚠️ na potvrdenie.
+3. **`invoice.paid` bez predplatného v DB** (napr. predplatné vytvorené mimo checkoutu): predtým 500 a 3 dni opakovania. Teraz vždy varovanie v konzole + `audit_log` (id faktúry, predplatného, suma, metadata). Bez draftu z checkoutu → 200, s draftom → 500 (Stripe zopakuje). Overené na produkcii: 2 záznamy `stripe.invoice_paid.subscription_missing`, doručenia 200.
+4. **Adaptive Pricing:** Stripe účet má zapnuté prepočítavanie meny; zahraničná IP dostala cenu v USD s poplatkom 4 %. Session má teraz `adaptive_pricing: { enabled: false }` (iba EUR podľa SPEC P1).
+
+**Test clock, jednoduchý** (`npm run stripe:test-clock`, kontroly v skripte, exit 1 pri chybe): všetkých 7 kontrol OK. Prvé obnovenie v deň zaplatenie + 3 + D − 7 o 06:00 UTC, potom každých D dní; zmena D 37 → 45 a ceny jedným `changePlan` **nestiahla platbu hneď** (vznikne iba faktúra 0,00 € `subscription_update`), ďalšia platba 73,90 € v nový dátum a potom o 45 dní. Doručenia webhooku 200.
+
+**Test clock cez skutočný nákup** (`npx tsx scripts/stripe-e2e-clock.ts`): zákazník na test clocku → produkčné `POST /api/checkout` (draft v DB) → Embedded Checkout, karta 4242 → produkčný webhook → posun hodín na prvé obnovenie. Všetkých 9 kontrol OK:
+
+| | Objednávka | DB | FHB (sandbox) | Stripe |
+|---|---|---|---|---|
+| first | #3 `25e23d48-…` 72,40 € | `sent_to_fhb` | `28qoismpyl92uqxfove2ew818` pending, `dpd_sk` SK21286 | `cs_test_b03weAKE…`, `sub_1UeGqo1U0mpiDjfiWlMxb3Ve`, trial_end 24. 12. 06:00 = next_charge_at |
+| renewal (po 32,6 dňa na clocku) | #4 `d9275f68-…` 72,40 € | `sent_to_fhb` | pending | `in_1UeGr21U0mpiDjfibicYNfdi` (subscription_cycle), ďalšia platba o D = 37 dní |
+
+Prvý beh (pred opravou id) dal objednávky #1 a #2 so stavom `fhb_error` (`TOO_LONG_ERROR`); ostávajú ako záznam chyby.
+
+**Živý nákup cez dotazník na www.granula.sk s `?test=`** (`npx tsx scripts/e2e-checkout.ts <scenár>`, Playwright: krok objednávky, kontakt, výber miesta v zozname, Embedded Checkout), na nasadení `0f22a92`:
+
+| Scenár | Výsledok | Dôkazy |
+|---|---|---|
+| Predplatné, 9 kg, DPD SK21286, 4242 | ✅ 13/13 | #7 `4eeb548a-…` first 72,40 €, DB `sent_to_fhb`, FHB `4o76ojze9imlk2potwm4pg7a8` pending; `sub_1UeHWx1U0mpiDjfiMvP0cCBy` trialing, D 37, interval položiek 37 dní, trial_end 24. 12. = next_charge_at; Hotovo „Číslo objednávky: 7.“; Session `cs_test_b0ktDZ02…` |
+| Jednorazovo, 4 kg, Packeta 30361 (Žilina), 4242 | ✅ 11/11 | #8 `7473335d-…` one_off 39,90 €, DB `sent_to_fhb`, FHB `6w6s5lbpl1hz4me39ggghbuy3` pending `zasielkovna_sk`; bez predplatného; Hotovo „Číslo objednávky: 8.“; Session `cs_test_b0pQE0Ut…` |
+| Zamietnutá karta 4000 0000 0000 0002, SPS kuriér | ✅ 7/7 | Checkout: „Vaša kreditná karta bola odmietnutá…“; Session `cs_test_b0XEwDzU…` open/unpaid; žiadna objednávka ani predplatné (ostáva iba draft zákazníka/psa/adresy); bez presmerovania na Hotovo |
+
+Ďalej: token zmizne z URL, Session nesie `metadata.app=granula` a spôsob doručenia, Checkout iba v EUR. Zlyhané doručenia webhooku za posledných 50 min: 0. Testy 82 ✅, typecheck ✅.
+
+**Poznámky:**
+- Pri jednorazovom nákupe Checkout ponúka aj Bancontact (nastavenie účtu), karta je v akordeóne. Pozri „Pred spustením predaja“.
+- Drafty (zákazník/pes/adresa) zo zamietnutých alebo nedokončených platieb ostávajú v DB. Upratovanie starých draftov: návrh do P3 (admin) alebo cron.
+- `checkout.session.async_payment_failed` je na endpointe (7. event), kód ho zatiaľ nespracúva (200).
