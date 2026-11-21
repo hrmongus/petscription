@@ -5,6 +5,12 @@ import Stripe from 'stripe';
  * Test vs. live určuje iba kľúč (lib/env-mode.ts); produkcia beží zatiaľ s test kľúčmi.
  */
 
+/**
+ * Stripe API verzia, s ktorou je kód napísaný a otestovaný (stripe@22.6.2). Rovnakú verziu má mať webhook endpoint
+ * v Stripe (tvar eventov, napr. invoice.parent.subscription_details). Zmena verzie = zmena SDK a nové testy.
+ */
+export const STRIPE_API_VERSION = '2026-08-26.dahlia' as const;
+
 let client: Stripe | null = null;
 
 export function stripeConfigured() {
@@ -14,7 +20,7 @@ export function stripeConfigured() {
 export function stripe(): Stripe {
   const key = process.env.STRIPE_SECRET_KEY;
   if (!key) throw new Error('STRIPE_SECRET_KEY nie je nastavený');
-  client ??= new Stripe(key, { appInfo: { name: 'Granula' } });
+  client ??= new Stripe(key, { apiVersion: STRIPE_API_VERSION, appInfo: { name: 'Granula' } });
   return client;
 }
 

@@ -118,7 +118,7 @@ _(zmenené 21. 11. 2026 podľa zadania používateľa: 18 kg je sada, nie 9 kg �
   - `invoice.payment_failed` → subscription `past_due`, email zákazníkovi, položka v admine.
   - `customer.subscription.updated` / `.deleted` → synchronizácia stavu.
 - Stripe Billing nastavenia: Smart Retries zapnuté, emaily na dooverenie karty (SCA) zapnuté, Customer Portal iba na kartu + faktúry (bez zmeny plánu).
-- **DPH:** `engine.js` počíta ceny s DPH 23 %, Spark Link s. r. o. zatiaľ **nie je platiteľ DPH** → ⚠️ rozhodnúť (ceny ostávajú ako konečné, iba sa neodvádza DPH) a zosúladiť texty a faktúry. Overiť s účtovníčkou náležitosti faktúry (Stripe faktúra vs. SuperFaktúra).
+- **DPH (rozhodnutie používateľa 21. 11. 2026):** Spark Link s. r. o. zatiaľ **nie je platiteľ DPH**. Ceny z výpočtu (`engine.js`) sú **konečné ceny pre zákazníka**; DPH sa neodvádza ani neuvádza. V checkoute, na faktúre ani v emailoch sa nepíše „s DPH“ (Stripe bez `automatic_tax` a bez daňových sadzieb). `PARAMS.vat` používa iba interná stránka `admin-vypocet`. **Zmeniť, keď sa firma stane platiteľom DPH** (Stripe Tax alebo sadzby, texty, faktúra). Náležitosti faktúry neplatiteľa overiť s účtovníčkou (Stripe faktúra vs. SuperFaktúra).
 
 ---
 
@@ -351,6 +351,7 @@ Každá položka čaká na potvrdenie, kým nie je označená ✅.
     - **Prepočet D pri obnovení** (šteňatá): vek k dátumu platby z `birth_date`, engine s predvolenými PARAMS. Pri zmene D jeden `changePlan` a ďalšia platba = dnešná platba + D_nové (nové vrece sa začne používať o LEAD dní a vydrží D_nové). Hmotnosť (`kg`) sa nemení, nové vstupy príjme portál P4.
     - **Webhook a FHB:** chyba odoslania do FHB webhook neprerušuje (objednávka ostane `paid`/`fhb_error`, zopakuje cron v kroku 5 alebo admin). Chýbajúci draft alebo chyba DB → 500 (Stripe zopakuje).
     - **Stripe webhook eventy** (nastaviť v Stripe → Developers → Webhooks, endpoint `https://granula.sk/api/stripe/webhook`): `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `invoice.paid`, `invoice.payment_failed`, `customer.subscription.updated`, `customer.subscription.deleted`.
-    - **DPH:** ⚠️ TODO, rozhodnutie používateľa (engine má ceny s 23 % DPH, firma nie je platiteľ).
+    - **DPH:** ✅ firma nie je platiteľ → ceny sú konečné, „s DPH“ sa nikde neuvádza (sekcia P1).
+    - **Stripe API verzia:** `2026-08-26.dahlia` (SDK `stripe` presne `22.6.2`, nastavená v `lib/stripe.ts`). Webhook endpoint v Stripe má mať rovnakú verziu.
 8. **Receptúra v checkoute:** server prijme akúkoľvek receptúru z `PRODUCTS`, rovnako ako dnešné UI (menej vhodné len označí). V snapshote sa ukladá `eligible`. Pre `/ucet` (P4) platí SPEC: iba vhodné.
 

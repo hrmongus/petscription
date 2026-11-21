@@ -5,7 +5,7 @@
    Ako upraviť:
    - BY_BAG: ktoré spôsoby doručenia ponúknuť pri balení (poradie = poradie v dotazníku) a ktorý je predvolený.
    - BOXES:  či pri výdajnom mieste povoliť aj boxy (Z-BOX, AlzaBox, DPD Pickup Box…); false = iba výdajné miesta.
-   - PRICE:  cena dopravy pre zákazníka s DPH v €; null = predvolená cena z engine.js (PARAMS.shipping, 4,90 €).
+   - PRICE:  cena dopravy pre zákazníka v € (konečná cena); null = predvolená cena z engine.js (PARAMS.shipping, 4,90 €).
    - COST:   cena FHB bez DPH v € (iba na prehľad a porovnanie, zákazník ju nevidí).
    - METHODS.fhbService: kód služby vo FHB (parcel_service). Dá sa prepísať aj env FHB_SERVICE_<PACKETA|DPD|SPS_COURIER>. */
 (function () {
@@ -43,7 +43,7 @@
     "18": { dpd_pickup: false }
   };
 
-  // Cena pre zákazníka s DPH (€). null = PARAMS.shipping. Príklad: "9": { sps_courier: 5.90 }
+  // Cena pre zákazníka, konečná (€). null = PARAMS.shipping. Príklad: "9": { sps_courier: 5.90 }
   var PRICE = {
     "4":  { packeta_point: null, dpd_pickup: null, sps_courier: null },
     "9":  { packeta_point: null, dpd_pickup: null, sps_courier: null },
@@ -72,7 +72,7 @@
     var row = BOXES[String(bagId)] || {};
     return row[method] !== false;
   }
-  /** cena dopravy pre zákazníka (€ s DPH); fallback = predvolená cena (PARAMS.shipping) */
+  /** cena dopravy pre zákazníka (€, konečná); fallback = predvolená cena (PARAMS.shipping) */
   function price(method, bagId, fallback) {
     var row = PRICE[String(bagId)] || {}, v = row[method];
     return v == null || isNaN(v) ? fallback : +v;

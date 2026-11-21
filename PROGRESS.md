@@ -252,5 +252,5 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
    - `npm run stripe:test-clock` (obnovenie po D dňoch, zmena intervalu bez okamžitej platby),
    - živý test na granula.sk s `?test=` (predplatné, jednorazovo, zlyhaná karta `4000 0000 0000 0341`),
    - kontrola objednávky v DB a vo FHB sandboxe.
-3. **DPH:** rozhodnúť (TODO v `lib/checkout.ts`).
+3. ~~DPH~~ ✅ firma nie je platiteľ, ceny sú konečné, „s DPH“ sa neuvádza (SPEC P1). Stripe API verzia `2026-08-26.dahlia` (webhook endpoint nastaviť na ňu).
 4. **Zľavový kód** v súhrne je zatiaľ maketa (Stripe `allow_promotion_codes` sa dá zapnúť neskôr).

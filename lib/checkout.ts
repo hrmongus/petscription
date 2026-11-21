@@ -95,8 +95,7 @@ export async function prepareCheckout(input: unknown, deps: { findPoint?: typeof
     shipTo = { name, email: d.email, phone, country: 'SK', delivery_method: d.method, street: a.street, city: a.city, zip };
   }
 
-  // TODO DPH (SPEC P1): engine má ceny s 23 % DPH, Spark Link s. r. o. zatiaľ nie je platiteľ DPH → rozhodnutie
-  // používateľa (ceny ako konečné bez odvodu DPH?) a náležitosti faktúry. Dovtedy sa účtuje suma z engine.
+  // DPH (SPEC P1): firma zatiaľ nie je platiteľ DPH → ceny z engine sú konečné, DPH sa neodvádza ani neuvádza.
   const shippingCents = Math.round(shippingPrice(d.method, q.bagId, q.shippingCents / 100) * 100);
   return {
     quote: q,

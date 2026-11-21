@@ -48,12 +48,12 @@
     calibration: 1.00,        // globálny korekčný násobok (1,00 = bez korekcie)
     roundTo: 5,               // zaokrúhlenie dávky (g)
 
-    vat: 0.23,                // DPH
-    shipping: 4.90,           // doprava za doručenie s DPH (€)
+    vat: 0.23,                // sadzba DPH (iba admin-vypocet); firma zatiaľ nie je platiteľ DPH → ceny sú konečné (SPEC P1)
+    shipping: 4.90,           // doprava za doručenie, konečná cena (€)
     minBagDays: 28,           // odporúčané vrece má vydržať aspoň toľko dní
     reorderLeadDays: 7,       // LEAD (SPEC §1): ďalšiu platbu a expedíciu robíme o toľko dní skôr, než sa vrece minie
     shipDays: 3,              // SHIP_DAYS (SPEC §1): odhad dní od platby po doručenie, kým FHB nepošle skutočný dátum
-    // predajné ceny balení s DPH (€), rovnaké pre všetky receptúry
+    // predajné ceny balení, konečné ceny pre zákazníka (€), rovnaké pre všetky receptúry
     // 9 kg ≈ −5 % a 2 × 9 kg ≈ −11 % za kilogram oproti 4 kg
     bagPrices: { "4": 35, "9": 75, "18": 140 },
     plans: { mesiac: 0.10, raz: 0 } // zľavy predplatného

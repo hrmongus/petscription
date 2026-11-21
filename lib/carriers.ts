@@ -16,7 +16,7 @@ export const defaultMethodFor = (bag: BagKey) => config.defaultFor(bag) as Deliv
 export const isMethodAllowed = (method: string, bag: BagKey): method is DeliveryMethod => config.allowed(method, bag);
 /** sú pri tomto balení povolené boxy (Z-BOX, AlzaBox, DPD Pickup Box…)? 18 kg do DPD boxu nie. */
 export const boxesAllowed = (method: DeliveryMethod, bag: BagKey): boolean => config.boxes(method, bag);
-/** cena dopravy pre zákazníka v € s DPH; `fallback` = PARAMS.shipping z engine */
+/** cena dopravy pre zákazníka v € (konečná cena); `fallback` = PARAMS.shipping z engine */
 export const shippingPrice = (method: DeliveryMethod, bag: BagKey, fallback: number): number => config.price(method, bag, fallback);
 
 const ENV_KEY: Record<DeliveryMethod, string> = { packeta_point: 'FHB_SERVICE_PACKETA', dpd_pickup: 'FHB_SERVICE_DPD', sps_courier: 'FHB_SERVICE_SPS_COURIER' };
