@@ -37,18 +37,14 @@
     }).join("");
   }
 
-  // možnosti výberu
-  var breeds = E.BREEDS.slice().sort(function (a, b) {
-    if (a.mix !== b.mix) return a.mix ? -1 : 1; // krížence hore
-    return a.name.localeCompare(b.name, "sk");
-  });
-  breed.innerHTML = breeds.map(function (b) { return '<option value="' + b.id + '">' + b.name + "</option>"; }).join("");
+  // možnosti výberu: plemeno cez vyhľadávanie (breed-search.js, rovnaké ako v dotazníku)
   var AGES = [["m3", "3 mesiace"], ["m6", "6 mesiacov"], ["m9", "9 mesiacov"], ["r1", "1 rok"]];
   for (var y = 2; y <= 16; y++) AGES.push(["r" + y, y + (y <= 4 ? " roky" : " rokov")]);
   age.innerHTML = AGES.map(function (a) { return '<option value="' + a[0] + '">' + a[1] + "</option>"; }).join("");
   var KG = [[2, "do 3 kg"], [4, "3–5 kg"], [6.5, "5–8 kg"], [10, "8–12 kg"], [13.5, "12–15 kg"], [17.5, "15–20 kg"], [22.5, "20–25 kg"], [27.5, "25–30 kg"], [35, "30–40 kg"], [45, "40–50 kg"], [55, "50+ kg"]];
   kg.innerHTML = KG.map(function (k) { return '<option value="' + k[0] + '">' + k[1] + "</option>"; }).join("");
   function kgFor(avg) { var best = KG[0][0]; KG.forEach(function (k) { if (Math.abs(k[0] - avg) < Math.abs(best - avg)) best = k[0]; }); return best; }
+  GranulaBreedSearch(root.querySelector(".pd-bs"), breed);
   breed.value = "krizenec-stredny"; age.value = "r2"; kg.value = String(kgFor(17));
 
   function eur(x) { return x.toFixed(2).replace(".", ",") + " €"; }
