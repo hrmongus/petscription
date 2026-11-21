@@ -84,6 +84,25 @@ export function normalizePhone(raw: string, defaultCc = '421'): string | null {
   return s;
 }
 
+/**
+ * FHB `order.id` má limit 30 znakov (sandbox: TOO_LONG_ERROR; OpenAPI ho neuvádza), UUID má 36. Preto FHB id =
+ * UUID objednávky v base36 (vždy 25 znakov [0-9a-z]), jednoznačné a spätne prevoditeľné (`orderIdFromFhb`).
+ */
+export function fhbOrderId(orderId: string): string {
+  const hex = orderId.replace(/-/g, '').toLowerCase();
+  if (!/^[0-9a-f]{32}$/.test(hex)) throw new FhbBuildError('id', `id objednávky nie je UUID: ${orderId}`);
+  return BigInt(`0x${hex}`).toString(36).padStart(25, '0');
+}
+
+export function orderIdFromFhb(fhbId: string): string | null {
+  if (!/^[0-9a-z]{25}$/.test(fhbId)) return null;
+  let n = 0n;
+  for (const ch of fhbId) n = n * 36n + BigInt(parseInt(ch, 36));
+  const hex = n.toString(16).padStart(32, '0');
+  if (hex.length !== 32) return null;
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+}
+
 export function notifyUrl(siteUrl: string, type: NotifyType, id: string, token: string) {
   return `${siteUrl.replace(/\/+$/, '')}/api/fhb/notify/${type}/${encodeURIComponent(id)}?t=${encodeURIComponent(token)}`;
 }
@@ -128,7 +147,7 @@ export function buildFhbOrder(o: BuildOrderInput, opts: BuildOrderOptions): FhbO
   for (const [k, u] of Object.entries(notification)) if (u.length > 255) throw new FhbBuildError(`notification.${k}`, 'URL je dlhšia ako 255 znakov');
 
   const body: FhbOrderInput = {
-    id: o.id,
+    id: fhbOrderId(o.id),
     variable_symbol: vs,
     ...(service ? { parcel_service: service } : {}),
     ...(point ? { delivery_point: point } : {}),

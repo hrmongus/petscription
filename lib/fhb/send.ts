@@ -1,5 +1,5 @@
 import type { Json } from '../database.types';
-import { buildFhbOrder, FhbBuildError, parcelServicesFromEnv, type BuildOrderOptions, type ShipTo } from './build-order';
+import { buildFhbOrder, FhbBuildError, fhbOrderId, parcelServicesFromEnv, type BuildOrderOptions, type ShipTo } from './build-order';
 import { FhbClient, FhbError, type FhbOrder } from './client';
 
 /*
@@ -7,7 +7,7 @@ import { FhbClient, FhbError, type FhbOrder } from './client';
  *
  * Bezpečné opakovanie (webhook retry, cron, tlačidlo v admine):
  *   - posiela sa iba objednávka v stave `paid` alebo `fhb_error`; iné stavy sa preskočia,
- *   - FHB `id` = orders.id: ak POST zlyhá, lebo objednávka už vo FHB je, overí sa GET /order a berie sa ako odoslaná.
+ *   - FHB `id` = fhbOrderId(orders.id) (base36, limit FHB 30 znakov): ak POST zlyhá, lebo objednávka už vo FHB je, overí sa GET /order a berie sa ako odoslaná.
  * Výsledok:
  *   - OK → status `sent_to_fhb`, fhb_error = null,
  *   - 400 / lokálna validácia → status `fhb_error`, fhb_error = { status, message, violations } (úloha v admine),
@@ -76,7 +76,7 @@ export async function sendOrderToFhb(orderId: string, deps: { client: FhbClient;
   } catch (e) {
     if (!(e instanceof FhbError)) throw e;
     // už vo FHB? (opakované odoslanie po výpadku, keď prvý POST prešiel)
-    const existing = await client.getOrder(order.id).catch(() => null);
+    const existing = await client.getOrder(fhbOrderId(order.id)).catch(() => null);
     if (existing) {
       await store.update(order.id, { status: 'sent_to_fhb', fhb_error: null });
       return { ok: true, state: 'already_in_fhb', fhb: existing };

@@ -6,7 +6,7 @@
  */
 import { randomUUID } from 'node:crypto';
 import { fhbMode } from '../lib/env-mode';
-import { buildFhbOrder, parcelServicesFromEnv } from '../lib/fhb/build-order';
+import { buildFhbOrder, fhbOrderId, parcelServicesFromEnv } from '../lib/fhb/build-order';
 import { FhbClient, FhbError } from '../lib/fhb/client';
 
 const ok = (s: string) => console.log(`✓ ${s}`);
@@ -41,14 +41,15 @@ async function main() {
   const dpd = services.dpd_pickup!;
   const point = (await fhb.deliveryPoints(dpd, 'sk'))[0];
   const sku = ours[0]?.id ?? '000000';
-  const id = `SMOKE-${randomUUID().slice(0, 8)}`;
+  const orderId = randomUUID();
+  const id = fhbOrderId(orderId); // rovnaký tvar ako skutočné objednávky (base36, 25 znakov)
   const body = buildFhbOrder(
     {
-      id, number: Math.floor(Date.now() / 1000) % 1e9, items: [{ sku, qty: 1 }], amountCents: 100,
+      id: orderId, number: Math.floor(Date.now() / 1000) % 1e9, items: [{ sku, qty: 1 }], amountCents: 100,
       shipTo: { name: 'Test Granula', email: 'test@granula.sk', phone: '+421900000000', country: 'SK', delivery_method: 'dpd_pickup',
         point_id: point?.external_code /* FHB delivery_point = external_code */, point_address: point ? { street: point.street, city: point.city, zip: point.zip } : null },
     },
-    { siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://granula.sk', notifyToken: 'smoke', services },
+    { siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.granula.sk', notifyToken: 'smoke', services },
   );
   try {
     const created = await fhb.createOrder({ ...body, note: 'SMOKE TEST – zmazať' });

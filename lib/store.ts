@@ -39,6 +39,13 @@ export const supabaseStore: Store = {
     if (error) throw new Error(error.message);
     return { order: data, created: true };
   },
+  async audit(row) {
+    let q = db().from('audit_log').select('id').eq('action', row.action).eq('entity', row.entity);
+    q = row.entity_id ? q.eq('entity_id', row.entity_id) : q.is('entity_id', null);
+    if (await one(q.limit(1).maybeSingle())) return;
+    const { error } = await db().from('audit_log').insert(row);
+    if (error) throw new Error(error.message);
+  },
 };
 
 /* ---------------------------------------------------------------- draft pri /api/checkout */

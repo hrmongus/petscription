@@ -9,6 +9,7 @@ const ANSWERS = { dogname: 'Bruno', sex: 'pes', breed: 'krizenec-stredny', kg: 1
 function memStore() {
   const customers = new Map<string, Customer>(), dogs = new Map<string, Dog>(), addresses = new Map<string, Address>();
   const subs = new Map<string, Subscription>(), orders = new Map<string, Order>();
+  const audits: { action: string; entity_id?: string | null }[] = [];
   let num = 0;
   const store: Store = {
     getCustomer: async (id) => customers.get(id) ?? null,
@@ -30,12 +31,15 @@ function memStore() {
       orders.set(o.id, o);
       return { order: o, created: true };
     },
+    async audit(row) {
+      if (!audits.some((x) => x.action === row.action && x.entity_id === row.entity_id)) audits.push(row);
+    },
   };
   const c: Customer = { id: 'c1', email: 'jan@example.sk', name: 'Ján Novák', phone: '+421905123456', stripe_customer_id: 'cus_1', auth_user_id: null, created_at: '', updated_at: '' };
   const d: Dog = { id: 'd1', customer_id: 'c1', name: 'Bruno', answers: ANSWERS, weight_kg: 17, birth_date: '2022-12-01', created_at: '', updated_at: '' };
   const a: Address = { id: 'a1', customer_id: 'c1', name: 'Ján Novák', street: 'Mierová 17', city: 'Tornaľa', zip: '98201', country: 'SK', carrier: 'dpd', delivery_method: 'dpd_pickup', point_id: 'SK21286', point_label: 'Pavel Lóška Cyklo-Šport', is_default: false, created_at: '' };
   customers.set('c1', c); dogs.set('d1', d); addresses.set('a1', a);
-  return { store, subs, orders, dogs };
+  return { store, subs, orders, dogs, audits };
 }
 
 function fakeStripe() {
@@ -121,13 +125,17 @@ describe('invoice.paid (obnovenie)', () => {
     const m = memStore(), f = fakeStripe();
     expect(await handleInvoicePaid(invoice({ billing_reason: 'subscription_create' }), { store: m.store, stripe: f.s, cycle: CYCLE })).toBeNull();
   });
-  test('predplatné mimo DB: bez draftu (test clock) ignorovať, s draftom 500 (checkout ešte nespracovaný)', async () => {
+  test('predplatné mimo DB: bez draftu (test clock) 200 so stopou v audit_log, s draftom stopa + 500 (checkout ešte nespracovaný)', async () => {
     const m = memStore(), f = fakeStripe();
     const d = { store: m.store, stripe: f.s, cycle: CYCLE };
     const orphan = invoice({ parent: { subscription_details: { subscription: 'sub_x', metadata: { app: 'granula', test_clock: '1' } } } });
     expect(await handleInvoicePaid(orphan, d)).toBeNull();
-    const pending = invoice({ parent: { subscription_details: { subscription: 'sub_x', metadata: META } } });
+    expect(await handleInvoicePaid(orphan, d)).toBeNull();
+    const pending = invoice({ id: 'in_3', parent: { subscription_details: { subscription: 'sub_y', metadata: META } } });
     await expect(handleInvoicePaid(pending, d)).rejects.toThrow(/nie je v DB/);
+    // stopa ostane (raz na faktúru), žiadna objednávka
+    expect(m.audits.map((a) => [a.action, a.entity_id])).toEqual([['stripe.invoice_paid.subscription_missing', 'in_2'], ['stripe.invoice_paid.subscription_pending', 'in_3']]);
+    expect(m.orders.size).toBe(0);
   });
 });
 

@@ -35,6 +35,8 @@ export type Store = {
   updateSubscription(id: string, patch: TablesUpdate<'subscriptions'>): Promise<void>;
   /** vloží alebo vráti existujúcu (podľa stripe_ref) */
   insertOrder(row: TablesInsert<'orders'>): Promise<{ order: Order; created: boolean }>;
+  /** stopa v audit_log (rovnaký action + entity_id sa zapíše iba raz) */
+  audit(row: TablesInsert<'audit_log'>): Promise<void>;
 };
 
 export type Deps = {
@@ -129,13 +131,22 @@ export async function handleInvoicePaid(invoice: Stripe.Invoice, deps: Deps): Pr
   if (!stripeSubId || !invoice.id) return null;
   const sub = await deps.store.findSubscriptionByStripeId(stripeSubId);
   if (!sub) {
-    // predplatné bez draftu z checkoutu (napr. scripts/stripe-test-clock.ts) sa nikdy v DB neobjaví → ignorovať;
-    // s draftom ešte nebol spracovaný checkout.session.completed → 500, Stripe zopakuje
-    if (!invoice.parent?.subscription_details?.metadata?.customer_id) {
-      console.warn(`[webhook] invoice ${invoice.id}: predplatné ${stripeSubId} nie je z checkoutu, ignorujem`);
-      return null;
-    }
-    throw new Error(`invoice ${invoice.id}: predplatné ${stripeSubId} nie je v DB`);
+    // Zaplatené obnovenie Granuly bez predplatného v DB nesmie zmiznúť bez stopy: varovanie do konzoly + audit_log.
+    // Bez draftu z checkoutu (napr. predplatné vytvorené mimo checkoutu) sa v DB nikdy neobjaví → 200 so stopou.
+    // S draftom ešte nebol spracovaný checkout.session.completed → stopa + 500, Stripe zopakuje.
+    const md = invoice.parent?.subscription_details?.metadata ?? {};
+    const fromCheckout = !!md.customer_id;
+    const action = fromCheckout ? 'stripe.invoice_paid.subscription_pending' : 'stripe.invoice_paid.subscription_missing';
+    console.warn(`[webhook] ${action}: invoice ${invoice.id}, predplatné ${stripeSubId}, ${invoice.amount_paid / 100} €`);
+    await deps.store.audit({
+      actor: 'system',
+      action,
+      entity: 'stripe_invoice',
+      entity_id: invoice.id,
+      after: { invoice: invoice.id, subscription: stripeSubId, amount_paid: invoice.amount_paid, customer: idOf(invoice.customer), metadata: md } as Json,
+    });
+    if (fromCheckout) throw new Error(`invoice ${invoice.id}: predplatné ${stripeSubId} nie je v DB`);
+    return null;
   }
   const [customer, dog, address] = await Promise.all([deps.store.getCustomer(sub.customer_id), deps.store.getDog(sub.dog_id), deps.store.getAddress(sub.address_id)]);
   if (!customer || !dog || !address) throw new Error(`invoice ${invoice.id}: chýba zákazník, pes alebo adresa`);
