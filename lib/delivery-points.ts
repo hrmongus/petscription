@@ -52,7 +52,7 @@ export function normalizePoints(raw: FhbDeliveryPoint[]): DeliveryPoint[] {
  * Vyhľadanie podľa PSČ, mesta, ulice alebo názvu (bez diakritiky). Poradie: PSČ od začiatku, mesto od začiatku,
  * mesto obsahuje, ostatné; v rámci skupiny výdajné miesta pred boxami a abecedne.
  */
-export function searchPoints(points: DeliveryPoint[], query: string, limit = 40): DeliveryPoint[] {
+export function searchPoints(points: DeliveryPoint[], query: string, limit = 40, opts: { boxes?: boolean } = {}): DeliveryPoint[] {
   const q = fold(query);
   const qz = zipOf(query);
   if (q.length < 2 && qz.length < 2) return [];
@@ -60,6 +60,7 @@ export function searchPoints(points: DeliveryPoint[], query: string, limit = 40)
   const isZip = qz.length >= 2 && /^\d[\d\s]*$/.test(query.trim());
   const scored: { p: DeliveryPoint; s: number }[] = [];
   for (const p of points) {
+    if (opts.boxes === false && p.kind === 'box') continue;
     let s = -1;
     if (isZip) {
       if (p.zip.startsWith(qz)) s = 0;

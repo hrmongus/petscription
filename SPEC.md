@@ -146,24 +146,24 @@ Ten istý súbor používa dotazník (prehliadač) aj server (`lib/carriers.ts`:
 |---|---|---|---|---|
 | 4 kg | 1,95 € | 2,64 € | 3,29 € | Packeta |
 | 9 kg | 4,23 € | 2,71 € | 4,65 € | DPD |
-| 18 kg (2 × 9 kg) | **neponúka sa** (limit Packety 15 kg) | 3,15 € | 7,63 € | DPD |
+| 18 kg (2 × 9 kg) | **neponúka sa** (limit Packety 15 kg) | 3,15 € (**iba odberné miesta, bez boxov**) | 7,63 € | DPD |
 
-_(ceny FHB bez DPH = `COST`, iba na prehľad)_
+_(ceny FHB bez DPH = `COST`, iba na prehľad; potvrdené používateľom 21. 11. 2026: pri 18 kg DPD predvolené + SPS kuriér, Packeta nie)_
+- **Boxy (`BOXES`):** pri 4 kg a 9 kg Packeta aj DPD vrátane boxov (Z-BOX, AlzaBox, DPD Pickup Box…). Pri 18 kg DPD **iba odberné miesta**: mapa DPD s `disableLockers=true`, záložný zoznam s `boxes=0`, validácia v dotazníku aj na serveri (`boxesAllowed`). Ak zákazník zmení balenie na 18 kg, vybraný box sa zruší.
 - **Cena dopravy pre zákazníka:** zatiaľ 4,90 € pri všetkých (`PARAMS.shipping`). V `doprava-config.js` → `PRICE` sa dá nastaviť cena podľa dopravcu a balenia (null = `PARAMS.shipping`). Súhrn v dotazníku ju už berie podľa zvoleného dopravcu.
 - Kód služby FHB je v `METHODS.fhbService`; prepísať sa dá aj env `FHB_SERVICE_PACKETA` / `FHB_SERVICE_DPD` / `FHB_SERVICE_SPS_COURIER`.
 
 ### Výber a overenie miesta
 - **Packeta:** s `PACKETA_API_KEY` oficiálny widget (`Packeta.Widget.pick`, SK, výdajné miesta aj Z-BOXy) a pod ním odkaz „Vyhľadať v zozname“. Bez kľúča, alebo keď sa widget nenačíta, vyhľadávanie a zoznam nad FHB.
-- **DPD:** naše okno s oficiálnou mapou DPD (iframe, `?lang=sk&countries=SK&enabledCountries=SK`) a prepínač „Zoznam“ (záloha nad FHB). Výsledok príde cez `postMessage` z `https://pickup-maps.dpd.sk` (`data.dpdWidget`: `id`, `name`, `type` parcelShop/locker, `location.address`).
+- **DPD:** naše okno s oficiálnou mapou DPD (iframe, `?lang=sk&countries=SK&enabledCountries=SK`, pri 18 kg `&disableLockers=true`) a prepínač „Zoznam“ (záloha nad FHB). Výsledok príde cez `postMessage` z `https://pickup-maps.dpd.sk` (`data.dpdWidget`: `id`, `name`, `type` parcelShop/locker, `location.address`).
 - **Záložný zoznam:** `GET /api/delivery-points?service=packeta|dpd&q=…` (FHB `GET /delivery-point/<kód>`, cache 12 h, CDN 1 h, pri výpadku FHB stará cache; bez FHB kľúčov testovacie miesta `TEST-…`). Hľadá sa podľa mesta alebo PSČ bez diakritiky a výdajné miesta sú pred boxami.
 - **Uloženie:** `addresses.carrier` (`packeta`/`dpd`/`sps`), `delivery_method`, `point_id` (= FHB `delivery_point`), `point_label`, plus snapshot v `orders.ship_to` (`point_address`).
-- **Overenie na serveri pred Checkout Session (krok 4):** spôsob musí byť povolený pre balenie (`isMethodAllowed`) a miesto musí byť v aktuálnom zozname FHB (`findPoint`). Mapa DPD má ~4 077 miest, FHB sandbox ~3 961; zhoda 3 951 (97 %). Miesto, ktoré FHB nepozná, server odmietne a zákazník vyberie iné.
+- **Overenie na serveri pred Checkout Session (krok 4):** spôsob musí byť povolený pre balenie (`isMethodAllowed`), miesto musí byť v aktuálnom zozname FHB (`findPoint`) a pri balení bez boxov nesmie byť box (`boxesAllowed`). Mapa DPD má ~4 077 miest, FHB sandbox ~3 961; zhoda 3 951 (97 %). Miesto, ktoré FHB nepozná, server odmietne a zákazník vyberie iné.
 - Dizajn okna podľa Granula Design System, mobil ako prvý (celá obrazovka), focus trap, Esc zatvorí okno aj z vyhľadávacieho poľa, fokus sa vráti na tlačidlo.
 - Zákaznícky portál (P4): zmena výdajného miesta tým istým výberom; admin (P3): zobraziť a meniť (iba v stave `pending`).
 
 ### ⚠️ Otvorené
-- **18 kg do DPD boxov:** box má limit veľkosti (56 × 53 × 44 cm) a 20 kg; 18 kg = 2 balíky. Pošle to FHB do boxu? Dovtedy sa boxy pri 18 kg neskrývajú (mapa DPD vie `disableLockers=true`).
-- **`dpd_sk` vs `dpd_eu_pudo`:** v sandboxe majú totožné miesta; na SK zásielky predpokladáme `dpd_sk` → potvrdiť s FHB.
+- **`dpd_sk` vs `dpd_eu_pudo`:** v sandboxe majú totožné miesta. Zatiaľ `dpd_sk` (jedno nastavenie `METHODS.dpd_pickup.fhbService` alebo env `FHB_SERVICE_DPD`), používateľ potvrdí s FHB.
 - **Kód SPS kuriéra** od FHB.
 
 ## P2 — FHB integrácia (Kika API 3)
@@ -337,7 +337,7 @@ Každá položka čaká na potvrdenie, kým nie je označená ✅.
     - **Názvy produktov vo FHB:** „Granula! <receptúra> <kg> kg“.
 11. **Doprava v checkoute (krok 3, 21. 11.):** prepracované podľa zadania používateľa, pozri sekciu **P1b**. Pôvodný návrh s SPS výdajnými miestami (`sps_pudo`), vlastným pop-upom a mapou Leaflet bol nahradený. Zmeny voči pôvodnej SPEC:
     - SPS iba kuriér; pribudlo DPD (oficiálna mapa bez zmluvy, kód `dpd_sk`); Packeta má zálohu (zoznam nad FHB `zasielkovna_sk`), kým nie je `PACKETA_API_KEY`, a aj potom, ak sa widget nenačíta.
-    - Pravidlá a ceny podľa balenia sú v jednom súbore `public/granula/doprava-config.js`. Packeta sa pri 18 kg neponúka. Pri 18 kg sa riadime tabuľkou (DPD predvolené + SPS kuriér), nie skoršou vetou „pri 18 kg iba SPS kuriér“. ⚠️ Potvrdiť.
+    - Pravidlá a ceny podľa balenia sú v jednom súbore `public/granula/doprava-config.js`. Packeta sa pri 18 kg neponúka. Pri 18 kg platí tabuľka (DPD predvolené, iba odberné miesta, + SPS kuriér). ✅ Potvrdené 21. 11.
     - `addresses`: `carrier` ∈ `packeta`/`dpd`/`sps`, `delivery_method` ∈ `packeta_point`/`dpd_pickup`/`sps_courier` (migrácia `p1b_carriers_dpd`).
     - Pôvodný formulár ostáva pri zatvorenom predaji bez zmeny; platobné polia sa odstránia v kroku 4.
 8. **Receptúra v checkoute:** server prijme akúkoľvek receptúru z `PRODUCTS`, rovnako ako dnešné UI (menej vhodné len označí). V snapshote sa ukladá `eligible`. Pre `/ucet` (P4) platí SPEC: iba vhodné.

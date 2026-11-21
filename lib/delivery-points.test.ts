@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test } from 'vitest';
-import { defaultMethodFor, fhbServiceFor, isMethodAllowed, methodsFor, shippingPrice } from './carriers';
+import { boxesAllowed, defaultMethodFor, fhbServiceFor, isMethodAllowed, methodsFor, shippingPrice } from './carriers';
 import { _resetPointsCache, findPoint, fold, getPoints, normalizePoints, searchPoints, type DeliveryPoint } from './delivery-points';
 import { MOCK_POINTS } from './delivery-points.mock';
 import { _resetFhbTokenCache, FhbClient } from './fhb/client';
@@ -16,6 +16,12 @@ describe('dopravcovia podľa balenia (doprava-config.js)', () => {
     expect(defaultMethodFor('18')).toBe('dpd_pickup');
     expect(isMethodAllowed('packeta_point', '18')).toBe(false);
     expect(isMethodAllowed('sps_parcelshop', '9')).toBe(false);
+  });
+  test('boxy: pri 18 kg do DPD iba odberné miesta, pri 4 a 9 kg aj boxy', () => {
+    expect(boxesAllowed('dpd_pickup', '18')).toBe(false);
+    expect(boxesAllowed('dpd_pickup', '9')).toBe(true);
+    expect(boxesAllowed('dpd_pickup', '4')).toBe(true);
+    expect(boxesAllowed('packeta_point', '4')).toBe(true);
   });
   test('cena dopravy: zatiaľ všade PARAMS.shipping', () => {
     for (const bag of ['4', '9', '18'] as const) for (const m of methodsFor(bag)) expect(shippingPrice(m, bag, 4.9)).toBe(4.9);
@@ -50,6 +56,8 @@ describe('výdajné miesta (FHB)', () => {
     expect(searchPoints(p, '982 01').map((x) => x.id)).toEqual(['SK21286']);
     expect(searchPoints(p, 'kosice trolejbusova').map((x) => x.id)).toEqual(['33711']);
     expect(searchPoints(p, 'b')).toEqual([]);
+    expect(searchPoints(p, 'bratislava').map((x) => x.id)).toEqual(['SK23096']);
+    expect(searchPoints(p, 'bratislava', 40, { boxes: false })).toEqual([]);
     expect(fold('  Žilina  Vlčince ')).toBe('zilina vlcince');
   });
   test('limit 40 výsledkov', () => {

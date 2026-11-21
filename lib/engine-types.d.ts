@@ -48,6 +48,8 @@ declare module '*/public/granula/doprava-config.js' {
     methodsFor(bagId: string): string[];
     defaultFor(bagId: string): string;
     allowed(method: string, bagId: string): boolean;
+    BOXES: Record<string, Record<string, boolean>>;
+    boxes(method: string, bagId: string): boolean;
     price(method: string, bagId: string, fallback: number): number;
   };
   export default config;

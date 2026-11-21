@@ -12,6 +12,7 @@
   var PACKETA_JS = "https://widget.packeta.com/v6/www/js/library.js";
   var DPD_ORIGIN = "https://pickup-maps.dpd.sk";
   var DPD_URL = DPD_ORIGIN + "/widget/?lang=sk&countries=SK&enabledCountries=SK&hideCloseButton=true";
+  function dpdUrl() { return DPD_URL + (C().boxes("dpd_pickup", bag) ? "" : "&disableLockers=true"); } // 18 kg: bez boxov
   var SERVICE_OF = { packeta_point: "packeta", dpd_pickup: "dpd" };
   var C = function () { return window.GranulaCarriers; };
 
@@ -159,7 +160,7 @@
     dlg.querySelectorAll(".dp-tabs button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === v)); });
     if (v === "map") {
       var fr = dlg.querySelector(".dp-frame");
-      if (!fr.getAttribute("src")) fr.setAttribute("src", DPD_URL);
+      if (fr.getAttribute("src") !== dpdUrl()) fr.setAttribute("src", dpdUrl());
     } else {
       var q = $("dp-q");
       if (!q.value) q.value = (chosen[svc === "dpd" ? "dpd_pickup" : "packeta_point"] || {}).city || ($("city") && $("city").value) || "";
@@ -170,7 +171,8 @@
   }
   function openDialog(service, btn, listOnly) {
     if (!dlg) buildDialog();
-    if (svc !== service) { results = []; lastQ = ""; $("dp-list").innerHTML = ""; $("dp-q").value = ""; }
+    if (svc !== service || dlg.getAttribute("data-bag") !== bag) { results = []; lastQ = ""; $("dp-list").innerHTML = ""; }
+    dlg.setAttribute("data-bag", bag);
     svc = service;
     opener = btn;
     dlg.setAttribute("data-svc", service);
@@ -191,7 +193,8 @@
     lastQ = q;
     var my = ++reqId;
     status("Hľadám…");
-    fetch("/api/delivery-points?service=" + svc + "&q=" + encodeURIComponent(q))
+    var m = svc === "dpd" ? "dpd_pickup" : "packeta_point";
+    fetch("/api/delivery-points?service=" + svc + "&q=" + encodeURIComponent(q) + (C().boxes(m, bag) ? "" : "&boxes=0"))
       .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || "chyba"); return j; }); })
       .then(function (j) {
         if (my !== reqId) return;
@@ -237,6 +240,7 @@
     else if (M.pickup) {
       point = chosen[m];
       if (!point) mark(form.querySelector('.dl-pick[data-for="' + m + '"] [data-pick]'), "Vyber výdajné miesto.");
+      else if (point.kind === "box" && !C().boxes(m, bag)) mark(form.querySelector('.dl-pick[data-for="' + m + '"] [data-pick]'), "Pri balení " + bag + " kg vyber odberné miesto, nie box.");
     } else {
       var st = $("street").value.trim(), zip = $("zip").value.replace(/\s/g, ""), city = $("city").value.trim();
       if (!st) mark($("street"), "Doplň adresu doručenia.");
@@ -266,7 +270,7 @@
       $("phone-f").hidden = false;
       var saved = cfg.saved;
       if (saved && C().METHODS[saved.method]) {
-        if (saved.point && C().METHODS[saved.method].pickup) chosen[saved.method] = saved.point;
+        if (saved.point && C().METHODS[saved.method].pickup && (saved.point.kind !== "box" || C().boxes(saved.method, bag))) chosen[saved.method] = saved.point;
         if (saved.phone && !$("phone").value) $("phone").value = fmtPhone(saved.phone);
       }
       renderOptions();
@@ -278,6 +282,8 @@
       b = String(b);
       if (!active || b === bag) return;
       bag = b;
+      // vybraný box pri balení, kde boxy nie sú povolené (18 kg do DPD), zrušiť
+      Object.keys(chosen).forEach(function (m) { if (chosen[m] && chosen[m].kind === "box" && !C().boxes(m, bag)) chosen[m] = null; });
       renderOptions();
     },
     method: function () { return active ? method() : ""; },

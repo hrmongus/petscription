@@ -199,10 +199,13 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
   - DPD zoznam (PSČ 010 01), Esc z vyhľadávacieho poľa zavrie okno a vráti fokus,
   - Packeta bez kľúča → zoznam → výber → `delivery` s `point.id` = číslo Packety.
 
+### Rozhodnutia používateľa (21. 11.)
+- **18 kg:** DPD (predvolené) + SPS kuriér, Packeta nie.
+- **18 kg do DPD:** iba odberné miesta, bez boxov (`BOXES`). V prehliadači overené: mapa pri 18 kg 0 boxov z 200 miest, pri 9 kg 70 boxov zo 100.
+- **Kód DPD:** zatiaľ `dpd_sk` (jedno nastavenie), používateľ potvrdí s FHB.
+
 ### Otvorené otázky
-1. **18 kg:** riadim sa tabuľkou (DPD predvolené + SPS kuriér), nie skoršou vetou „iba SPS kuriér“. Sedí?
-2. **18 kg do DPD boxov** (limit veľkosti a 2 balíky) a **`dpd_sk` vs `dpd_eu_pudo`** → doplniť do emailu pre FHB.
-3. **`PACKETA_API_KEY`** (používateľ zisťuje u FHB) a kód SPS kuriéra od FHB.
+1. **`PACKETA_API_KEY`** (používateľ zisťuje u FHB), kód SPS kuriéra a potvrdenie `dpd_sk` od FHB.
 
 ### Nasadenie na main / granula.sk (21. 11.)
 - **Nasadenie:** `main` fast-forward na `f507e98`, Vercel nasadil za ~40 s.
