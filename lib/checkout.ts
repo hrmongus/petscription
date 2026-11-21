@@ -163,6 +163,8 @@ export function sessionParams(p: PreparedCheckout, ids: DraftIds, opts: { origin
     ui_mode: 'embedded_page' as const,
     customer: opts.stripeCustomerId,
     locale: 'sk' as const,
+    // iba EUR (SPEC P1): Adaptive Pricing je na účte zapnuté a zahraničnej IP ponúkne USD s poplatkom 4 %
+    adaptive_pricing: { enabled: false },
     return_url: `${opts.origin}/granule-na-mieru?session_id={CHECKOUT_SESSION_ID}#hotovo`,
     metadata,
   };

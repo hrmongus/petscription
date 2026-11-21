@@ -51,7 +51,7 @@ describe('Checkout Session', () => {
   test('predplatné: interval day × D, doprava ako druhá opakovaná položka, EUR, embedded, metadata app=granula', async () => {
     const p = await prepareCheckout(IN, { findPoint: find });
     const s = sessionParams(p, ids, opts);
-    expect(s).toMatchObject({ mode: 'subscription', ui_mode: 'embedded_page', customer: 'cus_1', return_url: 'https://granula.sk/granule-na-mieru?session_id={CHECKOUT_SESSION_ID}#hotovo' });
+    expect(s).toMatchObject({ mode: 'subscription', ui_mode: 'embedded_page', customer: 'cus_1', adaptive_pricing: { enabled: false }, return_url: 'https://granula.sk/granule-na-mieru?session_id={CHECKOUT_SESSION_ID}#hotovo' });
     const rec = { interval: 'day', interval_count: p.quote.daysPerBag };
     expect(s.line_items).toEqual([
       { quantity: 1, price_data: { currency: 'eur', product: `granula-GRAN-${p.quote.productId}-9`, unit_amount: 6750, recurring: rec } },
