@@ -9,6 +9,8 @@ Stav: 21. 11. 2026. Tento súbor je zdroj pravdy; každé rozhodnutie počas pr�
 ## 0. Pravidlá (platia pre všetky projekty)
 
 - **Iba test mode** (Stripe test kľúče, FHB sandbox), kým nie je celý tok otestovaný end-to-end.
+- **Testuje sa priamo na produkcii** (main / granula.sk, zatiaľ bez zákazníkov): Production env má test kľúče (Stripe test, FHB api-stage). Kód **nikdy nepredpokladá production = live**; test/live určuje iba kľúč (`lib/env-mode.ts`).
+- **Prepínač predaja:** `CHECKOUT_ENABLED=true` → doručenie a platba pre všetkých; inak dotazník ako dnes (predregistrácia) a doručenie + platba iba s tajným `?test=<CHECKOUT_TEST_TOKEN>`. Kontroluje sa v UI aj na každom serverovom endpointe checkoutu (`lib/checkout-gate.ts`).
 - **Kľúče iba v env** (`.env.local`, Vercel Environment Variables). Nikdy v repe. Repo prepnúť na **privátne** (obsahuje aj referenčný kód FanpageKit v `reference/`).
 - **Cena, dávka, D a dátumy sa počítajú iba na serveri** cez `engine.js` s predvolenými `PARAMS`. Nič z prehliadača (vrátane `localStorage` `granula-engine-params`) sa neprevezme.
 - **Objednávka sa vytvára iba z overeného Stripe webhooku**, nie z návratovej URL.
@@ -231,6 +233,7 @@ Marketing ostáva v Klaviyo (iba udalosti: objednávka, zrušenie).
 
 ## P6 — Spustenie
 
+0. **Premazať testovacie dáta** (Supabase objednávky/zákazníci/predplatné z testov na granula.sk, Stripe test objekty, FHB sandbox) a **prepnúť Production env na live kľúče** (Stripe live, FHB produkcia); potom `CHECKOUT_ENABLED=true`.
 1. End-to-end v test mode + FHB sandbox (Stripe test clocks): prvá objednávka → FHB → odoslanie → doručenie → obnovenie; posun; preskočenie; zmena váhy; zlyhaná karta; storno v `pending`; odstúpenie; vrátená zásielka; refund.
 2. Potvrdiť FHB úspešný test (kontrola v ich testovacom portáli) → produkčné kľúče FHB.
 3. Stripe live: aktivovaný účet Spark Link s. r. o., statement descriptor, live webhook endpoint + secret, Billing nastavenia.
@@ -273,6 +276,8 @@ RESEND_API_KEY=
 EMAIL_FROM=
 EMAIL_REPLY_TO=
 CRON_SECRET=
+CHECKOUT_ENABLED=
+CHECKOUT_TEST_TOKEN=
 ```
 
 ---
@@ -299,5 +304,6 @@ Každá položka čaká na potvrdenie, kým nie je označená ✅.
 5. **Engine:** nový parameter `PARAMS.shipDays = 3` (SHIP_DAYS). `bags[].nextDay = max(1, D − LEAD + SHIP_DAYS)` = deň **od doručenia** vreca, keď príde ďalšie (platba ide v deň D − LEAD). Text v súhrne objednávky: „Ďalšie vrece pošleme tak, aby prišlo asi 4 dni predtým, ako sa minie“ (LEAD − SHIP_DAYS), predtým „pošleme 3 dni predtým“.
 6. **Routing:** pravidlá vo `lib/site-routes.ts` (next.config.ts). Koncovú lomku Next pri pravidlách ignoruje, preto `/blog` → `/blog/`, `/admin-blog` → `/admin-blog/` a 404 pre `/stranka/` rieši `proxy.ts`. `experimental.caseSensitiveRoutes` (ako Vercel). Navyše hlavička `X-Robots-Tag: noindex` pre `/admin-vypocet`, `/admin-blog/*`, `/blog/nahlad/*`.
 7. **`public/granula/README.md`** (interná dokumentácia webu) ostal v `public/` a je verejne dostupný na `/README.md` ⚠️ presunúť mimo `public/`?
+9. **Testovanie na produkcii + prepínač predaja** (zadanie od používateľa, 21. 11.): `CHECKOUT_ENABLED` + `?test=<CHECKOUT_TEST_TOKEN>`, `GET /api/checkout/status`, token sa z URL odstráni a drží v `sessionStorage` záložky, na server ide v hlavičke `X-Checkout-Test`. Výklad: `CHECKOUT_ENABLED=true` otvorí predaj pre všetkých (spustenie), token slúži na testovanie pred spustením.
 8. **Receptúra v checkoute:** server prijme akúkoľvek receptúru z `PRODUCTS`, rovnako ako dnešné UI (menej vhodné len označí). V snapshote sa ukladá `eligible`. Pre `/ucet` (P4) platí SPEC: iba vhodné.
 

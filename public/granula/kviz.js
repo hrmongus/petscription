@@ -393,7 +393,31 @@
 
   /* ---------------- objednávka ---------------- */
   // Objednávky sa otvoria, keď bude napojená platobná brána (Stripe) — dovtedy tlačidlo len informuje o štarte.
+  // Predaj zapína server (lib/checkout-gate.ts): CHECKOUT_ENABLED alebo tajný ?test=<token>. Bez toho ostáva
+  // dotazník ako doteraz (predregistrácia). Token sa z URL hneď odstráni a drží sa len v tejto záložke.
   var CHECKOUT_OPEN = false;
+  var TEST_KEY = "granula-checkout-test";
+  var testToken = (function () {
+    try {
+      var q = new URLSearchParams(location.search), t = q.get("test");
+      if (t) {
+        sessionStorage.setItem(TEST_KEY, t);
+        q.delete("test");
+        history.replaceState(null, "", location.pathname + (q.toString() ? "?" + q.toString() : "") + location.hash);
+      }
+      return sessionStorage.getItem(TEST_KEY) || "";
+    } catch (e) { return ""; }
+  })();
+  if (window.fetch) {
+    fetch("/api/checkout/status", { cache: "no-store", headers: testToken ? { "X-Checkout-Test": testToken } : {} })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (s) {
+        if (!s || !s.open) return;
+        CHECKOUT_OPEN = true;
+        if (current === "objednavka") renderOrder();
+      })
+      .catch(function () {});
+  }
   function days(n) { return n + " " + plural(n, "deň", "dni", "dní"); }
   function renderOrder() {
     var r = result(), p = r.product, x = bagOf(r), plans = r.params.plans;

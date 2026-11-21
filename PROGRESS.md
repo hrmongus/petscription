@@ -11,6 +11,9 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 | 5. FHB stavy a emaily | — |
 | 6. Test celého toku | — |
 
+## Pred spustením predaja
+- [ ] **Premazať testovacie dáta** (Supabase: zákazníci, psy, adresy, predplatné, objednávky, eventy z testov na granula.sk; Stripe test objekty; FHB sandbox) a **prepnúť Production env na live kľúče** (Stripe live + live webhook secret, FHB produkcia `https://api.fhb.sk/v3`). Až potom `CHECKOUT_ENABLED=true`.
+
 ---
 
 ## Krok 1: Základ (21. 11. 2026)
@@ -63,6 +66,16 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 4. **Vercel preview:** framework je nastavený iba cez `vercel.json`. Ak preview zlyhá (napr. projekt má v dashboarde prepísaný Output Directory alebo Build Command), pošli mi build log. Riešenie bez zásahu do dashboardu a produkcie je doplniť do `vercel.json` `"buildCommand": "next build"` a `"outputDirectory": ".next"`.
 5. **SKU:** id receptúr z engine sú dlhé (`GRAN-hovadzie-morka-jahna-9`, 27 znakov). Limit dĺžky FHB `product.id` overím v kroku 2 z OpenAPI.
 6. **DPH** (krok 4) ostáva otvorená podľa zadania.
+
+### Doplnok ku kroku 1: testovanie na produkcii
+- Testuje sa na main / granula.sk. Production env bude mať zatiaľ test kľúče (Stripe test, FHB api-stage). Kód test/live určuje iba z kľúča (`lib/env-mode.ts`: `stripeMode`, `fhbMode`), nikdy z `NODE_ENV` / `VERCEL_ENV`.
+- **Prepínač** (`lib/checkout-gate.ts`, `GET /api/checkout/status`):
+  - `CHECKOUT_ENABLED=true` otvorí doručenie a platbu všetkým,
+  - inak sa otvorí iba s `?test=<CHECKOUT_TEST_TOKEN>` (min. 16 znakov, porovnanie v konštantnom čase).
+- **`kviz.js`:** token z URL hneď odstráni (nedostane sa do analytiky ani zdieľaných odkazov), drží ho v `sessionStorage` záložky a posiela v hlavičke `X-Checkout-Test`. Bez otvoreného predaja je dotazník ako dnes („Objednávky od 1. 12.“, oznam o predregistrácii).
+- **Overené v prehliadači:** bez tokenu a so zlým tokenom „Objednávky od 1. 12.“, so správnym „Zaplatiť 72,40 €“ a token zmizne z URL. 21 testov ✅.
+- **Vercel env (Production aj Preview):** nastav `CHECKOUT_TEST_TOKEN` (napr. `openssl rand -hex 24`) a `CHECKOUT_ENABLED=false`.
+- **Otázka:** platí výklad, že `CHECKOUT_ENABLED=true` = spustenie predaja pre všetkých a token = testovanie pred spustením? (SPEC §10.9)
 
 ### Ostáva (ďalšie kroky)
 - Krok 2: FHB klient (`lib/fhb/`, OpenAPI typy, `buildFhbOrder`, sync a smoke skripty na mockoch).

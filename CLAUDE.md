@@ -4,7 +4,8 @@
 
 ## Pravidlá (SPEC §0)
 
-- **Iba test mode** (Stripe test kľúče, FHB sandbox), kým nie je celý tok otestovaný end-to-end.
+- **Iba test mode** (Stripe test kľúče, FHB sandbox), kým nie je celý tok otestovaný end-to-end. Testuje sa priamo na produkcii (granula.sk) s test kľúčmi: **nikdy nepredpokladaj production = live**, režim určuje iba kľúč (`lib/env-mode.ts`).
+- **Prepínač predaja** (`lib/checkout-gate.ts`): bez `CHECKOUT_ENABLED=true` alebo `?test=<CHECKOUT_TEST_TOKEN>` je dotazník ako dnes (predregistrácia). Každý serverový endpoint checkoutu musí volať `gateFromRequest`.
 - **Kľúče iba v env** (`.env.local`, Vercel Environment Variables), nikdy v repe. Zoznam premenných: `.env.example`.
 - **Cena, dávka, D a dátumy sa počítajú iba na serveri** cez `lib/engine-server.ts` (engine.js s predvolenými `PARAMS`). Nič z prehliadača (ani `localStorage` `granula-engine-params`) sa neprevezme.
 - **Objednávka vzniká iba z overeného Stripe webhooku**, nie z návratovej URL.
