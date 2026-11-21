@@ -50,13 +50,7 @@
 @media (max-width:960px){.signup .wrap{grid-template-columns:minmax(0,1fr);gap:32px}}
 
 /* ---------- čísla ---------- */
-.stats,.faq{overflow-x:clip}
-.stats .wrap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
-.stat{padding:26px 24px;display:flex;flex-direction:column;gap:16px;align-items:flex-start}
-.stat + .stat{border-left:2px solid var(--n)}
 /* čísla ako veľký text (najviac tri nálepky na plochu) */
-.stat .v{font-size:clamp(26px,2.4vw,36px);color:var(--k)}
-.stat span:last-child{font-size:14px;font-weight:700;line-height:1.4;max-width:220px}
 
 .rw .wrap{margin-bottom:32px}
 
@@ -127,9 +121,6 @@
 /* ---------- menšie obrazovky ---------- */
 @media (max-width:960px){
   .longevity .wrap,.faq .wrap,.final .wrap{grid-template-columns:minmax(0,1fr)}
-      .stats .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .stat:nth-child(3){border-left:0}
-  .stat:nth-child(n+3){border-top:2px solid var(--n)}
   .lg-panel{padding:28px 24px 32px}
   .steps{grid-template-columns:minmax(0,1fr)}
   .step + .step{border-left:0;border-top:2px solid var(--n)}
@@ -138,8 +129,6 @@
   .final .sticker{left:-8px}
 }
 @media (max-width:640px){
-        .stat{padding:28px 14px}
-  .stat .v{font-size:28px}
 }
 </style>
 </head>
@@ -229,16 +218,6 @@
         <ul class="pd-strip" id="pd-strip" aria-label="Psy našich zákazníkov"></ul>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- čísla -->
-<section class="stats bb">
-  <div class="wrap">
-    <div class="stat" data-reveal><span class="display v">Čerstvé mäso</span><span>konkrétny druh, žiadne „mäsové deriváty“</span></div>
-    <div class="stat" data-reveal style="--d:.06s"><span class="display v">0&nbsp;%</span><span>pšenice, kukurice a sóje</span></div>
-    <div class="stat" data-reveal style="--d:.12s"><span class="display v">na mieru</span><span>granule pre jedného konkrétneho psa</span></div>
-    <div class="stat" data-reveal style="--d:.18s"><span class="display v">na gramy</span><span>denná dávka, nie odhad z vreca</span></div>
   </div>
 </section>
 
