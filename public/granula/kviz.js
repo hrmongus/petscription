@@ -424,6 +424,7 @@
           // platba cez Stripe: pôvodné platobné polia (karta, prevod, peňaženky) skryť
           $("pay-legacy").hidden = true;
           $("pay-note").hidden = false;
+          $("pay-stripe").hidden = true;
         }
         if (current === "objednavka") renderOrder();
       })
@@ -461,12 +462,14 @@
     $("s-total").textContent = total == null ? "—" : eur(total);
     $("s-note").textContent = d ? "Potom " + eur(total) + " každých " + days(x.days) + ". Ďalšie vrece pošleme tak, aby prišlo asi " + days(r.params.reorderLeadDays - r.params.shipDays) + " predtým, ako sa minie." : "Platíš raz. Ďalšie vrece si objednáš, keď budeš chcieť.";
     $("s-fine").textContent = "Platbu bezpečne spracuje Stripe." + (d ? " Predplatné zrušíš jedným klikom v účte." : "");
+    // vlastný súhlas s opakovanou platbou (text Stripe pri karte je vypnutý, terms: never)
+    if (d && CHECKOUT_OPEN && total != null) $("s-fine").textContent = "Platbu bezpečne spracuje Stripe. Zaplatením súhlasíš, že ti každých " + days(x.days) + " strhneme z karty " + eur(total) + " za ďalšie vrece, kým predplatné nezrušíš. Zrušíš ho jedným klikom v účte.";
     var btn = $("s-submit");
     var newFlow = window.GranulaDelivery && GranulaDelivery.active();
     btn.disabled = !CHECKOUT_OPEN;
     btn.setAttribute("aria-disabled", String(!CHECKOUT_OPEN));
     btn.textContent = CHECKOUT_OPEN ? (total == null ? "Objednať" : "Zaplatiť " + eur(total)) : "Objednávky od 1. 12.";
-    if (newFlow && !paying) { btn.textContent = "Pokračovať k platbe"; btn.disabled = false; }
+    if (newFlow && !paying) { btn.textContent = pay && pay.ready ? payLabel() : "Pokračovať k platbe"; btn.disabled = false; }
     $("s-ann").hidden = CHECKOUT_OPEN;
     order.querySelectorAll(".wallet").forEach(function (w) { w.disabled = !CHECKOUT_OPEN; });
   }
@@ -499,7 +502,8 @@
       err.hidden = res.ok;
       if (!res.ok) { if (res.focus) res.focus.focus(); return; }
       state.delivery = res.delivery; save();
-      startPayment(res.delivery);
+      if (pay && pay.ready) confirmPayment();
+      else startPayment(res.delivery);
       return;
     }
     var need = ["email", "fname", "lname", "street", "zip", "city"];
@@ -520,14 +524,41 @@
     state.ordered = true; save();
     location.hash = "hotovo";
   }
-  /* ---------------- platba: POST /api/checkout → Stripe Embedded Checkout ---------------- */
-  var embedded = null, paying = false;
+  /* ---------------- platba: POST /api/checkout → vlastný formulár cez Stripe Elements ----------------
+     Checkout Session (ui_mode „elements“) sa vytvorí na serveri (cena, metadata), tu sa iba vykreslí: Express Checkout
+     Element (Apple Pay / Google Pay) a Payment Element (karta) v našom dizajne. Meno, e-mail a telefón máme z kroku
+     doručenia, krajina je pevne SK. Potvrdenie (aj 3D Secure) rieši checkout.loadActions().confirm(); po platbe
+     Stripe presmeruje na return_url (?session_id=…#hotovo), objednávku zakladá webhook. */
+  var STRIPE_FONT = "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap";
+  var APPEARANCE = {
+    theme: "flat",
+    labels: "above",
+    variables: {
+      fontFamily: "Montserrat, Arial, Helvetica, sans-serif", fontSizeBase: "15px", fontWeightNormal: "500",
+      colorText: "#000000", colorPrimary: "#0047BB", colorBackground: "#FFF7EE", colorDanger: "#B3261E",
+      colorTextPlaceholder: "#8A8178", borderRadius: "0px", spacingUnit: "4px", gridRowSpacing: "12px", gridColumnSpacing: "12px"
+    },
+    rules: {
+      ".Input": { border: "2px solid #000000", backgroundColor: "#FFF7EE", boxShadow: "none", padding: "13px 14px", fontWeight: "500" },
+      ".Input:focus": { border: "2px solid #0047BB", boxShadow: "0 0 0 2px #0047BB", outline: "none" },
+      ".Input--invalid": { border: "2px solid #B3261E", boxShadow: "none", color: "#000000" },
+      ".Label": { fontSize: "13px", fontWeight: "700", color: "#000000", marginBottom: "6px" },
+      ".Error": { color: "#B3261E", fontSize: "13px", fontWeight: "600" },
+      ".Tab": { border: "1.5px solid #CDBFB0", boxShadow: "none" },
+      ".Tab--selected": { border: "2px solid #0047BB", boxShadow: "none" }
+    }
+  };
+  var pay = null, paying = false; // pay = { checkout, express, element, ready, delivery }
   // zmena doručenia alebo plánu po pripravení platby: stará Checkout Session neplatí, treba ju pripraviť znova
   function resetPayment() {
-    if (!embedded) return;
-    try { embedded.destroy(); } catch (e) {}
-    embedded = null;
-    $("pay-embed").hidden = true;
+    if (!pay) return;
+    try { if (pay.express) pay.express.destroy(); } catch (e) {}
+    try { if (pay.element) pay.element.destroy(); } catch (e) {}
+    pay = null;
+    $("pay-stripe").hidden = true;
+    $("pay-or").hidden = true;
+    $("pay-element").setAttribute("aria-busy", "true");
+    $("pay-element").textContent = "Načítavam platobný formulár…";
     $("pay-note").hidden = false;
   }
   function loadStripeJs() {
@@ -535,17 +566,33 @@
     return new Promise(function (ok, fail) {
       var sc = document.createElement("script");
       sc.src = "https://js.stripe.com/dahlia/stripe.js";
-      sc.onload = ok; sc.onerror = function () { fail(new Error("Stripe sa nenačítal")); };
+      sc.onload = ok; sc.onerror = function () { fail(new Error("Platobný formulár sa nenačítal. Skús to prosím znova.")); };
       document.head.appendChild(sc);
     });
+  }
+  // fakturačné údaje z kroku doručenia (krajina vždy SK; adresa iba pri kuriérovi, pri výdajnom mieste ju nemáme)
+  function billingOf(d) {
+    var a = { country: "SK" };
+    if (d && d.address && d.address.street) { a.line1 = d.address.street; a.city = d.address.city; a.postal_code = String(d.address.zip || "").replace(/\s+/g, ""); }
+    return { name: (d && d.name) || "", address: a };
+  }
+  function payError(msg) {
+    var err = order.querySelector('[data-err="objednavka"]');
+    err.textContent = msg || "Platba neprešla. Skús to prosím znova alebo inou kartou.";
+    err.hidden = false;
+  }
+  function payLabel() {
+    var t = $("s-total").textContent;
+    return t && t !== "—" ? "Zaplatiť " + t : "Zaplatiť";
   }
   function startPayment(delivery) {
     if (paying) return;
     paying = true;
-    var btn = $("s-submit"), err = order.querySelector('[data-err="objednavka"]'), box = $("pay-embed");
+    var btn = $("s-submit");
     btn.disabled = true;
     btn.textContent = "Pripravujem platbu…";
-    if (embedded) { try { embedded.destroy(); } catch (e) {} embedded = null; }
+    order.querySelector('[data-err="objednavka"]').hidden = true;
+    resetPayment();
     var answers = {};
     ANSWERS.forEach(function (k) { if (k !== "bag" && k !== "bagKey" && k !== "plan") answers[k] = state[k]; });
     var headers = { "Content-Type": "application/json" };
@@ -554,24 +601,84 @@
       .then(function (r) { return r.json().then(function (j) { if (!r.ok) { var e = new Error(j.error || "Platbu sa nepodarilo pripraviť."); e.field = j.field; throw e; } return j; }); })
       .then(function (j) {
         return loadStripeJs().then(function () {
-          var stripe = window.Stripe(j.publishableKey);
-          var create = stripe.createEmbeddedCheckoutPage ? stripe.createEmbeddedCheckoutPage.bind(stripe) : stripe.initEmbeddedCheckout.bind(stripe);
-          return create({ fetchClientSecret: function () { return Promise.resolve(j.clientSecret); } });
+          var stripe = window.Stripe(j.publishableKey, { locale: "sk" });
+          var checkoutSdk = stripe.initCheckoutElementsSdk({
+            clientSecret: j.clientSecret,
+            elementsOptions: { appearance: APPEARANCE, fonts: [{ cssSrc: STRIPE_FONT }] }
+          });
+          var p = { checkout: checkoutSdk, delivery: delivery, ready: false };
+          pay = p;
+          $("pay-note").hidden = true;
+          $("pay-stripe").hidden = false;
+          $("pay-express").hidden = true; // ukáže sa, až keď Stripe potvrdí dostupnú peňaženku
+          // Apple Pay / Google Pay: iba ak ich prehliadač ponúka; Link, PayPal, Klarna… nie
+          p.express = checkoutSdk.createExpressCheckoutElement({
+            buttonHeight: 48,
+            buttonTheme: { applePay: "black", googlePay: "black" },
+            layout: { maxColumns: 2, maxRows: 1, overflow: "never" },
+            paymentMethods: { applePay: "auto", googlePay: "auto", link: "never", paypal: "never", amazonPay: "never", klarna: "never" }
+          });
+          p.express.on("ready", function (ev) {
+            var any = ev && ev.availablePaymentMethods && Object.keys(ev.availablePaymentMethods).some(function (k) { return ev.availablePaymentMethods[k]; });
+            $("pay-express").hidden = !any;
+            $("pay-or").hidden = !any;
+          });
+          p.express.on("confirm", function () {
+            checkoutSdk.loadActions().then(function (r) {
+              if (r.type !== "success") throw new Error("Platbu sa nepodarilo dokončiť.");
+              return r.actions.confirm();
+            }).then(function (res) { if (res && res.type === "error") payError(res.error && res.error.message); })
+              .catch(function (e) { payError(e.message); });
+          });
+          p.express.mount("#pay-express");
+          // karta: bez mena, e-mailu, telefónu a adresy (máme ich), bez textov Stripe (mandát, Link)
+          p.element = checkoutSdk.createPaymentElement({
+            layout: "tabs",
+            fields: { billingDetails: { name: "never", email: "never", phone: "never", address: "never" } },
+            terms: { card: "never" },
+            wallets: { applePay: "never", googlePay: "never", link: "never" }
+          });
+          var box = $("pay-element");
+          box.textContent = "";
+          p.element.on("ready", function () {
+            box.removeAttribute("aria-busy");
+            p.ready = true;
+            btn.disabled = false;
+            btn.textContent = payLabel();
+          });
+          p.element.on("loaderror", function (ev) { payError((ev && ev.error && ev.error.message) || "Platobný formulár sa nenačítal."); });
+          p.element.mount(box);
+          $("pay-stripe").scrollIntoView({ behavior: "smooth", block: "start" });
         });
       })
-      .then(function (ec) {
-        embedded = ec;
-        box.hidden = false;
-        $("pay-note").hidden = true;
-        ec.mount(box);
-        box.scrollIntoView({ behavior: "smooth", block: "start" });
-        btn.textContent = "Zaplať v okne Stripe vyššie";
-      })
       .catch(function (e) {
-        err.textContent = e.message || "Platbu sa nepodarilo pripraviť. Skús to prosím znova.";
-        err.hidden = false;
+        payError(e.message || "Platbu sa nepodarilo pripraviť. Skús to prosím znova.");
         btn.disabled = false;
         btn.textContent = "Pokračovať k platbe";
+      })
+      .then(function () { paying = false; });
+  }
+  // „Zaplatiť“: potvrdenie karty (Stripe zobrazí 3D Secure, ak ho banka chce) → presmerovanie na Hotovo
+  function confirmPayment() {
+    if (!pay || !pay.ready || paying) return;
+    paying = true;
+    var btn = $("s-submit"), p = pay;
+    btn.disabled = true;
+    btn.textContent = "Spracúvam platbu…";
+    order.querySelector('[data-err="objednavka"]').hidden = true;
+    p.checkout.loadActions()
+      .then(function (r) {
+        if (r.type !== "success") throw new Error("Platbu sa nepodarilo dokončiť. Skús to prosím znova.");
+        return r.actions.confirm({ billingAddress: billingOf(p.delivery) });
+      })
+      .then(function (res) {
+        // úspech = presmerovanie na return_url; sem sa vráti iba chyba (zamietnutá karta, zrušené overenie…)
+        if (res && res.type === "error") throw new Error(res.error && res.error.message);
+      })
+      .catch(function (e) {
+        payError(e.message);
+        btn.disabled = false;
+        btn.textContent = payLabel();
       })
       .then(function () { paying = false; });
   }

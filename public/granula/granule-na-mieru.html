@@ -1013,9 +1013,17 @@
       </section>
       <section class="pay-sec" aria-labelledby="t-payment">
         <div class="ps-h"><span class="ps-n" aria-hidden="true">3</span><h2 id="t-payment">Platba</h2></div>
-        <!-- pri otvorenom predaji: Stripe Embedded Checkout (kviz.js); pôvodné platobné polia sa skryjú -->
+        <!-- pri otvorenom predaji: vlastný formulár cez Stripe Elements (kviz.js, Checkout Session ui_mode elements);
+             pôvodné ukážkové polia (#pay-legacy) sa skryjú, rozloženie ostáva: peňaženky, „alebo“, karta -->
         <p class="pay-note" id="pay-note" hidden>Kartou, Apple Pay alebo Google Pay zaplatíš bezpečne cez Stripe hneď po kliknutí na „Pokračovať k platbe“.</p>
-        <div class="pay-embed" id="pay-embed" hidden></div>
+        <div class="dc pay-stripe" id="pay-stripe" hidden>
+          <div class="pay-express" id="pay-express"></div>
+          <div class="pay-or" id="pay-or" hidden><span></span>alebo<span></span></div>
+          <div class="pm">
+            <div class="pm-h">Karta</div>
+            <div class="pay-element" id="pay-element" aria-busy="true">Načítavam platobný formulár…</div>
+          </div>
+        </div>
         <div class="dc" id="pay-legacy">
         <div class="wallets">
           <button type="button" class="wallet" data-wallet="apple">Apple Pay</button>

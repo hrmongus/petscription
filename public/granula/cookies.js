@@ -1,4 +1,4 @@
-/* Granula — jednoduchá cookie lišta. Klaviyo (marketing) sa načíta až po súhlase.
+/* Granula — jednoduchá cookie lišta. Klaviyo (marketing) sa načíta až po súhlase. Vyskakovacie formuláre Klaviyo sa skryjú (hidePopups).
    Značka Klaviyo je v HTML ako type="text/plain" (overenie v Klaviyo ju nájde, prehliadač ju nespustí).
    Voľba sa pamätá v localStorage („granula-cookies“: "all" alebo "necessary").
    Lištu znova otvorí akýkoľvek odkaz s atribútom data-cookie-settings. */
@@ -76,7 +76,7 @@
       var alt = document.createElement("div");
       alt.className = "kl-alt";
       alt.innerHTML = "<p><b>Zapíš sa vopred</b> a prvé vrecko dostaneš o 30&nbsp;% lacnejšie. Rezervácia je nezáväzná.</p>" +
-        '<button type="button" class="btn btn-o btn-sm" data-klaviyo-open="YcSYzw">Chcem byť prvý →</button>';
+        '<p>Formulár sa tu nezobrazil. Napíš nám na <a href="mailto:podpora@granula.sk">podpora@granula.sk</a> a zapíšeme ťa.</p>';
       w.appendChild(alt);
       // formulár sa vykreslil neskôr: náhradu odstránime
       if ("MutationObserver" in window) new MutationObserver(function (m, o) {
@@ -88,9 +88,39 @@
   document.addEventListener("click", function (e) {
     if (e.target.closest("[data-cookie-settings]")) { e.preventDefault(); show(); return; }
     var o = e.target.closest("[data-klaviyo-open]");
-    if (o) { var id = o.getAttribute("data-klaviyo-open"); withKlaviyo(function () { window._klOnsite = window._klOnsite || []; window._klOnsite.push(["openForm", id]); }); return; }
+    // vyskakovacie okná Klaviyo sa nepoužívajú: tlačidlá „Chcem byť prvý“ vedú na formulár v sekcii úvodnej stránky
+    if (o) {
+      e.preventDefault();
+      var sec = document.getElementById("zapis");
+      if (sec) { sec.scrollIntoView({ behavior: "smooth", block: "start" }); if (history.replaceState) history.replaceState(null, "", "#zapis"); }
+      else location.href = "/#zapis";
+      return;
+    }
     if (e.target.closest("[data-klaviyo-consent]")) { set("all"); if (bar) bar.hidden = true; loadKlaviyo(); paintEmbeds(); }
   });
+
+  // Klaviyo podľa svojho nastavenia sám otvára pop-up („Email Popup“, YcSYzw) a flyout formuláre. Na webe ich
+  // nechceme (23. 11. 2026): keď ich Klaviyo vloží do stránky, hneď ich skryjeme. Formulár v sekcii (.kl-embed) ostáva.
+  function hidePopups() {
+    [].forEach.call(document.querySelectorAll('[role="dialog"][aria-label*="POPUP"], [role="dialog"][aria-label*="FLYOUT"], [role="dialog"][aria-label*="FULLSCREEN"], form[data-testid="klaviyo-form-YcSYzw"]'), function (el) {
+      if (el.closest(".kl-embed")) return;
+      var top = el;
+      while (top.parentElement && top.parentElement !== document.body) top = top.parentElement;
+      if (top === el.ownerDocument.body || top.querySelector(".kl-embed")) return;
+      top.style.setProperty("display", "none", "important");
+      top.setAttribute("aria-hidden", "true");
+      popupHidden = true;
+    });
+    // Klaviyo pri pop-upe zamkne scrollovanie (trieda na body): pop-up je skrytý, tak ho odomkneme
+    if (popupHidden && document.body && document.body.classList.contains("klaviyo-prevent-body-scrolling")) document.body.classList.remove("klaviyo-prevent-body-scrolling");
+  }
+  var popupHidden = false;
+  var queued = false;
+  if ("MutationObserver" in window) new MutationObserver(function () {
+    if (queued) return;
+    queued = true;
+    (window.requestAnimationFrame || setTimeout)(function () { queued = false; hidePopups(); });
+  }).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["class"] });
 
   var v = get();
   paintEmbeds();

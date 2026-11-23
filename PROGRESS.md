@@ -31,6 +31,8 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 - [x] ~~Email „pripomienka pred platbou“~~ ✅ 23. 11. (cron `reminders`, SPEC §10.16). Zvyšné emaily (potvrdenie odstúpenia, zrušenia/pauzy) prídu s P4.
 - [x] ~~Testovacie predplatné s vymyslenými adresami~~ ✅ 23. 11. zrušené v Stripe (`sub_1UeHWx1U0mpiDjfiMvP0cCBy`, `sub_1UeGw51U0mpiDjfi5tuDsQ46`, `sub_1UeHhE1U0mpiDjfig8W2mdsa`); ponechané predplatné používateľa `sub_1UeopL1U0mpiDjfiLAMcK46W` (test pripomienky 23. 12. a obnovenia 26. 12.). Odteraz `e2e-checkout` predplatné na konci testu sám zruší (ponechať iba s `--keep-subscription`), test clock skripty ho rušia zmazaním clocku, predvolená adresa je `delivered+…@resend.dev`.
 - [ ] Opýtať sa FHB na formát notifikácií objednávok (route prijme čokoľvek a loguje do `fhb_events`; po prvej skutočnej notifikácii pozrieť payload).
+- [ ] **Klaviyo:** v oboch formulároch („Email Popup“ YcSYzw aj „Rezervacia“ RuSXNc v sekcii úvodnej stránky) je text „Granulu spúšťame 20. novembra“ → opraviť v Klaviyo; pop-up YcSYzw v Klaviyo vypnúť (na webe je už skrytý kódom).
+- [ ] **Stripe live:** zaregistrovať doménu `www.granula.sk` aj v live režime (Settings → Payment method domains), inak sa Apple Pay nezobrazí.
 - [ ] Stripe účet vedený na Spark Link, s. r. o.
 - [ ] Zmazať staré branche (Carbone Company)
 - [ ] Záverečná bezpečnostná kontrola: kľúče v histórii gitu, webhooky (podpis, idempotencia), RLS
@@ -382,3 +384,20 @@ Spustené automaticky v noci („do as much as possible“). Opakovateľné skri
 - **FHB sandbox:** založená príjemka `TEST-SANDBOX-2026-11-23` (30 × `GRAN-morka-hus-kacica-9`, 15 × `-4`), stav `created`. Treba ju prijať v portáli (Stock receipts) alebo cez FHB; potom FHB začne testovacie objednávky (14 v stave pending kvôli chýbajúcemu tovaru) spracúvať → skutočné `sent` / `delivered`, notifikácie a ich formát (`fhb_events` `notify.*`).
 - **Portál FHB:** dokumentácia uvádza iba produkčný portál `zoe2.fhb.sk`. Portál, v ktorom používateľ vidí objednávky `GR-…`, je napojený na sandbox (objednávky sme posielali iba na `api-stage`). Presnú adresu testovacieho a ostrého portálu potvrdiť s FHB.
 - **Crony na Verceli overené (23. 11.):** `cron.fhb-rma` 05:37:30 UTC `ok: true` (0 vrátených); `cron.fhb-stock` 06:47:46 UTC `ok: true`, nízky sklad `GRAN-morka-hus-kacica-9` (sandbox 0 ks, spotreba 0,11 ks/deň) → `audit_log` `stock.low` + interné upozornenie na `ADMIN_EMAIL` (`email_log` `admin-stock-low:2026-11-23:…` `sent`). `fhb-orders` (18:17 UTC) a `reminders` (07:07 UTC) sa zapíšu do `fhb_events` pri najbližšom behu.
+
+---
+
+## Vlastný platobný formulár a Klaviyo pop-up (23. 11. 2026, po teste 1 používateľa)
+
+- **Platba:** Stripe Elements (Checkout Session `ui_mode: 'elements'`) v pôvodnom rozložení sekcie Platba (SPEC §10.17). Iba karta + Apple Pay / Google Pay, bez Link, slovenčina, krajina SK, bez mena/e-mailu/telefónu (máme z doručenia), bez textov Stripe o predplatnom (vlastný súhlas s opakovanou platbou pod tlačidlom). Server: iba `ui_mode`, `payment_method_types`, `wallet_options`. Doména `www.granula.sk` zaregistrovaná pre Apple/Google Pay (test mode).
+- **Klaviyo:** pop-up skrytý v `cookies.js`, scroll odomknutý, „Chcem byť prvý →“ → `#zapis` (SPEC §10.18).
+- **Testy (lokálne `next start` proti produkčnej DB, Stripe test, FHB sandbox; `scripts/e2e-checkout.ts`, `--mobile` = iPhone 13):**
+
+| Scenár | Počítač | Mobil |
+|---|---|---|
+| Predplatné, DPD, 4242 | ✅ #26 | ✅ #24 |
+| Jednorazovo, Packeta, 4242 | ✅ #23 | — |
+| 3D Secure 4000 0025 0000 3155 (predplatné) | ✅ #22 | ✅ #25 |
+| Zamietnutá karta 4000 0000 0000 0002 | ✅ chyba v našom formulári, tlačidlo znova aktívne, žiadna objednávka | ✅ |
+
+  Každá objednávka: `ui_mode elements`, iba karta, v DB aj vo FHB (`GR-…`), Hotovo s číslom objednávky; predplatné na D dní a na konci testu zrušené. Klaviyo: pop-up vložený, ale skrytý, formulár v sekcii vykreslený, scroll funguje.

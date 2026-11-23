@@ -65,8 +65,12 @@
 
 /* platba cez Stripe Embedded Checkout (kviz.js) */
 .pay-note{font-size:14px;line-height:1.5;margin:0}
-.pay-embed{min-height:120px;border:2px solid var(--n);background:#fff;padding:8px 0}
-.pay-embed[hidden],.pay-note[hidden],.done-order[hidden]{display:none}
-.pay-embed[aria-busy="true"]{display:flex;align-items:center;justify-content:center;font-weight:700;color:#5E5852}
+/* platba cez Stripe Elements (Payment Element + Express Checkout Element) v pôvodnom rozložení */
+.pay-stripe{display:flex;flex-direction:column;gap:16px}
+.pay-stripe[hidden],.pay-note[hidden],.done-order[hidden],.pay-or[hidden],.pay-express[hidden]{display:none}
+.pay-express{min-height:0}
+.pm-h{font-size:14px;font-weight:800;border:2px solid var(--k);padding:10px 12px;align-self:flex-start;min-width:50%}
+.pay-element{min-height:128px}
+.pay-element[aria-busy="true"]{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
 .done-order{font-weight:800;font-size:17px;margin:12px 0 0}
 .done-order a{color:inherit}
