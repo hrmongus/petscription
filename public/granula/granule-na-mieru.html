@@ -961,7 +961,7 @@
     <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
     <a class="pay-back" href="#vysledok">← Späť na výber</a>
   </div>
-  <h1 class="display pay-h q-title" tabindex="-1">Posledný krok. <span>Platba.</span></h1>
+  <h1 class="display pay-h q-title" tabindex="-1" id="order-h">Posledný krok. <span>Platba.</span></h1>
   <div class="pay-plans">
     <h2 class="pay-h2" id="t-plan">Ako chceš nakupovať?</h2>
     <div class="pp-opts" role="radiogroup" aria-labelledby="t-plan">
@@ -1012,19 +1012,9 @@
           <div class="ship-opts" id="ship-opts-new" role="radiogroup" aria-label="Spôsob doručenia"></div>
         </div>
       </section>
-      <section class="pay-sec" aria-labelledby="t-payment">
+      <section class="pay-sec" aria-labelledby="t-payment" id="pay-sec">
         <div class="ps-h"><span class="ps-n" aria-hidden="true">3</span><h2 id="t-payment">Platba</h2></div>
-        <!-- pri otvorenom predaji: vlastný formulár cez Stripe Elements (kviz.js, Checkout Session ui_mode elements);
-             pôvodné ukážkové polia (#pay-legacy) sa skryjú, rozloženie ostáva: peňaženky, „alebo“, karta -->
-        <p class="pay-note" id="pay-note" hidden>Kartou, Apple Pay alebo Google Pay zaplatíš bezpečne cez Stripe hneď po kliknutí na „Pokračovať k platbe“.</p>
-        <div class="dc pay-stripe" id="pay-stripe" hidden>
-          <div class="pay-express" id="pay-express"></div>
-          <div class="pay-or" id="pay-or" hidden><span></span>alebo<span></span></div>
-          <div class="pm">
-            <div class="pm-h">Karta</div>
-            <div class="pay-element" id="pay-element" aria-busy="true">Načítavam platobný formulár…</div>
-          </div>
-        </div>
+        <!-- pri otvorenom predaji sa celá sekcia skryje: platba je samostatná stránka #platba (kviz.js) -->
         <div class="dc" id="pay-legacy">
         <div class="wallets">
           <button type="button" class="wallet" data-wallet="apple">Apple Pay</button>
@@ -1048,6 +1038,7 @@
         </div>
       </section>
       <p class="err" role="alert" hidden data-err="objednavka">Doplň zvýraznené polia.</p>
+      <button type="submit" class="btn btn-o pay-cta pay-next" id="s-next" hidden>Pokračovať k platbe →</button>
     </div>
     <div class="pay-side">
       <div class="pay-sum">
@@ -1074,6 +1065,58 @@
     </div>
   </div>
 </form>
+
+<!-- ============ PLATBA (samostatná stránka pri otvorenom predaji; kviz.js, Stripe Elements) ============ -->
+<section class="screen pay" data-screen="platba" data-title="Platba — Granula" id="paypage">
+  <div class="pay-top">
+    <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
+    <a class="pay-back" href="#objednavka">← Späť na doručenie</a>
+  </div>
+  <h1 class="display pay-h q-title" tabindex="-1">Posledný krok. <span>Platba.</span></h1>
+  <div class="pay-grid">
+    <div class="pay-main">
+      <section class="pay-sec" aria-labelledby="t-recap">
+        <div class="ps-h"><span class="ps-n" aria-hidden="true">1</span><h2 id="t-recap">Kontakt a doručenie</h2><a class="pr-edit" href="#objednavka">Zmeniť</a></div>
+        <dl class="pr-recap">
+          <div><dt>Kontakt</dt><dd id="p-contact"></dd></div>
+          <div><dt>Doručenie</dt><dd id="p-ship"></dd></div>
+        </dl>
+      </section>
+      <section class="pay-sec pay-sec-last" aria-labelledby="t-pay2">
+        <div class="ps-h"><span class="ps-n" aria-hidden="true">2</span><h2 id="t-pay2">Platba</h2></div>
+        <div class="pay-stripe" id="pay-stripe">
+          <div class="pay-express" id="pay-express" hidden></div>
+          <div class="pay-or" id="pay-or" hidden><span></span>alebo<span></span></div>
+          <div class="pm">
+            <div class="pm-h">Karta</div>
+            <div class="pay-element" id="pay-element" aria-busy="true">Načítavam platobný formulár…</div>
+          </div>
+        </div>
+        <p class="err" role="alert" id="p-err" hidden></p>
+      </section>
+    </div>
+    <div class="pay-side">
+      <div class="pay-sum">
+        <div class="sum-prod">
+          <div class="sum-img"><img id="p-pack" src="" alt="" width="896" height="1200"></div>
+          <div class="sum-txt"><b id="p-name"></b><span id="p-meta"></span></div>
+        </div>
+        <div class="sum-lines">
+          <div><span id="p-bag-l"></span><span id="p-bag"></span></div>
+          <div class="disc" id="p-disc-row"><span id="p-disc-l"></span><span id="p-disc"></span></div>
+          <div><span>Doprava</span><span id="p-ship-price"></span></div>
+        </div>
+        <div class="sum-total"><div><span>Spolu dnes</span><b id="p-total"></b></div><p id="p-note"></p></div>
+      </div>
+      <div class="pay-act">
+        <button type="button" class="btn btn-o pay-cta" id="p-submit" disabled>Načítavam platbu…</button>
+        <p class="pay-fine" id="p-fine"></p>
+        <p class="pay-fine">Objednávkou súhlasíš s <a href="obchodne-podmienky.html" target="_blank">obchodnými podmienkami</a> a <a href="reklamacny-poriadok.html" target="_blank">reklamačným poriadkom</a> a berieš na vedomie <a href="ochrana-sukromia.html" target="_blank">zásady ochrany súkromia</a>.</p>
+        <p class="pay-fine">Potrebuješ pomôcť? <a href="podpora.html">podpora@granula.sk</a></p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ============ HOTOVO ============ -->
 <section class="screen full on-brand" data-screen="hotovo" data-title="Objednávka prijatá — Granula">

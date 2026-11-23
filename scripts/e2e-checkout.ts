@@ -116,10 +116,16 @@ async function main() {
     await shot('1-formular');
 
     // vlastný formulár: „Pokračovať k platbe“ → Payment Element (karta) a Express Checkout Element v sekcii Platba
-    await page.locator('#s-submit').click();
+    check(await page.locator('#pay-sec').isHidden(), 'sekcia Platba na stránke doručenia skrytá');
+    check(await page.locator('#s-next').isVisible(), 'tlačidlo „Pokračovať k platbe“ pod formulárom');
+    await page.locator(MOBILE ? '#s-next' : '#s-submit').click();
+    await page.waitForURL(/#platba$/, { timeout: 60_000 });
+    check(true, 'samostatná stránka #platba');
     const frame = page.frameLocator('#pay-element iframe').first();
     await frame.locator('input[name="number"]').waitFor({ timeout: 60_000 });
-    await page.waitForFunction(() => !(document.getElementById('s-submit') as HTMLButtonElement).disabled, null, { timeout: 30_000 });
+    await page.waitForFunction(() => !(document.getElementById('p-submit') as HTMLButtonElement).disabled, null, { timeout: 30_000 });
+    const recap = (await page.locator('.pr-recap').innerText()).replace(/\s+/g, ' ');
+    check(recap.includes(email) && recap.includes('+421'), `rekapitulácia kontaktu a doručenia („${recap.slice(0, 110)}“)`);
     check(!!sessionId, `Session ${sessionId}`);
     const session = await s.checkout.sessions.retrieve(sessionId!);
     console.log(`   Session: mode ${session.mode}, ui_mode ${session.ui_mode}, suma ${(session.amount_total ?? 0) / 100} €, D ${session.metadata?.days}, ${session.metadata?.method} | tlačidlo „${summary}“`);
@@ -133,7 +139,7 @@ async function main() {
     const stars = await page.evaluate(() => ['email', 'phone', 'fname', 'lname'].map((id) => getComputedStyle(document.getElementById(id)!.closest('label')!.querySelector('span')!, '::after').content));
     check(stars.every((c: string) => c.includes('*')), `povinné polia s hviezdičkou (${stars.join(' ')})`);
     console.log('   sekcia Platba:', pageText.slice(0, 160));
-    const btnLabel = (await page.locator('#s-submit').innerText()).trim();
+    const btnLabel = (await page.locator('#p-submit').innerText()).trim();
     check(/zaplatiť \d/i.test(btnLabel), `tlačidlo „${btnLabel}“`);
     await frame.locator('input[name="number"]').fill(card);
     await frame.locator('input[name="expiry"]').fill('12 / 34');
@@ -143,7 +149,7 @@ async function main() {
     await shot('2-platba');
     await page.locator('#pay-stripe').screenshot({ path: `${SHOTS}/e2e-${tag}-2-platba-detail.png` });
     check(!pageErrors.length, `bez chýb JavaScriptu na stránke ${pageErrors.join(' | ')}`);
-    await page.locator('#s-submit').click();
+    await page.locator('#p-submit').click();
 
     if (scenario === '3ds') {
       // overenie 3D Secure: testovacie okno Stripe → „Complete“ (vnorené iframe)
@@ -165,13 +171,13 @@ async function main() {
     }
 
     if (scenario === 'zamietnuta') {
-      const err = page.locator('[data-err="objednavka"]');
+      const err = page.locator('#p-err');
       await err.waitFor({ state: 'visible', timeout: 45_000 }).catch(() => {});
       const msg = (await err.innerText().catch(() => '')).trim();
       await shot('3-zamietnuta');
       console.log('   formulár hlási:', msg || '(text chyby sa nenašiel, pozri snímku)');
       check(!!msg, 'chyba zamietnutej karty zobrazená v našom formulári');
-      check(/zaplatiť/i.test(await page.locator('#s-submit').innerText()) && !(await page.locator('#s-submit').isDisabled()), 'tlačidlo „Zaplatiť“ znova aktívne (skúsiť inú kartu)');
+      check(/zaplatiť/i.test(await page.locator('#p-submit').innerText()) && !(await page.locator('#p-submit').isDisabled()), 'tlačidlo „Zaplatiť“ znova aktívne (skúsiť inú kartu)');
       await sleep(15_000); // čas na prípadný (nesprávny) webhook
       const sess = await s.checkout.sessions.retrieve(sessionId!);
       const order = (await sb.from('orders').select('id').eq('stripe_ref', sessionId!).maybeSingle()).data;

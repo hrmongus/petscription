@@ -70,8 +70,19 @@
 .pay-stripe[hidden],.pay-note[hidden],.done-order[hidden],.pay-or[hidden],.pay-express[hidden]{display:none}
 .pay-express{min-height:0}
 .pm-h{font-size:14px;font-weight:800;border:2px solid var(--k);padding:10px 12px;align-self:flex-start;min-width:50%}
-.pay-element{min-height:128px}
+.pay-element{min-height:236px}
 .pay-element[aria-busy="true"]{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+/* stránka #platba */
+.pay-next{margin-top:4px}
+.pay-next[hidden]{display:none}
+.pay .pay-sec.pay-sec-last{border-bottom:0;padding-bottom:0}
+.pay .ps-h .pr-edit{margin-left:auto;font-weight:700;font-size:14px;color:var(--n);text-decoration:underline;text-underline-offset:3px}
+.pr-recap{margin:0;display:flex;flex-direction:column;gap:10px;border:2px solid var(--n);background:var(--ml);padding:16px 18px}
+.pr-recap > div{display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px;font-size:15px;line-height:1.45}
+.pr-recap dt{font-weight:800}
+.pr-recap dd{margin:0;overflow-wrap:anywhere}
+.pay .err[hidden]{display:none}
+@media (max-width:860px){.pr-recap > div{grid-template-columns:minmax(0,1fr);gap:2px}}
 .done-order{font-weight:800;font-size:17px;margin:12px 0 0}
 .done-order a{color:inherit}
 
@@ -80,3 +91,5 @@
 .req-note{font-size:13px;margin:0}
 .req-note[hidden]{display:none}
 .req-star{color:var(--err);font-weight:800}
+/* mobil: pri otvorenom predaji stačí tlačidlo pod formulárom (bočné by bolo hneď pod ním druhýkrát) */
+@media (max-width:860px){.co-req #s-submit{display:none}}
