@@ -58,6 +58,7 @@ Stav: 21. 11. 2026. Tento súbor je zdroj pravdy; každé rozhodnutie počas pr�
 | P4 | Zákaznícky portál + odstúpenie od zmluvy | P0, P1 | P3 |
 | P5 | Transakčné emaily | P1, P2 | P3, P4 |
 | P6 | Spustenie: test celého toku, produkčné kľúče | všetko | — |
+| P7 | Dáta z dotazníka a analytika (PostHog, Klaviyo) | P1 | P3, P4 |
 
 Paralelná práca = samostatné Claude Code chaty na samostatných branchoch (git worktree), merge cez PR.
 
@@ -263,6 +264,25 @@ Marketing ostáva v Klaviyo (iba udalosti: objednávka, zrušenie).
 
 ---
 
+## P7 — Dáta z dotazníka a analytika (PostHog)
+Cieľ: ukladať všetky odpovede z dotazníka (aj keď zákazník nezaplatí) a merať celý funnel od návštevy po platbu.
+
+Všetky odpovede z dotazníka
+- Nová tabuľka quiz_sessions: id (anonymné, z prehliadača), started_at, updated_at, last_step, completed (bool), answers (jsonb), result (recept, balenie, gramy, D, cena z engine), utm/source, email a customer_id (iba ak ich zákazník neskôr zadá), checkout_started_at, order_id.
+- Ukladá sa priebežne po každom kroku (POST /api/quiz), bez emailu je záznam anonymný. Pri checkoute sa session spáruje so zákazníkom a objednávkou.
+- GDPR: anonymné odpovede bez emailu možno držať dlhodobo na štatistiku. Nedokončené nákupy s emailom (customers bez objednávky) mazať alebo anonymizovať po 90 dňoch (cron). Uviesť v zásadách ochrany súkromia.
+- Opustený košík: udalosť do Klaviyo „Started Checkout“ (pes, recept, cena, odkaz späť na výsledok), iba so súhlasom s marketingom.
+
+PostHog (celý funnel)
+- PostHog US cloud (us.i.posthog.com, NEXT_PUBLIC_POSTHOG_KEY a NEXT_PUBLIC_POSTHOG_HOST sú v env). V zásadách ochrany súkromia uviesť prenos do USA (PostHog Inc., EÚ–USA Data Privacy Framework).
+- Načítať iba po súhlase s analytickými cookies (cookies.js). Bez súhlasu nič, alebo cookieless režim bez osobných údajov.
+- Udalosti: page_view, quiz_started, quiz_step_completed (krok, odpoveď bez osobných údajov), quiz_completed (recept, balenie, cena), plan_selected, delivery_selected (dopravca), checkout_started, payment_submitted, payment_failed, order_completed (server-side z webhooku: suma, plán, recept, dopravca, nový/opakovaný), subscription_renewed, subscription_cancelled, withdrawal_submitted.
+- Identifikácia: anonymné id → po zadaní emailu identify (customer_id, nie email v properties, ak to nie je nutné). UTM a referrer ako person/session properties.
+- Dashboard v PostHogu: funnel návšteva → štart dotazníka → dokončenie → checkout → platba; odchody po krokoch; konverzia podľa zdroja (Meta kampane), receptu, balenia a dopravcu; retencia predplatného.
+- Session replay iba so súhlasom a s maskovaním všetkých polí formulára.
+
+---
+
 ## 7. Blokery mimo kódu (vybaviť hneď)
 
 - [ ] FHB: sandbox `app_id` + `secret` (ZOE), správna sandbox URL, formát notifikácií, kódy SPS a Packeta.
@@ -388,3 +408,14 @@ Každá položka čaká na potvrdenie, kým nie je označená ✅.
 24. **Cenník dopravy (23. 11., zadanie používateľa):** cena závisí od balenia, spôsobu a plánu (`PRICE` v `doprava-config.js`, `{ raz, mesiac }`). Jednorazovo: výdajné miesto 4 kg 3,90 € (Packeta alebo DPD), 9 kg 3,90 € (iba DPD), 18 kg 4,90 € (iba DPD); SPS kuriér 4,90 / 5,90 / 9,90 €. Predplatné: výdajné miesto zadarmo; SPS kuriér 1,90 / 1,90 / 3,90 €. **Packeta sa pri 9 kg už neponúka** (tabuľka „iba DPD“; FHB Packeta 9 kg 4,23 € vs. DPD 2,71 €). Doprava zadarmo = v Stripe bez riadku dopravy (Checkout aj zmena plánu); v dotazníku a emailoch „zadarmo“. Existujúce predplatné si v Stripe nechávajú pôvodnú cenu dopravy (iba testovacie).
 8. **Receptúra v checkoute:** server prijme akúkoľvek receptúru z `PRODUCTS`, rovnako ako dnešné UI (menej vhodné len označí). V snapshote sa ukladá `eligible`. Pre `/ucet` (P4) platí SPEC: iba vhodné.
 
+
+**Projekt 7 (P7, dáta z dotazníka a analytika), 23. 11. 2026** — branch `p7-analytics`, priebeh v `PROGRESS-P7.md`. Čaká na potvrdenie:
+1. **`page_view` = automatický `$pageview` PostHogu** (pri načítaní stránky; obrazovky dotazníka sú `#hash`, merajú sa udalosťami `quiz_*`). Vlastnú udalosť `page_view` neposielame, aby sa nezdvojovala s webovou analytikou PostHogu.
+2. **Súhlas po kategóriách:** `cookies.js` dnes pozná iba „všetky / nevyhnutné“. Pribudnú samostatné kategórie **analytické** (PostHog) a **marketingové** (Klaviyo) a v lište voľba „Nastaviť“ s dvoma prepínačmi (GDPR: súhlas musí byť konkrétny). Staré uložené voľby platia ďalej (`all` = obe, `necessary` = žiadna). PostHog (`analytics.js`) aj Klaviyo načíta `cookies.js`, HTML stránok sa to netýka.
+3. **Bez súhlasu v prehliadači nič** (žiadny cookieless režim). Server-side udalosti z webhooku pri zákazníkovi bez analytického súhlasu idú **bez osobného profilu** (`$process_person_profile: false`, náhodné id, iba suma/recept/plán/dopravca), aby sedeli tržby a počty objednávok; so súhlasom s `distinct_id = customer_id`. Súhlas sa nesie v Stripe metadata (`ph`, `kl`).
+4. **Identify v okamihu „Pokračovať k platbe“:** `customer_id` vzniká až v `POST /api/checkout` (email je overený spolu s doručením). Odpoveď vráti `customerId`, prehliadač zavolá `identify(customer_id)`; email do PostHogu nejde. V tej istej chvíli sa `quiz_sessions` spáruje so zákazníkom (email, customer_id, `checkout_started_at`) a do Klaviyo ide „Started Checkout“.
+5. **Reverse proxy `/ingest`** (Next rewrites → `us.i.posthog.com`, `us-assets.i.posthog.com`), aby blokovače reklám neskresľovali funnel. Iba prenos, súhlas platí rovnako.
+6. **Id dotazníka** (`quiz_sessions.id`, UUID) žije v stave dotazníka v `sessionStorage` (ako dnes odpovede); nový dotazník = nové id. Nie je to trvalý identifikátor návštevníka.
+7. **Klaviyo bez privátneho kľúča:** „Started Checkout“ (a „Placed Order“ na stránke Hotovo, aby flow opusteného košíka skončil) cez `klaviyo.js` v prehliadači (`identify` email + `track`), iba so súhlasom s marketingom. Odkaz späť: `/granule-na-mieru?kviz=<id>#vysledok` obnoví odpovede z `GET /api/quiz/<id>` (iba nezaplatená session, max. 90 dní).
+8. **Cron `retention` (denne):** zákazník bez objednávky a predplatného, vytvorený aj naposledy zmenený pred > 90 dňami → zmazať Stripe zákazníka (iba `metadata.app = granula`) a riadok `customers` (psy a adresy kaskádou). `quiz_sessions` takého zákazníka sa anonymizujú (email, customer_id = null, meno psa z odpovedí preč). Mazanie namiesto anonymizácie zákazníka: anonymný riadok zákazníka nemá využitie.
+9. **`quiz_step_completed`** nesie odpovede kroku bez mena psa (pohlavie, plemeno, váha, vek, aktivita, kastrácia, postava, zameranie, alergie).

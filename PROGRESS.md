@@ -11,6 +11,8 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 | 5. FHB stavy a emaily | ✅ hotové a nasadené na granula.sk (emaily cez Resend, crony bežia) |
 | 6. Test celého toku | ✅ overené na granula.sk (test mode, FHB sandbox) vrátane Apple Pay |
 
+Projekt 7 (analytika): `PROGRESS-P7.md`.
+
 **✅ Projekt 1 je uzavretý (23. 11. 2026, potvrdil používateľ).** Ostáva iba zoznam „Pred spustením predaja“ nižšie (prepnutie na live, `/odstupenie` a `/ucet` z P4, zmazanie testovacej route). Prijatie testovacej príjemky FHB v portáli a pripomienka/obnovenie predplatného používateľa (23. 12. / 26. 12.) sa overia priebežne.
 
 ## Pred spustením predaja
