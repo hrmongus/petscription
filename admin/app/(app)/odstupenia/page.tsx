@@ -4,10 +4,12 @@ import { Badge } from '@admin/components/badge';
 import { day, dt } from '@admin/lib/format';
 import { one } from '@admin/lib/query';
 import { daysLeft, OPEN_STATUSES, refundDeadline, type Withdrawal } from '@admin/lib/withdrawals';
+import { requireAdmin } from '@admin/lib/session';
 
 export const metadata = { title: 'Odstúpenia od zmluvy' };
 
 export default async function Withdrawals({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+  await requireAdmin();
   const all = one((await searchParams).vsetky) === '1';
   let q = db().from('withdrawals').select('*').order('submitted_at', { ascending: false }).limit(300);
   if (!all) q = q.in('status', OPEN_STATUSES);

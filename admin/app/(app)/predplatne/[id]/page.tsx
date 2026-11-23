@@ -18,10 +18,12 @@ import { stripeUrl } from '@admin/lib/links';
 import { loadSubscription } from '@admin/lib/subscription';
 import { searchPointsAction } from '../../objednavky/[id]/actions';
 import { addressAction, applyAction, cancelAction, moveAction, pauseAction, previewAction, resumeAction, skipAction, uncancelAction } from './actions';
+import { requireAdmin } from '@admin/lib/session';
 
 export const metadata = { title: 'Predplatné' };
 
 export default async function SubscriptionDetail({ params }: { params: Promise<{ id: string }> }) {
+  await requireAdmin();
   const { id } = await params;
   if (!/^[0-9a-f-]{36}$/i.test(id)) notFound();
   const c = await loadSubscription(id);

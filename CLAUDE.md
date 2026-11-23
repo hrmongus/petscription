@@ -18,6 +18,7 @@
 
 - **Web:** `public/granula/` (statické HTML, popis v `public/granula/README.md`). Next.js ho servíruje z koreňa domény: `granula.sk/podpora` = `public/granula/podpora.html`. Všetky URL pravidlá (pôvodný `vercel.json`: cleanUrls, presmerovania, hlavičky) sú v `lib/site-routes.ts` + `proxy.ts` (koncová lomka). `vercel.json` obsahuje iba `framework` a `crons` (Vercel Cron sa inde nastaviť nedá; SPEC §10.14).
 - **Overenie URL:** `npm run check:urls` porovná produkciu s lokálnym `next start` (status, presmerovanie, obsah).
+- **Admin (P3):** samostatná Next.js appka `admin/` (manazer.granula.sk, druhý Vercel projekt, Root Directory `admin`), importuje `../lib`, bez vlastných node_modules. Popis a nasadenie: `admin/README.md`, zadanie `PROJEKT-2.md`. Akcie nad objednávkou a zmena predplatného s prepočtom sú zdieľané v `lib/order-actions.ts` a `lib/subscription-actions.ts` (použiť aj v portáli).
 - **Engine:** `public/granula/engine.js` (UMD: prehliadač aj Node), na serveri `lib/engine-server.ts`.
 - **Databáza:** `supabase/migrations/`, typy `lib/database.types.ts`, klient `lib/db.ts` (service role, iba server).
 - **Testy:** `npm test` (vitest, `lib/**/*.test.ts`), `npm run typecheck`, `npm run build`.

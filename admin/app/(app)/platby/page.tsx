@@ -6,6 +6,7 @@ import { stripe } from '@admin/lib/deps';
 import { dt, eur, productName } from '@admin/lib/format';
 import { stripeUrl } from '@admin/lib/links';
 import { retryInvoiceAction } from './actions';
+import { requireAdmin } from '@admin/lib/session';
 
 export const metadata = { title: 'Neúspešné platby' };
 
@@ -27,6 +28,7 @@ async function openInvoice(stripeSubId: string): Promise<Row> {
 }
 
 export default async function FailedPayments() {
+  await requireAdmin();
   const { data: subs } = await db()
     .from('subscriptions')
     .select('id, stripe_subscription_id, product_id, bag_id, next_charge_at, updated_at, customers(email, name, phone), dogs(name)')

@@ -4,10 +4,12 @@ import { ActionForm } from '@admin/components/action-form';
 import { Badge } from '@admin/components/badge';
 import { dt, eur, kindLabel, shipShort } from '@admin/lib/format';
 import { refundAction, reshipAction } from '../objednavky/[id]/actions';
+import { requireAdmin } from '@admin/lib/session';
 
 export const metadata = { title: 'Vrátené zásielky' };
 
 export default async function Returned() {
+  await requireAdmin();
   const { data: orders } = await db()
     .from('orders')
     .select('id, number, kind, reship_of, amount_cents, status, ship_to, created_at, updated_at, subscription_id, customers(email, name)')

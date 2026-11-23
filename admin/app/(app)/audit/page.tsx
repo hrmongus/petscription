@@ -3,12 +3,14 @@ import { db } from '@lib/db';
 import { Pager } from '@admin/components/pager';
 import { dt, json } from '@admin/lib/format';
 import { one, pageOf, searchTerm } from '@admin/lib/query';
+import { requireAdmin } from '@admin/lib/session';
 
 export const metadata = { title: 'Audit' };
 
 const HREF: Record<string, string> = { order: '/objednavky/', subscription: '/predplatne/', withdrawal: '/odstupenia/' };
 
 export default async function Audit({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+  await requireAdmin();
   const sp = await searchParams;
   const kto = one(sp.kto);
   const q = searchTerm(one(sp.q));

@@ -4,6 +4,7 @@ import { Badge } from '@admin/components/badge';
 import { Pager } from '@admin/components/pager';
 import { dt, eur, kindLabel, shipShort } from '@admin/lib/format';
 import { one, pageOf, searchTerm } from '@admin/lib/query';
+import { requireAdmin } from '@admin/lib/session';
 
 export const metadata = { title: 'Objednávky' };
 
@@ -18,6 +19,7 @@ const FILTERS: [string, string, string[] | null][] = [
 ];
 
 export default async function Orders({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+  await requireAdmin();
   const sp = await searchParams;
   const stav = one(sp.stav);
   const q = searchTerm(one(sp.q));

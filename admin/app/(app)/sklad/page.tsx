@@ -2,10 +2,12 @@ import { db } from '@lib/db';
 import { STOCK_ALERT_DAYS } from '@lib/stock';
 import { day, dt, skuLabel } from '@admin/lib/format';
 import { liveStock } from '@admin/lib/stock-live';
+import { requireAdmin } from '@admin/lib/session';
 
 export const metadata = { title: 'Sklad' };
 
 export default async function Stock() {
+  await requireAdmin();
   const [rows, alerts] = await Promise.all([
     liveStock().catch((e) => ({ error: (e as Error).message })),
     db().from('audit_log').select('at, entity_id, after').eq('action', 'stock.low').order('at', { ascending: false }).limit(20),

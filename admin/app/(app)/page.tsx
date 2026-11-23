@@ -4,6 +4,7 @@ import { addDays } from '@lib/subscription-schedule';
 import { day, dt, eur, productName, skuLabel, startOfTodayLocal } from '@admin/lib/format';
 import { liveStock } from '@admin/lib/stock-live';
 import { OPEN_STATUSES, daysLeft, refundDeadline, type Withdrawal } from '@admin/lib/withdrawals';
+import { requireAdmin } from '@admin/lib/session';
 
 export const metadata = { title: 'Prehľad dňa' };
 
@@ -26,6 +27,7 @@ function Card({ n, label, href, tone }: { n: number | string; label: string; hre
 }
 
 export default async function Home() {
+  await requireAdmin();
   const today = startOfTodayLocal().toISOString();
   const tenMinAgo = new Date(Date.now() - 10 * 60_000).toISOString();
   const in7 = addDays(new Date(), 8).toISOString();

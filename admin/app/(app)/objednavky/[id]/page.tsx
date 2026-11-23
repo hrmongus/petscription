@@ -13,12 +13,14 @@ import { dt, eur, json, kindLabel, methodLabel, skuLabel, type ShipToView } from
 import { historyOf } from '@admin/lib/history';
 import { stripeUrl } from '@admin/lib/links';
 import { cancelAction, deliveryAction, refundAction, resendAction, reshipAction, searchPointsAction } from './actions';
+import { requireAdmin } from '@admin/lib/session';
 
 export const metadata = { title: 'Objednávka' };
 
 type FhbView = { status?: string; tracking_numbers?: string[]; tracking_links?: string[]; shipped_at?: string; delivered_at?: string; returned_at?: string; return_type?: string; parcel_service?: string; delivery_point?: string };
 
 export default async function OrderDetail({ params }: { params: Promise<{ id: string }> }) {
+  await requireAdmin();
   const { id } = await params;
   if (!/^[0-9a-f-]{36}$/i.test(id)) notFound();
   const { data: o } = await db().from('orders').select('*, customers(id, email, name, phone, stripe_customer_id)').eq('id', id).maybeSingle();

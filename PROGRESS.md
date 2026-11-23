@@ -414,3 +414,54 @@ Spustené automaticky v noci („do as much as possible“). Opakovateľné skri
 - **Emaily (23. 11.):** meno psa vždy s veľkým začiatočným písmenom každého slova („gut“ → „Gut“, „pre Guta“, „Gutovi“), zvyšok mena sa nemení (McQueen). Adresa doručenia: za číslicami neviditeľný znak U+200C, aby ju Gmail neprelinkoval na mapu (text vyzerá rovnako); v šablónach CSS `a[x-apple-data-detectors]` pre iOS Mail. Testy `lib/dog-name.test.ts`.
 - **✅ Projekt 1 uzavretý (23. 11. 2026).**
 - **Cenník dopravy (23. 11.):** jednorazovo vs. predplatné, výdajné miesto pri predplatnom zadarmo, Packeta pri 9 kg už nie (SPEC §10.24). Overené lokálne všetkých 6 kombinácií plán × balenie. `podpora.html` (FAQ Doprava) prepísané podľa nového cenníka so súhlasom používateľa.
+
+---
+
+# Projekt 2: admin portál (SPEC P3), branch `p2-admin`
+
+Zadanie a plán: `PROJEKT-2.md` · Appka: `admin/` (`admin/README.md`) · Rozhodnutia: SPEC §10.25–34.
+
+| Krok | Stav |
+|---|---|
+| 1. Kostra `admin/`, prihlásenie (Supabase Auth + 2FA), audit | ✅ |
+| 2. Objednávky (zoznam, detail, FHB naživo, platba, akcie) | ✅ otestované |
+| 3. Predplatné (posun, preskočenie, pauza, zmena s prepočtom, doručenie, zrušenie) | ✅ otestované |
+| 4. Neúspešné platby, vrátené zásielky, odstúpenia | ✅ otestované |
+| 5. Sklad, prehľad dňa | ✅ |
+| 6. Kontrola výpočtu (`/vypocet`), z webu odstránená | ✅ |
+| 7. Test, build ako na Verceli, dokumentácia | ✅ (čaká nasadenie a admin účet) |
+
+## Zdieľané zmeny v `lib/` (minimálne)
+- nové: `lib/order-actions.ts` (stav vo FHB, úprava doručenia, storno, refund, poslať znova), `lib/subscription-actions.ts` (zmena s prepočtom, doprava pri zmene doručenia), testy;
+- `lib/checkout.ts`: overenie doručenia vyčlenené do `resolveDelivery` (správanie checkoutu bez zmeny, testy prechádzajú);
+- `lib/stock.ts`: `stockRows` (všetky riadky; `lowStock` ju používa); `lib/subscription-schedule.ts`: preskočenie o 06:00 UTC;
+- `lib/site-routes.ts`: bez pravidla `/admin-vypocet`; `lib/database.types.ts` + migrácia `20261123102956_p3_admin_reship.sql` (aplikovaná);
+- `tsconfig.json` vylučuje `admin`, `vitest.config.mts` beží aj `admin/**/*.test.ts`. Webhook bez zmeny.
+
+## Testy
+- `npm test` 138 ✅ (nové: order-actions 17, subscription-actions 8, admin 4), `npm run typecheck` ✅, `npm run build` ✅ (web), admin build ✅ aj v čistej kópii repa postupom Vercelu (`cd .. && npm ci`, `npm run build`).
+- **Naživo (test mode: produkčná DB, Stripe test, FHB sandbox; admin lokálne):**
+
+| Akcia | Výsledok |
+|---|---|
+| Zmena DPD miesta objednávky v pending | #53 → SK26376 u nás aj vo FHB (`PUT /order`) |
+| Storno + refund | #53 zmazaná vo FHB, 72,40 € vrátené, stav `refunded`, 3 záznamy v audit_log |
+| Čiastočný refund | #52 1,50 € (Stripe succeeded), stav sa nemení |
+| Chyba FHB, znova odoslať | #29 (SPS kuriér, sandbox odmieta adresu) → chyba s violations zobrazená, znova odmietnuté s hlásením |
+| Poslať znova (vrátená) | #54 (stav `returned` nasimulovaný) → nová #57, 0 €, vo FHB |
+| Refund z odstúpenia | odstúpenie k #55 → 67,50 € vrátené, stav odstúpenia „peniaze vrátené“ |
+| Predplatné `88a62409…` | posun 28. 12., preskočenie → 3. 2. 2027, pauza, obnovenie 30. 12., doručenie → SPS kuriér (doprava v Stripe 4,90 → 1,90 €), zrušenie ku koncu, odvolanie, zrušenie hneď |
+| Zmena plánu `3606d9b0…` (`sub_1Ueuen…`) | 9 → 18 kg, 17 → 25 kg: 320 g/deň, D 56, 126 €, ďalšia platba 14. 1. 2027; v Stripe iba faktúry 0,00 € (žiadna okamžitá platba) |
+| Neúspešná platba | test clock `clock_1UeulZ…`, karta zlyhá → webhook `past_due` → obrazovka s dôvodom „Your card was declined“, „skúsiť znova“ → zamietnuté |
+| Prihlásenie (produkčný build) | neprihlásený → `/login` (aj `/vypocet`, `engine.js`), zlé heslo → „Nesprávny e-mail alebo heslo.“, podvrhnutý token s `aal2` odmietnutý |
+
+Celé prihlásenie s 2FA som neprešiel: vytvoriť testovací admin účet v produkčnom Supabase mi prostredie nepovolilo. Over po vytvorení svojho účtu.
+
+## Testovacie dáta, ktoré ostali (na vyskúšanie v admine)
+- predplatné `3606d9b0…` (`sub_1Ueuen1U0mpiDjfilD7tt4m5`, 18 kg) a nezaplatené `23b66fd6…` (`sub_1Ueula1U0mpiDjfihriqNREq`, test clock `clock_1UeulZ1U0mpiDjfiKuoq9ATR`): po vyskúšaní zrušiť v admine (clock zmazať v Stripe).
+- objednávka #57 (poslaná znova) vo FHB sandboxe.
+
+## Otvorené
+1. SPEC §10.25–34 na potvrdenie, hlavne e-maily zákazníkovi pri akciách admina (§10.34) a prepínač parametrov v kontrole výpočtu (§10.32).
+2. `scripts/stripe-e2e-clock.ts` už nefunguje (čaká na Embedded Checkout, ktorý nahradil vlastný formulár, SPEC §10.17); past_due som overil vlastnou simuláciou.
+3. Vercel: nový projekt + doména + env podľa `admin/README.md`, potom vytvoriť admin účty (`npm run create-admin`).

@@ -7,10 +7,12 @@ import { History } from '@admin/components/history';
 import { day, dt, eur, json, kindLabel, WITHDRAWAL_STATUS } from '@admin/lib/format';
 import { actionText, daysLeft, refundDeadline, type Withdrawal } from '@admin/lib/withdrawals';
 import { statusAction, withdrawalCancelSubAction, withdrawalRefundAction } from './actions';
+import { requireAdmin } from '@admin/lib/session';
 
 export const metadata = { title: 'Odstúpenie od zmluvy' };
 
 export default async function WithdrawalDetail({ params }: { params: Promise<{ id: string }> }) {
+  await requireAdmin();
   const { id } = await params;
   if (!/^[0-9a-f-]{36}$/i.test(id)) notFound();
   const { data } = await db().from('withdrawals').select('*').eq('id', id).maybeSingle();

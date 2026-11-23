@@ -4,6 +4,7 @@ import { Badge } from '@admin/components/badge';
 import { Pager } from '@admin/components/pager';
 import { day, eur, productName } from '@admin/lib/format';
 import { one, pageOf, searchTerm } from '@admin/lib/query';
+import { requireAdmin } from '@admin/lib/session';
 
 export const metadata = { title: 'Predplatné' };
 
@@ -17,6 +18,7 @@ const FILTERS: [string, string, string[] | null][] = [
 ];
 
 export default async function Subscriptions({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+  await requireAdmin();
   const sp = await searchParams;
   const stav = one(sp.stav);
   const q = searchTerm(one(sp.q));
