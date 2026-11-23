@@ -322,3 +322,54 @@ ${i.lines.map((l) => `<p style="margin:0 0 10px">${escHtml(l)}</p>`).join('')}
 </td></tr></table></body></html>`;
   return { key: i.key, kind: i.kind, to: i.to, subject: `[Granula] ${i.subject}`, html, text: i.lines.join('\n') };
 }
+
+/* ---------------------------------------------------------------- 6 pripomienka pred platbou (SPEC P5) */
+
+export type RenewalReminderInput = {
+  subscriptionId: string;
+  to: string;
+  name?: string | null;
+  dog?: EmailDog;
+  siteUrl: string;
+  product: { productId: string; bagId: string; days: number };
+  nextCharge: Date;
+  foodCents: number;
+  shippingCents: number;
+  shipTo: unknown;
+};
+
+/** kľúč podľa predplatného a dňa platby: posunutá platba = nová pripomienka, tá istá sa nepošle dvakrát */
+export function renewalReminderEmail(i: RenewalReminderInput): Mail {
+  const prod = productById(i.product.productId, i.product.bagId);
+  const del = deliveryOf(i.shipTo);
+  const v: Vars = {
+    ...common(i.siteUrl, i.name, i.dog),
+    product_name: prod.name,
+    product_slug: prod.slug,
+    bag_kg: prod.bagKg,
+    days: String(i.product.days),
+    price_food: eur(i.foodCents),
+    price_shipping: eur(i.shippingCents),
+    price_total: eur(i.foodCents + i.shippingCents),
+    next_charge: dateSk(i.nextCharge),
+    carrier: del.carrier,
+    delivery_address: del.address,
+  };
+  const subject = `Ďalšie vrece pošleme o pár dní · ${v.next_charge}`;
+  const text = tidy(
+    [
+      `Predplatné · ${v.dog_name}`,
+      '',
+      `Ahoj ${v.first_name}, okolo ${v.next_charge} zaplatíme z tvojej karty ${v.price_total} za ďalšie vrece pre ${v.dog_name_acc} a hneď ho pošleme. Nemusíš nič robiť.`,
+      '',
+      `Ak má ${v.dog_name} granúl ešte dosť alebo sa zmenila ${v.dog_poss} váha, dodávku si posuň, preskoč alebo uprav v účte: ${v.url_account}. Stačí aj odpísať na tento e-mail.`,
+      '',
+      `${prod.name}, ${prod.bagKg} kg · predplatné, každých ${v.days} dní`,
+      `Na úhradu: ${v.price_total} (granule ${v.price_food}, doprava ${v.price_shipping})`,
+      `Vrece pošleme na: ${v.carrier}, ${v.delivery_address}. Ak sa adresa zmenila, daj nám vedieť.`,
+      footerText(v),
+    ].join('\n'),
+  );
+  const day = i.nextCharge.toISOString().slice(0, 10);
+  return { key: `renewal-reminder:${i.subscriptionId}:${day}`, kind: 'renewal_reminder', to: i.to, subject, html: tidy(render('6-pripomienka-platby', v)), text };
+}

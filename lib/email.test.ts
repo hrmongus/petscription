@@ -1,6 +1,7 @@
 import { describe, expect, test, vi } from 'vitest';
 import { createMailer, type EmailLog } from './email';
-import { orderConfirmationEmail, paymentFailedEmail, shippedEmail } from './emails';
+import { orderConfirmationEmail, paymentFailedEmail, renewalReminderEmail, shippedEmail } from './emails';
+import { dueForReminder } from './reminders';
 
 function memLog() {
   const rows = new Map<string, { status: string }>();
@@ -139,5 +140,33 @@ describe('skloňovanie mena psa', () => {
     expect(c('Pán Pes', 'pes')).toEqual(['tvojho psa', 'tvojmu psovi']);
     expect(c('', 'fenka')).toEqual(['tvoju fenku', 'tvojej fenke']);
     expect(dogCases('Bodka', 'fenka').poss).toBe('jej');
+  });
+});
+
+describe('pripomienka pred platbou', () => {
+  test('email: dátum, suma, adresa, odkaz na účet; kľúč podľa predplatného a dňa platby', () => {
+    const m = renewalReminderEmail({ subscriptionId: 's1', to: 'a@b.sk', name: 'Ján Novák', dog: BODKA, siteUrl: SITE, product: { productId: 'morka-hus-kacica', bagId: '9', days: 37 }, nextCharge: new Date('2026-12-26T06:00:00Z'), foodCents: 6750, shippingCents: 490, shipTo: ORDER.ship_to });
+    noPlaceholders(m);
+    expect(m.key).toBe('renewal-reminder:s1:2026-12-26');
+    expect(m.subject).toBe('Ďalšie vrece pošleme o pár dní · 26. 12. 2026');
+    expect(m.html).toContain('okolo <strong>26. 12. 2026</strong>');
+    expect(m.html).toContain('72,40 €');
+    expect(m.html).toContain('pre Bodku');
+    expect(m.html).toContain('zmenila jej váha');
+    expect(m.html).toContain('https://www.granula.sk/ucet');
+    expect(m.html).toContain('Pavel Lóška Cyklo-Šport');
+    expect(m.text).toContain('Stačí aj odpísať na tento e-mail.');
+  });
+  test('kto dostane pripomienku: aktívne, platba o 24–72 h, nie hneď po kúpe', () => {
+    const now = new Date('2026-12-23T07:07:00Z');
+    const old = '2026-11-01T00:00:00Z';
+    const subs = [
+      { id: 'ok', status: 'active', next_charge_at: '2026-12-26T06:00:00Z', created_at: old },
+      { id: 'skorej-zajtra', status: 'active', next_charge_at: '2026-12-24T06:00:00Z', created_at: old },
+      { id: 'o-4-dni', status: 'active', next_charge_at: '2026-12-27T06:00:00Z', created_at: old },
+      { id: 'pauza', status: 'paused', next_charge_at: '2026-12-26T06:00:00Z', created_at: old },
+      { id: 'nove', status: 'active', next_charge_at: '2026-12-26T06:00:00Z', created_at: '2026-12-21T10:00:00Z' },
+    ];
+    expect(dueForReminder(subs, now).map((s) => s.id)).toEqual(['ok']);
   });
 });

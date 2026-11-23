@@ -28,7 +28,8 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
   (každú hodinu v 17. minúte, UTC), commit a nasadiť. Kód netreba meniť: úloha je idempotentná (stav iba dopredu, emaily cez `email_log`). Overenie: v `fhb_events` pribúda každú hodinu záznam `cron.fhb-orders`. Ostatné crony (`fhb-rma`, `fhb-stock`) stačia denne. Na Hobby by nasadenie s hodinovým cronom zlyhalo, preto to nemeniť skôr.
 - [ ] **Zmazať testovaciu route `app/api/test/email-preview`** (náhľady emailov, SPEC §10.14).
 - [ ] **Stránka `/ucet` (P4)**: emaily na ňu odkazujú („Otvoriť môj účet“, „Upraviť predplatné“, „Prejsť na predplatné“, „zmeň kartu v účte“). Do vtedy vedú na 404.
-- [ ] **Email „pripomienka pred platbou“** (SPEC P5): potvrdenie predplatného sľubuje „pár dní vopred ti pripomenieme“. Zatiaľ nie je postavený (spolu so zvyšnými: odstúpenie, zrušenie/pauza).
+- [x] ~~Email „pripomienka pred platbou“~~ ✅ 23. 11. (cron `reminders`, SPEC §10.16). Zvyšné emaily (potvrdenie odstúpenia, zrušenia/pauzy) prídu s P4.
+- [ ] **Testovacie predplatné s vymyslenými adresami** (`e2e-…@granula.sk`, 3 aktívne): zrušiť skôr ako 21. 12. (pripomienka) a 24. 12. (obnovenie v Stripe test mode), inak pôjdu emaily na neexistujúce schránky (nedoručené → reputácia domény).
 - [ ] Opýtať sa FHB na formát notifikácií objednávok (route prijme čokoľvek a loguje do `fhb_events`; po prvej skutočnej notifikácii pozrieť payload).
 - [ ] Stripe účet vedený na Spark Link, s. r. o.
 - [ ] Zmazať staré branche (Carbone Company)
@@ -372,3 +373,11 @@ Spustené automaticky v noci („do as much as possible“). Opakovateľné skri
 - **Testy:** 104 ✅ (nové: všetkých 5 šablón bez nevyplnených premenných, fotky, skloňovanie, podmienené bloky, aktuálnosť vygenerovaného modulu). Náhľady desktop aj mobil skontrolované.
 - **Overené na produkcii (23. 11.):** obrázky `/img/email/*` 200; 8 testovacích emailov podľa nového návrhu odoslaných na email používateľa (Resend `sent`); skutočný nákup #17 (jednorazovo, Packeta) → potvrdenie novou šablónou, `email_log` `sent`. Cron na Verceli: `cron.fhb-rma` 23. 11. 05:37:30 UTC `ok: true` (záznam v `fhb_events`).
 - **E2E skripty** teraz predvolene používajú testovaciu adresu Resend `delivered+…@resend.dev` (emaily už naozaj odchádzajú; nedoručiteľné adresy by zhoršili reputáciu domény). Vlastnú adresu cez `--email=`.
+
+---
+
+## Pripomienka pred platbou a FHB testovací sklad (23. 11. 2026)
+
+- **Pripomienka:** šablóna `content/emails/6-pripomienka-platby.html`, `renewalReminderEmail`, `lib/reminders.ts`, cron `/api/cron/reminders` (07:07 UTC, `vercel.json`). Testy 106 ✅. Suchý beh nad produkčnou DB (bez odoslania) s dátumom 21.–23. 12.: pripomienky pre 3 testovacie predplatné (platba 24. 12.) a predplatné používateľa (platba 26. 12., pripomienka 23. 12.).
+- **FHB sandbox:** založená príjemka `TEST-SANDBOX-2026-11-23` (30 × `GRAN-morka-hus-kacica-9`, 15 × `-4`), stav `created`. Treba ju prijať v portáli (Stock receipts) alebo cez FHB; potom FHB začne testovacie objednávky (14 v stave pending kvôli chýbajúcemu tovaru) spracúvať → skutočné `sent` / `delivered`, notifikácie a ich formát (`fhb_events` `notify.*`).
+- **Portál FHB:** dokumentácia uvádza iba produkčný portál `zoe2.fhb.sk`. Portál, v ktorom používateľ vidí objednávky `GR-…`, je napojený na sandbox (objednávky sme posielali iba na `api-stage`). Presnú adresu testovacieho a ostrého portálu potvrdiť s FHB.
