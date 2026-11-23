@@ -74,9 +74,14 @@ export function moveNextCharge(subId: string, at: Date, s: Stripe = stripe()) {
   return s.subscriptions.update(subId, { trial_end: unix(at), proration_behavior: 'none' });
 }
 
+/** deň preskočenej dodávky: plánovaná platba + D dní, o 06:00 UTC (addDays samo čas dňa zahodí) */
+export function skippedCharge(plannedCharge: Date, days: number): Date {
+  return chargeTime(addDays(plannedCharge, days));
+}
+
 /** Preskočiť jednu dodávku: ďalšia platba o D dní neskôr ako plánovaná. */
 export function skipDelivery(subId: string, plannedCharge: Date, days: number, s: Stripe = stripe()) {
-  return moveNextCharge(subId, addDays(plannedCharge, days), s);
+  return moveNextCharge(subId, skippedCharge(plannedCharge, days), s);
 }
 
 export type PlanChange = {

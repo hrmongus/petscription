@@ -570,7 +570,7 @@ textarea.input{resize:vertical;min-height:84px}
     panel.querySelector("[data-cancel]").addEventListener("click", function () { panel.hidden = true; panel.innerHTML = ""; btn.hidden = false; btn.focus(); });
     panel.querySelector("[data-ok]").addEventListener("click", function () {
       var ok = this; busy(ok, true); err(e, "");
-      api("/api/ucet/odstupenie", { orderNumber: n, reason: panel.querySelector("textarea").value.trim() || null, confirm: true }).then(function (b) {
+      api("/api/ucet/odstupenie", { orderNumber: n, reason: panel.querySelector("textarea").value.trim() || null, confirm: true, consent: !!(window.GranulaConsent && window.GranulaConsent.has("analytics")) }).then(function (b) {
         if (b._status === 401) { showLogin(); return; }
         if (!b._ok) { err(e, b.error || NET); return; }
         load({ message: "Odstúpenie sme prijali " + b.submittedAtText + ". Potvrdenie sme poslali na " + b.email + "." });

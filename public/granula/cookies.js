@@ -1,7 +1,14 @@
-/* Granula — jednoduchá cookie lišta. Klaviyo (marketing) sa načíta až po súhlase. Vyskakovacie formuláre Klaviyo sa skryjú (hidePopups).
+/* Granula — cookie lišta so súhlasom po kategóriách (SPEC P7):
+     funkčné     → zapamätanie psov z dotazníka a nastavení na tomto zariadení (localStorage; bez súhlasu iba
+                   sessionStorage do zatvorenia záložky, pri odvolaní sa uložení psi zmažú),
+     analytické  → PostHog (analytics.js: meranie návštevnosti a dotazníka, záznam relácie s maskovaním polí),
+     marketingové → Klaviyo (formuláre, emaily na mieru, pripomenutie nedokončenej objednávky).
+   Bez súhlasu sa nenačíta nič z toho. Vyskakovacie formuláre Klaviyo sa skryjú (hidePopups).
    Značka Klaviyo je v HTML ako type="text/plain" (overenie v Klaviyo ju nájde, prehliadač ju nespustí).
-   Voľba sa pamätá v localStorage („granula-cookies“: "all" alebo "necessary").
-   Lištu znova otvorí akýkoľvek odkaz s atribútom data-cookie-settings. */
+   Voľba sa pamätá v localStorage („granula-cookies“): "all", "necessary" alebo zoznam kategórií oddelený čiarkou
+   ("functional,analytics"; staré voľby "all"/"necessary"/"analytics"/"marketing" platia ďalej). Lištu znova otvorí odkaz s atribútom data-cookie-settings.
+   Pre ostatné skripty: GranulaConsent.has("analytics" | "marketing"), udalosť „granula:consent“ na window,
+   GranulaAnalytics.track/identify (fronta; bez analytického súhlasu sa zahodí). */
 (function () {
   var KEY = "granula-cookies", KLAVIYO_ID = "Yf7K2A";
   // stránky vedľa cookies.js (funguje aj z blogu v podpriečinku)
@@ -9,6 +16,71 @@
 
   function get() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
   function set(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+  var CATS = ["functional", "analytics", "marketing"];
+  function has(cat, v) { v = v === undefined ? get() : v; return v === "all" || (!!v && v.split(",").indexOf(cat) !== -1); }
+  function valueOf(c) {
+    var on = CATS.filter(function (k) { return c[k]; });
+    return on.length === CATS.length ? "all" : on.length ? on.join(",") : "necessary";
+  }
+  function valid(v) { return v === "all" || v === "necessary" || (!!v && v.split(",").every(function (k) { return CATS.indexOf(k) !== -1; })); }
+  function current() { return { functional: has("functional"), analytics: has("analytics"), marketing: has("marketing") }; }
+  /* funkčné úložiská (kviz.js): uložení psi. So súhlasom localStorage, bez neho sessionStorage tejto záložky. */
+  var FUNCTIONAL_KEYS = ["granula-psy", "granula-psy-v"];
+  function moveFunctional(toLocal) {
+    FUNCTIONAL_KEYS.forEach(function (k) {
+      try {
+        if (toLocal) { var v = sessionStorage.getItem(k); if (v !== null && localStorage.getItem(k) === null) localStorage.setItem(k, v); sessionStorage.removeItem(k); }
+        else { localStorage.removeItem(k); } // odvolaný súhlas: uložených psov zmazať
+      } catch (e) {}
+    });
+  }
+
+  /* ---------- analytika (PostHog): fronta udalostí, kým sa analytics.js nenačíta ---------- */
+  var queue = [].concat(window.__granulaQ || []); // udalosti zo skriptov, ktoré bežali pred cookies.js (kviz.js)
+  window.__granulaQ = null;
+  var A = window.GranulaAnalytics = window.GranulaAnalytics || {
+    track: function (name, props) { if (A.ready) A.ready.track(name, props); else if (has("analytics")) queue.push(["track", name, props]); },
+    identify: function (id, props) { if (A.ready) A.ready.identify(id, props); else if (has("analytics")) queue.push(["identify", id, props]); },
+    // analytics.js si po načítaní vyberie frontu
+    drain: function () { var q = queue; queue = []; return q; }
+  };
+  if (!has("analytics")) queue = [];
+  // zdroj návštevy zo vstupnej stránky (UTM, referrer) pre dotazník: iba so súhlasom, iba v tejto záložke
+  var SRC_KEY = "granula-src";
+  var landing = (function () {
+    var q = new URLSearchParams(location.search), utm = {};
+    ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"].forEach(function (k) { if (q.get(k)) utm[k] = q.get(k).slice(0, 150); });
+    ["fbclid", "gclid", "ttclid", "msclkid"].some(function (k) { if (q.has(k)) { utm.click = k; return true; } });
+    var ref = document.referrer || "";
+    try { if (ref && new URL(ref).hostname === location.hostname) ref = ""; } catch (e) { ref = ""; }
+    return { utm: utm, referrer: ref, landing: location.pathname };
+  })();
+  function rememberSource() {
+    try { if (!sessionStorage.getItem(SRC_KEY)) sessionStorage.setItem(SRC_KEY, JSON.stringify(landing)); } catch (e) {}
+  }
+  var analyticsLoaded = false;
+  function loadAnalytics() {
+    rememberSource();
+    if (analyticsLoaded) return; analyticsLoaded = true;
+    var s = document.createElement("script");
+    s.async = true; s.src = BASE + "analytics.js?v=p7";
+    document.head.appendChild(s);
+  }
+  function applyConsent(prev) {
+    var v = get();
+    if (has("functional", v) !== has("functional", prev)) moveFunctional(has("functional", v));
+    if (has("analytics", v)) loadAnalytics();
+    else { queue = []; try { sessionStorage.removeItem(SRC_KEY); } catch (e) {} }
+    if (has("marketing", v)) { loadKlaviyo(); pending.splice(0).forEach(function (fn) { fn(); }); }
+    else pending = [];
+    paintEmbeds();
+    try { window.dispatchEvent(new CustomEvent("granula:consent", { detail: { functional: has("functional", v), analytics: has("analytics", v), marketing: has("marketing", v) } })); } catch (e) {}
+    // súhlas odvolaný po načítaní skriptu: PostHog vypnúť, stránku obnoviť, aby skripty nebežali
+    var lostA = has("analytics", prev) && !has("analytics", v) && analyticsLoaded;
+    var lostM = has("marketing", prev) && !has("marketing", v) && loaded;
+    if (lostA && window.posthog && window.posthog.opt_out_capturing) { try { window.posthog.opt_out_capturing(); window.posthog.reset(); } catch (e) {} }
+    if (lostA || lostM) location.reload();
+  }
 
   var loaded = false;
   function loadKlaviyo() {
@@ -28,42 +100,58 @@
 
   var bar;
   function show(forForm) {
-    if (bar) { bar.hidden = false; bar.classList.toggle("for-form", !!forForm); bar.querySelector("button").focus(); return; }
+    if (bar) {
+      bar.hidden = false; bar.classList.toggle("for-form", !!forForm); bar.classList.remove("open");
+      bar.querySelector('[name="c-functional"]').checked = has("functional");
+      bar.querySelector('[name="c-analytics"]').checked = has("analytics");
+      bar.querySelector('[name="c-marketing"]').checked = has("marketing");
+      bar.querySelector("button").focus(); return;
+    }
     bar = document.createElement("div");
     bar.className = "cookie-bar";
     bar.setAttribute("role", "dialog");
     bar.setAttribute("aria-label", "Súhlas s cookies");
     bar.innerHTML =
-      '<p><span class="cookie-form-note">Na zápis potrebujeme Klaviyo, a to beží len s marketingovými cookies. </span><b>Cookies? Len s tvojím súhlasom.</b> Nevyhnutné potrebujeme, aby web fungoval. ' +
-      "Marketingové (Klaviyo) nám pomáhajú posielať ti ponuky na mieru. " +
-      '<a href="' + BASE + 'ochrana-sukromia.html" data-privacy>Ochrana súkromia</a></p>' +
+      '<div class="cookie-txt"><p><span class="cookie-form-note">Na zápis potrebujeme Klaviyo, a to beží len s marketingovými cookies. </span><b>Cookies? Len s tvojím súhlasom.</b> Nevyhnutné potrebujeme, aby web fungoval. ' +
+      "Funkčné si pamätajú tvojich psov na tomto zariadení. Analytické (PostHog) nám ukazujú, kde sa dotazník zasekáva. Marketingové (Klaviyo) nám pomáhajú posielať ti ponuky na mieru. " +
+      '<a href="' + BASE + 'ochrana-sukromia.html#cookies" data-privacy>Ochrana súkromia</a></p>' +
+      '<fieldset class="cookie-opts"><legend class="sr-only">Vyber cookies</legend>' +
+      '<label><input type="checkbox" checked disabled> <span><b>Nevyhnutné</b> chod webu, košík a platba. Vždy zapnuté.</span></label>' +
+      '<label><input type="checkbox" name="c-functional"' + (has("functional") ? " checked" : "") + '> <span><b>Funkčné</b> zapamätanie psov z dotazníka a nastavení na tomto zariadení. Bez nich ich zabudneme po zatvorení záložky.</span></label>' +
+      '<label><input type="checkbox" name="c-analytics"' + (has("analytics") ? " checked" : "") + '> <span><b>Analytické</b> PostHog: návštevnosť, priechod dotazníkom a anonymizovaný záznam relácie (vyplnené polia nevidíme).</span></label>' +
+      '<label><input type="checkbox" name="c-marketing"' + (has("marketing") ? " checked" : "") + '> <span><b>Marketingové</b> Klaviyo: formuláre, emaily na mieru a pripomenutie nedokončenej objednávky.</span></label>' +
+      "</fieldset></div>" +
       '<div class="cookie-btns"><button type="button" class="btn btn-o btn-sm" data-cookie="all">Prijať všetky</button>' +
-      '<button type="button" class="btn btn-sm cookie-min" data-cookie="necessary">Len nevyhnutné</button></div>';
+      '<button type="button" class="btn btn-sm cookie-min" data-cookie="necessary">Len nevyhnutné</button>' +
+      '<button type="button" class="btn btn-sm cookie-min cookie-set" data-cookie-open aria-expanded="false">Nastaviť</button>' +
+      '<button type="button" class="btn btn-sm cookie-min cookie-save" data-cookie="choice">Uložiť výber</button></div>';
     bar.addEventListener("click", function (e) {
+      if (e.target.closest("[data-cookie-open]")) {
+        bar.classList.add("open");
+        e.target.closest("[data-cookie-open]").setAttribute("aria-expanded", "true");
+        bar.querySelector('[name="c-analytics"]').focus();
+        return;
+      }
       var b = e.target.closest("[data-cookie]");
       if (!b) return;
-      var prev = get();
-      set(b.dataset.cookie);
+      var prev = get(), v = b.dataset.cookie;
+      if (v === "choice") v = valueOf({ functional: bar.querySelector('[name="c-functional"]').checked, analytics: bar.querySelector('[name="c-analytics"]').checked, marketing: bar.querySelector('[name="c-marketing"]').checked });
+      set(v);
       bar.hidden = true;
-      if (b.dataset.cookie === "all") { loadKlaviyo(); paintEmbeds(); pending.splice(0).forEach(function (fn) { fn(); }); }
-      else {
-        pending = []; paintEmbeds();
-        // súhlas odvolaný po načítaní Klaviyo: obnoviť stránku, aby skript nebežal
-        if (prev === "all" && loaded) location.reload();
-      }
+      applyConsent(prev);
     });
     bar.classList.toggle("for-form", !!forForm);
     document.body.appendChild(bar);
   }
 
-  // Klaviyo formuláre: bez súhlasu ukážeme lištu a formulár otvoríme hneď po „Prijať všetky“
+  // Klaviyo formuláre: bez súhlasu ukážeme lištu a formulár otvoríme hneď po súhlase s marketingovými cookies
   var pending = [];
   function withKlaviyo(fn) {
-    if (get() === "all") { loadKlaviyo(); fn(); return; }
+    if (has("marketing")) { loadKlaviyo(); fn(); return; }
     pending.push(fn); show(true);
   }
   function paintEmbeds() {
-    var ok = get() === "all";
+    var ok = has("marketing");
     [].forEach.call(document.querySelectorAll(".kl-fallback"), function (f) { f.hidden = ok; });
     if (ok) setTimeout(checkEmbeds, 8000);
   }
@@ -96,7 +184,8 @@
       else location.href = "/#zapis";
       return;
     }
-    if (e.target.closest("[data-klaviyo-consent]")) { set("all"); if (bar) bar.hidden = true; loadKlaviyo(); paintEmbeds(); }
+    // „Povoliť a zobraziť formulár“: súhlas iba s marketingovými cookies, analytická voľba ostáva
+    if (e.target.closest("[data-klaviyo-consent]")) { var prev = get(); set(valueOf(Object.assign(current(), { marketing: true }))); if (bar) bar.hidden = true; applyConsent(prev); }
   });
 
   // Klaviyo podľa svojho nastavenia sám otvára pop-up („Email Popup“, YcSYzw) a flyout formuláre. Na webe ich
@@ -124,6 +213,27 @@
 
   var v = get();
   paintEmbeds();
-  if (v === "all") loadKlaviyo();
-  else if (v !== "necessary") show();
+  if (has("marketing", v)) loadKlaviyo();
+  if (has("analytics", v)) loadAnalytics();
+  if (!valid(v)) show();
+  window.GranulaConsent = { has: function (cat) { return has(cat); }, show: show };
+  /* ---------- Klaviyo udalosti (SPEC P7): iba so súhlasom s marketingovými cookies ----------
+     startedCheckout: opustený košík (email z kroku doručenia, pes, recept, cena, odkaz späť na výsledok).
+     placedOrder: na stránke Hotovo, aby flow opusteného košíka v Klaviyo skončil. */
+  function klaviyoTrack(email, firstName, metric, props) {
+    if (!has("marketing") || !email) return;
+    loadKlaviyo();
+    var k = window.klaviyo;
+    if (!k || !k.identify) return;
+    try {
+      var who = { email: email };
+      if (firstName) who.first_name = firstName;
+      k.identify(who);
+      k.track(metric, props);
+    } catch (e) {}
+  }
+  window.GranulaMarketing = {
+    startedCheckout: function (d) { klaviyoTrack(d.email, d.firstName, "Started Checkout", d.event); },
+    placedOrder: function (d) { klaviyoTrack(d.email, d.firstName, "Placed Order", d.event); }
+  };
 })();

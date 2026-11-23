@@ -63,7 +63,7 @@ export function render(template: EmailTemplate, vars: Vars, flags: Record<string
 type OrderLike = { id: string; number: number; kind: string; amount_cents: number; items: unknown; ship_to: unknown; created_at?: string | null };
 export type EmailDog = { name?: string | null; sex?: string | null } | null | undefined;
 
-function productOf(items: unknown) {
+export function productOf(items: unknown) {
   const first = (Array.isArray(items) ? (items as { sku: string }[]) : [])[0];
   const sku = allSkus().find((x) => x.sku === first?.sku);
   const productId = sku?.productId ?? '';
@@ -75,7 +75,7 @@ function productOf(items: unknown) {
   };
 }
 
-function productById(productId: string, bagId: string) {
+export function productById(productId: string, bagId: string) {
   const sku = allSkus().find((x) => x.productId === productId && String(x.kg) === String(bagId));
   return { productId, bagKg: String(bagId), name: sku ? sku.name.replace(/ \d+ kg.*$/, '') : productId, slug: PRODUCT_SLUG[productId] ?? 'morka-hus-kacica' };
 }
@@ -110,7 +110,7 @@ function shippingCentsFor(shipTo: unknown, bagKg: string, plan: 'raz' | 'mesiac'
   }
 }
 
-function common(siteUrl: string, name: string | null | undefined, dog: EmailDog, withdrawFor?: number) {
+export function common(siteUrl: string, name: string | null | undefined, dog: EmailDog, withdrawFor?: number) {
   const d = dogCases(dog?.name, dog?.sex);
   const s = site(siteUrl);
   return {
@@ -128,9 +128,9 @@ function common(siteUrl: string, name: string | null | undefined, dog: EmailDog,
 }
 
 /** bez krstného mena: „Ďakujeme!“ / „Ahoj,“ namiesto „Ďakujeme, !“ */
-const tidy = (s: string) => s.replace(/,\s*!/g, '!').replace(/Ahoj\s+,/g, 'Ahoj,');
+export const tidy = (s: string) => s.replace(/,\s*!/g, '!').replace(/Ahoj\s+,/g, 'Ahoj,');
 
-function footerText(v: Vars) {
+export function footerText(v: Vars) {
   return [
     '',
     `Niečo nesedí alebo sa chceš na niečo opýtať? Odpíš na tento e-mail alebo napíš na ${SUPPORT_EMAIL}.`,
@@ -469,53 +469,4 @@ export function loginCodeEmail(i: { to: string; name?: string | null; code: stri
     footerText(v),
   ].join('\n');
   return { key: i.key, kind: 'login_code', to: i.to, subject: `${i.code} je tvoj kód na prihlásenie do Granuly`, html, text, orderId: null };
-}
-
-/* ---------------------------------------------------------------- 9 zmena predplatného: pauza, obnovenie, zrušenie (SPEC P5) */
-
-export type SubscriptionChangeKind = 'paused' | 'resumed' | 'cancel_requested' | 'cancel_revoked';
-
-export function subscriptionChangeEmail(i: {
-  kind: SubscriptionChangeKind;
-  key: string;
-  to: string;
-  name?: string | null;
-  dog?: EmailDog;
-  siteUrl: string;
-  /** pri obnovení: ďalšia platba; pri zrušení: posledný deň predplatného */
-  date?: Date | null;
-}): Mail {
-  const d = dogCases(i.dog?.name, i.dog?.sex);
-  const date = i.date ? dateSk(i.date) : '';
-  const c = {
-    paused: {
-      subject: 'Predplatné je pozastavené',
-      headline: 'Predplatné je pozastavené',
-      body: `predplatné granúl pre ${d.acc} sme pozastavili. Kým ho neobnovíš, nebudeme ti nič posielať ani účtovať.`,
-      detail: 'Obnoviť ho môžeš kedykoľvek v účte jedným klikom.',
-    },
-    resumed: {
-      subject: 'Predplatné opäť beží',
-      headline: 'Predplatné opäť beží',
-      body: `predplatné granúl pre ${d.acc} sme obnovili.`,
-      detail: date ? `Najbližšia platba a odoslanie vreca: ${date}. Pár dní vopred ti to pripomenieme.` : '',
-    },
-    cancel_requested: {
-      subject: 'Predplatné sme zrušili',
-      headline: 'Predplatné sme zrušili',
-      body: `predplatné granúl pre ${d.acc} sme zrušili. Ďalšie platby ani dodávky už nebudú.`,
-      detail: `${date ? `Predplatné skončí ${date}. ` : ''}Ak si to rozmyslíš, do vtedy ho v účte obnovíš jedným klikom. Zrušenie predplatného nie je odstúpenie od zmluvy.`,
-    },
-    cancel_revoked: {
-      subject: 'Predplatné pokračuje',
-      headline: 'Predplatné pokračuje',
-      body: `zrušenie predplatného granúl pre ${d.acc} sme odvolali, predplatné pokračuje ako doteraz.`,
-      detail: date ? `Najbližšia platba a odoslanie vreca: ${date}.` : '',
-    },
-  }[i.kind];
-  const first = (i.name ?? '').trim().split(/\s+/)[0] ?? '';
-  const v: Vars = { ...common(i.siteUrl, i.name, i.dog), eyebrow: 'Tvoje predplatné', headline: c.headline, preheader: c.body, body: c.body, detail: c.detail };
-  const html = render('9-zmena-predplatneho', v, { has_name: !!first, has_detail: !!c.detail });
-  const text = [`Ahoj${first ? ` ${first}` : ''}, ${c.body}`, ...(c.detail ? ['', c.detail] : []), '', `Môj účet: ${v.url_account}`, footerText(v)].join('\n');
-  return { key: i.key, kind: `subscription_${i.kind}`, to: i.to, subject: c.subject, html, text, orderId: null };
 }

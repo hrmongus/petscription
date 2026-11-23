@@ -3,7 +3,7 @@ import type { Mailer } from '../email';
 import { loginCodeEmail } from '../emails';
 
 /*
- * Prihlásenie do /ucet bez hesla: jednorazový kód e-mailom (Supabase email OTP, SPEC §10.25).
+ * Prihlásenie do /ucet bez hesla: jednorazový kód e-mailom (Supabase email OTP, SPEC §10.36).
  *   1. POST /api/ucet/kod { email }: kód sa pošle IBA existujúcemu zákazníkovi; odpoveď je vždy rovnaká
  *      (nedá sa zistiť, kto je zákazník). Kód vygeneruje Supabase (auth.admin.generateLink → email_otp),
  *      e-mail pošleme my cez Resend v dizajne Granuly (šablóna 8), nie SMTP Supabase.

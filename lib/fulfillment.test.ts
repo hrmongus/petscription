@@ -189,3 +189,43 @@ describe('emaily z webhooku (krok 5)', () => {
     expect(m.audits.some((a) => (a as { action: string }).action === 'email.failed')).toBe(true);
   });
 });
+
+describe('P7: udalosti pre analytiku a dotazník (deps.events)', () => {
+  function rec() {
+    const calls: string[] = [];
+    const events = {
+      orderCreated: vi.fn(async ({ order, metadata }: { order: Order; metadata: Record<string, string> }) => void calls.push(`order:${order.kind}:${metadata.quiz_session ?? '-'}`)),
+      renewed: vi.fn(async ({ order }: { order: Order }) => void calls.push(`renewed:${order.kind}`)),
+      renewalFailed: vi.fn(async () => void calls.push('failed')),
+      cancelled: vi.fn(async ({ atPeriodEnd }: { atPeriodEnd: boolean }) => void calls.push(`cancelled:${atPeriodEnd}`)),
+    };
+    return { calls, events: events as never };
+  }
+  test('objednávka a obnovenie iba raz; chyba udalosti webhook neprerušuje', async () => {
+    const m = memStore(), f = fakeStripe(), r = rec();
+    const deps = { store: m.store, stripe: f.s, cycle: CYCLE, now: () => NOW, events: r.events };
+    await handleCheckoutCompleted(session({ metadata: { ...META, quiz_session: 'q1' } }), deps);
+    await handleCheckoutCompleted(session({ metadata: { ...META, quiz_session: 'q1' } }), deps);
+    const inv = { id: 'in_r1', billing_reason: 'subscription_cycle', amount_paid: 7240, parent: { subscription_details: { subscription: 'sub_1', metadata: {} } }, lines: { data: [] } } as never;
+    await handleInvoicePaid(inv, { ...deps, now: () => new Date('2027-01-03T06:00:00Z') });
+    await handleInvoicePaid(inv, { ...deps, now: () => new Date('2027-01-03T06:00:00Z') });
+    expect(r.calls).toEqual(['order:first:q1', 'renewed:renewal']);
+    const broken = { ...deps, events: { orderCreated: async () => { throw new Error('PostHog 500'); } } };
+    await expect(handleCheckoutCompleted(session({ id: 'cs_test_2', subscription: 'sub_2' }), broken)).resolves.toMatchObject({ kind: 'first' });
+  });
+  test('zrušenie: raz pri žiadosti ku koncu obdobia, pri skutočnom konci už nie; okamžité zrušenie raz', async () => {
+    const m = memStore(), f = fakeStripe(), r = rec();
+    const deps = { store: m.store, stripe: f.s, cycle: CYCLE, now: () => NOW, events: r.events };
+    await handleCheckoutCompleted(session(), deps);
+    const base = { id: 'sub_1', status: 'trialing', trial_end: 1800000000, pause_collection: null, items: { data: [] } };
+    await handleSubscriptionChanged({ ...base, cancel_at_period_end: true } as never, deps, { cancel_at_period_end: false } as never);
+    await handleSubscriptionChanged({ ...base, cancel_at_period_end: true, trial_end: 1800000100 } as never, deps, { trial_end: 1800000000 } as never);
+    await handleSubscriptionChanged({ ...base, status: 'canceled', cancel_at_period_end: true } as never, deps, { status: 'trialing' } as never);
+    expect(r.calls.filter((c) => c.startsWith('cancelled'))).toEqual(['cancelled:true']);
+
+    await handleCheckoutCompleted(session({ id: 'cs_test_3', subscription: 'sub_3' }), deps);
+    await handleSubscriptionChanged({ ...base, id: 'sub_3', status: 'canceled', cancel_at_period_end: false, cancel_at: null } as never, deps);
+    await handleSubscriptionChanged({ ...base, id: 'sub_3', status: 'canceled', cancel_at_period_end: false, cancel_at: null } as never, deps);
+    expect(r.calls.filter((c) => c.startsWith('cancelled'))).toEqual(['cancelled:true', 'cancelled:false']);
+  });
+});

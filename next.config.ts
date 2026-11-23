@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next';
 import { headers, indexDirs, redirects, rewrites } from './lib/site-routes';
+import { analyticsRewrites } from './lib/analytics-routes';
 
 // Statický web je v public/granula/ a servíruje sa z koreňa domény; všetky URL pravidlá sú v lib/site-routes.ts.
 const nextConfig: NextConfig = {
@@ -16,7 +17,8 @@ const nextConfig: NextConfig = {
     return redirects();
   },
   async rewrites() {
-    return { beforeFiles: [], afterFiles: [], fallback: rewrites() };
+    // P7: /ingest → PostHog (lib/analytics-routes.ts)
+    return { beforeFiles: analyticsRewrites(), afterFiles: [], fallback: rewrites() };
   },
   async headers() {
     return headers();

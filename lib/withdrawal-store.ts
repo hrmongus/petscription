@@ -1,3 +1,4 @@
+import { trackWithdrawal } from './analytics';
 import { db } from './db';
 import { defaultMailer } from './email';
 import { FhbClient, fhbConfigFromEnv } from './fhb/client';
@@ -47,5 +48,6 @@ export async function withdrawalDepsFromEnv(): Promise<WithdrawalDeps> {
     mail: await defaultMailer(),
     adminTo: process.env.ADMIN_EMAIL || null,
     siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.granula.sk',
+    track: (w) => trackWithdrawal(w),
   };
 }

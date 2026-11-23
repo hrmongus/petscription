@@ -1,6 +1,6 @@
 # PROGRESS — Projekt 3: zákaznícky portál a odstúpenie od zmluvy (SPEC P4)
 
-Branch: `p3-portal` (z main 23. 11.) · Rozhodnutia: SPEC §10.25 a ďalej · Paralelne: `p2-admin` (admin/), `p7-analytics`.
+Branch: `p3-portal` (z main 23. 11.) · Rozhodnutia: SPEC §10.35 (odstúpenie) a §10.36 (/ucet), pôvodne §10.25 · Paralelne: `p2-admin` (admin/), `p7-analytics`.
 
 | Krok | Stav |
 |---|---|
@@ -42,7 +42,7 @@ Branch: `p3-portal` (z main 23. 11.) · Rozhodnutia: SPEC §10.25 a ďalej · Pa
 
 ## Pripomienky používateľa k priorite 1 (23. 11.)
 - Nezhoda e-mailu alebo neexistujúce číslo → hláška, nič sa nezaloží ani nezruší (krok 1 sa overí na serveri, `confirm: false`). Overené: 422 pri čísle 55/58/999999, správny e-mail → krok 2.
-- Refund nikdy automaticky; migrácia `p4_withdrawal_refund` (lehota na refund, stav vrátenia). Stĺpce pre chat C: SPEC §10.25.
+- Refund nikdy automaticky; migrácia `p4_withdrawal_refund` (lehota na refund, stav vrátenia). Stĺpce pre chat C: SPEC §10.35.
 
 ## Priorita 2: `/ucet` hotové (23. 11.)
 - **Súbory:** `lib/ucet/` (`session.ts`, `login.ts`, `plan.ts`, `actions.ts`, `account.ts`, `portal.ts`, `deps.ts`, `http.ts`, `ucet.test.ts`), `app/api/ucet/*` (kod, prihlasit, odhlasit, ja, faktury, karta, odstupenie, predplatne/[id]/[akcia]), `public/granula/ucet.html`, e-maily `8-prihlasovaci-kod`, `9-zmena-predplatneho`, migrácia `20261123104853_p4_ucet.sql` (aplikovaná, verzia sedí), balík `@supabase/ssr`. Zdieľané súbory: `lib/database.types.ts` (nové stĺpce), `lib/emails.ts` (nové funkcie na konci), `lib/fhb/sync.test.ts` (3 nové polia v mocku predplatného).
@@ -65,5 +65,12 @@ Porovnanie (prečítané z `origin/p2-admin` 7710f00 a `origin/p7-analytics` 534
 - **Doprava:** `syncShipping` (C, porovná so Stripe) nahradí dvojitý `computePlan` v `changeDelivery`.
 - **Objednávka vo FHB:** `fhbState` + `updateOrderDelivery` (C) nahradia vlastnú logiku v `changeDelivery` (rovnaké pravidlo pending/„už sa balí“; výpadok FHB → hláška namiesto ticha). `cancelOrder` (C) zvážiť v `lib/withdrawal.ts` `stopOrder` (rozdiel: odstúpenie pri `paid` bez FHB nesmie zlyhať, keď FHB nie je nastavené).
 - **Analytika:** `trackWithdrawal(...)` po zázname v `submitWithdrawal`; `consent` pošle stránka (`GranulaConsent.has('analytics')`), v `/ucet` rovnako.
-  - ⚠️ Podmienka používateľa (SPEC §10.25): bez súhlasu iba naozaj anonymne (žiadne id ani hash z nich, náhodné `distinct_id` aj `uuid`, `$process_person_profile: false`), inak neposielať. Verzia E (5347eae) to nespĺňa: bez súhlasu posiela `order_id`, `subscription_id` a `distinct_id`/`uuid` = hash z `withdrawal:<id>`. Pri integrácii: test na presný payload bez súhlasu; ak E nebude opravené, bez súhlasu sa `trackWithdrawal` nezavolá.
+  - ⚠️ Podmienka používateľa (SPEC §10.35): bez súhlasu iba naozaj anonymne (žiadne id ani hash z nich, náhodné `distinct_id` aj `uuid`, `$process_person_profile: false`), inak neposielať. Verzia E (5347eae) to nespĺňa: bez súhlasu posiela `order_id`, `subscription_id` a `distinct_id`/`uuid` = hash z `withdrawal:<id>`. Pri integrácii: test na presný payload bez súhlasu; ak E nebude opravené, bez súhlasu sa `trackWithdrawal` nezavolá.
 - ⚠️ **SPEC:** C použil čísla §10.25–34; moje §10.25 pri merge prečíslujem na najbližšie voľné a dám vedieť.
+
+## Zjednotenie s adminom (C) a analytikou (E), 23. 11. (main 44c90f6)
+- Merge main do `p3-portal`. Konflikty: SPEC (moje rozhodnutia prečíslované na **§10.35** odstúpenie a **§10.36** `/ucet`), `lib/email-templates.ts` (pregenerované).
+- `/ucet` používa spoločné funkcie: `previewPlanChange` / `applyPlanChange` / `syncShipping` (lib/subscription-actions.ts), `resolveDelivery` (lib/checkout.ts), `updateOrderDelivery` (lib/order-actions.ts), `skippedCharge`. Vlastné ostali iba pravidlá zákazníka (vhodné receptúry, box, limity dátumov, dôvod zrušenia). `lib/ucet/plan.ts` = iba vhodné receptúry.
+- E-maily k zmenám = `lib/emails-admin.ts` + šablóna `9-zmena` (C); pridané `subscriptionPauseEmail`, `subscriptionCancelledEmail` dostal voliteľný kľúč a záver. Moja šablóna `9-zmena-predplatneho` zrušená.
+- Odstúpenie: `stopOrder` ostal vlastný (pri `paid` musí prejsť aj bez FHB; `cancelOrder` od C by vtedy zlyhal). `trackWithdrawal()` po zázname, súhlas posiela stránka; test na presný obsah bez súhlasu.
+- Testy 205 ✅, typecheck ✅.

@@ -43,6 +43,8 @@ export type WithdrawalInput = {
   /** prihlásený zákazník (/ucet): zhoda podľa zákazníka namiesto e-mailu */
   customerId?: string | null;
   source: 'web' | 'ucet';
+  /** súhlas s analytickými cookies z prehliadača (GranulaConsent.has('analytics')); bez neho analytika naozaj anonymne */
+  analyticsConsent?: boolean;
   ip?: string | null;
   userAgent?: string | null;
 };
@@ -70,6 +72,8 @@ export type WithdrawalDeps = {
   mail?: Mailer;
   adminTo?: string | null;
   siteUrl: string;
+  /** P7 trackWithdrawal (lib/analytics.ts): so súhlasom na osobu, bez neho bez akéhokoľvek id (SPEC §10.35) */
+  track?: (w: { withdrawalId: string; customerId: string; orderId: string; subscriptionId: string | null; consent: boolean; reason: string | null }) => Promise<void>;
   now?: () => Date;
 };
 
@@ -119,6 +123,8 @@ export const WithdrawalFormSchema = z.object({
   contractRef: z.string().trim().min(1, 'Napíš číslo objednávky alebo predplatného.').max(60),
   reason: z.string().trim().max(1000).optional().nullable(),
   confirm: z.boolean(),
+  /** súhlas s analytickými cookies (prehliadač) */
+  consent: z.boolean().optional(),
   /** pasca na roboty (skryté pole) */
   website: z.string().max(0).optional(),
 });
@@ -182,7 +188,7 @@ export async function submitWithdrawal(input: WithdrawalInput, deps: WithdrawalD
   const reason = input.reason?.trim() || null;
 
   // zhoda: objednávka existuje a e-mail (alebo prihlásený zákazník) sedí. Inak sa NIČ nezaloží ani nezruší a formulár
-  // ukáže chybu (SPEC §10.25). Bez overovania kódom/e-mailom: zákon zakazuje sťažovať odstúpenie.
+  // ukáže chybu (SPEC §10.35). Bez overovania kódom/e-mailom: zákon zakazuje sťažovať odstúpenie.
   const { order, customer } = await matchOrder(input, store);
 
   // dvojklik / opakované odoslanie a ochrana proti zneužitiu
@@ -308,6 +314,12 @@ export async function submitWithdrawal(input: WithdrawalInput, deps: WithdrawalD
   await store
     .audit({ actor: input.source === 'ucet' ? 'customer' : 'customer:web', action: 'withdrawal.received', entity: 'withdrawal', entity_id: w.id, after: { ...patch, order_id: order.id } as unknown as Json })
     .catch((e) => console.error('[odstupenie] audit zlyhal', e));
+
+  // 5. analytika (P7): nikdy nezablokuje odstúpenie
+  if (deps.track)
+    await deps
+      .track({ withdrawalId: w.id, customerId: customer.id, orderId: order.id, subscriptionId: sub?.id ?? null, consent: input.analyticsConsent === true, reason })
+      .catch((e) => console.error('[odstupenie] analytika zlyhala', e));
 
   return { id: w.id, submittedAt: now.toISOString(), submittedAtText: dateTimeSk(now), name, email, contractRef, reason, emailSent, duplicate: false };
 }

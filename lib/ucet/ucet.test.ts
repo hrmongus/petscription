@@ -4,7 +4,9 @@ import type { Mail } from '../email';
 import { withdrawalInfo } from './account';
 import * as A from './actions';
 import { requestCode, verifyCode, type LoginDeps } from './login';
-import { computePlan } from './plan';
+import { previewPlanChange } from '../subscription-actions';
+import { OrderActionError } from '../order-actions';
+import { chooseProduct, eligibleProducts } from './plan';
 
 const NOW = new Date('2026-11-23T12:00:00Z');
 const ANSWERS = { dogname: 'Bruno', sex: 'pes', breed: 'labradorsky-retriever', kg: 30, years: '3', months: '0', activity: 'mesto', neutered: 'ano', body: 'akurat', focus: [], allergies: ['ziadne'] };
@@ -68,42 +70,29 @@ describe('prihlásenie kódom', () => {
 
 /* ---------------------------------------------------------------- prepočet */
 
-describe('computePlan', () => {
-  const base = { answers: ANSWERS, birthDate: null, now: NOW, current: { productId: '', bagId: '9' }, method: 'dpd_pickup' as const };
-
-  it('ponúka iba vhodné receptúry a odmietne nevhodnú', () => {
-    const r = computePlan({ ...base, current: { productId: 'x', bagId: '9' } });
-    expect(r.productSwitched).toBe(true); // neznáma súčasná → odporúčaná
-    expect(r.productId).toBe(r.recommendedId);
-    expect(r.products.every((p) => p.eligible)).toBe(true);
-    expect(r.products.some((p) => p.id === r.recommendedId && p.recommended)).toBe(true);
+describe('vhodné receptúry (/ucet)', () => {
+  it('odporúčaná je medzi vhodnými, nevhodná a neznáma sa odmietnu', () => {
+    const e = eligibleProducts({ answers: ANSWERS, birthDate: null, now: NOW });
+    expect(e.products.some((p) => p.id === e.recommendedId && p.recommended)).toBe(true);
+    expect(() => chooseProduct(e, e.recommendedId, 'neexistuje')).toThrow('Neznáma receptúra');
+    const bad = ['hovadzie-morka-jahna', 'morka-hus-kacica', 'hovadzie', 'jahna', 'jelen-kralik'].find((id) => !e.products.some((p) => p.id === id));
+    if (bad) expect(() => chooseProduct(e, e.recommendedId, bad)).toThrow('nehodí');
   });
-
-  it('vyššia váha = viac gramov a kratšie D, cena podľa balenia', () => {
-    const cur = computePlan(base);
-    const heavier = computePlan({ ...base, current: { productId: cur.productId, bagId: '9' }, kg: 40 });
-    expect(heavier.gramsPerDay).toBeGreaterThan(cur.gramsPerDay);
-    expect(heavier.daysPerBag).toBeLessThan(cur.daysPerBag);
-    expect(heavier.unitAmountCents).toBe(cur.unitAmountCents);
-    expect(heavier.shippingCents).toBe(0); // výdajné miesto pri predplatnom zadarmo
-    expect(computePlan({ ...base, method: 'sps_courier', current: { productId: cur.productId, bagId: '9' } }).shippingCents).toBe(190);
-  });
-
-  it('balenie musí sedieť s doručením a váha s rozsahom', () => {
-    expect(() => computePlan({ ...base, method: 'packeta_point', bagId: '18' })).toThrow('Najprv zmeň doručenie');
-    expect(() => computePlan({ ...base, kg: 200 })).toThrow('od 0,5 do 90 kg');
+  it('bez voľby ostane súčasná, ak je vhodná, inak odporúčaná', () => {
+    const e = eligibleProducts({ answers: ANSWERS, birthDate: null, now: NOW });
+    expect(chooseProduct(e, e.recommendedId)).toEqual({ productId: e.recommendedId, switched: false });
+    expect(chooseProduct(e, 'neznama')).toEqual({ productId: e.recommendedId, switched: true });
   });
 });
-
-/* ---------------------------------------------------------------- akcie */
 
 type Sub = Tables<'subscriptions'>;
 const CUSTOMER = { id: 'c1', email: 'jana@example.sk', name: 'Jana Nováková' } as Tables<'customers'>;
 
-function actionDeps(subOver: Partial<Sub> = {}, fhbStatus = 'pending') {
-  const sub = { id: 's1', customer_id: 'c1', dog_id: 'd1', address_id: 'a1', stripe_subscription_id: 'sub_1', status: 'active', product_id: '', bag_id: '9', grams_per_day: 300, days_per_bag: 30, unit_amount_cents: 6750, next_charge_at: '2026-12-26T06:00:00.000Z', last_delivered_at: '2026-11-26T10:00:00Z', cancel_at: null, cancel_reason: null, cancel_requested_at: null, created_at: '2026-11-23T10:00:00Z', ...subOver } as Sub;
-  sub.product_id ||= computePlan({ answers: ANSWERS, birthDate: null, now: NOW, current: { productId: 'x', bagId: '9' }, method: 'dpd_pickup' }).recommendedId;
+function actionDeps(subOver: Partial<Sub> = {}, fhbMode: 'fhb' | 'none' | 'down' = 'fhb') {
+  const rec = eligibleProducts({ answers: ANSWERS, birthDate: null, now: NOW }).recommendedId;
+  const sub = { id: 's1', customer_id: 'c1', dog_id: 'd1', address_id: 'a1', stripe_subscription_id: 'sub_1', status: 'active', product_id: rec, bag_id: '9', grams_per_day: 300, days_per_bag: 30, unit_amount_cents: 6750, plan: 'mesiac', next_charge_at: '2026-12-26T06:00:00.000Z', last_delivered_at: '2026-11-26T10:00:00Z', engine_snapshot: null, cancel_at: null, cancel_reason: null, cancel_requested_at: null, created_at: '2026-11-23T10:00:00Z', updated_at: '', ...subOver } as Sub;
   const calls: string[] = [];
+  const mails: Mail[] = [];
   const orders = [{ id: 'o1', number: 58, status: 'sent_to_fhb', items: [{ sku: 'GRAN-hovadzie-9', qty: 1 }], amount_cents: 6750, ship_to: { email: 'jana@example.sk' }, created_at: '2026-11-23T10:00:00Z' }] as unknown as Tables<'orders'>[];
   const deps: A.ActionDeps = {
     store: {
@@ -112,30 +101,38 @@ function actionDeps(subOver: Partial<Sub> = {}, fhbStatus = 'pending') {
       getAddress: async () => ({ id: 'a1', delivery_method: 'dpd_pickup', point_id: 'SK1' }) as never,
       ordersOfSubscription: async () => orders,
       updateSubscription: async (_id, p) => void (Object.assign(sub, p), calls.push('db.sub')),
-      updateDog: async () => void calls.push('db.dog'),
       updateCustomer: async () => void calls.push('db.customer'),
       insertAddress: async (row) => ({ id: 'a2', ...row }) as never,
-      updateOrder: async () => void calls.push('db.order'),
       audit: async (r) => void calls.push(`audit:${r.action}`),
     },
     stripe: {
       move: async () => void calls.push('stripe.move'),
       pause: async () => void calls.push('stripe.pause'),
       resume: async () => void calls.push('stripe.resume'),
-      changePlan: async () => void calls.push('stripe.changePlan'),
       cancelAtPeriodEnd: async (_id, on) => void calls.push(`stripe.cancel:${on}`),
-      ensureProduct: async () => {},
     },
-    fhb: { getOrder: async () => ({ status: fhbStatus }) as never, updateOrder: async () => void calls.push('fhb.put') },
-    fhbOptions: { siteUrl: 'https://www.granula.sk', notifyToken: 't', services: { dpd_pickup: 'dpd_sk' } },
-    prepareDelivery: async () => ({ shipTo: { name: 'Jana Nováková', email: 'jana@example.sk', phone: '+421905123456', country: 'SK', delivery_method: 'dpd_pickup', point_id: 'SK2', point_label: 'Nové miesto', point_address: { street: 'Ulica 1', city: 'Mesto', zip: '01001' } }, point: { id: 'SK2', name: 'N', street: 'Ulica 1', city: 'Mesto', zip: '01001', country: 'SK', kind: 'shop' }, shippingCents: 0, customer: {} as never }),
+    plan: {
+      preview: (ctx, input) => previewPlanChange(ctx, input), // skutočný spoločný výpočet (C)
+      apply: async (_ctx, p) => void (calls.push('plan.apply'), Object.assign(sub, { days_per_bag: p.quote.daysPerBag, next_charge_at: p.nextCharge.toISOString(), product_id: p.quote.productId, bag_id: p.quote.bagId })),
+      syncShipping: async (_s, m) => (calls.push(`ship:${m}`), { before: 0, after: m === 'sps_courier' ? 190 : 0, changed: m === 'sps_courier' }),
+    },
+    resolveDelivery: async (d) => {
+      calls.push(`resolve:${d.method}:${d.email}`);
+      return { shipTo: { name: d.name, email: d.email, phone: '+421905123456', country: 'SK', delivery_method: 'dpd_pickup', point_id: 'SK2', point_label: 'Nové miesto', point_address: { street: 'Ulica 1', city: 'Mesto', zip: '01001' } }, point: { id: 'SK2', name: 'N', street: 'Ulica 1', city: 'Mesto', zip: '01001', country: 'SK', kind: 'shop' } };
+    },
+    updateOrderDelivery: async () => {
+      if (fhbMode === 'none') throw new OrderActionError('Doručenie sa už nedá zmeniť: FHB ju už spracúva (stav confirmed).');
+      if (fhbMode === 'down') throw new OrderActionError('Doručenie sa už nedá zmeniť: FHB teraz neodpovedá (timeout). Skús znova.');
+      calls.push('order.update');
+      return { mode: 'fhb' };
+    },
     isBox: async () => false,
     cycle: { leadDays: 7, shipDays: 3 },
-    mail: async () => 'sent',
+    mail: async (m) => (mails.push(m), 'sent'),
     siteUrl: 'https://www.granula.sk',
     now: () => NOW,
   };
-  return { deps, sub, calls };
+  return { deps, sub, calls, mails };
 }
 
 describe('akcie /ucet', () => {
@@ -173,29 +170,35 @@ describe('akcie /ucet', () => {
     const r = await A.changeWeight(t.deps, CUSTOMER, 's1', { kg: '40', preview: true });
     const p = r.preview as A.PlanPreview;
     expect(p.after.gramsPerDay).toBeGreaterThan(0);
-    expect(t.calls.filter((c) => c.startsWith('stripe') || c.startsWith('db'))).toEqual([]);
+    expect(t.calls.filter((c) => c.startsWith('stripe') || c.startsWith('db') || c.startsWith('plan'))).toEqual([]);
     await A.changeWeight(t.deps, CUSTOMER, 's1', { kg: '40', preview: false });
-    expect(t.calls.filter((c) => c === 'stripe.changePlan')).toHaveLength(1);
+    expect(t.calls.filter((c) => c === 'plan.apply')).toHaveLength(1);
+    expect(t.mails.at(-1)?.kind).toBe('subscription_changed');
     // posledné doručenie 26. 11. + D_nové − 7
     const expected = new Date(Date.UTC(2026, 10, 26 + p.after.daysPerBag - 7, 6)).toISOString();
     expect(t.sub.next_charge_at).toBe(expected);
     expect(t.sub.days_per_bag).toBe(p.after.daysPerBag);
   });
 
-  it('nevhodná receptúra sa odmietne', async () => {
+  it('nevhodná receptúra sa odmietne, rovnaké D ponechá dátum (§10.30)', async () => {
     const t = actionDeps();
     await expect(A.changeRecipeOrBag(t.deps, CUSTOMER, 's1', { productId: 'neexistuje', preview: true })).rejects.toThrow('Neznáma receptúra');
+    const p = (await A.changeRecipeOrBag(t.deps, CUSTOMER, 's1', { preview: true })).preview as A.PlanPreview;
+    if (p.after.daysPerBag === t.sub.days_per_bag) expect(p.after.nextChargeAt).toBe(t.sub.next_charge_at);
+    await expect(A.changeRecipeOrBag(t.deps, CUSTOMER, 's1', { bagId: '5', preview: true })).rejects.toThrow();
   });
 
-  it('doručenie: objednávka vo FHB pending sa upraví, balená nie („už sa balí“)', async () => {
-    const a = actionDeps({}, 'pending');
-    const r1 = await A.changeDelivery(a.deps, CUSTOMER, 's1', {});
-    expect(a.calls).toContain('fhb.put');
+  it('doručenie: overenie ako checkout s e-mailom účtu, pending sa upraví, balená nie („už sa balí“), výpadok FHB', async () => {
+    const a = actionDeps({}, 'fhb');
+    const r1 = await A.changeDelivery(a.deps, CUSTOMER, 's1', { method: 'dpd_pickup', firstName: 'Jana', lastName: 'Nováková', email: 'iny@x.sk', phone: '0905123456', point: { id: 'SK2' } });
+    expect(a.calls).toContain('resolve:dpd_pickup:jana@example.sk');
+    expect(a.calls).toContain('ship:dpd_pickup');
+    expect(a.calls).toContain('order.update');
     expect(r1.message).toContain('Zmenili sme aj objednávku č. 58');
-    const b = actionDeps({}, 'confirmed');
-    const r2 = await b.deps && (await A.changeDelivery(b.deps, CUSTOMER, 's1', {}));
-    expect(b.calls).not.toContain('fhb.put');
-    expect(r2.message).toContain('sa už balí');
+    const b = actionDeps({}, 'none');
+    expect((await A.changeDelivery(b.deps, CUSTOMER, 's1', { method: 'dpd_pickup', name: 'Jana N', point: { id: 'SK2' } })).message).toContain('sa už balí');
+    const c = actionDeps({}, 'down');
+    expect((await A.changeDelivery(c.deps, CUSTOMER, 's1', { method: 'dpd_pickup', name: 'Jana N', point: { id: 'SK2' } })).message).toContain('nepodarilo zmeniť');
   });
 
   it('zrušenie vyžaduje dôvod, ide ku koncu obdobia a dá sa odvolať', async () => {
@@ -204,6 +207,7 @@ describe('akcie /ucet', () => {
     await A.cancelSubscription(t.deps, CUSTOMER, 's1', 'Pes ich neje');
     expect(t.sub).toMatchObject({ cancel_at: '2026-12-26T06:00:00.000Z', cancel_reason: 'Pes ich neje', status: 'active' });
     expect(t.calls).toContain('stripe.cancel:true');
+    expect(t.mails.at(-1)?.text).toContain('nie je odstúpenie');
     await expect(A.skipDelivery(t.deps, CUSTOMER, 's1')).rejects.toThrow('odvolaj');
     await A.revokeCancel(t.deps, CUSTOMER, 's1');
     expect(t.sub.cancel_at).toBeNull();

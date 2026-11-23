@@ -1,8 +1,9 @@
 /*
  * End-to-end overenie obnovenia predplatného na Stripe test clocku cez SKUTOČNÚ cestu nákupu (PROJEKT-1, krok 4):
  *   1. test clock (štart = teraz) + Stripe zákazník na ňom; zákazník v DB s týmto stripe_customer_id,
- *   2. POST <site>/api/checkout s ?test tokenom → draft pes/adresa v DB + Embedded Checkout Session (produkčný kód),
- *   3. zaplatenie kartou 4242 v Embedded Checkout (Playwright, lokálna stránka so stripe.js),
+ *   2.–3. nákup cez skutočný dotazník na <site> s ?test tokenom (scripts/e2e-quiz.ts): DPD, predplatné 9 kg, vlastný
+ *      platobný formulár (Stripe Elements, SPEC §10.17), karta 4242; /api/checkout nájde zákazníka podľa e-mailu a použije
+ *      jeho Stripe zákazníka na test clocku,
  *   4. produkčný webhook checkout.session.completed → predplatné + objednávka `first` v Supabase → FHB sandbox,
  *      trial_end = prvé obnovenie (doručenie + D − LEAD),
  *   5. posun hodín za prvé obnovenie → invoice.paid (subscription_cycle) → objednávka `renewal` v Supabase → FHB.
@@ -13,7 +14,6 @@
  * Iba so sk_test_ a FHB sandboxom. Na konci zmaže test clock (predplatné sa zruší → DB `cancelled`);
  * objednávky v DB a vo FHB sandboxe ostávajú ako dôkaz (premažú sa pred spustením predaja).
  */
-import http from 'node:http';
 import Stripe from 'stripe';
 import { db } from '../lib/db';
 import { FhbClient } from '../lib/fhb/client';
@@ -22,6 +22,7 @@ import { jobDepsFromEnv } from '../lib/fhb/jobs';
 import { applyFhbOrder, type DbOrder } from '../lib/fhb/sync';
 import { addDays, chargeTime } from '../lib/subscription-schedule';
 import { fhbMode, stripeMode } from '../lib/env-mode';
+import { CARDS, chooseDelivery, fillCard, fillContact, openOrder, openPayment, submitPayment, waitForDone, watchSession } from './e2e-quiz';
 
 // Playwright je v prostredí predinštalovaný globálne (nie je v package.json)
 // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -34,6 +35,8 @@ const FAIL = process.argv.includes('--fail-renewal');
 const unix = (d: Date) => Math.floor(d.getTime() / 1000);
 const iso = (s: number | null | undefined) => (s ? new Date(s * 1000).toISOString() : '—');
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+const SHOTS = process.env.E2E_SHOTS ?? '/tmp';
+const ANSWERS_CLOCK = { dogname: 'Clock', sex: 'pes', breed: 'krizenec-stredny', breedSet: true, kg: 17, years: '4', months: '0', weeks: '', activity: 'mesto', neutered: 'ano', pregnant: '', body: 'akurat', focus: ['nic'], allergies: ['ziadne'], ordered: false };
 
 const failures: string[] = [];
 function check(ok: boolean, msg: string) {
@@ -56,46 +59,29 @@ async function advance(s: Stripe, clockId: string, to: Date) {
   await poll('test clock ready', async () => (await s.testHelpers.testClocks.retrieve(clockId)).status === 'ready', 180_000);
 }
 
-/** lokálna stránka s Embedded Checkout (rovnaké volanie ako kviz.js) */
-function serve(publishableKey: string, clientSecret: string): Promise<{ url: string; close: () => void }> {
-  const html = `<!doctype html><meta charset="utf-8"><script src="https://js.stripe.com/dahlia/stripe.js"></script>
-<div id="checkout"></div><script>
-(async () => { const s = Stripe(${JSON.stringify(publishableKey)});
-  const c = await s.createEmbeddedCheckoutPage({ clientSecret: ${JSON.stringify(clientSecret)} }); c.mount('#checkout'); })();
-</script>`;
-  return new Promise((resolve) => {
-    const srv = http.createServer((_q, r) => { r.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }); r.end(html); });
-    srv.listen(0, '127.0.0.1', () => {
-      const port = (srv.address() as { port: number }).port;
-      resolve({ url: `http://localhost:${port}/`, close: () => srv.close() });
-    });
-  });
-}
-
-async function pay(publishableKey: string, clientSecret: string) {
-  const page = await serve(publishableKey, clientSecret);
+/** Nákup predplatného cez dotazník (rovnaké kroky ako e2e-checkout predplatne). Vráti id Checkout Session. */
+async function buyViaQuiz(token: string, email: string): Promise<string> {
   const browser = await chromium.launch();
   try {
-    const p = await browser.newPage({ viewport: { width: 1100, height: 1400 } });
-    await p.goto(page.url);
-    const frame = p.frameLocator('iframe[name^="embedded-checkout"], iframe[src*="checkout.stripe.com"]').first();
-    await frame.locator('#cardNumber').waitFor({ timeout: 60_000 });
-    await frame.locator('#cardNumber').fill('4242424242424242');
-    await frame.locator('#cardExpiry').fill('12 / 34');
-    await frame.locator('#cardCvc').fill('123');
-    const name = frame.locator('#billingName');
-    if (await name.isVisible().catch(() => false)) await name.fill('Test Clock');
-    const country = frame.locator('#billingCountry');
-    if (await country.isVisible().catch(() => false)) await country.selectOption('SK').catch(() => {});
-    await frame.locator('.SubmitButton, button[type=submit]').first().click();
-    // Embedded Checkout po úspechu presmeruje na return_url (/granule-na-mieru?session_id=…)
-    await p.waitForURL(/session_id=/, { timeout: 90_000 }).catch(async () => {
-      await p.screenshot({ path: '/tmp/e2e-clock-pay.png', fullPage: true });
-      throw new Error('platba sa nedokončila (snímka /tmp/e2e-clock-pay.png)');
-    });
+    const page = await browser.newPage({ viewport: { width: 1280, height: 1100 } });
+    const session = watchSession(page);
+    try {
+      await openOrder(page, { site: SITE, token, plan: 'mesiac', bag: '9', answers: { ...ANSWERS_CLOCK } });
+      await fillContact(page, { email, firstName: 'Test', lastName: 'Clock' });
+      await chooseDelivery(page, 'dpd_pickup');
+      const frame = await openPayment(page);
+      await fillCard(frame, CARDS.ok);
+      await submitPayment(page);
+      await waitForDone(page);
+    } catch (e) {
+      await page.screenshot({ path: `${SHOTS}/e2e-clock-chyba.png`, fullPage: true }).catch(() => {});
+      throw new Error(`nákup cez dotazník zlyhal: ${(e as Error).message} (snímka ${SHOTS}/e2e-clock-chyba.png)`);
+    }
+    const id = session();
+    if (!id) throw new Error('Session id sa nezachytilo z /api/checkout');
+    return id;
   } finally {
     await browser.close();
-    page.close();
   }
 }
 
@@ -120,25 +106,14 @@ async function main() {
     await s.customers.update(sc.id, { metadata: { app: 'granula', test_clock: '1', customer_id: cust.id } });
     console.log('1. zákazník', cust.id, sc.id, email);
 
-    // 2. checkout cez produkčné API
-    const body = {
-      answers: { dogname: 'Clock', sex: 'pes', breed: 'krizenec-stredny', kg: 17, years: '4', months: '0', weeks: '', activity: 'mesto', neutered: 'ano', body: 'akurat', focus: [], allergies: [] },
-      plan: 'mesiac',
-      bag: '9',
-      delivery: { method: 'dpd_pickup', firstName: 'Test', lastName: 'Clock', email, phone: '0905 123 456', point: { id: 'SK21286' } },
-    };
-    const res = await fetch(`${SITE}/api/checkout`, { method: 'POST', headers: { 'content-type': 'application/json', 'x-checkout-test': token }, body: JSON.stringify(body) });
-    const out = (await res.json()) as { clientSecret?: string; publishableKey?: string; error?: string };
-    if (!res.ok || !out.clientSecret) throw new Error(`/api/checkout ${res.status}: ${out.error}`);
-    const sessionId = out.clientSecret.split('_secret_')[0];
+    // 2.–3. nákup cez dotazník (produkčné /api/checkout + vlastný platobný formulár)
+    const sessionId = await buyViaQuiz(token, email);
     const session = await s.checkout.sessions.retrieve(sessionId);
     const D = Number(session.metadata?.days);
-    console.log('2. session', sessionId, '| D =', D, '| suma', (session.amount_total ?? 0) / 100, '€');
+    console.log('2. session', sessionId, '| ui_mode', session.ui_mode, '| D =', D, '| suma', (session.amount_total ?? 0) / 100, '€');
     check(session.customer === sc.id, 'Session patrí zákazníkovi na test clocku');
-
-    // 3. platba
-    await pay(out.publishableKey!, out.clientSecret);
-    console.log('3. zaplatené (Embedded Checkout, 4242)');
+    check(session.ui_mode === 'elements', 'vlastný platobný formulár (ui_mode elements)');
+    console.log('3. zaplatené (dotazník, vlastný formulár, 4242)');
 
     // 4. webhook → objednávka first
     const first = await poll('objednávka first v DB', async () => (await sb.from('orders').select('*').eq('stripe_ref', sessionId).maybeSingle()).data, 180_000);

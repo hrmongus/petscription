@@ -16,7 +16,7 @@ export async function POST(req: Request) {
   const reason = typeof b.reason === 'string' ? b.reason.trim().slice(0, 1000) : null;
   try {
     const s = await requireCustomer();
-    const input = { name: s.customer.name || s.customer.email, email: s.customer.email, contractRef: ref, reason, customerId: s.customer.id, source: 'ucet' as const, ip: ipOf(req), userAgent: req.headers.get('user-agent') };
+    const input = { name: s.customer.name || s.customer.email, email: s.customer.email, contractRef: ref, reason, customerId: s.customer.id, source: 'ucet' as const, analyticsConsent: b.consent === true, ip: ipOf(req), userAgent: req.headers.get('user-agent') };
     if (b.confirm !== true) {
       await matchOrder(input, supabaseWithdrawalStore);
       return json({ ok: true, checked: true });

@@ -2,7 +2,7 @@ import { matchOrder, submitWithdrawal, WithdrawalFormSchema, WithdrawalMismatch,
 import { supabaseWithdrawalStore, withdrawalDepsFromEnv } from '@/lib/withdrawal-store';
 
 /*
- * POST /api/odstupenie { name, email, contractRef, reason?, confirm } (SPEC P4, §10.25)
+ * POST /api/odstupenie { name, email, contractRef, reason?, confirm } (SPEC P4, §10.35)
  *   confirm: false → iba kontrola, či e-mail sedí s objednávkou (krok 1 → 2), nič sa nezaloží
  *   confirm: true  → záznam, akcie, potvrdzovací e-mail → čas prijatia
  * Nezhoda / neexistujúca objednávka → 422 s hláškou, nič sa nezaloží ani nezruší.
@@ -39,6 +39,7 @@ export async function POST(req: Request) {
         contractRef: f.contractRef,
         reason: f.reason ?? null,
         source: 'web',
+        analyticsConsent: f.consent === true,
         ip: (req.headers.get('x-forwarded-for') ?? '').split(',')[0].trim() || req.headers.get('x-real-ip'),
         userAgent: req.headers.get('user-agent'),
       },

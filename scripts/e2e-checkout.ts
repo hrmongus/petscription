@@ -9,7 +9,7 @@
  * Odpovede dotazníka sa vložia do sessionStorage (rovnaký stav ako kviz.js), zvyšok ide cez UI: krok objednávky,
  * kontakt, doručenie, vlastný platobný formulár (Stripe Elements; 3ds = karta 4000 0025 0000 3155). --mobile = iPhone 13. Overenie: Supabase (orders, subscriptions) a FHB sandbox (GET /order).
  * Predplatné, ktoré test vytvorí, na konci (aj pri chybe) ZRUŠÍ, aby nechodili pripomienky a obnovenia; ponechať ho
- * iba s --keep-subscription. Predvolený e-mail je testovacia adresa Resend (delivered+…@resend.dev), vlastný --email=.
+ * iba s --keep-subscription. --consent = súhlas s analytickými cookies (P7, PostHog s profilom zákazníka). Predvolený e-mail je testovacia adresa Resend (delivered+…@resend.dev), vlastný --email=.
  * Iba so sk_test_ a FHB sandboxom. Snímky: <scratch>/e2e-<scenár>-*.png (premenná E2E_SHOTS, inak /tmp).
  */
 import Stripe from 'stripe';
@@ -17,6 +17,7 @@ import { db } from '../lib/db';
 import { FhbClient } from '../lib/fhb/client';
 import { fhbOrderId } from '../lib/fhb/build-order';
 import { fhbMode, stripeMode } from '../lib/env-mode';
+import { CARDS, chooseDelivery, selectMethod, fillCard, fillContact, openOrder, openPayment, submitPayment, waitForDone, watchSession, type Method } from './e2e-quiz';
 
 // Playwright je v prostredí predinštalovaný globálne (nie je v package.json)
 // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-explicit-any
@@ -43,8 +44,6 @@ async function poll<T>(what: string, fn: () => Promise<T | null | undefined>, ti
   }
 }
 
-const ANSWERS = { dogname: 'Bruno', sex: 'pes', breed: 'krizenec-stredny', breedSet: true, kg: 17, years: '4', months: '0', weeks: '', activity: 'mesto', neutered: 'ano', pregnant: '', body: 'akurat', focus: ['nic'], allergies: ['ziadne'], ordered: false };
-
 async function main() {
   if (!['predplatne', 'jednorazovo', 'zamietnuta', '3ds'].includes(scenario)) throw new Error('scenár: predplatne | jednorazovo | zamietnuta | 3ds');
   if (stripeMode() !== 'test' || fhbMode() !== 'sandbox') throw new Error('Iba so Stripe test kľúčom a FHB sandboxom.');
@@ -56,7 +55,7 @@ async function main() {
   const email = process.argv.find((a) => a.startsWith('--email='))?.split('=')[1] ?? `delivered+e2e-${scenario}-${stamp}@resend.dev`;
   const plan = scenario === 'jednorazovo' ? 'raz' : 'mesiac';
   const bag = scenario === 'jednorazovo' ? '4' : '9';
-  const card = scenario === 'zamietnuta' ? '4000000000000002' : scenario === '3ds' ? '4000002500003155' : '4242424242424242';
+  const card = scenario === 'zamietnuta' ? CARDS.declined : scenario === '3ds' ? CARDS.threeDs : CARDS.ok;
   const MOBILE = process.argv.includes('--mobile');
   console.log(`scenár ${scenario} | ${SITE} | ${email} | plán ${plan} | ${bag} kg`);
 
@@ -66,65 +65,32 @@ async function main() {
   const page = await browser.newPage(MOBILE ? { ...devices['iPhone 13'] } : { viewport: { width: 1280, height: 1100 }, deviceScaleFactor: 2 });
   const tag = `${scenario}${MOBILE ? '-mobil' : ''}`;
   const shot = (n: string, full = true) => page.screenshot({ path: `${SHOTS}/e2e-${tag}-${n}.png`, fullPage: full });
-  let sessionId: string | null = null;
-  page.on('response', async (r: { url(): string; request(): { method(): string }; json(): Promise<{ clientSecret?: string }> }) => {
-    if (r.url().endsWith('/api/checkout') && r.request().method() === 'POST') {
-      const j = await r.json().catch(() => ({}) as { clientSecret?: string });
-      if (j.clientSecret) sessionId = j.clientSecret.split('_secret_')[0];
-    }
-  });
+  const session_ = watchSession(page);
   const pageErrors: string[] = [];
   page.on('pageerror', (e: Error) => pageErrors.push(String(e).slice(0, 200)));
   try {
-    await page.addInitScript((a: object) => sessionStorage.setItem('granula-quiz', JSON.stringify(a)), { ...ANSWERS, plan, bag });
-    await page.goto(`${SITE}/granule-na-mieru?test=${encodeURIComponent(token)}#objednavka`);
-    await page.getByRole('button', { name: 'Len nevyhnutné' }).click({ timeout: 10_000 }).catch(() => {});
+    // --consent: súhlas s analytickými cookies (P7: order_completed zo servera s distinct_id = customer_id), inak anonymne
+    await openOrder(page, { site: SITE, token, plan, bag: bag as '4' | '9', consent: process.argv.includes('--consent') });
     check(!page.url().includes('test='), 'token zmizol z URL');
 
-    // plán a balenie
-    await page.locator(`input[name="plan"][value="${plan}"]`).check({ force: true });
-    const bagRadio = page.locator(`input[name="bag"][value="${bag}"]`);
-    if (await bagRadio.count()) await bagRadio.check({ force: true });
-
     // kontakt
-    await page.fill('#email', email);
-    await page.fill('#phone', '0905 123 456');
-    await page.fill('#fname', 'Test');
-    await page.fill('#lname', scenario);
+    await fillContact(page, { email, firstName: 'Test', lastName: scenario });
 
     // doručenie
-    const method = scenario === 'predplatne' || scenario === '3ds' ? 'dpd_pickup' : scenario === 'jednorazovo' ? 'packeta_point' : 'sps_courier';
-    await page.locator(`input[name="dmethod"][value="${method}"]`).check({ force: true });
-    if (method === 'sps_courier') {
-      await page.fill('#street', 'Hlavná 1');
-      await page.fill('#zip', '040 01');
-      await page.fill('#city', 'Košice');
-    } else {
-      const pick = page.locator(`.so-act[data-for="${method}"]`); // oranžové tlačidlo výberu miesta v karte dopravcu
-      check(await pick.locator('[data-pick]').isVisible(), 'tlačidlo „Vybrať … miesto“ v karte dopravcu');
-      if (method === 'packeta_point' && (await pick.locator('[data-list="packeta"]').isVisible())) await pick.locator('[data-list="packeta"]').click();
-      else await pick.locator('[data-pick]').click();
-      const listTab = page.locator('.dp-tabs button[data-view="list"]');
-      if (await listTab.isVisible().catch(() => false)) await listTab.click();
-      await page.fill('#dp-q', method === 'dpd_pickup' ? 'Tornaľa' : 'Žilina');
-      await page.locator('#dp-q').press('Enter');
-      await page.locator('#dp-list button[data-i]').first().waitFor({ timeout: 30_000 });
-      await page.locator('#dp-list button[data-i]').first().click();
-      await page.locator(`.dl-pick[data-for="${method}"] .dl-chosen`).waitFor({ state: 'visible', timeout: 10_000 });
-      console.log('   miesto:', (await page.locator(`.dl-pick[data-for="${method}"] .dl-chosen`).innerText()).replace(/\s+/g, ' ').slice(0, 90));
-    }
+    const method: Method = scenario === 'predplatne' || scenario === '3ds' ? 'dpd_pickup' : scenario === 'jednorazovo' ? 'packeta_point' : 'sps_courier';
+    await selectMethod(page, method);
+    if (method !== 'sps_courier') check(await page.locator(`.so-act[data-for="${method}"] [data-pick]`).isVisible(), 'tlačidlo „Vybrať … miesto“ v karte dopravcu');
+    const place = await chooseDelivery(page, method);
+    if (place) console.log('   miesto:', place.slice(0, 90));
     const summary = (await page.locator('#s-submit').innerText()).trim();
     await shot('1-formular');
 
     // vlastný formulár: „Pokračovať k platbe“ → Payment Element (karta) a Express Checkout Element v sekcii Platba
     check(await page.locator('#pay-sec').isHidden(), 'sekcia Platba na stránke doručenia skrytá');
     check(await page.locator('#s-next').isVisible(), 'tlačidlo „Pokračovať k platbe“ pod formulárom');
-    await page.locator(MOBILE ? '#s-next' : '#s-submit').click();
-    await page.waitForURL(/#platba$/, { timeout: 60_000 });
+    const frame = await openPayment(page, { mobile: MOBILE });
     check(true, 'samostatná stránka #platba');
-    const frame = page.frameLocator('#pay-element iframe').first();
-    await frame.locator('input[name="number"]').waitFor({ timeout: 60_000 });
-    await page.waitForFunction(() => !(document.getElementById('p-submit') as HTMLButtonElement).disabled, null, { timeout: 30_000 });
+    const sessionId = session_();
     const recap = (await page.locator('.pr-recap').innerText()).replace(/\s+/g, ' ');
     check(recap.includes(email) && recap.includes('+421'), `rekapitulácia kontaktu a doručenia („${recap.slice(0, 110)}“)`);
     check(!!sessionId, `Session ${sessionId}`);
@@ -142,34 +108,14 @@ async function main() {
     console.log('   sekcia Platba:', pageText.slice(0, 160));
     const btnLabel = (await page.locator('#p-submit').innerText()).trim();
     check(/zaplatiť \d/i.test(btnLabel), `tlačidlo „${btnLabel}“`);
-    await frame.locator('input[name="number"]').fill(card);
-    await frame.locator('input[name="expiry"]').fill('12 / 34');
-    await frame.locator('input[name="cvc"]').fill('123');
+    await fillCard(frame, card);
     await page.evaluate(() => document.getElementById('pay-stripe')!.scrollIntoView({ block: 'center' }));
     await sleep(800);
     await shot('2-platba');
     await page.locator('#pay-stripe').screenshot({ path: `${SHOTS}/e2e-${tag}-2-platba-detail.png` });
     check(!pageErrors.length, `bez chýb JavaScriptu na stránke ${pageErrors.join(' | ')}`);
-    await page.locator('#p-submit').click();
-
-    if (scenario === '3ds') {
-      // overenie 3D Secure: testovacie okno Stripe → „Complete“ (vnorené iframe)
-      let done = false;
-      for (let i = 0; i < 40 && !done; i++) {
-        await sleep(1500);
-        for (const f of page.frames()) {
-          const b = f.locator('#test-source-authorize-3ds');
-          if (await b.isVisible().catch(() => false)) {
-            await sleep(1200); // testovacie okno Stripe potrebuje chvíľu, kým klik spracuje
-            await shot('3-3ds-okno', false);
-            await b.click();
-            done = true;
-            break;
-          }
-        }
-      }
-      check(done, '3D Secure okno sa zobrazilo a overenie potvrdené');
-    }
+    const threeDs = await submitPayment(page, { threeDs: scenario === '3ds', onThreeDs: () => shot('3-3ds-okno', false) });
+    if (scenario === '3ds') check(threeDs, '3D Secure okno sa zobrazilo a overenie potvrdené');
 
     if (scenario === 'zamietnuta') {
       const err = page.locator('#p-err');
@@ -188,8 +134,7 @@ async function main() {
       check(!order && subs.length === 0, 'žiadna objednávka ani predplatné v DB (draft zákazníka ostáva)');
       check(!page.url().includes('session_id='), 'bez presmerovania na Hotovo');
     } else {
-      await page.waitForURL(/session_id=/, { timeout: 120_000 });
-      await page.locator('[data-screen="hotovo"]').waitFor({ state: 'visible', timeout: 60_000 });
+      await waitForDone(page);
       // stránka sa pýta /api/checkout/session každé 2 s, kým webhook nezaloží objednávku
       await page.locator('[data-screen="hotovo"]').getByText(/Číslo objednávky|Platbu sme prijali\. Číslo|nebola dokončená/).waitFor({ timeout: 45_000 }).catch(() => {});
       const hotovo = (await page.locator('[data-screen="hotovo"]').innerText()).replace(/\s+/g, ' ');
@@ -222,8 +167,9 @@ async function main() {
     throw e;
   } finally {
     await browser.close();
-    if (sessionId && !process.argv.includes('--keep-subscription')) {
-      const sess = await s.checkout.sessions.retrieve(sessionId).catch(() => null);
+    const sid = session_();
+    if (sid && !process.argv.includes('--keep-subscription')) {
+      const sess = await s.checkout.sessions.retrieve(sid).catch(() => null);
       const subId = typeof sess?.subscription === 'string' ? sess.subscription : sess?.subscription?.id;
       if (subId) {
         const c = await s.subscriptions.cancel(subId).catch((e: Error) => ({ status: `chyba: ${e.message}` }));

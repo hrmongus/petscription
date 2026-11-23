@@ -1,97 +1,39 @@
 import engine from '../../public/granula/engine.js';
-import { isMethodAllowed, shippingPrice, type DeliveryMethod } from '../carriers';
 import { answersAt } from '../checkout';
-import { AnswersSchema, BagIdSchema, computeServer, quote, serverParams, type Answers, type BagId } from '../engine-server';
+import { AnswersSchema, computeServer } from '../engine-server';
 
 /*
- * Prepočet predplatného pre /ucet (SPEC P4): zmena váhy psa, receptúry, balenia. Všetko na serveri cez engine.js
- * s predvolenými PARAMS (SPEC §0); z prehliadača iba nová váha / id receptúry / balenie.
- *   - vek sa obnoví z dátumu narodenia (šteňatá),
- *   - receptúra: iba vhodné podľa engine (SPEC §10.8); pri zmene váhy ostane súčasná, ak je stále vhodná, inak odporúčaná,
- *   - balenie: musí sedieť so spôsobom doručenia (doprava-config.js), inak najprv zmeniť doručenie.
+ * Vhodné receptúry pre /ucet (SPEC P4, §10.8: zákazník smie iba vhodné). Samotný prepočet dávky, D, ceny a dátumu
+ * robí spoločná funkcia s adminom `previewPlanChange` (lib/subscription-actions.ts); admin smie aj menej vhodnú.
  */
 
 export class PlanError extends Error {}
 
 export const productName = (id: string) => engine.PRODUCTS.find((p) => p.id === id)?.name ?? id;
 
-export type PlanInput = {
-  answers: unknown;
-  birthDate: string | null;
-  now: Date;
-  current: { productId: string; bagId: string };
-  method: DeliveryMethod;
-  kg?: number;
-  productId?: string;
-  bagId?: string;
-};
+export type Eligible = { recommendedId: string; products: { id: string; name: string; recommended: boolean }[] };
 
-export type PlanResult = {
-  answers: Answers;
-  productId: string;
-  productName: string;
-  recommendedId: string;
-  /** receptúra sa zmenila sama (súčasná sa pre novú váhu/vek nehodí) */
-  productSwitched: boolean;
-  products: { id: string; name: string; eligible: boolean; recommended: boolean }[];
-  bagId: BagId;
-  gramsPerDay: number;
-  daysPerBag: number;
-  unitAmountCents: number;
-  shippingCents: number;
-  totalCents: number;
-};
+/** odporúčaná a vhodné receptúry pre odpovede psa (vek z dátumu narodenia, voliteľne nová váha) */
+export function eligibleProducts(i: { answers: unknown; birthDate: string | null; now: Date; kg?: number | null }): Eligible {
+  let a = AnswersSchema.parse(i.answers);
+  if (i.birthDate) a = answersAt(a, i.birthDate, i.now);
+  if (i.kg != null) a = { ...a, kg: i.kg };
+  const r = computeServer({ ...a, recipe: '', recipeFor: '' }).result;
+  if (!r.recommended) throw new PlanError('Pre tieto údaje sa nedá vybrať receptúra. Napíš nám na podpora@granula.sk.');
+  const ok = new Set(r.products.filter((e) => e.eligible).map((e) => e.product.id));
+  ok.add(r.recommended.id);
+  return { recommendedId: r.recommended.id, products: engine.PRODUCTS.filter((p) => ok.has(p.id)).map((p) => ({ id: p.id, name: p.name, recommended: p.id === r.recommended!.id })) };
+}
 
-export function computePlan(i: PlanInput): PlanResult {
-  let answers = AnswersSchema.parse(i.answers);
-  if (i.birthDate) answers = answersAt(answers, i.birthDate, i.now);
-  if (i.kg != null) {
-    if (!(i.kg >= 0.5 && i.kg <= 90)) throw new PlanError('Zadaj váhu psa od 0,5 do 90 kg.');
-    answers = { ...answers, kg: Math.round(i.kg * 10) / 10 };
+/**
+ * Receptúra pre zmenu v /ucet: zvolená musí byť vhodná; bez voľby ostane súčasná, ak je stále vhodná (napr. po zmene
+ * váhy), inak odporúčaná (`switched`).
+ */
+export function chooseProduct(e: Eligible, current: string, requested?: string | null): { productId: string; switched: boolean } {
+  if (requested) {
+    if (!engine.PRODUCTS.some((p) => p.id === requested)) throw new PlanError('Neznáma receptúra.');
+    if (!e.products.some((p) => p.id === requested)) throw new PlanError('Táto receptúra sa pre tvojho psa nehodí. Vyber niektorú z ponúknutých.');
+    return { productId: requested, switched: false };
   }
-  const bagParsed = BagIdSchema.safeParse(i.bagId ?? i.current.bagId);
-  if (!bagParsed.success) throw new PlanError('Neznáme balenie.');
-  const bagId = bagParsed.data;
-
-  // odporúčaná receptúra a vhodnosť pre aktuálne odpovede (bez vlastnej voľby)
-  const base = computeServer({ ...answers, recipe: '', recipeFor: '' }).result;
-  if (!base.recommended) throw new PlanError('Pre tieto údaje sa nedá vybrať receptúra. Napíš nám na podpora@granula.sk.');
-  const recommendedId = base.recommended.id;
-  const eligible = new Set(base.products.filter((e) => e.eligible).map((e) => e.product.id));
-  eligible.add(recommendedId);
-
-  let productId: string;
-  let productSwitched = false;
-  if (i.productId) {
-    if (!engine.PRODUCTS.some((p) => p.id === i.productId)) throw new PlanError('Neznáma receptúra.');
-    if (!eligible.has(i.productId)) throw new PlanError('Táto receptúra sa pre tvojho psa nehodí. Vyber niektorú z ponúknutých.');
-    productId = i.productId;
-  } else if (eligible.has(i.current.productId)) {
-    productId = i.current.productId;
-  } else {
-    productId = recommendedId;
-    productSwitched = true;
-  }
-
-  if (!isMethodAllowed(i.method, bagId)) throw new PlanError(`Pri balení ${bagId} kg sa tvoj spôsob doručenia neponúka. Najprv zmeň doručenie.`);
-
-  const chosen = { ...answers, recipe: productId === recommendedId ? '' : productId, recipeFor: productId === recommendedId ? '' : recommendedId };
-  const q = quote({ answers: chosen, plan: 'mesiac', bagId });
-  if (q.productId !== productId) throw new PlanError('Receptúru sa nepodarilo prepočítať.');
-  const P = serverParams();
-  const shippingCents = Math.round(shippingPrice(i.method, bagId, P.shipping, 'mesiac') * 100);
-  return {
-    answers: q.snapshot.answers,
-    productId,
-    productName: productName(productId),
-    recommendedId,
-    productSwitched,
-    products: engine.PRODUCTS.filter((p) => eligible.has(p.id)).map((p) => ({ id: p.id, name: p.name, eligible: true, recommended: p.id === recommendedId })),
-    bagId,
-    gramsPerDay: q.gramsPerDay,
-    daysPerBag: q.daysPerBag,
-    unitAmountCents: q.unitAmountCents,
-    shippingCents,
-    totalCents: q.unitAmountCents + shippingCents,
-  };
+  return e.products.some((p) => p.id === current) ? { productId: current, switched: false } : { productId: e.recommendedId, switched: true };
 }

@@ -6,6 +6,7 @@ import { serverParams } from '@/lib/engine-server';
 import { defaultMailer } from '@/lib/email';
 import { eventMetadata, isOurs, stripe } from '@/lib/stripe';
 import { eventProcessed, markEvent, supabaseStore } from '@/lib/store';
+import { fulfillmentEvents } from '@/lib/tracking';
 
 /*
  * Stripe webhook (vzor reference/fanpagekit/app/api/stripe/webhook/route.ts): overenie podpisu, cudzie eventy
@@ -27,6 +28,7 @@ async function deps(): Promise<Deps> {
     mail: await defaultMailer(),
     siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
     adminTo: process.env.ADMIN_EMAIL || null,
+    events: await fulfillmentEvents(),
   };
 }
 
@@ -61,7 +63,7 @@ export async function POST(req: Request) {
         break;
       case 'customer.subscription.updated':
       case 'customer.subscription.deleted':
-        await handleSubscriptionChanged(event.data.object, d);
+        await handleSubscriptionChanged(event.data.object, d, event.data.previous_attributes as never);
         break;
     }
     await markEvent(event.id, event.type);

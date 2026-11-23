@@ -2,7 +2,7 @@ import { body, fail, json } from '@/lib/ucet/http';
 import { EmailSchema, loginDepsFromEnv, requestCode } from '@/lib/ucet/login';
 import { ipOf, sameOrigin } from '@/lib/ucet/session';
 
-/* POST /api/ucet/kod { email } → kód e-mailom (iba existujúcemu zákazníkovi), odpoveď vždy rovnaká (SPEC §10.25). */
+/* POST /api/ucet/kod { email } → kód e-mailom (iba existujúcemu zákazníkovi), odpoveď vždy rovnaká (SPEC §10.36). */
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {

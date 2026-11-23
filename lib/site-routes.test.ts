@@ -19,6 +19,7 @@ describe('site-routes', () => {
   });
   test('noindex hlavičky pre PDF náhľady a interné stránky', () => {
     const s = headers().map((h) => h.source);
-    for (const x of ['/blog/nahlad-pdf/:path*', '/granula/blog/nahlad-pdf/:path*', '/admin-vypocet', '/admin-blog/:path*']) expect(s).toContain(x);
+    expect(s).not.toContain('/admin-vypocet');
+    for (const x of ['/blog/nahlad-pdf/:path*', '/granula/blog/nahlad-pdf/:path*', '/admin-blog/:path*']) expect(s).toContain(x);
   });
 });

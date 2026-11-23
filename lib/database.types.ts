@@ -72,6 +72,24 @@ export type Database = {
           },
         ]
       }
+      analytics_sent: {
+        Row: {
+          event: string
+          key: string
+          sent_at: string
+        }
+        Insert: {
+          event: string
+          key: string
+          sent_at?: string
+        }
+        Update: {
+          event?: string
+          key?: string
+          sent_at?: string
+        }
+        Relationships: []
+      }
       audit_log: {
         Row: {
           action: string
@@ -260,6 +278,7 @@ export type Database = {
           items: Json
           kind: string
           number: number
+          reship_of: string | null
           ship_to: Json
           shipped_at: string | null
           status: string
@@ -278,6 +297,7 @@ export type Database = {
           items?: Json
           kind: string
           number?: number
+          reship_of?: string | null
           ship_to: Json
           shipped_at?: string | null
           status?: string
@@ -296,6 +316,7 @@ export type Database = {
           items?: Json
           kind?: string
           number?: number
+          reship_of?: string | null
           ship_to?: Json
           shipped_at?: string | null
           status?: string
@@ -305,6 +326,13 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "orders_reship_of_fkey"
+            columns: ["reship_of"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "orders_customer_id_fkey"
             columns: ["customer_id"]
@@ -317,6 +345,106 @@ export type Database = {
             columns: ["subscription_id"]
             isOneToOne: false
             referencedRelation: "subscriptions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quiz_sessions: {
+        Row: {
+          answers: Json
+          bag_id: string | null
+          checkout_started_at: string | null
+          completed: boolean
+          customer_id: string | null
+          delivery_method: string | null
+          dog_id: string | null
+          email: string | null
+          id: string
+          landing_path: string | null
+          last_step: string | null
+          max_step: number
+          order_id: string | null
+          paid_at: string | null
+          plan: string | null
+          reminder_consent: boolean | null
+          reminder_consent_at: string | null
+          reminder_consent_text: string | null
+          referrer: string | null
+          result: Json | null
+          started_at: string
+          updated_at: string
+          utm: Json | null
+        }
+        Insert: {
+          answers?: Json
+          bag_id?: string | null
+          checkout_started_at?: string | null
+          completed?: boolean
+          customer_id?: string | null
+          delivery_method?: string | null
+          dog_id?: string | null
+          email?: string | null
+          id: string
+          landing_path?: string | null
+          last_step?: string | null
+          max_step?: number
+          order_id?: string | null
+          paid_at?: string | null
+          plan?: string | null
+          reminder_consent?: boolean | null
+          reminder_consent_at?: string | null
+          reminder_consent_text?: string | null
+          referrer?: string | null
+          result?: Json | null
+          started_at?: string
+          updated_at?: string
+          utm?: Json | null
+        }
+        Update: {
+          answers?: Json
+          bag_id?: string | null
+          checkout_started_at?: string | null
+          completed?: boolean
+          customer_id?: string | null
+          delivery_method?: string | null
+          dog_id?: string | null
+          email?: string | null
+          id?: string
+          landing_path?: string | null
+          last_step?: string | null
+          max_step?: number
+          order_id?: string | null
+          paid_at?: string | null
+          plan?: string | null
+          reminder_consent?: boolean | null
+          reminder_consent_at?: string | null
+          reminder_consent_text?: string | null
+          referrer?: string | null
+          result?: Json | null
+          started_at?: string
+          updated_at?: string
+          utm?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quiz_sessions_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quiz_sessions_dog_id_fkey"
+            columns: ["dog_id"]
+            isOneToOne: false
+            referencedRelation: "dogs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quiz_sessions_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
             referencedColumns: ["id"]
           },
         ]

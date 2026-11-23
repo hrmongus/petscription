@@ -223,3 +223,46 @@ describe('submitWithdrawal', () => {
     await expect(submitWithdrawal(t.input, t.deps)).rejects.toBeInstanceOf(WithdrawalRateLimited);
   });
 });
+
+describe('analytika odstúpenia (P7, SPEC §10.35)', () => {
+  it('submitWithdrawal zavolá track so súhlasom aj bez neho', async () => {
+    for (const consent of [true, false]) {
+      const t = setup({ fhbStatus: { 'GR-000007': 'pending' } });
+      const track = vi.fn(async () => {});
+      t.deps.track = track;
+      await submitWithdrawal({ ...t.input, analyticsConsent: consent }, t.deps);
+      expect(track).toHaveBeenCalledWith(expect.objectContaining({ withdrawalId: 'w1', consent }));
+    }
+  });
+
+  it('chyba analytiky odstúpenie neprekazí; pri nezhode e-mailu sa nič neposiela', async () => {
+    const t = setup({ fhbStatus: { 'GR-000007': 'pending' } });
+    t.deps.track = async () => {
+      throw new Error('PostHog');
+    };
+    expect((await submitWithdrawal(t.input, t.deps)).emailSent).toBe(true);
+    const u = setup({ email: 'iny@example.sk' });
+    const track = vi.fn(async () => {});
+    u.deps.track = track;
+    await expect(submitWithdrawal(u.input, u.deps)).rejects.toBeInstanceOf(WithdrawalMismatch);
+    expect(track).not.toHaveBeenCalled();
+  });
+
+  it('bez súhlasu udalosť naozaj anonymná: žiadne id ani hash, náhodné distinct_id a uuid, bez profilu', async () => {
+    const { trackWithdrawal, buildCapture } = await import('./analytics');
+    const payloads: ReturnType<typeof buildCapture>[] = [];
+    const w = { withdrawalId: 'w-123', customerId: 'cust-456', orderId: 'ord-789', subscriptionId: 'sub-000', reason: 'Pes ich neje' };
+    for (let i = 0; i < 2; i++) await trackWithdrawal({ ...w, consent: false }, async (e) => void payloads.push(buildCapture(e, 'phc_test')));
+    const [a, b] = payloads;
+    const json = JSON.stringify(a);
+    for (const id of ['w-123', 'cust-456', 'ord-789', 'sub-000', 'Pes ich neje']) expect(json).not.toContain(id);
+    expect(a.properties).toMatchObject({ $process_person_profile: false });
+    expect(Object.keys(a.properties).sort()).toEqual(['$lib', '$process_person_profile', 'source']);
+    expect(a.distinct_id).not.toBe(b.distinct_id); // náhodné, nie odvodené
+    expect(a.uuid).not.toBe(b.uuid);
+    // so súhlasom: osoba = customer_id
+    const withConsent: ReturnType<typeof buildCapture>[] = [];
+    await trackWithdrawal({ ...w, consent: true }, async (e) => void withConsent.push(buildCapture(e, 'phc_test')));
+    expect(withConsent[0].distinct_id).toBe('cust-456');
+  });
+});

@@ -218,7 +218,7 @@ textarea.input{resize:vertical;min-height:88px}
     return fetch("/api/odstupenie", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: data.name, email: data.email, contractRef: data.contractRef, reason: data.reason || null, confirm: confirm, website: $("wd-website").value })
+      body: JSON.stringify({ name: data.name, email: data.email, contractRef: data.contractRef, reason: data.reason || null, confirm: confirm, consent: !!(window.GranulaConsent && window.GranulaConsent.has("analytics")), website: $("wd-website").value })
     }).then(function (r) {
       return r.json().catch(function () { return {}; }).then(function (b) { return { ok: r.ok && b.ok, status: r.status, b: b }; });
     });
