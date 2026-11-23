@@ -107,3 +107,15 @@
 #ship-opts-new > #addr-f{display:flex;flex-direction:column;gap:12px;padding:2px 0 6px}
 #ship-opts-new > #addr-f[hidden]{display:none}
 @media (max-width:860px){.so-act{padding:0 14px 14px}.so-cta{width:100%}}
+/* logo dopravcu v karte */
+.so-logo{flex:none;width:76px;height:30px;display:flex;align-items:center;justify-content:center}
+.so-logo img{max-width:100%;max-height:100%;width:auto;height:auto;display:block}
+.so-wrap:has(input[aria-invalid="true"]){border-color:var(--err)}
+/* mobil: logo nad názvom (vedľa by názov lámalo na 3 riadky) */
+@media (max-width:860px){
+  .so-wrap > .so{display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"box logo pr" "box txt pr";column-gap:14px;row-gap:6px;align-items:center}
+  .so-wrap > .so > .so-box{grid-area:box}
+  .so-wrap > .so > .so-logo{grid-area:logo;justify-content:flex-start;width:auto;height:22px}
+  .so-wrap > .so > .so-txt{grid-area:txt}
+  .so-wrap > .so > .so-pr{grid-area:pr}
+}

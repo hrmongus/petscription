@@ -8,7 +8,7 @@ export type DeliveryMethod = 'packeta_point' | 'dpd_pickup' | 'sps_courier';
 export type Carrier = 'packeta' | 'dpd' | 'sps';
 export type BagKey = '4' | '9' | '18';
 
-export const METHODS = config.METHODS as Record<DeliveryMethod, { label: string; eta: string; etaEmail?: string; carrier: Carrier; pickup: boolean; maxKg: number | null; fhbService: string }>;
+export const METHODS = config.METHODS as Record<DeliveryMethod, { label: string; eta: string; etaEmail?: string; logo?: string; carrier: Carrier; pickup: boolean; maxKg: number | null; fhbService: string }>;
 export const DELIVERY_METHODS = Object.keys(METHODS) as DeliveryMethod[];
 
 export const methodsFor = (bag: BagKey) => config.methodsFor(bag) as DeliveryMethod[];

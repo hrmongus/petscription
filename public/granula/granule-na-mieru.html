@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,900&display=swap">
 <link rel="stylesheet" href="granula.css">
 <!-- ?v= pri zmene doprava/kviz/cookies zvýšiť, aby prehliadač (Safari) nepoužil starú kópiu -->
-<link rel="stylesheet" href="doprava.css?v=20261123c">
+<link rel="stylesheet" href="doprava.css?v=20261123d">
 <style>
 /* ---------- obrazovky ---------- */
 .screen{display:none;min-height:100vh;min-height:100svh}
@@ -89,6 +89,10 @@
 .chip:has(input:checked){background:var(--k);color:var(--m);border-color:var(--k)}
 .chip:has(input:checked)::before{content:"✓"}
 .chip:has(input:focus-visible){outline:3px solid var(--n);outline-offset:2px}
+/* alergie: „Na nič nie je alergický“ ako prvá, výrazná voľba na celú šírku */
+.chips .chip-none{flex-basis:100%;padding:14px 18px;font-size:16px;font-weight:800;background:var(--ml)}
+.chips .chip-none:has(input:checked){background:var(--k)}
+.chips-sep{flex-basis:100%;margin:6px 0 0;font-size:14px;font-weight:600}
 .card-label{font-weight:700;font-size:15px}
 .card-label span{font-weight:400}
 .split aside .frame{height:min(300px,40vh)}
@@ -822,6 +826,8 @@
       <h1 class="display q-title" tabindex="-1" id="t-allergy">Je na niečo <span>alergický?</span></h1>
       <p class="q-lead">Označ všetko, čo mu nesedí. Takú surovinu v jeho granuliach nebude.</p>
       <div class="card chips" role="group" aria-labelledby="t-allergy" style="flex-direction:row;gap:12px">
+        <label class="chip chip-none"><input type="checkbox" name="allergies" value="ziadne"><span class="ci" data-icon="f-nic" data-size="20" data-ink="currentColor"></span>Na nič nie je alergický</label>
+        <p class="chips-sep">alebo označ, na čo je alergický:</p>
         <label class="chip"><input type="checkbox" name="allergies" value="kuracie"><span class="ci" data-icon="kuramaso" data-size="18" data-ink="currentColor"></span>Kuracie</label>
         <label class="chip"><input type="checkbox" name="allergies" value="hovadzie"><span class="ci" data-icon="krava" data-size="18" data-ink="currentColor"></span>Hovädzie</label>
         <label class="chip"><input type="checkbox" name="allergies" value="bravcove"><span class="ci" data-icon="brav" data-size="18" data-ink="currentColor"></span>Bravčové</label>
@@ -835,7 +841,6 @@
         <label class="chip"><input type="checkbox" name="allergies" value="vajcia"><span class="ci" data-icon="vajce" data-size="18" data-ink="currentColor"></span>Vajcia</label>
         <label class="chip"><input type="checkbox" name="allergies" value="ryza"><span class="ci" data-icon="ryza" data-size="18" data-ink="currentColor"></span>Ryža</label>
         <label class="chip"><input type="checkbox" name="allergies" value="zemiaky"><span class="ci" data-icon="zemiaky" data-size="18" data-ink="currentColor"></span>Zemiaky</label>
-        <label class="chip"><input type="checkbox" name="allergies" value="ziadne"><span class="ci" data-icon="f-nic" data-size="18" data-ink="currentColor"></span>Na nič nie je alergický</label>
       </div>
       <p class="err" role="alert" hidden data-err="krok-7">Vyber aspoň jednu možnosť. Ak nemá alergiu, daj „Na nič nie je alergický“.</p>
     </div>
@@ -1166,13 +1171,13 @@
 <script src="radar.js"></script>
 <script src="breed-search.js"></script>
 <script src="compare.js"></script>
-<script src="doprava-config.js?v=20261123c"></script>
-<script src="doprava.js?v=20261123c"></script>
-<script src="kviz.js?v=20261123c"></script>
+<script src="doprava-config.js?v=20261123d"></script>
+<script src="doprava.js?v=20261123d"></script>
+<script src="kviz.js?v=20261123d"></script>
 <script src="reviews.js"></script>
 <script src="site.js"></script>
 <!-- Klaviyo onsite: vypnutý (type="text/plain"), cookies.js ho zapne až po súhlase s marketingovými cookies -->
 <script type="text/plain" data-cookie-category="marketing" async src="https://static.klaviyo.com/onsite/js/Yf7K2A/klaviyo.js?company_id=Yf7K2A"></script>
-<script src="cookies.js?v=20261123c"></script>
+<script src="cookies.js?v=20261123d"></script>
 </body>
 </html>

@@ -447,6 +447,10 @@
       GranulaDelivery.setBag(x.bag.id);
       var dm = GranulaDelivery.method();
       if (dm) ship = GranulaCarriers.price(dm, x.bag.id, ship);
+      else { // doprava ešte nevybraná (nič nie je predvolené) → najlacnejšia možnosť s „od“
+        var opts = GranulaCarriers.methodsFor(x.bag.id).map(function (m) { return GranulaCarriers.price(m, x.bag.id, r.params.shipping); });
+        if (opts.length) { ship = Math.min.apply(null, opts); var shipFrom = true; }
+      }
       order.querySelectorAll("[data-method]").forEach(function (e) { e.textContent = eur(GranulaCarriers.price(e.getAttribute("data-method"), x.bag.id, r.params.shipping)); });
     }
     order.querySelectorAll('input[name="plan"]').forEach(function (i) { i.checked = i.value === state.plan; });
@@ -465,10 +469,11 @@
     $("s-disc-row").hidden = !d || x.price == null;
     $("s-disc-l").textContent = "Zľava predplatného −" + Math.round(d * 100) + "\u00a0%";
     $("s-disc").textContent = x.price == null ? "" : "−" + eur(x.price * d);
-    $("s-ship").textContent = eur(ship);
+    var od = shipFrom ? "od\u00a0" : "";
+    $("s-ship").textContent = od + eur(ship);
     var total = x.price == null ? null : Math.round((x.price * (1 - d) + ship) * 100) / 100;
-    $("s-total").textContent = total == null ? "—" : eur(total);
-    $("s-note").textContent = d ? "Potom " + eur(total) + " každých " + days(x.days) + ". Ďalšie vrece pošleme tak, aby prišlo asi " + days(r.params.reorderLeadDays - r.params.shipDays) + " predtým, ako sa minie." : "Platíš raz. Ďalšie vrece si objednáš, keď budeš chcieť.";
+    $("s-total").textContent = total == null ? "—" : od + eur(total);
+    $("s-note").textContent = d ? "Potom " + od + eur(total) + " každých " + days(x.days) + ". Ďalšie vrece pošleme tak, aby prišlo asi " + days(r.params.reorderLeadDays - r.params.shipDays) + " predtým, ako sa minie." : "Platíš raz. Ďalšie vrece si objednáš, keď budeš chcieť.";
     $("s-fine").textContent = "Platbu bezpečne spracuje Stripe." + (d ? " Predplatné zrušíš jedným klikom v účte." : "");
     // vlastný súhlas s opakovanou platbou (text Stripe pri karte je vypnutý, terms: never) → na stránke #platba
     $("p-fine").textContent = d && total != null

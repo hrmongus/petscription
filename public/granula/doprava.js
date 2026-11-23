@@ -39,13 +39,14 @@
   var addrF = null;
   function renderOptions() {
     var box = $("ship-opts-new"), list = C().methodsFor(bag), cur = method();
-    if (list.indexOf(cur) === -1) cur = C().defaultFor(bag);
+    if (list.indexOf(cur) === -1) cur = ""; // nič nie je predvolené (zadanie 23. 11.): zákazník vyberie sám
     addrF = addrF || $("addr-f");
     if (addrF.parentNode === box) box.removeChild(addrF); // innerHTML by uzol zahodil (aj s vyplnenými hodnotami)
     box.innerHTML = list.map(function (m) {
       var M = C().METHODS[m], svc = SERVICE_OF[m];
       // karta: voľba + (pri výdajnom mieste, kým nie je vybrané) oranžové tlačidlo výberu priamo v karte
       return '<div class="so-wrap" data-m="' + m + '"><label class="so"><input type="radio" name="dmethod" value="' + m + '"' + (m === cur ? " checked" : "") + '><span class="so-box" aria-hidden="true"></span>' +
+        (M.logo ? '<span class="so-logo"><img src="' + esc(M.logo) + '" alt="" width="72" height="24"></span>' : "") +
         '<span class="so-txt"><b>' + esc(M.label) + "</b><span>" + esc(M.eta) + '</span></span><b class="so-pr" data-ship-price data-method="' + m + '"></b></label>' +
         (svc ? '<div class="so-act" data-for="' + m + '" hidden><button type="button" class="btn btn-o so-cta" data-pick="' + svc + '" aria-haspopup="dialog">' +
           (m === "packeta_point" ? "Vybrať výdajné miesto alebo Z-BOX →" : "Vybrať odberné miesto alebo box →") + "</button>" +
