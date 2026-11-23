@@ -469,6 +469,9 @@ Celé prihlásenie s 2FA som neprešiel: vytvoriť testovací admin účet v pro
 - **`scripts/stripe-e2e-clock.ts` opravený:** nákup cez skutočný dotazník a vlastný platobný formulár (spoločné kroky `scripts/e2e-quiz.ts`, používa ich aj `e2e-checkout.ts`). Normálny beh: first #59 → simulované doručenie → obnovenie 28. 12. → renewal #60 (`in_1UevBR1U0mpiDjfi2Tmyy2bo`), všetky kontroly OK. `--fail-renewal`: first #61 → faktúra `in_1UevEj1U0mpiDjfihFTmFzZI` open → `past_due` → email `payment-failed` sent, žiadna renewal objednávka, OK. `e2e-checkout.ts 3ds` (#62) a `jednorazovo` po refaktore OK.
 - **Admin účty vytvorené** (`create-admin`): jakub@granula.sk, viktoria@mamsacare.com (rola admin, prihlásenie heslom overené, 2FA si nastavia pri prvom prihlásení).
 
+## Nasadenie admina (23. 11.)
+- **https://granula-manazer.vercel.app** (bez vlastnej domény, SPEC §10.25). Overené dočasným účtom `claude-test-admin@granula.sk` (so súhlasom používateľa, po teste zmazaný): heslo → 2FA (nastavenie s QR, zlý kód odmietnutý, správny prijatý), bez 2FA sa do admina nedá, prehľad, objednávky (50 na strane), predplatné, odstúpenia (zoznam aj detail s lehotou a refundom), sklad, detail objednávky s FHB naživo, detail predplatného so Stripe, `/vypocet`; odhlásenie a nové prihlásenie iba kódom. Neprihlásený → `/login` (aj `/vypocet`, `engine.js`), podvrhnutý token odmietnutý, hlavičky `noindex`, `X-Frame-Options: DENY`, HSTS. Režim TEST (Stripe test, FHB sandbox).
+
 ## Otvorené
 1. SPEC §10.25–33 na potvrdenie (hlavne prepínač parametrov v kontrole výpočtu, §10.32).
 2. Vercel: nový projekt + doména + env podľa `admin/README.md`.
