@@ -1,69 +1,21 @@
 {
-  "cleanUrls": true,
-  "redirects": [
+  "framework": "nextjs",
+  "crons": [
     {
-      "source": "/suroviny",
-      "destination": "/#suroviny",
-      "permanent": true
+      "path": "/api/cron/fhb-orders",
+      "schedule": "17 18 * * *"
     },
     {
-      "source": "/granula",
-      "destination": "/",
-      "permanent": true
+      "path": "/api/cron/fhb-rma",
+      "schedule": "37 5 * * *"
     },
     {
-      "source": "/granula/",
-      "destination": "/",
-      "permanent": true
+      "path": "/api/cron/fhb-stock",
+      "schedule": "47 6 * * *"
     },
     {
-      "source": "/granula/:path*",
-      "destination": "/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/blog",
-      "destination": "/blog/",
-      "permanent": true
-    },
-    {
-      "source": "/admin-blog",
-      "destination": "/admin-blog/",
-      "permanent": true
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/granula/index"
-    },
-    {
-      "source": "/(.+)/",
-      "destination": "/granula/$1/index"
-    },
-    {
-      "source": "/:path*",
-      "destination": "/granula/:path*"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/blog/nahlad-pdf/(.*)",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow"
-        }
-      ]
-    },
-    {
-      "source": "/granula/blog/nahlad-pdf/(.*)",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow"
-        }
-      ]
+      "path": "/api/cron/reminders",
+      "schedule": "7 7 * * *"
     }
   ]
 }

@@ -1,0 +1,37 @@
+{
+  "name": "fanpagekit",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "deploy:functions": "supabase functions deploy analyze-orchestrate analyze-lyrics analyze-tags",
+    "db:push": "supabase db push"
+  },
+  "dependencies": {
+    "@stripe/react-stripe-js": "^6.12.0",
+    "@stripe/stripe-js": "^9.17.0",
+    "@supabase/supabase-js": "^2.117.2",
+    "libphonenumber-js": "^1.13.16",
+    "next": "^16.3.6",
+    "openai": "^7.51.0",
+    "posthog-js": "^1.438.2",
+    "posthog-node": "^5.55.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "stripe": "^22.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.3.6",
+    "typescript": "^6.0.3",
+    "vitest": "^5.1.0"
+  }
+}

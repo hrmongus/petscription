@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="sk" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="x-apple-disable-message-reformatting">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light only">
+<title>Balík s granulami je na ceste · objednávka č. {{order_number}}</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;padding:0;background:#F4EBE2;}
+  a{color:#0047BB;}
+  @media (max-width:620px){
+    .wrap{width:100%!important;}
+    .pad{padding:24px 20px!important;}
+    .pimg,.pimg img{width:104px!important;}
+    .lab{width:110px!important;}
+    h1{font-size:25px!important;}
+  }
+</style>
+</head>
+<body style="margin:0;padding:0;background:#F4EBE2;">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">Balík odišiel zo skladu. Tu je odkaz na sledovanie.&#8199;&#65279;&#847;&#8199;&#65279;&#847;&#8199;&#65279;&#847;&#8199;&#65279;&#847;&#8199;&#65279;&#847;&#8199;&#65279;&#847;</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#F4EBE2" style="background:#F4EBE2;">
+<tr><td align="center" style="padding:28px 12px 40px;">
+<table role="presentation" class="wrap" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;">
+
+<tr><td style="padding:0 0 22px 4px;">
+<a href="{{url_home}}" style="text-decoration:none;"><img src="https://www.granula.sk/img/email/logo-granula.png" width="200" alt="GRANULA!" style="display:block;width:200px;height:auto;border:0;font-family:'Montserrat','Proxima Nova','Arial Black',Arial,Helvetica,sans-serif;font-size:28px;font-weight:900;font-style:italic;color:#000000;"></a>
+</td></tr>
+
+<tr><td class="pad" bgcolor="#FFFBF6" style="background:#FFFBF6;border:2px solid #000000;padding:36px 36px 32px;">
+<p style="margin:0 0 10px;font-family:'Montserrat','Proxima Nova',Arial,Helvetica,sans-serif;font-size:12px;line-height:1.4;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#5C5650;">Objednávka č. {{order_number}}</p><h1 style="margin:0 0 16px;font-family:'Montserrat','Proxima Nova','Arial Black',Arial,Helvetica,sans-serif;font-size:30px;line-height:1.05;font-weight:900;text-transform:uppercase;letter-spacing:-0.3px;color:#000000;">Balík je na ceste</h1><p style="margin:0 0 16px;font-family:'Montserrat','Proxima Nova',Arial,Helvetica,sans-serif;font-size:16px;line-height:1.55;color:#000000;">Ahoj {{first_name}}, granule pre {{dog_name_acc}} práve odišli zo skladu. {{carrier_short}} ich zvyčajne doručí do {{eta}} pracovných dní. {{pickup_note}}</p><div style="height:4px;line-height:4px;font-size:0;">&nbsp;</div><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:2px solid #000000;background:#F4EBE2;">
+<tr>
+<td class="pimg" width="140" valign="top" style="width:140px;padding:0;background:#F4EBE2;border-right:2px solid #000000;">
+<img src="https://www.granula.sk/img/email/vrece-{{product_slug}}.jpg" width="140" alt="{{product_name}}" style="display:block;width:140px;height:auto;border:0;">
+</td>
+<td valign="top" style="padding:18px 18px 14px;background:#FFFBF6;">
+<p style="margin:0 0 8px;font-family:'Montserrat','Proxima Nova','Arial Black',Arial,Helvetica,sans-serif;font-size:17px;line-height:1.15;font-weight:900;text-transform:uppercase;color:#000000;">{{product_name}}</p>
+<p style="margin:0 0 4px;font-family:'Montserrat','Proxima Nova',Arial,Helvetica,sans-serif;font-size:14px;line-height:1.45;color:#5C5650;">{{bag_kg}} kg</p><p style="margin:0 0 4px;font-family:'Montserrat','Proxima Nova',Arial,Helvetica,sans-serif;font-size:14px;line-height:1.45;color:#5C5650;">Recept pre: <strong style="color:#000000;">{{dog_name}}</strong></p>
+
+</td></tr></table><div style="height:22px;line-height:22px;font-size:0;">&nbsp;</div><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td valign="top" class="lab" width="150" style="width:150px;padding:0 12px 12px 0;font-family:'Montserrat','Proxima Nova',Arial,Helvetica,sans-serif;font-size:14px;line-height:1.45;font-weight:700;color:#000000;">Doručenie</td>
+<td valign="top" style="padding:0 0 12px;font-family:'Montserrat','Proxima Nova',Arial,Helvetica,sans-serif;font-size:14px;line-height:1.45;color:#000000;">{{carrier}}<br><span style="color:#5C5650;">{{delivery_address}}</span></td></tr><tr><td valign="top" class="lab" width="150" style="width:150px;padding:0 12px 12px 0;font-family:'Montserrat','Proxima Nova',Arial,Helvetica,sans-serif;font-size:14px;line-height:1.45;font-weight:700;color:#000000;">Číslo zásielky</td>
+<td valign="top" style="padding:0 0 12px;font-family:'Montserrat','Proxima Nova',Arial,Helvetica,sans-serif;font-size:14px;line-height:1.45;color:#000000;"><strong>{{tracking_number}}</strong></td></tr></table><div style="height:4px;line-height:4px;font-size:0;">&nbsp;</div><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:4px 0 8px;"><tr>
+<td bgcolor="#FF6900" style="background:#FF6900;border:2px solid #000000;">
+<a href="{{tracking_url}}" style="display:inline-block;padding:14px 26px;font-family:'Montserrat','Proxima Nova','Arial Black',Arial,Helvetica,sans-serif;font-size:15px;line-height:1;font-weight:900;letter-spacing:0.5px;text-transform:uppercase;color:#000000;text-decoration:none;">Sledovať zásielku</a>
+</td></tr></table>{{#first}}<div style="height:6px;line-height:6px;font-size:0;">&nbsp;</div><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-top:1px solid #E3D8CC;font-size:0;line-height:0;height:1px;">&nbsp;</td></tr></table><div style="height:22px;line-height:22px;font-size:0;">&nbsp;</div><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding:18px 20px;background:#F4EBE2;border-left:4px solid #000000;"><p style="margin:0 0 10px;font-family:'Montserrat','Proxima Nova','Arial Black',Arial,Helvetica,sans-serif;font-size:13px;line-height:1;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:#000000;">Prvé vrece? Prechádzaj postupne</p><p style="margin:0 0 0px;font-family:'Montserrat','Proxima Nova',Arial,Helvetica,sans-serif;font-size:15px;line-height:1.55;color:#000000;">Nové granule miešaj so starými asi týždeň: prvé dva dni štvrtinu nových, potom polovicu, potom tri štvrtiny a od siedmeho dňa už len Granulu. Bruško si tak zvykne bez problémov.</p></td></tr></table>{{/first}}
+</td></tr>
+
+<tr><td style="padding:28px 4px 0;">
+<p style="margin:0 0 14px;font-family:'Montserrat','Proxima Nova',Arial,Helvetica,sans-serif;font-size:14px;line-height:1.55;color:#000000;">Niečo nesedí alebo sa chceš na niečo opýtať? Odpíš na tento e-mail alebo napíš na <a href="mailto:podpora@granula.sk" style="color:#0047BB;text-decoration:underline;font-weight:600;">podpora@granula.sk</a>.</p>
+<p style="margin:0 0 18px;font-family:'Montserrat','Proxima Nova',Arial,Helvetica,sans-serif;font-size:13px;line-height:1.8;color:#000000;"><a href="{{url_account}}" style="color:#000000;text-decoration:underline;font-weight:600;">Môj účet</a> <span style="color:#5C5650;">&nbsp;·&nbsp;</span> <a href="{{url_vop}}" style="color:#000000;text-decoration:underline;font-weight:600;">Obchodné podmienky</a> <span style="color:#5C5650;">&nbsp;·&nbsp;</span> <a href="{{url_claims}}" style="color:#000000;text-decoration:underline;font-weight:600;">Reklamácie</a> <span style="color:#5C5650;">&nbsp;·&nbsp;</span> <a href="{{url_withdraw}}" style="color:#000000;text-decoration:underline;font-weight:600;">Odstúpiť od zmluvy tu</a></p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-top:1px solid #E3D8CC;font-size:0;line-height:0;height:1px;">&nbsp;</td></tr></table>
+<p style="margin:16px 0 4px;font-family:'Montserrat','Proxima Nova',Arial,Helvetica,sans-serif;font-size:12px;line-height:1.6;color:#5C5650;">
+<strong style="color:#000000;">Granula</strong> · <a href="{{url_home}}" style="color:#5C5650;text-decoration:underline;font-weight:600;">granula.sk</a><br>
+Spark Link, s. r. o. · Lermontovova 911/3, 811 05 Bratislava<br>
+IČO: 55615597 · DIČ: 2122032979
+</p>
+<p style="margin:10px 0 0;font-family:'Montserrat','Proxima Nova',Arial,Helvetica,sans-serif;font-size:12px;line-height:1.6;color:#5C5650;">Tento e-mail ti posielame, pretože súvisí s tvojou objednávkou na granula.sk.</p>
+</td></tr>
+
+</table>
+</td></tr></table>
+</body>
+</html>
