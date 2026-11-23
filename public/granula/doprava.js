@@ -35,17 +35,36 @@
   function fmtPhone(p) { return p.replace(/^(\+\d{3})(\d{3})(\d{3})(\d{3})$/, "$1 $2 $3 $4"); }
 
   /* ---------------- možnosti podľa balenia ---------------- */
+  // adresné polia kuriéra: pri novom toku stoja priamo pod kartou „SPS – kuriér na adresu“ (formulár ide zhora nadol)
+  var addrF = null;
   function renderOptions() {
     var box = $("ship-opts-new"), list = C().methodsFor(bag), cur = method();
     if (list.indexOf(cur) === -1) cur = C().defaultFor(bag);
+    addrF = addrF || $("addr-f");
+    if (addrF.parentNode === box) box.removeChild(addrF); // innerHTML by uzol zahodil (aj s vyplnenými hodnotami)
     box.innerHTML = list.map(function (m) {
       var M = C().METHODS[m], svc = SERVICE_OF[m];
-      return '<label class="so"><input type="radio" name="dmethod" value="' + m + '"' + (m === cur ? " checked" : "") + '><span class="so-box" aria-hidden="true"></span>' +
+      // karta: voľba + (pri výdajnom mieste, kým nie je vybrané) oranžové tlačidlo výberu priamo v karte
+      return '<div class="so-wrap" data-m="' + m + '"><label class="so"><input type="radio" name="dmethod" value="' + m + '"' + (m === cur ? " checked" : "") + '><span class="so-box" aria-hidden="true"></span>' +
         '<span class="so-txt"><b>' + esc(M.label) + "</b><span>" + esc(M.eta) + '</span></span><b class="so-pr" data-ship-price data-method="' + m + '"></b></label>' +
-        (svc ? '<div class="dl-pick" data-for="' + m + '" hidden><button type="button" class="link-under" data-pick="' + svc + '" aria-haspopup="dialog"></button>' +
-          '<div class="dl-chosen" hidden></div>' +
-          (svc === "packeta" ? '<button type="button" class="dl-alt" data-list="packeta">Vyhľadať v zozname</button>' : "") + "</div>" : "");
+        (svc ? '<div class="so-act" data-for="' + m + '" hidden><button type="button" class="btn btn-o so-cta" data-pick="' + svc + '" aria-haspopup="dialog">' +
+          (m === "packeta_point" ? "Vybrať výdajné miesto alebo Z-BOX →" : "Vybrať odberné miesto alebo box →") + "</button>" +
+          (svc === "packeta" ? '<button type="button" class="dl-alt" data-list="packeta">Vyhľadať v zozname</button>' : "") + "</div>" : "") +
+        "</div>" +
+        // vybrané miesto: pod kartou, s odkazom na zmenu
+        (svc ? '<div class="dl-pick" data-for="' + m + '" hidden><div class="dl-chosen" hidden></div>' +
+          '<button type="button" class="link-under" data-pick="' + svc + '" aria-haspopup="dialog">Zmeniť výdajné miesto</button></div>' : "");
     }).join("");
+    var sw = box.querySelector('.so-wrap[data-m="sps_courier"]');
+    if (sw) {
+      sw.parentNode.insertBefore(addrF, sw.nextSibling);
+      if (!addrF.querySelector(".addr-hint")) {
+        var h = document.createElement("small");
+        h.className = "pf-hint addr-hint";
+        h.textContent = "Doručujeme na Slovensko. Číslo bytu alebo poschodie napíš k ulici.";
+        addrF.appendChild(h);
+      }
+    }
     box.querySelectorAll('input[name="dmethod"]').forEach(function (r) { r.addEventListener("change", function () { paintMethod(); onChange(); }); });
     box.querySelectorAll("[data-pick]").forEach(function (b) {
       b.addEventListener("click", function () { b.getAttribute("data-pick") === "packeta" ? pickPacketa(b) : openDialog("dpd", b); });
@@ -55,8 +74,7 @@
   }
   function paintMethod() {
     var m = method();
-    form.querySelectorAll(".dl-pick").forEach(function (el) { el.hidden = el.getAttribute("data-for") !== m; });
-    $("addr-f").hidden = m !== "sps_courier"; // adresa iba pre kuriéra (pri výdajnom mieste ju FHB doplní z miesta)
+    (addrF || $("addr-f")).hidden = m !== "sps_courier"; // adresa iba pre kuriéra (pri výdajnom mieste ju FHB doplní z miesta)
     paintChosen("packeta_point");
     paintChosen("dpd_pickup");
     // „Vyhľadať v zozname“ pri Packete iba popri oficiálnom widgete (bez kľúča je zoznam hlavné tlačidlo)
@@ -66,9 +84,10 @@
   function paintChosen(m) {
     var box = form.querySelector('.dl-pick[data-for="' + m + '"]');
     if (!box) return;
-    var p = chosen[m], card = box.querySelector(".dl-chosen"), btn = box.querySelector("[data-pick]");
+    var p = chosen[m], card = box.querySelector(".dl-chosen"), act = form.querySelector('.so-act[data-for="' + m + '"]'), sel = method() === m;
     card.hidden = !p;
-    btn.textContent = p ? "Zmeniť výdajné miesto" : (m === "packeta_point" ? "Vybrať výdajné miesto alebo Z-BOX →" : "Vybrať odberné miesto alebo box →");
+    box.hidden = !(sel && p);            // vybrané miesto pod kartou
+    if (act) act.hidden = !(sel && !p);  // kým nie je vybrané: oranžové tlačidlo v karte
     card.innerHTML = p ? "<b>" + esc(p.name) + "</b><span>" + esc([title(p.street), [fmtZip(p.zip), title(p.city)].filter(Boolean).join(" ")].filter(Boolean).join(", ")) + "</span>" +
       (p.kind === "box" ? '<span class="dl-tag">box</span>' : "") + (String(p.id).indexOf("TEST-") === 0 ? '<span class="dl-tag">test</span>' : "") : "";
   }
@@ -239,7 +258,7 @@
     if (!m || !C().allowed(m, bag)) mark(form.querySelector('#ship-new input[name="dmethod"]'), "Vyber spôsob doručenia.");
     else if (M.pickup) {
       point = chosen[m];
-      if (!point) mark(form.querySelector('.dl-pick[data-for="' + m + '"] [data-pick]'), "Vyber výdajné miesto.");
+      if (!point) mark(form.querySelector('.so-act[data-for="' + m + '"] [data-pick]'), "Vyber výdajné miesto.");
       else if (point.kind === "box" && !C().boxes(m, bag)) mark(form.querySelector('.dl-pick[data-for="' + m + '"] [data-pick]'), "Pri balení " + bag + " kg vyber odberné miesto, nie box.");
     } else {
       var st = $("street").value.trim(), zip = $("zip").value.replace(/\s/g, ""), city = $("city").value.trim();

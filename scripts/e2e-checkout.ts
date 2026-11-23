@@ -100,7 +100,8 @@ async function main() {
       await page.fill('#zip', '040 01');
       await page.fill('#city', 'Košice');
     } else {
-      const pick = page.locator(`.dl-pick[data-for="${method}"]`);
+      const pick = page.locator(`.so-act[data-for="${method}"]`); // oranžové tlačidlo výberu miesta v karte dopravcu
+      check(await pick.locator('[data-pick]').isVisible(), 'tlačidlo „Vybrať … miesto“ v karte dopravcu');
       if (method === 'packeta_point' && (await pick.locator('[data-list="packeta"]').isVisible())) await pick.locator('[data-list="packeta"]').click();
       else await pick.locator('[data-pick]').click();
       const listTab = page.locator('.dp-tabs button[data-view="list"]');

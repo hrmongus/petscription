@@ -404,3 +404,4 @@ Spustené automaticky v noci („do as much as possible“). Opakovateľné skri
 - **Link a povinné polia (23. 11.):** Link povolený ako zelené tlačidlo nad formulárom (Express Checkout), vo formulári karty bez ukladania do Link (inak povinný telefón). Hviezdičky pri povinných poliach. Overené lokálne: predplatné #34 (počítač), 3D Secure #35 (mobil).
 - **Ceny vriec na stránke výsledku (23. 11.):** karty ukazujú cenu s predplatným (4 kg 31,50 €, 9 kg 67,50 €, 18 kg 126,00 € pri vzorovom psovi), SPEC §10.20.
 - **Platba ako samostatná stránka `#platba` (23. 11.):** SPEC §10.21. Lokálne: predplatné #39 (počítač), zamietnutá karta (mobil), 3D Secure #40 (mobil); späť a znova bez zmeny = 1 Checkout Session; predregistrácia bez zmeny.
+- **Karty dopravcov (23. 11.):** tlačidlo výberu miesta v karte, vybrané miesto pod kartou, adresa kuriéra pod kartou SPS (SPEC §10.22). Lokálne: DPD #43, Packeta (mobil) #44, kuriér + zamietnutá karta.

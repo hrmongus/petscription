@@ -93,3 +93,17 @@
 .req-star{color:var(--err);font-weight:800}
 /* mobil: pri otvorenom predaji stačí tlačidlo pod formulárom (bočné by bolo hneď pod ním druhýkrát) */
 @media (max-width:860px){.co-req #s-submit{display:none}}
+/* karty dopravcov (nový tok): tlačidlo výberu miesta v karte, vybrané miesto a adresa kuriéra pod kartou */
+.so-wrap{border:2px solid var(--n);background:var(--ml)}
+.so-wrap > .so{border:0 !important;background:none;padding:14px 16px}
+.so-wrap:has(input:checked){border:3px solid var(--k)}
+.so-wrap:has(input:checked) > .so{padding:13px 15px}
+.so-wrap:has(input:focus-visible){outline:3px solid var(--n);outline-offset:2px}
+.so-wrap > .so:has(input:focus-visible){outline:none}
+.so-act{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:0 15px 16px 50px}
+.so-act[hidden]{display:none}
+.so-cta{min-height:48px;padding:12px 20px;font-size:15px}
+.so-cta[aria-invalid="true"]{outline:3px solid var(--err);outline-offset:2px}
+#ship-opts-new > #addr-f{display:flex;flex-direction:column;gap:12px;padding:2px 0 6px}
+#ship-opts-new > #addr-f[hidden]{display:none}
+@media (max-width:860px){.so-act{padding:0 14px 14px}.so-cta{width:100%}}
