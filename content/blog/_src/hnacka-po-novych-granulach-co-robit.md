@@ -27,7 +27,7 @@ key_points:
   - "Granule nemusia byť vinníkom. Veterinári zapísali zmenu krmiva ako možnú príčinu hnačky len pri 4,6 % psov."
   - "Najčastejšia chyba: zmeniť granule zo dňa na deň a pri hnačke hneď skúšať ďalšie nové krmivo."
 changelog:
-  - "2026-11-23: Hlavná fotka (ilustrácia vygenerovaná AI)"
+  - "2026-11-23: Hlavná fotka a fotky do sekcií (ilustrácie vygenerované AI)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: „žerie“ nahradené"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
@@ -47,7 +47,7 @@ sources:
 
 ==Od hnačky z infekcie, parazitov alebo zjedeného odpadu ju rozlíšiš podľa dvoch vecí: prišla krátko po zmene krmiva a pes je inak čulý, má chuť do jedla a pije.==
 
-![Majiteľ v kuchyni mieša v miske malú časť nových granúl so starými, pes sedí vedľa a čaká](placeholder "Pri postupnom prechode sa nové granule pridávajú k starým po malých dávkach.")
+![Francúzsky buldoček s chuťou je granule z misky na podlahe kuchyne, vedľa stojí miska s vodou a v pozadí sa naňho pozerá žena s hrnčekom](img/blog/hnacka-po-novych-granulach-co-robit/pes-je.webp "Pes s hnačkou zo zmeny krmiva býva inak čulý, má chuť do jedla a pije. Ilustrácia vygenerovaná AI.")
 
 ## Prečo má pes po nových granulách hnačku?
 
@@ -112,7 +112,7 @@ Ak hnačka prišla presne so zmenou granúl, súvislosť je pravdepodobná. Ak v
 
 ==Šteňa, starý pes, pes s iným ochorením alebo pes na liekoch patrí s hnačkou k veterinárovi vždy.== Platí to najmä pri protizápalových liekoch.[^pdsa] Ak máš podozrenie, že pes zjedol niečo jedovaté, volaj veterinára hneď.
 
-![Majiteľ telefonuje s veterinárom, pes leží pokojne vedľa neho na deke v obývačke](placeholder "Pri krvi, zvracaní alebo apatii nečakaj, kým hnačka prejde sama.")
+![Žena sedí na gauči a s ustaraným výrazom telefonuje, francúzsky buldoček leží pri jej nohách na deke](img/blog/hnacka-po-novych-granulach-co-robit/telefonat.webp "Pri krvi, zvracaní alebo apatii nečakaj, kým hnačka prejde sama. Zavolaj veterinárovi. Ilustrácia vygenerovaná AI.")
 
 [^cornell]: Cornell Riney Canine Health Center: Diarrhea (2024) a When to go to the ER (2025). Podľa druhého zdroja môže opakované zvracanie alebo hnačka počas 24 hodín, najmä s krvou, apatiou alebo odmietaním jedla, znamenať vážnejší problém.
 [^pdsa]: PDSA, Diarrhoea after a change of food, 2019.

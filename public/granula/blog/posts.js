@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-23 23:13",
+ "built": "2026-11-23 23:18",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -2010,7 +2010,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
-      "2026-11-23: Hlavná fotka (ilustrácia vygenerovaná AI)",
+      "2026-11-23: Hlavná fotka a fotky do sekcií (ilustrácie vygenerované AI)",
       "2026-11-20: Autorka MVDr. Marcela Glezgová",
       "2026-11-18: „žerie“ nahradené"
      ]
@@ -2132,12 +2132,9 @@ window.GRANULA_POSTS = {
     {
      "id": "img-placeholder",
      "level": "error",
-     "ok": false,
+     "ok": true,
      "msg": "Zástupné obrázky sú nahradené skutočnými (pred publikovaním)",
-     "details": [
-      "obrázok: Majiteľ v kuchyni mieša v miske malú časť nových granúl so starými, pes sedí vedľa a čaká",
-      "obrázok: Majiteľ telefonuje s veterinárom, pes leží pokojne vedľa neho na deke v obývačke"
-     ]
+     "details": []
     },
     {
      "id": "img-files",
