@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<title>Môj účet — Granula</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="Môj účet Granula: predplatné, doručenie a objednávky."><meta name="robots" content="noindex">
+<script>document.documentElement.classList.add("js")</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,900&display=swap">
+<link rel="stylesheet" href="granula.css">
+<link rel="stylesheet" href="doprava.css?v=20261123e">
+<style>
+.u-hero .wrap{padding-top:40px;padding-bottom:72px}
+.u-wrap{display:flex;flex-direction:column;gap:24px;max-width:880px}
+.u-head{display:flex;flex-direction:column;gap:14px}
+.u-head h1{font-size:clamp(40px,5vw,64px)}
+.u-sub{font-size:16px;line-height:1.5;max-width:560px}
+.u-loading{font-weight:700}
+.u-card{background:var(--ml);border:2px solid var(--n);padding:24px 20px;display:flex;flex-direction:column;gap:14px}
+.u-login{max-width:520px}
+.u-login form{display:flex;flex-direction:column;gap:14px}
+.u-login p{font-size:15px;line-height:1.5}
+.u-h{font-size:22px;font-weight:900;text-transform:uppercase;line-height:1.1;outline:none}
+.u-h2{font-size:clamp(22px,2.4vw,30px);font-weight:900;text-transform:uppercase;line-height:1}
+.pf{display:flex;flex-direction:column;gap:6px;min-width:0}
+.pf > span{font-size:13px;font-weight:700}
+.pf-hint{font-size:12px;line-height:1.4}
+.pf2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pf2.zip{grid-template-columns:1fr 2fr}
+.input{width:100%;font:500 16px/1.3 var(--font);color:var(--n);background:var(--m);border:2px solid var(--n);border-radius:0;padding:12px 14px}
+textarea.input{resize:vertical;min-height:84px}
+.input::placeholder{color:var(--n);opacity:.5}
+.input:focus{outline:none;border-color:var(--k);box-shadow:0 0 0 2px var(--k)}
+.input[aria-invalid="true"]{border-color:var(--err)}
+.u-code{font-size:28px;font-weight:900;letter-spacing:.3em;text-align:center}
+.u-btn{width:100%}
+.btn[aria-busy="true"]{opacity:.6;cursor:progress}
+.u-err{color:var(--err);font-weight:700;font-size:14px;line-height:1.4}
+.u-links{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:center}
+.u-link{background:none;border:0;border-bottom:2px solid currentColor;padding:0 0 2px;font:700 14px var(--font);color:var(--n);cursor:pointer}
+.u-small{font-size:13px !important}
+.u-bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 16px;font-size:15px}
+.u-flash{padding:14px 16px;border:2px solid var(--n);border-left-width:8px;background:var(--ml);font-weight:700;font-size:15px;line-height:1.4;outline:none}
+.u-flash.is-err{border-color:var(--err);color:var(--err)}
+#u-acc{display:flex;flex-direction:column;gap:28px}
+#u-acc[hidden]{display:none}
+#u-subs{display:flex;flex-direction:column;gap:20px}
+.u-sub-card{gap:16px}
+.u-sub-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:10px}
+.u-sub-top h3{font-size:24px;font-weight:900;text-transform:uppercase;line-height:1.05}
+.u-tag{display:inline-block;padding:6px 10px 5px;font-size:13px;font-weight:900;text-transform:uppercase;border:2px solid var(--n);background:var(--m)}
+.u-tag.is-ok{background:var(--k);color:var(--m);border-color:var(--k)}
+.u-tag.is-warn{background:var(--o)}
+.u-facts{margin:0;display:grid;grid-template-columns:minmax(0,170px) minmax(0,1fr);gap:8px 14px;font-size:15px;line-height:1.4}
+.u-facts dt{font-weight:700}
+.u-facts dd{margin:0;overflow-wrap:anywhere}
+.u-next{font-size:18px;font-weight:800;line-height:1.35;padding:12px 14px;background:var(--m);border-left:4px solid var(--n)}
+.u-note{font-size:14px;line-height:1.45}
+.u-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.u-act{min-height:48px;padding:10px 12px;border:2px solid var(--n);background:var(--m);font:800 14px/1.2 var(--font);color:var(--n);cursor:pointer;text-align:left}
+.u-act:hover,.u-act[aria-expanded="true"]{background:var(--n);color:var(--m)}
+.u-act.is-danger{border-style:dashed}
+.u-panel{display:flex;flex-direction:column;gap:14px;padding:18px 16px;border:2px solid var(--n);background:var(--m)}
+.u-panel[hidden]{display:none}
+.u-panel h4{font-size:17px;font-weight:900;text-transform:uppercase}
+.u-panel p{font-size:15px;line-height:1.5}
+.u-panel .input{background:var(--ml)}
+.u-panel-btns{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.u-cmp{width:100%;border-collapse:collapse;font-size:14px;line-height:1.35}
+.u-cmp th,.u-cmp td{text-align:left;padding:8px 6px;border-bottom:1px solid #CDBFB0;vertical-align:top}
+.u-cmp thead th{font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.u-cmp td.is-new{font-weight:800}
+.u-opts{display:flex;flex-direction:column;gap:8px}
+.u-opt{display:flex;align-items:center;gap:12px;padding:12px 14px;border:2px solid var(--n);background:var(--ml);cursor:pointer;font-size:15px;font-weight:700}
+.u-opt input{width:20px;height:20px;accent-color:var(--k);flex:none}
+.u-opt:has(input:checked){border-color:var(--k);box-shadow:inset 0 0 0 1px var(--k)}
+.u-opt small{font-weight:400;font-size:13px;display:block}
+.u-bags{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.u-bags .u-opt{justify-content:center}
+.u-sec{display:flex;flex-direction:column;gap:14px}
+.u-orders{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.u-order{background:var(--ml);border:2px solid var(--n);padding:16px;display:flex;flex-direction:column;gap:10px}
+.u-order-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 14px}
+.u-order-top b{font-size:16px;font-weight:900}
+.u-order p{font-size:14px;line-height:1.45}
+.u-order .u-panel{background:var(--m)}
+.u-wd-btn{align-self:flex-start;min-height:44px;padding:10px 16px;font-size:14px}
+.u-row{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.u-row p{font-size:15px;max-width:460px}
+.u-upsell p{font-size:15px;line-height:1.5}
+.u-upsell .btn{align-self:flex-start}
+.u-delivery{display:flex;flex-direction:column;gap:12px}
+/* výber doručenia (rovnaké štýly ako v checkoute, granule-na-mieru.html) */
+.ship-opts{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.so{display:flex;align-items:center;gap:14px;padding:14px 16px;border:2px solid var(--n);background:var(--ml);cursor:pointer}
+.so input{position:absolute;opacity:0;pointer-events:none}
+.so:has(input:focus-visible){outline:3px solid var(--n);outline-offset:2px}
+.so-box{width:20px;height:20px;flex:none;border:2px solid currentColor;display:flex;align-items:center;justify-content:center}
+.so-box::after{content:"";width:10px;height:10px;background:currentColor;transform:scale(0)}
+.so:has(input:checked) .so-box::after{transform:scale(1)}
+.so:has(input:checked){border:3px solid var(--k);padding:13px 15px;color:var(--k)}
+.so-txt{flex:1;display:flex;flex-direction:column;gap:2px;color:var(--n)}
+.so-txt b{font-size:15px;font-weight:800}
+.so-txt span{font-size:13px}
+.so-pr{font-size:15px;font-weight:900;color:var(--n)}
+@media (min-width:720px){
+  .u-card{padding:28px 28px}
+  .u-actions{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .u-facts{grid-template-columns:minmax(0,1fr);gap:2px}
+  .u-facts dd{margin-bottom:8px}
+  .u-cmp{font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar"><span>Štartujeme 1.&nbsp;decembra</span><span class="star" aria-hidden="true"></span><span>Prvé vrecko −30&nbsp;% pre tých, čo sa zapíšu vopred</span><button type="button" class="topbar-cta" data-klaviyo-open="YcSYzw">Chcem byť prvý →</button></div>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
+    <nav class="menu" aria-label="Hlavné menu">
+      <a href="index.html#suroviny">Suroviny</a>
+
+      <a href="index.html#recenzie">Recenzie</a>
+      <a href="index.html#otazky">Otázky</a>
+      <a href="blog/">Blog</a>
+      <a href="nas-pribeh.html">Náš príbeh</a>
+    </nav>
+    <a class="btn btn-k btn-sm btn-head" href="granule-na-mieru.html">Granule na mieru →</a>
+  </div>
+</header>
+
+<main class="u">
+<section class="u-hero">
+  <div class="wrap u-wrap">
+    <div class="u-head">
+      <div class="eyebrow">Môj účet</div>
+      <h1 class="display" id="u-title">Môj <span class="ac">účet.</span></h1>
+      <p class="u-sub" id="u-sub">Predplatné, doručenie a objednávky na jednom mieste.</p>
+    </div>
+
+    <p class="u-loading" id="u-loading">Načítavam…</p>
+
+    <!-- prihlásenie kódom z e-mailu -->
+    <div class="u-card u-login" id="u-login" hidden>
+      <form id="l-email" novalidate>
+        <h2 class="u-h">Prihlásenie</h2>
+        <p>Bez hesla: pošleme ti jednorazový kód na e-mail, ktorý si zadal pri objednávke.</p>
+        <label class="pf"><span>E-mail</span><input class="input" id="l-mail" type="email" autocomplete="email" placeholder="meno@email.sk" required maxlength="254"></label>
+        <p class="u-err" id="l-err1" role="alert" hidden></p>
+        <button class="btn btn-o u-btn" type="submit">Poslať kód</button>
+      </form>
+      <form id="l-code" novalidate hidden>
+        <h2 class="u-h" tabindex="-1" id="l-code-h">Zadaj kód</h2>
+        <p>Ak máme <b id="l-to"></b> medzi zákazníkmi, práve sme naň poslali kód. Platí 10 minút.</p>
+        <label class="pf"><span>Kód z e-mailu</span><input class="input u-code" id="l-otp" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" maxlength="10" required></label>
+        <p class="u-err" id="l-err2" role="alert" hidden></p>
+        <button class="btn btn-o u-btn" type="submit">Prihlásiť sa</button>
+        <div class="u-links"><button type="button" class="u-link" id="l-again">Poslať nový kód</button><button type="button" class="u-link" id="l-back">Zmeniť e-mail</button></div>
+        <p class="u-small">Kód neprišiel? Pozri spam. Ak si objednával z iného e-mailu, zadaj ten. Pomôžeme aj na <a href="mailto:podpora@granula.sk">podpora@granula.sk</a>.</p>
+      </form>
+    </div>
+
+    <!-- účet -->
+    <div id="u-acc" hidden>
+      <div class="u-bar"><span id="u-who"></span><button type="button" class="u-link" id="u-logout">Odhlásiť sa</button></div>
+      <p class="u-flash" id="u-flash" role="status" tabindex="-1" hidden></p>
+      <div id="u-subs"></div>
+      <div class="u-card u-upsell" id="u-upsell" hidden>
+        <h2 class="u-h">Prejsť na predplatné</h2>
+        <p>S predplatným príde ďalšie vrece samo, presne keď to súčasné dochádza, a zaplatíš o 10 % menej. Zrušiť sa dá kedykoľvek.</p>
+        <a class="btn btn-o" href="granule-na-mieru.html">Prejsť na predplatné →</a>
+      </div>
+      <section class="u-sec" aria-labelledby="u-orders-h">
+        <h2 class="u-h2" id="u-orders-h">Objednávky</h2>
+        <ul class="u-orders" id="u-orders"></ul>
+      </section>
+      <section class="u-sec" aria-labelledby="u-card-h">
+        <h2 class="u-h2" id="u-card-h">Karta a faktúry</h2>
+        <div class="u-card u-row">
+          <p>Kartu zmeníš na zabezpečenej stránke Stripe. Nová karta platí aj pre ďalšie platby predplatného.</p>
+          <button type="button" class="btn btn-line" id="u-portal">Zmeniť kartu →</button>
+        </div>
+        <p class="u-err" id="u-portal-err" role="alert" hidden></p>
+        <ul class="u-orders" id="u-invoices"><li class="u-order"><p>Načítavam faktúry…</p></li></ul>
+      </section>
+    </div>
+  </div>
+</section>
+
+<!-- výber doručenia (rovnaký ako v checkoute: doprava.js + doprava-config.js); presúva sa do panelu predplatného -->
+<form id="order" class="u-delivery" novalidate hidden>
+  <div class="pf2">
+    <label class="pf"><span>Meno</span><input class="input" id="fname" autocomplete="given-name" required></label>
+    <label class="pf"><span>Priezvisko</span><input class="input" id="lname" autocomplete="family-name" required></label>
+  </div>
+  <label class="pf" id="phone-f" hidden><span>Telefón</span><input class="input" id="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+421 9XX XXX XXX"><small class="pf-hint">Dopravca ti dá vedieť, kedy balík príde.</small></label>
+  <input type="hidden" id="email">
+  <div class="dc" id="addr-f">
+    <label class="pf"><span>Ulica a číslo</span><input class="input" id="street" autocomplete="street-address" required></label>
+    <div class="pf2 zip">
+      <label class="pf"><span>PSČ</span><input class="input" id="zip" autocomplete="postal-code" inputmode="numeric" required></label>
+      <label class="pf"><span>Mesto</span><input class="input" id="city" autocomplete="address-level2" required></label>
+    </div>
+  </div>
+  <div id="ship-legacy" hidden></div>
+  <div class="dl-new" id="ship-new" hidden>
+    <div class="ship-opts" id="ship-opts-new" role="radiogroup" aria-label="Spôsob doručenia"></div>
+  </div>
+</form>
+</main>
+
+<footer class="foot">
+  <div class="wrap fq-wrap">
+    <section class="fq" aria-labelledby="fq-h">
+      <div class="fq-top">
+        <div class="fq-ph" aria-hidden="true"><span class="fq-on">Online</span><span class="fq-img"><svg viewBox="0 0 48 48" width="44" height="44" fill="currentColor"><path d="M8 8h32a4 4 0 0 1 4 4v18a4 4 0 0 1-4 4H22l-9 8v-8H8a4 4 0 0 1-4-4V12a4 4 0 0 1 4-4Z"/><circle cx="16" cy="21" r="2.6" fill="#FFF7EE"/><circle cx="24" cy="21" r="2.6" fill="#FFF7EE"/><circle cx="32" cy="21" r="2.6" fill="#FFF7EE"/></svg></span></div>
+        <div class="fq-copy"><h2 class="display" id="fq-h">Máš otázky?</h2><p>Naša zákaznícka podpora ti rada pomôže s výberom granúl, dávkou aj objednávkou.</p></div>
+      </div>
+      <ul class="fq-list">
+        <li><span class="fq-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 7 9 6 9-6"/></svg></span><span><small>E-mail</small><a href="mailto:podpora@granula.sk">podpora@granula.sk</a></span></li>
+        <li><span class="fq-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span><small>Kedy sme tu</small><b>Po–Pi 9:00–18:00</b></span></li>
+        <li><span class="fq-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14"/><circle cx="12" cy="17.2" r=".6" fill="currentColor"/></svg></span><span><small>Centrum podpory</small><a href="podpora.html">Časté otázky a témy →</a></span></li>
+      </ul>
+    </section>
+  </div>
+  <div class="wrap top">
+    <div class="about">
+      <span class="logo">Granula!</span>
+      <p>Granule na mieru pre jedného konkrétneho psa. Receptúry navrhnuté s veterinármi, dávka na gramy, vrecko až k dverám.</p>
+    </div>
+    <div class="cols">
+      <nav aria-label="Granula"><span class="t"><span class="star" aria-hidden="true"></span>GRANULA</span><a href="index.html#suroviny">Suroviny</a><a href="granule-na-mieru.html">Granule na mieru</a><a href="blog/">Blog</a><a href="nas-pribeh.html">Náš príbeh</a></nav>
+      <nav aria-label="Pomoc"><span class="t"><span class="star" aria-hidden="true"></span>POMOC</span><a href="index.html#otazky">Otázky</a><a href="podpora.html#doprava">Doprava</a><a href="podpora.html">Podpora</a></nav>
+      <nav aria-label="Právne"><span class="t"><span class="star" aria-hidden="true"></span>PRÁVNE</span><a href="obchodne-podmienky.html">Všeobecné obchodné podmienky</a><a href="reklamacny-poriadok.html">Reklamačný poriadok</a><a href="ochrana-sukromia.html">Zásady ochrany súkromia</a><a href="garancia.html">Garancia spokojného psíka</a><a href="#" data-cookie-settings>Nastavenia cookies</a><a class="foot-wd" href="odstupenie.html">Odstúpiť od zmluvy tu</a></nav>
+    </div>
+  </div>
+  <div class="wrap bottom"><address>© 2026 <b>Spark Link, s. r. o.</b> · Lermontovova 911/3, 811 05 Bratislava – mestská časť Staré Mesto · IČO 55615597 · DIČ 2122032979 · <a href="mailto:info@granula.sk">info@granula.sk</a></address><span>granula.sk</span></div>
+</footer>
+
+<script src="icons.js"></script>
+<script src="site.js"></script>
+<script src="doprava-config.js?v=20261123e"></script>
+<script src="doprava.js?v=20261123e"></script>
+<script>
+// Môj účet (SPEC P4): prihlásenie kódom z e-mailu, predplatné, objednávky. Všetky výpočty a zmeny robí server (/api/ucet/*).
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function eur(c) { return (c / 100).toFixed(2).replace(".", ",") + " €"; }
+  function ship(c) { return c > 0 ? eur(c) : "zadarmo"; }
+  function dsk(iso) { if (!iso) return ""; var d = new Date(iso); return new Intl.DateTimeFormat("sk-SK", { timeZone: "Europe/Bratislava", day: "numeric", month: "numeric", year: "numeric" }).format(d).replace(/\s/g, " "); }
+  function ymd(d) { return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Bratislava" }).format(d); }
+  function dayIso(iso) { return iso ? ymd(new Date(iso)) : ""; }
+  var NET = "Niečo sa pokazilo. Skús to prosím znova alebo nám napíš na podpora@granula.sk.";
+
+  function api(path, body) {
+    return fetch(path, body === undefined ? { credentials: "same-origin" } : { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (b) { b._status = r.status; b._ok = r.ok && b.ok !== false; return b; }); });
+  }
+  function busy(btn, on) { if (!btn) return; if (on) btn.setAttribute("aria-busy", "true"); else btn.removeAttribute("aria-busy"); btn.disabled = !!on; }
+  function err(el, msg) { el.textContent = msg || ""; el.hidden = !msg; }
+
+  var data = null, email = "";
+
+  /* ---------------- prihlásenie ---------------- */
+  function showLogin() {
+    $("u-loading").hidden = true; $("u-acc").hidden = true; $("u-login").hidden = false;
+    $("u-title").innerHTML = 'Môj <span class="ac">účet.</span>';
+  }
+  $("l-email").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var m = $("l-mail").value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m)) { $("l-mail").setAttribute("aria-invalid", "true"); err($("l-err1"), "Skontroluj e-mail."); return; }
+    $("l-mail").removeAttribute("aria-invalid"); err($("l-err1"), "");
+    sendCode(m, this.querySelector("button"));
+  });
+  function sendCode(m, btn) {
+    busy(btn, true);
+    api("/api/ucet/kod", { email: m }).then(function (b) {
+      if (!b._ok) { err($("l-err1"), b.error || NET); return; }
+      email = m; $("l-to").textContent = m;
+      $("l-email").hidden = true; $("l-code").hidden = false; err($("l-err2"), "");
+      $("l-otp").value = ""; $("l-otp").focus();
+    }).catch(function () { err($("l-err1"), NET); }).then(function () { busy(btn, false); });
+  }
+  $("l-code").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var code = $("l-otp").value.replace(/\D/g, ""), btn = this.querySelector("button[type=submit]");
+    if (code.length < 6) { $("l-otp").setAttribute("aria-invalid", "true"); err($("l-err2"), "Zadaj celý kód z e-mailu."); return; }
+    busy(btn, true);
+    api("/api/ucet/prihlasit", { email: email, code: code }).then(function (b) {
+      if (!b._ok) { $("l-otp").setAttribute("aria-invalid", "true"); err($("l-err2"), b.error || NET); return; }
+      $("l-otp").removeAttribute("aria-invalid"); load();
+    }).catch(function () { err($("l-err2"), NET); }).then(function () { busy(btn, false); });
+  });
+  $("l-otp").addEventListener("input", function () { var v = this.value.replace(/\D/g, ""); if (v !== this.value) this.value = v; });
+  $("l-again").addEventListener("click", function () { sendCode(email, this); });
+  $("l-back").addEventListener("click", function () { $("l-code").hidden = true; $("l-email").hidden = false; $("l-mail").focus(); });
+  $("u-logout").addEventListener("click", function () { api("/api/ucet/odhlasit", {}).then(function () { data = null; invLoaded = false; showLogin(); $("l-code").hidden = true; $("l-email").hidden = false; }); });
+
+  /* ---------------- účet ---------------- */
+  function load(flash) {
+    return api("/api/ucet/ja").then(function (b) {
+      if (b._status === 401) { showLogin(); return; }
+      if (!b._ok) { $("u-loading").textContent = b.error || NET; return; }
+      data = b; render();
+      if (flash) say(flash.message, flash.error);
+      else if (/[?&]karta=ok/.test(location.search)) { say("Kartu sme uložili."); try { history.replaceState(null, "", location.pathname); } catch (_) {} }
+      invoices();
+    }).catch(function () { $("u-loading").textContent = NET; });
+  }
+  function say(msg, isErr) {
+    var f = $("u-flash"); f.textContent = msg; f.hidden = !msg; f.classList.toggle("is-err", !!isErr);
+    if (msg) { f.focus({ preventScroll: true }); f.scrollIntoView({ block: "center", behavior: "smooth" }); }
+  }
+  function render() {
+    $("u-loading").hidden = true; $("u-login").hidden = true; $("u-acc").hidden = false;
+    var first = (data.customer.name || "").trim().split(/\s+/)[0];
+    $("u-title").innerHTML = first ? 'Ahoj, <span class="ac">' + esc(first) + ".</span>" : 'Môj <span class="ac">účet.</span>';
+    $("u-who").innerHTML = "Prihlásený ako <b>" + esc(data.customer.email) + "</b>";
+    $("u-flash").hidden = true;
+    parkDelivery();
+    $("u-subs").innerHTML = data.subscriptions.map(subHtml).join("");
+    $("u-upsell").hidden = !!data.hasSubscription;
+    $("u-orders").innerHTML = data.orders.length ? data.orders.map(orderHtml).join("") : '<li class="u-order"><p>Zatiaľ tu nemáš žiadne objednávky.</p></li>';
+    bind();
+  }
+
+  function subHtml(s) {
+    var tag = s.cancelAt && s.status !== "cancelled" ? "is-warn" : s.status === "active" ? "is-ok" : s.status === "cancelled" ? "" : "is-warn";
+    var next;
+    if (s.status === "cancelled") next = "Predplatné je zrušené.";
+    else if (s.cancelAt) next = "Predplatné skončí " + dsk(s.cancelAt) + ". Ďalšie vrece už nepošleme.";
+    else if (s.status === "paused") next = "Predplatné je pozastavené. Nič nepošleme ani neúčtujeme, kým ho neobnovíš.";
+    else if (s.status === "past_due") next = "Posledná platba neprešla. Zmeň kartu v časti Karta a faktúry.";
+    else next = s.nextChargeAt ? "Ďalšie vrece pošleme " + dsk(s.nextChargeAt) + " (vtedy aj zaplatíš " + eur(s.totalCents) + ")." : "Ďalšie vrece naplánujeme po doručení prvého.";
+    var open = s.openOrder ? '<p class="u-note">' + (s.openOrder.packing ? "Objednávka č. " + s.openOrder.number + " sa už balí. Zmeny platia od ďalšieho vreca." : "Objednávka č. " + s.openOrder.number + " čaká v sklade na odoslanie.") + "</p>" : "";
+    var acts = [];
+    if (s.canEdit && s.status === "active") acts.push(["posunut", "Posunúť dodávku"], ["preskocit", "Preskočiť dodávku"], ["pauza", "Pozastaviť"]);
+    if (s.canEdit && s.status === "paused") acts.push(["obnovit", "Obnoviť predplatné"]);
+    if (s.canEdit) acts.push(["vaha", "Zmeniť váhu psa"], ["plan", "Receptúra a balenie"], ["dorucenie", "Doručenie"]);
+    if (s.cancelAt && s.status !== "cancelled") acts.push(["zrusit-spat", "Odvolať zrušenie"]);
+    else if (s.status !== "cancelled") acts.push(["zrusit", "Zrušiť predplatné"]);
+    return '<article class="u-card u-sub-card" data-sub="' + esc(s.id) + '">' +
+      '<div class="u-sub-top"><h3>' + esc(s.dog ? s.dog.name : "Predplatné") + '</h3><span class="u-tag ' + tag + '">' + esc(s.statusText) + "</span></div>" +
+      '<p class="u-next">' + esc(next) + "</p>" + open +
+      '<dl class="u-facts">' +
+      "<dt>Receptúra</dt><dd>" + esc(s.productName) + "</dd>" +
+      "<dt>Balenie</dt><dd>" + esc(s.bagId) + " kg, vydrží " + s.daysPerBag + " dní (" + s.gramsPerDay + " g denne)</dd>" +
+      (s.dog && s.dog.kg ? "<dt>Váha psa</dt><dd>" + String(s.dog.kg).replace(".", ",") + " kg</dd>" : "") +
+      "<dt>Cena za dodávku</dt><dd>" + eur(s.unitAmountCents) + " + doprava " + ship(s.shippingCents) + "</dd>" +
+      "<dt>Doručenie</dt><dd>" + esc(s.delivery.label) + "<br>" + esc(s.delivery.address) + "</dd>" +
+      "</dl>" +
+      (acts.length ? '<div class="u-actions">' + acts.map(function (a) { return '<button type="button" class="u-act' + (a[0] === "zrusit" ? " is-danger" : "") + '" data-act="' + a[0] + '" aria-expanded="false">' + a[1] + "</button>"; }).join("") + "</div>" : "") +
+      '<div class="u-panel" hidden></div></article>';
+  }
+
+  function orderHtml(o) {
+    var w = o.withdrawal, wd = "";
+    if (w.submittedAt) wd = '<p class="u-note">Odstúpenie od zmluvy prijaté ' + dsk(w.submittedAt) + ".</p>";
+    else if (w.eligible) wd = '<button type="button" class="btn btn-o u-wd-btn" data-wd="' + o.number + '">Odstúpiť od zmluvy tu</button><div class="u-panel" hidden></div>';
+    return '<li class="u-order" data-order="' + o.number + '"><div class="u-order-top"><b>Objednávka č. ' + o.number + "</b><span>" + esc(o.statusText) + "</span></div>" +
+      "<p>" + dsk(o.createdAt) + " · " + esc(o.product) + " · " + eur(o.amountCents) + (o.kind === "one_off" ? " · jednorazovo" : "") + "</p>" +
+      (o.trackingUrl ? '<p><a href="' + esc(o.trackingUrl) + '" target="_blank" rel="noopener">Sledovať zásielku →</a></p>' : "") +
+      (w.eligible && w.deadline ? '<p class="u-note">Odstúpiť môžeš do ' + dsk(w.deadline) + ".</p>" : "") + wd + "</li>";
+  }
+
+  /* ---------------- panely akcií ---------------- */
+  function bind() {
+    document.querySelectorAll("[data-act]").forEach(function (b) { b.addEventListener("click", function () { togglePanel(b); }); });
+    document.querySelectorAll("[data-wd]").forEach(function (b) { b.addEventListener("click", function () { withdrawPanel(b); }); });
+  }
+  function subOf(el) { var c = el.closest("[data-sub]"); var id = c.getAttribute("data-sub"); return { card: c, sub: data.subscriptions.filter(function (s) { return s.id === id; })[0] }; }
+  function closePanels(except) {
+    document.querySelectorAll(".u-sub-card .u-panel").forEach(function (p) { if (p !== except) { if (p.contains($("order"))) parkDelivery(); p.hidden = true; p.innerHTML = ""; } });
+    document.querySelectorAll("[data-act]").forEach(function (b) { if (!except || !except.parentNode.contains(b)) b.setAttribute("aria-expanded", "false"); });
+  }
+  function togglePanel(btn) {
+    var x = subOf(btn), panel = x.card.querySelector(".u-panel"), act = btn.getAttribute("data-act");
+    var wasOpen = btn.getAttribute("aria-expanded") === "true";
+    closePanels(null);
+    $("u-flash").hidden = true;
+    if (wasOpen) return;
+    x.card.querySelectorAll("[data-act]").forEach(function (b) { b.setAttribute("aria-expanded", String(b === btn)); });
+    panel.hidden = false;
+    PANELS[act](panel, x.sub);
+    var f = panel.querySelector("input, textarea, button"); if (f) f.focus({ preventScroll: true });
+    panel.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }
+  function run(sub, act, body, btn, errEl) {
+    busy(btn, true); err(errEl, "");
+    return api("/api/ucet/predplatne/" + encodeURIComponent(sub.id) + "/" + act, body || {}).then(function (b) {
+      if (b._status === 401) { showLogin(); return null; }
+      if (!b._ok) { err(errEl, b.error || NET); return null; }
+      return b;
+    }).catch(function () { err(errEl, NET); return null; }).then(function (b) { busy(btn, false); return b; });
+  }
+  function done(b) { if (b) load({ message: b.message }); }
+  function panelHtml(title, inner, okLabel) {
+    return "<h4>" + title + "</h4>" + inner + '<p class="u-err" role="alert" hidden></p><div class="u-panel-btns"><button type="button" class="btn btn-o" data-ok>' + okLabel + '</button><button type="button" class="u-link" data-cancel>Zavrieť</button></div>';
+  }
+  function wire(panel, onOk) {
+    panel.querySelector("[data-cancel]").addEventListener("click", function () { closePanels(null); });
+    panel.querySelector("[data-ok]").addEventListener("click", function () { onOk(this, panel.querySelector(".u-err")); });
+  }
+
+  function cmpTable(p) {
+    var a = p.before, b = p.after;
+    function row(label, x, y) { return "<tr><th scope=\"row\">" + label + "</th><td>" + x + '</td><td class="' + (x !== y ? "is-new" : "") + '">' + y + "</td></tr>"; }
+    return '<table class="u-cmp"><thead><tr><th></th><th>Teraz</th><th>Po zmene</th></tr></thead><tbody>' +
+      row("Receptúra", esc(a.productName), esc(b.productName)) +
+      row("Balenie", a.bagId + " kg", b.bagId + " kg") +
+      row("Dávka denne", a.gramsPerDay + " g", b.gramsPerDay + " g") +
+      row("Vrece vydrží", a.daysPerBag + " dní", b.daysPerBag + " dní") +
+      row("Cena vreca", eur(a.unitAmountCents), eur(b.unitAmountCents)) +
+      row("Doprava", ship(a.shippingCents), ship(b.shippingCents)) +
+      row("Spolu za dodávku", eur(a.unitAmountCents + a.shippingCents), eur(b.totalCents)) +
+      row("Ďalšie vrece pošleme", a.nextChargeAt ? dsk(a.nextChargeAt) : "–", dsk(b.nextChargeAt)) +
+      "</tbody></table>" + (p.productSwitched ? '<p class="u-note">Súčasná receptúra sa pri novej váhe nehodí, preto navrhujeme ' + esc(b.productName) + ".</p>" : "");
+  }
+
+  var PANELS = {
+    posunut: function (panel, s) {
+      var min = ymd(new Date(Date.now() + 86400000)), max = ymd(new Date(Date.now() + 120 * 86400000));
+      panel.innerHTML = panelHtml("Posunúť dodávku", "<p>Vyber deň, keď máme ďalšie vrece poslať. V ten deň ti ho aj zaúčtujeme a príde o 1 až 3 pracovné dni.</p>" +
+        '<label class="pf"><span>Poslať dňa</span><input class="input" type="date" min="' + min + '" max="' + max + '" value="' + (dayIso(s.nextChargeAt) || min) + '"></label>', "Uložiť dátum");
+      wire(panel, function (btn, e) { run(s, "posunut", { day: panel.querySelector("input").value }, btn, e).then(done); });
+    },
+    preskocit: function (panel, s) {
+      var later = s.nextChargeAt ? dsk(new Date(new Date(s.nextChargeAt).getTime() + s.daysPerBag * 86400000).toISOString()) : "";
+      panel.innerHTML = panelHtml("Preskočiť dodávku", "<p>Najbližšie vrece (" + dsk(s.nextChargeAt) + ") vynecháme. Ďalšie pošleme až " + later + ", o " + s.daysPerBag + " dní neskôr.</p>", "Preskočiť");
+      wire(panel, function (btn, e) { run(s, "preskocit", {}, btn, e).then(done); });
+    },
+    pauza: function (panel, s) {
+      panel.innerHTML = panelHtml("Pozastaviť predplatné", "<p>Kým predplatné neobnovíš, nebudeme ti nič posielať ani účtovať. Obnoviť ho môžeš kedykoľvek tu v účte.</p>", "Pozastaviť");
+      wire(panel, function (btn, e) { run(s, "pauza", {}, btn, e).then(done); });
+    },
+    obnovit: function (panel, s) {
+      var min = ymd(new Date(Date.now() + 86400000)), max = ymd(new Date(Date.now() + 120 * 86400000));
+      panel.innerHTML = panelHtml("Obnoviť predplatné", "<p>Vyber, kedy máme poslať ďalšie vrece.</p>" +
+        '<label class="pf"><span>Poslať dňa</span><input class="input" type="date" min="' + min + '" max="' + max + '" value="' + (dayIso(s.nextChargeAt) > min ? dayIso(s.nextChargeAt) : min) + '"></label>', "Obnoviť");
+      wire(panel, function (btn, e) { run(s, "obnovit", { day: panel.querySelector("input").value }, btn, e).then(done); });
+    },
+    vaha: function (panel, s) {
+      panel.innerHTML = "<h4>Zmeniť váhu psa</h4><p>Dávku, veľkosť vreca na dni a cenu prepočítame podľa novej váhy. Pred uložením uvidíš porovnanie.</p>" +
+        '<label class="pf"><span>Aktuálna váha psa (kg)</span><input class="input" inputmode="decimal" value="' + (s.dog && s.dog.kg ? String(s.dog.kg).replace(".", ",") : "") + '"></label>' +
+        '<div class="u-prev"></div><p class="u-err" role="alert" hidden></p><div class="u-panel-btns"><button type="button" class="btn btn-line" data-calc>Prepočítať</button><button type="button" class="btn btn-o" data-ok hidden>Potvrdiť zmenu</button><button type="button" class="u-link" data-cancel>Zavrieť</button></div>';
+      var e = panel.querySelector(".u-err"), inp = panel.querySelector("input"), ok = panel.querySelector("[data-ok]");
+      panel.querySelector("[data-cancel]").addEventListener("click", function () { closePanels(null); });
+      inp.addEventListener("input", function () { ok.hidden = true; panel.querySelector(".u-prev").innerHTML = ""; });
+      panel.querySelector("[data-calc]").addEventListener("click", function () {
+        var btn = this;
+        run(s, "vaha", { kg: inp.value, preview: true }, btn, e).then(function (b) {
+          if (!b) return;
+          panel.querySelector(".u-prev").innerHTML = cmpTable(b.preview); ok.hidden = false;
+        });
+      });
+      ok.addEventListener("click", function () { run(s, "vaha", { kg: inp.value, preview: false }, ok, e).then(done); });
+    },
+    plan: function (panel, s) {
+      panel.innerHTML = "<h4>Receptúra a balenie</h4><p>Ponúkame iba receptúry, ktoré sa pre tvojho psa hodia. Zmena platí od ďalšieho vreca.</p>" +
+        '<div class="u-opts" data-products><p class="u-note">Načítavam…</p></div>' +
+        '<p class="pf"><span>Veľkosť vreca</span></p><div class="u-bags">' + ["4", "9", "18"].map(function (b) {
+          return '<label class="u-opt"><input type="radio" name="bag-' + s.id + '" value="' + b + '"' + (b === s.bagId ? " checked" : "") + ">" + b + " kg</label>";
+        }).join("") + "</div>" +
+        '<div class="u-prev"></div><p class="u-err" role="alert" hidden></p><div class="u-panel-btns"><button type="button" class="btn btn-o" data-ok hidden>Potvrdiť zmenu</button><button type="button" class="u-link" data-cancel>Zavrieť</button></div>';
+      var e = panel.querySelector(".u-err"), ok = panel.querySelector("[data-ok]"), listed = false;
+      panel.querySelector("[data-cancel]").addEventListener("click", function () { closePanels(null); });
+      function choice() {
+        var p = panel.querySelector('input[name="prod-' + s.id + '"]:checked'), b = panel.querySelector('input[name="bag-' + s.id + '"]:checked');
+        return { productId: p ? p.value : s.productId, bagId: b ? b.value : s.bagId };
+      }
+      function preview() {
+        var c = choice();
+        ok.hidden = true;
+        run(s, "plan", { productId: c.productId, bagId: c.bagId, preview: true }, null, e).then(function (b) {
+          if (!b) { panel.querySelector(".u-prev").innerHTML = ""; return; }
+          var p = b.preview;
+          if (!listed) {
+            panel.querySelector("[data-products]").innerHTML = p.products.map(function (x) {
+              return '<label class="u-opt"><input type="radio" name="prod-' + s.id + '" value="' + esc(x.id) + '"' + (x.id === c.productId ? " checked" : "") + "><span>" + esc(x.name) + (x.recommended ? "<small>odporúčaná pre tvojho psa</small>" : "") + "</span></label>";
+            }).join("");
+            panel.querySelectorAll('input[name="prod-' + s.id + '"]').forEach(function (r) { r.addEventListener("change", preview); });
+            listed = true;
+          }
+          var changed = p.after.productId !== p.before.productId || p.after.bagId !== p.before.bagId;
+          panel.querySelector(".u-prev").innerHTML = changed ? cmpTable(p) : "";
+          ok.hidden = !changed;
+        });
+      }
+      panel.querySelectorAll('input[name="bag-' + s.id + '"]').forEach(function (r) { r.addEventListener("change", preview); });
+      preview();
+      ok.addEventListener("click", function () { var c = choice(); run(s, "plan", { productId: c.productId, bagId: c.bagId, preview: false }, ok, e).then(done); });
+    },
+    dorucenie: function (panel, s) {
+      panel.innerHTML = "<h4>Doručenie</h4><p>Rovnaký výber ako pri objednávke. Ak objednávka ešte čaká v sklade, zmeníme aj ju; ak sa už balí, nové doručenie platí od ďalšieho vreca.</p>" +
+        '<div data-slot></div><p class="u-err" role="alert" hidden></p><div class="u-panel-btns"><button type="button" class="btn btn-o" data-ok>Uložiť doručenie</button><button type="button" class="u-link" data-cancel>Zavrieť</button></div>';
+      var f = $("order");
+      panel.querySelector("[data-slot]").appendChild(f);
+      f.hidden = false;
+      setupDelivery(s);
+      wire(panel, function (btn, e) {
+        var r = window.GranulaDelivery.validate();
+        if (!r.ok) { err(e, r.message); if (r.focus) r.focus.focus(); return; }
+        run(s, "dorucenie", { delivery: r.delivery }, btn, e).then(done);
+      });
+    },
+    zrusit: function (panel, s) {
+      panel.innerHTML = panelHtml("Zrušiť predplatné", "<p>Ďalšie platby ani dodávky už nebudú. Vrecia, ktoré už prišli alebo sú na ceste, ostávajú tvoje. Toto nie je odstúpenie od zmluvy; to nájdeš pri objednávke v časti Objednávky.</p>" +
+        '<label class="pf"><span>Prečo rušíš? (pomôže nám to zlepšiť sa)</span><textarea class="input" maxlength="500" rows="3"></textarea></label>' +
+        '<p class="u-note">Rozmýšľaš len o prestávke? Predplatné môžeš aj pozastaviť alebo posunúť dodávku.</p>', "Zrušiť predplatné");
+      wire(panel, function (btn, e) {
+        var why = panel.querySelector("textarea").value.trim();
+        if (!why) { err(e, "Napíš prosím krátko, prečo predplatné rušíš."); panel.querySelector("textarea").focus(); return; }
+        run(s, "zrusit", { reason: why }, btn, e).then(done);
+      });
+    },
+    "zrusit-spat": function (panel, s) {
+      panel.innerHTML = panelHtml("Odvolať zrušenie", "<p>Predplatné bude pokračovať ako doteraz, ďalšie vrece pošleme " + dsk(s.nextChargeAt) + ".</p>", "Pokračovať v predplatnom");
+      wire(panel, function (btn, e) { run(s, "zrusit-spat", {}, btn, e).then(done); });
+    }
+  };
+
+  /* ---------------- doručenie: doprava.js ---------------- */
+  var deliveryReady = false;
+  function parkDelivery() { var f = $("order"); f.hidden = true; document.querySelector("main.u").appendChild(f); }
+  function setupDelivery(s) {
+    var c = data.customer, parts = (c.name || "").trim().split(/\s+/);
+    $("fname").value = parts.shift() || ""; $("lname").value = parts.join(" ");
+    $("email").value = c.email; $("phone").value = c.phone || "";
+    var saved = { method: s.delivery.method, phone: c.phone || "" };
+    if (!deliveryReady) {
+      window.GranulaDelivery.init($("order"), { onChange: prices });
+      window.GranulaDelivery.enable({ packetaKey: data.packetaKey || "", bag: s.bagId, saved: saved });
+      deliveryReady = true;
+    } else window.GranulaDelivery.setBag(s.bagId);
+    var r = $("order").querySelector('input[name="dmethod"][value="' + s.delivery.method + '"]');
+    if (r && !r.checked) { r.checked = true; r.dispatchEvent(new Event("change")); }
+    if (s.delivery.method === "sps_courier") {
+      var m = /^(.*),\s*(\d{3}\s?\d{2})\s+(.+)$/.exec(s.delivery.address || "");
+      if (m) { $("street").value = m[1]; $("zip").value = m[2].replace(/\s/g, ""); $("city").value = m[3]; }
+    }
+    prices();
+    function prices() {
+      $("order").querySelectorAll("[data-ship-price]").forEach(function (el) {
+        var p = window.GranulaCarriers.price(el.getAttribute("data-method"), s.bagId, 4.9, "mesiac");
+        el.textContent = p > 0 ? p.toFixed(2).replace(".", ",") + " €" : "zadarmo";
+      });
+    }
+  }
+
+  /* ---------------- odstúpenie pri objednávke ---------------- */
+  function withdrawPanel(btn) {
+    var li = btn.closest("[data-order]"), n = li.getAttribute("data-order"), panel = li.querySelector(".u-panel");
+    btn.hidden = true; panel.hidden = false;
+    panel.innerHTML = '<h4>Odstúpenie od zmluvy</h4><p class="u-statement"><b>Týmto oznamujem, že odstupujem od zmluvy</b> (objednávka č. ' + esc(n) + ").</p>" +
+      "<p>Meno: " + esc(data.customer.name || "") + "<br>E-mail: " + esc(data.customer.email) + "</p>" +
+      '<label class="pf"><span>Dôvod (nepovinné)</span><textarea class="input" maxlength="1000" rows="2"></textarea></label>' +
+      '<p class="u-err" role="alert" hidden></p><div class="u-panel-btns"><button type="button" class="btn btn-o" data-ok>Potvrdiť odstúpenie</button><button type="button" class="u-link" data-cancel>Späť</button></div>';
+    var e = panel.querySelector(".u-err");
+    panel.querySelector("[data-cancel]").addEventListener("click", function () { panel.hidden = true; panel.innerHTML = ""; btn.hidden = false; btn.focus(); });
+    panel.querySelector("[data-ok]").addEventListener("click", function () {
+      var ok = this; busy(ok, true); err(e, "");
+      api("/api/ucet/odstupenie", { orderNumber: n, reason: panel.querySelector("textarea").value.trim() || null, confirm: true }).then(function (b) {
+        if (b._status === 401) { showLogin(); return; }
+        if (!b._ok) { err(e, b.error || NET); return; }
+        load({ message: "Odstúpenie sme prijali " + b.submittedAtText + ". Potvrdenie sme poslali na " + b.email + "." });
+      }).catch(function () { err(e, NET); }).then(function () { busy(ok, false); });
+    });
+    panel.querySelector("textarea").focus();
+  }
+
+  var invLoaded = false;
+  function invoices() {
+    if (invLoaded) return;
+    invLoaded = true;
+    api("/api/ucet/faktury").then(function (b) {
+      var list = (b._ok && b.invoices) || [];
+      $("u-invoices").innerHTML = !b._ok ? '<li class="u-order"><p>Faktúry sa nepodarilo načítať. Skús obnoviť stránku.</p></li>' : list.length ? list.map(function (i) {
+        return '<li class="u-order"><div class="u-order-top"><b>Faktúra ' + esc(i.number || "") + "</b><span>" + (i.status === "paid" ? "Zaplatená" : "Na zaplatenie") + "</span></div><p>" + dsk(i.date) + " · " + eur(i.amountCents) + "</p><p>" +
+          (i.pdf ? '<a href="' + esc(i.pdf) + '" target="_blank" rel="noopener">Stiahnuť PDF</a>' : "") + (i.url ? (i.pdf ? " · " : "") + '<a href="' + esc(i.url) + '" target="_blank" rel="noopener">' + (i.status === "paid" ? "Zobraziť online" : "Zaplatiť online") + "</a>" : "") + "</p></li>";
+      }).join("") : '<li class="u-order"><p>Zatiaľ tu nemáš žiadne faktúry.</p></li>';
+    }).catch(function () { invLoaded = false; });
+  }
+
+  $("u-portal").addEventListener("click", function () {
+    var btn = this; busy(btn, true); err($("u-portal-err"), "");
+    api("/api/ucet/karta", {}).then(function (b) {
+      if (b._status === 401) { showLogin(); return; }
+      if (!b._ok || !b.url) { err($("u-portal-err"), b.error || NET); return; }
+      location.href = b.url;
+    }).catch(function () { err($("u-portal-err"), NET); }).then(function () { busy(btn, false); });
+  });
+
+  load();
+})();
+</script>
+<!-- Klaviyo onsite: vypnutý (type="text/plain"), cookies.js ho zapne až po súhlase s marketingovými cookies -->
+<script type="text/plain" data-cookie-category="marketing" async src="https://static.klaviyo.com/onsite/js/Yf7K2A/klaviyo.js?company_id=Yf7K2A"></script>
+<script src="cookies.js"></script>
+</body>
+</html>

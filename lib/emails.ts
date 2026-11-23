@@ -452,3 +452,70 @@ export function withdrawalConfirmationEmail(i: WithdrawalConfirmationInput): Mai
   ].join('\n');
   return { key: `withdrawal-confirm:${i.withdrawalId}`, kind: 'withdrawal_confirmation', to: i.to, subject: `Potvrdenie: odstúpenie od zmluvy prijaté ${i.receivedAt}`, html, text, orderId: null };
 }
+
+/* ---------------------------------------------------------------- 8 kód na prihlásenie do /ucet (SPEC P4) */
+
+export function loginCodeEmail(i: { to: string; name?: string | null; code: string; validMinutes: number; siteUrl: string; key: string }): Mail {
+  const first = (i.name ?? '').trim().split(/\s+/)[0] ?? '';
+  const v: Vars = { ...common(i.siteUrl, i.name, null), code: i.code, valid_minutes: String(i.validMinutes) };
+  const html = render('8-prihlasovaci-kod', v, { has_name: !!first });
+  const text = [
+    `Ahoj${first ? ` ${first}` : ''}, tento kód zadaj na stránke prihlásenia do účtu Granula:`,
+    '',
+    i.code,
+    '',
+    `Kód platí ${i.validMinutes} minút a dá sa použiť iba raz.`,
+    'Ak si o kód nežiadal, e-mail pokojne ignoruj. Bez kódu sa do tvojho účtu nikto neprihlási.',
+    footerText(v),
+  ].join('\n');
+  return { key: i.key, kind: 'login_code', to: i.to, subject: `${i.code} je tvoj kód na prihlásenie do Granuly`, html, text, orderId: null };
+}
+
+/* ---------------------------------------------------------------- 9 zmena predplatného: pauza, obnovenie, zrušenie (SPEC P5) */
+
+export type SubscriptionChangeKind = 'paused' | 'resumed' | 'cancel_requested' | 'cancel_revoked';
+
+export function subscriptionChangeEmail(i: {
+  kind: SubscriptionChangeKind;
+  key: string;
+  to: string;
+  name?: string | null;
+  dog?: EmailDog;
+  siteUrl: string;
+  /** pri obnovení: ďalšia platba; pri zrušení: posledný deň predplatného */
+  date?: Date | null;
+}): Mail {
+  const d = dogCases(i.dog?.name, i.dog?.sex);
+  const date = i.date ? dateSk(i.date) : '';
+  const c = {
+    paused: {
+      subject: 'Predplatné je pozastavené',
+      headline: 'Predplatné je pozastavené',
+      body: `predplatné granúl pre ${d.acc} sme pozastavili. Kým ho neobnovíš, nebudeme ti nič posielať ani účtovať.`,
+      detail: 'Obnoviť ho môžeš kedykoľvek v účte jedným klikom.',
+    },
+    resumed: {
+      subject: 'Predplatné opäť beží',
+      headline: 'Predplatné opäť beží',
+      body: `predplatné granúl pre ${d.acc} sme obnovili.`,
+      detail: date ? `Najbližšia platba a odoslanie vreca: ${date}. Pár dní vopred ti to pripomenieme.` : '',
+    },
+    cancel_requested: {
+      subject: 'Predplatné sme zrušili',
+      headline: 'Predplatné sme zrušili',
+      body: `predplatné granúl pre ${d.acc} sme zrušili. Ďalšie platby ani dodávky už nebudú.`,
+      detail: `${date ? `Predplatné skončí ${date}. ` : ''}Ak si to rozmyslíš, do vtedy ho v účte obnovíš jedným klikom. Zrušenie predplatného nie je odstúpenie od zmluvy.`,
+    },
+    cancel_revoked: {
+      subject: 'Predplatné pokračuje',
+      headline: 'Predplatné pokračuje',
+      body: `zrušenie predplatného granúl pre ${d.acc} sme odvolali, predplatné pokračuje ako doteraz.`,
+      detail: date ? `Najbližšia platba a odoslanie vreca: ${date}.` : '',
+    },
+  }[i.kind];
+  const first = (i.name ?? '').trim().split(/\s+/)[0] ?? '';
+  const v: Vars = { ...common(i.siteUrl, i.name, i.dog), eyebrow: 'Tvoje predplatné', headline: c.headline, preheader: c.body, body: c.body, detail: c.detail };
+  const html = render('9-zmena-predplatneho', v, { has_name: !!first, has_detail: !!c.detail });
+  const text = [`Ahoj${first ? ` ${first}` : ''}, ${c.body}`, ...(c.detail ? ['', c.detail] : []), '', `Môj účet: ${v.url_account}`, footerText(v)].join('\n');
+  return { key: i.key, kind: `subscription_${i.kind}`, to: i.to, subject: c.subject, html, text, orderId: null };
+}

@@ -341,6 +341,9 @@ export type Database = {
       }
       subscriptions: {
         Row: {
+          cancel_at: string | null
+          cancel_reason: string | null
+          cancel_requested_at: string | null
           address_id: string
           bag_id: string
           created_at: string
@@ -360,6 +363,9 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          cancel_at?: string | null
+          cancel_reason?: string | null
+          cancel_requested_at?: string | null
           address_id: string
           bag_id: string
           created_at?: string
@@ -379,6 +385,9 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          cancel_at?: string | null
+          cancel_reason?: string | null
+          cancel_requested_at?: string | null
           address_id?: string
           bag_id?: string
           created_at?: string
@@ -420,6 +429,30 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      ucet_login_attempts: {
+        Row: {
+          at: string
+          email: string
+          id: number
+          ip: string | null
+          kind: string
+        }
+        Insert: {
+          at?: string
+          email: string
+          id?: never
+          ip?: string | null
+          kind: string
+        }
+        Update: {
+          at?: string
+          email?: string
+          id?: never
+          ip?: string | null
+          kind?: string
+        }
+        Relationships: []
       }
       withdrawals: {
         Row: {

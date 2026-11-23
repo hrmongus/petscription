@@ -7,7 +7,7 @@ const order = (over: Partial<DbOrder> = {}): DbOrder => ({ id: 'o1', number: 12,
 
 function mem(sub?: Partial<DbSubscription>) {
   const orders: Record<string, unknown>[] = [], subs: Record<string, unknown>[] = [], audits: { action: string }[] = [];
-  const s: DbSubscription = { id: 's1', customer_id: 'c1', dog_id: 'd1', address_id: 'a1', stripe_subscription_id: 'sub_1', status: 'active', product_id: 'hovadzie', bag_id: '9', grams_per_day: 240, days_per_bag: 37, unit_amount_cents: 6750, plan: 'mesiac', next_charge_at: '2027-02-06T06:00:00.000Z', last_delivered_at: null, engine_snapshot: null, created_at: '', updated_at: '', ...sub };
+  const s: DbSubscription = { id: 's1', customer_id: 'c1', dog_id: 'd1', address_id: 'a1', stripe_subscription_id: 'sub_1', status: 'active', product_id: 'hovadzie', bag_id: '9', grams_per_day: 240, days_per_bag: 37, unit_amount_cents: 6750, plan: 'mesiac', next_charge_at: '2027-02-06T06:00:00.000Z', last_delivered_at: null, engine_snapshot: null, cancel_at: null, cancel_reason: null, cancel_requested_at: null, created_at: '', updated_at: '', ...sub };
   const store: SyncStore = {
     updateOrder: async (_id, p) => void orders.push(p),
     getSubscription: async () => s,
