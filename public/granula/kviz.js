@@ -644,8 +644,12 @@
     $("p-pack").src = $("s-pack").src;
     $("p-pack").alt = $("s-pack").alt;
     var d = pay.delivery, M = window.GranulaCarriers && GranulaCarriers.METHODS[d.method];
-    $("p-contact").textContent = d.name + " · " + d.email + " · " + d.phone;
-    var where = d.point ? [d.point.name, [d.point.street, [d.point.zip, d.point.city].filter(Boolean).join(" ")].filter(Boolean).join(", ")].filter(Boolean).join(", ")
+    // telefón v tvare +421 949 832 707; výdajné miesto rovnako upravené ako v karte pod dopravcom (FHB posiela adresy často VEĽKÝMI)
+    var tel = String(d.phone || "").replace(/^(\+\d{3})(\d{3})(\d{3})(\d{3})$/, "$1 $2 $3 $4");
+    $("p-contact").textContent = d.name + " · " + d.email + " · " + tel;
+    var chosenEl = d.point && order.querySelector('.dl-pick[data-for="' + d.method + '"] .dl-chosen');
+    var where = chosenEl && chosenEl.textContent ? [].map.call(chosenEl.querySelectorAll("b, span:not(.dl-tag)"), function (e) { return e.textContent; }).join(", ")
+      : d.point ? [d.point.name, [d.point.street, [d.point.zip, d.point.city].filter(Boolean).join(" ")].filter(Boolean).join(", ")].filter(Boolean).join(", ")
       : d.address ? [d.address.street, [d.address.zip, d.address.city].filter(Boolean).join(" ")].filter(Boolean).join(", ") : "";
     $("p-ship").textContent = (M ? M.label : d.method) + (where ? ": " + where : "");
     if (pay.ready) { $("p-submit").disabled = false; $("p-submit").textContent = payLabel(); }

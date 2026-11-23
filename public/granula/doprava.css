@@ -70,8 +70,8 @@
 .pay-stripe[hidden],.pay-note[hidden],.done-order[hidden],.pay-or[hidden],.pay-express[hidden]{display:none}
 .pay-express{min-height:0}
 .pm-h{font-size:14px;font-weight:800;border:2px solid var(--k);padding:10px 12px;align-self:flex-start;min-width:50%}
-.pay-element{min-height:236px}
-.pay-element[aria-busy="true"]{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+/* vyhradené miesto iba počas načítania (potom určuje výšku Stripe; na širokom displeji sú platnosť a CVC vedľa seba) */
+.pay-element[aria-busy="true"]{min-height:236px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
 /* stránka #platba */
 .pay-next{margin-top:4px}
 .pay-next[hidden]{display:none}
