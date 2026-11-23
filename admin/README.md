@@ -36,6 +36,6 @@ Nový projekt z repa `hrmongus/petscription`:
 - **Doména:** `manazer.granula.sk` (DNS CNAME `manazer` → `cname.vercel-dns.com`).
 - **Env (Production aj Preview):** `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`,
   `STRIPE_SECRET_KEY`, `FHB_API_URL`, `FHB_APP_ID`, `FHB_SECRET`, `FHB_NOTIFY_TOKEN`, `NEXT_PUBLIC_SITE_URL=https://www.granula.sk`,
-  `FHB_VALIDATE_ADDRESS` (rovnako ako web), voliteľne `FHB_SERVICE_PACKETA` / `FHB_SERVICE_DPD` / `FHB_SERVICE_SPS_COURIER`.
+  `FHB_VALIDATE_ADDRESS` (rovnako ako web), `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_REPLY_TO` (e-maily zákazníkovi po refunde, storne, zrušení a zmene predplatného), voliteľne `FHB_SERVICE_PACKETA` / `FHB_SERVICE_DPD` / `FHB_SERVICE_SPS_COURIER`.
   Rovnaké hodnoty ako projekt webu (test kľúče, kým web beží v teste). **Nenastavovať** `ADMIN_DEV_USER`.
 - Crony ostávajú iba na projekte webu (admin nemá `crons`).

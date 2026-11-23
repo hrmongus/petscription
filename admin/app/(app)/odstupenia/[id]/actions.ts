@@ -8,6 +8,8 @@ import { adminAction, str, UserError } from '@admin/lib/action';
 import { audit } from '@admin/lib/audit';
 import { orderStore, stripe } from '@admin/lib/deps';
 import { eur } from '@admin/lib/format';
+import { mailCustomer } from '@admin/lib/notify-customer';
+import { refundEmail, subscriptionCancelledEmail } from '@lib/emails-admin';
 import { canRefund, RETURN_CONDITION, RETURN_STATUS, type Withdrawal } from '@admin/lib/withdrawals';
 
 const STATUSES = ['received', 'return_pending', 'refunded', 'rejected'];
@@ -81,21 +83,24 @@ export const withdrawalRefundAction = adminAction(async (admin, fd) => {
   };
   const { error } = await db().from('withdrawals').update(done as never).eq('id', id);
   if (error) throw new Error(error.message);
+  const order = (await (await orderStore()).getOrder(orderId))!;
+  const mail = await mailCustomer(admin.email, (rc) => refundEmail({ ...rc, order, refundId: r.refund.id, amountCents: r.refund.amount, full: r.full }), { customerId: order.customer_id, subscriptionId: order.subscription_id }, { type: 'order', id: orderId });
   revalidatePath(`/odstupenia/${id}`);
-  return `Vrátené ${eur(r.refund.amount)}${r.full ? ' (celá platba)' : ''}.`;
+  return `Vrátené ${eur(r.refund.amount)}${r.full ? ' (celá platba)' : ''}.${mail}`;
 });
 
 /** Okamžité zrušenie predplatného zo zmluvy (ak ho P4 nezrušilo, napr. bez zhody e-mailu). */
 export const withdrawalCancelSubAction = adminAction(async (admin, fd) => {
   const id = str(fd, 'id');
   const subId = str(fd, 'sub');
-  const { data: sub } = await db().from('subscriptions').select('id, status, stripe_subscription_id').eq('id', subId).maybeSingle();
+  const { data: sub } = await db().from('subscriptions').select('*').eq('id', subId).maybeSingle();
   if (!sub?.stripe_subscription_id) throw new UserError('Predplatné sa nenašlo.');
   if (sub.status === 'cancelled') throw new UserError('Predplatné už je zrušené.');
   await cancel(sub.stripe_subscription_id, 'now', stripe());
   await db().from('subscriptions').update({ status: 'cancelled' }).eq('id', sub.id);
   await audit(admin.email, 'subscription.cancel_now', 'subscription', sub.id, { status: sub.status }, { mode: 'now', withdrawal: id });
   await audit(admin.email, 'withdrawal.subscription_cancelled', 'withdrawal', id, null, { subscription: sub.id });
+  const mail = await mailCustomer(admin.email, (rc) => subscriptionCancelledEmail({ ...rc, sub, mode: 'now' }), { customerId: sub.customer_id, subscriptionId: sub.id }, { type: 'subscription', id: sub.id });
   revalidatePath(`/odstupenia/${id}`);
-  return 'Predplatné zrušené okamžite.';
+  return `Predplatné zrušené okamžite.${mail}`;
 });

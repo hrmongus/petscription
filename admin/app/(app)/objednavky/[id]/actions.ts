@@ -8,6 +8,8 @@ import { bagOfItems, cancelOrder, createReship, OrderActionError, refundOrder, u
 import { adminAction, str, UserError } from '@admin/lib/action';
 import { audit } from '@admin/lib/audit';
 import { eur } from '@admin/lib/format';
+import { mailCustomer } from '@admin/lib/notify-customer';
+import { orderCancelledEmail, refundEmail } from '@lib/emails-admin';
 import { fhb, orderStore, sendOptionsFromEnv, sendToFhb, stripe } from '@admin/lib/deps';
 import { requireAdmin } from '@admin/lib/session';
 
@@ -57,18 +59,24 @@ export const deliveryAction = adminAction(async (admin, fd) => {
 export const cancelAction = adminAction(async (admin, fd) => {
   const id = str(fd, 'id');
   const store = await orderStore();
+  const order = await store.getOrder(id);
+  if (!order) throw new UserError('Objednávka neexistuje.');
   const r = await cancelOrder(id, { store, fhb: fhb() }).catch(userErr);
+  let refunded = 0;
   await audit(admin.email, 'order.cancelled', 'order', id, { status: r.before }, { status: 'cancelled', where: r.mode });
   let msg = r.mode === 'fhb' ? 'Stornované vo FHB aj u nás.' : 'Stornované (vo FHB nebola).';
   if (fd.get('refund') === 'on') {
     try {
       const rf = await refundOrder(id, null, { store, stripe: stripe(), reason: 'storno' });
       await audit(admin.email, 'order.refunded', 'order', id, { status: 'cancelled' }, rf);
+      refunded = rf.refund.amount;
       msg += ` Peniaze vrátené (${eur(rf.refund.amount)}).`;
     } catch (e) {
       msg += ` Refund zlyhal: ${(e as Error).message}`;
     }
   }
+  // jeden e-mail o storne (aj s vrátenou sumou), samostatný e-mail o refunde sa pri storne neposiela
+  msg += await mailCustomer(admin.email, (rc) => orderCancelledEmail({ ...rc, order, refundedCents: refunded }), { customerId: order.customer_id, subscriptionId: order.subscription_id }, { type: 'order', id });
   done(id);
   return msg;
 });
@@ -78,10 +86,13 @@ export const refundAction = adminAction(async (admin, fd) => {
   const raw = str(fd, 'amount').replace(',', '.');
   const amount = raw ? Math.round(Number(raw) * 100) : null;
   if (raw && !Number.isFinite(amount)) throw new UserError('Neplatná suma.');
-  const r = await refundOrder(id, amount, { store: await orderStore(), stripe: stripe(), reason: str(fd, 'note') }).catch(userErr);
+  const store = await orderStore();
+  const r = await refundOrder(id, amount, { store, stripe: stripe(), reason: str(fd, 'note') }).catch(userErr);
   await audit(admin.email, 'order.refunded', 'order', id, { status: r.before }, { ...r, note: str(fd, 'note') || null });
+  const order = (await store.getOrder(id))!;
+  const mail = await mailCustomer(admin.email, (rc) => refundEmail({ ...rc, order, refundId: r.refund.id, amountCents: r.refund.amount, full: r.full }), { customerId: order.customer_id, subscriptionId: order.subscription_id }, { type: 'order', id });
   done(id);
-  return `Vrátené ${eur(r.refund.amount)} (Stripe ${r.refund.status}).${r.full ? ' Platba je vrátená celá.' : ''}`;
+  return `Vrátené ${eur(r.refund.amount)} (Stripe ${r.refund.status}).${r.full ? ' Platba je vrátená celá.' : ''}${mail}`;
 });
 
 export const reshipAction = adminAction(async (admin, fd) => {

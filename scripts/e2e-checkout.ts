@@ -17,7 +17,7 @@ import { db } from '../lib/db';
 import { FhbClient } from '../lib/fhb/client';
 import { fhbOrderId } from '../lib/fhb/build-order';
 import { fhbMode, stripeMode } from '../lib/env-mode';
-import { CARDS, chooseDelivery, fillCard, fillContact, openOrder, openPayment, submitPayment, waitForDone, watchSession, type Method } from './e2e-quiz';
+import { CARDS, chooseDelivery, selectMethod, fillCard, fillContact, openOrder, openPayment, submitPayment, waitForDone, watchSession, type Method } from './e2e-quiz';
 
 // Playwright je v prostredí predinštalovaný globálne (nie je v package.json)
 // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-explicit-any
@@ -77,6 +77,7 @@ async function main() {
 
     // doručenie
     const method: Method = scenario === 'predplatne' || scenario === '3ds' ? 'dpd_pickup' : scenario === 'jednorazovo' ? 'packeta_point' : 'sps_courier';
+    await selectMethod(page, method);
     if (method !== 'sps_courier') check(await page.locator(`.so-act[data-for="${method}"] [data-pick]`).isVisible(), 'tlačidlo „Vybrať … miesto“ v karte dopravcu');
     const place = await chooseDelivery(page, method);
     if (place) console.log('   miesto:', place.slice(0, 90));

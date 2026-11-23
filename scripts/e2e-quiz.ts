@@ -41,8 +41,12 @@ export async function fillContact(page: Page, c: { email: string; phone?: string
 }
 
 /** Spôsob doručenia; pri výdajnom mieste výber zo zoznamu (prvé miesto pre hľadaný výraz). Vráti popis miesta. */
-export async function chooseDelivery(page: Page, method: Method, opts: { query?: string } = {}): Promise<string | null> {
+export async function selectMethod(page: Page, method: Method) {
   await page.locator(`input[name="dmethod"][value="${method}"]`).check({ force: true });
+}
+
+export async function chooseDelivery(page: Page, method: Method, opts: { query?: string } = {}): Promise<string | null> {
+  await selectMethod(page, method);
   if (method === 'sps_courier') {
     await page.fill('#street', 'Hlavná 1');
     await page.fill('#zip', '040 01');

@@ -63,7 +63,7 @@ export function render(template: EmailTemplate, vars: Vars, flags: Record<string
 type OrderLike = { id: string; number: number; kind: string; amount_cents: number; items: unknown; ship_to: unknown; created_at?: string | null };
 export type EmailDog = { name?: string | null; sex?: string | null } | null | undefined;
 
-function productOf(items: unknown) {
+export function productOf(items: unknown) {
   const first = (Array.isArray(items) ? (items as { sku: string }[]) : [])[0];
   const sku = allSkus().find((x) => x.sku === first?.sku);
   const productId = sku?.productId ?? '';
@@ -75,7 +75,7 @@ function productOf(items: unknown) {
   };
 }
 
-function productById(productId: string, bagId: string) {
+export function productById(productId: string, bagId: string) {
   const sku = allSkus().find((x) => x.productId === productId && String(x.kg) === String(bagId));
   return { productId, bagKg: String(bagId), name: sku ? sku.name.replace(/ \d+ kg.*$/, '') : productId, slug: PRODUCT_SLUG[productId] ?? 'morka-hus-kacica' };
 }
@@ -110,7 +110,7 @@ function shippingCentsFor(shipTo: unknown, bagKg: string, plan: 'raz' | 'mesiac'
   }
 }
 
-function common(siteUrl: string, name: string | null | undefined, dog: EmailDog, withdrawFor?: number) {
+export function common(siteUrl: string, name: string | null | undefined, dog: EmailDog, withdrawFor?: number) {
   const d = dogCases(dog?.name, dog?.sex);
   const s = site(siteUrl);
   return {
@@ -128,9 +128,9 @@ function common(siteUrl: string, name: string | null | undefined, dog: EmailDog,
 }
 
 /** bez krstného mena: „Ďakujeme!“ / „Ahoj,“ namiesto „Ďakujeme, !“ */
-const tidy = (s: string) => s.replace(/,\s*!/g, '!').replace(/Ahoj\s+,/g, 'Ahoj,');
+export const tidy = (s: string) => s.replace(/,\s*!/g, '!').replace(/Ahoj\s+,/g, 'Ahoj,');
 
-function footerText(v: Vars) {
+export function footerText(v: Vars) {
   return [
     '',
     `Niečo nesedí alebo sa chceš na niečo opýtať? Odpíš na tento e-mail alebo napíš na ${SUPPORT_EMAIL}.`,

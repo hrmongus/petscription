@@ -461,7 +461,13 @@ Celé prihlásenie s 2FA som neprešiel: vytvoriť testovací admin účet v pro
 - predplatné `3606d9b0…` (`sub_1Ueuen1U0mpiDjfilD7tt4m5`, 18 kg) a nezaplatené `23b66fd6…` (`sub_1Ueula1U0mpiDjfihriqNREq`, test clock `clock_1UeulZ1U0mpiDjfiKuoq9ATR`): po vyskúšaní zrušiť v admine (clock zmazať v Stripe).
 - objednávka #57 (poslaná znova) vo FHB sandboxe.
 
+## Doplnky po rozhodnutiach (23. 11.)
+- **E-maily zákazníkovi** (SPEC §10.34): overené naživo, všetky `sent` v `email_log`: zmena predplatného `3606d9b0…`, storno + refund #56 (jeden e-mail so sumou), čiastočný refund #62 5,00 €, zrušenie predplatného; druhé zrušenie → „e-mail už dostal“ (neodišiel znova). Náhľad desktop aj mobil.
+- **Odstúpenia: refund až po vrátení tovaru** (SPEC §10.35): odstúpenie k #58: „čakáme na vrátenie“ → tlačidlo refundu skryté s vysvetlením → „tovar prijatý, otvorené“ → čiastočný refund 60 €, zapísané `refunded_at`, `refund_amount_cents`, `stripe_refund_id`. Starší refund k #55 doplnený do nových stĺpcov.
+- **`scripts/stripe-e2e-clock.ts` opravený:** nákup cez skutočný dotazník a vlastný platobný formulár (spoločné kroky `scripts/e2e-quiz.ts`, používa ich aj `e2e-checkout.ts`). Normálny beh: first #59 → simulované doručenie → obnovenie 28. 12. → renewal #60 (`in_1UevBR1U0mpiDjfi2Tmyy2bo`), všetky kontroly OK. `--fail-renewal`: first #61 → faktúra `in_1UevEj1U0mpiDjfihFTmFzZI` open → `past_due` → email `payment-failed` sent, žiadna renewal objednávka, OK. `e2e-checkout.ts 3ds` (#62) a `jednorazovo` po refaktore OK.
+- **Admin účty vytvorené** (`create-admin`): jakub@granula.sk, viktoria@mamsacare.com (rola admin, prihlásenie heslom overené, 2FA si nastavia pri prvom prihlásení).
+
 ## Otvorené
-1. SPEC §10.25–34 na potvrdenie, hlavne e-maily zákazníkovi pri akciách admina (§10.34) a prepínač parametrov v kontrole výpočtu (§10.32).
-2. `scripts/stripe-e2e-clock.ts` už nefunguje (čaká na Embedded Checkout, ktorý nahradil vlastný formulár, SPEC §10.17); past_due som overil vlastnou simuláciou.
-3. Vercel: nový projekt + doména + env podľa `admin/README.md`, potom vytvoriť admin účty (`npm run create-admin`).
+1. SPEC §10.25–33 na potvrdenie (hlavne prepínač parametrov v kontrole výpočtu, §10.32).
+2. Vercel: nový projekt + doména + env podľa `admin/README.md`.
+3. Merge do main po P7 (p7-analytics).

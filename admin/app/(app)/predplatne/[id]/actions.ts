@@ -12,6 +12,8 @@ import { audit } from '@admin/lib/audit';
 import { cycle, stripe } from '@admin/lib/deps';
 import { day, eur, productName } from '@admin/lib/format';
 import { loadSubscription, planInput } from '@admin/lib/subscription';
+import { mailCustomer } from '@admin/lib/notify-customer';
+import { subscriptionCancelledEmail, subscriptionChangedEmail } from '@lib/emails-admin';
 
 const done = (id: string) => revalidatePath(`/predplatne/${id}`);
 
@@ -85,8 +87,9 @@ export const cancelAction = adminAction(async (admin, fd) => {
   await cancel(c.sid, mode, stripe());
   if (mode === 'now') await db().from('subscriptions').update({ status: 'cancelled' }).eq('id', c.sub.id);
   await audit(admin.email, `subscription.cancel_${mode}`, 'subscription', c.sub.id, { status: c.sub.status }, { mode, reason: str(fd, 'reason') || null });
+  const mail = await mailCustomer(admin.email, (rc) => subscriptionCancelledEmail({ ...rc, sub: c.sub, mode }), { customerId: c.sub.customer_id, subscriptionId: c.sub.id }, { type: 'subscription', id: c.sub.id });
   done(c.sub.id);
-  return mode === 'now' ? 'Predplatné zrušené okamžite.' : `Predplatné sa zruší pred ďalšou platbou (${day(c.sub.next_charge_at)}); ďalšia platba už neprebehne.`;
+  return (mode === 'now' ? 'Predplatné zrušené okamžite.' : `Predplatné sa zruší pred ďalšou platbou (${day(c.sub.next_charge_at)}); ďalšia platba už neprebehne.`) + mail;
 });
 
 export const uncancelAction = adminAction(async (admin, fd) => {
@@ -137,8 +140,10 @@ export const applyAction = adminAction(async (admin, fd) => {
   await applyPlanChange({ sub: c.sub, dog: c.dog }, p!, { stripe: stripe(), store: await supabaseApplyStore() });
   const q = p!.quote;
   await audit(admin.email, 'subscription.plan_changed', 'subscription', c.sub.id, { ...p!.before, next_charge_at: c.sub.next_charge_at, kg: (c.dog.answers as { kg?: number }).kg }, { productId: q.productId, bagId: q.bagId, grams: q.gramsPerDay, days: q.daysPerBag, unitCents: q.unitAmountCents, shippingCents: p!.shippingCents, next_charge_at: p!.nextCharge.toISOString(), kg: p!.answers.kg, input: planInput(fd) } as Json);
+  const changed = { ...c.sub, product_id: q.productId, bag_id: q.bagId, grams_per_day: q.gramsPerDay, days_per_bag: q.daysPerBag, unit_amount_cents: q.unitAmountCents };
+  const mail = await mailCustomer(admin.email, (rc) => subscriptionChangedEmail({ ...rc, dog: { name: c.dog.name, sex: (p!.answers as { sex?: string }).sex ?? null }, sub: changed, shippingCents: p!.shippingCents, nextCharge: p!.nextCharge }), { customerId: c.sub.customer_id, subscriptionId: c.sub.id }, { type: 'subscription', id: c.sub.id });
   done(c.sub.id);
-  return `Zmenené: ${productName(q.productId)} ${q.bagId} kg, ${q.gramsPerDay} g/deň, každých ${q.daysPerBag} dní za ${eur(q.unitAmountCents + p!.shippingCents)}. Ďalšia platba ${day(p!.nextCharge)}.`;
+  return `Zmenené: ${productName(q.productId)} ${q.bagId} kg, ${q.gramsPerDay} g/deň, každých ${q.daysPerBag} dní za ${eur(q.unitAmountCents + p!.shippingCents)}. Ďalšia platba ${day(p!.nextCharge)}.${mail}`;
 });
 
 /** Nová adresa pre ďalšie dodávky (nový riadok addresses, predplatné naň ukáže). Už vytvorené objednávky sa nemenia. */
