@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import type { ActionResult } from '@admin/lib/action';
 import { audit } from '@admin/lib/audit';
 import { AuthError, gotrue } from '@admin/lib/gotrue';
+import { qrDataUrl } from '@admin/lib/qr';
 import { accessToken, clearSession, isAdminUser, sessionState, setSession } from '@admin/lib/session';
 
 const res = (ok: boolean, msg: string, data?: unknown): ActionResult => ({ ok, msg, data, at: Date.now() });
@@ -38,7 +39,7 @@ export async function enrollAction(_prev: ActionResult): Promise<ActionResult> {
   if ((st.user.factors ?? []).some((f) => f.status === 'verified')) return res(false, 'Overenie už je nastavené, zadaj kód.');
   for (const f of st.user.factors ?? []) if (f.status === 'unverified') await gotrue.unenroll(st.token, f.id).catch(() => null);
   const f = await gotrue.enrollTotp(st.token, `manazer-${Date.now()}`);
-  return res(true, '', { factorId: f.id, qr: f.totp.qr_code, secret: f.totp.secret });
+  return res(true, '', { factorId: f.id, qr: qrDataUrl(f.totp.qr_code), secret: f.totp.secret });
 }
 
 /** 2FA: overenie 6-miestneho kódu → session s aal2. */
