@@ -663,6 +663,7 @@
       elementsOptions: { appearance: APPEARANCE, fonts: [{ cssSrc: STRIPE_FONT }] }
     });
     p.checkout = checkoutSdk;
+    p.actions = checkoutSdk.loadActions(); // pripraviť hneď (karta aj peňaženky)
     // Apple Pay / Google Pay (iba ak ich prehliadač ponúka) a Link; PayPal, Klarna… nie
     p.express = checkoutSdk.createExpressCheckoutElement({
       buttonHeight: 48,
@@ -675,13 +676,19 @@
       $("pay-express").hidden = !any;
       $("pay-or").hidden = !any;
     });
-    p.express.on("confirm", function () {
+    // Apple Pay / Google Pay / Link: potvrdenie s udalosťou z Express Checkout (údaje z peňaženky); akcie sú
+    // pripravené vopred, aby okno peňaženky dostalo odpoveď hneď (inak sa dlho točí a peňaženka vyprší)
+    p.express.on("confirm", function (ev) {
       $("p-err").hidden = true;
-      checkoutSdk.loadActions().then(function (r) {
+      p.actions.then(function (r) {
         if (r.type !== "success") throw new Error("Platbu sa nepodarilo dokončiť.");
-        return r.actions.confirm();
-      }).then(function (res) { if (res && res.type === "error") payError(res.error && res.error.message); })
-        .catch(function (e) { payError(e.message); });
+        return r.actions.confirm({ expressCheckoutConfirmEvent: ev });
+      }).then(function (res) {
+        if (res && res.type === "error") throw new Error(res.error && res.error.message);
+      }).catch(function (e) {
+        try { if (ev && ev.paymentFailed) ev.paymentFailed({ reason: "fail" }); } catch (x) {}
+        payError(e.message);
+      });
     });
     p.express.mount("#pay-express");
     // karta: bez mena, e-mailu, telefónu a adresy (máme ich), bez textu mandátu Stripe; Link je tlačidlo v Express Checkout
@@ -711,7 +718,7 @@
     btn.disabled = true;
     btn.textContent = "Spracúvam platbu…";
     $("p-err").hidden = true;
-    p.checkout.loadActions()
+    p.actions
       .then(function (r) {
         if (r.type !== "success") throw new Error("Platbu sa nepodarilo dokončiť. Skús to prosím znova.");
         return r.actions.confirm({ billingAddress: billingOf(p.delivery) });
