@@ -23,7 +23,10 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 - [ ] Pri premazaní testovacích dát **neresetovať sekvenciu `orders.number`** (FHB id `GR-000123` musí ostať unikátne), iba zmazať riadky.
 - [ ] **Vercel env pre krok 5:** `CRON_SECRET` (`openssl rand -hex 32`; bez neho crony vrátia 503), `ADMIN_EMAIL` (interné upozornenia), `RESEND_API_KEY` + `EMAIL_FROM` (napr. `Granula <objednavky@granula.sk>`) + `EMAIL_REPLY_TO` (`podpora@granula.sk`) po overení domény granula.sk v Resend. Do vtedy sa emaily iba zapisujú do `email_log` ako `skipped` (po nastavení kľúča sa staré neposielajú).
 - [ ] **Stránka `/odstupenie`** (P4) musí existovať pred spustením: potvrdzovací email už odkazuje na `/odstupenie?objednavka=<číslo>`.
-- [ ] **Vercel plán:** crony bežia 1× denne (Hobby). Hodinový `fhb-orders` (SPEC P2) vyžaduje Pro: potom vo `vercel.json` zmeniť na napr. `17 6-20 * * *`.
+- [ ] **Vercel Pro + hodinová kontrola stavov FHB:** po prechode na Pro (Settings → Billing) zmeniť vo `vercel.json` jediný riadok
+  `{ "path": "/api/cron/fhb-orders", "schedule": "17 18 * * *" }` → `{ "path": "/api/cron/fhb-orders", "schedule": "17 * * * *" }`
+  (každú hodinu v 17. minúte, UTC), commit a nasadiť. Kód netreba meniť: úloha je idempotentná (stav iba dopredu, emaily cez `email_log`). Overenie: v `fhb_events` pribúda každú hodinu záznam `cron.fhb-orders`. Ostatné crony (`fhb-rma`, `fhb-stock`) stačia denne. Na Hobby by nasadenie s hodinovým cronom zlyhalo, preto to nemeniť skôr.
+- [ ] **Zmazať testovaciu route `app/api/test/email-preview`** (náhľady emailov, SPEC §10.14).
 - [ ] Opýtať sa FHB na formát notifikácií objednávok (route prijme čokoľvek a loguje do `fhb_events`; po prvej skutočnej notifikácii pozrieť payload).
 - [ ] Stripe účet vedený na Spark Link, s. r. o.
 - [ ] Zmazať staré branche (Carbone Company)
