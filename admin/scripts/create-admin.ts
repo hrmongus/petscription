@@ -1,5 +1,5 @@
 /*
- * Admin účet pre manazer.granula.sk (SPEC P3): Supabase Auth používateľ s app_metadata.role = "admin".
+ * Admin účet pre granula-manazer.vercel.app (SPEC P3): Supabase Auth používateľ s app_metadata.role = "admin".
  *
  *   cd admin && npm run create-admin -- meno@granula.sk            → vytvorí účet (alebo pridá rolu existujúcemu) a vypíše dočasné heslo
  *   cd admin && npm run create-admin -- meno@granula.sk --password  → nové heslo pre existujúci účet
@@ -59,7 +59,7 @@ async function main() {
     const pw = password();
     const { error } = await sb.auth.admin.createUser({ email: e, password: pw, email_confirm: true, app_metadata: { role: 'admin' } });
     if (error) throw error;
-    console.log(`Admin účet vytvorený: ${e}\nDočasné heslo: ${pw}\nPrihlásenie: https://manazer.granula.sk (pri prvom prihlásení nastaví 2FA).`);
+    console.log(`Admin účet vytvorený: ${e}\nDočasné heslo: ${pw}\nPrihlásenie: https://granula-manazer.vercel.app (pri prvom prihlásení nastaví 2FA).`);
     return;
   }
   const pw = flag === '--password' ? password() : null;

@@ -80,7 +80,7 @@ export function headers(): Header[] {
     // z vercel.json
     { source: '/blog/nahlad-pdf/:path*', headers: NOINDEX },
     { source: '/granula/blog/nahlad-pdf/:path*', headers: NOINDEX },
-    // interné stránky: meta noindex majú v HTML, hlavička je druhá poistka (SPEC P0); admin-vypocet je od P3 v admin/ (manazer.granula.sk)
+    // interné stránky: meta noindex majú v HTML, hlavička je druhá poistka (SPEC P0); admin-vypocet je od P3 v admin/ (granula-manazer.vercel.app)
     { source: '/admin-blog/:path*', headers: NOINDEX },
     { source: '/blog/nahlad/:path*', headers: NOINDEX },
   ];

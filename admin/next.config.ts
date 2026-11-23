@@ -2,7 +2,7 @@ import path from 'node:path';
 import type { NextConfig } from 'next';
 
 /*
- * Admin portál (SPEC P3, manazer.granula.sk). Samostatný Vercel projekt s Root Directory `admin`, ale kód zdieľa
+ * Admin portál (SPEC P3, granula-manazer.vercel.app). Samostatný Vercel projekt s Root Directory `admin`, ale kód zdieľa
  * s webom: importuje ../lib (engine, stripe, fhb, db, subscription-schedule) a ../public/granula/engine.js.
  * Závislosti sú iba v koreňovom node_modules (vercel.json: installCommand `cd .. && npm ci`).
  */

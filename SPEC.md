@@ -197,7 +197,7 @@ Produkcia: `https://api.fhb.sk/v3` · Sandbox: ⚠️ docs uvádzajú `https://a
 
 ---
 
-## P3 — Admin portál (`manazer.granula.sk`)
+## P3 — Admin portál (`granula-manazer.vercel.app`)
 
 Samostatná Next.js appka v `admin/`, druhý Vercel projekt (Root Directory = `admin`), zdieľa `lib/` (engine, stripe, fhb, db).
 Prihlásenie: Supabase Auth, iba emaily s rolou admin, 2FA. Všetky akcie na serveri, zapisujú do `audit_log`.
@@ -260,7 +260,7 @@ Marketing ostáva v Klaviyo (iba udalosti: objednávka, zrušenie).
 3. Stripe live: aktivovaný účet Spark Link s. r. o., statement descriptor, live webhook endpoint + secret, Billing nastavenia.
 4. Produkty vo FHB produkcii (10 SKU), príjemka skladu.
 5. Právne texty (VOP, reklamačný poriadok, ochrana súkromia sú dnes lorem ipsum + `noindex`) → finálne, odstrániť `noindex`.
-6. DNS `manazer.granula.sk`.
+6. Admin beží na `granula-manazer.vercel.app` (bez vlastnej domény, §10.25).
 
 ---
 
@@ -426,13 +426,13 @@ Každá položka čaká na potvrdenie, kým nie je označená ✅.
 14. **Funkčné cookies** (zadanie používateľa): štvrtá kategória v lište „Funkčné“ (zapamätanie psov z dotazníka a nastavení na tomto zariadení), bez ďalšieho políčka na stránke. So súhlasom `granula-psy` v `localStorage` trvalo, bez neho v `sessionStorage` do zatvorenia záložky; udelenie súhlasu presunie psov zo záložky do `localStorage`, odvolanie ich z `localStorage` zmaže. Psi uložení skôr bez súhlasu sa pri prvej návšteve presunú do záložky. `granula-cookies` = `all` | `necessary` | zoznam kategórií oddelený čiarkou (`functional,analytics`); staré hodnoty platia, staré `all` zahŕňa aj funkčné.
 
 **Projekt 2: admin portál (P3), 23. 11. 2026** (branch `p2-admin`, zadanie `PROJEKT-2.md`)
-25. **Appka `admin/`:** závislosti iba z koreňového `node_modules` (`admin/vercel.json`: `installCommand: cd .. && npm ci`), `admin/package.json` uvádza `next` iba kvôli detekcii frameworku na Verceli. Žiadne npm workspaces (zmena koreňového `package.json` by kolidovala s paralelnými branchmi).
+25. **Appka `admin/`:** závislosti iba z koreňového `node_modules` (`admin/vercel.json`: `installCommand: cd .. && npm ci`), `admin/package.json` uvádza `next` iba kvôli detekcii frameworku na Verceli. Žiadne npm workspaces (zmena koreňového `package.json` by kolidovala s paralelnými branchmi). **Adresa:** `https://granula-manazer.vercel.app` (Vercel doména projektu; vlastnú doménu `manazer.granula.sk` nepoužívame, admin je interný; rozhodnutie používateľa 23. 11.).
 26. **Prihlásenie:** e-mail + heslo + povinné 2FA (TOTP, `aal2`), iba `app_metadata.role = "admin"`. Tokeny v httpOnly cookies (7 dní bez aktivity), overenie v Supabase pri každej požiadavke. Účty iba skriptom `admin/scripts/create-admin.ts` (žiadna registrácia ani reset hesla e-mailom). Lokálne obídenie prihlásenia `ADMIN_DEV_USER` platí iba v `next dev`.
 27. **Žiadne nové Stripe eventy.** Refund z admina zapíše stav hneď (synchrónne), detail objednávky číta platbu a refundy zo Stripe naživo. `charge.refunded` sa nepridáva: pri obnoveniach charge nemá `metadata.app` a webhook by ho aj tak zahodil (`isOurs`). Dôsledok: refund urobený priamo v Stripe dashboarde detail ukáže, ale stav objednávky v DB nezmení → refundy robiť v admine.
 28. **Úprava doručenia a storno:** vo FHB iba v stave `pending` (PUT / DELETE `/order`); objednávka `paid` / `fhb_error`, ktorá ešte nie je vo FHB, sa mení iba u nás a potom „Znova odoslať do FHB“. Storno nerobí refund samo (v admine je zaškrtnuté „a vrátiť peniaze“) a nezruší predplatné. Overenie doručenia je spoločné s checkoutom (`resolveDelivery` v `lib/checkout.ts`).
 29. **Poslať znova (vrátená/stratená zásielka)** = nová objednávka s rovnakými položkami, 0 €, `stripe_ref = reship:<pôvodná>:<n>`, nový stĺpec `orders.reship_of` (migrácia `p3_admin_reship`, aplikovaná). FHB `value` = 0.
 30. **Zmena predplatného s prepočtom** (`lib/subscription-actions.ts`): admin smie zvoliť aj menej vhodnú receptúru (náhľad ju označí; portál P4 iba vhodné). Ďalšia platba: rovnaké D → nemení sa; iné D → posledné doručenie + D − LEAD (bez doručenia odhad: posledná objednávka + SHIP_DAYS), najskôr zajtra. Zmena doručenia predplatného = nový riadok `addresses` + prepočet ceny dopravy v Stripe (napr. DPD zadarmo → SPS kuriér 1,90 €); už vytvorené objednávky sa nemenia.
 31. **Oprava `skipDelivery`:** preskočená dodávka sa platí o 06:00 UTC (predtým o polnoci, `addDays` zahodil čas).
-32. **Kontrola výpočtu** je na `manazer.granula.sk/vypocet` (za prihlásením), `granula.sk/admin-vypocet` → 404. ⚠️ Prepínač „použiť testovacie parametre v dotazníku“ (localStorage) už dotazník na www neovplyvní (iná doména); server ich ignoroval vždy. Banner v `kviz.js` so starým odkazom sa zobrazí iba pri starom nastavení v prehliadači.
+32. **Kontrola výpočtu** je na `granula-manazer.vercel.app/vypocet` (za prihlásením), `granula.sk/admin-vypocet` → 404. ⚠️ Prepínač „použiť testovacie parametre v dotazníku“ (localStorage) už dotazník na www neovplyvní (iná doména); server ich ignoroval vždy. Banner v `kviz.js` so starým odkazom sa zobrazí iba pri starom nastavení v prehliadači.
 33. **Odstúpenie: lehota a refund až po vrátení tovaru:** peniaze vrátiť do 14 dní od prijatia odstúpenia (prijaté 23. 11. → posledný deň 7. 12.; od P4 stĺpec `refund_due_at`). (zadanie 23. 11., stĺpce z `p4_withdrawal_refund`): čakajúce = `refunded_at is null` (okrem zamietnutých), zoradené podľa `refund_due_at`, prešvihnuté červeno, do 3 dní oranžovo. Admin zapíše vrátenie (`return_status`, `return_received_at`, `return_condition`, `return_note`); refund je povolený iba pri `not_needed` alebo `received` (kontrola aj na serveri), potom `refunded_at`, `refund_amount_cents` (súčet), `stripe_refund_id`.
 34. ✅ **E-maily zákazníkovi po akciách admina** (rozhodnutie používateľa 23. 11.): refund, storno objednávky, zrušenie predplatného, zmena predplatného (receptúra/balenie/váha/vek). Šablóna `content/emails/9-zmena.html` (dizajn ako ostatné), buildery `lib/emails-admin.ts`, odosielanie cez `email_log`: kľúče `refund:<re_…>`, `order-cancelled:<objednávka>` (storno s refundom = jeden e-mail so sumou), `subscription-cancelled:<predplatné>` (iba raz, aj pri opakovanom zrušení), `subscription-changed:<predplatné>:<nové hodnoty>:<deň platby>`. Bez e-mailu: posun, preskočenie, pauza, zmena doručenia, poslať znova (zákazník dostane e-mail o odoslaní z FHB).

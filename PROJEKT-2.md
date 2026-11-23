@@ -6,7 +6,7 @@ súbory (`lib/`, migrácie, webhook) opatrne a minimálne, migrácie s časovou 
 ## Zadanie (používateľ, 23. 11. 2026)
 
 Cieľ: Viktoria a Andrej vedia spravovať objednávky a predplatné bez chodenia do Stripe, Supabase a FHB.
-- Samostatná Next.js appka v `admin/` (druhý Vercel projekt, Root Directory `admin`, doména `manazer.granula.sk`). Zdieľa `lib/`
+- Samostatná Next.js appka v `admin/` (druhý Vercel projekt, Root Directory `admin`, doména `manazer.granula.sk`; neskôr rozhodnuté: bez vlastnej domény, `granula-manazer.vercel.app`, SPEC §10.25). Zdieľa `lib/`
   (engine, stripe, fhb, db, subscription-schedule), žiadna duplicitná logika.
 - Prihlásenie: Supabase Auth, iba používatelia s `app_metadata.role = admin`. Všetky akcie na serveri, zapisujú sa do `audit_log`.
 - Obrazovky (SPEC P3): 1. prehľad dňa, 2. objednávky (detail, znova do FHB, úprava adresy a storno iba v `pending`, refund),
