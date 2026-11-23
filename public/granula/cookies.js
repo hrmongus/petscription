@@ -196,4 +196,23 @@
   if (has("analytics", v)) loadAnalytics();
   if (v === null || ["all", "necessary", "analytics", "marketing"].indexOf(v) === -1) show();
   window.GranulaConsent = { has: function (cat) { return has(cat); }, show: show };
+  /* ---------- Klaviyo udalosti (SPEC P7): iba so súhlasom s marketingovými cookies ----------
+     startedCheckout: opustený košík (email z kroku doručenia, pes, recept, cena, odkaz späť na výsledok).
+     placedOrder: na stránke Hotovo, aby flow opusteného košíka v Klaviyo skončil. */
+  function klaviyoTrack(email, firstName, metric, props) {
+    if (!has("marketing") || !email) return;
+    loadKlaviyo();
+    var k = window.klaviyo;
+    if (!k || !k.identify) return;
+    try {
+      var who = { email: email };
+      if (firstName) who.first_name = firstName;
+      k.identify(who);
+      k.track(metric, props);
+    } catch (e) {}
+  }
+  window.GranulaMarketing = {
+    startedCheckout: function (d) { klaviyoTrack(d.email, d.firstName, "Started Checkout", d.event); },
+    placedOrder: function (d) { klaviyoTrack(d.email, d.firstName, "Placed Order", d.event); }
+  };
 })();

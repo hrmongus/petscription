@@ -533,6 +533,25 @@
       .catch(function () {});
   }
   function days(n) { return n + " " + plural(n, "deň", "dni", "dní"); }
+  /* P7: údaje pre Klaviyo „Started Checkout“ / „Placed Order“ (posiela cookies.js iba so súhlasom s marketingom).
+     Cena je iba informatívna (účtuje server); odkaz späť obnoví odpovede z quiz_sessions. */
+  function klaviyoCheckout(d, orderNumber) {
+    var r = result(), p = r.product, x = bagOf(r), disc = r.params.plans[state.plan] || 0;
+    var price = x.price == null ? null : Math.round(x.price * (1 - disc) * 100) / 100;
+    var abs = function (u) { try { return new URL(u, location.href).href; } catch (e) { return u; } };
+    var back = location.origin + "/granule-na-mieru?kviz=" + qid() + "#vysledok";
+    var item = { ProductID: p.id, SKU: "GRAN-" + p.id + "-" + x.bag.id, ProductName: p.name + " " + x.bag.label, Quantity: 1,
+      ItemPrice: price, RowTotal: price, ProductURL: back, ImageURL: abs(p.img), Categories: ["Granule na mieru"] };
+    return {
+      email: d && d.email, firstName: d && d.firstName,
+      event: {
+        $event_id: orderNumber ? "order-" + orderNumber : "checkout-" + qid(),
+        $value: price, ItemNames: [item.ProductName], CheckoutURL: back, Items: [item],
+        DogName: state.dogname, Recipe: p.name, RecipeId: p.id, BagKg: x.bag.id, Plan: state.plan === "mesiac" ? "predplatné" : "jednorazovo",
+        GramsPerDay: r.dose.grams, DaysPerBag: x.days, Carrier: d && d.carrier || null
+      }
+    };
+  }
   function renderOrder() {
     var r = result(), p = r.product, x = bagOf(r), plans = r.params.plans;
     var d = plans[state.plan] || 0, ship = r.params.shipping;
@@ -728,7 +747,7 @@
         pay = { key: key, clientSecret: res[0].clientSecret, publishableKey: res[0].publishableKey, delivery: delivery, ready: false };
         // P7: identify(customer_id) — email do PostHogu nejde; zdroj návštevy má PostHog sám ($initial_utm_*, $initial_referrer)
         if (res[0].customerId && window.GranulaAnalytics) GranulaAnalytics.identify(res[0].customerId, { $set: { has_checkout: true } });
-        if (window.GranulaMarketing) GranulaMarketing.startedCheckout(delivery);
+        if (window.GranulaMarketing) GranulaMarketing.startedCheckout(klaviyoCheckout(delivery));
         paying = false;
         go("platba");
       })
@@ -862,7 +881,11 @@
       .then(function (r) { return r.json(); })
       .then(function (j) {
         el.hidden = false;
-        if (j.status === "paid") { el.textContent = "Číslo objednávky: " + j.order.number + "."; delete state.paySession; save(); }
+        if (j.status === "paid") {
+          el.textContent = "Číslo objednávky: " + j.order.number + ".";
+          if (window.GranulaMarketing && state.delivery) { try { GranulaMarketing.placedOrder(klaviyoCheckout(state.delivery, j.order.number)); } catch (e) {} }
+          delete state.paySession; save();
+        }
         else if (j.status === "processing" && n < 15) { el.textContent = "Platbu sme prijali, objednávku práve zakladáme…"; setTimeout(function () { pollOrder(id, n + 1); }, 2000); }
         else if (j.status === "processing") el.textContent = "Platbu sme prijali. Číslo objednávky ti príde e-mailom.";
         else { el.innerHTML = 'Platba nebola dokončená. <a href="#objednavka">Späť na platbu</a>'; state.ordered = false; save(); }

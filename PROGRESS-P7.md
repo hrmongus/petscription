@@ -11,7 +11,7 @@ Paralelne: P3 admin (`p2-admin`, `admin/`), P4 portál (`p3-portal`). Spoločné
 | 3. Súhlas po kategóriách v `cookies.js` | ✅ (texty lišty na potvrdenie, krok 8) |
 | 4. PostHog v prehliadači (udalosti, identify, UTM, replay s maskovaním, proxy `/ingest`) | ✅ overené lokálne, udalosti v PostHogu |
 | 5. Server-side udalosti z webhooku (+ `withdrawal_submitted` pre P4) | ✅ (odstúpenie zapojí P4) |
-| 6. Klaviyo „Started Checkout“ + odkaz späť na výsledok | ⏳ |
+| 6. Klaviyo „Started Checkout“ + odkaz späť na výsledok | ✅ overené lokálne (flow v Klaviyo nastaviť) |
 | 7. Dashboard v PostHogu | ⏳ |
 | 8. Texty: zásady ochrany súkromia a cookie lišta | ⏳ |
 
@@ -100,3 +100,18 @@ Funnel: `$pageview` → `quiz_started` → `quiz_completed` → `checkout_starte
 ### Overené
 - `lib/tracking.test.ts` (5): súhlas/anonymita, stabilné uuid, žiadny email v udalostiach, obnovenie, zrušenie, odstúpenie; fulfillment testy (raz pri prvom spracovaní). Spolu 128/128.
 - Naživo: testovacia udalosť `p7_server_selftest` → PostHog `200 Ok`. Skutočné `order_completed` sa overí pri testovacom nákupe po nasadení (webhook beží iba na granula.sk).
+
+## Krok 6: Klaviyo opustený košík (23. 11. 2026)
+
+### Hotové
+- **`cookies.js` → `GranulaMarketing`**: iba so súhlasom s marketingovými cookies `klaviyo.identify({ email, first_name })` + `klaviyo.track(…)`. Bez súhlasu sa nič nepošle ani nenačíta.
+- **„Started Checkout“** po „Pokračovať k platbe“ (email je overený serverom spolu s doručením): `$event_id` = `checkout-<id dotazníka>` (opakované kliknutie nezdvojí), `$value`, `ItemNames`, `Items` (recept, SKU, balenie, cena, obrázok vreca), `CheckoutURL` = `https://www.granula.sk/granule-na-mieru?kviz=<id>#vysledok` (obnoví odpovede, krok 1), `DogName`, `Recipe`, `BagKg`, `Plan`, `GramsPerDay`, `DaysPerBag`, `Carrier`.
+- **„Placed Order“** na stránke Hotovo po potvrdení objednávky zo servera (`$event_id` = `order-<číslo>`), aby flow opusteného košíka skončil.
+- Verzie skriptov v HTML: `kviz.js` / `cookies.js` `?v=20261123p7` (granule-na-mieru, úvodná stránka).
+
+### Overené (lokálne, `CHECKOUT_TEST_TOKEN` iba v env lokálneho servera)
+- Dotazník → doručenie SPS kuriér → „Pokračovať k platbe“ → `#platba`: `quiz_sessions` má email, `customer_id`, psa, plán, balenie, dopravu, `checkout_started_at`, UTM; PostHog `distinct_id` = to isté `customer_id`; Klaviyo dostal `identify` + „Started Checkout“ s údajmi vyššie. (Klaviyo v headless prehliadači sleduje ako bota, preto bol jeho skript v teste nahradený prázdnym a kontrolovala sa fronta volaní.)
+- Testovacie dáta: zákazník `delivered+p7test@resend.dev` (Supabase + Stripe test) → zmažú sa s ostatnými testovacími dátami pred spustením.
+
+### Treba v Klaviyo (používateľ)
+- Flow **Abandoned Checkout**: spúšťač metrika „Started Checkout“ (vznikne po prvej udalosti z webu), filter „Placed Order zero times since starting this flow“, oneskorenie napr. 4 h a 24 h, tlačidlo na `{{ event.CheckoutURL }}`, obrázok `{{ event.Items.0.ImageURL }}`, meno psa `{{ event.DogName }}`. Právny základ pozri krok 8.
