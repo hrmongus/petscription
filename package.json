@@ -13,7 +13,8 @@
     "fhb:types": "npx -y openapi-typescript@7.13.0 reference/fhb-openapi.json -o lib/fhb/openapi.d.ts",
     "fhb:smoke": "tsx scripts/fhb-smoke.ts",
     "fhb:sync": "tsx scripts/fhb-sync-products.ts",
-    "stripe:test-clock": "tsx scripts/stripe-test-clock.ts"
+    "stripe:test-clock": "tsx scripts/stripe-test-clock.ts",
+    "emails": "node scripts/email-templates.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.119.2",

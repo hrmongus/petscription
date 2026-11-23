@@ -37,35 +37,105 @@ describe('createMailer', () => {
   });
 });
 
-const ORDER = { id: 'o1', number: 42, kind: 'first', amount_cents: 7240, items: [{ sku: 'GRAN-hovadzie-9', qty: 1 }], ship_to: { name: 'Ján Novák', email: 'jan@example.sk', phone: '+421905123456', country: 'SK', delivery_method: 'dpd_pickup', point_id: 'SK21286', point_label: 'Pavel Lóška Cyklo-Šport, Tornaľa' } };
+const ORDER = { id: 'o1', number: 42, kind: 'first', amount_cents: 7240, created_at: '2026-11-23T10:00:00Z', items: [{ sku: 'GRAN-hovadzie-9', qty: 1 }], ship_to: { name: 'Ján Novák', email: 'jan@example.sk', phone: '+421905123456', country: 'SK', delivery_method: 'dpd_pickup', point_id: 'SK21286', point_label: 'Pavel Lóška Cyklo-Šport, Mierová 17, 98201 Tornaľa' } };
+const SITE = 'https://www.granula.sk/';
+const BODKA = { name: 'Bodka', sex: 'fenka' };
+const noPlaceholders = (m: { html: string; text: string }) => {
+  expect(m.html).not.toMatch(/\{\{|\}\}/);
+  expect(m.text).not.toMatch(/\{\{|\}\}/);
+};
 
-describe('šablóny', () => {
-  test('potvrdenie: číslo, položky, doručenie, suma, „Odstúpiť od zmluvy tu“ s odkazom; bez DPH', () => {
-    const m = orderConfirmationEmail({ order: ORDER, to: 'jan@example.sk', name: 'Ján Novák', siteUrl: 'https://www.granula.sk/', subscription: { days: 37, nextChargeAt: new Date('2027-02-06T06:00:00Z') } });
+describe('šablóny (návrh content/emails)', () => {
+  test('vygenerovaný lib/email-templates.ts zodpovedá content/emails (npm run emails)', async () => {
+    // @ts-expect-error .mjs bez typov
+    const { buildTemplatesModule } = await import('../scripts/email-templates.mjs');
+    const { readFileSync } = await import('node:fs');
+    expect(readFileSync(new URL('./email-templates.ts', import.meta.url), 'utf8')).toBe(buildTemplatesModule());
+  });
+  test('1 potvrdenie predplatného: údaje, fotka vreca, skloňovanie, odkazy, bez DPH', () => {
+    const m = orderConfirmationEmail({ order: ORDER, to: 'jan@example.sk', name: 'Ján Novák', dog: BODKA, siteUrl: SITE, subscription: { days: 37, nextChargeAt: new Date('2026-12-26T06:00:00Z') }, prices: { foodCents: 6750, shippingCents: 490 } });
+    noPlaceholders(m);
     expect(m.key).toBe('order-confirm:o1');
-    expect(m.subject).toContain('42');
+    expect(m.subject).toBe('Objednávka č. 42 je potvrdená');
+    expect(m.html).toContain('https://www.granula.sk/img/email/vrece-hovadzie-ryza.jpg');
+    expect(m.html).toContain('https://www.granula.sk/img/email/logo-granula.png');
+    expect(m.html).toContain('Ďakujeme, Ján!');
+    expect(m.html).toContain('granule pre Bodku');
+    expect(m.html).toContain('vystačí Bodke');
     for (const t of [m.html, m.text]) {
-      expect(t).toContain('Odstúpiť od zmluvy tu');
-      expect(t).toContain('https://www.granula.sk/odstupenie?objednavka=42');
+      expect(t).toContain('67,50 €');
+      expect(t).toContain('4,90 €');
       expect(t).toContain('72,40 €');
-      expect(t).toContain('Hovädzie');
-      expect(t).toContain('DPD');
-      expect(t).toContain('každých 37 dní');
+      expect(t).toContain('26. 12. 2026');
+      expect(t).toContain('23. 11. 2026');
+      expect(t).toContain('DPD, výdajné miesto');
+      expect(t).toContain('https://www.granula.sk/odstupenie?objednavka=42');
+      expect(t).toContain('Odstúpiť od zmluvy tu');
       expect(t).not.toMatch(/DPH/);
     }
   });
-  test('zásielka odoslaná: tracking odkaz a číslo', () => {
-    const m = shippedEmail({ order: ORDER, to: 'jan@example.sk', trackingLinks: ['https://tracking.example/1'], trackingNumbers: ['1'] });
+  test('2 obnovenie a 3 jednorazovo: správna šablóna a predmet; doprava dopočítaná, keď chýba rozpis', () => {
+    const r = orderConfirmationEmail({ order: { ...ORDER, kind: 'renewal' }, to: 'a@b.sk', name: 'Ján', dog: { name: 'Rex', sex: 'pes' }, siteUrl: SITE, subscription: { days: 37, nextChargeAt: null } });
+    noPlaceholders(r);
+    expect(r.subject).toBe('Ďalšie vrece už chystáme · objednávka č. 42');
+    expect(r.html).toContain('Rexovi sa pomaly míňajú granule');
+    expect(r.html).toContain('zmenila jeho váha');
+    expect(r.html).toContain('67,50 €'); // 72,40 − 4,90
+    const o = orderConfirmationEmail({ order: { ...ORDER, kind: 'one_off' }, to: 'a@b.sk', name: 'Ján', dog: BODKA, siteUrl: SITE });
+    noPlaceholders(o);
+    expect(o.html).toContain('jednorazová objednávka');
+    expect(o.html).toContain('Prejsť na predplatné');
+  });
+  test('4 zásielka odoslaná: tracking, doba doručenia podľa dopravcu, blok „Prvé vrece“ iba pri prvej', () => {
+    const m = shippedEmail({ order: ORDER, to: 'a@b.sk', name: 'Ján', dog: BODKA, siteUrl: SITE, trackingLinks: ['https://tracking.example/1'], trackingNumbers: ['1'] });
+    noPlaceholders(m);
     expect(m.key).toBe('shipped:o1');
     expect(m.html).toContain('https://tracking.example/1');
+    expect(m.html).toContain('DPD ich zvyčajne doručí do 2\u00a0–\u00a03 pracovných dní');
+    expect(m.html).toContain('Prvé vrece? Prechádzaj postupne');
     expect(m.text).toContain('Číslo zásielky: 1');
+    const r = shippedEmail({ order: { ...ORDER, kind: 'renewal', ship_to: { ...ORDER.ship_to, delivery_method: 'sps_courier', street: 'Hlavná 1', zip: '04001', city: 'Košice' } }, to: 'a@b.sk', dog: BODKA, siteUrl: SITE, trackingLinks: [], trackingNumbers: [] });
+    noPlaceholders(r);
+    expect(r.html).not.toContain('Prvé vrece');
+    expect(r.html).toContain('SPS ich zvyčajne doručí do 1\u00a0–\u00a02 pracovných dní');
+    expect(r.html).toContain('Hlavná 1, 04001 Košice');
   });
-  test('neúspešná platba: kľúč podľa faktúry a pokusu, odkaz na zaplatenie', () => {
-    const m = paymentFailedEmail({ invoiceId: 'in_1', attempt: 2, to: 'jan@example.sk', amountCents: 7240, payUrl: 'https://invoice.stripe.com/i/x' });
+  test('5 neúspešná platba: kľúč podľa faktúry a pokusu, odkaz na zaplatenie, veta o ďalšom pokuse iba s dátumom', () => {
+    const base = { invoiceId: 'in_1', attempt: 2, to: 'a@b.sk', name: 'Ján', dog: BODKA, siteUrl: SITE, product: { productId: 'jelen-kralik', bagId: '4', days: 16 }, totalCents: 3990, shippingCents: 490, payUrl: 'https://invoice.stripe.com/i/x' };
+    const m = paymentFailedEmail({ ...base, nextAttempt: new Date('2026-12-29T06:00:00Z') });
+    noPlaceholders(m);
     expect(m.key).toBe('payment-failed:in_1:2');
     expect(m.html).toContain('https://invoice.stripe.com/i/x');
+    expect(m.html).toContain('vrece-jelen-kralik.jpg');
+    expect(m.html).toContain('Platbu skúsime znova <strong>29. 12. 2026</strong>');
+    expect(m.html).toContain('35,00 €');
+    const last = paymentFailedEmail({ ...base, nextAttempt: null });
+    noPlaceholders(last);
+    expect(last.html).not.toContain('Platbu skúsime znova');
   });
-  test('HTML escapuje meno', () => {
-    expect(orderConfirmationEmail({ order: ORDER, to: 'a@b.sk', name: '<script>', siteUrl: 'https://x' }).html).not.toContain('<script>');
+  test('HTML escapuje meno a meno psa; bez mena „Ďakujeme!“', () => {
+    const m = orderConfirmationEmail({ order: ORDER, to: 'a@b.sk', name: '<script>', dog: { name: '<b>x</b>', sex: 'pes' }, siteUrl: SITE });
+    expect(m.html).not.toContain('<script>');
+    expect(m.html).not.toContain('<b>x</b>');
+    expect(orderConfirmationEmail({ order: ORDER, to: 'a@b.sk', name: '', siteUrl: SITE }).html).toContain('Ďakujeme!');
+  });
+});
+
+describe('skloňovanie mena psa', () => {
+  test('bežné mená a bezpečný náhradný tvar', async () => {
+    const { dogCases } = await import('./dog-name');
+    const c = (n: string, s?: string) => { const d = dogCases(n, s); return [d.acc, d.dat]; };
+    expect(c('Bodka', 'fenka')).toEqual(['Bodku', 'Bodke']);
+    expect(c('Mia', 'fenka')).toEqual(['Miu', 'Mii']);
+    expect(c('Daisy', 'fenka')).toEqual(['Daisy', 'Daisy']);
+    expect(c('Rex', 'pes')).toEqual(['Rexa', 'Rexovi']);
+    expect(c('Bruno', 'pes')).toEqual(['Bruna', 'Brunovi']);
+    expect(c('Lucky', 'pes')).toEqual(['Luckyho', 'Luckymu']);
+    expect(c('Charlie', 'pes')).toEqual(['Charlieho', 'Charliemu']);
+    expect(c('Kuba', 'pes')).toEqual(['Kubu', 'Kubovi']);
+    expect(c('Šmolek', 'pes')).toEqual(['tvojho psa', 'tvojmu psovi']);
+    expect(c('Pán Pes', 'pes')).toEqual(['tvojho psa', 'tvojmu psovi']);
+    expect(c('', 'fenka')).toEqual(['tvoju fenku', 'tvojej fenke']);
+    expect(dogCases('Bodka', 'fenka').poss).toBe('jej');
   });
 });

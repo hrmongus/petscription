@@ -1,159 +1,322 @@
 /*
- * Šablóny transakčných emailov (SPEC P5, PROJEKT-1 krok 5). Slovensky, HTML + text, Granula Design System:
- * Mlieko #F4EBE2 podklad, Mlieko light #FFF7EE karta, Noc #000 text, Kobalt #0047BB, Oranž #FF6900 (orámované).
+ * Transakčné emaily (SPEC P5). HTML = návrh v content/emails/*.html (premenné {{…}}, bloky {{#x}}…{{/x}}),
+ * vygenerovaný do lib/email-templates.ts (npm run emails). Text verzia sa skladá tu. Obrázky (logo, vrecia)
+ * sú na https://www.granula.sk/img/email/ (public/granula/img/email/).
  * Ceny sú konečné (firma nie je platiteľ DPH, SPEC P1) → nikde „s DPH“.
+ *
+ *   1 potvrdenie, predplatné (first) · 2 obnovenie (renewal) · 3 potvrdenie, jednorazovo (one_off)
+ *   4 zásielka odoslaná (FHB sent) · 5 neúspešná platba (invoice.payment_failed) · interné upozornenia (adminEmail)
  */
-import { METHODS, type DeliveryMethod } from './carriers';
-import { allSkus } from './engine-server';
+import { METHODS, shippingPrice, type DeliveryMethod } from './carriers';
+import { dogCases } from './dog-name';
+import { EMAIL_TEMPLATES, type EmailTemplate } from './email-templates';
+import { allSkus, serverParams, type BagId } from './engine-server';
 import type { ShipTo } from './fhb/build-order';
 import type { Mail } from './email';
 
 export const SUPPORT_EMAIL = 'podpora@granula.sk';
+export const EMAIL_IMG_BASE = 'https://www.granula.sk/img/email';
 
-type OrderLike = { id: string; number: number; kind: string; amount_cents: number; items: unknown; ship_to: unknown };
+/** id receptúry z engine.js → názov fotky vreca `vrece-<slug>.jpg` */
+export const PRODUCT_SLUG: Record<string, string> = {
+  'hovadzie-morka-jahna': 'hovadzie-morka-jahna',
+  'morka-hus-kacica': 'morka-hus-kacica',
+  hovadzie: 'hovadzie-ryza',
+  jahna: 'jahna-bataty-cucoriedky',
+  'jelen-kralik': 'jelen-kralik',
+};
 
-const esc = (s: string) => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+const CARRIER: Record<DeliveryMethod, { long: string; short: string }> = {
+  packeta_point: { long: 'Packeta, výdajné miesto', short: 'Packeta' },
+  dpd_pickup: { long: 'DPD, výdajné miesto', short: 'DPD' },
+  sps_courier: { long: 'SPS, kuriér na adresu', short: 'SPS' },
+};
+
+const escHtml = (s: string) => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 export const eur = (cents: number) => `${(cents / 100).toFixed(2).replace('.', ',')} €`;
-const dateSk = (d: Date) => d.toLocaleDateString('sk-SK', { day: 'numeric', month: 'numeric', year: 'numeric', timeZone: 'Europe/Bratislava' });
+export const dateSk = (d: Date) => {
+  const p = new Intl.DateTimeFormat('sk-SK', { day: 'numeric', month: 'numeric', year: 'numeric', timeZone: 'Europe/Bratislava' }).formatToParts(d);
+  const v = (t: string) => p.find((x) => x.type === t)?.value ?? '';
+  return `${v('day')}. ${v('month')}. ${v('year')}`; // 26. 12. 2026
+};
 const site = (u: string) => u.replace(/\/+$/, '');
 
-export function itemsText(items: unknown): string {
-  const list = Array.isArray(items) ? (items as { sku: string; qty: number }[]) : [];
-  const names = new Map(allSkus().map((x) => [x.sku, `Granula! ${x.name}`]));
-  return list.map((i) => `${i.qty > 1 ? `${i.qty} × ` : ''}${names.get(i.sku) ?? i.sku}`).join(', ');
+/* ---------------------------------------------------------------- render */
+
+export type Vars = Record<string, string>;
+
+/** {{#x}}…{{/x}} ponechá, ak flags.x; {{var}} nahradí escapovanou hodnotou. Neznáma premenná = chyba. */
+export function render(template: EmailTemplate, vars: Vars, flags: Record<string, boolean> = {}): string {
+  let html: string = EMAIL_TEMPLATES[template];
+  html = html.replace(/\{\{#([a-z_]+)\}\}([\s\S]*?)\{\{\/\1\}\}/g, (_, f: string, inner: string) => (flags[f] ? inner : ''));
+  html = html.replace(/\{\{([a-z_]+)\}\}/g, (_, k: string) => {
+    if (!(k in vars)) throw new Error(`[email] chýba premenná {{${k}}} v šablóne ${template}`);
+    return escHtml(vars[k]);
+  });
+  return html;
 }
 
-export function deliveryText(shipTo: unknown): string {
-  const t = shipTo as ShipTo;
-  const label = METHODS[t.delivery_method as DeliveryMethod]?.label ?? t.delivery_method;
-  if (t.delivery_method === 'sps_courier') return `${label}: ${[t.street, `${t.zip ?? ''} ${t.city ?? ''}`.trim()].filter(Boolean).join(', ')}`;
-  return `${label}: ${t.point_label ?? t.point_id ?? ''}`;
+/* ---------------------------------------------------------------- spoločné údaje */
+
+type OrderLike = { id: string; number: number; kind: string; amount_cents: number; items: unknown; ship_to: unknown; created_at?: string | null };
+export type EmailDog = { name?: string | null; sex?: string | null } | null | undefined;
+
+function productOf(items: unknown) {
+  const first = (Array.isArray(items) ? (items as { sku: string }[]) : [])[0];
+  const sku = allSkus().find((x) => x.sku === first?.sku);
+  const productId = sku?.productId ?? '';
+  return {
+    productId,
+    bagKg: String(sku?.kg ?? ''),
+    name: sku ? sku.name.replace(/ \d+ kg.*$/, '') : (first?.sku ?? 'Granula'),
+    slug: PRODUCT_SLUG[productId] ?? 'morka-hus-kacica',
+  };
 }
 
-/* ---------------------------------------------------------------- rámec */
-
-function layout(title: string, bodyHtml: string, footerHtml = ''): string {
-  return `<!doctype html><html lang="sk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title></head>
-<body style="margin:0;padding:0;background:#F4EBE2;color:#000;font-family:Montserrat,Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F4EBE2"><tr><td align="center" style="padding:24px 12px">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px">
-<tr><td style="padding:0 0 16px"><span style="display:inline-block;background:#FF6900;color:#000;font-weight:900;font-style:italic;font-size:22px;padding:4px 10px;border:2px solid #000">GRANULA!</span></td></tr>
-<tr><td style="background:#FFF7EE;border:2px solid #000;padding:24px">${bodyHtml}</td></tr>
-<tr><td style="padding:16px 4px;font-size:13px">${footerHtml}Potrebuješ pomôcť? Napíš na <a href="mailto:${SUPPORT_EMAIL}" style="color:#0047BB">${SUPPORT_EMAIL}</a>.<br>Granula · Spark Link, s. r. o.</td></tr>
-</table></td></tr></table></body></html>`;
+function productById(productId: string, bagId: string) {
+  const sku = allSkus().find((x) => x.productId === productId && String(x.kg) === String(bagId));
+  return { productId, bagKg: String(bagId), name: sku ? sku.name.replace(/ \d+ kg.*$/, '') : productId, slug: PRODUCT_SLUG[productId] ?? 'morka-hus-kacica' };
 }
 
-const h1 = (t: string) => `<h1 style="margin:0 0 12px;font-size:24px;line-height:1.2;font-weight:900;text-transform:uppercase">${esc(t)}</h1>`;
-const p = (t: string) => `<p style="margin:0 0 12px">${t}</p>`;
-const row = (k: string, v: string) => `<tr><td style="padding:4px 12px 4px 0;vertical-align:top;white-space:nowrap"><b>${esc(k)}</b></td><td style="padding:4px 0">${esc(v)}</td></tr>`;
-const button = (href: string, label: string, color = '#FF6900') =>
-  `<a href="${esc(href)}" style="display:inline-block;background:${color};color:${color === '#0047BB' ? '#F4EBE2' : '#000'};font-weight:800;text-decoration:none;padding:12px 18px;border:2px solid #000;text-transform:uppercase">${esc(label)}</a>`;
+export function deliveryOf(shipTo: unknown) {
+  const t = (shipTo ?? {}) as ShipTo;
+  const m = t.delivery_method as DeliveryMethod;
+  const c = CARRIER[m] ?? { long: METHODS[m]?.label ?? String(m ?? ''), short: String(m ?? '') };
+  const address =
+    m === 'sps_courier'
+      ? [t.street, `${t.zip ?? ''} ${t.city ?? ''}`.trim()].filter(Boolean).join(', ')
+      : t.point_label || [t.point_address?.street, `${t.point_address?.zip ?? ''} ${t.point_address?.city ?? ''}`.trim()].filter(Boolean).join(', ');
+  const eta = (METHODS[m]?.eta ?? '2–3').replace(/^(\d+)\s*[–-]\s*(\d+).*$/, '$1\u00a0–\u00a0$2'); // nezalomiť „2 – 3“
+  return { carrier: c.long, carrierShort: c.short, address, eta };
+}
 
-/* ---------------------------------------------------------------- potvrdenie objednávky */
+/** cena dopravy pre spôsob a balenie (rovnaký výpočet ako checkout), keď ju volajúci nepozná */
+function shippingCentsFor(shipTo: unknown, bagKg: string): number {
+  const P = serverParams() as unknown as { shipping: number };
+  const m = (shipTo as ShipTo | null)?.delivery_method;
+  try {
+    return Math.round(shippingPrice(m as DeliveryMethod, bagKg as BagId, P.shipping) * 100);
+  } catch {
+    return Math.round(P.shipping * 100);
+  }
+}
+
+function common(siteUrl: string, name: string | null | undefined, dog: EmailDog, withdrawFor?: number) {
+  const d = dogCases(dog?.name, dog?.sex);
+  const s = site(siteUrl);
+  return {
+    first_name: (name ?? '').trim().split(' ')[0] ?? '',
+    dog_name: d.nom,
+    dog_name_acc: d.acc,
+    dog_name_dat: d.dat,
+    dog_poss: d.poss,
+    url_home: `${s}/`,
+    url_account: `${s}/ucet`,
+    url_vop: `${s}/obchodne-podmienky`,
+    url_claims: `${s}/reklamacny-poriadok`,
+    url_withdraw: withdrawFor ? `${s}/odstupenie?objednavka=${withdrawFor}` : `${s}/odstupenie`,
+  };
+}
+
+/** bez krstného mena: „Ďakujeme!“ / „Ahoj,“ namiesto „Ďakujeme, !“ */
+const tidy = (s: string) => s.replace(/,\s*!/g, '!').replace(/Ahoj\s+,/g, 'Ahoj,');
+
+function footerText(v: Vars) {
+  return [
+    '',
+    `Niečo nesedí alebo sa chceš na niečo opýtať? Odpíš na tento e-mail alebo napíš na ${SUPPORT_EMAIL}.`,
+    '',
+    `Môj účet: ${v.url_account}`,
+    `Obchodné podmienky: ${v.url_vop}`,
+    `Reklamácie: ${v.url_claims}`,
+    `Odstúpiť od zmluvy tu: ${v.url_withdraw}`,
+    '',
+    'Granula · granula.sk',
+    'Spark Link, s. r. o. · Lermontovova 911/3, 811 05 Bratislava · IČO: 55615597 · DIČ: 2122032979',
+  ].join('\n');
+}
+
+/* ---------------------------------------------------------------- 1–3 potvrdenie objednávky */
 
 export type ConfirmationInput = {
   order: OrderLike;
   to: string;
   name?: string | null;
+  dog?: EmailDog;
   siteUrl: string;
   /** pri predplatnom: interval a dátum ďalšej platby */
   subscription?: { days: number; nextChargeAt: Date | null } | null;
+  /** rozpis ceny (zo Stripe); bez neho doprava podľa doprava-config.js a granule = spolu − doprava */
+  prices?: { foodCents: number; shippingCents: number } | null;
 };
 
 export function orderConfirmationEmail(i: ConfirmationInput): Mail {
   const o = i.order;
-  const withdrawUrl = `${site(i.siteUrl)}/odstupenie?objednavka=${o.number}`;
-  const items = itemsText(o.items);
-  const delivery = deliveryText(o.ship_to);
-  const title = o.kind === 'renewal' ? `Ďalšie vrece je na ceste · objednávka ${o.number}` : `Objednávka ${o.number} je prijatá`;
+  const prod = productOf(o.items);
+  const del = deliveryOf(o.ship_to);
+  const ship = i.prices?.shippingCents ?? shippingCentsFor(o.ship_to, prod.bagKg);
+  const food = i.prices?.foodCents ?? o.amount_cents - ship;
+  const days = i.subscription?.days ?? 0;
+  const next = i.subscription?.nextChargeAt ? dateSk(i.subscription.nextChargeAt) : '';
+  const v: Vars = {
+    ...common(i.siteUrl, i.name, i.dog, o.number),
+    order_number: String(o.number),
+    order_date: dateSk(o.created_at ? new Date(o.created_at) : new Date()),
+    product_name: prod.name,
+    product_slug: prod.slug,
+    bag_kg: prod.bagKg,
+    days: String(days),
+    price_food: eur(food),
+    price_shipping: eur(ship),
+    price_total: eur(o.amount_cents),
+    next_charge: next || 'o pár týždňov',
+    carrier: del.carrier,
+    delivery_address: del.address,
+  };
+  const tpl: EmailTemplate = o.kind === 'renewal' ? '2-obnovenie-predplatneho' : o.kind === 'one_off' ? '3-potvrdenie-jednorazova' : '1-potvrdenie-predplatne';
+  const subject = o.kind === 'renewal' ? `Ďalšie vrece už chystáme · objednávka č. ${o.number}` : `Objednávka č. ${o.number} je potvrdená`;
+
+  const plan = o.kind === 'one_off' ? 'jednorazová objednávka' : `predplatné, každých ${days} dní`;
   const intro =
     o.kind === 'renewal'
-      ? 'zaplatili sme ďalšie vrece z tvojho predplatného a posielame ho do skladu na expedíciu.'
-      : 'ďakujeme, platba prešla a objednávku posielame do skladu na expedíciu. Keď balík odíde, napíšeme ti s odkazom na sledovanie.';
-  const sub = i.subscription;
-  const subLine = sub ? `Predplatné: každých ${sub.days} dní${sub.nextChargeAt ? `, ďalšia platba približne ${dateSk(sub.nextChargeAt)}` : ''}. Zrušiť ho môžeš kedykoľvek.` : null;
-  const hello = i.name ? `Ahoj ${esc(i.name.split(' ')[0])},` : 'Ahoj,';
-
-  const html = layout(
-    title,
-    h1(o.kind === 'renewal' ? 'Ďalšie vrece je na ceste.' : 'Objednávka prijatá.') +
-      p(`${hello} ${intro}`) +
-      `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:8px 0 16px;font-size:15px">${row('Číslo objednávky', String(o.number))}${row('Granule', items)}${row('Doručenie', delivery)}${row('Zaplatené', eur(o.amount_cents))}</table>` +
-      (subLine ? p(esc(subLine)) : '') +
-      `<div style="margin:20px 0 4px;padding:16px;border:2px solid #000;background:#F4EBE2">` +
-      p('<b>Odstúpenie od zmluvy:</b> do 14 dní od prevzatia tovaru môžeš od zmluvy odstúpiť bez udania dôvodu.') +
-      button(withdrawUrl, 'Odstúpiť od zmluvy tu', '#0047BB') +
-      `</div>`,
+      ? `Ahoj ${v.first_name}, ${v.dog_name_dat} sa pomaly míňajú granule, preto sme z predplatného zaplatili ďalšie vrece a už ho chystáme v sklade. Keď balík odíde, pošleme ti odkaz na sledovanie.`
+      : `Ďakujeme, ${v.first_name}! Platbu sme prijali a granule pre ${v.dog_name_acc} už chystáme v sklade. Hneď ako balík odovzdáme dopravcovi, pošleme ti e-mail s odkazom na sledovanie.`;
+  const outro =
+    o.kind === 'renewal'
+      ? [`Ďalšia platba bude okolo ${v.next_charge}. Ak má ${v.dog_name} granúl ešte dosť alebo sa zmenila ${v.dog_poss} váha, dodávku si posuň alebo uprav v účte: ${v.url_account}`]
+      : o.kind === 'one_off'
+        ? [`Nechceš strážiť, kedy dôjdu? S predplatným príde ďalšie vrece samo, presne keď ${v.dog_name_dat} dochádza to súčasné, a zaplatíš o 10 % menej. Zrušiť sa dá kedykoľvek: ${v.url_account}`]
+        : [
+            `Ako funguje tvoje predplatné: jedno vrece vystačí ${v.dog_name_dat} približne na ${days} dní. Ďalšie preto pošleme samo, skôr ako sa to súčasné minie. Najbližšia platba ${v.price_total} bude okolo ${v.next_charge} a pár dní vopred ti pripomenieme, že sa blíži.`,
+            '',
+            `V účte môžeš dodávku kedykoľvek posunúť, preskočiť, zmeniť adresu alebo predplatné zrušiť. Bez poplatkov a bez viazanosti: ${v.url_account}`,
+          ];
+  const text = tidy(
+    [
+      `Objednávka č. ${o.number}`,
+      '',
+      intro,
+      '',
+      `${prod.name}, ${prod.bagKg} kg · ${plan}`,
+      `Recept pre: ${v.dog_name}`,
+      `Granule: ${v.price_food}`,
+      `Doprava: ${v.price_shipping}`,
+      `Zaplatené: ${v.price_total}`,
+      '',
+      `Doručenie: ${v.carrier}, ${v.delivery_address}`,
+      `Objednávka: č. ${o.number} zo dňa ${v.order_date}`,
+      '',
+      ...outro,
+      footerText(v),
+    ].join('\n'),
   );
-  const text = [
-    `${i.name ? `Ahoj ${i.name.split(' ')[0]},` : 'Ahoj,'} ${intro}`,
-    '',
-    `Číslo objednávky: ${o.number}`,
-    `Granule: ${items}`,
-    `Doručenie: ${delivery}`,
-    `Zaplatené: ${eur(o.amount_cents)}`,
-    ...(subLine ? ['', subLine] : []),
-    '',
-    'Odstúpenie od zmluvy: do 14 dní od prevzatia tovaru môžeš od zmluvy odstúpiť bez udania dôvodu.',
-    `Odstúpiť od zmluvy tu: ${withdrawUrl}`,
-    '',
-    `Potrebuješ pomôcť? ${SUPPORT_EMAIL}`,
-  ].join('\n');
-  return { key: `order-confirm:${o.id}`, kind: 'order_confirmation', to: i.to, subject: title, html, text, orderId: o.id };
+  return { key: `order-confirm:${o.id}`, kind: 'order_confirmation', to: i.to, subject, html: tidy(render(tpl, v)), text, orderId: o.id };
 }
 
-/* ---------------------------------------------------------------- zásielka odoslaná */
+/* ---------------------------------------------------------------- 4 zásielka odoslaná */
 
-export function shippedEmail(i: { order: OrderLike; to: string; name?: string | null; trackingLinks: string[]; trackingNumbers: string[] }): Mail {
+export function shippedEmail(i: { order: OrderLike; to: string; name?: string | null; dog?: EmailDog; siteUrl: string; trackingLinks: string[]; trackingNumbers: string[] }): Mail {
   const o = i.order;
-  const delivery = deliveryText(o.ship_to);
-  const t = o.ship_to as ShipTo;
-  const eta = METHODS[t.delivery_method as DeliveryMethod]?.eta ?? '';
-  const link = i.trackingLinks[0];
-  const title = `Balík s granulami je na ceste · objednávka ${o.number}`;
-  const html = layout(
-    title,
-    h1('Balík je na ceste.') +
-      p(`${i.name ? `Ahoj ${esc(i.name.split(' ')[0])},` : 'Ahoj,'} tvoje granule odišli zo skladu.${eta ? ` Doručenie zvyčajne trvá ${esc(eta)}.` : ''}`) +
-      `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:8px 0 16px;font-size:15px">${row('Číslo objednávky', String(o.number))}${row('Doručenie', delivery)}${i.trackingNumbers.length ? row('Číslo zásielky', i.trackingNumbers.join(', ')) : ''}</table>` +
-      (link ? button(link, 'Sledovať zásielku') : p('Odkaz na sledovanie ti pošle aj dopravca SMS alebo e-mailom.')),
+  const prod = productOf(o.items);
+  const del = deliveryOf(o.ship_to);
+  const v: Vars = {
+    ...common(i.siteUrl, i.name, i.dog, o.number),
+    order_number: String(o.number),
+    product_name: prod.name,
+    product_slug: prod.slug,
+    bag_kg: prod.bagKg,
+    carrier: del.carrier,
+    carrier_short: del.carrierShort,
+    delivery_address: del.address,
+    eta: del.eta,
+    tracking_number: i.trackingNumbers.join(', ') || '—',
+    tracking_url: i.trackingLinks[0] ?? `${site(i.siteUrl)}/podpora`,
+  };
+  const isFirst = o.kind === 'first' || o.kind === 'one_off';
+  const subject = `Balík s granulami je na ceste · objednávka č. ${o.number}`;
+  const text = tidy(
+    [
+      `Objednávka č. ${o.number}`,
+      '',
+      `Ahoj ${v.first_name}, granule pre ${v.dog_name_acc} práve odišli zo skladu. ${v.carrier_short} ich zvyčajne doručí do ${v.eta} pracovných dní. Keď budú pripravené na vyzdvihnutie, dopravca ti pošle SMS alebo e-mail.`,
+      '',
+      `${prod.name}, ${prod.bagKg} kg · recept pre: ${v.dog_name}`,
+      `Doručenie: ${v.carrier}, ${v.delivery_address}`,
+      `Číslo zásielky: ${v.tracking_number}`,
+      ...(i.trackingLinks[0] ? [`Sledovať zásielku: ${i.trackingLinks[0]}`] : []),
+      ...(isFirst
+        ? ['', 'Prvé vrece? Prechádzaj postupne: nové granule miešaj so starými asi týždeň: prvé dva dni štvrtinu nových, potom polovicu, potom tri štvrtiny a od siedmeho dňa už len Granulu. Bruško si tak zvykne bez problémov.']
+        : []),
+      footerText(v),
+    ].join('\n'),
   );
-  const text = [
-    `${i.name ? `Ahoj ${i.name.split(' ')[0]},` : 'Ahoj,'} tvoje granule odišli zo skladu.${eta ? ` Doručenie zvyčajne trvá ${eta}.` : ''}`,
-    '',
-    `Číslo objednávky: ${o.number}`,
-    `Doručenie: ${delivery}`,
-    ...(i.trackingNumbers.length ? [`Číslo zásielky: ${i.trackingNumbers.join(', ')}`] : []),
-    ...(link ? [`Sledovať zásielku: ${link}`] : []),
-    '',
-    `Potrebuješ pomôcť? ${SUPPORT_EMAIL}`,
-  ].join('\n');
-  return { key: `shipped:${o.id}`, kind: 'shipped', to: i.to, subject: title, html, text, orderId: o.id };
+  return { key: `shipped:${o.id}`, kind: 'shipped', to: i.to, subject, html: tidy(render('4-zasielka-odoslana', v, { first: isFirst })), text, orderId: o.id };
 }
 
-/* ---------------------------------------------------------------- neúspešná platba */
+/* ---------------------------------------------------------------- 5 neúspešná platba */
 
-export function paymentFailedEmail(i: { invoiceId: string; attempt: number; to: string; name?: string | null; amountCents: number; payUrl?: string | null; nextAttempt?: Date | null }): Mail {
-  const title = 'Platba za granule neprešla';
-  const retry = i.nextAttempt ? ` Platbu skúsime znova ${dateSk(i.nextAttempt)}.` : '';
-  const html = layout(
-    title,
-    h1('Platba neprešla.') +
-      p(`${i.name ? `Ahoj ${esc(i.name.split(' ')[0])},` : 'Ahoj,'} platbu ${eur(i.amountCents)} za ďalšie vrece sa nepodarilo strhnúť z karty.${retry} Kým platba neprejde, vrece neodošleme.`) +
-      (i.payUrl ? p('Zaplatiť môžeš hneď, aj inou kartou:') + button(i.payUrl, 'Zaplatiť teraz') : p(`Ak chceš zmeniť kartu, napíš nám na ${SUPPORT_EMAIL}.`)),
+export type PaymentFailedInput = {
+  invoiceId: string;
+  attempt: number;
+  to: string;
+  name?: string | null;
+  dog?: EmailDog;
+  siteUrl: string;
+  product: { productId: string; bagId: string; days: number };
+  totalCents: number;
+  shippingCents?: number | null;
+  payUrl?: string | null;
+  nextAttempt?: Date | null;
+};
+
+export function paymentFailedEmail(i: PaymentFailedInput): Mail {
+  const prod = productById(i.product.productId, i.product.bagId);
+  const ship = i.shippingCents ?? Math.round((serverParams() as unknown as { shipping: number }).shipping * 100);
+  const v: Vars = {
+    ...common(i.siteUrl, i.name, i.dog),
+    product_name: prod.name,
+    product_slug: prod.slug,
+    bag_kg: prod.bagKg,
+    days: String(i.product.days),
+    price_food: eur(i.totalCents - ship),
+    price_shipping: eur(ship),
+    price_total: eur(i.totalCents),
+    retry_date: i.nextAttempt ? dateSk(i.nextAttempt) : '',
+    pay_url: i.payUrl || `${site(i.siteUrl)}/ucet`,
+  };
+  const subject = 'Platba za granule zlyhala';
+  const text = tidy(
+    [
+      `Predplatné · ${v.dog_name}`,
+      '',
+      `Ahoj ${v.first_name}, platba ${v.price_total} za ďalšie vrece pre ${v.dog_name_acc} z tvojej karty zlyhala. Najčastejšie ide o kartu, ktorej skončila platnosť, vyčerpaný limit alebo banku, ktorá chce platbu potvrdiť.`,
+      '',
+      `${i.nextAttempt ? `Platbu skúsime znova ${v.retry_date}. ` : ''}Ak chceš, aby vrece odišlo čo najskôr, zaplať hneď. Pokojne aj inou kartou.`,
+      `Zaplatiť ${v.price_total}: ${v.pay_url}`,
+      '',
+      `Prípadne zmeň kartu v účte, ďalšie platby potom pôjdu z nej: ${v.url_account}`,
+      '',
+      `${prod.name}, ${prod.bagKg} kg · predplatné, každých ${v.days} dní`,
+      `Na úhradu: ${v.price_total} (granule ${v.price_food}, doprava ${v.price_shipping})`,
+      'Vrece odošleme hneď, ako platba prejde.',
+      footerText(v),
+    ].join('\n'),
   );
-  const text = [
-    `${i.name ? `Ahoj ${i.name.split(' ')[0]},` : 'Ahoj,'} platbu ${eur(i.amountCents)} za ďalšie vrece sa nepodarilo strhnúť z karty.${retry} Kým platba neprejde, vrece neodošleme.`,
-    ...(i.payUrl ? ['', `Zaplatiť teraz (aj inou kartou): ${i.payUrl}`] : []),
-    '',
-    `Potrebuješ pomôcť? ${SUPPORT_EMAIL}`,
-  ].join('\n');
-  return { key: `payment-failed:${i.invoiceId}:${i.attempt}`, kind: 'payment_failed', to: i.to, subject: title, html, text };
+  return { key: `payment-failed:${i.invoiceId}:${i.attempt}`, kind: 'payment_failed', to: i.to, subject, html: tidy(render('5-neuspesna-platba', v, { retry: !!i.nextAttempt })), text };
 }
 
 /* ---------------------------------------------------------------- interné upozornenia */
 
 export function adminEmail(i: { key: string; kind: string; to: string; subject: string; lines: string[] }): Mail {
-  const html = layout(i.subject, h1(i.subject) + i.lines.map((l) => p(esc(l))).join(''));
+  const f = "font-family:'Montserrat',Arial,Helvetica,sans-serif;";
+  const html = `<!doctype html><html lang="sk"><head><meta charset="utf-8"><title>${escHtml(i.subject)}</title></head>
+<body style="margin:0;padding:24px 12px;background:#F4EBE2;color:#000;${f}font-size:15px;line-height:1.5">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto">
+<tr><td style="padding:0 0 16px"><img src="${EMAIL_IMG_BASE}/logo-granula.png" width="160" alt="GRANULA!" style="display:block;width:160px;height:auto;border:0"></td></tr>
+<tr><td style="background:#FFFBF6;border:2px solid #000;padding:24px">
+<p style="margin:0 0 8px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#5C5650">Interné upozornenie</p>
+<h1 style="margin:0 0 14px;font-size:22px;line-height:1.15;font-weight:900;text-transform:uppercase">${escHtml(i.subject)}</h1>
+${i.lines.map((l) => `<p style="margin:0 0 10px">${escHtml(l)}</p>`).join('')}
+</td></tr></table></body></html>`;
   return { key: i.key, kind: i.kind, to: i.to, subject: `[Granula] ${i.subject}`, html, text: i.lines.join('\n') };
 }

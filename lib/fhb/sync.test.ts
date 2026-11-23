@@ -13,6 +13,7 @@ function mem(sub?: Partial<DbSubscription>) {
     getSubscription: async () => s,
     updateSubscription: async (_id, p) => void subs.push(p),
     getCustomer: async () => ({ email: 'jan@example.sk', name: 'Ján Novák' }),
+    getDogForOrder: async () => ({ name: 'Bodka', sex: 'fenka' }),
     audit: async (r) => void audits.push(r),
   };
   const update = vi.fn(async () => ({}));
@@ -36,7 +37,7 @@ describe('targetStatus', () => {
 describe('applyFhbOrder', () => {
   test('odoslané: stav, tracking, shipped_at, email s trackingom', async () => {
     const m = mem();
-    const r = await applyFhbOrder(order(), { id: 'GR-000012', status: 'sent', shipped_at: '2027-01-05T10:00:00+0100', tracking_numbers: ['123'], tracking_links: ['https://t.example/123'] } as never, { ...m, cycle: CYCLE });
+    const r = await applyFhbOrder(order(), { id: 'GR-000012', status: 'sent', shipped_at: '2027-01-05T10:00:00+0100', tracking_numbers: ['123'], tracking_links: ['https://t.example/123'] } as never, { ...m, cycle: CYCLE, siteUrl: 'https://www.granula.sk' });
     expect(r).toMatchObject({ from: 'sent_to_fhb', to: 'sent' });
     expect(m.orders[0]).toMatchObject({ status: 'sent', shipped_at: '2027-01-05T09:00:00.000Z', tracking: { numbers: ['123'], links: ['https://t.example/123'] } });
     expect(m.mail).toHaveBeenCalledTimes(1);

@@ -30,6 +30,7 @@ export async function jobDepsFromEnv(): Promise<JobDeps> {
     stripe: stripe(),
     cycle: { leadDays: P.reorderLeadDays, shipDays: P.shipDays },
     mail: await defaultMailer(),
+    siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
     adminTo: process.env.ADMIN_EMAIL || null,
   };
 }

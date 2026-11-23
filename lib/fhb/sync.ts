@@ -24,6 +24,8 @@ export type SyncStore = {
   getSubscription(id: string): Promise<DbSubscription | null>;
   updateSubscription(id: string, patch: TablesUpdate<'subscriptions'>): Promise<void>;
   getCustomer(id: string): Promise<{ email: string; name: string | null } | null>;
+  /** pes k objednávke: pri predplatnom z predplatného, pri jednorazovej posledný pes zákazníka */
+  getDogForOrder(o: DbOrder): Promise<{ name: string; sex: string | null } | null>;
   audit(row: { actor: string; action: string; entity: string; entity_id: string | null; before?: Json; after?: Json }): Promise<void>;
 };
 
@@ -32,6 +34,7 @@ export type SyncDeps = {
   stripe: Stripe;
   cycle: CycleParams;
   mail?: Mailer;
+  siteUrl?: string;
   now?: () => Date;
 };
 
@@ -92,12 +95,12 @@ export async function applyFhbOrder(o: DbOrder, f: FhbView, deps: SyncDeps): Pro
   }
 
   // zásielka odoslaná → email s trackingom (iba pri prechode na sent; pri skoku rovno na delivered už nie)
-  if (patch.status === 'sent' && deps.mail) {
-    const c = await deps.store.getCustomer(o.customer_id);
+  if (patch.status === 'sent' && deps.mail && deps.siteUrl) {
+    const [c, dog] = await Promise.all([deps.store.getCustomer(o.customer_id), deps.store.getDogForOrder(o).catch(() => null)]);
     const to = c?.email ?? (o.ship_to as { email?: string }).email;
     if (to) {
       await deps
-        .mail(shippedEmail({ order: o, to, name: c?.name ?? (o.ship_to as { name?: string }).name, trackingLinks: tracking.links, trackingNumbers: tracking.numbers }))
+        .mail(shippedEmail({ order: o, to, name: c?.name ?? (o.ship_to as { name?: string }).name, dog, siteUrl: deps.siteUrl, trackingLinks: tracking.links, trackingNumbers: tracking.numbers }))
         .catch((e) => console.error('[fhb-sync] email zásielka odoslaná zlyhal', o.id, e));
     }
   }
@@ -144,5 +147,18 @@ export async function supabaseSyncStore(): Promise<SyncStore> {
       return r.data;
     },
     audit: (row) => supabaseStore.audit(row),
+    getDogForOrder: async (o) => {
+      let q;
+      if (o.subscription_id) {
+        const sub = await db().from('subscriptions').select('dog_id').eq('id', o.subscription_id).maybeSingle();
+        ok(sub);
+        if (!sub.data) return null;
+        q = await db().from('dogs').select('name, answers').eq('id', sub.data.dog_id).maybeSingle();
+      } else {
+        q = await db().from('dogs').select('name, answers').eq('customer_id', o.customer_id).lte('created_at', o.created_at).order('created_at', { ascending: false }).limit(1).maybeSingle();
+      }
+      ok(q);
+      return q.data ? { name: q.data.name, sex: (q.data.answers as { sex?: string } | null)?.sex ?? null } : null;
+    },
   };
 }

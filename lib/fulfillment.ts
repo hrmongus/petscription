@@ -97,9 +97,18 @@ async function mailSafely(deps: Deps, mail: Mail, entity: { type: string; id: st
   }
 }
 
-async function sendConfirmation(deps: Deps, order: Order, customer: Customer, sub?: { days: number; nextChargeAt: Date | null } | null) {
+const dogOf = (dog: Dog | null) => (dog ? { name: dog.name, sex: (dog.answers as { sex?: string } | null)?.sex ?? null } : null);
+
+async function sendConfirmation(
+  deps: Deps,
+  order: Order,
+  customer: Customer,
+  dog: Dog | null,
+  sub: { days: number; nextChargeAt: Date | null } | null,
+  prices: { foodCents: number; shippingCents: number } | null,
+) {
   if (!deps.mail || !deps.siteUrl) return;
-  await mailSafely(deps, orderConfirmationEmail({ order, to: customer.email, name: customer.name, siteUrl: deps.siteUrl, subscription: sub ?? null }), { type: 'order', id: order.id });
+  await mailSafely(deps, orderConfirmationEmail({ order, to: customer.email, name: customer.name, dog: dogOf(dog), siteUrl: deps.siteUrl, subscription: sub, prices }), { type: 'order', id: order.id });
 }
 
 export async function handleCheckoutCompleted(session: Stripe.Checkout.Session, deps: Deps): Promise<Order | null> {
@@ -149,7 +158,9 @@ export async function handleCheckoutCompleted(session: Stripe.Checkout.Session, 
     status: 'paid',
   });
   await sendSafely(deps, order);
-  await sendConfirmation(deps, order, customer, subInfo);
+  const shipCents = Number(md.ship_cents);
+  const prices = Number.isFinite(shipCents) && md.ship_cents ? { shippingCents: shipCents, foodCents: (session.amount_total ?? 0) - shipCents } : null;
+  await sendConfirmation(deps, order, customer, dog, subInfo, prices);
   return order;
 }
 
@@ -218,7 +229,8 @@ export async function handleInvoicePaid(invoice: Stripe.Invoice, deps: Deps): Pr
   }
   await sendSafely(deps, order);
   const fresh = await deps.store.findSubscriptionByStripeId(stripeSubId);
-  await sendConfirmation(deps, order, customer, { days: fresh?.days_per_bag ?? sub.days_per_bag, nextChargeAt: fresh?.next_charge_at ? new Date(fresh.next_charge_at) : null });
+  const ship = shippingCentsOf(invoice, sub);
+  await sendConfirmation(deps, order, customer, dog, { days: fresh?.days_per_bag ?? sub.days_per_bag, nextChargeAt: fresh?.next_charge_at ? new Date(fresh.next_charge_at) : null }, { shippingCents: ship, foodCents: invoice.amount_paid - ship });
   return order;
 }
 
@@ -237,8 +249,12 @@ export async function handlePaymentFailed(invoice: Stripe.Invoice, deps: Deps) {
   const sub = await deps.store.findSubscriptionByStripeId(stripeSubId);
   if (!sub) return;
   await deps.store.updateSubscription(sub.id, { status: 'past_due' });
-  const customer = await deps.store.getCustomer(sub.customer_id);
-  if (!customer || !invoice.id) return;
+  const [customer, dog] = await Promise.all([deps.store.getCustomer(sub.customer_id), deps.store.getDog(sub.dog_id)]);
+  if (!customer || !invoice.id || !deps.siteUrl) return;
+  const line = invoice.lines?.data.find((l) => {
+    const p = l.pricing?.price_details?.product;
+    return (typeof p === 'string' ? p : null) === SHIPPING_PRODUCT_ID;
+  });
   await mailSafely(
     deps,
     paymentFailedEmail({
@@ -246,7 +262,11 @@ export async function handlePaymentFailed(invoice: Stripe.Invoice, deps: Deps) {
       attempt: invoice.attempt_count ?? 1,
       to: customer.email,
       name: customer.name,
-      amountCents: invoice.amount_due,
+      dog: dogOf(dog),
+      siteUrl: deps.siteUrl,
+      product: { productId: sub.product_id, bagId: sub.bag_id, days: sub.days_per_bag },
+      totalCents: invoice.amount_due,
+      shippingCents: line ? line.amount : Math.max(0, invoice.amount_due - sub.unit_amount_cents),
       payUrl: invoice.hosted_invoice_url,
       nextAttempt: unixDate(invoice.next_payment_attempt),
     }),

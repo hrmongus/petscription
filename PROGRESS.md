@@ -27,6 +27,8 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
   `{ "path": "/api/cron/fhb-orders", "schedule": "17 18 * * *" }` → `{ "path": "/api/cron/fhb-orders", "schedule": "17 * * * *" }`
   (každú hodinu v 17. minúte, UTC), commit a nasadiť. Kód netreba meniť: úloha je idempotentná (stav iba dopredu, emaily cez `email_log`). Overenie: v `fhb_events` pribúda každú hodinu záznam `cron.fhb-orders`. Ostatné crony (`fhb-rma`, `fhb-stock`) stačia denne. Na Hobby by nasadenie s hodinovým cronom zlyhalo, preto to nemeniť skôr.
 - [ ] **Zmazať testovaciu route `app/api/test/email-preview`** (náhľady emailov, SPEC §10.14).
+- [ ] **Stránka `/ucet` (P4)**: emaily na ňu odkazujú („Otvoriť môj účet“, „Upraviť predplatné“, „Prejsť na predplatné“, „zmeň kartu v účte“). Do vtedy vedú na 404.
+- [ ] **Email „pripomienka pred platbou“** (SPEC P5): potvrdenie predplatného sľubuje „pár dní vopred ti pripomenieme“. Zatiaľ nie je postavený (spolu so zvyšnými: odstúpenie, zrušenie/pauza).
 - [ ] Opýtať sa FHB na formát notifikácií objednávok (route prijme čokoľvek a loguje do `fhb_events`; po prvej skutočnej notifikácii pozrieť payload).
 - [ ] Stripe účet vedený na Spark Link, s. r. o.
 - [ ] Zmazať staré branche (Carbone Company)
@@ -359,3 +361,12 @@ Spustené automaticky v noci („do as much as possible“). Opakovateľné skri
 | Posun, preskočenie, zmena váhy, storno v `pending`, refund | ⏳ | funkcie v `lib/subscription-schedule.ts` sú, akcie (UI/API) prídu v P3 (admin) a P4 (portál) |
 | Odstúpenie od zmluvy | ⏳ | P4 (`/odstupenie`) |
 | Vrátená zásielka (RMA) | ⏳ | cron `fhb-rma` hotový; sandbox RMA prázdne |
+
+---
+
+## Emaily podľa návrhu (23. 11. 2026)
+
+- **Návrh od používateľa** (`granula-emaily.zip`): 5 šablón (potvrdenie predplatného, obnovenie, jednorazovo, odoslaná zásielka, neúspešná platba), fotky vriec, logo. Logo z dodaného SVG vyrenderované do PNG (600 × 133, priehľadné pozadie).
+- **Kód:** zdroje `content/emails/*.html` → `npm run emails` → `lib/email-templates.ts`; `lib/emails.ts` dopĺňa premenné (meno, pes v páde, receptúra a fotka vreca, rozpis ceny, doručenie, dátumy, odkazy) a skladá textovú verziu; `lib/dog-name.ts` skloňovanie. Webhook a FHB synchronizácia posielajú psa a rozpis ceny. Úpravy oproti návrhu v SPEC §10.15.
+- **Obrázky:** `public/granula/img/email/` (logo + 5 vriec).
+- **Testy:** 104 ✅ (nové: všetkých 5 šablón bez nevyplnených premenných, fotky, skloňovanie, podmienené bloky, aktuálnosť vygenerovaného modulu). Náhľady desktop aj mobil skontrolované.

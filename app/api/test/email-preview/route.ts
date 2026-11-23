@@ -26,17 +26,20 @@ export async function POST(req: Request) {
   if (!known) return Response.json({ error: 'príjemca musí byť ADMIN_EMAIL alebo existujúci zákazník' }, { status: 403 });
 
   const site = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.granula.sk';
-  const first = { id: '00000000-0000-4000-8000-000000000123', number: 123, kind: 'first', amount_cents: 7240, items: [{ sku: 'GRAN-morka-hus-kacica-9', qty: 1 }], ship_to: SHIP_DPD };
+  const created_at = new Date().toISOString();
+  const first = { id: '00000000-0000-4000-8000-000000000123', number: 123, kind: 'first', amount_cents: 7240, items: [{ sku: 'GRAN-morka-hus-kacica-9', qty: 1 }], ship_to: SHIP_DPD, created_at };
   const renewal = { ...first, id: '00000000-0000-4000-8000-000000000124', number: 124, kind: 'renewal' };
   const oneOff = { ...first, id: '00000000-0000-4000-8000-000000000125', number: 125, kind: 'one_off', amount_cents: 3990, items: [{ sku: 'GRAN-jahna-4', qty: 1 }], ship_to: SHIP_PACKETA };
+  const bodka = { name: 'Bodka', sex: 'fenka' };
+  const rex = { name: 'Rex', sex: 'pes' };
   const next = new Date(Date.now() + 33 * 86_400_000);
   const name = 'Ján Novák';
   const mails: Mail[] = [
-    orderConfirmationEmail({ order: first, to: email, name, siteUrl: site, subscription: { days: 37, nextChargeAt: next } }),
-    orderConfirmationEmail({ order: renewal, to: email, name, siteUrl: site, subscription: { days: 37, nextChargeAt: new Date(next.getTime() + 37 * 86_400_000) } }),
-    orderConfirmationEmail({ order: oneOff, to: email, name, siteUrl: site }),
-    shippedEmail({ order: first, to: email, name, trackingLinks: ['https://tracking.dpd.de/status/sk_SK/parcel/06512345678901'], trackingNumbers: ['06512345678901'] }),
-    paymentFailedEmail({ invoiceId: 'in_test', attempt: 1, to: email, name, amountCents: 7240, payUrl: `${site}/`, nextAttempt: new Date(Date.now() + 3 * 86_400_000) }),
+    orderConfirmationEmail({ order: first, to: email, name, dog: bodka, siteUrl: site, subscription: { days: 37, nextChargeAt: next }, prices: { foodCents: 6750, shippingCents: 490 } }),
+    orderConfirmationEmail({ order: renewal, to: email, name, dog: rex, siteUrl: site, subscription: { days: 37, nextChargeAt: new Date(next.getTime() + 37 * 86_400_000) }, prices: { foodCents: 6750, shippingCents: 490 } }),
+    orderConfirmationEmail({ order: oneOff, to: email, name, dog: bodka, siteUrl: site, prices: { foodCents: 3500, shippingCents: 490 } }),
+    shippedEmail({ order: first, to: email, name, dog: bodka, siteUrl: site, trackingLinks: ['https://tracking.dpd.de/status/sk_SK/parcel/06512345678901'], trackingNumbers: ['06512345678901'] }),
+    paymentFailedEmail({ invoiceId: 'in_test', attempt: 1, to: email, name, dog: rex, siteUrl: site, product: { productId: 'hovadzie', bagId: '9', days: 37 }, totalCents: 7240, shippingCents: 490, payUrl: `${site}/`, nextAttempt: new Date(Date.now() + 3 * 86_400_000) }),
     adminEmail({ key: 'a1', kind: 'admin_fhb_error', to: email, subject: 'Chyba FHB pri objednávke 123', lines: ['Objednávka 123 (00000000-0000-4000-8000-000000000123) sa nedostala do FHB a čaká na riešenie.', 'Chyba: {"status":400,"message":"Invalid request","violations":{"delivery_point":[{"code":"DELIVERY_POINT_DOES_NOT_EXISTS"}]}}'] }),
     adminEmail({ key: 'a2', kind: 'admin_stock_low', to: email, subject: 'Nízky sklad (2 produkty)', lines: ['Voľné kusy nevydržia 35 dní spotreby predplatných (dodávateľ min. 3 týždne):', 'GRAN-morka-hus-kacica-9: voľných 12 ks, spotreba 0,8 ks/deň, vydrží ~15 dní (hranica 28 ks)', 'GRAN-jahna-4: voľných 20 ks, spotreba 0,7 ks/deň, vydrží ~28 dní (hranica 25 ks)'] }),
     adminEmail({ key: 'a3', kind: 'admin_returned', to: email, subject: 'Vrátená zásielka, objednávka 123', lines: ['Objednávka 123 sa vrátila od dopravcu (return).', 'Treba rozhodnúť: refund alebo opätovné odoslanie (admin, P3).'] }),
