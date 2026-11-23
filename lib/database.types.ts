@@ -423,6 +423,12 @@ export type Database = {
       }
       withdrawals: {
         Row: {
+          actions: Json
+          customer_id: string | null
+          deadline_at: string | null
+          in_deadline: boolean | null
+          needs_review: boolean
+          review_note: string | null
           confirmation_sent_at: string | null
           content: Json
           contract_ref: string
@@ -436,6 +442,12 @@ export type Database = {
           subscription_id: string | null
         }
         Insert: {
+          actions?: Json
+          customer_id?: string | null
+          deadline_at?: string | null
+          in_deadline?: boolean | null
+          needs_review?: boolean
+          review_note?: string | null
           confirmation_sent_at?: string | null
           content: Json
           contract_ref: string
@@ -449,6 +461,12 @@ export type Database = {
           subscription_id?: string | null
         }
         Update: {
+          actions?: Json
+          customer_id?: string | null
+          deadline_at?: string | null
+          in_deadline?: boolean | null
+          needs_review?: boolean
+          review_note?: string | null
           confirmation_sent_at?: string | null
           content?: Json
           contract_ref?: string
@@ -462,6 +480,13 @@ export type Database = {
           subscription_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "withdrawals_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "withdrawals_order_id_fkey"
             columns: ["order_id"]

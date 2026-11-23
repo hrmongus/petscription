@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<title>Odstúpenie od zmluvy — Granula</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="Odstúpenie od zmluvy online: vyplň formulár, potvrď odstúpenie a hneď dostaneš potvrdenie e-mailom s dátumom a časom prijatia.">
+<script>document.documentElement.classList.add("js")</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,900&display=swap">
+<link rel="stylesheet" href="granula.css">
+<style>
+.wd-hero .wrap{padding-top:56px;padding-bottom:72px}
+.wd-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,520px);gap:56px;align-items:start}
+.wd-copy{display:flex;flex-direction:column;gap:22px}
+.wd-copy h1{font-size:clamp(40px,5vw,72px)}
+.wd-copy > p{font-size:16px;line-height:1.5;max-width:520px}
+.wd-steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;max-width:520px}
+.wd-steps li{display:flex;gap:14px;align-items:center;font-size:15px;line-height:1.4}
+.wd-steps b{flex:none;width:32px;height:32px;background:var(--n);color:var(--m);display:flex;align-items:center;justify-content:center;font-weight:900}
+.wd-note{display:flex;flex-direction:column;gap:6px;max-width:520px;padding:16px 18px;border-left:4px solid var(--n);background:var(--ml);font-size:14px;line-height:1.5}
+.wd-note b{font-weight:800}
+.wd-card{scroll-margin-top:130px;background:var(--ml);border:2px solid var(--n);padding:32px 28px;display:flex;flex-direction:column}
+.wd-card form,#wd-review,#wd-done{display:flex;flex-direction:column;gap:16px}
+.wd-h{font-size:22px;font-weight:900;text-transform:uppercase;line-height:1.1;outline:none}
+.pf{display:flex;flex-direction:column;gap:6px;min-width:0}
+.pf > span{font-size:13px;font-weight:700}
+.pf > span i{font-style:normal;font-weight:400}
+.pf-hint{font-size:12px;line-height:1.4}
+.input{width:100%;font:500 16px/1.3 var(--font);color:var(--n);background:var(--m);border:2px solid var(--n);border-radius:0;padding:12px 14px}
+textarea.input{resize:vertical;min-height:88px}
+.input::placeholder{color:var(--n);opacity:.5}
+.input:focus{outline:none;border-color:var(--k);box-shadow:0 0 0 2px var(--k)}
+.input[aria-invalid="true"]{border-color:var(--err)}
+.wd-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.wd-err{color:var(--err);font-weight:700;font-size:14px;line-height:1.4}
+.wd-btn{width:100%;min-height:60px;font-size:18px}
+.wd-btn[aria-busy="true"]{opacity:.6;cursor:progress}
+.wd-back{align-self:center;background:none;border:0;border-bottom:2px solid currentColor;padding:0 0 2px;font:700 14px var(--font);color:var(--n);cursor:pointer}
+.wd-statement{font-size:18px;font-weight:800;line-height:1.35;padding:14px 16px;border:2px solid var(--n);background:var(--m)}
+.wd-dl{margin:0;display:grid;grid-template-columns:minmax(0,170px) minmax(0,1fr);gap:10px 14px;font-size:15px;line-height:1.4}
+.wd-dl dt{font-weight:700}
+.wd-dl dd{margin:0;overflow-wrap:anywhere;white-space:pre-line}
+.wd-time{font-size:18px;line-height:1.35}
+.wd-time b{font-weight:900}
+.wd-st{align-self:flex-start;font-size:16px}
+#wd-done p{font-size:15px;line-height:1.5}
+.wd-small{font-size:14px !important}
+@media (max-width:960px){
+  .wd-grid{grid-template-columns:minmax(0,1fr);gap:36px}
+  .wd-hero .wrap{padding-top:36px;padding-bottom:48px}
+}
+@media (max-width:560px){
+  .wd-card{padding:24px 18px}
+  .wd-dl{grid-template-columns:minmax(0,1fr);gap:2px}
+  .wd-dl dd{margin-bottom:10px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar"><span>Štartujeme 1.&nbsp;decembra</span><span class="star" aria-hidden="true"></span><span>Prvé vrecko −30&nbsp;% pre tých, čo sa zapíšu vopred</span><button type="button" class="topbar-cta" data-klaviyo-open="YcSYzw">Chcem byť prvý →</button></div>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo-link" href="index.html" aria-label="Granula — domov"><span class="logo">Granula!</span></a>
+    <nav class="menu" aria-label="Hlavné menu">
+      <a href="index.html#suroviny">Suroviny</a>
+
+      <a href="index.html#recenzie">Recenzie</a>
+      <a href="index.html#otazky">Otázky</a>
+      <a href="blog/">Blog</a>
+      <a href="nas-pribeh.html">Náš príbeh</a>
+    </nav>
+    <a class="btn btn-k btn-sm btn-head" href="granule-na-mieru.html">Granule na mieru →</a>
+  </div>
+</header>
+
+<main>
+<section class="wd-hero">
+  <div class="wrap wd-grid">
+    <div class="wd-copy">
+      <div class="eyebrow">Odstúpenie od zmluvy</div>
+      <h1 class="display">Odstúpiť <span class="ac">od zmluvy.</span></h1>
+      <p>Od zmluvy môžeš odstúpiť bez udania dôvodu do 14 dní od prevzatia tovaru. Pri predplatnom plynie lehota od prevzatia prvého vreca. Stačí vyplniť formulár a potvrdiť. Prihlásenie netreba.</p>
+      <ol class="wd-steps">
+        <li><b>1</b><span>Vyplň meno, e-mail a číslo objednávky.</span></li>
+        <li><b>2</b><span>Skontroluj údaje a potvrď odstúpenie.</span></li>
+        <li><b>3</b><span>Hneď ti príde e-mail s potvrdením, dátumom a časom prijatia.</span></li>
+      </ol>
+      <div class="wd-note">
+        <b>Chceš iba zrušiť predplatné?</b>
+        <span>To nie je odstúpenie: predplatné zrušíš kedykoľvek bez vrátenia peňazí za doručené vrecia. Napíš nám na <a href="mailto:podpora@granula.sk?subject=Zru%C5%A1enie%20predplatn%C3%A9ho">podpora@granula.sk</a>.</span>
+      </div>
+    </div>
+
+    <div class="wd-card" id="wd-card">
+      <!-- krok 1: formulár -->
+      <form id="wd-form" novalidate>
+        <h2 class="wd-h">Formulár na odstúpenie</h2>
+        <label class="pf"><span>Meno a priezvisko</span><input class="input" id="wd-name" name="name" autocomplete="name" required maxlength="120"></label>
+        <label class="pf"><span>E-mail</span><input class="input" id="wd-email" name="email" type="email" autocomplete="email" placeholder="meno@email.sk" required maxlength="254"><small class="pf-hint">Ten, ktorý si zadal pri objednávke. Pošleme naň potvrdenie.</small></label>
+        <label class="pf"><span>Číslo objednávky alebo predplatného</span><input class="input" id="wd-ref" name="contractRef" inputmode="text" placeholder="napr. 17" required maxlength="60"><small class="pf-hint">Nájdeš ho v e-maile s potvrdením objednávky („Objednávka č. 17“).</small></label>
+        <label class="pf"><span>Dôvod <i>(nepovinné)</i></span><textarea class="input" id="wd-reason" name="reason" rows="3" maxlength="1000"></textarea></label>
+        <label class="wd-hp" aria-hidden="true">Web<input id="wd-website" name="website" tabindex="-1" autocomplete="off"></label>
+        <p class="wd-err" id="wd-err1" role="alert" hidden></p>
+        <button class="btn btn-o wd-btn" type="submit">Odstúpiť od zmluvy tu</button>
+      </form>
+
+      <!-- krok 2: potvrdenie -->
+      <div id="wd-review" hidden>
+        <h2 class="wd-h" tabindex="-1" id="wd-review-h">Skontroluj a potvrď</h2>
+        <p class="wd-statement">Týmto oznamujem, že odstupujem od zmluvy.</p>
+        <dl class="wd-dl">
+          <dt>Meno</dt><dd id="r-name"></dd>
+          <dt>E-mail</dt><dd id="r-email"></dd>
+          <dt>Číslo objednávky alebo predplatného</dt><dd id="r-ref"></dd>
+          <dt id="r-reason-t">Dôvod</dt><dd id="r-reason"></dd>
+        </dl>
+        <p class="wd-err" id="wd-err2" role="alert" hidden></p>
+        <button class="btn btn-o wd-btn" type="button" id="wd-confirm">Potvrdiť odstúpenie</button>
+        <button class="wd-back" type="button" id="wd-back">← Späť a upraviť</button>
+      </div>
+
+      <!-- krok 3: prijaté -->
+      <div id="wd-done" hidden>
+        <span class="sticker st-k wd-st" style="--t:-4deg">Prijaté</span>
+        <h2 class="wd-h" tabindex="-1" id="wd-done-h">Odstúpenie sme prijali</h2>
+        <p class="wd-time">Prijaté <b id="d-time"></b></p>
+        <dl class="wd-dl">
+          <dt>Meno</dt><dd id="d-name"></dd>
+          <dt>E-mail</dt><dd id="d-email"></dd>
+          <dt>Číslo objednávky alebo predplatného</dt><dd id="d-ref"></dd>
+          <dt id="d-reason-t">Dôvod</dt><dd id="d-reason"></dd>
+        </dl>
+        <p id="d-mail">Potvrdenie s obsahom odstúpenia sme poslali na <b id="d-mail-to"></b>. Ak ti nepríde do pár minút, pozri aj priečinok so spamom.</p>
+        <p class="wd-small">Peniaze ti vrátime najneskôr do 14 dní. Ak už tovar odišiel zo skladu, pošleme ti pokyny k vráteniu. Otázky: <a href="mailto:podpora@granula.sk">podpora@granula.sk</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap fq-wrap">
+    <section class="fq" aria-labelledby="fq-h">
+      <div class="fq-top">
+        <div class="fq-ph" aria-hidden="true"><span class="fq-on">Online</span><span class="fq-img"><svg viewBox="0 0 48 48" width="44" height="44" fill="currentColor"><path d="M8 8h32a4 4 0 0 1 4 4v18a4 4 0 0 1-4 4H22l-9 8v-8H8a4 4 0 0 1-4-4V12a4 4 0 0 1 4-4Z"/><circle cx="16" cy="21" r="2.6" fill="#FFF7EE"/><circle cx="24" cy="21" r="2.6" fill="#FFF7EE"/><circle cx="32" cy="21" r="2.6" fill="#FFF7EE"/></svg></span></div>
+        <div class="fq-copy"><h2 class="display" id="fq-h">Máš otázky?</h2><p>Naša zákaznícka podpora ti rada pomôže s výberom granúl, dávkou aj objednávkou.</p></div>
+      </div>
+      <ul class="fq-list">
+        <li><span class="fq-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 7 9 6 9-6"/></svg></span><span><small>E-mail</small><a href="mailto:podpora@granula.sk">podpora@granula.sk</a></span></li>
+        <li><span class="fq-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span><small>Kedy sme tu</small><b>Po–Pi 9:00–18:00</b></span></li>
+        <li><span class="fq-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14"/><circle cx="12" cy="17.2" r=".6" fill="currentColor"/></svg></span><span><small>Centrum podpory</small><a href="podpora.html">Časté otázky a témy →</a></span></li>
+      </ul>
+    </section>
+  </div>
+  <div class="wrap top">
+    <div class="about">
+      <span class="logo">Granula!</span>
+      <p>Granule na mieru pre jedného konkrétneho psa. Receptúry navrhnuté s veterinármi, dávka na gramy, vrecko až k dverám.</p>
+    </div>
+    <div class="cols">
+      <nav aria-label="Granula"><span class="t"><span class="star" aria-hidden="true"></span>GRANULA</span><a href="index.html#suroviny">Suroviny</a><a href="granule-na-mieru.html">Granule na mieru</a><a href="blog/">Blog</a><a href="nas-pribeh.html">Náš príbeh</a></nav>
+      <nav aria-label="Pomoc"><span class="t"><span class="star" aria-hidden="true"></span>POMOC</span><a href="index.html#otazky">Otázky</a><a href="podpora.html#doprava">Doprava</a><a href="podpora.html">Podpora</a></nav>
+      <nav aria-label="Právne"><span class="t"><span class="star" aria-hidden="true"></span>PRÁVNE</span><a href="obchodne-podmienky.html">Všeobecné obchodné podmienky</a><a href="reklamacny-poriadok.html">Reklamačný poriadok</a><a href="ochrana-sukromia.html">Zásady ochrany súkromia</a><a href="garancia.html">Garancia spokojného psíka</a><a href="#" data-cookie-settings>Nastavenia cookies</a><a class="foot-wd" href="odstupenie.html">Odstúpiť od zmluvy tu</a></nav>
+    </div>
+  </div>
+  <div class="wrap bottom"><address>© 2026 <b>Spark Link, s. r. o.</b> · Lermontovova 911/3, 811 05 Bratislava – mestská časť Staré Mesto · IČO 55615597 · DIČ 2122032979 · <a href="mailto:info@granula.sk">info@granula.sk</a></address><span>granula.sk</span></div>
+</footer>
+
+<script src="icons.js"></script>
+<script src="site.js"></script>
+<script>
+// Odstúpenie od zmluvy (SPEC P4): formulár → „Potvrdiť odstúpenie“ → POST /api/odstupenie → čas prijatia zo servera.
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var form = $("wd-form"), review = $("wd-review"), done = $("wd-done");
+  var fields = { name: $("wd-name"), email: $("wd-email"), contractRef: $("wd-ref"), reason: $("wd-reason") };
+  var data = null, busy = false;
+
+  // predvyplnenie z odkazu v e-maile: /odstupenie?objednavka=17
+  var q = new URLSearchParams(location.search);
+  var pre = q.get("objednavka") || q.get("predplatne");
+  if (pre) fields.contractRef.value = pre.slice(0, 60);
+  if (q.get("email")) fields.email.value = q.get("email").slice(0, 254);
+
+  function err(el, msg) { el.textContent = msg || ""; el.hidden = !msg; }
+  function show(step, focusId) {
+    form.hidden = step !== form; review.hidden = step !== review; done.hidden = step !== done;
+    var f = focusId && $(focusId);
+    if (f) { f.focus({ preventScroll: true }); }
+    $("wd-card").scrollIntoView({ block: "start", behavior: "smooth" });
+  }
+  function fill(prefix, d) {
+    $(prefix + "-name").textContent = d.name;
+    $(prefix + "-email").textContent = d.email;
+    $(prefix + "-ref").textContent = d.contractRef;
+    $(prefix + "-reason").textContent = d.reason || "";
+    $(prefix + "-reason").hidden = $(prefix + "-reason-t").hidden = !d.reason;
+  }
+  function validate() {
+    var bad = null;
+    Object.keys(fields).forEach(function (k) { fields[k].removeAttribute("aria-invalid"); });
+    var d = { name: fields.name.value.trim(), email: fields.email.value.trim(), contractRef: fields.contractRef.value.trim(), reason: fields.reason.value.trim() };
+    if (d.name.length < 2) bad = bad || ["name", "Napíš meno a priezvisko."];
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) bad = bad || ["email", "Skontroluj e-mail."];
+    if (!d.contractRef) bad = bad || ["contractRef", "Napíš číslo objednávky alebo predplatného."];
+    if (bad) { fields[bad[0]].setAttribute("aria-invalid", "true"); fields[bad[0]].focus(); err($("wd-err1"), bad[1]); return null; }
+    err($("wd-err1"), "");
+    return d;
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    data = validate();
+    if (!data) return;
+    fill("r", data);
+    err($("wd-err2"), "");
+    show(review, "wd-review-h");
+  });
+  $("wd-back").addEventListener("click", function () { show(form, "wd-name"); });
+
+  $("wd-confirm").addEventListener("click", function () {
+    if (busy || !data) return;
+    busy = true;
+    var btn = $("wd-confirm");
+    btn.setAttribute("aria-busy", "true"); btn.textContent = "Odosielam…";
+    err($("wd-err2"), "");
+    fetch("/api/odstupenie", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: data.name, email: data.email, contractRef: data.contractRef, reason: data.reason || null, confirm: true, website: $("wd-website").value })
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (b) { return { ok: r.ok, b: b }; });
+    }).then(function (res) {
+      if (!res.ok || !res.b.ok) throw new Error(res.b.error || "Odstúpenie sa nepodarilo odoslať. Skús to prosím znova.");
+      var b = res.b;
+      fill("d", { name: b.name, email: b.email, contractRef: b.contractRef, reason: b.reason });
+      $("d-time").textContent = b.submittedAtText;
+      $("d-mail-to").textContent = b.email;
+      show(done, "wd-done-h");
+      try { history.replaceState(null, "", location.pathname); } catch (_) {}
+    }).catch(function (e) {
+      err($("wd-err2"), (e && e.message) || "Odstúpenie sa nepodarilo odoslať. Skús to prosím znova alebo napíš na podpora@granula.sk.");
+    }).then(function () {
+      busy = false; btn.removeAttribute("aria-busy"); btn.textContent = "Potvrdiť odstúpenie";
+    });
+  });
+})();
+</script>
+<!-- Klaviyo onsite: vypnutý (type="text/plain"), cookies.js ho zapne až po súhlase s marketingovými cookies -->
+<script type="text/plain" data-cookie-category="marketing" async src="https://static.klaviyo.com/onsite/js/Yf7K2A/klaviyo.js?company_id=Yf7K2A"></script>
+<script src="cookies.js"></script>
+</body>
+</html>

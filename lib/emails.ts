@@ -381,3 +381,74 @@ export function renewalReminderEmail(i: RenewalReminderInput): Mail {
   const day = i.nextCharge.toISOString().slice(0, 10);
   return { key: `renewal-reminder:${i.subscriptionId}:${day}`, kind: 'renewal_reminder', to: i.to, subject, html: tidy(render('6-pripomienka-platby', v)), text };
 }
+
+/* ---------------------------------------------------------------- 7 potvrdenie odstúpenia od zmluvy (SPEC P4) */
+
+/** čo server po odstúpení automaticky urobil (withdrawals.actions) */
+export type WithdrawalAction =
+  | { type: 'subscription_cancelled'; ok: boolean; error?: string }
+  | { type: 'order_cancelled'; ok: boolean; order: number; fhb?: 'deleted'; error?: string }
+  | { type: 'order_in_progress'; ok: true; order: number; status: string }
+  | { type: 'order_shipped'; ok: true; order: number; status: string };
+
+export type WithdrawalConfirmationInput = {
+  withdrawalId: string;
+  to: string;
+  /** meno z formulára (obsah odstúpenia) */
+  name: string;
+  /** oslovenie (krstné meno zákazníka, inak z formulára) */
+  firstName: string;
+  contractRef: string;
+  reason: string | null;
+  /** „23. 11. 2026 o 14:05:12“, čas servera */
+  receivedAt: string;
+  siteUrl: string;
+  /** e-mail sedel s objednávkou → v e-maile je, čo sa automaticky stalo */
+  matched: boolean;
+  actions: WithdrawalAction[];
+  needsReview: boolean;
+};
+
+const orderList = (ns: number[]) => (ns.length === 1 ? `Objednávku č. ${ns[0]}` : `Objednávky č. ${ns.join(', ')}`);
+const returnClause = (ns: number[]) => (ns.length === 1 ? `Objednávka č. ${ns[0]} už odišla zo skladu alebo sa práve balí` : `Objednávky č. ${ns.join(', ')} už odišli zo skladu alebo sa práve balia`);
+
+/** Potvrdenie o prijatí odstúpenia (§ 20a zák. 108/2024 Z. z.): obsah odstúpenia + dátum a čas prijatia. */
+export function withdrawalConfirmationEmail(i: WithdrawalConfirmationInput): Mail {
+  const a = i.matched ? i.actions : [];
+  const subCancelled = a.some((x) => x.type === 'subscription_cancelled' && x.ok);
+  const stopped = a.filter((x) => x.type === 'order_cancelled' && x.ok).map((x) => (x as { order: number }).order);
+  const ret = a.filter((x) => x.type === 'order_in_progress' || x.type === 'order_shipped').map((x) => (x as { order: number }).order);
+  const review = i.needsReview || !i.matched;
+  const v: Vars = {
+    ...common(i.siteUrl, i.firstName, null),
+    received_at: i.receivedAt,
+    name: i.name,
+    email: i.to,
+    contract_ref: i.contractRef,
+    reason: i.reason ?? '',
+    orders_stopped: stopped.length ? orderList(stopped) : '',
+    orders_return: ret.length ? returnClause(ret) : '',
+  };
+  const flags = { has_reason: !!i.reason, sub_cancelled: subCancelled, orders_stopped: stopped.length > 0, return_needed: ret.length > 0, review };
+  const html = tidy(render('7-potvrdenie-odstupenia', v, flags));
+  const text = [
+    tidy(`Ahoj ${v.first_name}, potvrdzujeme, že sme ${i.receivedAt} prijali tvoje odstúpenie od zmluvy. Tento e-mail si ulož, je to potvrdenie o jeho prijatí.`),
+    '',
+    'OBSAH ODSTÚPENIA',
+    `Prijaté: ${i.receivedAt}`,
+    `Meno: ${i.name}`,
+    `E-mail: ${i.to}`,
+    `Číslo objednávky alebo predplatného: ${i.contractRef}`,
+    ...(i.reason ? [`Dôvod: ${i.reason}`] : []),
+    'Vyhlásenie: Týmto oznamujem, že odstupujem od zmluvy.',
+    '',
+    'ČO BUDE ĎALEJ',
+    ...(subCancelled ? ['Predplatné sme zrušili. Ďalšie platby ani dodávky už nebudú.'] : []),
+    ...(stopped.length ? [`${orderList(stopped)} sme zastavili, zo skladu neodíde.`] : []),
+    ...(ret.length ? [`${returnClause(ret)}. Tovar nám prosím vráť najneskôr do 14 dní od odstúpenia. Pokyny k vráteniu ti pošleme e-mailom.`] : []),
+    ...(review ? ['Odstúpenie skontrolujeme a do 3 pracovných dní sa ti ozveme.'] : []),
+    'Peniaze ti vrátime najneskôr do 14 dní od prijatia odstúpenia, rovnakým spôsobom, akým si platil. Ak tovar už odišiel zo skladu, vrátime ich, keď ho dostaneme späť alebo keď nám pošleš potvrdenie o jeho odoslaní.',
+    footerText(v),
+  ].join('\n');
+  return { key: `withdrawal-confirm:${i.withdrawalId}`, kind: 'withdrawal_confirmation', to: i.to, subject: `Potvrdenie: odstúpenie od zmluvy prijaté ${i.receivedAt}`, html, text, orderId: null };
+}
