@@ -44,7 +44,7 @@ describe('úpravy predplatného v Stripe', () => {
     await moveNextCharge('sub_1', d('2027-01-10T06:00:00Z'), f.s);
     expect(f.update).toHaveBeenLastCalledWith('sub_1', { trial_end: 1799560800, proration_behavior: 'none' });
     await skipDelivery('sub_1', d('2027-01-10T06:00:00Z'), 30, f.s);
-    expect(f.update.mock.lastCall![1]).toMatchObject({ trial_end: Math.floor(d('2027-02-09T00:00:00Z').getTime() / 1000), proration_behavior: 'none' });
+    expect(f.update.mock.lastCall![1]).toMatchObject({ trial_end: Math.floor(d('2027-02-09T06:00:00Z').getTime() / 1000), proration_behavior: 'none' });
   });
   test('zmena D/ceny v JEDNOM update: staré položky preč, nové s intervalom D, trial_end, bez prorácie', async () => {
     const f = fakeStripe();
