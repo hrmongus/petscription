@@ -401,3 +401,4 @@ Spustené automaticky v noci („do as much as possible“). Opakovateľné skri
 | Zamietnutá karta 4000 0000 0000 0002 | ✅ chyba v našom formulári, tlačidlo znova aktívne, žiadna objednávka | ✅ |
 
   Každá objednávka: `ui_mode elements`, iba karta, v DB aj vo FHB (`GR-…`), Hotovo s číslom objednávky; predplatné na D dní a na konci testu zrušené. Klaviyo: pop-up vložený, ale skrytý, formulár v sekcii vykreslený, scroll funguje.
+- **Link a povinné polia (23. 11.):** Link povolený ako zelené tlačidlo nad formulárom (Express Checkout), vo formulári karty bez ukladania do Link (inak povinný telefón). Hviezdičky pri povinných poliach. Overené lokálne: predplatné #34 (počítač), 3D Secure #35 (mobil).

@@ -163,9 +163,8 @@ export function sessionParams(p: PreparedCheckout, ids: DraftIds, opts: { origin
     // vlastný platobný formulár v dizajne Granuly (Stripe Elements: Payment Element + Express Checkout Element),
     // v API dahlia sa „custom“ volá „elements“ (SPEC §10.17)
     ui_mode: 'elements' as const,
-    // iba karta: Apple Pay / Google Pay sú kartové peňaženky; bez Link a lokálnych metód (Bancontact…)
-    payment_method_types: ['card'] as Stripe.Checkout.SessionCreateParams.PaymentMethodType[],
-    wallet_options: { link: { display: 'never' as const } },
+    // karta (Apple Pay / Google Pay sú kartové peňaženky) a Link; bez lokálnych metód (Bancontact…)
+    payment_method_types: ['card', 'link'] as Stripe.Checkout.SessionCreateParams.PaymentMethodType[],
     customer: opts.stripeCustomerId,
     locale: 'sk' as const,
     // iba EUR (SPEC P1): Adaptive Pricing je na účte zapnuté a zahraničnej IP ponúkne USD s poplatkom 4 %

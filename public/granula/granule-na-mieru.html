@@ -977,20 +977,21 @@
     <div class="pay-main">
       <section class="pay-sec" aria-labelledby="t-contact">
         <div class="ps-h"><span class="ps-n" aria-hidden="true">1</span><h2 id="t-contact">Kontakt</h2></div>
-        <label class="pf"><span>E-mail</span><input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="meno@email.sk" required></label>
-        <label class="pf" id="phone-f" hidden><span>Telefón</span><input class="input" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+421 9XX XXX XXX"><small class="pf-hint">Dopravca ti dá vedieť, kedy balík príde.</small></label>
+        <p class="req-note" hidden>Polia označené <span class="req-star" aria-hidden="true">*</span> sú povinné.</p>
+        <label class="pf req"><span>E-mail</span><input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="meno@email.sk" required></label>
+        <label class="pf req" id="phone-f" hidden><span>Telefón</span><input class="input" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+421 9XX XXX XXX"><small class="pf-hint">Dopravca ti dá vedieť, kedy balík príde.</small></label>
       </section>
       <section class="pay-sec" aria-labelledby="t-ship">
         <div class="ps-h"><span class="ps-n" aria-hidden="true">2</span><h2 id="t-ship">Doručenie</h2></div>
         <div class="pf2">
-          <label class="pf"><span>Meno</span><input class="input" id="fname" name="fname" autocomplete="given-name" required></label>
-          <label class="pf"><span>Priezvisko</span><input class="input" id="lname" name="lname" autocomplete="family-name" required></label>
+          <label class="pf req"><span>Meno</span><input class="input" id="fname" name="fname" autocomplete="given-name" required></label>
+          <label class="pf req"><span>Priezvisko</span><input class="input" id="lname" name="lname" autocomplete="family-name" required></label>
         </div>
         <div class="dc" id="addr-f">
-        <label class="pf"><span>Ulica a číslo</span><input class="input" id="street" name="street" autocomplete="street-address" required></label>
+        <label class="pf req"><span>Ulica a číslo</span><input class="input" id="street" name="street" autocomplete="street-address" required></label>
         <div class="pf2 zip">
-          <label class="pf"><span>PSČ</span><input class="input" id="zip" name="zip" autocomplete="postal-code" inputmode="numeric" required></label>
-          <label class="pf"><span>Mesto</span><input class="input" id="city" name="city" autocomplete="address-level2" required></label>
+          <label class="pf req"><span>PSČ</span><input class="input" id="zip" name="zip" autocomplete="postal-code" inputmode="numeric" required></label>
+          <label class="pf req"><span>Mesto</span><input class="input" id="city" name="city" autocomplete="address-level2" required></label>
         </div>
         </div>
         <div class="dc" id="ship-legacy">

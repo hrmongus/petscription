@@ -425,6 +425,10 @@
           $("pay-legacy").hidden = true;
           $("pay-note").hidden = false;
           $("pay-stripe").hidden = true;
+          // povinné polia: hviezdička pri popise + poznámka (iba pri otvorenom predaji, predregistrácia bez zmeny)
+          order.classList.add("co-req");
+          order.querySelector(".req-note").hidden = false;
+          ["email", "phone", "fname", "lname", "street", "zip", "city"].forEach(function (id) { var f = $(id); if (f) f.setAttribute("aria-required", "true"); });
         }
         if (current === "objednavka") renderOrder();
       })
@@ -611,12 +615,12 @@
           $("pay-note").hidden = true;
           $("pay-stripe").hidden = false;
           $("pay-express").hidden = true; // ukáže sa, až keď Stripe potvrdí dostupnú peňaženku
-          // Apple Pay / Google Pay: iba ak ich prehliadač ponúka; Link, PayPal, Klarna… nie
+          // Apple Pay / Google Pay (iba ak ich prehliadač ponúka) a Link; PayPal, Klarna… nie
           p.express = checkoutSdk.createExpressCheckoutElement({
             buttonHeight: 48,
             buttonTheme: { applePay: "black", googlePay: "black" },
             layout: { maxColumns: 2, maxRows: 1, overflow: "auto" },
-            paymentMethods: { applePay: "auto", googlePay: "auto", link: "never", paypal: "never", amazonPay: "never", klarna: "never" }
+            paymentMethods: { applePay: "auto", googlePay: "auto", link: "auto", paypal: "never", amazonPay: "never", klarna: "never" }
           });
           p.express.on("ready", function (ev) {
             var any = ev && ev.availablePaymentMethods && Object.keys(ev.availablePaymentMethods).some(function (k) { return ev.availablePaymentMethods[k]; });
@@ -631,7 +635,8 @@
               .catch(function (e) { payError(e.message); });
           });
           p.express.mount("#pay-express");
-          // karta: bez mena, e-mailu, telefónu a adresy (máme ich), bez textov Stripe (mandát, Link)
+          // karta: bez mena, e-mailu, telefónu a adresy (máme ich), bez textu mandátu Stripe; Link je tlačidlo v Express Checkout
+          // (vo formulári karty by Link pridal „Uložiť údaje“ s e-mailom a povinným telefónom)
           p.element = checkoutSdk.createPaymentElement({
             layout: "tabs",
             fields: { billingDetails: { name: "never", email: "never", phone: "never", address: "never" } },

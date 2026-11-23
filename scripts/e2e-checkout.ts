@@ -125,13 +125,13 @@ async function main() {
     console.log(`   Session: mode ${session.mode}, ui_mode ${session.ui_mode}, suma ${(session.amount_total ?? 0) / 100} €, D ${session.metadata?.days}, ${session.metadata?.method} | tlačidlo „${summary}“`);
     check(session.mode === (plan === 'raz' ? 'payment' : 'subscription') && session.ui_mode === 'elements', `mode ${session.mode}, ui_mode ${session.ui_mode}`);
     check(session.metadata?.app === 'granula' && session.metadata?.method === method, 'metadata app=granula a spôsob doručenia');
-    check(JSON.stringify(session.payment_method_types) === '["card"]', 'iba karta (bez Link, Bancontact…)');
+    check(JSON.stringify(session.payment_method_types) === '["card","link"]', 'karta a Link (bez Bancontact…)');
     // v našom formulári nesmú byť texty ani prvky Stripe, ktoré nechceme
     const peText = (await frame.locator('body').innerText()).replace(/\s+/g, ' ');
     const pageText = (await page.locator('#pay-stripe').innerText()).replace(/\s+/g, ' ');
-    check(!/link|odber|každ[éý]ch? \d|e-mail|telef|krajina|country/i.test(peText), `Payment Element bez Link, odberu, intervalu, e-mailu, telefónu, krajiny („${peText.slice(0, 120)}“)`);
-    const linkFrames = await page.evaluate(() => [...document.querySelectorAll('iframe')].filter((f) => /link/i.test(f.src.split('#')[0].split('?')[0]) && f.offsetWidth > 0 && f.offsetHeight > 0).map((f) => `${f.src.slice(0, 90)} ${f.offsetWidth}x${f.offsetHeight}`));
-    check(!linkFrames.length, `žiadny viditeľný Link ${linkFrames.join(' | ')}`);
+    check(!/odber|každ[éý]ch? \d|telef|krajina|country|ulož|e-mail/i.test(peText), `Payment Element bez odberu, intervalu, e-mailu, telefónu, krajiny, ukladania do Link („${peText.slice(0, 120)}“)`);
+    const stars = await page.evaluate(() => ['email', 'phone', 'fname', 'lname'].map((id) => getComputedStyle(document.getElementById(id)!.closest('label')!.querySelector('span')!, '::after').content));
+    check(stars.every((c: string) => c.includes('*')), `povinné polia s hviezdičkou (${stars.join(' ')})`);
     console.log('   sekcia Platba:', pageText.slice(0, 160));
     const btnLabel = (await page.locator('#s-submit').innerText()).trim();
     check(/zaplatiť \d/i.test(btnLabel), `tlačidlo „${btnLabel}“`);

@@ -74,3 +74,9 @@
 .pay-element[aria-busy="true"]{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
 .done-order{font-weight:800;font-size:17px;margin:12px 0 0}
 .done-order a{color:inherit}
+
+/* povinné polia pri otvorenom predaji (kviz.js pridá na formulár .co-req) */
+.co-req .pf.req > span::after{content:"\00a0*";color:var(--err);font-weight:800}
+.req-note{font-size:13px;margin:0}
+.req-note[hidden]{display:none}
+.req-star{color:var(--err);font-weight:800}
