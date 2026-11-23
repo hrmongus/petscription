@@ -4,7 +4,7 @@ window.GRANULA_POSTS = {
   {
    "id": "marcela-glezgova",
    "name": "MVDr. Marcela Glezgová",
-   "bio": "Veterinárka a majiteľka veterinárnej kliniky KiraVet v Handlovej.",
+   "bio": "Veterinárka so zameraním na malé zvieratá, hlavne psy a mačky, a majiteľka veterinárnej kliniky KiraVet v Handlovej.",
    "web": "https://kiravet.sk/",
    "photo": "placeholder",
    "photoOk": false,
@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-21 12:05",
+ "built": "2026-11-23 20:00",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
