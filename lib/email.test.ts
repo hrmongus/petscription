@@ -91,13 +91,15 @@ describe('šablóny (návrh content/emails)', () => {
     noPlaceholders(m);
     expect(m.key).toBe('shipped:o1');
     expect(m.html).toContain('https://tracking.example/1');
-    expect(m.html).toContain('DPD ich zvyčajne doručí do 2\u00a0–\u00a03 pracovných dní');
+    expect(m.html).toContain('DPD ich zvyčajne doručí do 2\u00a0–\u00a04 pracovných dní');
+    expect(m.html).toContain('pripravené na vyzdvihnutie');
     expect(m.html).toContain('Prvé vrece? Prechádzaj postupne');
     expect(m.text).toContain('Číslo zásielky: 1');
     const r = shippedEmail({ order: { ...ORDER, kind: 'renewal', ship_to: { ...ORDER.ship_to, delivery_method: 'sps_courier', street: 'Hlavná 1', zip: '04001', city: 'Košice' } }, to: 'a@b.sk', dog: BODKA, siteUrl: SITE, trackingLinks: [], trackingNumbers: [] });
     noPlaceholders(r);
     expect(r.html).not.toContain('Prvé vrece');
-    expect(r.html).toContain('SPS ich zvyčajne doručí do 1\u00a0–\u00a02 pracovných dní');
+    expect(r.html).toContain('SPS ich zvyčajne doručí do 1\u00a0–\u00a03 pracovných dní');
+    expect(r.html).toContain('kuriér dá vedieť');
     expect(r.html).toContain('Hlavná 1, 04001 Košice');
   });
   test('5 neúspešná platba: kľúč podľa faktúry a pokusu, odkaz na zaplatenie, veta o ďalšom pokuse iba s dátumom', () => {

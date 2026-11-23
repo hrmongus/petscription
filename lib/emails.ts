@@ -86,8 +86,9 @@ export function deliveryOf(shipTo: unknown) {
     m === 'sps_courier'
       ? [t.street, `${t.zip ?? ''} ${t.city ?? ''}`.trim()].filter(Boolean).join(', ')
       : t.point_label || [t.point_address?.street, `${t.point_address?.zip ?? ''} ${t.point_address?.city ?? ''}`.trim()].filter(Boolean).join(', ');
-  const eta = (METHODS[m]?.eta ?? '2–3').replace(/^(\d+)\s*[–-]\s*(\d+).*$/, '$1\u00a0–\u00a0$2'); // nezalomiť „2 – 3“
-  return { carrier: c.long, carrierShort: c.short, address, eta };
+  const eta = (METHODS[m]?.etaEmail ?? METHODS[m]?.eta ?? '2–4').replace(/^(\d+)\s*[–-]\s*(\d+).*$/, '$1\u00a0–\u00a0$2'); // nezalomiť „2 – 3“
+  const pickupNote = METHODS[m]?.pickup === false ? 'V deň doručenia ti kuriér dá vedieť SMS alebo e-mailom.' : 'Keď budú pripravené na vyzdvihnutie, dopravca ti pošle SMS alebo e-mail.';
+  return { carrier: c.long, carrierShort: c.short, address, eta, pickupNote };
 }
 
 /** cena dopravy pre spôsob a balenie (rovnaký výpočet ako checkout), keď ju volajúci nepozná */
@@ -229,6 +230,7 @@ export function shippedEmail(i: { order: OrderLike; to: string; name?: string | 
     carrier_short: del.carrierShort,
     delivery_address: del.address,
     eta: del.eta,
+    pickup_note: del.pickupNote,
     tracking_number: i.trackingNumbers.join(', ') || '—',
     tracking_url: i.trackingLinks[0] ?? `${site(i.siteUrl)}/podpora`,
   };
@@ -238,7 +240,7 @@ export function shippedEmail(i: { order: OrderLike; to: string; name?: string | 
     [
       `Objednávka č. ${o.number}`,
       '',
-      `Ahoj ${v.first_name}, granule pre ${v.dog_name_acc} práve odišli zo skladu. ${v.carrier_short} ich zvyčajne doručí do ${v.eta} pracovných dní. Keď budú pripravené na vyzdvihnutie, dopravca ti pošle SMS alebo e-mail.`,
+      `Ahoj ${v.first_name}, granule pre ${v.dog_name_acc} práve odišli zo skladu. ${v.carrier_short} ich zvyčajne doručí do ${v.eta} pracovných dní. ${v.pickup_note}`,
       '',
       `${prod.name}, ${prod.bagKg} kg · recept pre: ${v.dog_name}`,
       `Doručenie: ${v.carrier}, ${v.delivery_address}`,

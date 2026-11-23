@@ -7,23 +7,24 @@
    - BOXES:  či pri výdajnom mieste povoliť aj boxy (Z-BOX, AlzaBox, DPD Pickup Box…); false = iba výdajné miesta.
    - PRICE:  cena dopravy pre zákazníka v € (konečná cena); null = predvolená cena z engine.js (PARAMS.shipping, 4,90 €).
    - COST:   cena FHB bez DPH v € (iba na prehľad a porovnanie, zákazník ju nevidí).
+   - METHODS.etaEmail: doba doručenia v emaile „Balík je na ceste“ (pracovné dni od odoslania; zámerne dlhšia ako eta v dotazníku).
    - METHODS.fhbService: kód služby vo FHB (parcel_service). Dá sa prepísať aj env FHB_SERVICE_<PACKETA|DPD|SPS_COURIER>. */
 (function () {
   "use strict";
 
   var METHODS = {
     packeta_point: {
-      label: "Packeta – výdajné miesto alebo Z-BOX", eta: "2–3 pracovné dni",
+      label: "Packeta – výdajné miesto alebo Z-BOX", eta: "2–3 pracovné dni", etaEmail: "2–4",
       carrier: "packeta", pickup: true, maxKg: 15,
       fhbService: "zasielkovna_sk"   // overené v sandboxe FHB (21. 11. 2026): 3 857 miest SK, kód miesta = ID Packety
     },
     dpd_pickup: {
-      label: "DPD – odberné miesta a boxy", eta: "2–3 pracovné dni",
+      label: "DPD – odberné miesta a boxy", eta: "2–3 pracovné dni", etaEmail: "2–4",
       carrier: "dpd", pickup: true, maxKg: null,
       fhbService: "dpd_sk"           // overené v sandboxe FHB: 3 961 miest SK, kód miesta = ID z mapy DPD (napr. SK21286)
     },
     sps_courier: {
-      label: "SPS – kuriér na adresu", eta: "1–2 pracovné dni",
+      label: "SPS – kuriér na adresu", eta: "1–2 pracovné dni", etaEmail: "1–3",
       carrier: "sps", pickup: false, maxKg: null,
       fhbService: ""                 // ⚠️ kód zatiaľ nepoznáme (od FHB); prázdne = predvolená služba účtu vo FHB
     }
