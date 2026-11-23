@@ -29,7 +29,7 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 - [ ] **Zmazať testovaciu route `app/api/test/email-preview`** (náhľady emailov, SPEC §10.14).
 - [ ] **Stránka `/ucet` (P4)**: emaily na ňu odkazujú („Otvoriť môj účet“, „Upraviť predplatné“, „Prejsť na predplatné“, „zmeň kartu v účte“). Do vtedy vedú na 404.
 - [x] ~~Email „pripomienka pred platbou“~~ ✅ 23. 11. (cron `reminders`, SPEC §10.16). Zvyšné emaily (potvrdenie odstúpenia, zrušenia/pauzy) prídu s P4.
-- [ ] **Testovacie predplatné s vymyslenými adresami** (`e2e-…@granula.sk`, 3 aktívne): zrušiť skôr ako 21. 12. (pripomienka) a 24. 12. (obnovenie v Stripe test mode), inak pôjdu emaily na neexistujúce schránky (nedoručené → reputácia domény).
+- [x] ~~Testovacie predplatné s vymyslenými adresami~~ ✅ 23. 11. zrušené v Stripe (`sub_1UeHWx1U0mpiDjfiMvP0cCBy`, `sub_1UeGw51U0mpiDjfi5tuDsQ46`, `sub_1UeHhE1U0mpiDjfig8W2mdsa`); ponechané predplatné používateľa `sub_1UeopL1U0mpiDjfiLAMcK46W` (test pripomienky 23. 12. a obnovenia 26. 12.). Odteraz `e2e-checkout` predplatné na konci testu sám zruší (ponechať iba s `--keep-subscription`), test clock skripty ho rušia zmazaním clocku, predvolená adresa je `delivered+…@resend.dev`.
 - [ ] Opýtať sa FHB na formát notifikácií objednávok (route prijme čokoľvek a loguje do `fhb_events`; po prvej skutočnej notifikácii pozrieť payload).
 - [ ] Stripe účet vedený na Spark Link, s. r. o.
 - [ ] Zmazať staré branche (Carbone Company)

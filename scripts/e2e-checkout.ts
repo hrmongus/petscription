@@ -8,6 +8,8 @@
  *
  * Odpovede dotazníka sa vložia do sessionStorage (rovnaký stav ako kviz.js), zvyšok ide cez UI: krok objednávky,
  * kontakt, doručenie, Embedded Checkout. Overenie: Supabase (orders, subscriptions) a FHB sandbox (GET /order).
+ * Predplatné, ktoré test vytvorí, na konci (aj pri chybe) ZRUŠÍ, aby nechodili pripomienky a obnovenia; ponechať ho
+ * iba s --keep-subscription. Predvolený e-mail je testovacia adresa Resend (delivered+…@resend.dev), vlastný --email=.
  * Iba so sk_test_ a FHB sandboxom. Snímky: <scratch>/e2e-<scenár>-*.png (premenná E2E_SHOTS, inak /tmp).
  */
 import Stripe from 'stripe';
@@ -185,6 +187,14 @@ async function main() {
     throw e;
   } finally {
     await browser.close();
+    if (sessionId && !process.argv.includes('--keep-subscription')) {
+      const sess = await s.checkout.sessions.retrieve(sessionId).catch(() => null);
+      const subId = typeof sess?.subscription === 'string' ? sess.subscription : sess?.subscription?.id;
+      if (subId) {
+        const c = await s.subscriptions.cancel(subId).catch((e: Error) => ({ status: `chyba: ${e.message}` }));
+        console.log(`   predplatné ${subId} zrušené na konci testu (${(c as { status: string }).status}); ponechať: --keep-subscription`);
+      }
+    }
   }
   if (failures.length) throw new Error(`${failures.length} kontrol zlyhalo`);
   console.log('VÝSLEDOK: všetky kontroly OK');

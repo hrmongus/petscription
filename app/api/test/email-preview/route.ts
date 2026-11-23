@@ -5,7 +5,7 @@ import { adminEmail, orderConfirmationEmail, paymentFailedEmail, renewalReminder
 import { stripeMode } from '@/lib/env-mode';
 
 /*
- * POST /api/test/email-preview { to } s hlavičkou x-checkout-test: <CHECKOUT_TEST_TOKEN>
+ * POST /api/test/email-preview { to, only?: [kind…] } s hlavičkou x-checkout-test: <CHECKOUT_TEST_TOKEN>
  * Pošle testovacie verzie všetkých transakčných a interných emailov (predmet „[TEST] …“) cez Resend z produkcie,
  * aby sa dali skontrolovať texty. Iba v Stripe TEST mode (pred spustením predaja). Príjemca musí byť ADMIN_EMAIL
  * alebo e-mail existujúceho zákazníka v DB (nedá sa zneužiť na posielanie na ľubovoľné adresy). Do email_log sa nezapisuje.
@@ -19,7 +19,7 @@ const SHIP_PACKETA = { ...SHIP_DPD, delivery_method: 'packeta_point', point_id: 
 export async function POST(req: Request) {
   if (!validTestToken(req.headers.get(TEST_HEADER))) return new Response('Unauthorized', { status: 401 });
   if (stripeMode() !== 'test') return new Response('Iba v test mode', { status: 403 });
-  const { to } = (await req.json().catch(() => ({}))) as { to?: string };
+  const { to, only } = (await req.json().catch(() => ({}))) as { to?: string; only?: string[] };
   const email = (to ?? process.env.ADMIN_EMAIL ?? '').trim().toLowerCase();
   if (!email) return Response.json({ error: 'chýba príjemca' }, { status: 400 });
   const known = email === (process.env.ADMIN_EMAIL ?? '').trim().toLowerCase() || !!(await db().from('customers').select('id').eq('email', email).maybeSingle()).data;
@@ -52,6 +52,7 @@ export async function POST(req: Request) {
   const stamp = Date.now();
   const results: { kind: string; subject: string; result: string }[] = [];
   for (const [i, m] of mails.entries()) {
+    if (only?.length && !only.includes(m.kind)) continue;
     const subject = `[TEST] ${m.subject}`;
     try {
       results.push({ kind: m.kind, subject, result: await send({ ...m, subject, key: `preview:${stamp}:${i}`, orderId: null }) });
