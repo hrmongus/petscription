@@ -1939,11 +1939,11 @@ window.GRANULA_POSTS = {
    "wanted": "draft",
    "example": false,
    "published": "2026-11-18",
-   "updated": "2026-11-20",
+   "updated": "2026-11-23",
    "author": "MVDr. Marcela Glezgová",
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
-   "hero": "placeholder",
+   "hero": "img/blog/hnacka-po-novych-granulach-co-robit/hero.webp",
    "words": 1059,
    "description": "Hnačka po nových granulách zvyčajne odznie za 1–3 dni. Vráť sa k starému krmivu a prechod spomaľ. K veterinárovi pri krvi, zvracaní, apatii alebo po 2 dňoch.",
    "id": "F2",
@@ -2010,9 +2010,9 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-23: Hlavná fotka (ilustrácia vygenerovaná AI)",
       "2026-11-20: Autorka MVDr. Marcela Glezgová",
-      "2026-11-18: „žerie“ nahradené",
-      "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
+      "2026-11-18: „žerie“ nahradené"
      ]
     },
     {
@@ -2135,7 +2135,6 @@ window.GRANULA_POSTS = {
      "ok": false,
      "msg": "Zástupné obrázky sú nahradené skutočnými (pred publikovaním)",
      "details": [
-      "hero: Majiteľ kľačí v kuchyni pri psovi strednej veľkosti, ktorý pokojne pije z misky s čerstvou vodou; vedľa stoja dve vrecia granúl, staré a nové",
       "obrázok: Majiteľ v kuchyni mieša v miske malú časť nových granúl so starými, pes sedí vedľa a čaká",
       "obrázok: Majiteľ telefonuje s veterinárom, pes leží pokojne vedľa neho na deke v obývačke"
      ]

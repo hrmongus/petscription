@@ -7,14 +7,14 @@ category: "Problémy"
 priority: P1
 description: "Hnačka po nových granulách zvyčajne odznie za 1–3 dni. Vráť sa k starému krmivu a prechod spomaľ. K veterinárovi pri krvi, zvracaní, apatii alebo po 2 dňoch."
 author: marcela-glezgova
-hero: placeholder
-hero_alt: "Majiteľ kľačí v kuchyni pri psovi strednej veľkosti, ktorý pokojne pije z misky s čerstvou vodou; vedľa stoja dve vrecia granúl, staré a nové"
-hero_caption: "Keď má pes po zmene krmiva hnačku, daj mu najprv vodu a vráť sa k jedlu, ktoré poznal."
+hero: img/blog/hnacka-po-novych-granulach-co-robit/hero.webp
+hero_alt: "Žena v béžovom svetri kľačí v kuchyni pri francúzskom buldočkovi, ktorý pije vodu z kovovej misky. Vedľa stojí miska s granulami."
+hero_caption: "Keď má pes po zmene krmiva hnačku, daj mu najprv vodu a vráť sa k jedlu, ktoré poznal. Ilustrácia vygenerovaná AI."
 cta_title: "Granule pre psa s citlivým trávením"
 cta_text: "Dennú dávku spočítame na gramy, aby pes pri prechode nezjedol viac, ako potrebuje. Pri citlivom trávení vyberáme granule s jedným druhom mäsa, ak tomu nebráni iná potreba psa."
 cta_button: "Nájdi granule pre svojho psa"
 published: 2026-11-18
-updated: 2026-11-20
+updated: 2026-11-23
 tldr: >
   Hnačka po nových granulách vzniká najčastejšie preto, že zmena krmiva prišla príliš rýchlo.
   Ak je pes inak čulý, zvyčajne odznie za 1–3 dni. Vráť sa k starému krmivu a daj psovi dosť vody.
@@ -27,6 +27,7 @@ key_points:
   - "Granule nemusia byť vinníkom. Veterinári zapísali zmenu krmiva ako možnú príčinu hnačky len pri 4,6 % psov."
   - "Najčastejšia chyba: zmeniť granule zo dňa na deň a pri hnačke hneď skúšať ďalšie nové krmivo."
 changelog:
+  - "2026-11-23: Hlavná fotka (ilustrácia vygenerovaná AI)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: „žerie“ nahradené"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
