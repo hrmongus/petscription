@@ -278,7 +278,8 @@
         '<span class="ro-txt"><span class="ro-kg">' + x.bag.label + "</span>" +
         '<span class="ro-days">vydrží ' + x.days + " " + plural(x.days, "deň", "dni", "dní") + "</span>" +
         (x.saving > 0 ? '<span class="ro-save">−' + x.saving + "\u00a0% za kg</span>" : "") + "</span>" +
-        '<span class="ro-price">' + (x.price == null ? "cena —" : eur(x.price)) + "</span>" +
+        // cena s predplatným (zľava PARAMS.plans.mesiac), ako „na deň s predplatným“ pod kartami a v kroku platby
+        '<span class="ro-price">' + (x.price == null ? "cena —" : eur(x.price * (1 - r.params.plans.mesiac))) + "</span>" +
         (x.bag.id === r.recBag ? '<span class="ro-rec">Odporúčame</span>' : "") + "</label>";
     }).join("");
 
