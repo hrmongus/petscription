@@ -73,6 +73,8 @@ async function main() {
       if (j.clientSecret) sessionId = j.clientSecret.split('_secret_')[0];
     }
   });
+  const pageErrors: string[] = [];
+  page.on('pageerror', (e: Error) => pageErrors.push(String(e).slice(0, 200)));
   try {
     await page.addInitScript((a: object) => sessionStorage.setItem('granula-quiz', JSON.stringify(a)), { ...ANSWERS, plan, bag });
     await page.goto(`${SITE}/granule-na-mieru?test=${encodeURIComponent(token)}#objednavka`);
@@ -136,9 +138,11 @@ async function main() {
     await frame.locator('input[name="number"]').fill(card);
     await frame.locator('input[name="expiry"]').fill('12 / 34');
     await frame.locator('input[name="cvc"]').fill('123');
-    await page.locator('#pay-stripe').scrollIntoViewIfNeeded();
+    await page.evaluate(() => document.getElementById('pay-stripe')!.scrollIntoView({ block: 'center' }));
+    await sleep(800);
     await shot('2-platba');
     await page.locator('#pay-stripe').screenshot({ path: `${SHOTS}/e2e-${tag}-2-platba-detail.png` });
+    check(!pageErrors.length, `bez chýb JavaScriptu na stránke ${pageErrors.join(' | ')}`);
     await page.locator('#s-submit').click();
 
     if (scenario === '3ds') {

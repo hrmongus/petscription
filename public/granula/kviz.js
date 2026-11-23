@@ -615,7 +615,7 @@
           p.express = checkoutSdk.createExpressCheckoutElement({
             buttonHeight: 48,
             buttonTheme: { applePay: "black", googlePay: "black" },
-            layout: { maxColumns: 2, maxRows: 1, overflow: "never" },
+            layout: { maxColumns: 2, maxRows: 1, overflow: "auto" },
             paymentMethods: { applePay: "auto", googlePay: "auto", link: "never", paypal: "never", amazonPay: "never", klarna: "never" }
           });
           p.express.on("ready", function (ev) {
