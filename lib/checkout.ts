@@ -40,6 +40,9 @@ export const CheckoutInputSchema = z.object({
   plan: z.unknown(),
   bag: z.unknown(),
   delivery: DeliverySchema,
+  // P7: id dotazníka (quiz_sessions) a súhlas s cookies v čase nákupu; neplatné hodnoty sa ignorujú, nákup nezastavia
+  quizSession: z.string().uuid().optional().catch(undefined),
+  consent: z.object({ analytics: z.boolean(), marketing: z.boolean() }).partial().optional().catch(undefined),
 });
 
 export type PreparedCheckout = {
@@ -53,6 +56,10 @@ export type PreparedCheckout = {
   point: DeliveryPoint | null;
   /** snapshot pre orders.ship_to a FHB */
   shipTo: ShipTo;
+  /** P7: quiz_sessions.id z prehliadača (alebo null) */
+  quizSessionId: string | null;
+  /** P7: súhlas s analytickými (PostHog) a marketingovými (Klaviyo) cookies v čase nákupu */
+  consent: { analytics: boolean; marketing: boolean };
 };
 
 const POINT_SERVICE: Partial<Record<DeliveryMethod, PointService>> = { packeta_point: 'packeta', dpd_pickup: 'dpd' };
@@ -107,6 +114,8 @@ export async function prepareCheckout(input: unknown, deps: { findPoint?: typeof
     customer: { email: d.email, firstName: d.firstName, lastName: d.lastName, name, phone },
     point,
     shipTo,
+    quizSessionId: parsed.data.quizSession ?? null,
+    consent: { analytics: parsed.data.consent?.analytics === true, marketing: parsed.data.consent?.marketing === true },
   };
 }
 
@@ -151,6 +160,10 @@ export function checkoutMetadata(p: PreparedCheckout, ids: DraftIds): Stripe.Met
     unit_cents: String(p.quote.unitAmountCents),
     ship_cents: String(p.shippingCents),
     method: p.method,
+    // P7: spárovanie objednávky s dotazníkom; súhlas pre server-side analytiku (ph = PostHog s profilom zákazníka)
+    ...(p.quizSessionId ? { quiz_session: p.quizSessionId } : {}),
+    ph: p.consent.analytics ? '1' : '0',
+    kl: p.consent.marketing ? '1' : '0',
   };
 }
 

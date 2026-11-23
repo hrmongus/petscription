@@ -41,6 +41,48 @@
     storeDogs([a].concat(savedDogs().filter(function (d) { return d.dogname.toLowerCase() !== state.dogname.toLowerCase(); })));
   }
 
+  /* ---------------- P7: priebežné uloženie dotazníka (POST /api/quiz → quiz_sessions) ----------------
+     Id dotazníka žije v stave (sessionStorage tejto záložky); nový dotazník = nové id. Bez emailu anonymné.
+     Zdroj návštevy: UTM a referrer tejto stránky; zo vstupnej stránky webu iba so súhlasom s analytickými
+     cookies (cookies.js ho uloží do sessionStorage „granula-src“). Chyba odoslania nikdy nič nezastaví. */
+  function uuid() {
+    try { if (crypto.randomUUID) return crypto.randomUUID(); } catch (e) {}
+    var b = new Uint8Array(16);
+    try { crypto.getRandomValues(b); } catch (e) { for (var i = 0; i < 16; i++) b[i] = Math.floor(Math.random() * 256); }
+    b[6] = (b[6] & 15) | 64; b[8] = (b[8] & 63) | 128;
+    var h = [].map.call(b, function (x) { return (x + 256).toString(16).slice(1); }).join("");
+    return h.slice(0, 8) + "-" + h.slice(8, 12) + "-" + h.slice(12, 16) + "-" + h.slice(16, 20) + "-" + h.slice(20);
+  }
+  var UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  function qid() { if (!UUID_RE.test(state.qid || "")) { state.qid = uuid(); save(); } return state.qid; }
+  var SOURCE = (function () {
+    var src = null;
+    try { src = JSON.parse(sessionStorage.getItem("granula-src")); } catch (e) {}
+    if (src && typeof src === "object") return src;
+    var q = new URLSearchParams(location.search), utm = {};
+    ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"].forEach(function (k) { if (q.get(k)) utm[k] = q.get(k).slice(0, 150); });
+    ["fbclid", "gclid", "ttclid", "msclkid"].some(function (k) { if (q.has(k)) { utm.click = k; return true; } });
+    return { utm: utm, referrer: document.referrer || "", landing: location.pathname };
+  })();
+  function quizAnswers() {
+    var a = {};
+    ANSWERS.forEach(function (k) { if (k !== "bag" && k !== "bagKey" && k !== "plan") a[k] = state[k]; });
+    return a;
+  }
+  function syncQuiz(step) {
+    if (!window.fetch || step === "miesame") return;
+    if (step === "krok-1" && !state.dogname) return; // prázdny dotazník (iba otvorená stránka) neukladáme
+    var after = ["vysledok", "objednavka", "platba", "hotovo"].indexOf(step) !== -1;
+    var body = { id: qid(), step: step, answers: quizAnswers(), plan: state.plan, bag: after ? state.bag || undefined : undefined,
+      method: state.delivery && state.delivery.method || undefined, utm: SOURCE.utm, referrer: SOURCE.referrer, landing: SOURCE.landing };
+    try { fetch("/api/quiz", { method: "POST", keepalive: true, headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }).catch(function () {}); } catch (e) {}
+  }
+  // súhlas s cookies v čase nákupu (cookies.js → GranulaConsent): server podľa neho posiela udalosti do PostHogu s profilom
+  function consentNow() {
+    var C = window.GranulaConsent;
+    return { analytics: !!(C && C.has("analytics")), marketing: !!(C && C.has("marketing")) };
+  }
+
   var quiz = document.getElementById("quiz");
   var order = document.getElementById("order");
   var $ = function (id) { return document.getElementById(id); };
@@ -507,7 +549,7 @@
     m.textContent = v ? "Kód „" + v + "“ nepoznáme." : "";
   });
   order.addEventListener("change", function (e) {
-    if (e.target.name === "plan") { state.plan = e.target.value; save(); resetPayment(); renderOrder(); }
+    if (e.target.name === "plan") { state.plan = e.target.value; save(); resetPayment(); renderOrder(); syncQuiz(current); }
     if (e.target.name === "ship" || e.target.name === "pm") shipUI();
   });
   function checkout(wallet) {
@@ -626,7 +668,7 @@
     var headers = { "Content-Type": "application/json" };
     if (testToken) headers["X-Checkout-Test"] = testToken;
     Promise.all([
-      fetch("/api/checkout", { method: "POST", headers: headers, body: JSON.stringify({ answers: answers, plan: state.plan, bag: bagOf(result()).bag.id, delivery: delivery }) })
+      fetch("/api/checkout", { method: "POST", headers: headers, body: JSON.stringify({ answers: answers, plan: state.plan, bag: bagOf(result()).bag.id, delivery: delivery, quizSession: qid(), consent: consentNow() }) })
         .then(function (r) { return r.json().then(function (j) { if (!r.ok) { var e = new Error(j.error || "Platbu sa nepodarilo pripraviť."); e.field = j.field; throw e; } return j; }); }),
       loadStripeJs()
     ])
@@ -833,6 +875,7 @@
     if (id === "objednavka") { renderOrder(); shipUI(); }
     if (id === "platba") renderPay();
     if (id === "hotovo") renderDone();
+    syncQuiz(id);
     profRoute();
     window.scrollTo(0, 0);
     var h = screens[id].querySelector(".q-title, .rh-name");
@@ -859,7 +902,32 @@
     save();
     history.replaceState(null, "", location.pathname + location.hash);
   })();
-  fill();
-  window.addEventListener("hashchange", route);
-  route();
+  // P7: návrat z emailu opusteného košíka (Klaviyo): ?kviz=<id> → odpovede zo servera → výsledok
+  var restoreId = (function () { try { return new URLSearchParams(location.search).get("kviz") || ""; } catch (e) { return ""; } })();
+  if (restoreId) {
+    try { var rq = new URLSearchParams(location.search); rq.delete("kviz"); history.replaceState(null, "", location.pathname + (rq.toString() ? "?" + rq.toString() : "") + location.hash); } catch (e) {}
+  }
+  function start() {
+    fill();
+    window.addEventListener("hashchange", route);
+    route();
+  }
+  if (UUID_RE.test(restoreId) && window.fetch) {
+    fetch("/api/quiz/" + restoreId, { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        if (j && j.answers) {
+          state = JSON.parse(JSON.stringify(BLANK));
+          ANSWERS.forEach(function (k) { if (k in j.answers) state[k] = j.answers[k]; });
+          state.breedSet = true;
+          if (j.plan && j.plan in E.PARAMS.plans) state.plan = j.plan;
+          if (j.bag) { state.bag = j.bag; var rr = result(); if (rr.product && rr.dose) state.bagKey = rr.product.id + "|" + rr.dose.grams; }
+          state.qid = restoreId; state.entry = "email";
+          save();
+          if (!firstInvalid()) history.replaceState(null, "", location.pathname + location.search + "#vysledok");
+        }
+      })
+      .catch(function () {})
+      .then(start);
+  } else start();
 })();

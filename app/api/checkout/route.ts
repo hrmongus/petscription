@@ -4,6 +4,7 @@ import { skuItems, allSkus } from '@/lib/engine-server';
 import { insertAddress, insertDog, setStripeCustomer, upsertCustomer } from '@/lib/store';
 import { APP_METADATA, stripe, stripeConfigured } from '@/lib/stripe';
 import { ensureProduct } from '@/lib/stripe-products';
+import { linkCheckout, resultFromQuote, supabaseQuizStore } from '@/lib/quiz';
 
 /*
  * POST /api/checkout { answers, plan, bag, delivery } → { clientSecret, publishableKey }
@@ -68,7 +69,15 @@ export async function POST(req: Request) {
 
     const origin = new URL(req.url).origin;
     const session = await s.checkout.sessions.create(sessionParams(p, { customerId: customer.id, dogId: dog.id, addressId: address.id }, { origin, stripeCustomerId, productName }));
-    return json({ clientSecret: session.client_secret, publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY });
+    // P7: dotazník → zákazník (email, customer_id). Chyba analytiky nákup nezastaví.
+    if (p.quizSessionId) {
+      await linkCheckout(p.quizSessionId, {
+        email: p.customer.email, customerId: customer.id, dogId: dog.id, answers: p.answers,
+        plan: p.quote.plan, bag: p.quote.bagId, method: p.method, result: resultFromQuote(p.quote),
+      }, await supabaseQuizStore()).catch((e) => console.error('[checkout] quiz_sessions', e));
+    }
+    // customerId: identify v PostHogu (P7, iba so súhlasom; email do analytiky nejde)
+    return json({ clientSecret: session.client_secret, publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY, customerId: customer.id });
   } catch (e) {
     if (e instanceof CheckoutError) return json({ error: e.message, field: e.field }, 422);
     console.error('[checkout]', e);

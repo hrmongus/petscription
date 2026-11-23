@@ -321,6 +321,97 @@ export type Database = {
           },
         ]
       }
+      quiz_sessions: {
+        Row: {
+          answers: Json
+          bag_id: string | null
+          checkout_started_at: string | null
+          completed: boolean
+          customer_id: string | null
+          delivery_method: string | null
+          dog_id: string | null
+          email: string | null
+          id: string
+          landing_path: string | null
+          last_step: string | null
+          max_step: number
+          order_id: string | null
+          paid_at: string | null
+          plan: string | null
+          referrer: string | null
+          result: Json | null
+          started_at: string
+          updated_at: string
+          utm: Json | null
+        }
+        Insert: {
+          answers?: Json
+          bag_id?: string | null
+          checkout_started_at?: string | null
+          completed?: boolean
+          customer_id?: string | null
+          delivery_method?: string | null
+          dog_id?: string | null
+          email?: string | null
+          id: string
+          landing_path?: string | null
+          last_step?: string | null
+          max_step?: number
+          order_id?: string | null
+          paid_at?: string | null
+          plan?: string | null
+          referrer?: string | null
+          result?: Json | null
+          started_at?: string
+          updated_at?: string
+          utm?: Json | null
+        }
+        Update: {
+          answers?: Json
+          bag_id?: string | null
+          checkout_started_at?: string | null
+          completed?: boolean
+          customer_id?: string | null
+          delivery_method?: string | null
+          dog_id?: string | null
+          email?: string | null
+          id?: string
+          landing_path?: string | null
+          last_step?: string | null
+          max_step?: number
+          order_id?: string | null
+          paid_at?: string | null
+          plan?: string | null
+          referrer?: string | null
+          result?: Json | null
+          started_at?: string
+          updated_at?: string
+          utm?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quiz_sessions_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quiz_sessions_dog_id_fkey"
+            columns: ["dog_id"]
+            isOneToOne: false
+            referencedRelation: "dogs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quiz_sessions_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       stripe_events: {
         Row: {
           event_id: string
