@@ -12,8 +12,8 @@ Paralelne: P3 admin (`p2-admin`, `admin/`), P4 portál (`p3-portal`). Spoločné
 | 4. PostHog v prehliadači (udalosti, identify, UTM, replay s maskovaním, proxy `/ingest`) | ✅ overené lokálne, udalosti v PostHogu |
 | 5. Server-side udalosti z webhooku (+ `withdrawal_submitted` pre P4) | ✅ (odstúpenie zapojí P4) |
 | 6. Klaviyo „Started Checkout“ + odkaz späť na výsledok | ✅ overené lokálne (flow v Klaviyo nastaviť) |
-| 7. Dashboard v PostHogu | ⏳ |
-| 8. Texty: zásady ochrany súkromia a cookie lišta | ⏳ |
+| 7. Dashboard v PostHogu | ✅ 11 insightov |
+| 8. Texty: zásady ochrany súkromia a cookie lišta | ✅ návrh nižšie, čaká na právnika |
 
 ## Plán udalostí (PostHog)
 
@@ -115,3 +115,21 @@ Funnel: `$pageview` → `quiz_started` → `quiz_completed` → `checkout_starte
 
 ### Treba v Klaviyo (používateľ)
 - Flow **Abandoned Checkout**: spúšťač metrika „Started Checkout“ (vznikne po prvej udalosti z webu), filter „Placed Order zero times since starting this flow“, oneskorenie napr. 4 h a 24 h, tlačidlo na `{{ event.CheckoutURL }}`, obrázok `{{ event.Items.0.ImageURL }}`, meno psa `{{ event.DogName }}`. Právny základ pozri krok 8.
+
+## Krok 7: dashboard v PostHogu (23. 11. 2026)
+
+**[Granula: funnel dotazník → platba](https://us.posthog.com/project/761342/dashboard/2399484)** (pripnutý, US cloud, projekt 761342):
+1. Funnel návšteva → štart dotazníka → výsledok → checkout → platba (`order_completed` first/one_off, okno 14 dní) + konverzia po týždňoch.
+2. Odchody v dotazníku po krokoch (štart → kroky 1–7 → výsledok, % voči predošlému kroku).
+3. Konverzia podľa zdroja (`$entry_utm_source`) a kampane (`$entry_utm_campaign`, Meta) — zdroj z prvej stránky relácie.
+4. Konverzia podľa receptu, balenia (výsledok → checkout → platba) a dopravcu (výber dopravy → odoslanie platby → platba).
+5. Objednávky a tržby po týždňoch (všetky objednávky vrátane obnovení), zrušenia podľa dôvodu + odstúpenia, retencia predplatného (prvá objednávka → obnovenia po mesiacoch).
+
+**Obmedzenia:** funnel a retencia vidia iba návštevníkov so súhlasom s analytickými cookies (bez súhlasu nie je čo prepojiť); tržby a počty objednávok sú úplné (server-side aj anonymne). V projekte sú testovacie udalosti z `localhost` z 23. 11. — pri spustení nastaviť dátum od spustenia alebo testovacie filtre.
+
+## Krok 8: čo doplniť do zásad ochrany súkromia a cookie lišty
+
+Pozri odpoveď v chate (23. 11.) — zhrnutie: nové spracovania (dotazník `quiz_sessions`, nedokončený nákup 90 dní, PostHog vrátane záznamu relácie a prenosu do USA, server-side štatistika objednávok bez profilu, Klaviyo opustený košík), právne základy, doby uchovania, príjemcovia, zoznam cookies a úložísk. **Otvorené pre právnika:** emaily opusteného košíka potrebujú súhlas s emailovým marketingom (súhlas s cookies nestačí), `granula-psy` (uložení psi v `localStorage`) nie je nevyhnutné úložisko.
+
+### Retencia (doplnok)
+- Cron `retention` odstráni po 90 dňoch meno psa aj z anonymných sessions bez objednávky (nielen zo sessions s emailom).

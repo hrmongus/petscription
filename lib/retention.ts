@@ -2,8 +2,8 @@ import type Stripe from 'stripe';
 
 /*
  * P7 retencia (SPEC P7, §10 P7.8): nedokončené nákupy s emailom sa po 90 dňoch zmažú alebo anonymizujú.
- *   1. quiz_sessions s emailom bez objednávky, posledná zmena pred > 90 dňami → email, customer_id, dog_id = null,
- *      meno psa z odpovedí preč (ostanú anonymné odpovede na štatistiku).
+ *   1. quiz_sessions bez objednávky, posledná zmena pred > 90 dňami → email, customer_id, dog_id = null,
+ *      meno psa z odpovedí preč (ostanú anonymné odpovede na štatistiku; týka sa aj sessions bez emailu).
  *   2. customers bez objednávky a bez predplatného, vytvorený aj naposledy zmenený pred > 90 dňami → zmazať
  *      Stripe zákazníka (iba náš, metadata.app = granula) a riadok customers (psy a adresy kaskádou).
  *      Poistka: ak má Stripe zákazník úspešnú platbu (objednávka by mala existovať, napr. zlyhal webhook),
@@ -82,7 +82,9 @@ export async function supabaseRetentionStore(): Promise<RetentionStore> {
   };
   return {
     async anonymizeQuizSessions(before) {
-      const { data, error } = await db().from('quiz_sessions').select('id, answers').not('email', 'is', null).is('order_id', null).lt('updated_at', before).limit(1000);
+      // s emailom, alebo anonymné, ktoré ešte nesú meno psa
+      const { data, error } = await db().from('quiz_sessions').select('id, answers').is('order_id', null).lt('updated_at', before)
+        .or('email.not.is.null,answers->>dogname.not.is.null').limit(1000);
       if (error) throw new Error(error.message);
       return strip(data);
     },
