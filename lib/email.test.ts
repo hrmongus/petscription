@@ -101,7 +101,7 @@ describe('šablóny (návrh content/emails)', () => {
     expect(r.html).not.toContain('Prvé vrece');
     expect(r.html).toContain('SPS ich zvyčajne doručí do 1\u00a0–\u00a03 pracovných dní');
     expect(r.html).toContain('kuriér dá vedieť');
-    expect(r.html).toContain('Hlavná 1, 04001 Košice');
+    expect(r.html.replace(/\u200c/g, '')).toContain('Hlavná 1, 04001 Košice');
   });
   test('5 neúspešná platba: kľúč podľa faktúry a pokusu, odkaz na zaplatenie, veta o ďalšom pokuse iba s dátumom', () => {
     const base = { invoiceId: 'in_1', attempt: 2, to: 'a@b.sk', name: 'Ján', dog: BODKA, siteUrl: SITE, product: { productId: 'jelen-kralik', bagId: '4', days: 16 }, totalCents: 3990, shippingCents: 490, payUrl: 'https://invoice.stripe.com/i/x' };

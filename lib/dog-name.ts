@@ -15,7 +15,8 @@ function generic(female: boolean, name: string | null): DogCases {
 }
 
 export function dogCases(rawName: string | null | undefined, sex?: string | null): DogCases {
-  const name = (rawName ?? '').trim().replace(/\s+/g, ' ');
+  // veľké začiatočné písmeno každého slova („gut“ → „Gut“, „bruno-max“ → „Bruno-Max“); zvyšok mena nemeníme
+  const name = (rawName ?? '').trim().replace(/\s+/g, ' ').replace(/(^|[\s-])(\p{Ll})/gu, (_, a: string, b: string) => a + b.toLocaleUpperCase('sk'));
   const female = sex ? sex === 'fenka' : /a$/i.test(name);
   if (!name || !/^\p{L}[\p{L}'-]*$/u.test(name) || name.length > 20) return generic(female, name || null);
   const ok = (acc: string, dat: string): DogCases => ({ nom: name, acc, dat, poss: female ? 'jej' : 'jeho', declined: true });

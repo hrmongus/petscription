@@ -8,8 +8,10 @@ Zadanie: `PROJEKT-1.md` · Zdroj pravdy: `SPEC.md` (odchýlky v §10) · Branch:
 | 2. FHB klient (P2) | ✅ hotové, na main |
 | 3. Doprava v checkoute (P1b) | ✅ hotové, na main / granula.sk |
 | 4. Checkout a predplatné (P1) | ✅ otestované naživo na granula.sk (test mode, FHB sandbox) a na test clocku vrátane obnovenia |
-| 5. FHB stavy a emaily | ✅ postavené a nasadené na granula.sk; emaily čakajú na Resend kľúč, crony na `CRON_SECRET` |
-| 6. Test celého toku | 🟡 väčšina overená (pozri nižšie); čaká na FHB testovací portál, Resend a P3/P4 akcie |
+| 5. FHB stavy a emaily | ✅ hotové a nasadené na granula.sk (emaily cez Resend, crony bežia) |
+| 6. Test celého toku | ✅ overené na granula.sk (test mode, FHB sandbox) vrátane Apple Pay |
+
+**✅ Projekt 1 je uzavretý (23. 11. 2026, potvrdil používateľ).** Ostáva iba zoznam „Pred spustením predaja“ nižšie (prepnutie na live, `/odstupenie` a `/ucet` z P4, zmazanie testovacej route). Prijatie testovacej príjemky FHB v portáli a pripomienka/obnovenie predplatného používateľa (23. 12. / 26. 12.) sa overia priebežne.
 
 ## Pred spustením predaja
 - [ ] Prepnúť repo na privátne
@@ -409,3 +411,5 @@ Spustené automaticky v noci („do as much as possible“). Opakovateľné skri
 - **Platba (23. 11.):** box „Karta“ odstránený (vyzeral ako tlačidlo). Súbory dotazníka majú v `granule-na-mieru.html` (a `cookies.js` v `index.html`) verziu `?v=20261123c`; **pri zmene `doprava.*`, `kviz.js`, `cookies.js` ju zvýšiť** (Safari inak použil starú kópiu a používateľ videl pôvodnú chybu Apple Pay).
 - **Apple Pay overené používateľom (23. 11., Safari):** objednávka #49, Stripe `card.wallet = apple_pay` (Mastercard •6131), DB `sent_to_fhb`, potvrdzovací e-mail `sent`.
 - **Alergie, doručenie, logá (23. 11.):** „Na nič nie je alergický“ prvá a najvýraznejšia; doprava bez predvolenej voľby (súhrn „od 4,90 €“); logá Packeta/DPD/SPS v kartách (SPEC §10.23). Verzia súborov `?v=20261123d`.
+- **Emaily (23. 11.):** meno psa vždy s veľkým začiatočným písmenom každého slova („gut“ → „Gut“, „pre Guta“, „Gutovi“), zvyšok mena sa nemení (McQueen). Adresa doručenia: za číslicami neviditeľný znak U+200C, aby ju Gmail neprelinkoval na mapu (text vyzerá rovnako); v šablónach CSS `a[x-apple-data-detectors]` pre iOS Mail. Testy `lib/dog-name.test.ts`.
+- **✅ Projekt 1 uzavretý (23. 11. 2026).**

@@ -88,7 +88,13 @@ export function deliveryOf(shipTo: unknown) {
       : t.point_label || [t.point_address?.street, `${t.point_address?.zip ?? ''} ${t.point_address?.city ?? ''}`.trim()].filter(Boolean).join(', ');
   const eta = (METHODS[m]?.etaEmail ?? METHODS[m]?.eta ?? '2–4').replace(/^(\d+)\s*[–-]\s*(\d+).*$/, '$1\u00a0–\u00a0$2'); // nezalomiť „2 – 3“
   const pickupNote = METHODS[m]?.pickup === false ? 'V deň doručenia ti kuriér dá vedieť SMS alebo e-mailom.' : 'Keď budú pripravené na vyzdvihnutie, dopravca ti pošle SMS alebo e-mail.';
-  return { carrier: c.long, carrierShort: c.short, address, eta, pickupNote };
+  return { carrier: c.long, carrierShort: c.short, address: noAutoLink(address), eta, pickupNote };
+}
+
+/** Gmail (a iOS Mail) z adresy robí modrý odkaz na mapu. Neviditeľný znak U+200C za číslicami rozbije rozpoznanie
+ *  adresy, text vyzerá rovnako. */
+export function noAutoLink(s: string): string {
+  return s.replace(/(\d)(?=\d|\s|,|$)/g, '$1\u200c');
 }
 
 /** cena dopravy pre spôsob a balenie (rovnaký výpočet ako checkout), keď ju volajúci nepozná */
