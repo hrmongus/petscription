@@ -1,8 +1,8 @@
 /* Granula — recenzie (jeden zdroj pre úvodnú stránku aj výsledok konfigurátora).
    Použitie: <div class="rw-wrap" data-reviews tabindex="0" aria-label="…"></div>
    Pravidlá:
-   - žiadna recenzia nie je v oboch radoch naraz;
-   - každý rad je dlhší ako šírka obrazovky + najširšia karta, takže sa tá istá karta
+   - jeden rad (fotky a písané v pomere ~1 : 5), takže sa nič nemôže stretnúť v dvoch radoch;
+   - rad je dlhší ako šírka obrazovky + najširšia karta, takže sa tá istá karta
      (a jej kópia pre nekonečné posúvanie) nikdy neukáže dvakrát naraz;
    - prednosť majú fotky (pomer ~1 písaná : 4–5 fotiek), písané sa pridávajú len vtedy,
      keď fotky na šírku obrazovky nestačia;
@@ -72,23 +72,17 @@
       .map(function (r) { return { kind: "t", r: r, w: m[r.w] + m.gap }; });
     var widest = Math.max(m.p, m[1], m[2], m[3]);
     var target = V + widest + m.gap;
-    var rows = [[], []], w = [0, 0];
-    function put(it) { var i = w[0] <= w[1] ? 0 : 1; rows[i].push(it); w[i] += it.w; }
-    items.forEach(put);
-    // fotky nestačia na šírku obrazovky: pridávaj písané recenzie do kratšieho radu
-    var t = 0;
-    while (Math.min(w[0], w[1]) < target && t < texts.length) put(texts[t++]);
-    // písané rozložiť medzi fotky rovnomerne
-    rows = rows.map(function (row) {
-      var ph = row.filter(function (x) { return x.kind === "p"; }), tx = row.filter(function (x) { return x.kind === "t"; });
-      if (!tx.length) return ph;
-      var out = [], step = (ph.length + tx.length) / tx.length, next = step / 2, ti = 0, pi = 0;
-      for (var k = 0; k < ph.length + tx.length; k++) {
-        if (ti < tx.length && (k >= Math.floor(next) || pi >= ph.length)) { out.push(tx[ti++]); next += step; }
-        else out.push(ph[pi++]);
-      }
-      return out;
-    });
+    // jeden rad: všetky fotky + písané v pomere ~1 : 5 (aspoň 1); ďalšie písané len keby rad nestačil na šírku
+    var row = items.slice(), w = items.reduce(function (s, x) { return s + x.w; }, 0), t = 0;
+    var want = Math.max(1, Math.round(items.length / 5));
+    while (t < texts.length && (t < want || w < target)) { row.push(texts[t]); w += texts[t].w; t++; }
+    var ph = row.filter(function (x) { return x.kind === "p"; }), tx = row.filter(function (x) { return x.kind === "t"; });
+    var out = [], step = (ph.length + tx.length) / tx.length, next = step / 2, ti = 0, pi = 0;
+    for (var k = 0; k < ph.length + tx.length; k++) {
+      if (ti < tx.length && (k >= Math.floor(next) || pi >= ph.length)) { out.push(tx[ti++]); next += step; }
+      else out.push(ph[pi++]);
+    }
+    var rows = [out]; w = [w];
     return { rows: rows, w: w, key: rows.map(function (r) { return r.length; }).join("/") + ":" + t };
   }
 
