@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-23 20:00",
+ "built": "2026-11-23 22:35",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -86,11 +86,11 @@ window.GRANULA_POSTS = {
    "wanted": "draft",
    "example": false,
    "published": "2026-11-18",
-   "updated": "2026-11-20",
+   "updated": "2026-11-23",
    "author": "MVDr. Marcela Glezgová",
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
-   "hero": "placeholder",
+   "hero": "img/blog/ako-spravne-prejst-na-nove-granule/hero.webp",
    "words": 1117,
    "description": "Na nové granule prechádzaj postupne aspoň 7 dní. Nové krmivo pridávaj po krokoch 10, 25, 50, 75 a 90 %. Citlivý pes potrebuje 2 týždne aj viac.",
    "id": "F1",
@@ -157,9 +157,9 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-23: Hlavná fotka (ilustrácia vygenerovaná AI)",
       "2026-11-20: Autorka MVDr. Marcela Glezgová",
-      "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok",
-      "2026-11-18: Prvá verzia"
+      "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
      ]
     },
     {
@@ -282,7 +282,6 @@ window.GRANULA_POSTS = {
      "ok": false,
      "msg": "Zástupné obrázky sú nahradené skutočnými (pred publikovaním)",
      "details": [
-      "hero: Dve misky vedľa seba na kuchynskej linke: v jednej staré granule, v druhej nové granule s inou farbou a tvarom, pri nich kuchynská váha a pes strednej veľkosti, ktorý sa na misky pozerá",
       "obrázok: Ruka majiteľa sype do misky odvážené staré granule a menšiu kôpku nových granúl, oba druhy sú v miske jasne odlíšiteľné farbou a veľkosťou",
       "obrázok: Majiteľ odváži na kuchynskej váhe porciu nových granúl do misky, vedľa stojí otvorené vrece starých granúl a papier s ručne napísaným plánom 7 dní"
      ]
