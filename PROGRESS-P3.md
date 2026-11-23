@@ -6,7 +6,7 @@ Branch: `p3-portal` (z main 23. 11.) · Rozhodnutia: SPEC §10.35 (odstúpenie) 
 |---|---|
 | Priorita 1: `/odstupenie` | ✅ hotové, upravené podľa pripomienok (nezhoda e-mailu = chyba, refund ručne) |
 | Priorita 2: `/ucet` | ✅ hotové a otestované lokálne proti produkčnej DB (test mode, FHB sandbox) |
-| Do main | ⏳ na pokyn používateľa |
+| Do main | ✅ 23. 11. (`ab263de`), otestované na granula.sk |
 
 ## Plán
 
@@ -74,3 +74,11 @@ Porovnanie (prečítané z `origin/p2-admin` 7710f00 a `origin/p7-analytics` 534
 - E-maily k zmenám = `lib/emails-admin.ts` + šablóna `9-zmena` (C); pridané `subscriptionPauseEmail`, `subscriptionCancelledEmail` dostal voliteľný kľúč a záver. Moja šablóna `9-zmena-predplatneho` zrušená.
 - Odstúpenie: `stopOrder` ostal vlastný (pri `paid` musí prejsť aj bez FHB; `cancelOrder` od C by vtedy zlyhal). `trackWithdrawal()` po zázname, súhlas posiela stránka; test na presný obsah bez súhlasu.
 - Testy 205 ✅, typecheck ✅.
+- Lokálny test celého toku po zjednotení: predplatné #66 (všetky akcie `/ucet`, karta, odstúpenie z účtu), jednorazovo #67 (`/odstupenie`); FHB zmazané, Stripe zrušené, e-maily `sent`, `analytics_sent` 2/2.
+
+## Nasadenie a test na granula.sk (23. 11.)
+- Merge `p3-portal` → main fast-forward `ab263de` (main bez nových commitov, testy 205 ✅ a build na tom istom commite). Vercel nasadil za ~30 s (`/odstupenie` krátko 404 počas prepínania, potom 200).
+- **Predplatné #68** (`sub_1UezbB1U0mpiDjfidvVbBSjG`, DPD SK21286, FHB `GR-000068`): prihlásenie kódom (zlý kód odmietnutý), posun → preskočenie → váha 12,5 kg → 4 kg → SPS kuriér (objednávka #68 vo FHB `pending` prepísaná) → pauza → obnovenie → zrušenie → odvolanie → karta (Stripe rovno na zmenu karty) → odstúpenie z účtu: Stripe `canceled`, `GR-000068` zmazaná, DB `cancelled`, `withdrawals` `received` / `not_needed`, zdroj `ucet`.
+- **Jednorazovo #69** (Packeta 30361, FHB `GR-000069`): `/odstupenie?objednavka=69` → prijaté 16:58:49, `GR-000069` zmazaná, zdroj `web`; zlý e-mail → 422 s hláškou.
+- E-maily (Resend) `sent`: potvrdenia objednávok, kódy, zmena, pauza, obnovenie, zrušenie, odvolanie, potvrdenia odstúpenia, admin. `analytics_sent` 2/2. Žiadne aktívne testovacie predplatné neostalo.
+- Pri prvom nákupe na produkcii e2e skript raz zachytil chybu JS „undefined“ (zamietnutý Promise bez dôvodu) na stránke dotazníka; pri opakovaní sa neobjavila, `/ucet` a `/odstupenie` bez chýb. Pravdepodobne skript tretej strany (Stripe/PostHog/Klaviyo), sledovať.
