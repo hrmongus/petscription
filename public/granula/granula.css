@@ -253,10 +253,10 @@ h1,h2,h3,p{margin:0}
 
 /* ---------- recenzie (úvodná stránka aj výsledok konfigurátora; obsah z reviews.js) ---------- */
 .rw-wrap{display:flex;flex-direction:column;gap:12px;overflow:hidden;position:relative;width:100%;max-width:1800px;margin-inline:auto}
-.rw-row{list-style:none;margin:0 auto;padding:0;display:flex;gap:12px;width:max-content;max-width:none}
-.rw-row.move{margin:0;animation:rw-pp 40s ease-in-out infinite alternate}
-.rw-row.move.rw-b{animation-direction:alternate-reverse}
-@keyframes rw-pp{from{transform:translateX(0)}to{transform:translateX(var(--shift))}}
+.rw-row{list-style:none;margin:0;padding:0;display:flex;gap:12px;width:max-content;animation:rw-left 80s linear infinite}
+.rw-row.rw-b{animation-name:rw-right}
+@keyframes rw-left{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 6px))}}
+@keyframes rw-right{from{transform:translateX(calc(-50% - 6px))}to{transform:translateX(0)}}
 .rw-wrap:hover .rw-row,.rw-wrap:focus-within .rw-row{animation-play-state:paused}
 .rw-c{flex:none;height:240px;border:2px solid var(--n);background:var(--ml)}
 .rw-ph{position:relative;width:240px;overflow:hidden}
@@ -285,7 +285,8 @@ h1,h2,h3,p{margin:0}
   .rw-pt b{font-size:11px}.rw-pt small{font-size:10px}
 }
 @media (prefers-reduced-motion:reduce){
-  .rw-wrap{overflow-x:auto}.rw-row,.rw-row.move{animation:none}
+  .rw-wrap{overflow-x:auto}.rw-row{animation:none}
+  .rw-row [aria-hidden="true"]{display:none}
 }
 @media (min-width:1801px){.rw-wrap{-webkit-mask-image:linear-gradient(90deg,transparent,#000 120px,#000 calc(100% - 120px),transparent);mask-image:linear-gradient(90deg,transparent,#000 120px,#000 calc(100% - 120px),transparent)}}
 

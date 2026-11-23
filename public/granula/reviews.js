@@ -1,9 +1,8 @@
 /* Granula — recenzie (jeden zdroj pre úvodnú stránku aj výsledok konfigurátora).
    Použitie: <div class="rw-wrap" data-reviews tabindex="0" aria-label="…"></div>
    Pravidlá:
-   - dva rady, každá recenzia práve raz (žiadne kópie, žiadne opakovanie medzi radmi);
-   - písané v pomere ~1 : 4–5 k fotkám, v každom rade v strede;
-   - rad širší ako obrazovka sa pomaly posúva tam a späť, užší je vycentrovaný;
+   - dva rady sa samy posúvajú opačným smerom (nekonečný pás);
+   - pomer ~1 písaná : 5 fotiek; fotky sa pri nedostatku opakujú, písané nie;
    - písaná recenzia od majiteľa, ktorý má aj foto recenziu, sa nezobrazí spolu s ňou. */
 (function () {
   "use strict";
@@ -15,7 +14,11 @@
     { img: "img/recenzie/pes-zlta-stena.webp", alt: "Kríženka Šuška sedí pred žltou drevenou stenou", bag: "jelen-kralik-s-batatmi", dog: "Šuška, kríženec z útulku", by: "Jakub F." },
     { img: "img/recenzie/pes-banan.webp", alt: "Šteňa Bimbo hryzie banán z ruky majiteľa", bag: "morka-hus-kacica-s-tekvicou", dog: "Bimbo, kríženec", by: "Martin B." },
     { img: "img/recenzie/border-kolia.webp", alt: "Border kólia Max s vyplazeným jazykom na lúke", bag: "jahna-s-batatmi-cucoriedkami", dog: "Max, border kólia", by: "Juraj H." },
-    { img: "img/recenzie/psi-nos.webp", alt: "Detail nosa a jazyka kríženca Badyho", bag: "jahna-s-batatmi-cucoriedkami", dog: "Bady, kríženec, 9 rokov", by: "Laura B." }
+    { img: "img/recenzie/psi-nos.webp", alt: "Detail nosa a jazyka kríženca Badyho", bag: "jahna-s-batatmi-cucoriedkami", dog: "Bady, kríženec, 9 rokov", by: "Laura B." },
+    // PLACEHOLDERY: nahradiť skutočnými foto recenziami (fotka, pes, majiteľ)
+    { img: "img/produkt/pes-granula.webp", alt: "Pes s granulou v papuli", bag: "hovadzie-s-ryzou", dog: "[Meno psa], [plemeno]", by: "[Majiteľ]", ph: true },
+    { img: "img/hero-jack-russell.jpg", alt: "Jack russell s tenisovými loptičkami", bag: "jelen-kralik-s-batatmi", dog: "[Meno psa], [plemeno]", by: "[Majiteľ]", ph: true },
+    { img: "img/kviz-lopticka.jpg", alt: "Pes beží za loptičkou", bag: "morka-hus-kacica-s-tekvicou", dog: "[Meno psa], [plemeno]", by: "[Majiteľ]", ph: true }
   ];
   // poradie = priorita (prvé sa ukážu aj na menších obrazovkách)
   var TEXTS = [
@@ -31,8 +34,9 @@
     { w: 1, stars: 5, text: "dlho sme hladali nieco co mu sadne, vsetko skoncilo hnackou. tu konecne pevne hovienka a ziadne behanie von o 3 rano 😅", bag: "jahna-s-batatmi-cucoriedkami", by: "Juraj H.", dog: "Max, border kólia" }
   ];
   // pre produktovú sekciu (počet recenzií, fotky zákazníkov)
-  window.GranulaReviews = { count: PHOTOS.length + TEXTS.length, photos: PHOTOS };
-  var SPEED = [22, 18]; // px za sekundu (rady idú opačne a rôzne rýchlo)
+  var REAL = PHOTOS.filter(function (r) { return !r.ph; });
+  window.GranulaReviews = { count: REAL.length + TEXTS.length, photos: REAL };
+  var SPEED = [30, 25]; // px za sekundu (rady idú opačne a rôzne rýchlo)
 
   function bagImg(b) { return '<img src="' + P + b + '.webp" alt="" width="896" height="1200" loading="lazy">'; }
   function stars(n) {
@@ -63,37 +67,35 @@
     return m;
   }
 
-  // dva rady, každá recenzia práve raz (žiadne kópie ani opakovanie medzi radmi):
-  // fotky striedavo do radov, písané v pomere ~1 : 4–5 (pri 7 fotkách 2, v každom rade jedna, v strede radu).
-  // Rad, ktorý je širší ako obrazovka, sa pomaly posúva tam a späť; užší je vycentrovaný.
-  function plan() {
+  // dva rady, ktoré sa samy posúvajú opačným smerom (nekonečný pás).
+  // Pomer ~1 písaná : 5 fotiek. Keď fotky na šírku nestačia, opakujú sa (každý rad začína inou fotkou),
+  // aby rad bol dlhší ako obrazovka + najširšia karta. Písané sa neopakujú.
+  function plan(V, m) {
     var owners = PHOTOS.map(function (r) { return r.by; });
     var texts = TEXTS.filter(function (r) { return owners.indexOf(r.by) === -1; });
-    var nt = Math.max(1, Math.round(PHOTOS.length / 4));
-    var rows = [[], []];
-    PHOTOS.forEach(function (r, i) { rows[i % 2].push({ kind: "p", r: r }); });
-    texts.slice(0, nt).forEach(function (r, i) {
-      var row = rows[(i + 1) % 2]; // prvá písaná do kratšieho radu
-      row.splice(Math.ceil(row.length / 2), 0, { kind: "t", r: r });
-    });
-    return rows;
+    var widest = Math.max(m.p, m[1], m[2], m[3]), target = V + widest + m.gap;
+    var rows = [], ws = [], t = 0, n = PHOTOS.length;
+    for (var ri = 0; ri < 2; ri++) {
+      var row = [], w = 0, k = 0, start = ri ? Math.floor(n / 2) : 0;
+      while (w < target || k < Math.ceil(n / 2)) {
+        row.push({ kind: "p", r: PHOTOS[(start + k) % n] }); w += m.p + m.gap; k++;
+        if (k % 5 === 3 && t < texts.length) { var tx = texts[t++]; row.push({ kind: "t", r: tx }); w += m[tx.w] + m.gap; }
+      }
+      rows.push(row); ws.push(w);
+    }
+    return { rows: rows, w: ws, key: rows.map(function (r) { return r.length; }).join("/") };
   }
 
   function render(wrap) {
     var V = wrap.clientWidth;
     if (!V) return;
-    if (!wrap._rwDone) {
-      wrap._rwDone = true;
-      wrap.innerHTML = plan().map(function (row, i) {
-        return '<ul class="rw-row rw-' + (i ? "b" : "a") + '">' + row.map(function (it) { return card(it, false); }).join("") + "</ul>";
-      }).join("");
-    }
-    [].forEach.call(wrap.querySelectorAll(".rw-row"), function (ul, i) {
-      var shift = Math.max(0, ul.scrollWidth - V);
-      ul.classList.toggle("move", shift > 0);
-      ul.style.setProperty("--shift", -shift + "px");
-      ul.style.animationDuration = Math.max(12, Math.round(shift / SPEED[i] * 2)) + "s";
-    });
+    var m = measure(wrap), pl = plan(V, m);
+    if (wrap._rwKey === pl.key) return;
+    wrap._rwKey = pl.key;
+    wrap.innerHTML = pl.rows.map(function (row, i) {
+      var html = row.map(function (it) { return card(it, false); }).join("") + row.map(function (it) { return card(it, true); }).join("");
+      return '<ul class="rw-row rw-' + (i ? "b" : "a") + '" style="animation-duration:' + Math.round(pl.w[i] / SPEED[i]) + 's">' + html + "</ul>";
+    }).join("");
   }
 
   function init() {
