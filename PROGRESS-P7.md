@@ -5,7 +5,7 @@ Paralelne: P3 admin (`p2-admin`, `admin/`), P4 portál (`p3-portal`). Spoločné
 
 | Krok | Stav |
 |---|---|
-| 0. Plán, SPEC P7 | ✅ |
+| 0. Plán, SPEC P7 | ✅ rozhodnutia §10 P7.1–14 potvrdené |
 | 1. `quiz_sessions` + `POST /api/quiz` + spárovanie s checkoutom a objednávkou | ✅ migrácia aplikovaná, overené lokálne proti Supabase |
 | 2. Cron `retention` (90 dní) | ✅ dry run naživo OK |
 | 3. Súhlas po kategóriách v `cookies.js` | ✅ (texty lišty na potvrdenie, krok 8) |
@@ -157,3 +157,12 @@ Pozri odpoveď v chate (23. 11.) — zhrnutie: nové spracovania (dotazník `qui
 | Analytické | `ph_<kľúč projektu>_posthog` | cookie + localStorage (PostHog) | pseudonymné id návštevníka, relácia, záznam relácie | 1 rok |
 | Analytické | `granula-src` | sessionStorage | zdroj návštevy (UTM, referrer) pre dotazník | do zatvorenia záložky |
 | Marketingové | `__kla_id` a ďalšie úložiská Klaviyo | cookie + localStorage (Klaviyo) | formuláre, identifikácia pre emaily | 2 roky |
+
+## Nasadenie na main / granula.sk (23. 11. 2026)
+
+- Merge do main `752c39d` (fast-forward; main sa od začiatku P7 nezmenil), testy 130/130, typecheck a build OK. Vercel nasadil: `/api/analytics/config` vracia konfiguráciu PostHogu (env vo Verceli je nastavené), dotazník má políčko súhlasu s pripomenutím.
+- **Živý test nákupu** `npx tsx scripts/e2e-checkout.ts predplatne --consent` (nová voľba `--consent` = analytický súhlas): objednávka #63 (`first`, 67,50 €, DPD, FHB `GR-000063` pending), predplatné na konci zrušené. Všetky kontroly skriptu OK.
+  - PostHog: **`order_completed` zo servera** (`source: server`) s `distinct_id` = customer_id objednávky, `order_kind: first`, `revenue: 67.5`, `plan: mesiac`, recept, balenie 9, `carrier: dpd`, `customer_type: new`, `quiz_session_id` = session v DB. Po zrušení predplatného `subscription_cancelled` (`at_period_end: false`).
+  - Supabase: `quiz_sessions.order_id` = objednávka #63, `paid_at` vyplnené, `reminder_consent = false` (políčko nezaškrtnuté).
+  - V tom istom čase prišli aj anonymné `order_completed` (bez súhlasu, `$process_person_profile: false`) z testov ostatných chatov na granula.sk — anonymná cesta funguje tiež.
+- Testovacie dáta (zákazníci `delivered+…@resend.dev`, udalosti z 23. 11. v PostHogu vrátane zrušení) treba pred spustením predaja zmazať / odfiltrovať dátumom.
