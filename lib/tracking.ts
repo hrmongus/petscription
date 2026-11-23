@@ -2,6 +2,7 @@ import type Stripe from 'stripe';
 import { posthogCapture, type Capture } from './analytics';
 import type { FulfillmentEvents, Order } from './fulfillment';
 import { linkOrder, supabaseQuizStore, type QuizStore } from './quiz';
+import { klaviyoSender, placedOrderEvent, type KlaviyoSend } from './klaviyo';
 
 /*
  * P7: čo sa po spracovaní Stripe webhooku deje pre dotazník a analytiku (lib/fulfillment.ts → deps.events).
@@ -18,6 +19,10 @@ export type TrackingDeps = {
   quiz: QuizStore;
   /** počet objednávok zákazníka (nový / opakovaný zákazník, poradie obnovenia) */
   orderCounts(customerId: string, subscriptionId: string | null): Promise<{ customer: number; renewals: number }>;
+  /** Klaviyo zo servera (bez KLAVIYO_PRIVATE_KEY nič) */
+  klaviyo?: KlaviyoSend;
+  /** dal zákazník súhlas s pripomenutím v niektorom dotazníku? (Started Checkout mohol ísť z iného ako nákup) */
+  hadReminderConsent?(customerId: string): Promise<boolean>;
 };
 
 const CARRIER: Record<string, string> = { packeta_point: 'packeta', dpd_pickup: 'dpd', sps_courier: 'sps' };
@@ -36,7 +41,13 @@ const consentOf = (md: Stripe.Metadata | null | undefined) => md?.ph === '1';
 export function trackingEvents(d: TrackingDeps): FulfillmentEvents {
   return {
     async orderCreated({ order, customer, metadata }) {
+      // dotazník pred spárovaním: súhlas s pripomenutím → Klaviyo „Placed Order“ (flow opusteného košíka skončí)
+      const qs = metadata.quiz_session && /^[0-9a-f-]{36}$/i.test(metadata.quiz_session) ? await d.quiz.get(metadata.quiz_session).catch(() => null) : null;
       await linkOrder(metadata.quiz_session, order.id, d.quiz).catch((e) => console.error('[tracking] quiz_sessions', e));
+      const consented = !!qs?.reminder_consent || (d.hadReminderConsent ? await d.hadReminderConsent(customer.id).catch(() => false) : false);
+      if (d.klaviyo && consented) {
+        await d.klaviyo(placedOrderEvent({ number: order.number, email: customer.email, firstName: customer.name?.split(' ')[0] ?? null, amountCents: order.amount_cents, productId: metadata.product_id ?? null, bagId: metadata.bag_id ?? null }));
+      }
       const counts = await d.orderCounts(customer.id, null);
       await d.capture({
         event: 'order_completed',
@@ -117,6 +128,11 @@ export async function fulfillmentEvents(): Promise<FulfillmentEvents> {
   return trackingEvents({
     capture: posthogCapture(),
     quiz: await supabaseQuizStore(),
+    klaviyo: klaviyoSender(),
+    async hadReminderConsent(customerId) {
+      const { data } = await db().from('quiz_sessions').select('id').eq('customer_id', customerId).eq('reminder_consent', true).limit(1);
+      return !!data?.length;
+    },
     async orderCounts(customerId, subscriptionId) {
       const c = await db().from('orders').select('id', { count: 'exact', head: true }).eq('customer_id', customerId);
       const r = subscriptionId

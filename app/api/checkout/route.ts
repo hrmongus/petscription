@@ -5,6 +5,9 @@ import { insertAddress, insertDog, setStripeCustomer, upsertCustomer } from '@/l
 import { APP_METADATA, stripe, stripeConfigured } from '@/lib/stripe';
 import { ensureProduct } from '@/lib/stripe-products';
 import { linkCheckout, REMINDER_TEXT, resultFromQuote, supabaseQuizStore } from '@/lib/quiz';
+import { klaviyoConfigured, klaviyoSender, startedCheckoutEvent } from '@/lib/klaviyo';
+
+const CARRIER: Record<string, string> = { packeta_point: 'packeta', dpd_pickup: 'dpd', sps_courier: 'sps' };
 
 /*
  * POST /api/checkout { answers, plan, bag, delivery } → { clientSecret, publishableKey }
@@ -77,8 +80,19 @@ export async function POST(req: Request) {
         reminder: { consent: p.reminderConsent, text: REMINDER_TEXT },
       }, await supabaseQuizStore()).catch((e) => console.error('[checkout] quiz_sessions', e));
     }
-    // customerId: identify v PostHogu (P7, iba so súhlasom; email do analytiky nejde)
-    return json({ clientSecret: session.client_secret, publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY, customerId: customer.id });
+    // P7: pripomienka nedokončenej objednávky — „Started Checkout“ do Klaviyo zo servera iba so súhlasom z políčka,
+    // nezávisle od cookies; bez KLAVIYO_PRIVATE_KEY nič (prehliadač potom použije starú cestu cez klaviyo.js s cookies)
+    const reminderServer = p.reminderConsent && !!p.quizSessionId && klaviyoConfigured();
+    if (reminderServer) {
+      await klaviyoSender()(startedCheckoutEvent({
+        quizSessionId: p.quizSessionId!, email: p.customer.email, firstName: p.customer.firstName, dogName: p.answers.dogname,
+        productId: p.quote.productId, bagId: p.quote.bagId, plan: p.quote.plan, unitCents: p.quote.unitAmountCents,
+        gramsPerDay: p.quote.gramsPerDay, daysPerBag: p.quote.daysPerBag, carrier: CARRIER[p.method] ?? null,
+        siteUrl: process.env.NEXT_PUBLIC_SITE_URL || origin,
+      }));
+    }
+    // customerId: identify v PostHogu (P7, iba so súhlasom); reminderServer: prehliadač „Started Checkout“ neposiela
+    return json({ clientSecret: session.client_secret, publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY, customerId: customer.id, reminderServer });
   } catch (e) {
     if (e instanceof CheckoutError) return json({ error: e.message, field: e.field }, 422);
     console.error('[checkout]', e);

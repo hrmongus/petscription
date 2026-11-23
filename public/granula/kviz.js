@@ -767,7 +767,9 @@
         // P7: identify(customer_id) — email do PostHogu nejde; zdroj návštevy má PostHog sám ($initial_utm_*, $initial_referrer)
         if (res[0].customerId && window.GranulaAnalytics) GranulaAnalytics.identify(res[0].customerId, { $set: { has_checkout: true } });
         // „Started Checkout“ iba so súhlasom s pripomenutím (políčko) — súhlas s cookies na emaily nestačí
-        if (window.GranulaMarketing && $("remind").checked) GranulaMarketing.startedCheckout(klaviyoCheckout(delivery));
+        // keď ju poslal server (KLAVIYO_PRIVATE_KEY, nezávisle od cookies), prehliadač ju neposiela; „Placed Order“ potom pošle webhook
+        state.reminderServer = !!res[0].reminderServer; save();
+        if (window.GranulaMarketing && $("remind").checked && !res[0].reminderServer) GranulaMarketing.startedCheckout(klaviyoCheckout(delivery));
         paying = false;
         go("platba");
       })
@@ -903,7 +905,7 @@
         el.hidden = false;
         if (j.status === "paid") {
           el.textContent = "Číslo objednávky: " + j.order.number + ".";
-          if (window.GranulaMarketing && state.delivery) { try { GranulaMarketing.placedOrder(klaviyoCheckout(state.delivery, j.order.number)); } catch (e) {} }
+          if (window.GranulaMarketing && state.delivery && !state.reminderServer) { try { GranulaMarketing.placedOrder(klaviyoCheckout(state.delivery, j.order.number)); } catch (e) {} }
           delete state.paySession; save();
         }
         else if (j.status === "processing" && n < 15) { el.textContent = "Platbu sme prijali, objednávku práve zakladáme…"; setTimeout(function () { pollOrder(id, n + 1); }, 2000); }

@@ -172,3 +172,18 @@ Pozri odpoveď v chate (23. 11.) — zhrnutie: nové spracovania (dotazník `qui
 - `lib/analytics.ts`: bez súhlasu náhodné `distinct_id` aj `uuid`, `$process_person_profile: false`, iba whitelist `ANON_PROPERTIES`. Predtým: `distinct_id = anon-<uuid odvodené z kľúča>` (deterministický hash id objednávky) a všetky vlastnosti vrátane `quiz_session_id`, `order_id`, `subscription_id`, `renewal_number`, `lifetime_days`, dôvodu zrušenia.
 - Duplicity: migrácia `20261123112723_p7_analytics_sent.sql` (aplikovaná), `supabaseOnce` zapíše kľúč pred odoslaním; platí pre všetky serverové udalosti aj `trackWithdrawal`.
 - Test presného obsahu všetkých 6 serverových udalostí bez súhlasu (vlastnosti, kľúče payloadu, náhodné id, žiadne id/email/meno v JSON) + test, že dve rovnaké udalosti majú rôzne id.
+
+## Klaviyo zo servera (23. 11., SPEC §10 P7.16)
+
+### Hotové
+- `lib/klaviyo.ts`: Klaviyo Events API (`POST https://a.klaviyo.com/api/events`, revision `2024-10-15`), „Started Checkout“ s rovnakým obsahom ako prehliadač, „Placed Order“; bez `KLAVIYO_PRIVATE_KEY` nič; limit 3 s; chyba sa iba zaloguje; najviac raz (`analytics_sent`).
+- `POST /api/checkout`: so súhlasom z políčka pošle „Started Checkout“ zo servera (cookies netreba), vráti `reminderServer`; `kviz.js` potom neposiela „Started Checkout“ ani „Placed Order“ (Hotovo).
+- Webhook (`lib/tracking.ts`): „Placed Order“ pri novej objednávke, ak mal zákazník súhlas s pripomenutím v niektorom dotazníku.
+- `.env.example`: `KLAVIYO_PRIVATE_KEY`.
+
+### Overené
+- `lib/klaviyo.test.ts` (4): bez kľúča ticho, hlavičky a telo Events API, duplicita, chyba siete, obsah udalostí, „Placed Order“ iba so súhlasom. Spolu 171/171.
+- Lokálne: bez kľúča posiela „Started Checkout“ prehliadač (s cookies), s kľúčom server (Klaviyo dosiahnuté, s neplatným kľúčom 401) a prehliadač nič.
+
+### Po pridaní kľúča do Vercelu
+- Redeploy (env sa načíta pri nasadení), potom testovací nákup so zaškrtnutým políčkom a bez cookies → v Klaviyo profil s „Started Checkout“; po zaplatení „Placed Order“. Flow: spúšťač „Started Checkout“, filter „Placed Order zero times since starting this flow“.
