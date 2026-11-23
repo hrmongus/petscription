@@ -4,9 +4,12 @@
   "private": true,
   "description": "Admin portál Granula (manazer.granula.sk). Závislosti sú v koreňovom package.json (npm ci v koreni repa), tu nič neinštalovať.",
   "scripts": {
+    "predev": "node scripts/vypocet.mjs",
     "dev": "next dev -p 3001",
+    "prebuild": "node scripts/vypocet.mjs",
     "build": "next build",
     "start": "next start -p 3001",
+    "pretypecheck": "node scripts/vypocet.mjs",
     "typecheck": "tsc --noEmit",
     "create-admin": "tsx scripts/create-admin.ts"
   },

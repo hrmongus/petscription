@@ -12,7 +12,6 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 | `nas-pribeh.html` | Náš príbeh — zatiaľ prázdna (noindex, mimo sitemap), odkaz v pätičke | |
 | `podpora.html` | podpora: e-mail podpora@granula.sk, témy s predvyplneným predmetom, časté otázky | |
 | `granule-na-mieru.html` | funkčný dotazník: 6 krokov (meno a pohlavie, plemeno s vyhľadávaním, váha a vek, deň, kastrácia a postava, zameranie) → miešanie → výsledok → objednávka → hotovo (smerovanie cez `#krok-1` … `#hotovo`) | Formulár 1–5 + nový krok s menom, Vyberáme granule, Výsledok, Checkout, Hotovo |
-| `admin-vypocet.html` | dočasná kontrolná stránka výpočtu (všetky otázky, vhodnosť, pravidlá, dávka krok za krokom, parametre, katalóg) | |
 | `engine.js` | výber granúl, dávka a profil psa pre graf; jediný zdroj pravdy | |
 | `radar.js` | radarový graf „Profil tvojho psa“ (dotazník aj kontrolná stránka) | |
 | `kviz.js` | ovládanie dotazníka | |
@@ -43,7 +42,7 @@ buildu; stačí otvoriť `index.html` alebo spustiť `python3 -m http.server`.
 ## Profil psa (radar v dotazníku)
 
 - Vedľa otázok (desktop hore v modrom pravom stĺpci nad „Vedel si?“, mobil malý v pravom hornom rohu vedľa loga a krokov, s krátkymi popismi osí a tlačidlom „i“ s vysvetlením) je graf „Profil tvojho psa“ (len graf, bez rámu a textu) so 6 osami: Energia, Bielkoviny, Tuk, Jednoduché zloženie, Rast, Veľkosť granule. Ukazuje **potreby psa, nikdy receptúry**; tie sú až vo výsledku. Vo výsledku je graf kompletný (všetky osi odomknuté).
-- Hodnoty počíta `engine.js` → `profilPsa(odpovede, krok)` z rovnakých odvodených údajov ako odporúčanie (veľkosť z tabuľky plemien, fáza, násobok RER cez spoločnú `factorFor()`, príznaky). Kreslí `radar.js`. Kontrola čísel: `admin-vypocet.html`, sekcia 1b.
+- Hodnoty počíta `engine.js` → `profilPsa(odpovede, krok)` z rovnakých odvodených údajov ako odporúčanie (veľkosť z tabuľky plemien, fáza, násobok RER cez spoločnú `factorFor()`, príznaky). Kreslí `radar.js`. Kontrola čísel: manazer.granula.sk/vypocet, sekcia 1b.
 - Os je zamknutá (stred, sivá, prerušovaná), kým nie je zodpovedaný jej krok: veľkosť granule → plemeno, rast → vek, energia a bielkoviny → bežný deň, tuk → kastrácia/postava, zloženie → zameranie. Odpovede z neskorších krokov sa nepočítajú (návrat späť).
 - Hodnoty osí sú návrh na zobrazenie smeru potreby, nie výživové pravidlo; neoveril ich veterinár.
 - Na mobile je navigácia krokov (Späť / Ďalej) stále na spodnej lište. Fotky z bočných panelov sú zatiaľ odstránené; „Vedel si?“ je pod grafom (len desktop).
@@ -81,8 +80,8 @@ dotazník dáva bočný panel pod otázku.
 ## Dotazník a výpočet
 
 Všetko počíta **`engine.js`** (`GranulaEngine.compute`). Dotazník (`kviz.js`)
-aj kontrolná stránka **`admin-vypocet.html`** (odkaz „Výpočet granúl (interné)“
-v pätičke, `noindex`) volajú ten istý kód, takže sa nemôžu rozísť.
+aj kontrolná stránka výpočtu v admine (`admin/vypocet/admin-vypocet.html`, manazer.granula.sk/vypocet,
+za prihlásením) volajú ten istý kód, takže sa nemôžu rozísť.
 
 **Produkty** (názvy podľa obalu, `img/produkty/`): Hovädzie, morka & jahňa s ryžou ·
 Morka, hus & kačica s tekvicou · Hovädzie s ryžou · Jahňa s batátmi & čučoriedkami ·
