@@ -51,7 +51,7 @@ async function main() {
   const s = new Stripe(process.env.STRIPE_SECRET_KEY!);
   const sb = db();
   const stamp = Math.floor(Date.now() / 1000);
-  const email = process.argv.find((a) => a.startsWith('--email='))?.split('=')[1] ?? `e2e-${scenario}-${stamp}@granula.sk`;
+  const email = process.argv.find((a) => a.startsWith('--email='))?.split('=')[1] ?? `delivered+e2e-${scenario}-${stamp}@resend.dev`;
   const plan = scenario === 'jednorazovo' ? 'raz' : 'mesiac';
   const bag = scenario === 'jednorazovo' ? '4' : '9';
   const card = scenario === 'zamietnuta' ? '4000000000000002' : '4242424242424242';

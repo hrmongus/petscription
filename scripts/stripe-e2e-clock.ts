@@ -113,7 +113,7 @@ async function main() {
   console.log(`site ${SITE}\ntest clock ${clock.id} štart ${start.toISOString()}`);
   try {
     // 1. zákazník na test clocku + v DB (POST /api/checkout ho nájde podľa e-mailu a použije jeho Stripe zákazníka)
-    const email = `e2e-clock-${unix(start)}@granula.sk`;
+    const email = `delivered+clock-${unix(start)}@resend.dev`;
     const sc = await s.customers.create({ test_clock: clock.id, email, name: 'Test Clock', phone: '+421905123456', preferred_locales: ['sk'], metadata: { app: 'granula', test_clock: '1' } });
     const { data: cust, error } = await sb.from('customers').insert({ email, name: 'Test Clock', phone: '+421905123456', stripe_customer_id: sc.id }).select('*').single();
     if (error) throw new Error(error.message);
