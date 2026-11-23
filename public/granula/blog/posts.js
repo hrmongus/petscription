@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-23 22:44",
+ "built": "2026-11-23 22:46",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -157,7 +157,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
-      "2026-11-23: Hlavná fotka a fotky do sekcií o prechode a o krokoch (ilustrácie vygenerované AI)",
+      "2026-11-23: Nová hlavná fotka a fotky do sekcií o prechode a o krokoch (ilustrácie vygenerované AI)",
       "2026-11-20: Autorka MVDr. Marcela Glezgová",
       "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
      ]

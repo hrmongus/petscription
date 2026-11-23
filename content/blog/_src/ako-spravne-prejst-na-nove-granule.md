@@ -8,7 +8,7 @@ priority: P1
 description: "Na nové granule prechádzaj postupne aspoň 7 dní. Nové krmivo pridávaj po krokoch 10, 25, 50, 75 a 90 %. Citlivý pes potrebuje 2 týždne aj viac."
 author: marcela-glezgova
 hero: img/blog/ako-spravne-prejst-na-nove-granule/hero.webp
-hero_alt: "Zlatý retríver položil hlavu na kuchynský stôl a pozerá na dve misky granúl: v menšej sú malé tmavohnedé granule, vo väčšej svetlejšie trojuholníkové. Vedľa stojí kuchynská váha so sklenenou miskou."
+hero_alt: "Zlatý retríver položil hlavu na kuchynský stôl a pozerá na dve misky granúl: v jednej sú malé tmavohnedé granule, v druhej svetlejšie trojuholníkové. Vedľa stojí plochá kuchynská váha so sklenenou miskou."
 hero_caption: "Pri prechode na nové granule pomáha hlavne trpezlivosť. Staré krmivo uberáš a nové pridávaš po malých krokoch. Ilustrácia vygenerovaná AI."
 published: 2026-11-18
 updated: 2026-11-23
@@ -23,7 +23,7 @@ key_points:
   - "Staré a nové granule miešaj podľa gramov, nie podľa odmerky."
   - "Najčastejšia chyba: držať sa kalendára. Ďalší krok urob, až keď má pes pevnú stolicu."
 changelog:
-  - "2026-11-23: Hlavná fotka a fotky do sekcií o prechode a o krokoch (ilustrácie vygenerované AI)"
+  - "2026-11-23: Nová hlavná fotka a fotky do sekcií o prechode a o krokoch (ilustrácie vygenerované AI)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
