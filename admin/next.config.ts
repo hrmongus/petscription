@@ -10,6 +10,7 @@ const root = path.join(import.meta.dirname, '..');
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  agentRules: false,
   // súbory mimo admin/ (../lib, ../public/granula) a koreňové node_modules
   turbopack: { root },
   outputFileTracingRoot: root,

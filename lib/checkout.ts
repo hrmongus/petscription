@@ -2,7 +2,7 @@ import type Stripe from 'stripe';
 import { z } from 'zod';
 import { boxesAllowed, isMethodAllowed, METHODS, shippingPrice, type DeliveryMethod } from './carriers';
 import { findPoint, type DeliveryPoint, type PointService } from './delivery-points';
-import { quote, QuoteError, skuItems, type Answers, type Quote } from './engine-server';
+import { quote, QuoteError, skuItems, type Answers, type BagId, type Quote } from './engine-server';
 import { normalizePhone, type ShipTo } from './fhb/build-order';
 import { APP_METADATA } from './stripe';
 
@@ -70,30 +70,8 @@ export async function prepareCheckout(input: unknown, deps: { findPoint?: typeof
     throw e;
   }
 
-  if (!isMethodAllowed(d.method, q.bagId)) throw new CheckoutError('Tento spôsob doručenia sa pri zvolenom balení neponúka.', 'delivery.method');
-  const phone = normalizePhone(d.phone);
-  if (!phone) throw new CheckoutError('Zadaj telefón v tvare +421 9XX XXX XXX.', 'delivery.phone');
-  const name = `${d.firstName} ${d.lastName}`;
-
-  let point: DeliveryPoint | null = null;
-  let shipTo: ShipTo;
-  const service = POINT_SERVICE[d.method];
-  if (service) {
-    if (!d.point?.id) throw new CheckoutError('Vyber výdajné miesto.', 'delivery.point');
-    point = await (deps.findPoint ?? findPoint)(service, d.point.id);
-    if (!point) throw new CheckoutError('Toto výdajné miesto teraz nie je dostupné. Vyber prosím iné.', 'delivery.point');
-    if (point.kind === 'box' && !boxesAllowed(d.method, q.bagId)) throw new CheckoutError(`Pri balení ${q.bagId} kg vyber odberné miesto, nie box.`, 'delivery.point');
-    shipTo = {
-      name, email: d.email, phone, country: 'SK', delivery_method: d.method,
-      point_id: point.id, point_label: `${point.name}, ${point.street}, ${point.zip} ${point.city}`,
-      point_address: { street: point.street, city: point.city, zip: point.zip },
-    };
-  } else {
-    const a = d.address;
-    const zip = (a?.zip ?? '').replace(/\s/g, '');
-    if (!a || !/^\d{5}$/.test(zip)) throw new CheckoutError('Doplň adresu doručenia (PSČ má 5 číslic).', 'delivery.address');
-    shipTo = { name, email: d.email, phone, country: 'SK', delivery_method: d.method, street: a.street, city: a.city, zip };
-  }
+  const { point, shipTo } = await resolveDelivery({ ...d, name: `${d.firstName} ${d.lastName}` }, q.bagId, deps);
+  const { phone, name } = shipTo;
 
   // DPH (SPEC P1): firma zatiaľ nie je platiteľ DPH → ceny z engine sú konečné, DPH sa neodvádza ani neuvádza.
   const shippingCents = Math.round(shippingPrice(d.method, q.bagId, q.shippingCents / 100, q.plan === 'raz' ? 'raz' : 'mesiac') * 100);
@@ -108,6 +86,50 @@ export async function prepareCheckout(input: unknown, deps: { findPoint?: typeof
     point,
     shipTo,
   };
+}
+
+export type DeliveryInput = {
+  method: DeliveryMethod;
+  name: string;
+  email: string;
+  phone: string;
+  point?: { id: string } | null;
+  address?: { street: string; zip: string; city: string } | null;
+};
+
+/**
+ * Doručenie → overený snapshot pre orders.ship_to a FHB (checkout, admin, zákaznícky portál): spôsob povolený pre balenie,
+ * telefón +421, výdajné miesto z aktuálneho zoznamu FHB (názov a adresa z FHB, nie od klienta), box iba kde je povolený,
+ * pri kuriérovi adresa s 5-miestnym PSČ.
+ */
+export async function resolveDelivery(d: DeliveryInput, bagId: BagId, deps: { findPoint?: typeof findPoint } = {}): Promise<{ point: DeliveryPoint | null; shipTo: ShipTo }> {
+  if (!isMethodAllowed(d.method, bagId)) throw new CheckoutError('Tento spôsob doručenia sa pri zvolenom balení neponúka.', 'delivery.method');
+  const phone = normalizePhone(d.phone);
+  if (!phone) throw new CheckoutError('Zadaj telefón v tvare +421 9XX XXX XXX.', 'delivery.phone');
+  const name = d.name.trim();
+  const email = d.email.trim().toLowerCase();
+  if (!name) throw new CheckoutError('Doplň meno.', 'delivery.name');
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || email.length > 50) throw new CheckoutError('Skontroluj e-mail (najviac 50 znakov).', 'delivery.email');
+
+  const service = POINT_SERVICE[d.method];
+  if (service) {
+    if (!d.point?.id) throw new CheckoutError('Vyber výdajné miesto.', 'delivery.point');
+    const point = await (deps.findPoint ?? findPoint)(service, d.point.id);
+    if (!point) throw new CheckoutError('Toto výdajné miesto teraz nie je dostupné. Vyber prosím iné.', 'delivery.point');
+    if (point.kind === 'box' && !boxesAllowed(d.method, bagId)) throw new CheckoutError(`Pri balení ${bagId} kg vyber odberné miesto, nie box.`, 'delivery.point');
+    return {
+      point,
+      shipTo: {
+        name, email, phone, country: 'SK', delivery_method: d.method,
+        point_id: point.id, point_label: `${point.name}, ${point.street}, ${point.zip} ${point.city}`,
+        point_address: { street: point.street, city: point.city, zip: point.zip },
+      },
+    };
+  }
+  const a = d.address;
+  const zip = (a?.zip ?? '').replace(/\s/g, '');
+  if (!a || !a.street?.trim() || !a.city?.trim() || !/^\d{5}$/.test(zip)) throw new CheckoutError('Doplň adresu doručenia (PSČ má 5 číslic).', 'delivery.address');
+  return { point: null, shipTo: { name, email, phone, country: 'SK', delivery_method: d.method, street: a.street.trim(), city: a.city.trim(), zip } };
 }
 
 /** Približný dátum narodenia z veku v odpovediach (na prepočet dávky pri obnovení, SPEC §1 šteňatá). */

@@ -1,4 +1,6 @@
+import { cookies } from 'next/headers';
 import Link from 'next/link';
+import { Flash } from '@admin/components/flash';
 import { fhbMode, stripeMode } from '@lib/env-mode';
 import { requireAdmin } from '@admin/lib/session';
 import { logoutAction } from '../login/actions';
@@ -30,7 +32,10 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         </form>
       </header>
       <Nav />
-      <main className="main">{children}</main>
+      <main className="main">
+        <Flash raw={(await cookies()).get('ga_flash')?.value ?? null} />
+        {children}
+      </main>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { applyFhbOrder, targetStatus, type DbOrder, type DbSubscription, type Sy
 
 const CYCLE = { leadDays: 7, shipDays: 3 };
 const SHIP = { name: 'Ján Novák', email: 'jan@example.sk', phone: '+421905123456', country: 'SK', delivery_method: 'dpd_pickup', point_id: 'SK21286', point_label: 'Pavel Lóška Cyklo-Šport' };
-const order = (over: Partial<DbOrder> = {}): DbOrder => ({ id: 'o1', number: 12, customer_id: 'c1', subscription_id: 's1', kind: 'first', stripe_ref: 'cs_1', amount_cents: 7240, items: [{ sku: 'GRAN-hovadzie-9', qty: 1 }], ship_to: SHIP, status: 'sent_to_fhb', fhb_error: null, tracking: null, shipped_at: null, delivered_at: null, created_at: '', updated_at: '', ...over });
+const order = (over: Partial<DbOrder> = {}): DbOrder => ({ id: 'o1', number: 12, customer_id: 'c1', subscription_id: 's1', kind: 'first', stripe_ref: 'cs_1', amount_cents: 7240, items: [{ sku: 'GRAN-hovadzie-9', qty: 1 }], ship_to: SHIP, status: 'sent_to_fhb', fhb_error: null, tracking: null, shipped_at: null, delivered_at: null, reship_of: null, created_at: '', updated_at: '', ...over });
 
 function mem(sub?: Partial<DbSubscription>) {
   const orders: Record<string, unknown>[] = [], subs: Record<string, unknown>[] = [], audits: { action: string }[] = [];

@@ -24,7 +24,8 @@ export function ActionForm({
   className?: string;
   inline?: boolean;
 }) {
-  const [state, run, pending] = useActionState(action, null);
+  // výsledok ukáže hlavička stránky (components/flash.tsx)
+  const [, run, pending] = useActionState(action, null);
   return (
     <form
       action={run}
@@ -37,11 +38,6 @@ export function ActionForm({
       <button type="submit" className={danger ? 'btn danger' : 'btn'} disabled={pending}>
         {pending ? 'Pracujem…' : submit}
       </button>
-      {state?.msg ? (
-        <p className={state.ok ? 'msg ok' : 'msg err'} role="status" key={state.at}>
-          {state.msg}
-        </p>
-      ) : null}
     </form>
   );
 }

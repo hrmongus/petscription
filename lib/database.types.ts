@@ -260,6 +260,7 @@ export type Database = {
           items: Json
           kind: string
           number: number
+          reship_of: string | null
           ship_to: Json
           shipped_at: string | null
           status: string
@@ -278,6 +279,7 @@ export type Database = {
           items?: Json
           kind: string
           number?: number
+          reship_of?: string | null
           ship_to: Json
           shipped_at?: string | null
           status?: string
@@ -296,6 +298,7 @@ export type Database = {
           items?: Json
           kind?: string
           number?: number
+          reship_of?: string | null
           ship_to?: Json
           shipped_at?: string | null
           status?: string
@@ -305,6 +308,13 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "orders_reship_of_fkey"
+            columns: ["reship_of"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "orders_customer_id_fkey"
             columns: ["customer_id"]
