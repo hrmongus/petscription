@@ -83,6 +83,42 @@
     return { analytics: !!(C && C.has("analytics")), marketing: !!(C && C.has("marketing")) };
   }
 
+  /* ---------------- P7: udalosti do PostHogu (GranulaAnalytics z cookies.js; bez súhlasu sa zahodia) ---------------- */
+  function track(name, props) {
+    props = props || {};
+    props.quiz_session_id = state.qid || undefined;
+    var A = window.GranulaAnalytics;
+    if (A) A.track(name, props);
+    else (window.__granulaQ = window.__granulaQ || []).push(["track", name, props]); // cookies.js sa načíta až po kviz.js
+  }
+  // odpovede kroku bez mena psa (SPEC P7: krok, odpoveď bez osobných údajov)
+  var STEP_FIELDS = { "krok-1": ["sex"], "krok-2": ["breed"], "krok-3": ["kg", "years", "months", "weeks"], "krok-4": ["activity"],
+    "krok-5": ["neutered", "pregnant", "body"], "krok-6": ["focus"], "krok-7": ["allergies"] };
+  function stepProps(step) {
+    var p = { step: STEPS.indexOf(step) + 1, step_name: step };
+    (STEP_FIELDS[step] || []).forEach(function (k) { p[k] = Array.isArray(state[k]) ? state[k].slice() : state[k]; });
+    return p;
+  }
+  // jedna udalosť na dotazník (id) a kľúč, aby návrat späť a obnovenie stránky funnel nenafukovali
+  function once(key) {
+    var k = qid() + ":" + key;
+    state.sent = state.sent || [];
+    if (state.sent.indexOf(k) !== -1) return false;
+    state.sent.push(k); save();
+    return true;
+  }
+  function orderProps() {
+    var r = result(), p = r.product, x = p ? bagOf(r) : null, d = r.params.plans[state.plan] || 0;
+    var m = window.GranulaDelivery && GranulaDelivery.active() ? GranulaDelivery.method() : "";
+    var M = m && window.GranulaCarriers ? GranulaCarriers.METHODS[m] : null;
+    return {
+      recipe: p ? p.id : null, recommended_recipe: r.recommended ? r.recommended.id : null, bag: x ? x.bag.id : null, plan: state.plan,
+      grams_per_day: r.dose ? r.dose.grams : null, days_per_bag: x ? x.days : null,
+      price: x && x.price != null ? Math.round(x.price * (1 - d) * 100) / 100 : null,
+      delivery_method: m || undefined, carrier: M ? M.carrier : undefined, checkout_open: CHECKOUT_OPEN, currency: "EUR"
+    };
+  }
+
   var quiz = document.getElementById("quiz");
   var order = document.getElementById("order");
   var $ = function (id) { return document.getElementById(id); };
@@ -142,6 +178,7 @@
 
   // formulár → stav
   function read() {
+    if (current === "krok-1" && once("quiz_started")) { track("quiz_started", { entry: state.entry || (savedDogs().length ? "returning" : "new") }); }
     var fd = new FormData(quiz);
     state.dogname = (fd.get("dogname") || "").trim();
     state.sex = fd.get("sex") || "";
@@ -183,6 +220,7 @@
     if (!d) return;
     Object.assign(state, d, { ordered: false, breedSet: true });
     fill(); save();
+    if (once("quiz_started")) track("quiz_started", { entry: "saved_dog" });
     go(firstInvalid() || "vysledok");
   });
 
@@ -245,6 +283,7 @@
     var err = quiz.querySelector('[data-err="' + cur + '"]');
     if (!valid(cur)) { if (err) err.hidden = false; return; }
     if (err) err.hidden = true;
+    track("quiz_step_completed", stepProps(cur));
     go(i < STEPS.length - 1 ? STEPS[i + 1] : "miesame");
   });
 
@@ -294,6 +333,7 @@
     var algs = (d.allergies || []).map(function (id) { return E.ALLERGENS.filter(function (x) { return x.id === id; })[0]; }).filter(Boolean);
     if (!p) {
       $("r-swap").hidden = true; $("r-name").textContent = "Pre tohto psa nemáme vhodné granule";
+      if (once("quiz_completed")) track("quiz_completed", { recipe: null, no_match: true, allergies: algs.length });
       $("r-why").textContent = algs.length ? "Každá naša receptúra obsahuje niečo, na čo je " + state.dogname + " alergický (" + algs.map(function (a) { return a.label.toLowerCase(); }).join(", ") + "). Napíš nám na podpora@granula.sk, poradíme osobne." : "Napíš nám, poradíme osobne.";
       return;
     }
@@ -304,6 +344,12 @@
     $("r-kicker").textContent = "Hotovo · granule sú vybrané";
     $("r-name").textContent = p.name;
     rememberDog();
+    if (once("quiz_completed")) {
+      var qx = bagOf(r);
+      track("quiz_completed", { recipe: p.id, recommended_recipe: r.recommended.id, swapped: !!r.swapped, bag: qx.bag.id, recommended_bag: r.recBag,
+        grams_per_day: r.dose.grams, days_per_bag: qx.days, price: qx.price == null ? null : Math.round(qx.price * (1 - r.params.plans.mesiac) * 100) / 100,
+        price_per_day: qx.price == null ? null : Math.round(qx.price * (1 - r.params.plans.mesiac) / qx.days * 100) / 100, allergies: (r.derived.allergies || []).length, currency: "EUR" });
+    }
     // hlavné suroviny receptúry + denná dávka (nálepky v hlavičke)
     $("r-chips").innerHTML = p.highlights.map(function (h) {
       return '<li><span class="rh-ico" aria-hidden="true">' + I(h[0], 20, "#0047BB") + "</span><span>" + h[1] + " <b>" + h[2] + "\u00a0%</b></span></li>";
@@ -463,7 +509,12 @@
         CHECKOUT_OPEN = true;
         // výber doručenia (doprava.js): Packeta, SPS výdajné miesto, SPS kuriér
         if (window.GranulaDelivery) {
-          GranulaDelivery.init(order, { onChange: function () { order.querySelector('[data-err="objednavka"]').hidden = true; resetPayment(); if (current === "objednavka") renderOrder(); } });
+          var lastMethod = "";
+          GranulaDelivery.init(order, { onChange: function () {
+            order.querySelector('[data-err="objednavka"]').hidden = true; resetPayment(); if (current === "objednavka") renderOrder();
+            var m = GranulaDelivery.method();
+            if (m && m !== lastMethod) { lastMethod = m; track("delivery_selected", orderProps()); }
+          } });
           GranulaDelivery.enable({ packetaKey: s.packetaKey || "", mode: s.mode, saved: state.delivery, bag: bagOf(result()).bag.id });
           // platba cez Stripe: pôvodné platobné polia (karta, prevod, peňaženky) skryť
           $("pay-legacy").hidden = true;
@@ -549,7 +600,7 @@
     m.textContent = v ? "Kód „" + v + "“ nepoznáme." : "";
   });
   order.addEventListener("change", function (e) {
-    if (e.target.name === "plan") { state.plan = e.target.value; save(); resetPayment(); renderOrder(); syncQuiz(current); }
+    if (e.target.name === "plan") { state.plan = e.target.value; save(); resetPayment(); renderOrder(); syncQuiz(current); track("plan_selected", orderProps()); }
     if (e.target.name === "ship" || e.target.name === "pm") shipUI();
   });
   function checkout(wallet) {
@@ -643,6 +694,7 @@
     err.hidden = false;
   }
   function payError(msg) {
+    track("payment_failed", Object.assign(orderProps(), { reason: String(msg || "unknown").slice(0, 120) }));
     var err = $("p-err");
     err.textContent = msg || "Platba neprešla. Skús to prosím znova alebo inou kartou.";
     err.hidden = false;
@@ -674,6 +726,9 @@
     ])
       .then(function (res) {
         pay = { key: key, clientSecret: res[0].clientSecret, publishableKey: res[0].publishableKey, delivery: delivery, ready: false };
+        // P7: identify(customer_id) — email do PostHogu nejde; zdroj návštevy má PostHog sám ($initial_utm_*, $initial_referrer)
+        if (res[0].customerId && window.GranulaAnalytics) GranulaAnalytics.identify(res[0].customerId, { $set: { has_checkout: true } });
+        if (window.GranulaMarketing) GranulaMarketing.startedCheckout(delivery);
         paying = false;
         go("platba");
       })
@@ -729,6 +784,7 @@
     // pripravené vopred, aby okno peňaženky dostalo odpoveď hneď (inak sa dlho točí a peňaženka vyprší)
     p.express.on("confirm", function (ev) {
       $("p-err").hidden = true;
+      track("payment_submitted", Object.assign(orderProps(), { payment_method: (ev && ev.expressPaymentType) || "express" }));
       p.actions.then(function (r) {
         if (r.type !== "success") throw new Error("Platbu sa nepodarilo dokončiť.");
         return r.actions.confirm({ expressCheckoutConfirmEvent: ev });
@@ -763,6 +819,7 @@
   function confirmPayment() {
     if (!pay || !pay.ready || paying) return;
     paying = true;
+    track("payment_submitted", Object.assign(orderProps(), { payment_method: "card" }));
     var btn = $("p-submit"), p = pay;
     btn.disabled = true;
     btn.textContent = "Spracúvam platbu…";
@@ -872,7 +929,7 @@
     document.title = screens[id].dataset.title;
     if (id === "miesame") runMix(); else cancelAnimationFrame(mixRaf);
     if (id === "vysledok") renderResult();
-    if (id === "objednavka") { renderOrder(); shipUI(); }
+    if (id === "objednavka") { renderOrder(); shipUI(); if (once("checkout_started")) track("checkout_started", orderProps()); }
     if (id === "platba") renderPay();
     if (id === "hotovo") renderDone();
     syncQuiz(id);

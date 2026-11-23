@@ -9,7 +9,7 @@ Paralelne: P3 admin (`p2-admin`, `admin/`), P4 portál (`p3-portal`). Spoločné
 | 1. `quiz_sessions` + `POST /api/quiz` + spárovanie s checkoutom a objednávkou | ✅ migrácia aplikovaná, overené lokálne proti Supabase |
 | 2. Cron `retention` (90 dní) | ✅ dry run naživo OK |
 | 3. Súhlas po kategóriách v `cookies.js` | ✅ (texty lišty na potvrdenie, krok 8) |
-| 4. PostHog v prehliadači (udalosti, identify, UTM, replay s maskovaním, proxy `/ingest`) | ⏳ |
+| 4. PostHog v prehliadači (udalosti, identify, UTM, replay s maskovaním, proxy `/ingest`) | ✅ overené lokálne, udalosti v PostHogu |
 | 5. Server-side udalosti z webhooku (+ `withdrawal_submitted` pre P4) | ⏳ |
 | 6. Klaviyo „Started Checkout“ + odkaz späť na výsledok | ⏳ |
 | 7. Dashboard v PostHogu | ⏳ |
@@ -75,3 +75,15 @@ Funnel: `$pageview` → `quiz_started` → `quiz_completed` → `checkout_starte
 
 ### Overené
 - Playwright desktop 1280 aj mobil 390: lišta zbalená / rozbalená, výber „iba analytické“ → `analytics`, `analytics.js` sa pridá, Klaviyo nie.
+
+## Krok 4: PostHog v prehliadači (23. 11. 2026)
+
+### Hotové
+- **`public/granula/analytics.js`** (načíta ho iba `cookies.js` po analytickom súhlase): oficiálny načítavač PostHogu, `api_host: /ingest`, `person_profiles: identified_only`, `$pageview` pri načítaní stránky + `$pageleave`, autocapture (klik na uloženého psa sa zahodí, nesie meno). **Záznam relácie:** všetky vstupy maskované (`maskAllInputs` + všetky typy), maskované texty s menom psa, kontaktom a adresou (`[data-name]`, rekapitulácia platby, vybrané výdajné miesto, Hotovo…). `before_send` odstráni z URL `?test=`, `?session_id=`, `?kviz=`.
+- **Proxy `/ingest`** (`lib/analytics-routes.ts`, `next.config.ts` beforeFiles; `proxy.ts` nevracia 404 pre `/ingest/…/`). **`GET /api/analytics/config`** dá statickému webu kľúč z env.
+- **Udalosti v `kviz.js`** (SPEC P7): `quiz_started` (prvá odpoveď alebo uložený pes; `entry`), `quiz_step_completed` (krok 1–7 + odpovede kroku bez mena), `quiz_completed` (recept, odporúčaný recept, balenie, odporúčané balenie, gramy, D, cena, cena/deň; aj „bez vhodnej receptúry“), `checkout_started`, `plan_selected`, `delivery_selected` (dopravca, spôsob), `payment_submitted` (karta / Apple Pay / Google Pay / Link), `payment_failed` (dôvod). Každá nesie `quiz_session_id`; štart, dokončenie a checkout iba raz na dotazník.
+- **Identify:** po `POST /api/checkout` `identify(customer_id)`; email do PostHogu nejde. UTM a referrer: PostHog ich ukladá sám (`$initial_utm_*`, `$initial_referrer` na osobe, `$entry_*` na relácii).
+
+### Overené (Playwright + PostHog)
+- Bez súhlasu **0 požiadaviek** na PostHog. So súhlasom: `/ingest/e/`, `/ingest/s/` (záznam), v PostHogu `$pageview` s `utm_source=facebook`, `quiz_started`, `quiz_step_completed` (krok 2, `sex: pes`), `quiz_completed`, `checkout_started`. Meno psa ani `?test=` token sa v žiadnej udalosti neobjavili.
+- PostHog zahadzuje udalosti z headless prehliadačov (bot filter) — v teste bol prepísaný user agent. V projekte sú teraz testovacie udalosti z `localhost` (dashboard ich filtruje podľa hostu, krok 7).
