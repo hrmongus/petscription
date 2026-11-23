@@ -8,7 +8,7 @@ Paralelne: P3 admin (`p2-admin`, `admin/`), P4 portál (`p3-portal`). Spoločné
 | 0. Plán, SPEC P7 | ✅ |
 | 1. `quiz_sessions` + `POST /api/quiz` + spárovanie s checkoutom a objednávkou | ✅ migrácia aplikovaná, overené lokálne proti Supabase |
 | 2. Cron `retention` (90 dní) | ✅ dry run naživo OK |
-| 3. Súhlas po kategóriách v `cookies.js` | ⏳ |
+| 3. Súhlas po kategóriách v `cookies.js` | ✅ (texty lišty na potvrdenie, krok 8) |
 | 4. PostHog v prehliadači (udalosti, identify, UTM, replay s maskovaním, proxy `/ingest`) | ⏳ |
 | 5. Server-side udalosti z webhooku (+ `withdrawal_submitted` pre P4) | ⏳ |
 | 6. Klaviyo „Started Checkout“ + odkaz späť na výsledok | ⏳ |
@@ -64,3 +64,14 @@ Funnel: `$pageview` → `quiz_started` → `quiz_completed` → `checkout_starte
 
 ### Overené
 - `lib/retention.test.ts` (3), dry run `localhost` proti Supabase: 0 kandidátov (najstarší zákazník je z 21. 11.), bez `CRON_SECRET` 401.
+
+## Krok 3: súhlas po kategóriách (23. 11. 2026)
+
+### Hotové
+- **`cookies.js`:** kategórie analytické (PostHog) a marketingové (Klaviyo). Lišta: „Prijať všetky“, „Len nevyhnutné“, „Nastaviť“ (rozbalí prepínače Nevyhnutné / Analytické / Marketingové a „Uložiť výber“). `localStorage` `granula-cookies` = `all` | `necessary` | `analytics` | `marketing` (staré `all`/`necessary` platia). Odkaz „Nastavenia cookies“ (`data-cookie-settings`) otvorí lištu s aktuálnou voľbou.
+- Analytický súhlas → `analytics.js` (krok 4) + zdroj návštevy do `sessionStorage` `granula-src`; marketingový → Klaviyo (ako doteraz pri „Prijať všetky“). „Povoliť a zobraziť formulár“ pri Klaviyo embede = iba marketing. Odvolanie súhlasu po načítaní skriptu: PostHog `opt_out_capturing` + obnovenie stránky (ako doteraz pri Klaviyo).
+- API pre ostatné skripty: `GranulaConsent.has()`, udalosť `granula:consent`, `GranulaAnalytics.track/identify` (fronta; bez súhlasu sa zahodí, aj udalosti z `kviz.js` spred načítania `cookies.js` cez `__granulaQ`).
+- `granula.css`: pár riadkov pre rozbalené nastavenia (desktop aj mobil).
+
+### Overené
+- Playwright desktop 1280 aj mobil 390: lišta zbalená / rozbalená, výber „iba analytické“ → `analytics`, `analytics.js` sa pridá, Klaviyo nie.
