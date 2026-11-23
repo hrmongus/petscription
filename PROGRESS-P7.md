@@ -7,7 +7,7 @@ Paralelne: P3 admin (`p2-admin`, `admin/`), P4 portál (`p3-portal`). Spoločné
 |---|---|
 | 0. Plán, SPEC P7 | ✅ |
 | 1. `quiz_sessions` + `POST /api/quiz` + spárovanie s checkoutom a objednávkou | ✅ migrácia aplikovaná, overené lokálne proti Supabase |
-| 2. Cron `retention` (90 dní) | ⏳ |
+| 2. Cron `retention` (90 dní) | ✅ dry run naživo OK |
 | 3. Súhlas po kategóriách v `cookies.js` | ⏳ |
 | 4. PostHog v prehliadači (udalosti, identify, UTM, replay s maskovaním, proxy `/ingest`) | ⏳ |
 | 5. Server-side udalosti z webhooku (+ `withdrawal_submitted` pre P4) | ⏳ |
@@ -52,3 +52,15 @@ Funnel: `$pageview` → `quiz_started` → `quiz_completed` → `checkout_starte
 
 ### Poznámka
 - **Zdroj návštevy mimo stránky dotazníka:** UTM zo vstupnej stránky (napr. úvodná s `?utm_…`) prenesie do dotazníka `cookies.js` cez `sessionStorage` iba so súhlasom s analytickými cookies (krok 3). Bez súhlasu má `quiz_sessions.utm` iba UTM priamo z URL dotazníka.
+
+## Krok 2: cron retention (23. 11. 2026)
+
+### Hotové
+- **`lib/retention.ts`** + **`GET /api/cron/retention`** (Vercel Cron 03:27 UTC denne, `vercel.json`; `?dry=1` iba spočíta; beh sa zapíše do `fhb_events` ako `cron.retention` ako ostatné crony).
+  1. `quiz_sessions` s emailom bez objednávky, nezmenené > 90 dní → email, customer_id, dog_id = null, z odpovedí preč meno psa.
+  2. `customers` bez objednávky a predplatného, vytvorený aj zmenený pred > 90 dňami → Stripe zákazník zmazaný (iba `metadata.app = granula`), riadok zmazaný (psy, adresy kaskádou), `audit_log` `retention.customer_deleted` (bez emailu).
+  - Poistky: Stripe zákazník s úspešnou platbou sa nemaže (`audit_log` `retention.skipped_paid` na ručné riešenie: platba bez objednávky), cudzí Stripe zákazník sa nemaže, zákazník s prihlásením (`auth_user_id`) sa nemaže, bez Stripe kľúča sa nemaže zákazník so Stripe id. Max. 200 zákazníkov na beh.
+- `updated_at` zákazníka sa mení pri každom novom checkoute (`upsertCustomer`), takže 90 dní plynie od posledného pokusu o nákup.
+
+### Overené
+- `lib/retention.test.ts` (3), dry run `localhost` proti Supabase: 0 kandidátov (najstarší zákazník je z 21. 11.), bez `CRON_SECRET` 401.
