@@ -72,6 +72,24 @@ export type Database = {
           },
         ]
       }
+      analytics_sent: {
+        Row: {
+          event: string
+          key: string
+          sent_at: string
+        }
+        Insert: {
+          event: string
+          key: string
+          sent_at?: string
+        }
+        Update: {
+          event?: string
+          key?: string
+          sent_at?: string
+        }
+        Relationships: []
+      }
       audit_log: {
         Row: {
           action: string

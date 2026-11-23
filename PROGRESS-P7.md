@@ -166,3 +166,9 @@ Pozri odpoveď v chate (23. 11.) — zhrnutie: nové spracovania (dotazník `qui
   - Supabase: `quiz_sessions.order_id` = objednávka #63, `paid_at` vyplnené, `reminder_consent = false` (políčko nezaškrtnuté).
   - V tom istom čase prišli aj anonymné `order_completed` (bez súhlasu, `$process_person_profile: false`) z testov ostatných chatov na granula.sk — anonymná cesta funguje tiež.
 - Testovacie dáta (zákazníci `delivered+…@resend.dev`, udalosti z 23. 11. v PostHogu vrátane zrušení) treba pred spustením predaja zmazať / odfiltrovať dátumom.
+
+## Oprava 23. 11.: serverové udalosti bez súhlasu (SPEC §10 P7.15)
+
+- `lib/analytics.ts`: bez súhlasu náhodné `distinct_id` aj `uuid`, `$process_person_profile: false`, iba whitelist `ANON_PROPERTIES`. Predtým: `distinct_id = anon-<uuid odvodené z kľúča>` (deterministický hash id objednávky) a všetky vlastnosti vrátane `quiz_session_id`, `order_id`, `subscription_id`, `renewal_number`, `lifetime_days`, dôvodu zrušenia.
+- Duplicity: migrácia `20261123112723_p7_analytics_sent.sql` (aplikovaná), `supabaseOnce` zapíše kľúč pred odoslaním; platí pre všetky serverové udalosti aj `trackWithdrawal`.
+- Test presného obsahu všetkých 6 serverových udalostí bez súhlasu (vlastnosti, kľúče payloadu, náhodné id, žiadne id/email/meno v JSON) + test, že dve rovnaké udalosti majú rôzne id.
