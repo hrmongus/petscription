@@ -465,7 +465,7 @@ Celé prihlásenie s 2FA som neprešiel: vytvoriť testovací admin účet v pro
 
 ## Doplnky po rozhodnutiach (23. 11.)
 - **E-maily zákazníkovi** (SPEC §10.34): overené naživo, všetky `sent` v `email_log`: zmena predplatného `3606d9b0…`, storno + refund #56 (jeden e-mail so sumou), čiastočný refund #62 5,00 €, zrušenie predplatného; druhé zrušenie → „e-mail už dostal“ (neodišiel znova). Náhľad desktop aj mobil.
-- **Odstúpenia: refund až po vrátení tovaru** (SPEC §10.35): odstúpenie k #58: „čakáme na vrátenie“ → tlačidlo refundu skryté s vysvetlením → „tovar prijatý, otvorené“ → čiastočný refund 60 €, zapísané `refunded_at`, `refund_amount_cents`, `stripe_refund_id`. Starší refund k #55 doplnený do nových stĺpcov.
+- **Odstúpenia: refund až po vrátení tovaru** (SPEC §10.33): odstúpenie k #58: „čakáme na vrátenie“ → tlačidlo refundu skryté s vysvetlením → „tovar prijatý, otvorené“ → čiastočný refund 60 €, zapísané `refunded_at`, `refund_amount_cents`, `stripe_refund_id`. Starší refund k #55 doplnený do nových stĺpcov.
 - **`scripts/stripe-e2e-clock.ts` opravený:** nákup cez skutočný dotazník a vlastný platobný formulár (spoločné kroky `scripts/e2e-quiz.ts`, používa ich aj `e2e-checkout.ts`). Normálny beh: first #59 → simulované doručenie → obnovenie 28. 12. → renewal #60 (`in_1UevBR1U0mpiDjfi2Tmyy2bo`), všetky kontroly OK. `--fail-renewal`: first #61 → faktúra `in_1UevEj1U0mpiDjfihFTmFzZI` open → `past_due` → email `payment-failed` sent, žiadna renewal objednávka, OK. `e2e-checkout.ts 3ds` (#62) a `jednorazovo` po refaktore OK.
 - **Admin účty vytvorené** (`create-admin`): jakub@granula.sk, viktoria@mamsacare.com (rola admin, prihlásenie heslom overené, 2FA si nastavia pri prvom prihlásení).
 
