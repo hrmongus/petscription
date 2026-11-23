@@ -338,6 +338,9 @@ export type Database = {
           order_id: string | null
           paid_at: string | null
           plan: string | null
+          reminder_consent: boolean | null
+          reminder_consent_at: string | null
+          reminder_consent_text: string | null
           referrer: string | null
           result: Json | null
           started_at: string
@@ -360,6 +363,9 @@ export type Database = {
           order_id?: string | null
           paid_at?: string | null
           plan?: string | null
+          reminder_consent?: boolean | null
+          reminder_consent_at?: string | null
+          reminder_consent_text?: string | null
           referrer?: string | null
           result?: Json | null
           started_at?: string
@@ -382,6 +388,9 @@ export type Database = {
           order_id?: string | null
           paid_at?: string | null
           plan?: string | null
+          reminder_consent?: boolean | null
+          reminder_consent_at?: string | null
+          reminder_consent_text?: string | null
           referrer?: string | null
           result?: Json | null
           started_at?: string

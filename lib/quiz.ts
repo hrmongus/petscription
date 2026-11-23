@@ -13,6 +13,9 @@ import { AnswersSchema, BagIdSchema, computeServer, PlanSchema, quote, type Quot
  * Email a customer_id sa doplnia až pri checkoute (linkCheckout), objednávka z webhooku (linkOrder).
  */
 
+/** text políčka v checkoute (doklad súhlasu v quiz_sessions.reminder_consent_text); musí sedieť s granule-na-mieru.html */
+export const REMINDER_TEXT = 'Ak objednávku nedokončíš, pripomenieme ti ju e-mailom.';
+
 export const QUIZ_STEPS = ['krok-1', 'krok-2', 'krok-3', 'krok-4', 'krok-5', 'krok-6', 'krok-7', 'miesame', 'vysledok', 'objednavka', 'platba', 'hotovo'] as const;
 export type QuizStep = (typeof QUIZ_STEPS)[number];
 const AFTER_QUIZ = new Set<QuizStep>(['miesame', 'vysledok', 'objednavka', 'platba', 'hotovo']);
@@ -145,7 +148,11 @@ export async function saveQuizStep(input: QuizInput, store: QuizStore, opts: { o
 /** Checkout (POST /api/checkout): spárovanie so zákazníkom, psom a voľbami. Chýbajúca session sa založí. */
 export async function linkCheckout(
   id: string,
-  link: { email: string; customerId: string; dogId: string; answers: unknown; plan: string; bag: string; method: string; result: QuizResult | null },
+  link: {
+    email: string; customerId: string; dogId: string; answers: unknown; plan: string; bag: string; method: string; result: QuizResult | null;
+    /** políčko „Ak objednávku nedokončíš, pripomenieme ti ju e-mailom“ (doklad súhlasu: hodnota, čas servera, text) */
+    reminder?: { consent: boolean; text: string };
+  },
   store: QuizStore,
   now = new Date(),
 ): Promise<void> {
@@ -164,6 +171,10 @@ export async function linkCheckout(
     answers: link.answers as Json,
     ...(link.result ? { result: link.result as unknown as Json } : {}),
     checkout_started_at: existing?.checkout_started_at ?? now.toISOString(),
+    // súhlas (alebo jeho odvolanie) sa zapíše s časom iba pri zmene, aby čas ostal časom udelenia
+    ...(link.reminder && existing?.reminder_consent !== link.reminder.consent
+      ? { reminder_consent: link.reminder.consent, reminder_consent_at: now.toISOString(), reminder_consent_text: link.reminder.text }
+      : {}),
   };
   if (existing) await store.update(id, patch);
   else await store.insert({ id, ...patch } as TablesInsert<'quiz_sessions'>);

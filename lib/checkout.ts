@@ -43,6 +43,8 @@ export const CheckoutInputSchema = z.object({
   // P7: id dotazníka (quiz_sessions) a súhlas s cookies v čase nákupu; neplatné hodnoty sa ignorujú, nákup nezastavia
   quizSession: z.string().uuid().optional().catch(undefined),
   consent: z.object({ analytics: z.boolean(), marketing: z.boolean() }).partial().optional().catch(undefined),
+  // políčko „Ak objednávku nedokončíš, pripomenieme ti ju e-mailom“ (predvolene nezaškrtnuté)
+  reminder: z.boolean().optional().catch(undefined),
 });
 
 export type PreparedCheckout = {
@@ -60,6 +62,8 @@ export type PreparedCheckout = {
   quizSessionId: string | null;
   /** P7: súhlas s analytickými (PostHog) a marketingovými (Klaviyo) cookies v čase nákupu */
   consent: { analytics: boolean; marketing: boolean };
+  /** P7: súhlas s pripomenutím nedokončenej objednávky emailom (iba true = súhlas) */
+  reminderConsent: boolean;
 };
 
 const POINT_SERVICE: Partial<Record<DeliveryMethod, PointService>> = { packeta_point: 'packeta', dpd_pickup: 'dpd' };
@@ -116,6 +120,7 @@ export async function prepareCheckout(input: unknown, deps: { findPoint?: typeof
     shipTo,
     quizSessionId: parsed.data.quizSession ?? null,
     consent: { analytics: parsed.data.consent?.analytics === true, marketing: parsed.data.consent?.marketing === true },
+    reminderConsent: parsed.data.reminder === true,
   };
 }
 

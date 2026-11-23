@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { describe, expect, test } from 'vitest';
-import { linkCheckout, linkOrder, partialAnswers, QuizInputSchema, quizResult, referrerHost, restorable, saveQuizStep, type QuizRow, type QuizStore } from './quiz';
+import { linkCheckout, linkOrder, REMINDER_TEXT, partialAnswers, QuizInputSchema, quizResult, referrerHost, restorable, saveQuizStep, type QuizRow, type QuizStore } from './quiz';
 
 const FULL = { dogname: 'Bruno', sex: 'pes', breed: 'krizenec-stredny', kg: 17, years: '4', months: '0', weeks: '', activity: 'mesto', neutered: 'ano', pregnant: '', body: 'akurat', focus: ['nic'], allergies: ['ziadne'], recipe: '', recipeFor: '' };
 
@@ -10,7 +10,7 @@ function mem() {
     get: async (id) => rows.get(id) ?? null,
     insert: async (row) => void rows.set(row.id, {
       started_at: '2026-11-23T10:00:00Z', updated_at: '', last_step: null, max_step: 0, completed: false, answers: {}, result: null, plan: null, bag_id: null,
-      delivery_method: null, utm: null, referrer: null, landing_path: null, email: null, customer_id: null, dog_id: null, checkout_started_at: null, order_id: null, paid_at: null,
+      delivery_method: null, reminder_consent: null, reminder_consent_at: null, reminder_consent_text: null, utm: null, referrer: null, landing_path: null, email: null, customer_id: null, dog_id: null, checkout_started_at: null, order_id: null, paid_at: null,
       ...row,
     } as QuizRow),
     update: async (id, patch) => void Object.assign(rows.get(id)!, patch),
@@ -81,6 +81,15 @@ describe('checkout a objednávka', () => {
     await linkCheckout(id, { ...link, method: 'sps_courier' }, m.store, new Date('2026-11-23T12:00:00Z'));
     expect(m.rows.get(id)).toMatchObject({ email: 'jan@example.sk', customer_id: 'c1', dog_id: 'd1', delivery_method: 'sps_courier', checkout_started_at: '2026-11-23T11:00:00.000Z', completed: true });
   });
+  test('súhlas s pripomenutím: uloží sa s časom a textom, čas sa mení iba pri zmene voľby', async () => {
+    const m = mem(), id = randomUUID();
+    const link = { email: 'jan@example.sk', customerId: 'c1', dogId: 'd1', answers: FULL, plan: 'mesiac', bag: '9', method: 'dpd_pickup', result: null };
+    await linkCheckout(id, { ...link, reminder: { consent: true, text: REMINDER_TEXT } }, m.store, new Date('2026-11-23T11:00:00Z'));
+    await linkCheckout(id, { ...link, reminder: { consent: true, text: REMINDER_TEXT } }, m.store, new Date('2026-11-23T11:05:00Z'));
+    expect(m.rows.get(id)).toMatchObject({ reminder_consent: true, reminder_consent_at: '2026-11-23T11:00:00.000Z', reminder_consent_text: 'Ak objednávku nedokončíš, pripomenieme ti ju e-mailom.' });
+    await linkCheckout(id, { ...link, reminder: { consent: false, text: REMINDER_TEXT } }, m.store, new Date('2026-11-23T11:10:00Z'));
+    expect(m.rows.get(id)).toMatchObject({ reminder_consent: false, reminder_consent_at: '2026-11-23T11:10:00.000Z' });
+  });
   test('linkOrder: neznáma alebo neplatná session nič nespraví', async () => {
     const m = mem();
     await linkOrder('nie-uuid', 'o1', m.store);
@@ -93,5 +102,15 @@ describe('checkout a objednávka', () => {
     expect(restorable(row, new Date('2027-03-01T00:00:00Z'))).toBe(false);
     expect(restorable({ ...row, order_id: 'o' }, new Date('2026-12-01T00:00:00Z'))).toBe(false);
     expect(restorable({ ...row, completed: false }, new Date('2026-12-01T00:00:00Z'))).toBe(false);
+  });
+});
+
+describe('doklad súhlasu', () => {
+  test('text políčka v granule-na-mieru.html = REMINDER_TEXT (ukladá sa ako doklad)', async () => {
+    const fs = await import('node:fs');
+    const html = fs.readFileSync(new URL('../public/granula/granule-na-mieru.html', import.meta.url), 'utf8');
+    expect(html).toMatch(/<input type="checkbox" id="remind" name="remind">/);
+    expect(html).not.toMatch(/id="remind"[^>]*checked/);
+    expect(html).toContain(`<span>${REMINDER_TEXT}</span>`);
   });
 });

@@ -4,7 +4,7 @@ import { skuItems, allSkus } from '@/lib/engine-server';
 import { insertAddress, insertDog, setStripeCustomer, upsertCustomer } from '@/lib/store';
 import { APP_METADATA, stripe, stripeConfigured } from '@/lib/stripe';
 import { ensureProduct } from '@/lib/stripe-products';
-import { linkCheckout, resultFromQuote, supabaseQuizStore } from '@/lib/quiz';
+import { linkCheckout, REMINDER_TEXT, resultFromQuote, supabaseQuizStore } from '@/lib/quiz';
 
 /*
  * POST /api/checkout { answers, plan, bag, delivery } → { clientSecret, publishableKey }
@@ -74,6 +74,7 @@ export async function POST(req: Request) {
       await linkCheckout(p.quizSessionId, {
         email: p.customer.email, customerId: customer.id, dogId: dog.id, answers: p.answers,
         plan: p.quote.plan, bag: p.quote.bagId, method: p.method, result: resultFromQuote(p.quote),
+        reminder: { consent: p.reminderConsent, text: REMINDER_TEXT },
       }, await supabaseQuizStore()).catch((e) => console.error('[checkout] quiz_sessions', e));
     }
     // customerId: identify v PostHogu (P7, iba so súhlasom; email do analytiky nejde)

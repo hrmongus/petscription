@@ -21,15 +21,30 @@
   try { Object.assign(state, JSON.parse(sessionStorage.getItem(KEY)) || {}); } catch (e) {}
   if (!(state.plan in E.PARAMS.plans)) state.plan = "mesiac";
   if (state.breed !== BLANK.breed) state.breedSet = true; // starší uložený stav bez príznaku // napr. zrušená možnosť „na 3 mesiace“
-  // dokončené odpovede si pamätáme aj po zatvorení prehliadača (len v tomto prehliadači, max. 3 psy)
+  // dokončené odpovede (max. 3 psy): so súhlasom s funkčnými cookies trvalo v localStorage, bez neho iba v sessionStorage
+  // tejto záložky (cookies.js pri udelení súhlasu presunie psov do localStorage, pri odvolaní ich z localStorage zmaže)
   var SAVED_KEY = "granula-psy";
+  // kviz.js beží pred cookies.js: súhlas čítame priamo z jeho kľúča (rovnaký formát ako GranulaConsent)
+  function functionalOK() {
+    try { var v = localStorage.getItem("granula-cookies") || ""; return v === "all" || v.split(",").indexOf("functional") !== -1; } catch (e) { return false; }
+  }
+  function dogStore() { try { return functionalOK() ? localStorage : sessionStorage; } catch (e) { return null; } }
+  // psi uložení pred zavedením funkčných cookies bez súhlasu: presunúť do záložky a z trvalého úložiska zmazať
+  if (!functionalOK()) {
+    [SAVED_KEY, SAVED_KEY + "-v"].forEach(function (k) {
+      try {
+        var legacy = localStorage.getItem(k);
+        if (legacy !== null) { if (sessionStorage.getItem(k) === null) sessionStorage.setItem(k, legacy); localStorage.removeItem(k); }
+      } catch (e) {}
+    });
+  }
   var ANSWERS = ["dogname", "sex", "breed", "breedSet", "kg", "years", "months", "weeks", "activity", "neutered", "pregnant", "body", "focus", "allergies", "bag", "bagKey", "plan", "recipe", "recipeFor"];
   function savedDogs() {
-    try { var l = JSON.parse(localStorage.getItem(SAVED_KEY)); return Array.isArray(l) ? l : []; } catch (e) { return []; }
+    try { var l = JSON.parse(dogStore().getItem(SAVED_KEY)); return Array.isArray(l) ? l : []; } catch (e) { return []; }
   }
   // jednorazovo vymažeme psov uložených prvou verziou (ukladala pri každom písmene mena: „Adol“, „Adolf“, „Adolft“)
-  try { if (localStorage.getItem(SAVED_KEY + "-v") !== "2") { localStorage.removeItem(SAVED_KEY); localStorage.setItem(SAVED_KEY + "-v", "2"); } } catch (e) {}
-  function storeDogs(l) { try { localStorage.setItem(SAVED_KEY, JSON.stringify(l.slice(0, 3))); } catch (e) {} }
+  try { var ds = dogStore(); if (ds.getItem(SAVED_KEY + "-v") !== "2") { ds.removeItem(SAVED_KEY); ds.setItem(SAVED_KEY + "-v", "2"); } } catch (e) {}
+  function storeDogs(l) { try { dogStore().setItem(SAVED_KEY, JSON.stringify(l.slice(0, 3))); } catch (e) {} }
   function save() {
     try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
   }
@@ -526,6 +541,9 @@
           // povinné polia: hviezdička pri popise + poznámka (iba pri otvorenom predaji, predregistrácia bez zmeny)
           order.classList.add("co-req");
           order.querySelector(".req-note").hidden = false;
+          // P7: súhlas s pripomenutím nedokončenej objednávky (predvolene nezaškrtnutý)
+          $("remind-f").hidden = false;
+          $("remind").checked = !!state.remind;
           ["email", "phone", "fname", "lname", "street", "zip", "city"].forEach(function (id) { var f = $(id); if (f) f.setAttribute("aria-required", "true"); });
         }
         if (current === "objednavka") renderOrder();
@@ -548,7 +566,7 @@
         $event_id: orderNumber ? "order-" + orderNumber : "checkout-" + qid(),
         $value: price, ItemNames: [item.ProductName], CheckoutURL: back, Items: [item],
         DogName: state.dogname, Recipe: p.name, RecipeId: p.id, BagKg: x.bag.id, Plan: state.plan === "mesiac" ? "predplatné" : "jednorazovo",
-        GramsPerDay: r.dose.grams, DaysPerBag: x.days, Carrier: d && d.carrier || null
+        GramsPerDay: r.dose.grams, DaysPerBag: x.days, Carrier: d && d.carrier || null, ReminderConsent: !orderNumber
       }
     };
   }
@@ -621,6 +639,7 @@
   order.addEventListener("change", function (e) {
     if (e.target.name === "plan") { state.plan = e.target.value; save(); resetPayment(); renderOrder(); syncQuiz(current); track("plan_selected", orderProps()); }
     if (e.target.name === "ship" || e.target.name === "pm") shipUI();
+    if (e.target.name === "remind") { state.remind = e.target.checked; save(); }
   });
   function checkout(wallet) {
     if (!CHECKOUT_OPEN) return; // pred štartom sa neobjednáva
@@ -723,7 +742,7 @@
     return t && t !== "—" ? "Zaplatiť " + t : "Zaplatiť";
   }
   function payKey(delivery) {
-    return JSON.stringify([state.plan, bagOf(result()).bag.id, delivery]);
+    return JSON.stringify([state.plan, bagOf(result()).bag.id, delivery, !!$("remind").checked]);
   }
   // „Pokračovať k platbe“: server pripraví Checkout Session (cena, metadata), potom stránka #platba
   function startPayment(delivery) {
@@ -739,7 +758,7 @@
     var headers = { "Content-Type": "application/json" };
     if (testToken) headers["X-Checkout-Test"] = testToken;
     Promise.all([
-      fetch("/api/checkout", { method: "POST", headers: headers, body: JSON.stringify({ answers: answers, plan: state.plan, bag: bagOf(result()).bag.id, delivery: delivery, quizSession: qid(), consent: consentNow() }) })
+      fetch("/api/checkout", { method: "POST", headers: headers, body: JSON.stringify({ answers: answers, plan: state.plan, bag: bagOf(result()).bag.id, delivery: delivery, quizSession: qid(), consent: consentNow(), reminder: !!$("remind").checked }) })
         .then(function (r) { return r.json().then(function (j) { if (!r.ok) { var e = new Error(j.error || "Platbu sa nepodarilo pripraviť."); e.field = j.field; throw e; } return j; }); }),
       loadStripeJs()
     ])
@@ -747,7 +766,8 @@
         pay = { key: key, clientSecret: res[0].clientSecret, publishableKey: res[0].publishableKey, delivery: delivery, ready: false };
         // P7: identify(customer_id) — email do PostHogu nejde; zdroj návštevy má PostHog sám ($initial_utm_*, $initial_referrer)
         if (res[0].customerId && window.GranulaAnalytics) GranulaAnalytics.identify(res[0].customerId, { $set: { has_checkout: true } });
-        if (window.GranulaMarketing) GranulaMarketing.startedCheckout(klaviyoCheckout(delivery));
+        // „Started Checkout“ iba so súhlasom s pripomenutím (políčko) — súhlas s cookies na emaily nestačí
+        if (window.GranulaMarketing && $("remind").checked) GranulaMarketing.startedCheckout(klaviyoCheckout(delivery));
         paying = false;
         go("platba");
       })

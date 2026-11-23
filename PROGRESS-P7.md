@@ -133,3 +133,27 @@ Pozri odpoveď v chate (23. 11.) — zhrnutie: nové spracovania (dotazník `qui
 
 ### Retencia (doplnok)
 - Cron `retention` odstráni po 90 dňoch meno psa aj z anonymných sessions bez objednávky (nielen zo sessions s emailom).
+
+## Doplnok 23. 11.: súhlas s pripomenutím a funkčné cookies (zadanie používateľa, SPEC §10 P7.13–14)
+
+### Hotové
+- **Políčko v checkoute** „Ak objednávku nedokončíš, pripomenieme ti ju e-mailom.“ (nezaškrtnuté, iba pri otvorenom predaji). Migrácia `20261123110946_p7_quiz_reminder_consent.sql` (aplikovaná): `quiz_sessions.reminder_consent`, `reminder_consent_at` (čas servera), `reminder_consent_text` (doklad, aký text človek videl; test stráži zhodu s HTML). Zmena políčka po príprave platby pripraví platbu znova, aby server mal aktuálnu voľbu.
+- **Klaviyo „Started Checkout“** iba so zaškrtnutým políčkom (+ marketingové cookies), s `ReminderConsent: true`.
+- **Kategória „Funkčné“** v `cookies.js` a ukladanie psov v `kviz.js` podľa nej (pozri §10 P7.14).
+
+### Overené (lokálne proti Supabase)
+- Bez políčka: `reminder_consent = false` s časom a textom, do Klaviyo nič. S políčkom: `true` s časom, Klaviyo `identify` + „Started Checkout“.
+- Funkčné úložisko: bez voľby starý pes z `localStorage` → `sessionStorage`; súhlas „Funkčné“ → `localStorage`; „Len nevyhnutné“ → zmazané. Testy 130/130.
+
+## Zoznam úložísk v prehliadači (pre zásady ochrany súkromia)
+
+| Kategória | Názov | Typ | Účel | Doba |
+|---|---|---|---|---|
+| Nevyhnutné | `granula-cookies` | localStorage | voľba súhlasu s cookies | do zmeny voľby / vymazania |
+| Nevyhnutné | `granula-quiz` | sessionStorage | rozpracovaný dotazník a objednávka (vrátane id dotazníka) | do zatvorenia záložky |
+| Nevyhnutné | `granula-checkout-test` | sessionStorage | testovací prístup k platbe (iba interne) | do zatvorenia záložky |
+| Nevyhnutné | `__stripe_mid`, `__stripe_sid` | cookie (Stripe) | ochrana platby pred podvodmi | 1 rok / 30 min |
+| Funkčné | `granula-psy`, `granula-psy-v` | localStorage so súhlasom, inak sessionStorage | zapamätanie psov z dotazníka (max. 3) | trvalo / do zatvorenia záložky; zmaže sa pri odvolaní |
+| Analytické | `ph_<kľúč projektu>_posthog` | cookie + localStorage (PostHog) | pseudonymné id návštevníka, relácia, záznam relácie | 1 rok |
+| Analytické | `granula-src` | sessionStorage | zdroj návštevy (UTM, referrer) pre dotazník | do zatvorenia záložky |
+| Marketingové | `__kla_id` a ďalšie úložiská Klaviyo | cookie + localStorage (Klaviyo) | formuláre, identifikácia pre emaily | 2 roky |

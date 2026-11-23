@@ -547,6 +547,9 @@
   .rm-facts summary{font-size:15px}
 }
 @media (prefers-reduced-motion:reduce){.drop{animation:none;opacity:1}}
+/* P7: políčko súhlasu s pripomenutím pod e-mailom */
+.co-remind{display:flex;gap:10px;align-items:flex-start;margin:4px 0 14px;font-size:14px;line-height:1.4;cursor:pointer}
+.co-remind input{width:18px;height:18px;margin:1px 0 0;flex:none;accent-color:var(--k)}
 </style>
 </head>
 <body>
@@ -985,6 +988,8 @@
         <div class="ps-h"><span class="ps-n" aria-hidden="true">1</span><h2 id="t-contact">Kontakt</h2></div>
         <p class="req-note" hidden>Polia označené <span class="req-star" aria-hidden="true">*</span> sú povinné.</p>
         <label class="pf req"><span>E-mail</span><input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="meno@email.sk" required></label>
+        <!-- P7: súhlas s pripomenutím (predvolene nezaškrtnuté, iba pri otvorenom predaji); text = REMINDER_TEXT v lib/quiz.ts -->
+        <label class="co-remind" id="remind-f" hidden><input type="checkbox" id="remind" name="remind"><span>Ak objednávku nedokončíš, pripomenieme ti ju e-mailom.</span></label>
         <label class="pf req" id="phone-f" hidden><span>Telefón</span><input class="input" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+421 9XX XXX XXX"><small class="pf-hint">Dopravca ti dá vedieť, kedy balík príde.</small></label>
       </section>
       <section class="pay-sec" aria-labelledby="t-ship">
@@ -1173,11 +1178,11 @@
 <script src="compare.js"></script>
 <script src="doprava-config.js?v=20261123e"></script>
 <script src="doprava.js?v=20261123e"></script>
-<script src="kviz.js?v=20261123p7"></script>
+<script src="kviz.js?v=20261123p7b"></script>
 <script src="reviews.js"></script>
 <script src="site.js"></script>
 <!-- Klaviyo onsite: vypnutý (type="text/plain"), cookies.js ho zapne až po súhlase s marketingovými cookies -->
 <script type="text/plain" data-cookie-category="marketing" async src="https://static.klaviyo.com/onsite/js/Yf7K2A/klaviyo.js?company_id=Yf7K2A"></script>
-<script src="cookies.js?v=20261123p7"></script>
+<script src="cookies.js?v=20261123p7b"></script>
 </body>
 </html>
