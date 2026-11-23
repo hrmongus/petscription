@@ -18,8 +18,8 @@
 .hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:clamp(560px,calc(100vh - 150px),760px);border-bottom:0}
 .hero-copy{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:30px;padding:56px clamp(24px,4vw,64px) 88px}
 .hero-badge{display:inline-flex;align-items:center;gap:10px;border:2px solid var(--n);background:var(--ml);padding:6px 12px 6px 6px;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
-.hero-badge .sk{width:26px;height:30px;display:flex;align-items:center;justify-content:center}
-.hero-badge .sk svg{width:24px;height:29px;display:block}
+.hero-badge .sk{width:26px;height:26px;display:flex;color:var(--ml)}
+.hero-badge .sk svg{display:block}
 .hero h1{font-size:clamp(44px,5.4vw,84px);line-height:.98}
 .hero h1 span{color:var(--k)}
 .hero-flower{position:absolute;right:12%;top:20%;width:44px;height:44px;color:var(--o);transform:rotate(12deg)}
@@ -112,7 +112,7 @@
 <!-- hero -->
 <section class="hero">
   <div class="hero-copy">
-    <span class="hero-badge"><span class="sk" aria-hidden="true"><svg class="sk-znak" viewBox="0 0 60 72" width="22" height="26" aria-hidden="true"><path d="M2 2h56v36c0 18-13 28-28 32C15 66 2 56 2 38Z" fill="#EE1C25" stroke="#fff" stroke-width="2.5"/><path d="M27 10h6v8h9v-5h5v13h-5v-4h-9v7h12v-5h5v14h-5v-4H33v13h-6V33H15v4h-5V23h5v5h12v-7h-9v4h-5V12h5v5h9Z" fill="#fff"/><path d="M5 50c4-6 9-9 14-9 3 0 6 1 8 3 2-3 5-5 9-5 4 0 7 2 9 5 2-2 5-3 8-3 2 0 4 1 5 2v-1c-2 9-8 16-16 21-3 2-6 3-8 3-6-2-12-6-17-10-5-3-9-6-12-6Z" fill="#0B4EA2"/></svg></span>Vyrobené na Slovensku</span>
+    <span class="hero-badge"><span class="sk" aria-hidden="true" data-icon="slovensko" data-size="26" data-ink="#0047BB"></span>Vyrobené na Slovensku</span>
     <span class="hero-flower"><svg viewBox="-52 -52 104 104" aria-hidden="true"><g fill="currentColor"><rect x="-50" y="-15" width="100" height="30" rx="15" transform="rotate(90)"/><rect x="-50" y="-15" width="100" height="30" rx="15" transform="rotate(30)"/><rect x="-50" y="-15" width="100" height="30" rx="15" transform="rotate(150)"/></g></svg></span>
     <h1 class="display">Kvalitné granule, <span>zdravý pes</span></h1>
     <a class="btn btn-o" href="granule-na-mieru.html">Granule na mieru →</a>
