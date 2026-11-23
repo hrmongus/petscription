@@ -23,7 +23,7 @@ key_points:
   - "Staré a nové granule miešaj podľa gramov, nie podľa odmerky."
   - "Najčastejšia chyba: držať sa kalendára. Ďalší krok urob, až keď má pes pevnú stolicu."
 changelog:
-  - "2026-11-23: Hlavná fotka a fotka do sekcie o prechode (ilustrácie vygenerované AI)"
+  - "2026-11-23: Hlavná fotka a fotky do sekcií o prechode a o krokoch (ilustrácie vygenerované AI)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
@@ -135,7 +135,7 @@ Súvislosť potvrdzujú aj záznamy z veterinárnych ambulancií. Psy, ktoré ne
 6. **Nepridávaj nič nové.** ==Nové maškrty, zvyšky zo stola alebo doplnky by ti zakryli, čo spôsobilo mäkšiu stolicu.==
 7. **Sleduj stolicu, chuť do jedla a energiu psa.** Varovné znaky sú hnačka, zvracanie, veľa plynov, zápcha, bolesť a apatia.[^znaky]
 
-![Majiteľ odváži na kuchynskej váhe porciu nových granúl do misky, vedľa stojí otvorené vrece starých granúl a papier s ručne napísaným plánom 7 dní](placeholder "Porcie počas prechodu odvažuj. Odmerka pri dvoch rôznych krmivách nesedí.")
+![Majiteľka kladie na kuchynskú váhu misku, v ktorej sú staré a nové granule zhruba napoly, vedľa stojí sklenená miska s novými granulami a za stolom čaká zlatý retríver](img/blog/ako-spravne-prejst-na-nove-granule/vazenie.webp "Porcie počas prechodu odvažuj. Odmerka pri dvoch rôznych krmivách nesedí. Ilustrácia vygenerovaná AI.")
 
 [^znaky]: Varovné znaky podľa Tufts Petfoodology (2019).
 
