@@ -5,8 +5,9 @@ import { ActionForm } from '@admin/components/action-form';
 import { Badge } from '@admin/components/badge';
 import { History } from '@admin/components/history';
 import { day, dt, eur, json, kindLabel, WITHDRAWAL_STATUS } from '@admin/lib/format';
-import { actionText, daysLeft, refundDeadline, type Withdrawal } from '@admin/lib/withdrawals';
-import { statusAction, withdrawalCancelSubAction, withdrawalRefundAction } from './actions';
+import { actionText, canRefund, daysLeft, dueOf, RETURN_CONDITION, RETURN_STATUS, urgency, type Withdrawal } from '@admin/lib/withdrawals';
+import { todayLocal, ymdLocal } from '@admin/lib/format';
+import { returnAction, statusAction, withdrawalCancelSubAction, withdrawalRefundAction } from './actions';
 import { requireAdmin } from '@admin/lib/session';
 
 export const metadata = { title: 'Odstúpenie od zmluvy' };
@@ -28,8 +29,10 @@ export default async function WithdrawalDetail({ params }: { params: Promise<{ i
     db().from('audit_log').select('at, actor, action, before, after').eq('entity', 'withdrawal').eq('entity_id', w.id).order('at', { ascending: false }),
   ]);
   const orders = subOrders.data ?? [];
-  const dl = refundDeadline(w);
+  const dl = dueOf(w);
   const left = daysLeft(dl);
+  const u = !w.refunded_at && w.status !== 'rejected' ? urgency(dl) : null;
+  const gate = canRefund(w);
 
   return (
     <>
@@ -61,8 +64,17 @@ export default async function WithdrawalDetail({ params }: { params: Promise<{ i
               {w.deadline_at ? `do ${day(w.deadline_at)}` : 'tovar ešte nebol doručený'} · v lehote: {w.in_deadline == null ? '—' : w.in_deadline ? 'áno' : 'NIE'}
             </dd>
             <dt>Vrátiť peniaze do</dt>
+            <dd style={u ? { color: u === 'overdue' ? 'var(--err)' : '#a34300', fontWeight: 700 } : undefined}>
+              <b>{day(dl)}</b> {!w.refunded_at && w.status !== 'rejected' ? `(${left >= 0 ? `zostáva ${left} d.` : `prešvihnuté o ${-left} d.`})` : ''}
+            </dd>
+            <dt>Peniaze</dt>
+            <dd>{w.refunded_at ? `vrátené ${dt(w.refunded_at)}, ${eur(w.refund_amount_cents ?? 0)}${w.stripe_refund_id ? ` (${w.stripe_refund_id})` : ''}` : 'zatiaľ nevrátené'}</dd>
+            <dt>Vrátenie tovaru</dt>
             <dd>
-              <b>{day(dl)}</b> {['received', 'return_pending'].includes(w.status) ? `(${left >= 0 ? `zostáva ${left} d.` : `po lehote ${-left} d.`})` : ''}
+              {RETURN_STATUS[w.return_status ?? 'not_needed']}
+              {w.return_received_at ? `, prijaté ${day(w.return_received_at)}` : ''}
+              {w.return_condition ? `, ${RETURN_CONDITION[w.return_condition]}` : ''}
+              {w.return_note ? <div className="small">{w.return_note}</div> : null}
             </dd>
             <dt>Potvrdenie</dt>
             <dd>{w.confirmation_sent_at ? `odoslané ${dt(w.confirmation_sent_at)}` : 'neodoslané'}</dd>
@@ -101,6 +113,44 @@ export default async function WithdrawalDetail({ params }: { params: Promise<{ i
               </label>
             </div>
           </ActionForm>
+          <details open={w.return_status === 'awaiting'}>
+            <summary>Vrátenie tovaru</summary>
+            <ActionForm action={returnAction} submit="Uložiť vrátenie">
+              <input type="hidden" name="id" value={w.id} />
+              <div className="row">
+                <label>
+                  Stav vrátenia
+                  <select name="return_status" defaultValue={w.return_status === 'awaiting' ? 'received' : w.return_status ?? 'not_needed'}>
+                    {Object.entries(RETURN_STATUS).map(([k, v]) => (
+                      <option key={k} value={k}>
+                        {v}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  Prijaté dňa
+                  <input type="date" name="return_received_at" defaultValue={w.return_received_at ? ymdLocal(w.return_received_at) : todayLocal()} max={todayLocal()} />
+                </label>
+                <label>
+                  Stav vrecka
+                  <select name="return_condition" defaultValue={w.return_condition ?? ''}>
+                    <option value="">—</option>
+                    {Object.entries(RETURN_CONDITION).map(([k, v]) => (
+                      <option key={k} value={k}>
+                        {v}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+              <label>
+                Poznámka k vráteniu (interná)
+                <input name="return_note" defaultValue={w.return_note ?? ''} />
+              </label>
+              <p className="small">Dátum a stav vrecka sa uložia iba pri „Tovar prijatý“. Pri otvorenom alebo poškodenom vrecku zváž čiastočný refund.</p>
+            </ActionForm>
+          </details>
           {sub.data && sub.data.status !== 'cancelled' ? (
             <ActionForm action={withdrawalCancelSubAction} submit="Zrušiť predplatné okamžite" danger inline confirm="Zrušiť predplatné okamžite?">
               <input type="hidden" name="id" value={w.id} />
@@ -122,7 +172,8 @@ export default async function WithdrawalDetail({ params }: { params: Promise<{ i
                 <Link href={`/objednavky/${o.id}`}>#{o.number}</Link> · {kindLabel(o)} · {eur(o.amount_cents)} · <Badge status={o.status} />
                 {o.delivered_at ? <span className="small"> · doručená {day(o.delivered_at)}</span> : null}
               </p>
-              {o.amount_cents > 0 && o.status !== 'refunded' ? (
+              {o.amount_cents > 0 && o.status !== 'refunded' && !gate.ok ? <p className="msg warn small">{gate.reason}</p> : null}
+              {o.amount_cents > 0 && o.status !== 'refunded' && gate.ok ? (
                 <ActionForm action={withdrawalRefundAction} submit="Vrátiť peniaze" danger inline confirm={`Vrátiť peniaze za #${o.number}?`}>
                   <input type="hidden" name="id" value={w.id} />
                   <input type="hidden" name="order" value={o.id} />

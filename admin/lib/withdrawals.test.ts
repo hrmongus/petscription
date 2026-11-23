@@ -10,3 +10,22 @@ describe('lehota na vrátenie peňazí pri odstúpení', () => {
     expect(daysLeft(d, new Date('2026-12-09T08:00:00Z'))).toBe(-2);
   });
 });
+
+import { canRefund, dueOf, urgency } from './withdrawals';
+
+describe('refund až po vrátení tovaru', () => {
+  it('povolený iba bez vrátenia alebo po prijatí tovaru', () => {
+    expect(canRefund({ return_status: 'not_needed' }).ok).toBe(true);
+    expect(canRefund({ return_status: 'received' }).ok).toBe(true);
+    expect(canRefund({ return_status: 'awaiting' }).ok).toBe(false);
+    expect(canRefund({ return_status: 'not_returned' }).ok).toBe(false);
+    expect(canRefund({ return_status: null }).ok).toBe(true);
+  });
+  it('lehota z refund_due_at, zvýraznenie', () => {
+    const due = dueOf({ refund_due_at: '2026-12-07T22:59:59.999Z', submitted_at: '2026-11-23T11:00:00Z' });
+    expect(due.toISOString()).toBe('2026-12-07T22:59:59.999Z');
+    expect(urgency(due, new Date('2026-11-30T10:00:00Z'))).toBeNull();
+    expect(urgency(due, new Date('2026-12-05T10:00:00Z'))).toBe('soon');
+    expect(urgency(due, new Date('2026-12-08T10:00:00Z'))).toBe('overdue');
+  });
+});

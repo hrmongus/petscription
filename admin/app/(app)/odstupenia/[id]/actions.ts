@@ -8,6 +8,7 @@ import { adminAction, str, UserError } from '@admin/lib/action';
 import { audit } from '@admin/lib/audit';
 import { orderStore, stripe } from '@admin/lib/deps';
 import { eur } from '@admin/lib/format';
+import { canRefund, RETURN_CONDITION, RETURN_STATUS, type Withdrawal } from '@admin/lib/withdrawals';
 
 const STATUSES = ['received', 'return_pending', 'refunded', 'rejected'];
 
@@ -32,6 +33,30 @@ export const statusAction = adminAction(async (admin, fd) => {
   return 'Uložené.';
 });
 
+/** Vrátenie tovaru: prijatie a stav vráteného vrecka (refund sa povolí až potom). */
+export const returnAction = adminAction(async (admin, fd) => {
+  const id = str(fd, 'id');
+  const st = str(fd, 'return_status');
+  if (!(st in RETURN_STATUS)) throw new UserError('Neplatný stav vrátenia.');
+  const cond = str(fd, 'return_condition');
+  if (st === 'received' && !(cond in RETURN_CONDITION)) throw new UserError('Pri prijatom tovare vyber stav vrecka.');
+  const date = str(fd, 'return_received_at');
+  if (st === 'received' && date && !/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new UserError('Neplatný dátum prijatia.');
+  const w = (await load(id)) as Withdrawal;
+  const patch = {
+    return_status: st,
+    return_received_at: st === 'received' ? (date ? new Date(`${date}T12:00:00Z`).toISOString() : new Date().toISOString()) : null,
+    return_condition: st === 'received' ? cond : null,
+    return_note: str(fd, 'return_note') || null,
+    ...(st === 'awaiting' && w.status === 'received' ? { status: 'return_pending' } : {}),
+  };
+  const { error } = await db().from('withdrawals').update(patch as never).eq('id', id);
+  if (error) throw new Error(error.message);
+  await audit(admin.email, 'withdrawal.return', 'withdrawal', id, { return_status: w.return_status ?? null, return_condition: w.return_condition ?? null }, patch);
+  revalidatePath(`/odstupenia/${id}`);
+  return st === 'received' ? `Tovar prijatý (${RETURN_CONDITION[cond as keyof typeof RETURN_CONDITION]}). Teraz môžeš vrátiť peniaze.` : `Uložené: ${RETURN_STATUS[st as keyof typeof RETURN_STATUS]}.`;
+});
+
 /** Refund objednávky zo zmluvy; voliteľne označí odstúpenie ako vyriešené (peniaze vrátené). */
 export const withdrawalRefundAction = adminAction(async (admin, fd) => {
   const id = str(fd, 'id');
@@ -39,14 +64,23 @@ export const withdrawalRefundAction = adminAction(async (admin, fd) => {
   const raw = str(fd, 'amount').replace(',', '.');
   const amount = raw ? Math.round(Number(raw) * 100) : null;
   if (raw && !Number.isFinite(amount)) throw new UserError('Neplatná suma.');
-  await load(id);
+  const w = (await load(id)) as Withdrawal;
+  const gate = canRefund(w);
+  if (!gate.ok) throw new UserError(gate.reason);
   const r = await refundOrder(orderId, amount, { store: await orderStore(), stripe: stripe(), reason: 'odstúpenie od zmluvy' }).catch((e) => {
     if (e instanceof OrderActionError) throw new UserError(e.message);
     throw e;
   });
   await audit(admin.email, 'order.refunded', 'order', orderId, { status: r.before }, { ...r, withdrawal: id });
   await audit(admin.email, 'withdrawal.refund', 'withdrawal', id, null, { order: orderId, amount: r.refund.amount });
-  if (fd.get('resolve') === 'on') await db().from('withdrawals').update({ status: 'refunded', needs_review: false } as never).eq('id', id);
+  const done = {
+    refunded_at: new Date().toISOString(),
+    refund_amount_cents: (w.refund_amount_cents ?? 0) + r.refund.amount,
+    stripe_refund_id: r.refund.id,
+    ...(fd.get('resolve') === 'on' ? { status: 'refunded', needs_review: false } : {}),
+  };
+  const { error } = await db().from('withdrawals').update(done as never).eq('id', id);
+  if (error) throw new Error(error.message);
   revalidatePath(`/odstupenia/${id}`);
   return `Vrátené ${eur(r.refund.amount)}${r.full ? ' (celá platba)' : ''}.`;
 });

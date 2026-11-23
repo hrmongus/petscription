@@ -3,7 +3,7 @@ import { db } from '@lib/db';
 import { Badge } from '@admin/components/badge';
 import { day, dt } from '@admin/lib/format';
 import { one } from '@admin/lib/query';
-import { daysLeft, OPEN_STATUSES, refundDeadline, type Withdrawal } from '@admin/lib/withdrawals';
+import { daysLeft, dueOf, RETURN_CONDITION, RETURN_STATUS, urgency, type Withdrawal } from '@admin/lib/withdrawals';
 import { requireAdmin } from '@admin/lib/session';
 
 export const metadata = { title: 'Odstúpenia od zmluvy' };
@@ -11,8 +11,9 @@ export const metadata = { title: 'Odstúpenia od zmluvy' };
 export default async function Withdrawals({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   await requireAdmin();
   const all = one((await searchParams).vsetky) === '1';
-  let q = db().from('withdrawals').select('*').order('submitted_at', { ascending: false }).limit(300);
-  if (!all) q = q.in('status', OPEN_STATUSES);
+  // čakajúce = peniaze ešte nevrátené (refunded_at is null), okrem zamietnutých; zoradené podľa lehoty na refund
+  let q = db().from('withdrawals').select('*').limit(300);
+  q = all ? q.order('submitted_at', { ascending: false }) : q.is('refunded_at' as never, null).neq('status', 'rejected').order('refund_due_at' as never, { ascending: true, nullsFirst: false });
   const { data, error } = await q;
   const rows = (data ?? []) as Withdrawal[];
   const orderIds = rows.map((w) => w.order_id).filter(Boolean) as string[];
@@ -23,14 +24,14 @@ export default async function Withdrawals({ searchParams }: { searchParams: Prom
       <h1>Odstúpenia od zmluvy</h1>
       <div className="chips">
         <Link href="/odstupenia" className={all ? 'chip' : 'chip on'}>
-          Na riešenie
+          Čakajú na refund
         </Link>
         <Link href="/odstupenia?vsetky=1" className={all ? 'chip on' : 'chip'}>
           Všetky
         </Link>
       </div>
       <p className="small">
-        Peniaze treba vrátiť do <b>14 dní od prijatia odstúpenia</b> (môžeš počkať, kým sa tovar vráti). Lehota na odstúpenie je 14 dní od prevzatia prvého tovaru; odstúpenie po lehote alebo bez zhody e-mailu je označené „na posúdenie“.
+        Peniaze treba vrátiť do <b>14 dní od prijatia odstúpenia</b> (lehota refund_due_at). Ak sa tovar vracia, najprv v detaile zapíš jeho prijatie a stav vrecka, až potom vráť peniaze. Červená = lehota prešvihnutá, oranžová = do 3 dní. Lehota na odstúpenie je 14 dní od prevzatia prvého tovaru; odstúpenie po lehote alebo bez zhody e-mailu je označené „na posúdenie“.
       </p>
       {error ? <p className="msg err">{error.message}</p> : null}
       <div className="tablewrap">
@@ -42,17 +43,19 @@ export default async function Withdrawals({ searchParams }: { searchParams: Prom
               <th>Zmluva</th>
               <th>V lehote</th>
               <th>Refund do</th>
+              <th>Vrátenie tovaru</th>
               <th>Stav</th>
             </tr>
           </thead>
           <tbody>
             {rows.map((w) => {
-              const dl = refundDeadline(w);
+              const dl = dueOf(w);
               const left = daysLeft(dl);
-              const open = OPEN_STATUSES.includes(w.status);
+              const open = !w.refunded_at && w.status !== 'rejected';
+              const u = open ? urgency(dl) : null;
               const o = (orders ?? []).find((x) => x.id === w.order_id);
               return (
-                <tr key={w.id}>
+                <tr key={w.id} className={u ? `due-${u}` : undefined}>
                   <td>
                     <Link href={`/odstupenia/${w.id}`}>{dt(w.submitted_at)}</Link>
                   </td>
@@ -77,8 +80,12 @@ export default async function Withdrawals({ searchParams }: { searchParams: Prom
                     ) : null}
                   </td>
                   <td>
-                    {day(dl)}
-                    {open ? <div className={left <= 3 ? 'small' : 'small muted'} style={left <= 3 ? { color: 'var(--err)', fontWeight: 700 } : undefined}>{left >= 0 ? `zostáva ${left} d.` : `po lehote ${-left} d.`}</div> : null}
+                    <b>{day(dl)}</b>
+                    {open ? <div className="small">{left >= 0 ? `zostáva ${left} d.` : `prešvihnuté o ${-left} d.`}</div> : w.refunded_at ? <div className="small muted">vrátené {day(w.refunded_at)}</div> : null}
+                  </td>
+                  <td className="small">
+                    {RETURN_STATUS[w.return_status ?? 'not_needed']}
+                    {w.return_condition ? <div className="muted">{RETURN_CONDITION[w.return_condition]}</div> : null}
                   </td>
                   <td>
                     <Badge status={w.status} kind="withdrawal" />
@@ -88,7 +95,7 @@ export default async function Withdrawals({ searchParams }: { searchParams: Prom
             })}
             {!rows.length ? (
               <tr>
-                <td colSpan={6}>{all ? 'Zatiaľ žiadne odstúpenia.' : 'Nič na riešenie.'}</td>
+                <td colSpan={7}>{all ? 'Zatiaľ žiadne odstúpenia.' : 'Nič nečaká na refund.'}</td>
               </tr>
             ) : null}
           </tbody>

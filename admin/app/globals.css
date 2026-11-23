@@ -101,3 +101,7 @@ pre.json { background: #fff; border: 1px solid var(--line); padding: 8px; font-s
 .pager { display: flex; gap: 10px; margin-top: 10px; align-items: center; }
 .msg.flash { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 14px; position: sticky; top: 0; z-index: 5; }
 a.btn { text-decoration: none; display: inline-block; }
+tr.due-overdue td { background: #fbecea; }
+tr.due-overdue td:nth-child(5) { color: var(--err); }
+tr.due-soon td { background: #fff1e6; }
+tr.due-soon td:nth-child(5) { color: #a34300; }
