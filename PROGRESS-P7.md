@@ -10,7 +10,7 @@ Paralelne: P3 admin (`p2-admin`, `admin/`), P4 portál (`p3-portal`). Spoločné
 | 2. Cron `retention` (90 dní) | ✅ dry run naživo OK |
 | 3. Súhlas po kategóriách v `cookies.js` | ✅ (texty lišty na potvrdenie, krok 8) |
 | 4. PostHog v prehliadači (udalosti, identify, UTM, replay s maskovaním, proxy `/ingest`) | ✅ overené lokálne, udalosti v PostHogu |
-| 5. Server-side udalosti z webhooku (+ `withdrawal_submitted` pre P4) | ⏳ |
+| 5. Server-side udalosti z webhooku (+ `withdrawal_submitted` pre P4) | ✅ (odstúpenie zapojí P4) |
 | 6. Klaviyo „Started Checkout“ + odkaz späť na výsledok | ⏳ |
 | 7. Dashboard v PostHogu | ⏳ |
 | 8. Texty: zásady ochrany súkromia a cookie lišta | ⏳ |
@@ -87,3 +87,16 @@ Funnel: `$pageview` → `quiz_started` → `quiz_completed` → `checkout_starte
 ### Overené (Playwright + PostHog)
 - Bez súhlasu **0 požiadaviek** na PostHog. So súhlasom: `/ingest/e/`, `/ingest/s/` (záznam), v PostHogu `$pageview` s `utm_source=facebook`, `quiz_started`, `quiz_step_completed` (krok 2, `sex: pes`), `quiz_completed`, `checkout_started`. Meno psa ani `?test=` token sa v žiadnej udalosti neobjavili.
 - PostHog zahadzuje udalosti z headless prehliadačov (bot filter) — v teste bol prepísaný user agent. V projekte sú teraz testovacie udalosti z `localhost` (dashboard ich filtruje podľa hostu, krok 7).
+
+## Krok 5: server-side udalosti (23. 11. 2026)
+
+### Hotové
+- **`lib/analytics.ts`:** `posthogCapture` (POST `NEXT_PUBLIC_POSTHOG_HOST/i/v0/e/`, limit 3 s, chyba sa iba zaloguje), deterministické `uuid` z kľúča udalosti (opakovaný webhook nezdvojí), súhlas: `ph = 1` → `distinct_id = customer_id`, inak anonymne s `$process_person_profile: false`. **`trackWithdrawal()`** pre P4.
+- **`lib/tracking.ts`** (`deps.events` webhooku): `order_completed` (suma, doprava, plán, recept, balenie, dopravca, spôsob, D, `order_kind`, `is_first_order` / `customer_type`, `quiz_session_id`), `subscription_renewed` (+ `order_completed` renewal, poradie obnovenia), `subscription_payment_failed`, `subscription_cancelled` (ku koncu obdobia / okamžite, dôvod a spätná väzba zo Stripe, počet obnovení, dĺžka predplatného v dňoch). Email ani meno do PostHogu nejdú.
+
+### Pre P4 (zákaznícky portál, branch `p3-portal`)
+- Po zápise do `withdrawals` zavolať `await trackWithdrawal({ withdrawalId, customerId, orderId, subscriptionId, consent, reason })` z `@/lib/analytics` (nikdy nehodí chybu). `consent` = analytický súhlas z prehliadača (`GranulaConsent.has('analytics')` poslaný vo formulári) alebo `ph` z metadata predplatného.
+
+### Overené
+- `lib/tracking.test.ts` (5): súhlas/anonymita, stabilné uuid, žiadny email v udalostiach, obnovenie, zrušenie, odstúpenie; fulfillment testy (raz pri prvom spracovaní). Spolu 128/128.
+- Naživo: testovacia udalosť `p7_server_selftest` → PostHog `200 Ok`. Skutočné `order_completed` sa overí pri testovacom nákupe po nasadení (webhook beží iba na granula.sk).
