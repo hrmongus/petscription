@@ -50,24 +50,27 @@
   age.value = "r2"; kg.value = String(kgFor(17));
 
   function eur(x) { return x.toFixed(2).replace(".", ",") + " €"; }
-  function update() {
-    var v = /^([rm])(\d+)$/.exec(age.value);
-    var a = { dogname: "", sex: "pes", breed: breed.value || null, breedSet: !!breed.value, kg: parseFloat(kg.value),
-      years: v[1] === "r" ? v[2] : "0", months: v[1] === "m" ? v[2] : "0", weeks: "",
-      activity: "mesto", neutered: "nie", pregnant: "", body: "akurat", focus: [] };
-    var r = E.compute(a), p = r.product;
-    if (p) { $("pd-bag").src = p.img; $("pd-bag").alt = "Vrece Granula: " + p.name; }
-  }
-  // jediná cena: najnižšia cena za kg, akú máme (najväčšie vrece, s predplatným); ceny sú rovnaké pre všetky receptúry
-  (function () {
+  // najnižšia cena za kg (najväčšie vrece, s predplatným); ceny sú rovnaké pre všetky receptúry
+  var BEST = (function () {
     var P = E.PARAMS, best = null;
     E.BAGS.forEach(function (b) {
       var v = P.bagPrices[b.id];
       if (v != null && !isNaN(v)) { var perKg = v * (1 - P.plans.mesiac) / b.kg; if (!best || perKg < best.v) best = { v: perKg, bag: b }; }
     });
-    $("pd-perday").textContent = best ? eur(best.v) : "—";
-    $("pd-note").textContent = best ? "s predplatným, pri vreci " + best.bag.label : "";
+    return best;
   })();
+  // jediná cena: „už od X / deň“ = denná dávka zvoleného psa × najnižšia cena za kg
+  function update() {
+    var v = /^([rm])(\d+)$/.exec(age.value);
+    var a = { dogname: "", sex: "pes", breed: breed.value || null, breedSet: !!breed.value, kg: parseFloat(kg.value),
+      years: v[1] === "r" ? v[2] : "0", months: v[1] === "m" ? v[2] : "0", weeks: "",
+      activity: "mesto", neutered: "nie", pregnant: "", body: "akurat", focus: [], allergies: [] };
+    var r = E.compute(a), p = r.product;
+    if (p) { $("pd-bag").src = p.img; $("pd-bag").alt = "Vrece Granula: " + p.name; }
+    var ok = p && r.dose && BEST;
+    $("pd-perday").textContent = ok ? eur(r.dose.grams / 1000 * BEST.v) : "—";
+    $("pd-note").textContent = ok ? "s predplatným, pri vreci " + BEST.bag.label : "";
+  }
   breed.addEventListener("change", function () {
     var b = E.BREEDS.filter(function (x) { return x.id === breed.value; })[0];
     if (b) kg.value = String(kgFor(b.avg));

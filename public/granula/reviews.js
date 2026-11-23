@@ -1,11 +1,9 @@
 /* Granula — recenzie (jeden zdroj pre úvodnú stránku aj výsledok konfigurátora).
    Použitie: <div class="rw-wrap" data-reviews tabindex="0" aria-label="…"></div>
    Pravidlá:
-   - jeden rad (fotky a písané v pomere ~1 : 5), takže sa nič nemôže stretnúť v dvoch radoch;
-   - rad je dlhší ako šírka obrazovky + najširšia karta, takže sa tá istá karta
-     (a jej kópia pre nekonečné posúvanie) nikdy neukáže dvakrát naraz;
-   - prednosť majú fotky (pomer ~1 písaná : 4–5 fotiek), písané sa pridávajú len vtedy,
-     keď fotky na šírku obrazovky nestačia;
+   - dva rady, každá recenzia práve raz (žiadne kópie, žiadne opakovanie medzi radmi);
+   - písané v pomere ~1 : 4–5 k fotkám, v každom rade v strede;
+   - rad širší ako obrazovka sa pomaly posúva tam a späť, užší je vycentrovaný;
    - písaná recenzia od majiteľa, ktorý má aj foto recenziu, sa nezobrazí spolu s ňou. */
 (function () {
   "use strict";
@@ -34,7 +32,7 @@
   ];
   // pre produktovú sekciu (počet recenzií, fotky zákazníkov)
   window.GranulaReviews = { count: PHOTOS.length + TEXTS.length, photos: PHOTOS };
-  var SPEED = [30, 25]; // px za sekundu (rady idú opačne a rôzne rýchlo)
+  var SPEED = [22, 18]; // px za sekundu (rady idú opačne a rôzne rýchlo)
 
   function bagImg(b) { return '<img src="' + P + b + '.webp" alt="" width="896" height="1200" loading="lazy">'; }
   function stars(n) {
@@ -65,37 +63,37 @@
     return m;
   }
 
-  function plan(V, m) {
+  // dva rady, každá recenzia práve raz (žiadne kópie ani opakovanie medzi radmi):
+  // fotky striedavo do radov, písané v pomere ~1 : 4–5 (pri 7 fotkách 2, v každom rade jedna, v strede radu).
+  // Rad, ktorý je širší ako obrazovka, sa pomaly posúva tam a späť; užší je vycentrovaný.
+  function plan() {
     var owners = PHOTOS.map(function (r) { return r.by; });
-    var items = PHOTOS.map(function (r) { return { kind: "p", r: r, w: m.p + m.gap }; });
-    var texts = TEXTS.filter(function (r) { return owners.indexOf(r.by) === -1; })
-      .map(function (r) { return { kind: "t", r: r, w: m[r.w] + m.gap }; });
-    var widest = Math.max(m.p, m[1], m[2], m[3]);
-    var target = V + widest + m.gap;
-    // jeden rad: všetky fotky + písané v pomere ~1 : 5 (aspoň 1); ďalšie písané len keby rad nestačil na šírku
-    var row = items.slice(), w = items.reduce(function (s, x) { return s + x.w; }, 0), t = 0;
-    var want = Math.max(1, Math.round(items.length / 5));
-    while (t < texts.length && (t < want || w < target)) { row.push(texts[t]); w += texts[t].w; t++; }
-    var ph = row.filter(function (x) { return x.kind === "p"; }), tx = row.filter(function (x) { return x.kind === "t"; });
-    var out = [], step = (ph.length + tx.length) / tx.length, next = step / 2, ti = 0, pi = 0;
-    for (var k = 0; k < ph.length + tx.length; k++) {
-      if (ti < tx.length && (k >= Math.floor(next) || pi >= ph.length)) { out.push(tx[ti++]); next += step; }
-      else out.push(ph[pi++]);
-    }
-    var rows = [out]; w = [w];
-    return { rows: rows, w: w, key: rows.map(function (r) { return r.length; }).join("/") + ":" + t };
+    var texts = TEXTS.filter(function (r) { return owners.indexOf(r.by) === -1; });
+    var nt = Math.max(1, Math.round(PHOTOS.length / 4));
+    var rows = [[], []];
+    PHOTOS.forEach(function (r, i) { rows[i % 2].push({ kind: "p", r: r }); });
+    texts.slice(0, nt).forEach(function (r, i) {
+      var row = rows[(i + 1) % 2]; // prvá písaná do kratšieho radu
+      row.splice(Math.ceil(row.length / 2), 0, { kind: "t", r: r });
+    });
+    return rows;
   }
 
   function render(wrap) {
     var V = wrap.clientWidth;
     if (!V) return;
-    var m = measure(wrap), pl = plan(V, m);
-    if (wrap._rwKey === pl.key) return;
-    wrap._rwKey = pl.key;
-    wrap.innerHTML = pl.rows.map(function (row, i) {
-      var html = row.map(function (it) { return card(it, false); }).join("") + row.map(function (it) { return card(it, true); }).join("");
-      return '<ul class="rw-row rw-' + (i ? "b" : "a") + '" style="animation-duration:' + Math.round(pl.w[i] / SPEED[i]) + 's">' + html + "</ul>";
-    }).join("");
+    if (!wrap._rwDone) {
+      wrap._rwDone = true;
+      wrap.innerHTML = plan().map(function (row, i) {
+        return '<ul class="rw-row rw-' + (i ? "b" : "a") + '">' + row.map(function (it) { return card(it, false); }).join("") + "</ul>";
+      }).join("");
+    }
+    [].forEach.call(wrap.querySelectorAll(".rw-row"), function (ul, i) {
+      var shift = Math.max(0, ul.scrollWidth - V);
+      ul.classList.toggle("move", shift > 0);
+      ul.style.setProperty("--shift", -shift + "px");
+      ul.style.animationDuration = Math.max(12, Math.round(shift / SPEED[i] * 2)) + "s";
+    });
   }
 
   function init() {
