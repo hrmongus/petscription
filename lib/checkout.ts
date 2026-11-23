@@ -96,7 +96,7 @@ export async function prepareCheckout(input: unknown, deps: { findPoint?: typeof
   }
 
   // DPH (SPEC P1): firma zatiaľ nie je platiteľ DPH → ceny z engine sú konečné, DPH sa neodvádza ani neuvádza.
-  const shippingCents = Math.round(shippingPrice(d.method, q.bagId, q.shippingCents / 100) * 100);
+  const shippingCents = Math.round(shippingPrice(d.method, q.bagId, q.shippingCents / 100, q.plan === 'raz' ? 'raz' : 'mesiac') * 100);
   return {
     quote: q,
     answers: q.snapshot.answers,
@@ -179,7 +179,7 @@ export function sessionParams(p: PreparedCheckout, ids: DraftIds, opts: { origin
       mode: 'subscription',
       line_items: [
         { quantity: 1, price_data: { currency: 'eur', product: productId, unit_amount: q.unitAmountCents, recurring } },
-        { quantity: 1, price_data: { currency: 'eur', product: SHIPPING_PRODUCT_ID, unit_amount: p.shippingCents, recurring } },
+        ...(p.shippingCents > 0 ? [{ quantity: 1, price_data: { currency: 'eur', product: SHIPPING_PRODUCT_ID, unit_amount: p.shippingCents, recurring } }] : []),
       ],
       subscription_data: { description: `${opts.productName} · každých ${q.daysPerBag} dní · ${shippingLabel}`, metadata },
     };
@@ -189,7 +189,7 @@ export function sessionParams(p: PreparedCheckout, ids: DraftIds, opts: { origin
     mode: 'payment',
     line_items: [
       { quantity: 1, price_data: { currency: 'eur', product: productId, unit_amount: q.unitAmountCents } },
-      { quantity: 1, price_data: { currency: 'eur', product: SHIPPING_PRODUCT_ID, unit_amount: p.shippingCents } },
+      ...(p.shippingCents > 0 ? [{ quantity: 1, price_data: { currency: 'eur', product: SHIPPING_PRODUCT_ID, unit_amount: p.shippingCents } }] : []),
     ],
     invoice_creation: { enabled: true, invoice_data: { metadata } },
     payment_intent_data: { description: `${opts.productName} · jednorazovo`, metadata, setup_future_usage: 'off_session' },

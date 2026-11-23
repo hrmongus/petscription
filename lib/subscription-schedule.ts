@@ -104,7 +104,7 @@ export async function changePlan(subId: string, c: PlanChange, s: Stripe = strip
     items: [
       ...sub.items.data.map((i) => ({ id: i.id, deleted: true })),
       { price_data: { currency: 'eur', product: c.productId, unit_amount: c.unitAmountCents, recurring }, quantity: 1 },
-      { price_data: { currency: 'eur', product: c.shippingProductId, unit_amount: c.shippingCents, recurring }, quantity: 1 },
+      ...(c.shippingCents > 0 ? [{ price_data: { currency: 'eur', product: c.shippingProductId, unit_amount: c.shippingCents, recurring }, quantity: 1 }] : []), // doprava zadarmo = bez riadku
     ],
     trial_end: unix(c.nextCharge),
     proration_behavior: 'none',

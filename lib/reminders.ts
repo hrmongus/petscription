@@ -45,7 +45,7 @@ export async function sendRenewalReminders(deps: { mail: Mailer; siteUrl: string
     if (!c?.email || !a) continue;
     const pickup = a.delivery_method !== 'sps_courier';
     const shipTo = { delivery_method: a.delivery_method, point_label: a.point_label, street: a.street, city: a.city, zip: a.zip, point_address: pickup ? { street: a.street ?? '', city: a.city ?? '', zip: a.zip ?? '' } : null };
-    const shippingCents = Math.round(shippingPrice(a.delivery_method as DeliveryMethod, s.bag_id as BagId, P.shipping) * 100);
+    const shippingCents = Math.round(shippingPrice(a.delivery_method as DeliveryMethod, s.bag_id as BagId, P.shipping, 'mesiac') * 100);
     try {
       const r = await deps.mail(
         renewalReminderEmail({

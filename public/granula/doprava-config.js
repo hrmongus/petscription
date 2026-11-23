@@ -5,7 +5,8 @@
    Ako upraviť:
    - BY_BAG: ktoré spôsoby doručenia ponúknuť pri balení (poradie = poradie v dotazníku) a ktorý je predvolený.
    - BOXES:  či pri výdajnom mieste povoliť aj boxy (Z-BOX, AlzaBox, DPD Pickup Box…); false = iba výdajné miesta.
-   - PRICE:  cena dopravy pre zákazníka v € (konečná cena); null = predvolená cena z engine.js (PARAMS.shipping, 4,90 €).
+   - PRICE:  cena dopravy pre zákazníka v € (konečná cena) podľa plánu: raz = jednorazovo, mesiac = predplatné;
+             0 = zadarmo; null = predvolená cena z engine.js (PARAMS.shipping, 4,90 €).
    - COST:   cena FHB bez DPH v € (iba na prehľad a porovnanie, zákazník ju nevidí).
    - METHODS.logo: logo dopravcu v karte (public/granula/img/dopravcovia/, oficiálne SVG z webu dopravcu).
    - METHODS.etaEmail: doba doručenia v emaile „Balík je na ceste“ (pracovné dni od odoslania; zámerne dlhšia ako eta v dotazníku).
@@ -34,7 +35,7 @@
   // Packeta má limit 15 kg → pri 18 kg (2 × 9 kg) sa neponúka.
   var BY_BAG = {
     "4":  { methods: ["packeta_point", "dpd_pickup", "sps_courier"], default: "packeta_point" },
-    "9":  { methods: ["packeta_point", "dpd_pickup", "sps_courier"], default: "dpd_pickup" },
+    "9":  { methods: ["dpd_pickup", "sps_courier"], default: "dpd_pickup" },   // Packeta pri 9 kg nie (FHB 4,23 € vs. DPD 2,71 €, cenník 23. 11.)
     "18": { methods: ["dpd_pickup", "sps_courier"], default: "dpd_pickup" }
   };
 
@@ -45,11 +46,12 @@
     "18": { dpd_pickup: false }
   };
 
-  // Cena pre zákazníka, konečná (€). null = PARAMS.shipping. Príklad: "9": { sps_courier: 5.90 }
+  // Cena pre zákazníka, konečná (€), podľa plánu (raz = jednorazovo, mesiac = predplatné). 0 = zadarmo,
+  // null = PARAMS.shipping. Cenník od 23. 11. 2026 (zadanie používateľa).
   var PRICE = {
-    "4":  { packeta_point: null, dpd_pickup: null, sps_courier: null },
-    "9":  { packeta_point: null, dpd_pickup: null, sps_courier: null },
-    "18": { dpd_pickup: null, sps_courier: null }
+    "4":  { packeta_point: { raz: 3.90, mesiac: 0 }, dpd_pickup: { raz: 3.90, mesiac: 0 }, sps_courier: { raz: 4.90, mesiac: 1.90 } },
+    "9":  { dpd_pickup: { raz: 3.90, mesiac: 0 }, sps_courier: { raz: 5.90, mesiac: 1.90 } },
+    "18": { dpd_pickup: { raz: 4.90, mesiac: 0 }, sps_courier: { raz: 9.90, mesiac: 3.90 } }
   };
 
   // Cenník FHB bez DPH (€), na prehľad.
@@ -74,9 +76,10 @@
     var row = BOXES[String(bagId)] || {};
     return row[method] !== false;
   }
-  /** cena dopravy pre zákazníka (€, konečná); fallback = predvolená cena (PARAMS.shipping) */
-  function price(method, bagId, fallback) {
+  /** cena dopravy pre zákazníka (€, konečná) pre plán (raz | mesiac; iné = mesiac); fallback = PARAMS.shipping */
+  function price(method, bagId, fallback, plan) {
     var row = PRICE[String(bagId)] || {}, v = row[method];
+    if (v != null && typeof v === "object") v = v[plan === "raz" ? "raz" : "mesiac"];
     return v == null || isNaN(v) ? fallback : +v;
   }
 

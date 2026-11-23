@@ -34,6 +34,8 @@ const CARRIER: Record<DeliveryMethod, { long: string; short: string }> = {
 
 const escHtml = (s: string) => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 export const eur = (cents: number) => `${(cents / 100).toFixed(2).replace('.', ',')} €`;
+/** cena dopravy: 0 = „zadarmo“ */
+export const shipEur = (cents: number) => (cents > 0 ? eur(cents) : 'zadarmo');
 export const dateSk = (d: Date) => {
   const p = new Intl.DateTimeFormat('sk-SK', { day: 'numeric', month: 'numeric', year: 'numeric', timeZone: 'Europe/Bratislava' }).formatToParts(d);
   const v = (t: string) => p.find((x) => x.type === t)?.value ?? '';
@@ -98,11 +100,11 @@ export function noAutoLink(s: string): string {
 }
 
 /** cena dopravy pre spôsob a balenie (rovnaký výpočet ako checkout), keď ju volajúci nepozná */
-function shippingCentsFor(shipTo: unknown, bagKg: string): number {
+function shippingCentsFor(shipTo: unknown, bagKg: string, plan: 'raz' | 'mesiac'): number {
   const P = serverParams() as unknown as { shipping: number };
   const m = (shipTo as ShipTo | null)?.delivery_method;
   try {
-    return Math.round(shippingPrice(m as DeliveryMethod, bagKg as BagId, P.shipping) * 100);
+    return Math.round(shippingPrice(m as DeliveryMethod, bagKg as BagId, P.shipping, plan) * 100);
   } catch {
     return Math.round(P.shipping * 100);
   }
@@ -161,7 +163,7 @@ export function orderConfirmationEmail(i: ConfirmationInput): Mail {
   const o = i.order;
   const prod = productOf(o.items);
   const del = deliveryOf(o.ship_to);
-  const ship = i.prices?.shippingCents ?? shippingCentsFor(o.ship_to, prod.bagKg);
+  const ship = i.prices?.shippingCents ?? shippingCentsFor(o.ship_to, prod.bagKg, o.kind === 'one_off' ? 'raz' : 'mesiac');
   const food = i.prices?.foodCents ?? o.amount_cents - ship;
   const days = i.subscription?.days ?? 0;
   const next = i.subscription?.nextChargeAt ? dateSk(i.subscription.nextChargeAt) : '';
@@ -174,7 +176,7 @@ export function orderConfirmationEmail(i: ConfirmationInput): Mail {
     bag_kg: prod.bagKg,
     days: String(days),
     price_food: eur(food),
-    price_shipping: eur(ship),
+    price_shipping: shipEur(ship),
     price_total: eur(o.amount_cents),
     next_charge: next || 'o pár týždňov',
     carrier: del.carrier,
@@ -287,7 +289,7 @@ export function paymentFailedEmail(i: PaymentFailedInput): Mail {
     bag_kg: prod.bagKg,
     days: String(i.product.days),
     price_food: eur(i.totalCents - ship),
-    price_shipping: eur(ship),
+    price_shipping: shipEur(ship),
     price_total: eur(i.totalCents),
     retry_date: i.nextAttempt ? dateSk(i.nextAttempt) : '',
     pay_url: i.payUrl || `${site(i.siteUrl)}/ucet`,
@@ -355,7 +357,7 @@ export function renewalReminderEmail(i: RenewalReminderInput): Mail {
     bag_kg: prod.bagKg,
     days: String(i.product.days),
     price_food: eur(i.foodCents),
-    price_shipping: eur(i.shippingCents),
+    price_shipping: shipEur(i.shippingCents),
     price_total: eur(i.foodCents + i.shippingCents),
     next_charge: dateSk(i.nextCharge),
     carrier: del.carrier,

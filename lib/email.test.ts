@@ -76,12 +76,13 @@ describe('šablóny (návrh content/emails)', () => {
     }
   });
   test('2 obnovenie a 3 jednorazovo: správna šablóna a predmet; doprava dopočítaná, keď chýba rozpis', () => {
-    const r = orderConfirmationEmail({ order: { ...ORDER, kind: 'renewal' }, to: 'a@b.sk', name: 'Ján', dog: { name: 'Rex', sex: 'pes' }, siteUrl: SITE, subscription: { days: 37, nextChargeAt: null } });
+    const r = orderConfirmationEmail({ order: { ...ORDER, kind: 'renewal', amount_cents: 6750 }, to: 'a@b.sk', name: 'Ján', dog: { name: 'Rex', sex: 'pes' }, siteUrl: SITE, subscription: { days: 37, nextChargeAt: null } });
     noPlaceholders(r);
     expect(r.subject).toBe('Ďalšie vrece už chystáme · objednávka č. 42');
     expect(r.html).toContain('Rexovi sa pomaly míňajú granule');
     expect(r.html).toContain('zmenila jeho váha');
-    expect(r.html).toContain('67,50 €'); // 72,40 − 4,90
+    expect(r.html).toContain('67,50 €');
+    expect(r.html).toContain('zadarmo'); // predplatné + DPD výdajné miesto
     const o = orderConfirmationEmail({ order: { ...ORDER, kind: 'one_off' }, to: 'a@b.sk', name: 'Ján', dog: BODKA, siteUrl: SITE });
     noPlaceholders(o);
     expect(o.html).toContain('jednorazová objednávka');

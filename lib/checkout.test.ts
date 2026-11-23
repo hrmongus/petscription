@@ -13,8 +13,8 @@ describe('prepareCheckout', () => {
   test('cena, D a doprava zo servera; údaje miesta z FHB, nie z prehliadača', async () => {
     const p = await prepareCheckout({ ...IN, price: 1, days: 999 }, { findPoint: find });
     expect(p.quote).toMatchObject({ unitAmountCents: 6750, bagId: '9', plan: 'mesiac' });
-    expect(p.shippingCents).toBe(490);
-    expect(p.totalCents).toBe(7240);
+    expect(p.shippingCents).toBe(0); // predplatné + výdajné miesto = doprava zadarmo (cenník 23. 11.)
+    expect(p.totalCents).toBe(6750);
     expect(p.items).toEqual([{ sku: `GRAN-${p.quote.productId}-9`, qty: 1 }]);
     expect(p.customer).toEqual({ email: 'jan.novak@example.sk', firstName: 'Ján', lastName: 'Novák', name: 'Ján Novák', phone: '+421905123456' });
     expect(p.shipTo).toMatchObject({ delivery_method: 'dpd_pickup', point_id: 'SK21286', point_address: { street: 'Mierová 17', city: 'Tornaľa', zip: '98201' } });
@@ -49,15 +49,19 @@ describe('Checkout Session', () => {
   const ids = { customerId: 'c1', dogId: 'd1', addressId: 'a1' };
   const opts = { origin: 'https://granula.sk', stripeCustomerId: 'cus_1', productName: 'Granula! Hovädzie 9 kg' };
   test('predplatné: interval day × D, doprava ako druhá opakovaná položka, EUR, embedded, metadata app=granula', async () => {
-    const p = await prepareCheckout(IN, { findPoint: find });
+    const p = await prepareCheckout({ ...IN, delivery: { ...DEL, method: 'sps_courier', point: undefined, address: { street: 'Hlavná 1', city: 'Košice', zip: '040 01' } } }, { findPoint: find });
     const s = sessionParams(p, ids, opts);
     expect(s).toMatchObject({ mode: 'subscription', ui_mode: 'elements', payment_method_types: ['card', 'link'], customer: 'cus_1', adaptive_pricing: { enabled: false }, return_url: 'https://granula.sk/granule-na-mieru?session_id={CHECKOUT_SESSION_ID}#hotovo' });
     const rec = { interval: 'day', interval_count: p.quote.daysPerBag };
     expect(s.line_items).toEqual([
       { quantity: 1, price_data: { currency: 'eur', product: `granula-GRAN-${p.quote.productId}-9`, unit_amount: 6750, recurring: rec } },
-      { quantity: 1, price_data: { currency: 'eur', product: 'granula-doprava', unit_amount: 490, recurring: rec } },
+      { quantity: 1, price_data: { currency: 'eur', product: 'granula-doprava', unit_amount: 190, recurring: rec } },
     ]);
-    expect(s.subscription_data?.metadata).toMatchObject({ app: 'granula', customer_id: 'c1', dog_id: 'd1', address_id: 'a1', bag_id: '9', days: String(p.quote.daysPerBag), unit_cents: '6750', ship_cents: '490' });
+    expect(s.subscription_data?.metadata).toMatchObject({ app: 'granula', customer_id: 'c1', dog_id: 'd1', address_id: 'a1', bag_id: '9', days: String(p.quote.daysPerBag), unit_cents: '6750', ship_cents: '190' });
+  });
+  test('doprava zadarmo: bez riadku dopravy', async () => {
+    const s = sessionParams(await prepareCheckout(IN, { findPoint: find }), ids, opts);
+    expect(s.line_items).toHaveLength(1);
   });
   test('jednorazovo: payment, faktúra, karta uložená na neskôr', async () => {
     const p = await prepareCheckout({ ...IN, plan: 'raz' }, { findPoint: find });
@@ -65,6 +69,7 @@ describe('Checkout Session', () => {
     expect(s).toMatchObject({ mode: 'payment', invoice_creation: { enabled: true }, payment_intent_data: { setup_future_usage: 'off_session' } });
     expect(s.line_items?.[0].price_data?.unit_amount).toBe(7500);
     expect(s.line_items?.[0].price_data).not.toHaveProperty('recurring');
+    expect(s.line_items?.[1].price_data?.unit_amount).toBe(390); // DPD 9 kg jednorazovo
   });
 });
 

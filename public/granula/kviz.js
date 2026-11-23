@@ -45,6 +45,7 @@
   var order = document.getElementById("order");
   var $ = function (id) { return document.getElementById(id); };
   var eur = function (n) { return n == null ? "cena doplniť" : n.toFixed(2).replace(".", ",") + "\u00a0€"; };
+  var shipEur = function (n) { return n === 0 ? "zadarmo" : eur(n); }; // doprava: 0 = zadarmo
   var num = function (n, d) { return (d ? n.toFixed(d) : String(Math.round(n))).replace(".", ","); };
   function plural(n, one, few, many) { return n === 1 ? one : (n >= 2 && n <= 4 ? few : many); }
   function result() { return E.compute(state, params); }
@@ -446,12 +447,13 @@
     if (window.GranulaDelivery && GranulaDelivery.active()) {
       GranulaDelivery.setBag(x.bag.id);
       var dm = GranulaDelivery.method();
-      if (dm) ship = GranulaCarriers.price(dm, x.bag.id, ship);
+      // cena dopravy podľa plánu (cenník v doprava-config.js: jednorazovo / predplatné; 0 = zadarmo)
+      if (dm) ship = GranulaCarriers.price(dm, x.bag.id, ship, state.plan);
       else { // doprava ešte nevybraná (nič nie je predvolené) → najlacnejšia možnosť s „od“
-        var opts = GranulaCarriers.methodsFor(x.bag.id).map(function (m) { return GranulaCarriers.price(m, x.bag.id, r.params.shipping); });
+        var opts = GranulaCarriers.methodsFor(x.bag.id).map(function (m) { return GranulaCarriers.price(m, x.bag.id, r.params.shipping, state.plan); });
         if (opts.length) { ship = Math.min.apply(null, opts); var shipFrom = true; }
       }
-      order.querySelectorAll("[data-method]").forEach(function (e) { e.textContent = eur(GranulaCarriers.price(e.getAttribute("data-method"), x.bag.id, r.params.shipping)); });
+      order.querySelectorAll("[data-method]").forEach(function (e) { e.textContent = shipEur(GranulaCarriers.price(e.getAttribute("data-method"), x.bag.id, r.params.shipping, state.plan)); });
     }
     order.querySelectorAll('input[name="plan"]').forEach(function (i) { i.checked = i.value === state.plan; });
     Object.keys(plans).forEach(function (k) {
@@ -470,7 +472,7 @@
     $("s-disc-l").textContent = "Zľava predplatného −" + Math.round(d * 100) + "\u00a0%";
     $("s-disc").textContent = x.price == null ? "" : "−" + eur(x.price * d);
     var od = shipFrom ? "od\u00a0" : "";
-    $("s-ship").textContent = od + eur(ship);
+    $("s-ship").textContent = shipFrom && !ship ? "zadarmo na výdajné miesto" : od + shipEur(ship);
     var total = x.price == null ? null : Math.round((x.price * (1 - d) + ship) * 100) / 100;
     $("s-total").textContent = total == null ? "—" : od + eur(total);
     $("s-note").textContent = d ? "Potom " + od + eur(total) + " každých " + days(x.days) + ". Ďalšie vrece pošleme tak, aby prišlo asi " + days(r.params.reorderLeadDays - r.params.shipDays) + " predtým, ako sa minie." : "Platíš raz. Ďalšie vrece si objednáš, keď budeš chcieť.";

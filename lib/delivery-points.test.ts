@@ -8,7 +8,7 @@ describe('dopravcovia podľa balenia (doprava-config.js)', () => {
   test('ponuka a predvolená voľba', () => {
     expect(methodsFor('4')).toEqual(['packeta_point', 'dpd_pickup', 'sps_courier']);
     expect(defaultMethodFor('4')).toBe('packeta_point');
-    expect(methodsFor('9')).toEqual(['packeta_point', 'dpd_pickup', 'sps_courier']);
+    expect(methodsFor('9')).toEqual(['dpd_pickup', 'sps_courier']); // Packeta pri 9 kg nie (cenník 23. 11.)
     expect(defaultMethodFor('9')).toBe('dpd_pickup');
   });
   test('18 kg: Packeta sa neponúka (limit 15 kg), predvolené DPD', () => {
@@ -23,8 +23,19 @@ describe('dopravcovia podľa balenia (doprava-config.js)', () => {
     expect(boxesAllowed('dpd_pickup', '4')).toBe(true);
     expect(boxesAllowed('packeta_point', '4')).toBe(true);
   });
-  test('cena dopravy: zatiaľ všade PARAMS.shipping', () => {
-    for (const bag of ['4', '9', '18'] as const) for (const m of methodsFor(bag)) expect(shippingPrice(m, bag, 4.9)).toBe(4.9);
+  test('cenník dopravy 23. 11.: jednorazovo / predplatné (výdajné miesto zadarmo)', () => {
+    const t: Record<string, Record<string, [number, number]>> = {
+      '4': { packeta_point: [3.9, 0], dpd_pickup: [3.9, 0], sps_courier: [4.9, 1.9] },
+      '9': { dpd_pickup: [3.9, 0], sps_courier: [5.9, 1.9] },
+      '18': { dpd_pickup: [4.9, 0], sps_courier: [9.9, 3.9] },
+    };
+    for (const bag of ['4', '9', '18'] as const) {
+      expect(methodsFor(bag)).toEqual(Object.keys(t[bag]));
+      for (const m of methodsFor(bag)) {
+        expect(shippingPrice(m, bag, 4.9, 'raz')).toBe(t[bag][m][0]);
+        expect(shippingPrice(m, bag, 4.9, 'mesiac')).toBe(t[bag][m][1]);
+      }
+    }
   });
   test('kódy FHB z konfigurácie, prepísateľné env', () => {
     expect(fhbServiceFor('packeta_point', {})).toBe('zasielkovna_sk');

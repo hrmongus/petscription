@@ -50,7 +50,7 @@ declare module '*/public/granula/doprava-config.js' {
     allowed(method: string, bagId: string): boolean;
     BOXES: Record<string, Record<string, boolean>>;
     boxes(method: string, bagId: string): boolean;
-    price(method: string, bagId: string, fallback: number): number;
+    price(method: string, bagId: string, fallback: number, plan?: string): number;
   };
   export default config;
 }
