@@ -42,8 +42,17 @@ export type Store = {
   audit(row: TablesInsert<'audit_log'>): Promise<void>;
 };
 
+/** P7: analytika a dotazník (lib/tracking.ts). Volá sa iba pri prvom spracovaní, chyba nikdy neprerušuje webhook. */
+export type FulfillmentEvents = {
+  orderCreated?(ctx: { order: Order; customer: Customer; session: Stripe.Checkout.Session; metadata: Stripe.Metadata }): Promise<void>;
+  renewed?(ctx: { order: Order; customer: Customer; subscription: Subscription; invoice: Stripe.Invoice }): Promise<void>;
+  renewalFailed?(ctx: { subscription: Subscription; invoice: Stripe.Invoice }): Promise<void>;
+  cancelled?(ctx: { subscription: Subscription; stripeSubscription: Stripe.Subscription; atPeriodEnd: boolean }): Promise<void>;
+};
+
 export type Deps = {
   store: Store;
+  events?: FulfillmentEvents;
   stripe: Stripe;
   /** odoslanie do FHB (lib/fhb/send.ts); chyba neprerušuje webhook, objednávka ostane paid/fhb_error */
   sendToFhb?: (orderId: string) => Promise<unknown>;
@@ -57,6 +66,15 @@ export type Deps = {
 };
 
 const nowOf = (d: Deps) => (d.now ? d.now() : new Date());
+
+async function emit(deps: Deps, name: keyof FulfillmentEvents, fn: (e: FulfillmentEvents) => Promise<void> | undefined) {
+  if (!deps.events?.[name]) return;
+  try {
+    await fn(deps.events);
+  } catch (e) {
+    console.error(`[fulfillment] events.${name} zlyhalo`, e);
+  }
+}
 
 /** ship_to snapshot z adresy a zákazníka (pri výdajnom mieste sú ulica/PSČ/mesto adresou miesta) */
 export function shipToOf(c: Customer, a: Address): ShipTo {
@@ -147,7 +165,7 @@ export async function handleCheckoutCompleted(session: Stripe.Checkout.Session, 
     await deps.stripe.subscriptions.update(stripeSubId, { trial_end: Math.floor(next.getTime() / 1000), proration_behavior: 'none' });
   }
 
-  const { order } = await deps.store.insertOrder({
+  const { order, created } = await deps.store.insertOrder({
     customer_id: customer.id,
     subscription_id: subscriptionId,
     kind: session.mode === 'subscription' ? 'first' : 'one_off',
@@ -161,6 +179,7 @@ export async function handleCheckoutCompleted(session: Stripe.Checkout.Session, 
   const shipCents = Number(md.ship_cents);
   const prices = Number.isFinite(shipCents) && md.ship_cents ? { shippingCents: shipCents, foodCents: (session.amount_total ?? 0) - shipCents } : null;
   await sendConfirmation(deps, order, customer, dog, subInfo, prices);
+  if (created) await emit(deps, 'orderCreated', (e) => e.orderCreated?.({ order, customer, session, metadata: md }));
   return order;
 }
 
@@ -231,6 +250,7 @@ export async function handleInvoicePaid(invoice: Stripe.Invoice, deps: Deps): Pr
   const fresh = await deps.store.findSubscriptionByStripeId(stripeSubId);
   const ship = shippingCentsOf(invoice, sub);
   await sendConfirmation(deps, order, customer, dog, { days: fresh?.days_per_bag ?? sub.days_per_bag, nextChargeAt: fresh?.next_charge_at ? new Date(fresh.next_charge_at) : null }, { shippingCents: ship, foodCents: invoice.amount_paid - ship });
+  if (created) await emit(deps, 'renewed', (e) => e.renewed?.({ order, customer, subscription: fresh ?? sub, invoice }));
   return order;
 }
 
@@ -249,6 +269,7 @@ export async function handlePaymentFailed(invoice: Stripe.Invoice, deps: Deps) {
   const sub = await deps.store.findSubscriptionByStripeId(stripeSubId);
   if (!sub) return;
   await deps.store.updateSubscription(sub.id, { status: 'past_due' });
+  await emit(deps, 'renewalFailed', (e) => e.renewalFailed?.({ subscription: sub, invoice }));
   const [customer, dog] = await Promise.all([deps.store.getCustomer(sub.customer_id), deps.store.getDog(sub.dog_id)]);
   if (!customer || !invoice.id || !deps.siteUrl) return;
   const line = invoice.lines?.data.find((l) => {
@@ -282,9 +303,19 @@ export function statusOf(s: Stripe.Subscription): Subscription['status'] {
   return 'active';
 }
 
-export async function handleSubscriptionChanged(s: Stripe.Subscription, deps: Deps) {
+export async function handleSubscriptionChanged(s: Stripe.Subscription, deps: Deps, previous?: Partial<Stripe.Subscription> | null) {
   const sub = await deps.store.findSubscriptionByStripeId(s.id);
   if (!sub) return; // ešte nevzniklo (checkout.session.completed príde neskôr) alebo cudzie
   const next = s.status === 'trialing' ? unixDate(s.trial_end) : unixDate(s.items?.data?.[0]?.current_period_end);
-  await deps.store.updateSubscription(sub.id, { status: statusOf(s), ...(next && s.status !== 'canceled' ? { next_charge_at: next.toISOString() } : {}) });
+  const status = statusOf(s);
+  const before = sub.status;
+  await deps.store.updateSubscription(sub.id, { status, ...(next && s.status !== 'canceled' ? { next_charge_at: next.toISOString() } : {}) });
+  // P7 subscription_cancelled: raz pri žiadosti o zrušenie ku koncu obdobia, alebo pri okamžitom zrušení bez nej
+  const requested = (x: Partial<Stripe.Subscription> | null | undefined) => !!(x?.cancel_at_period_end || x?.cancel_at);
+  const hadRequest = previous && ('cancel_at_period_end' in previous || 'cancel_at' in previous) ? requested(previous) : requested(s);
+  if (status !== 'cancelled' && requested(s) && !hadRequest) {
+    await emit(deps, 'cancelled', (e) => e.cancelled?.({ subscription: sub, stripeSubscription: s, atPeriodEnd: true }));
+  } else if (status === 'cancelled' && before !== 'cancelled' && !requested(s)) {
+    await emit(deps, 'cancelled', (e) => e.cancelled?.({ subscription: sub, stripeSubscription: s, atPeriodEnd: false }));
+  }
 }

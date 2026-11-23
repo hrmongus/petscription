@@ -24,8 +24,10 @@ export function watchSession(page: Page): () => string | null {
 }
 
 /** Otvorí krok objednávky s odpoveďami dotazníka v sessionStorage a tokenom predaja. */
-export async function openOrder(page: Page, o: { site: string; token: string; plan: 'mesiac' | 'raz'; bag: '4' | '9' | '18'; answers?: object }) {
+export async function openOrder(page: Page, o: { site: string; token: string; plan: 'mesiac' | 'raz'; bag: '4' | '9' | '18'; answers?: object; consent?: boolean }) {
   await page.addInitScript((a: object) => sessionStorage.setItem('granula-quiz', JSON.stringify(a)), { ...(o.answers ?? ANSWERS), plan: o.plan, bag: o.bag });
+  // súhlas s analytickými cookies (P7), inak lišta → „Len nevyhnutné“
+  if (o.consent) await page.addInitScript(() => localStorage.setItem('granula-cookies', 'analytics'));
   await page.goto(`${o.site}/granule-na-mieru?test=${encodeURIComponent(o.token)}#objednavka`);
   await page.getByRole('button', { name: 'Len nevyhnutné' }).click({ timeout: 10_000 }).catch(() => {});
   await page.locator(`input[name="plan"][value="${o.plan}"]`).check({ force: true });

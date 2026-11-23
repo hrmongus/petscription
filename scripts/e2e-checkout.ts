@@ -9,7 +9,7 @@
  * Odpovede dotazníka sa vložia do sessionStorage (rovnaký stav ako kviz.js), zvyšok ide cez UI: krok objednávky,
  * kontakt, doručenie, vlastný platobný formulár (Stripe Elements; 3ds = karta 4000 0025 0000 3155). --mobile = iPhone 13. Overenie: Supabase (orders, subscriptions) a FHB sandbox (GET /order).
  * Predplatné, ktoré test vytvorí, na konci (aj pri chybe) ZRUŠÍ, aby nechodili pripomienky a obnovenia; ponechať ho
- * iba s --keep-subscription. Predvolený e-mail je testovacia adresa Resend (delivered+…@resend.dev), vlastný --email=.
+ * iba s --keep-subscription. --consent = súhlas s analytickými cookies (P7, PostHog s profilom zákazníka). Predvolený e-mail je testovacia adresa Resend (delivered+…@resend.dev), vlastný --email=.
  * Iba so sk_test_ a FHB sandboxom. Snímky: <scratch>/e2e-<scenár>-*.png (premenná E2E_SHOTS, inak /tmp).
  */
 import Stripe from 'stripe';
@@ -69,7 +69,8 @@ async function main() {
   const pageErrors: string[] = [];
   page.on('pageerror', (e: Error) => pageErrors.push(String(e).slice(0, 200)));
   try {
-    await openOrder(page, { site: SITE, token, plan, bag: bag as '4' | '9' });
+    // --consent: súhlas s analytickými cookies (P7: order_completed zo servera s distinct_id = customer_id), inak anonymne
+    await openOrder(page, { site: SITE, token, plan, bag: bag as '4' | '9', consent: process.argv.includes('--consent') });
     check(!page.url().includes('test='), 'token zmizol z URL');
 
     // kontakt
