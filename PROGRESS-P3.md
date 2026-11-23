@@ -56,3 +56,13 @@ Branch: `p3-portal` (z main 23. 11.) · Rozhodnutia: SPEC §10.25 a ďalej · Pa
 
 ## Čo nastaviť (používateľ)
 Pozri záverečné zhrnutie v chate (Supabase Auth: dĺžka a platnosť kódu, Stripe: verejné údaje firmy pre portál). Šablónu e-mailu v Supabase meniť netreba (kód posielame cez Resend).
+
+## Ďalší krok: zjednotenie s adminom (C) a analytikou (E) — čaká na ich merge do main
+Zadanie 23. 11.: po merge C a E aktualizovať branch, v `/ucet` použiť `lib/subscription-actions.ts` a `lib/order-actions.ts` (jedna verzia), pri odstúpení `trackWithdrawal()` z `lib/analytics.ts`; do main až po C a E, potom test na granula.sk.
+
+Porovnanie (prečítané z `origin/p2-admin` 7710f00 a `origin/p7-analytics` 5347eae):
+- **Prepočet:** `previewPlanChange` / `applyPlanChange` (C) ⇔ `lib/ucet/plan.ts` + `previewOf`/`applyPlan` (P3). Lepšie z C: pri nezmenenom D ostane dátum ďalšej platby (zachová ručný posun/preskočenie pri zmene iba ceny/receptúry), zmena veku, `birth_date`, `ensureStripeProducts` (aj produkt dopravy). Z P3 zachovať v `/ucet`: iba vhodné receptúry (admin smie aj nevhodnú), kontrola boxu pri balení bez boxov, zoznam receptúr pre UI. → `/ucet` = vlastná kontrola vhodnosti + boxu nad `previewPlanChange`, `lib/ucet/plan.ts` zostane iba ako zoznam vhodných receptúr.
+- **Doprava:** `syncShipping` (C, porovná so Stripe) nahradí dvojitý `computePlan` v `changeDelivery`.
+- **Objednávka vo FHB:** `fhbState` + `updateOrderDelivery` (C) nahradia vlastnú logiku v `changeDelivery` (rovnaké pravidlo pending/„už sa balí“; výpadok FHB → hláška namiesto ticha). `cancelOrder` (C) zvážiť v `lib/withdrawal.ts` `stopOrder` (rozdiel: odstúpenie pri `paid` bez FHB nesmie zlyhať, keď FHB nie je nastavené).
+- **Analytika:** `trackWithdrawal({ withdrawalId, customerId, orderId, subscriptionId, consent, reason })` po zázname v `submitWithdrawal`; `consent` pošle stránka (`GranulaConsent.has('analytics')`), v `/ucet` rovnako.
+- ⚠️ **SPEC:** C použil čísla §10.25–34; moje §10.25 pri merge prečíslujem na najbližšie voľné a dám vedieť.
