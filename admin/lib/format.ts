@@ -88,3 +88,9 @@ export function shipShort(s: unknown) {
 }
 
 export const json = (v: unknown) => JSON.stringify(v, null, 2);
+
+/** začiatok dnešného dňa v Bratislave ako Date (UTC okamih) */
+export function startOfTodayLocal(now = new Date()) {
+  const off = new Intl.DateTimeFormat('en-US', { timeZone: TZ, timeZoneName: 'longOffset' }).formatToParts(now).find((p) => p.type === 'timeZoneName')?.value ?? 'GMT+01:00';
+  return new Date(`${ymdLocal(now)}T00:00:00${off.replace('GMT', '') || '+00:00'}`);
+}

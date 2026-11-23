@@ -100,3 +100,4 @@ pre.json { background: #fff; border: 1px solid var(--line); padding: 8px; font-s
 .badge.paused, .badge.return_pending { border-color: var(--o); color: #a34300; }
 .pager { display: flex; gap: 10px; margin-top: 10px; align-items: center; }
 .msg.flash { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 14px; position: sticky; top: 0; z-index: 5; }
+a.btn { text-decoration: none; display: inline-block; }

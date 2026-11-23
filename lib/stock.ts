@@ -24,15 +24,22 @@ export function dailyUnits(subs: SubLike[]): Map<string, number> {
 
 export type StockRow = { sku: string; free: number; perDay: number; threshold: number; coverDays: number | null };
 
-export function lowStock(products: { id: string; free_quantity?: number | null; type?: string | null }[], perDay: Map<string, number>, days = STOCK_ALERT_DAYS): StockRow[] {
-  const rows: StockRow[] = [];
+/** Všetky bežné produkty (4 kg, 9 kg): voľné kusy, spotreba, hranica upozornenia, na koľko dní vystačia (admin: sklad). */
+export function stockRows(products: { id: string; free_quantity?: number | null; type?: string | null }[], perDay: Map<string, number>, days = STOCK_ALERT_DAYS): (StockRow & { low: boolean })[] {
+  const rows: (StockRow & { low: boolean })[] = [];
   for (const p of products) {
     if (!p.id.startsWith('GRAN-') || p.type === 'multi' || p.id.endsWith('-18')) continue;
     const rate = perDay.get(p.id) ?? 0;
-    if (rate <= 0) continue;
     const free = p.free_quantity ?? 0;
     const threshold = Math.ceil(rate * days);
-    if (free < threshold) rows.push({ sku: p.id, free, perDay: Math.round(rate * 100) / 100, threshold, coverDays: Math.floor(free / rate) });
+    rows.push({ sku: p.id, free, perDay: Math.round(rate * 100) / 100, threshold, coverDays: rate > 0 ? Math.floor(free / rate) : null, low: rate > 0 && free < threshold });
   }
-  return rows.sort((a, b) => (a.coverDays ?? 0) - (b.coverDays ?? 0));
+  return rows;
+}
+
+export function lowStock(products: { id: string; free_quantity?: number | null; type?: string | null }[], perDay: Map<string, number>, days = STOCK_ALERT_DAYS): StockRow[] {
+  return stockRows(products, perDay, days)
+    .filter((r) => r.low)
+    .map(({ low: _low, ...r }) => r)
+    .sort((a, b) => (a.coverDays ?? 0) - (b.coverDays ?? 0));
 }
