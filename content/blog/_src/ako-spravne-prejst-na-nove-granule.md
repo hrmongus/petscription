@@ -23,7 +23,7 @@ key_points:
   - "Staré a nové granule miešaj podľa gramov, nie podľa odmerky."
   - "Najčastejšia chyba: držať sa kalendára. Ďalší krok urob, až keď má pes pevnú stolicu."
 changelog:
-  - "2026-11-23: Hlavná fotka (ilustrácia vygenerovaná AI)"
+  - "2026-11-23: Hlavná fotka a fotka do sekcie o prechode (ilustrácie vygenerované AI)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
@@ -47,7 +47,7 @@ Nové granule majú iné bielkoviny, tuky, vlákninu aj energiu v 100 g. ==Črev
 
 Postupne prechádzaj pri každej zmene: na inú značku, na inú receptúru tej istej značky aj zo šteňacieho krmiva na krmivo pre dospelých psov. Výnimkou je diéta od veterinára, napríklad eliminačná diéta pri podozrení na alergiu. Vtedy postupuj presne podľa neho.
 
-![Ruka majiteľa sype do misky odvážené staré granule a menšiu kôpku nových granúl, oba druhy sú v miske jasne odlíšiteľné farbou a veľkosťou](placeholder "Na začiatku tvoria nové granule len malú časť misky.")
+![Ruka sype zo sklenenej misky svetlé trojuholníkové granule do misky s malými tmavohnedými granulami, za stolom sa na misku pozerá zlatý retríver](img/blog/ako-spravne-prejst-na-nove-granule/miesanie.webp "Na začiatku pridaj k starým granulám len trochu nových. Ilustrácia vygenerovaná AI.")
 
 ## Ako dlho má trvať prechod na nové granule?
 

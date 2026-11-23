@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-23 22:35",
+ "built": "2026-11-23 22:41",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -157,7 +157,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
-      "2026-11-23: Hlavná fotka (ilustrácia vygenerovaná AI)",
+      "2026-11-23: Hlavná fotka a fotka do sekcie o prechode (ilustrácie vygenerované AI)",
       "2026-11-20: Autorka MVDr. Marcela Glezgová",
       "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
      ]
@@ -282,7 +282,6 @@ window.GRANULA_POSTS = {
      "ok": false,
      "msg": "Zástupné obrázky sú nahradené skutočnými (pred publikovaním)",
      "details": [
-      "obrázok: Ruka majiteľa sype do misky odvážené staré granule a menšiu kôpku nových granúl, oba druhy sú v miske jasne odlíšiteľné farbou a veľkosťou",
       "obrázok: Majiteľ odváži na kuchynskej váhe porciu nových granúl do misky, vedľa stojí otvorené vrece starých granúl a papier s ručne napísaným plánom 7 dní"
      ]
     },
