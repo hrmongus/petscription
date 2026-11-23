@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import type { Tables } from './database.types';
 import type { Mail } from './email';
-import { dateTimeSk, parseContractRef, submitWithdrawal, withdrawalDeadline, WithdrawalFormSchema, WithdrawalRateLimited, type WithdrawalDeps } from './withdrawal';
+import { dateTimeSk, mismatchMessage, parseContractRef, submitWithdrawal, withdrawalDeadline, WithdrawalFormSchema, WithdrawalMismatch, WithdrawalRateLimited, type WithdrawalDeps } from './withdrawal';
 
 type Order = Tables<'orders'>;
 type Sub = Tables<'subscriptions'>;
@@ -30,7 +30,7 @@ function setup(opts: { orders?: Order[]; sub?: Partial<Sub> | null; fhbStatus?: 
       ordersOfSubscription: async (id) => [...orders.values()].filter((o) => o.subscription_id === id),
       recentByEmail: async (email) => withdrawals.filter((w) => w.email.toLowerCase() === email.toLowerCase()),
       insertWithdrawal: async (row) => {
-        const w = { id: `w${withdrawals.length + 1}`, order_id: null, subscription_id: null, customer_id: null, reason: null, confirmation_sent_at: null, status: 'received', deadline_at: null, in_deadline: null, needs_review: false, review_note: null, actions: [], submitted_at: NOW.toISOString(), ...row } as W;
+        const w = { id: `w${withdrawals.length + 1}`, order_id: null, subscription_id: null, customer_id: null, reason: null, confirmation_sent_at: null, status: 'received', deadline_at: null, in_deadline: null, needs_review: false, review_note: null, actions: [], return_status: 'awaiting', refund_due_at: null, submitted_at: NOW.toISOString(), ...row } as W;
         withdrawals.push(w);
         return w;
       },
@@ -83,7 +83,8 @@ describe('pomocné funkcie', () => {
   it('formulár vyžaduje potvrdenie a prázdnu pascu', () => {
     const ok = { name: 'Jana N', email: 'jana@example.sk', contractRef: '7', confirm: true };
     expect(WithdrawalFormSchema.safeParse(ok).success).toBe(true);
-    expect(WithdrawalFormSchema.safeParse({ ...ok, confirm: false }).success).toBe(false);
+    expect(WithdrawalFormSchema.safeParse({ ...ok, confirm: false }).success).toBe(true);
+    expect(WithdrawalFormSchema.safeParse({ name: 'Jana N', email: 'jana@example.sk', contractRef: '7' }).success).toBe(false);
     expect(WithdrawalFormSchema.safeParse({ ...ok, website: 'x' }).success).toBe(false);
     expect(WithdrawalFormSchema.safeParse({ ...ok, email: 'x' }).success).toBe(false);
   });
@@ -96,7 +97,8 @@ describe('submitWithdrawal', () => {
 
     expect(r).toMatchObject({ submittedAt: NOW.toISOString(), submittedAtText: '1. 12. 2026 o 14:05:09', contractRef: '7', emailSent: true, duplicate: false });
     const w = t.withdrawals[0];
-    expect(w).toMatchObject({ order_id: 'o7', subscription_id: 's1', customer_id: 'c1', in_deadline: true, deadline_at: null, needs_review: false, status: 'received', submitted_at: NOW.toISOString() });
+    expect(w).toMatchObject({ order_id: 'o7', subscription_id: 's1', customer_id: 'c1', in_deadline: true, deadline_at: null, needs_review: false, status: 'received', return_status: 'not_needed', submitted_at: NOW.toISOString() });
+    expect(w.refund_due_at).toBe('2026-12-15T22:59:59.999Z'); // 1. 12. + 14 dní, koniec dňa SK
     expect(w.confirmation_sent_at).toBeTruthy();
     expect(w.content).toMatchObject({ form: { name: 'Jana Nováková', email: 'jana@example.sk', contract_ref: '7', reason: 'Pes ich neje' }, source: 'web' });
     expect(t.cancelled).toEqual(['sub_1']);
@@ -123,23 +125,28 @@ describe('submitWithdrawal', () => {
     expect(t.audits).toHaveLength(1);
   });
 
-  it('e-mail nesedí s objednávkou: iba záznam a potvrdenie, nič sa nezruší, na posúdenie', async () => {
+  it('e-mail nesedí s objednávkou: chyba, NIČ sa nezaloží ani nezruší, žiadny e-mail', async () => {
     const t = setup({ email: 'iny@example.sk', fhbStatus: { 'GR-000007': 'pending' } });
-    await submitWithdrawal(t.input, t.deps);
+    const p = submitWithdrawal(t.input, t.deps);
+    await expect(p).rejects.toBeInstanceOf(WithdrawalMismatch);
+    await expect(p).rejects.toThrow(mismatchMessage('7'));
+    expect(t.withdrawals).toEqual([]);
     expect(t.cancelled).toEqual([]);
     expect(t.deleted).toEqual([]);
-    expect(t.withdrawals[0]).toMatchObject({ order_id: null, customer_id: null, needs_review: true });
-    expect(t.withdrawals[0].review_note).toContain('nesedí');
-    expect(t.mails[0].to).toBe('jana@example.sk');
-    expect(t.mails[0].text).toContain('skontrolujeme');
-    expect(t.mails[0].text).not.toContain('Predplatné sme zrušili');
+    expect(t.mails).toEqual([]);
+    expect(t.audits).toEqual([]);
   });
 
-  it('neznáme číslo: zaeviduje sa a potvrdí', async () => {
+  it('neexistujúce číslo: rovnaká hláška, nič sa nezaloží', async () => {
     const t = setup();
-    const r = await submitWithdrawal({ ...t.input, contractRef: 'neviem' }, t.deps);
-    expect(r.emailSent).toBe(true);
-    expect(t.withdrawals[0]).toMatchObject({ needs_review: true, contract_ref: 'neviem' });
+    await expect(submitWithdrawal({ ...t.input, contractRef: 'GR-000099' }, t.deps)).rejects.toThrow(mismatchMessage('99'));
+    await expect(submitWithdrawal({ ...t.input, contractRef: 'neviem' }, t.deps)).rejects.toThrow('objednávkou č. neviem');
+    expect(t.withdrawals).toEqual([]);
+    expect(t.mails).toEqual([]);
+  });
+
+  it('hláška pri nezhode', () => {
+    expect(mismatchMessage('17')).toBe('Tento email nesedí s objednávkou č. 17. Zadaj email, ktorý si použil pri objednávke. Ak si ho nepamätáš, napíš nám na podpora@granula.sk – odstúpenie platí aj takto.');
   });
 
   it('prihlásený zákazník (/ucet): zhoda podľa zákazníka, nie e-mailu', async () => {
@@ -154,7 +161,7 @@ describe('submitWithdrawal', () => {
     await submitWithdrawal(t.input, t.deps);
     expect(t.deleted).toEqual([]);
     expect(t.orders.get('o7')!.status).toBe('confirmed');
-    expect(t.withdrawals[0]).toMatchObject({ status: 'return_pending', needs_review: false });
+    expect(t.withdrawals[0]).toMatchObject({ status: 'return_pending', return_status: 'awaiting', needs_review: false });
     expect(t.mails[0].text).toContain('Objednávka č. 7 už odišla zo skladu alebo sa práve balí');
   });
 

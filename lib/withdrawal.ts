@@ -88,13 +88,37 @@ export type WithdrawalResult = {
 
 export class WithdrawalRateLimited extends Error {}
 
+/** E-mail nesedí s objednávkou alebo objednávka neexistuje → nič sa nezaloží, formulár ukáže hlášku. */
+export class WithdrawalMismatch extends Error {
+  constructor(readonly ref: string) {
+    super(mismatchMessage(ref));
+  }
+}
+
+export const mismatchMessage = (ref: string) =>
+  `Tento email nesedí s objednávkou č. ${ref}. Zadaj email, ktorý si použil pri objednávke. Ak si ho nepamätáš, napíš nám na podpora@granula.sk – odstúpenie platí aj takto.`;
+
+/** lehota na vrátenie peňazí: 14 dní od prijatia odstúpenia (do konca dňa) */
+export const refundDue = (receivedAt: Date) => endOfLocalDay(receivedAt, WITHDRAWAL_DAYS);
+
+/** Objednávka a zákazník, ak e-mail (alebo prihlásený zákazník) sedí; inak WithdrawalMismatch. */
+export async function matchOrder(input: Pick<WithdrawalInput, 'email' | 'contractRef' | 'customerId'>, store: Pick<WithdrawalStore, 'findOrderByNumber' | 'getCustomer'>) {
+  const ref = input.contractRef.trim();
+  const number = parseContractRef(ref);
+  const order = number ? await store.findOrderByNumber(number) : null;
+  const customer = order ? await store.getCustomer(order.customer_id) : null;
+  const ok = !!order && !!customer && (input.customerId ? customer.id === input.customerId : customer.email.trim().toLowerCase() === input.email.trim().toLowerCase());
+  if (!ok) throw new WithdrawalMismatch(number ? String(number) : ref);
+  return { order: order!, customer: customer! };
+}
+
 /** formulár /odstupenie (druhý krok „Potvrdiť odstúpenie“ posiela confirm: true) */
 export const WithdrawalFormSchema = z.object({
   name: z.string().trim().min(2, 'Napíš meno a priezvisko.').max(120),
   email: z.string().trim().max(254).email('Skontroluj e-mail.'),
   contractRef: z.string().trim().min(1, 'Napíš číslo objednávky alebo predplatného.').max(60),
   reason: z.string().trim().max(1000).optional().nullable(),
-  confirm: z.literal(true),
+  confirm: z.boolean(),
   /** pasca na roboty (skryté pole) */
   website: z.string().max(0).optional(),
 });
@@ -157,11 +181,22 @@ export async function submitWithdrawal(input: WithdrawalInput, deps: WithdrawalD
   const contractRef = input.contractRef.trim();
   const reason = input.reason?.trim() || null;
 
+  // zhoda: objednávka existuje a e-mail (alebo prihlásený zákazník) sedí. Inak sa NIČ nezaloží ani nezruší a formulár
+  // ukáže chybu (SPEC §10.25). Bez overovania kódom/e-mailom: zákon zakazuje sťažovať odstúpenie.
+  const { order, customer } = await matchOrder(input, store);
+
   // dvojklik / opakované odoslanie a ochrana proti zneužitiu
   const recent = await store.recentByEmail(email, new Date(now.getTime() - 86_400_000));
-  const same = recent.find((w) => w.contract_ref.trim().toLowerCase() === contractRef.toLowerCase() && now.getTime() - new Date(w.submitted_at).getTime() < DUPLICATE_WINDOW_MS);
+  const same = recent.find((w) => w.order_id === order.id && now.getTime() - new Date(w.submitted_at).getTime() < DUPLICATE_WINDOW_MS);
   if (same) return resultOf(same, true);
   if (recent.length >= MAX_PER_EMAIL_PER_DAY) throw new WithdrawalRateLimited('príliš veľa odstúpení z tohto e-mailu');
+
+  const sub = order.subscription_id ? await store.getSubscription(order.subscription_id) : null;
+  const orders = sub ? await store.ordersOfSubscription(sub.id) : [order];
+  if (!orders.some((o) => o.id === order.id)) orders.push(order);
+  const delivered = orders.map((o) => o.delivered_at).filter((d): d is string => !!d).sort();
+  const deadline = delivered[0] ? withdrawalDeadline(new Date(delivered[0])) : null;
+  const inDeadline = deadline ? now <= deadline : true;
 
   // 1. záznam (čas servera)
   const content = {
@@ -171,66 +206,43 @@ export async function submitWithdrawal(input: WithdrawalInput, deps: WithdrawalD
     ip: input.ip ?? null,
     user_agent: input.userAgent?.slice(0, 300) ?? null,
   };
-  const w = await store.insertWithdrawal({ name, email, contract_ref: contractRef, reason, content: content as Json, submitted_at: now.toISOString(), status: 'received' });
+  const w = await store.insertWithdrawal({
+    name, email, contract_ref: contractRef, reason, content: content as Json, submitted_at: now.toISOString(), status: 'received',
+    order_id: order.id, subscription_id: sub?.id ?? null, customer_id: customer.id,
+    deadline_at: deadline?.toISOString() ?? null, in_deadline: inDeadline,
+    refund_due_at: refundDue(now).toISOString(),
+  });
 
   const actions: WithdrawalAction[] = [];
   const review: string[] = [];
-  let customerName: string | null = null;
-  let order: Order | null = null;
-  let sub: Subscription | null = null;
-  let deadline: Date | null = null;
-  let inDeadline: boolean | null = null;
   let returnExpected = false;
-  let matched = false;
+  if (!inDeadline) review.push(`Po lehote: prvý tovar prevzatý ${dateTimeSk(new Date(delivered[0]))}, lehota uplynula ${dateTimeSk(deadline!)}.`);
 
-  // 2. objednávka, zhoda, lehota a akcie
+  // 2. akcie
   try {
-    const number = parseContractRef(contractRef);
-    order = number ? await store.findOrderByNumber(number) : null;
-    const customer = order ? await store.getCustomer(order.customer_id) : null;
-    matched = !!order && !!customer && (input.customerId ? customer.id === input.customerId : customer.email.trim().toLowerCase() === email);
-
-    if (!number) review.push('Číslo objednávky sa nedá rozpoznať.');
-    else if (!order) review.push(`Objednávka č. ${number} neexistuje.`);
-    else if (!matched) review.push(`E-mail z formulára nesedí s e-mailom objednávky č. ${order.number}. Nič sa automaticky nezrušilo.`);
-
-    if (order && customer && matched) {
-      customerName = customer.name;
-      sub = order.subscription_id ? await store.getSubscription(order.subscription_id) : null;
-      const orders = sub ? await store.ordersOfSubscription(sub.id) : [order];
-      if (!orders.some((o) => o.id === order!.id)) orders.push(order);
-
-      const delivered = orders.map((o) => o.delivered_at).filter((d): d is string => !!d).sort();
-      deadline = delivered[0] ? withdrawalDeadline(new Date(delivered[0])) : null;
-      inDeadline = deadline ? now <= deadline : true;
-      if (!inDeadline) review.push(`Po lehote: prvý tovar prevzatý ${dateTimeSk(new Date(delivered[0]))}, lehota uplynula ${dateTimeSk(deadline!)}.`);
-
-      await store.updateWithdrawal(w.id, { order_id: order.id, subscription_id: sub?.id ?? null, customer_id: customer.id, deadline_at: deadline?.toISOString() ?? null, in_deadline: inDeadline });
-
-      // predplatné: okamžite (SPEC §1), bez ďalších platieb
-      if (sub && sub.status !== 'cancelled') {
-        try {
-          if (sub.stripe_subscription_id) await deps.cancelSubscription(sub.stripe_subscription_id);
-          await store.updateSubscription(sub.id, { status: 'cancelled', next_charge_at: null });
-          actions.push({ type: 'subscription_cancelled', ok: true });
-        } catch (e) {
-          actions.push({ type: 'subscription_cancelled', ok: false, error: errText(e) });
-          review.push(`Predplatné sa nepodarilo zrušiť: ${errText(e)}`);
-        }
+    // predplatné: okamžite (SPEC §1), bez ďalších platieb
+    if (sub && sub.status !== 'cancelled') {
+      try {
+        if (sub.stripe_subscription_id) await deps.cancelSubscription(sub.stripe_subscription_id);
+        await store.updateSubscription(sub.id, { status: 'cancelled', next_charge_at: null });
+        actions.push({ type: 'subscription_cancelled', ok: true });
+      } catch (e) {
+        actions.push({ type: 'subscription_cancelled', ok: false, error: errText(e) });
+        review.push(`Predplatné sa nepodarilo zrušiť: ${errText(e)}`);
       }
+    }
 
-      // objednávky: čo ešte neodišlo, zastaviť; čo odišlo, čaká na vrátenie. Po lehote sa zaplatené objednávky
-      // automaticky nezastavujú (zákazník by ostal bez tovaru aj peňazí), rozhodne admin.
-      for (const o of inDeadline ? orders.sort((a, b) => a.number - b.number) : []) {
-        if (STOPPABLE.has(o.status)) {
-          const r = await stopOrder(o, deps);
-          actions.push(r);
-          if (r.type === 'order_in_progress') returnExpected = true;
-          if (!r.ok) review.push(`Objednávka č. ${o.number}: ${r.error}`);
-        } else if (SHIPPED.has(o.status) && (o.id === order.id || !o.delivered_at || (deadline && new Date(o.delivered_at) <= deadline))) {
-          actions.push({ type: 'order_shipped', ok: true, order: o.number, status: o.status });
-          returnExpected = true;
-        }
+    // objednávky: čo ešte neodišlo, zastaviť; čo odišlo, čaká na vrátenie. Po lehote sa zaplatené objednávky
+    // automaticky nezastavujú (zákazník by ostal bez tovaru aj peňazí), rozhodne admin.
+    for (const o of orders.sort((a, b) => a.number - b.number)) {
+      if (inDeadline && STOPPABLE.has(o.status)) {
+        const r = await stopOrder(o, deps);
+        actions.push(r);
+        if (r.type === 'order_in_progress') returnExpected = true;
+        if (!r.ok) review.push(`Objednávka č. ${o.number}: ${r.error}`);
+      } else if (SHIPPED.has(o.status) && (o.id === order.id || !o.delivered_at || (deadline && new Date(o.delivered_at) <= deadline))) {
+        actions.push({ type: 'order_shipped', ok: true, order: o.number, status: o.status });
+        returnExpected = true;
       }
     }
   } catch (e) {
@@ -244,6 +256,7 @@ export async function submitWithdrawal(input: WithdrawalInput, deps: WithdrawalD
     needs_review: needsReview,
     review_note: needsReview ? review.join(' ') : null,
     status: returnExpected ? 'return_pending' : 'received',
+    return_status: returnExpected ? 'awaiting' : 'not_needed',
   };
   await store.updateWithdrawal(w.id, patch).catch((e) => console.error('[odstupenie] zápis výsledku zlyhal', w.id, e));
 
@@ -256,12 +269,12 @@ export async function submitWithdrawal(input: WithdrawalInput, deps: WithdrawalD
           withdrawalId: w.id,
           to: email,
           name,
-          firstName: (customerName ?? name).split(/\s+/)[0],
+          firstName: (customer.name || name).split(/\s+/)[0],
           contractRef,
           reason,
           receivedAt: dateTimeSk(now),
           siteUrl: deps.siteUrl,
-          matched,
+          matched: true,
           actions,
           needsReview,
         }),
@@ -284,15 +297,16 @@ export async function submitWithdrawal(input: WithdrawalInput, deps: WithdrawalD
       `Prijaté ${dateTimeSk(now)} cez ${input.source === 'ucet' ? 'účet' : 'web /odstupenie'}.`,
       `Meno: ${name} · E-mail: ${email} · Číslo: ${contractRef}`,
       `Dôvod: ${reason ?? '(neuvedený)'}`,
-      order ? `Objednávka č. ${order.number}${sub ? `, predplatné ${sub.stripe_subscription_id ?? sub.id}` : ', jednorazová'}${deadline ? `, lehota do ${dateTimeSk(deadline)}` : ', tovar ešte nedoručený'}` : 'Objednávka nenájdená.',
+      `Objednávka č. ${order.number}${sub ? `, predplatné ${sub.stripe_subscription_id ?? sub.id}` : ', jednorazová'}${deadline ? `, lehota do ${dateTimeSk(deadline)}` : ', tovar ešte nedoručený'}`,
       `Akcie: ${actions.length ? actions.map(actionText).join(' · ') : 'žiadne'}`,
       ...(review.length ? [`Na posúdenie: ${review.join(' ')}`] : []),
-      returnExpected ? 'Tovar už odišiel zo skladu: čaká sa na vrátenie, potom refund.' : 'Refund: po posúdení v admine (Stripe).',
+      returnExpected ? 'Tovar už odišiel zo skladu: čaká sa na vrátenie, refund po prijatí a kontrole vreca.' : 'Tovar neodišiel zo skladu: refund v admine.',
+      `Refund najneskôr do ${dateTimeSk(refundDue(now))} (14 dní od prijatia odstúpenia), vždy ručne.`,
       `Záznam withdrawals ${w.id}`,
     ],
   }).catch(() => {});
   await store
-    .audit({ actor: input.source === 'ucet' ? 'customer' : 'customer:web', action: 'withdrawal.received', entity: 'withdrawal', entity_id: w.id, after: { ...patch, order_id: order?.id ?? null } as unknown as Json })
+    .audit({ actor: input.source === 'ucet' ? 'customer' : 'customer:web', action: 'withdrawal.received', entity: 'withdrawal', entity_id: w.id, after: { ...patch, order_id: order.id } as unknown as Json })
     .catch((e) => console.error('[odstupenie] audit zlyhal', e));
 
   return { id: w.id, submittedAt: now.toISOString(), submittedAtText: dateTimeSk(now), name, email, contractRef, reason, emailSent, duplicate: false };

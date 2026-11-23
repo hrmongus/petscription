@@ -1,8 +1,11 @@
-import { submitWithdrawal, WithdrawalFormSchema, WithdrawalRateLimited } from '@/lib/withdrawal';
-import { withdrawalDepsFromEnv } from '@/lib/withdrawal-store';
+import { matchOrder, submitWithdrawal, WithdrawalFormSchema, WithdrawalMismatch, WithdrawalRateLimited } from '@/lib/withdrawal';
+import { supabaseWithdrawalStore, withdrawalDepsFromEnv } from '@/lib/withdrawal-store';
 
 /*
- * POST /api/odstupenie { name, email, contractRef, reason?, confirm: true } → potvrdenie s časom prijatia (SPEC P4).
+ * POST /api/odstupenie { name, email, contractRef, reason?, confirm } (SPEC P4, §10.25)
+ *   confirm: false → iba kontrola, či e-mail sedí s objednávkou (krok 1 → 2), nič sa nezaloží
+ *   confirm: true  → záznam, akcie, potvrdzovací e-mail → čas prijatia
+ * Nezhoda / neexistujúca objednávka → 422 s hláškou, nič sa nezaloží ani nezruší.
  * Verejné, bez prihlásenia a BEZ prepínača predaja (odstúpiť sa musí dať vždy). Záznam, e-mail a akcie: lib/withdrawal.ts.
  * Odpoveď obsahuje iba to, čo zákazník zadal, + čas prijatia (nič o objednávke, aby sa nedalo hádať cudzie údaje).
  */
@@ -25,6 +28,10 @@ export async function POST(req: Request) {
   }
   const f = parsed.data;
   try {
+    if (!f.confirm) {
+      await matchOrder({ email: f.email, contractRef: f.contractRef }, supabaseWithdrawalStore);
+      return json({ ok: true, checked: true });
+    }
     const r = await submitWithdrawal(
       {
         name: f.name,
@@ -39,6 +46,7 @@ export async function POST(req: Request) {
     );
     return json({ ok: true, ...r, id: undefined });
   } catch (e) {
+    if (e instanceof WithdrawalMismatch) return json({ error: e.message, field: 'email' }, 422);
     if (e instanceof WithdrawalRateLimited) return json({ error: 'Z tohto e-mailu sme dnes dostali už veľa odstúpení. Napíš nám prosím na podpora@granula.sk.' }, 429);
     console.error('[odstupenie] záznam zlyhal', e);
     return json({ error: 'Odstúpenie sa nepodarilo uložiť. Skús to prosím znova alebo nám ho pošli e-mailom na podpora@granula.sk.' }, 500);

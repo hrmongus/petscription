@@ -423,6 +423,14 @@ export type Database = {
       }
       withdrawals: {
         Row: {
+          refund_due_at: string | null
+          return_status: string
+          return_received_at: string | null
+          return_condition: string | null
+          return_note: string | null
+          refunded_at: string | null
+          refund_amount_cents: number | null
+          stripe_refund_id: string | null
           actions: Json
           customer_id: string | null
           deadline_at: string | null
@@ -442,6 +450,14 @@ export type Database = {
           subscription_id: string | null
         }
         Insert: {
+          refund_due_at?: string | null
+          return_status?: string
+          return_received_at?: string | null
+          return_condition?: string | null
+          return_note?: string | null
+          refunded_at?: string | null
+          refund_amount_cents?: number | null
+          stripe_refund_id?: string | null
           actions?: Json
           customer_id?: string | null
           deadline_at?: string | null
@@ -461,6 +477,14 @@ export type Database = {
           subscription_id?: string | null
         }
         Update: {
+          refund_due_at?: string | null
+          return_status?: string
+          return_received_at?: string | null
+          return_condition?: string | null
+          return_note?: string | null
+          refunded_at?: string | null
+          refund_amount_cents?: number | null
+          stripe_refund_id?: string | null
           actions?: Json
           customer_id?: string | null
           deadline_at?: string | null

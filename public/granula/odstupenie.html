@@ -137,7 +137,7 @@ textarea.input{resize:vertical;min-height:88px}
           <dt id="d-reason-t">Dôvod</dt><dd id="d-reason"></dd>
         </dl>
         <p id="d-mail">Potvrdenie s obsahom odstúpenia sme poslali na <b id="d-mail-to"></b>. Ak ti nepríde do pár minút, pozri aj priečinok so spamom.</p>
-        <p class="wd-small">Peniaze ti vrátime najneskôr do 14 dní. Ak už tovar odišiel zo skladu, pošleme ti pokyny k vráteniu. Otázky: <a href="mailto:podpora@granula.sk">podpora@granula.sk</a>.</p>
+        <p class="wd-small">Peniaze ti vrátime najneskôr do 14 dní. Ak už tovar odišiel zo skladu, pošleme ti pokyny k vráteniu a peniaze vrátime po jeho prijatí. Otázky: <a href="mailto:podpora@granula.sk">podpora@granula.sk</a>.</p>
       </div>
     </div>
   </div>
@@ -214,13 +214,36 @@ textarea.input{resize:vertical;min-height:88px}
     return d;
   }
 
+  function post(confirm) {
+    return fetch("/api/odstupenie", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: data.name, email: data.email, contractRef: data.contractRef, reason: data.reason || null, confirm: confirm, website: $("wd-website").value })
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (b) { return { ok: r.ok && b.ok, status: r.status, b: b }; });
+    });
+  }
+  var NET = "Odstúpenie sa nepodarilo odoslať. Skús to prosím znova alebo napíš na podpora@granula.sk – odstúpenie platí aj takto.";
+
+  // krok 1 → 2: server overí, či e-mail sedí s objednávkou (nič nezakladá)
   form.addEventListener("submit", function (e) {
     e.preventDefault();
+    if (busy) return;
     data = validate();
     if (!data) return;
-    fill("r", data);
-    err($("wd-err2"), "");
-    show(review, "wd-review-h");
+    busy = true;
+    var btn = form.querySelector("button[type=submit]");
+    btn.setAttribute("aria-busy", "true");
+    post(false).then(function (res) {
+      if (!res.ok) {
+        if (res.b.field === "email") { fields.email.setAttribute("aria-invalid", "true"); fields.email.focus(); }
+        err($("wd-err1"), res.b.error || NET);
+        return;
+      }
+      fill("r", data);
+      err($("wd-err2"), "");
+      show(review, "wd-review-h");
+    }).catch(function () { err($("wd-err1"), NET); }).then(function () { busy = false; btn.removeAttribute("aria-busy"); });
   });
   $("wd-back").addEventListener("click", function () { show(form, "wd-name"); });
 
@@ -230,14 +253,8 @@ textarea.input{resize:vertical;min-height:88px}
     var btn = $("wd-confirm");
     btn.setAttribute("aria-busy", "true"); btn.textContent = "Odosielam…";
     err($("wd-err2"), "");
-    fetch("/api/odstupenie", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: data.name, email: data.email, contractRef: data.contractRef, reason: data.reason || null, confirm: true, website: $("wd-website").value })
-    }).then(function (r) {
-      return r.json().catch(function () { return {}; }).then(function (b) { return { ok: r.ok, b: b }; });
-    }).then(function (res) {
-      if (!res.ok || !res.b.ok) throw new Error(res.b.error || "Odstúpenie sa nepodarilo odoslať. Skús to prosím znova.");
+    post(true).then(function (res) {
+      if (!res.ok) throw new Error(res.b.error || NET);
       var b = res.b;
       fill("d", { name: b.name, email: b.email, contractRef: b.contractRef, reason: b.reason });
       $("d-time").textContent = b.submittedAtText;
@@ -245,7 +262,7 @@ textarea.input{resize:vertical;min-height:88px}
       show(done, "wd-done-h");
       try { history.replaceState(null, "", location.pathname); } catch (_) {}
     }).catch(function (e) {
-      err($("wd-err2"), (e && e.message) || "Odstúpenie sa nepodarilo odoslať. Skús to prosím znova alebo napíš na podpora@granula.sk.");
+      err($("wd-err2"), (e && e.message) || NET);
     }).then(function () {
       busy = false; btn.removeAttribute("aria-busy"); btn.textContent = "Potvrdiť odstúpenie";
     });
