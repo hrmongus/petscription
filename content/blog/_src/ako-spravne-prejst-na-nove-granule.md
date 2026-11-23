@@ -8,7 +8,7 @@ priority: P1
 description: "Na nové granule prechádzaj postupne aspoň 7 dní. Nové krmivo pridávaj po krokoch 10, 25, 50, 75 a 90 %. Citlivý pes potrebuje 2 týždne aj viac."
 author: marcela-glezgova
 hero: img/blog/ako-spravne-prejst-na-nove-granule/hero.webp
-hero_alt: "Zlatý retríver položil hlavu na kuchynský stôl a pozerá na dve misky granúl: v jednej sú malé tmavohnedé granule, v druhej svetlejšie trojuholníkové. Vedľa stojí plochá kuchynská váha so sklenenou miskou."
+hero_alt: "Na kuchynskom stole stoja dve misky: v jednej sú nové svetlé trojuholníkové granule, druhá so starými tmavohnedými granulami stojí na kuchynskej váhe. Za stolom sa na ne pozerá zlatý retríver."
 hero_caption: "Pri prechode na nové granule pomáha hlavne trpezlivosť. Staré krmivo uberáš a nové pridávaš po malých krokoch. Ilustrácia vygenerovaná AI."
 published: 2026-11-18
 updated: 2026-11-23
@@ -23,7 +23,7 @@ key_points:
   - "Staré a nové granule miešaj podľa gramov, nie podľa odmerky."
   - "Najčastejšia chyba: držať sa kalendára. Ďalší krok urob, až keď má pes pevnú stolicu."
 changelog:
-  - "2026-11-23: Nová hlavná fotka a fotky do sekcií o prechode a o krokoch (ilustrácie vygenerované AI)"
+  - "2026-11-23: Hlavná fotka a fotky do sekcií o prechode a o krokoch ako jedna séria (ilustrácie vygenerované AI)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
@@ -47,7 +47,7 @@ Nové granule majú iné bielkoviny, tuky, vlákninu aj energiu v 100 g. ==Črev
 
 Postupne prechádzaj pri každej zmene: na inú značku, na inú receptúru tej istej značky aj zo šteňacieho krmiva na krmivo pre dospelých psov. Výnimkou je diéta od veterinára, napríklad eliminačná diéta pri podozrení na alergiu. Vtedy postupuj presne podľa neho.
 
-![Ruka sype zo sklenenej misky svetlé trojuholníkové granule do misky s malými tmavohnedými granulami, miska stojí na kuchynskej váhe a za stolom sa na ňu pozerá zlatý retríver](img/blog/ako-spravne-prejst-na-nove-granule/miesanie.webp "Nové granule primiešavaj k starým postupne. Ilustrácia vygenerovaná AI.")
+![Ruka presýpa nové svetlé granule z jednej misky do misky so starými tmavohnedými granulami, ktorá stojí na kuchynskej váhe. Zlatý retríver sa pozerá.](img/blog/ako-spravne-prejst-na-nove-granule/miesanie.webp "Nové granule primiešavaj k starým postupne. Ilustrácia vygenerovaná AI.")
 
 ## Ako dlho má trvať prechod na nové granule?
 
@@ -135,7 +135,7 @@ Súvislosť potvrdzujú aj záznamy z veterinárnych ambulancií. Psy, ktoré ne
 6. **Nepridávaj nič nové.** ==Nové maškrty, zvyšky zo stola alebo doplnky by ti zakryli, čo spôsobilo mäkšiu stolicu.==
 7. **Sleduj stolicu, chuť do jedla a energiu psa.** Varovné znaky sú hnačka, zvracanie, veľa plynov, zápcha, bolesť a apatia.[^znaky]
 
-![Majiteľka kladie na kuchynskú váhu misku, v ktorej sú staré a nové granule zhruba napoly, vedľa stojí sklenená miska s novými granulami a za stolom čaká zlatý retríver](img/blog/ako-spravne-prejst-na-nove-granule/vazenie.webp "Porcie počas prechodu odvažuj. Odmerka pri dvoch rôznych krmivách nesedí. Ilustrácia vygenerovaná AI.")
+![Majiteľka drží na kuchynskej váhe misku, v ktorej sú staré a nové granule zhruba napoly. Vedľa stojí miska s novými granulami a za stolom čaká zlatý retríver.](img/blog/ako-spravne-prejst-na-nove-granule/vazenie.webp "Porcie počas prechodu odvažuj. Odmerka pri dvoch rôznych krmivách nesedí. Ilustrácia vygenerovaná AI.")
 
 [^znaky]: Varovné znaky podľa Tufts Petfoodology (2019).
 
