@@ -7,11 +7,11 @@ category: "Zloženie a suroviny"
 priority: P1
 description: "Surové mäso je zo 67–75 % voda, múčka z menej ako 10 %. Zloženie sa radí podľa hmotnosti pri miešaní, preto je čerstvé mäso na obale často prvé."
 author: marcela-glezgova
-hero: placeholder
-hero_alt: "Tri biele misky vedľa seba na svetlom stole: v prvej kocky surového červeného mäsa, v druhej tmavšie suché kúsky sušeného mäsa, v tretej jemný hnedosivý prášok mäsovej múčky; pred miskami ležia granule a obal granúl otočený zadnou stranou so zložením"
-hero_caption: "Čerstvé mäso, sušené mäso a mäsová múčka sa líšia hlavne obsahom vody. Preto ich v zložení nájdeš na rôznych miestach."
+hero: img/blog/cerstve-maso-dehydrovane-maso-masova-mucka/hero.webp
+hero_alt: "Tri krémové misky na kuchynskom stole: v prvej kocky surového hovädzieho mäsa, v druhej tmavé kúsky sušeného mäsa, v tretej sivohnedá mäsová múčka. Za nimi stojí papierové vrece granúl s etiketou so zložením."
+hero_caption: "Čerstvé mäso, sušené mäso a mäsová múčka sa líšia hlavne obsahom vody. Preto ich v zložení nájdeš na rôznych miestach. Ilustrácia vygenerovaná AI."
 published: 2026-11-18
-updated: 2026-11-20
+updated: 2026-11-24
 tldr: >
   Čerstvé mäso, sušené mäso a mäsová múčka sa líšia hlavne obsahom vody. Surové mäso je asi
   zo 67–75 % voda, múčka z menej ako 10 %. Zloženie sa radí podľa hmotnosti pri miešaní.
@@ -23,6 +23,7 @@ key_points:
   - "Kvalita mäsovej múčky kolíše. Z krmív s rôznymi múčkami psy strávili 62–82 % aminokyselín."
   - "Najčastejší omyl: čerstvé mäso na prvom mieste neznamená, že v granulách je najviac mäsa."
 changelog:
+  - "2026-11-24: Hlavná fotka a fotka etikety so zložením (ilustrácie vygenerované AI, etiketa so skutočným zložením)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: odstránený výklad slova „čerstvé“"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
@@ -53,7 +54,7 @@ cta_button: "Nájdi granule pre svojho psa"
 
 ==Slovo „mäso“ znamená v pravidlách označovania len svalovinu.== Širší zákonný názov „mäso a živočíšne vedľajšie produkty“ zahŕňa všetky mäsité časti a aj to, čo vznikne pri spracovaní tiel zvierat.
 
-![Zadná strana obalu granúl, detail časti Zloženie, v ktorej je ako prvá surovina uvedené mäso s percentom a slovom sušené](placeholder "Forma mäsa (čerstvé, sušené, múčka) je v zložení napísaná pri názve suroviny.")
+![Žena drží v kuchyni veľké papierové vrece granúl a číta etiketu, prvý riadok zloženia uvádza 60 % hovädzieho mäsa, z toho 40 % sušeného a 20 % čerstvo spracovaného](img/blog/cerstve-maso-dehydrovane-maso-masova-mucka/zlozenie.webp "Forma mäsa je v zložení napísaná pri názve suroviny. Na etikete je zloženie našej receptúry Hovädzie s ryžou. Ilustrácia vygenerovaná AI.")
 
 [^cerstve]: Kódex správneho označovania FEDIAF, 2019. Pri sušenej surovine kódex vyžaduje, aby to jasne povedal jej názov, napríklad slovom „sušené“. Mäso je v kódexe kostrový sval; kategória „mäso a živočíšne vedľajšie produkty“ zahŕňa mäsité časti a produkty zo spracovania tiel teplokrvných suchozemských zvierat.
 [^mucka]: Tufts Petfoodology, 2016. Múčka sa vyrába kafilerickým spracovaním (renderingom).

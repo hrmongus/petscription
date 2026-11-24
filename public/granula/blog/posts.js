@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-23 23:18",
+ "built": "2026-11-24 08:48",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -650,11 +650,11 @@ window.GRANULA_POSTS = {
    "wanted": "draft",
    "example": false,
    "published": "2026-11-18",
-   "updated": "2026-11-20",
+   "updated": "2026-11-24",
    "author": "MVDr. Marcela Glezgová",
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
-   "hero": "placeholder",
+   "hero": "img/blog/cerstve-maso-dehydrovane-maso-masova-mucka/hero.webp",
    "words": 1471,
    "description": "Surové mäso je zo 67–75 % voda, múčka z menej ako 10 %. Zloženie sa radí podľa hmotnosti pri miešaní, preto je čerstvé mäso na obale často prvé.",
    "id": "A4",
@@ -721,9 +721,9 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-24: Hlavná fotka a fotka etikety so zložením (ilustrácie vygenerované AI, etiketa so skutočným zložením)",
       "2026-11-20: Autorka MVDr. Marcela Glezgová",
-      "2026-11-18: odstránený výklad slova „čerstvé“",
-      "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
+      "2026-11-18: odstránený výklad slova „čerstvé“"
      ]
     },
     {
@@ -844,12 +844,9 @@ window.GRANULA_POSTS = {
     {
      "id": "img-placeholder",
      "level": "error",
-     "ok": false,
+     "ok": true,
      "msg": "Zástupné obrázky sú nahradené skutočnými (pred publikovaním)",
-     "details": [
-      "hero: Tri biele misky vedľa seba na svetlom stole: v prvej kocky surového červeného mäsa, v druhej tmavšie suché kúsky sušeného mäsa, v tretej jemný hnedosivý prášok mäsovej múčky; pred miskami ležia granule a obal granúl otočený zadnou stranou so zložením",
-      "obrázok: Zadná strana obalu granúl, detail časti Zloženie, v ktorej je ako prvá surovina uvedené mäso s percentom a slovom sušené"
-     ]
+     "details": []
     },
     {
      "id": "img-files",
