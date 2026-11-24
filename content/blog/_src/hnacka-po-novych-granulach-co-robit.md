@@ -27,6 +27,7 @@ key_points:
   - "Granule nemusia byť vinníkom. Veterinári zapísali zmenu krmiva ako možnú príčinu hnačky len pri 4,6 % psov."
   - "Najčastejšia chyba: zmeniť granule zo dňa na deň a pri hnačke hneď skúšať ďalšie nové krmivo."
 changelog:
+  - "2026-11-24: „inak zdravý“ preštylizované v sekcii o tom, či je hnačka normálna"
   - "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)"
   - "2026-11-24: Zrozumiteľnejšia veta v sumári o tom, kedy hnačka prejde sama"
   - "2026-11-23: Hlavná fotka a fotky do sekcií (ilustrácie vygenerované AI)"
@@ -72,7 +73,7 @@ odkaz: granule-na-mieru.html
 
 ## Je hnačka po zmene granúl normálna a ako dlho trvá?
 
-**Mierna hnačka po zmene granúl je bežná. Ak je pes inak zdravý, zvyčajne prejde za 1–3 dni.** Väčšina psov sa podľa PDSA zotaví za 1–3 dni, často aj bez liečby. Akútna hnačka u psov trvá v 78 % prípadov najviac 2 dni.[^pegram]
+**Mierna hnačka po zmene granúl je bežná. Ak pes nemá iné zdravotné problémy, väčšinou prejde za 1–3 dni.** Väčšina psov sa podľa PDSA zotaví za 1–3 dni, často aj bez liečby. Akútna hnačka u psov trvá v 78 % prípadov najviac 2 dni.[^pegram]
 
 „Normálna“ je však len vtedy, keď je pes aktívny ako vždy, má chuť do jedla, pije, nezvracia a v stolici nie je krv ani hlien. Kašovitá stolica je pri prechode bežnejšia ako vodnatá. Ak sa stolica 1–2 dni po návrate k starému krmivu zlepšuje, ide to dobrým smerom.
 
