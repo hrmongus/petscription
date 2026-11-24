@@ -9,9 +9,9 @@ description: "Hnačka po nových granulách zvyčajne odznie za 1–3 dni. Vrá�
 author: marcela-glezgova
 hero: img/blog/hnacka-po-novych-granulach-co-robit/hero.webp
 hero_alt: "Žena v béžovom svetri kľačí v kuchyni pri francúzskom buldočkovi, ktorý pije vodu z kovovej misky. Vedľa stojí miska s granulami."
-hero_caption: "Keď má pes po zmene krmiva hnačku, daj mu najprv vodu a vráť sa k jedlu, ktoré poznal. Ilustrácia vygenerovaná AI."
+hero_caption: "Keď má pes po zmene krmiva hnačku, daj mu najprv vodu a vráť sa ku krmivu, na ktoré je zvyknutý. Ilustrácia vygenerovaná AI."
 cta_title: "Granule pre psa s citlivým trávením"
-cta_text: "Dennú dávku spočítame na gramy, aby pes pri prechode nezjedol viac, ako potrebuje. Pri citlivom trávení vyberáme granule s jedným druhom mäsa, ak tomu nebráni iná potreba psa."
+cta_text: "Povedz nám o svojom psovi. Vyberieme granule, ktoré sedia jeho tráveniu, a dennú dávku spočítame na gramy."
 cta_button: "Nájdi granule pre svojho psa"
 published: 2026-11-18
 updated: 2026-11-24
@@ -27,6 +27,8 @@ key_points:
   - "Granule nemusia byť vinníkom. Veterinári zapísali zmenu krmiva ako možnú príčinu hnačky len pri 4,6 % psov."
   - "Najčastejšia chyba: zmeniť granule zo dňa na deň a pri hnačke hneď skúšať ďalšie nové krmivo."
 changelog:
+  - "2026-11-24: Spresnené, že 2–3 dni platia pre psa na ľahkej strave (overené v zdroji Cornell)"
+  - "2026-11-24: Jazyková korektúra (prirodzenejšie formulácie, úvodná veta sekcie o veterinárovi, kroky, časté otázky), nová záverečná ponuka"
   - "2026-11-24: „Dávku odvažuj na gramy“ → „Dávku vždy odváž v gramoch“ (krok 6 a zhrnutie)"
   - "2026-11-24: „inak zdravý“ preštylizované v sekcii o tom, či je hnačka normálna"
   - "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)"
@@ -47,7 +49,7 @@ sources:
 
 ## Čo je hnačka po zmene krmiva?
 
-**Hnačka po zmene krmiva je krátkodobá tráviaca porucha, ktorá vznikne, keď si črevo psa ešte nestihlo zvyknúť na nové granule.** Pes má mäkkú až vodnatú stolicu, kaká častejšie a niekedy má plyny.
+**Hnačka po zmene krmiva je krátkodobá tráviaca porucha, ktorá vznikne, keď si črevo psa ešte nestihlo zvyknúť na nové granule.** Pes má mäkkú až vodnatú stolicu, chodí na potrebu častejšie a niekedy má plyny.
 
 ==Od hnačky z infekcie, parazitov alebo zjedeného odpadu ju rozlíšiš podľa dvoch vecí: prišla krátko po zmene krmiva a pes sa napriek hnačke správa normálne, má chuť do jedla a pije.==
 
@@ -55,13 +57,13 @@ sources:
 
 ## Prečo má pes po nových granulách hnačku?
 
-**Najčastejšie preto, že zmena prišla príliš rýchlo a črevné baktérie si na nové krmivo ešte nezvykli.** Príliš rýchly prechod na nové krmivo uvádzajú medzi bežnými príčinami hnačky veterinári z Cornellu aj britská charita PDSA.
+**Najčastejšie preto, že zmena prišla príliš rýchlo a črevné baktérie si na nové krmivo ešte nezvykli.** Veterinári z Cornellu aj britská charita PDSA uvádzajú príliš rýchly prechod medzi bežnými príčinami hnačky.
 
-Nové granule majú iné zloženie bielkovín, tukov, vlákniny a sacharidov. V hrubom čreve spracúvajú rôzne zložky krmiva rôzne baktérie. Keď sa krmivo zmení zo dňa na deň, baktérie a tráviace enzýmy nestíhajú. Časť živín sa potom dostane do hrubého čreva nestrávená a stolica zmäkne.
+Nové granule majú iné zloženie bielkovín, tukov, vlákniny a sacharidov. V hrubom čreve spracúvajú rôzne zložky krmiva rôzne baktérie. Keď sa krmivo zmení zo dňa na deň, baktérie a tráviace enzýmy sa nestihnú prispôsobiť. Časť živín sa potom dostane do hrubého čreva nestrávená a stolica zmäkne.
 
 V jednej štúdii psom zmenili krmivo zo dňa na deň. Stolica im rýchlo zmäkla, a to pri prechode na tučnejšie aj na chudšie krmivo. ==Trávenie sa ustálilo asi za 6 dní.==[^lin] Ukazuje to, že hnačku môže spôsobiť už samotná náhla zmena.
 
-Krmivo s viac tukom alebo bielkovinami môže trávenie zaťažiť viac. Presnú hranicu pre konkrétneho psa však štúdie nedávajú. Ďalšou častou príčinou je väčšia porcia. Nové granule majú inú energiu, a keď ich pes dostane rovnakú misku „od oka“, môže zjesť viac, než potrebuje.
+Krmivo s vyšším obsahom tuku alebo bielkovín môže trávenie zaťažiť viac. Presnú hranicu pre konkrétneho psa však štúdie neuvádzajú. Ďalšou častou príčinou je väčšia porcia. Nové granule sú inak výdatné. Keď ich pes dostane rovnako plnú misku „od oka“, môže zjesť viac, než potrebuje.
 
 [^lin]: Lin a kol., Animal Microbiome, 2022. Štúdia sledovala 12 zdravých dospelých bíglov. Látky v stolici sa ustálili približne za 2 dni, zloženie črevných baktérií približne za 6 dní. Jedno krmivo malo v sušine 41 % bielkovín a 24 % tuku, druhé 28 % bielkovín a 14 % tuku. Stolica zmäkla pri prechode oboma smermi. Zo štúdie na 12 psoch nemožno robiť pevné závery pre všetky psy.
 
@@ -102,7 +104,7 @@ Ak hnačka prišla presne so zmenou granúl, súvislosť je pravdepodobná. Ak v
 
 ## Kedy ísť s hnačkou po zmene krmiva k veterinárovi?
 
-**Ak hnačka trvá viac ako 2 dni. Hneď, ak vidíš krv alebo čiernu stolicu, pes zvracia, je apatický alebo prestane jesť.** Tak to radia veterinári z Cornellu. Hnačka spolu so zvracaním psa odvodní rýchlejšie.[^cornell]
+**K veterinárovi choď, ak hnačka trvá viac ako 2 dni. Hneď choď, ak vidíš krv alebo čiernu stolicu, pes zvracia, je apatický alebo prestane jesť.** Tak to radia veterinári z Cornellu. Hnačka spolu so zvracaním psa odvodní rýchlejšie.[^cornell]
 
 | Situácia | Čo to znamená | Čo urobiť |
 | --- | --- | --- |
@@ -125,28 +127,28 @@ Ak hnačka prišla presne so zmenou granúl, súvislosť je pravdepodobná. Ak v
 
 **Vráť sa k starému krmivu a daj psovi vodu. Nový prechod začni až po spevnení stolice a pomalšie, počas 1–2 týždňov.** Postup vychádza z odporúčaní Cornellu a PDSA.
 
-1. **Skontroluj varovné príznaky.** Pri krvi, čiernej stolici, zvracaní, apatii alebo pri šteňati najprv zavolaj veterinárovi.
+1. **Skontroluj varovné príznaky.** Pri krvi, čiernej stolici, zvracaní, apatii alebo ak ide o šteňa, najprv zavolaj veterinárovi.
 2. **Vráť sa k starému krmivu.** Dávaj ho, kým sa stolica nespevní. Ak staré granule nemáš, poraď sa s veterinárom.
 3. **Daj psovi stále čerstvú vodu.** Pri hnačke pes stráca tekutiny.
-4. **Vynechaj pamlsky a zvyšky zo stola.** Kým hnačka neprejde, nedávaj psovi pamlsky ani výdatné jedlo.
+4. **Vynechaj pamlsky a zvyšky zo stola.** Kým hnačka neprejde, nedávaj psovi pamlsky ani zvyšky zo stola.
 5. **Sleduj stolicu a správanie 1–2 dni.** Všímaj si, či sa stolica zlepšuje a či má pes chuť do jedla a správa sa ako zvyčajne. Ak sa to do 2 dní nezlepší, zavolaj veterinárovi.
 6. **Začni nový prechod pomalšie.** Keď je stolica znova v poriadku, pridávaj nové granule k starým po menších krokoch počas 1–2 týždňov. Dávku vždy odváž v gramoch.
 
-Citlivému psovi môžeš každý podiel nového krmiva nechať o pár dní dlhšie. ==Ak sa hnačka vracia pri každom pokuse o zmenu alebo stolica nie je v poriadku ani na starom krmive, nejde o bežnú reakciu.== Vtedy to rieš s veterinárom.
+Citlivému psovi môžeš každý krok prechodu predĺžiť o pár dní. ==Ak sa hnačka vracia pri každom pokuse o zmenu alebo stolica nie je v poriadku ani na starom krmive, nejde o bežnú reakciu.== Vtedy sa poraď s veterinárom.
 
 ## Časté otázky
 
-**Môžem psovi pri hnačke dať varenú ryžu s mäsom?** Áno, Cornell uvádza ľahkú stravu, napríklad varené kuracie alebo chudé hovädzie mäso s bielou ryžou. Na dlhodobé kŕmenie sa nehodí. Ak sa stolica do 2–3 dní nezlepší, choď so psom k veterinárovi.
+**Môžem psovi pri hnačke dať varenú ryžu s mäsom?** Áno, veterinári z Cornellu odporúčajú ľahkú stravu, napríklad varené kuracie alebo chudé hovädzie mäso s bielou ryžou. Na dlhodobé kŕmenie sa nehodí. Ak sa stolica na ľahkej strave do 2–3 dní nezlepší, choď so psom k veterinárovi.
 
-**Mám psa pri hnačke nechať hladovať?** Cornell spomína možnosť vynechať jedlo na 12–24 hodín a potom dávať ľahkú stravu. Pri šteňati, starom alebo chorom psovi sa najprv poraď s veterinárom. Vodu musí mať pes stále.
+**Mám psa pri hnačke nechať hladovať?** Veterinári z Cornellu pripúšťajú vynechať jedlo na 12–24 hodín a potom dávať ľahkú stravu. Pri šteňati, starom alebo chorom psovi sa najprv poraď s veterinárom. Vodu musí mať pes stále.
 
-**Pomôžu pri náhlej hnačke antibiotiká?** Pri nekomplikovanej hnačke väčšinou nie. Štúdia na 894 psoch nenašla rozdiel v zotavení psov s antibiotikami a bez nich.[^atb] Autori odporúčajú antibiotiká pri hnačke obmedziť.
+**Pomôžu pri náhlej hnačke antibiotiká?** Pri nekomplikovanej hnačke väčšinou nie. Veľká britská štúdia nenašla rozdiel v zotavení psov s antibiotikami a bez nich.[^atb] Autori odporúčajú antibiotiká pri hnačke obmedziť.
 
 **Môžem psovi dať lieky na hnačku pre ľudí?** Bez porady s veterinárom nie. Psy potrebujú iné dávky a nie každý liek je pre ne vhodný.
 
-**Mám nové granule po hnačke úplne vyradiť?** Nie hneď. Jedna hnačka po rýchlom prechode ešte neznamená, že pes krmivo neznáša, a pomalší prechod často stačí. Ak sa hnačka vracia aj pri pomalom prechode, poraď sa s veterinárom.
+**Mám nové granule po hnačke úplne vyradiť?** Nie hneď, jedna hnačka po rýchlom prechode ešte neznamená, že pes krmivo neznáša. Často stačí pomalší prechod. Ak sa hnačka vracia aj pri pomalom prechode, poraď sa s veterinárom.
 
-[^atb]: Pegram a kol., PLOS One, 2023.
+[^atb]: Pegram a kol., PLOS One, 2023. Štúdia porovnala zotavenie 894 psov s náhlou hnačkou.
 
 ## Zhrnutie
 

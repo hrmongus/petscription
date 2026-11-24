@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-24 11:13",
+ "built": "2026-11-24 12:24",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -91,7 +91,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "img/blog/ako-spravne-prejst-na-nove-granule/hero.webp",
-   "words": 1118,
+   "words": 1130,
    "description": "Na nové granule prechádzaj postupne aspoň 7 dní. Nové krmivo pridávaj po krokoch 10, 25, 50, 75 a 90 %. Citlivý pes potrebuje 2 týždne aj viac.",
    "id": "F1",
    "category": "Problémy",
@@ -157,9 +157,9 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-24: Jazyková korektúra (výdatnosť namiesto energie v 100 g, prirodzenejšie formulácie) a spresnenie odporúčania Cornellu na 1–2 týždne",
       "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)",
-      "2026-11-23: Hlavná fotka a fotky do sekcií o prechode a o krokoch ako jedna séria (ilustrácie vygenerované AI)",
-      "2026-11-20: Autorka MVDr. Marcela Glezgová"
+      "2026-11-23: Hlavná fotka a fotky do sekcií o prechode a o krokoch ako jedna séria (ilustrácie vygenerované AI)"
      ]
     },
     {
@@ -378,7 +378,7 @@ window.GRANULA_POSTS = {
      "id": "atomic",
      "level": "info",
      "ok": true,
-     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 25)",
+     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 22)",
      "details": []
     },
     {
@@ -420,7 +420,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1118 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1130 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -435,8 +435,8 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo je prechod na nové granule?",
      "kind": "definition",
-     "words": 100,
-     "numbers": 1,
+     "words": 102,
+     "numbers": 0,
      "question": true,
      "firstBold": true,
      "table": false,
@@ -448,7 +448,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Ako dlho má trvať prechod na nové granule?",
      "kind": "main",
-     "words": 158,
+     "words": 161,
      "numbers": 9,
      "question": true,
      "firstBold": true,
@@ -461,8 +461,8 @@ window.GRANULA_POSTS = {
     {
      "title": "Koľko starých a koľko nových granúl dať v ktorý deň?",
      "kind": "main",
-     "words": 142,
-     "numbers": 25,
+     "words": 150,
+     "numbers": 24,
      "question": true,
      "firstBold": true,
      "table": false,
@@ -474,7 +474,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Prečo má pes po náhlej zmene krmiva hnačku?",
      "kind": "main",
-     "words": 123,
+     "words": 122,
      "numbers": 6,
      "question": true,
      "firstBold": true,
@@ -487,8 +487,8 @@ window.GRANULA_POSTS = {
     {
      "title": "Ako prejsť na nové granule: 7 krokov",
      "kind": "main",
-     "words": 141,
-     "numbers": 10,
+     "words": 137,
+     "numbers": 9,
      "question": false,
      "firstBold": true,
      "table": false,
@@ -500,7 +500,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Kedy prechod spomaliť a kedy ísť k veterinárovi?",
      "kind": "main",
-     "words": 175,
+     "words": 179,
      "numbers": 4,
      "question": true,
      "firstBold": true,
@@ -1941,7 +1941,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "img/blog/hnacka-po-novych-granulach-co-robit/hero.webp",
-   "words": 1069,
+   "words": 1080,
    "description": "Hnačka po nových granulách zvyčajne odznie za 1–3 dni. Vráť sa k starému krmivu a prechod spomaľ. K veterinárovi pri krvi, zvracaní, apatii alebo po 2 dňoch.",
    "id": "F2",
    "category": "Problémy",
@@ -2007,9 +2007,9 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
-      "2026-11-24: „Dávku odvažuj na gramy“ → „Dávku vždy odváž v gramoch“ (krok 6 a zhrnutie)",
-      "2026-11-24: „inak zdravý“ preštylizované v sekcii o tom, či je hnačka normálna",
-      "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)"
+      "2026-11-24: Spresnené, že 2–3 dni platia pre psa na ľahkej strave (overené v zdroji Cornell)",
+      "2026-11-24: Jazyková korektúra (prirodzenejšie formulácie, úvodná veta sekcie o veterinárovi, kroky, časté otázky), nová záverečná ponuka",
+      "2026-11-24: „Dávku odvažuj na gramy“ → „Dávku vždy odváž v gramoch“ (krok 6 a zhrnutie)"
      ]
     },
     {
@@ -2228,7 +2228,7 @@ window.GRANULA_POSTS = {
      "id": "atomic",
      "level": "info",
      "ok": true,
-     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 19)",
+     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 18)",
      "details": []
     },
     {
@@ -2270,7 +2270,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1069 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1080 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -2285,7 +2285,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo je hnačka po zmene krmiva?",
      "kind": "definition",
-     "words": 63,
+     "words": 65,
      "numbers": 0,
      "question": true,
      "firstBold": true,
@@ -2324,7 +2324,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Kedy ísť s hnačkou po zmene krmiva k veterinárovi?",
      "kind": "main",
-     "words": 190,
+     "words": 194,
      "numbers": 5,
      "question": true,
      "firstBold": true,
@@ -2337,7 +2337,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo robiť, keď má pes po nových granulách hnačku: 6 krokov",
      "kind": "main",
-     "words": 186,
+     "words": 187,
      "numbers": 7,
      "question": false,
      "firstBold": true,
@@ -2350,8 +2350,8 @@ window.GRANULA_POSTS = {
     {
      "title": "Časté otázky",
      "kind": "faq",
-     "words": 168,
-     "numbers": 5,
+     "words": 172,
+     "numbers": 4,
      "question": false,
      "firstBold": true,
      "table": false,
