@@ -53,7 +53,7 @@ Nové granule majú iné zloženie bielkovín, tukov a vlákniny a sú inak výd
 
 Postupne prechádzaj pri každej zmene: na inú značku, na inú receptúru tej istej značky aj zo šteňacieho krmiva na krmivo pre dospelých psov. Výnimkou je diéta od veterinára, napríklad eliminačná diéta pri podozrení na alergiu. Vtedy postupuj presne podľa pokynov veterinára.
 
-![Ruka presýpa svetlé trojuholníkové granule z jednej misky do misky s tmavohnedými granulami, ktorá stojí na kuchynskej váhe. Zlatý retríver položil hlavu na stôl a pozerá sa.](img/blog/ako-spravne-prejst-na-nove-granule/miesanie.webp "Nové granule primiešavaj k starým postupne. Ilustrácia vygenerovaná AI.")
+![Ruka presýpa trochu svetlých trojuholníkových granúl zo zelenej misky do modrej misky s tmavohnedými granulami, ktorá stojí na kuchynskej váhe. Zlatý retríver má hlavu a labku na stole a pozerá sa.](img/blog/ako-spravne-prejst-na-nove-granule/miesanie.webp "Na začiatku tvoria nové granule len malú časť misky. Ilustrácia vygenerovaná AI.")
 
 ## Ako dlho má trvať prechod na nové granule?
 
