@@ -16,10 +16,10 @@ cta_button: "Nájdi granule pre svojho psa"
 published: 2026-11-18
 updated: 2026-11-24
 tldr: >
-  Hnačka po nových granulách vzniká najčastejšie preto, že zmena krmiva prišla príliš rýchlo.
-  Ak je pes popri hnačke čulý a má chuť do jedla, hnačka zvyčajne prejde za 1–3 dni. Vráť sa k starému krmivu a daj psovi dosť vody.
-  Nové granule potom zavádzaj pomalšie, počas 1–2 týždňov. K veterinárovi choď, ak hnačka trvá
-  viac ako 2 dni, je v nej krv, pes zvracia alebo je apatický.
+  Hnačka po nových granulách vzniká najčastejšie pre príliš rýchlu zmenu krmiva.
+  Ak je pes čulý a má chuť do jedla, hnačka zvyčajne prejde za 1–3 dni. Vráť sa k starému
+  krmivu a daj psovi dosť vody. Nové granule potom zavádzaj pomalšie, počas 1–2 týždňov.
+  K veterinárovi choď pri hnačke dlhšej ako 2 dni, pri krvi, zvracaní alebo apatii.
 key_points:
   - "Väčšina psov s hnačkou po zmene krmiva sa zotaví za 1–3 dni."
   - "Po náhlej zmene krmiva sa trávenie psa ustáli asi za 6 dní."

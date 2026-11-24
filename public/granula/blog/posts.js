@@ -1941,7 +1941,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "img/blog/hnacka-po-novych-granulach-co-robit/hero.webp",
-   "words": 1067,
+   "words": 1058,
    "description": "Hnačka po nových granulách zvyčajne odznie za 1–3 dni. Vráť sa k starému krmivu a prechod spomaľ. K veterinárovi pri krvi, zvracaní, apatii alebo po 2 dňoch.",
    "id": "F2",
    "category": "Problémy",
@@ -2016,14 +2016,14 @@ window.GRANULA_POSTS = {
      "id": "tldr",
      "level": "error",
      "ok": true,
-     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 67)",
+     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 58)",
      "details": []
     },
     {
      "id": "tldr-range",
      "level": "warn",
-     "ok": false,
-     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 67)",
+     "ok": true,
+     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 58)",
      "details": []
     },
     {
@@ -2270,7 +2270,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1067 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1058 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
