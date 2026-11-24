@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-24 13:07",
+ "built": "2026-11-24 13:25",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -655,7 +655,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "img/blog/cerstve-maso-dehydrovane-maso-masova-mucka/hero.webp",
-   "words": 1369,
+   "words": 1372,
    "description": "Surové mäso je zo 67–75 % voda, múčka z menej ako 10 %. Zloženie sa radí podľa hmotnosti pri miešaní, preto je čerstvé mäso na obale často prvé.",
    "id": "A4",
    "category": "Zloženie a suroviny",
@@ -721,9 +721,9 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-24: Popis fotky jahňacieho presne podľa zloženia, zdroj zoznamu receptúr: zloženie na webe",
       "2026-11-24: Popis pod fotkou obalu bez zmienky o našej receptúre (obal na ilustrácii nie je náš)",
-      "2026-11-24: Jazyková korektúra, výpočet z tabuľky do poznámky, ponuky bez sľubu formy pri každom mäse, zoznam receptúr skrátený na 3 príklady",
-      "2026-11-24: Hlavná fotka a fotka etikety so zložením (ilustrácie vygenerované AI, etiketa so skutočným zložením)"
+      "2026-11-24: Jazyková korektúra, výpočet z tabuľky do poznámky, ponuky bez sľubu formy pri každom mäse, zoznam receptúr skrátený na 3 príklady"
      ]
     },
     {
@@ -985,7 +985,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1369 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1372 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -1065,7 +1065,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo znamená „čerstvo spracované mäso v sušenom stave“ v zložení Granuly?",
      "kind": "main",
-     "words": 158,
+     "words": 161,
      "numbers": 10,
      "question": true,
      "firstBold": true,

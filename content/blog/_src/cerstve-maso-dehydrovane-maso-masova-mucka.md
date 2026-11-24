@@ -23,6 +23,7 @@ key_points:
   - "Kvalita mäsovej múčky kolíše. Z krmív s rôznymi múčkami psy strávili 62–82 % aminokyselín."
   - "Najčastejší omyl: čerstvé mäso na prvom mieste neznamená, že v granulách je najviac mäsa."
 changelog:
+  - "2026-11-24: Popis fotky jahňacieho presne podľa zloženia, zdroj zoznamu receptúr: zloženie na webe"
   - "2026-11-24: Popis pod fotkou obalu bez zmienky o našej receptúre (obal na ilustrácii nie je náš)"
   - "2026-11-24: Jazyková korektúra, výpočet z tabuľky do poznámky, ponuky bez sľubu formy pri každom mäse, zoznam receptúr skrátený na 3 príklady"
   - "2026-11-24: Hlavná fotka a fotka etikety so zložením (ilustrácie vygenerované AI, etiketa so skutočným zložením)"
@@ -152,9 +153,9 @@ Kategória „mäso a živočíšne vedľajšie produkty“ je povolená. Pri kr
 
 „Čerstvo spracované“ hovorí, v akom stave bolo mäso pred sušením. V zložení uvádzame obe informácie: z čoho sme vychádzali a v akej forme mäso ide do granúl.
 
-![Tri surové jahňacie kotlety s kosťou na svetlom podklade](img/suroviny/jahnacie.webp "Jahňacie je jediný druh mäsa v granulách Jahňa s batátmi & čučoriedkami.")
+![Tri surové jahňacie kotlety s kosťou na svetlom podklade](img/suroviny/jahnacie.webp "Jahňacie mäso tvorí 51 % zloženia granúl Jahňa s batátmi & čučoriedkami. Je uvedené v sušenom stave.")
 
-Takto vyzerá mäsová časť zloženia niektorých našich granúl, doslova podľa obalu:
+Takto vyzerá mäsová časť zloženia niektorých našich granúl, doslova podľa zloženia na našom webe:
 
 - **Jahňa s batátmi & čučoriedkami:** čerstvo spracované jahňacie mäso v sušenom stave 51 %.
 - **Morka, hus & kačica s tekvicou:** čerstvo spracované morčacie mäso v sušenom stave 25 %, sušené husacie mäso 15 %, sušené kačacie mäso 8 %, kuracia pečeň 3 %.
