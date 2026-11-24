@@ -8,7 +8,7 @@ priority: P1
 description: "Surové mäso je zo 67–75 % voda, múčka z menej ako 10 %. Zloženie sa radí podľa hmotnosti pri miešaní, preto je čerstvé mäso na obale často prvé."
 author: marcela-glezgova
 hero: img/blog/cerstve-maso-dehydrovane-maso-masova-mucka/hero.webp
-hero_alt: "Tri krémové misky na kuchynskom stole: v prvej kocky surového hovädzieho mäsa, v druhej tmavé kúsky sušeného mäsa, v tretej sivohnedá mäsová múčka. Za nimi stojí papierové vrece granúl s etiketou so zložením."
+hero_alt: "Na kuchynskej linke stoja tri misky: v modrej kocky surového hovädzieho mäsa, v bielej kúsky sušeného mäsa, v sklenenej sivohnedá mäsová múčka. Za nimi stojí papierové vrece granúl s etiketou so zložením."
 hero_caption: "Čerstvé mäso, sušené mäso a mäsová múčka sa líšia hlavne obsahom vody. Preto ich v zložení nájdeš na rôznych miestach. Ilustrácia vygenerovaná AI."
 published: 2026-11-18
 updated: 2026-11-24
@@ -23,6 +23,7 @@ key_points:
   - "Kvalita mäsovej múčky kolíše. Z krmív s rôznymi múčkami psy strávili 62–82 % aminokyselín."
   - "Najčastejší omyl: čerstvé mäso na prvom mieste neznamená, že v granulách je najviac mäsa."
 changelog:
+  - "2026-11-24: Nová, realistickejšia hlavná fotka (ilustrácia vygenerovaná AI, etiketa so skutočným zložením)"
   - "2026-11-24: Štylistická korektúra: prirodzenejší slovosled a formulácie krokov"
   - "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)"
   - "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
