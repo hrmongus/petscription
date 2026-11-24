@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-24 12:56",
+ "built": "2026-11-24 13:07",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -721,9 +721,9 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-24: Popis pod fotkou obalu bez zmienky o našej receptúre (obal na ilustrácii nie je náš)",
       "2026-11-24: Jazyková korektúra, výpočet z tabuľky do poznámky, ponuky bez sľubu formy pri každom mäse, zoznam receptúr skrátený na 3 príklady",
-      "2026-11-24: Hlavná fotka a fotka etikety so zložením (ilustrácie vygenerované AI, etiketa so skutočným zložením)",
-      "2026-11-20: Autorka MVDr. Marcela Glezgová"
+      "2026-11-24: Hlavná fotka a fotka etikety so zložením (ilustrácie vygenerované AI, etiketa so skutočným zložením)"
      ]
     },
     {

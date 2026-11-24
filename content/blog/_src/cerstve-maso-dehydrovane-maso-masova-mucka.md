@@ -23,6 +23,7 @@ key_points:
   - "Kvalita mäsovej múčky kolíše. Z krmív s rôznymi múčkami psy strávili 62–82 % aminokyselín."
   - "Najčastejší omyl: čerstvé mäso na prvom mieste neznamená, že v granulách je najviac mäsa."
 changelog:
+  - "2026-11-24: Popis pod fotkou obalu bez zmienky o našej receptúre (obal na ilustrácii nie je náš)"
   - "2026-11-24: Jazyková korektúra, výpočet z tabuľky do poznámky, ponuky bez sľubu formy pri každom mäse, zoznam receptúr skrátený na 3 príklady"
   - "2026-11-24: Hlavná fotka a fotka etikety so zložením (ilustrácie vygenerované AI, etiketa so skutočným zložením)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
@@ -55,7 +56,7 @@ cta_button: "Nájdi granule pre svojho psa"
 
 ==Slovo „mäso“ znamená v pravidlách označovania len svalovinu.== Širší zákonný názov „mäso a živočíšne vedľajšie produkty“ zahŕňa všetky mäsité časti zvierat aj produkty z ich spracovania.
 
-![Žena drží v kuchyni veľké papierové vrece granúl a číta etiketu, prvý riadok zloženia uvádza 60 % hovädzieho mäsa, z toho 40 % sušeného a 20 % čerstvo spracovaného](img/blog/cerstve-maso-dehydrovane-maso-masova-mucka/zlozenie.webp "Forma mäsa je v zložení napísaná pri názve suroviny. Na etikete je zloženie našej receptúry Hovädzie s ryžou. Ilustrácia vygenerovaná AI.")
+![Žena drží v kuchyni veľké papierové vrece granúl a číta etiketu, prvý riadok zloženia uvádza 60 % hovädzieho mäsa, z toho 40 % sušeného a 20 % čerstvo spracovaného](img/blog/cerstve-maso-dehydrovane-maso-masova-mucka/zlozenie.webp "Forma mäsa je v zložení napísaná pri názve suroviny. Ilustrácia vygenerovaná AI.")
 
 [^cerstve]: Kódex správneho označovania FEDIAF, 2019. Pri sušenej surovine kódex vyžaduje, aby to jasne povedal jej názov, napríklad slovom „sušené“. Mäso je v kódexe kostrový sval; kategória „mäso a živočíšne vedľajšie produkty“ zahŕňa mäsité časti a produkty zo spracovania tiel teplokrvných suchozemských zvierat.
 [^mucka]: Tufts Petfoodology, 2016. Múčka sa vyrába kafilerickým spracovaním (renderingom).
