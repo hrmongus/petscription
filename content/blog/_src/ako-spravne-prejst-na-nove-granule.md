@@ -23,6 +23,7 @@ key_points:
   - "Staré a nové granule miešaj podľa gramov, nie podľa odmerky."
   - "Najčastejšia chyba: držať sa kalendára. Ďalší krok urob, až keď má pes pevnú stolicu."
 changelog:
+  - "2026-11-24: Jazyková korektúra (výdatnosť namiesto energie v 100 g, prirodzenejšie formulácie) a spresnenie odporúčania Cornellu na 1–2 týždne"
   - "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)"
   - "2026-11-23: Hlavná fotka a fotky do sekcií o prechode a o krokoch ako jedna séria (ilustrácie vygenerované AI)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
@@ -44,15 +45,15 @@ cta_button: "Nájdi granule pre svojho psa"
 
 **Prechod na nové granule je postupná výmena krmiva, ktorá dá tráveniu psa čas zvyknúť si na nové zloženie.** Staré granule uberáš a nové pridávaš po malých krokoch. Nakoniec dostáva pes už len nové krmivo.
 
-Nové granule majú iné bielkoviny, tuky, vlákninu aj energiu v 100 g. ==Črevo a baktérie v ňom potrebujú pár dní, aby si na nové zloženie zvykli.==
+Nové granule majú iné zloženie bielkovín, tukov a vlákniny a sú inak výdatné. ==Črevo a baktérie v ňom potrebujú pár dní, aby si na nové zloženie zvykli.==
 
-Postupne prechádzaj pri každej zmene: na inú značku, na inú receptúru tej istej značky aj zo šteňacieho krmiva na krmivo pre dospelých psov. Výnimkou je diéta od veterinára, napríklad eliminačná diéta pri podozrení na alergiu. Vtedy postupuj presne podľa neho.
+Postupne prechádzaj pri každej zmene: na inú značku, na inú receptúru tej istej značky aj zo šteňacieho krmiva na krmivo pre dospelých psov. Výnimkou je diéta od veterinára, napríklad eliminačná diéta pri podozrení na alergiu. Vtedy postupuj presne podľa pokynov veterinára.
 
 ![Ruka presýpa nové svetlé granule z jednej misky do misky so starými tmavohnedými granulami, ktorá stojí na kuchynskej váhe. Zlatý retríver sa pozerá.](img/blog/ako-spravne-prejst-na-nove-granule/miesanie.webp "Nové granule primiešavaj k starým postupne. Ilustrácia vygenerovaná AI.")
 
 ## Ako dlho má trvať prechod na nové granule?
 
-**Väčšine zdravých dospelých psov stačí približne týždeň. Citlivý pes potrebuje 2 týždne aj viac.** Presný počet dní nevychádza zo štúdie. Je to zaužívaná prax veterinárov a jednotlivé veterinárne fakulty odporúčajú rôzne dĺžky.[^dlzka]
+**Väčšine zdravých dospelých psov stačí približne týždeň. Citlivý pes potrebuje 2 týždne aj viac.** Presný počet dní nestanovila žiadna štúdia. Ide o zaužívanú prax a veterinárne fakulty odporúčajú rôzne dĺžky.[^dlzka]
 
 | Zdroj | Koľko dní | Pre koho |
 | --- | --- | --- |
@@ -61,7 +62,7 @@ Postupne prechádzaj pri každej zmene: na inú značku, na inú receptúru tej 
 | Cornell, Diarrhea | 1–2 týždne | pes, ktorý mal po zmene krmiva hnačku |
 | Tufts Petfoodology, 2019 | 4–6 týždňov | citlivé zvieratá |
 
-Niektoré psy zvládnu zmenu krmiva z raňajok na večeru. Vopred však nevieš, či je tvoj pes medzi nimi. ==Týždeň je preto rozumný začiatok.== Ak všetko ide dobre, stratíš pár dní. Ak nie, predídeš hnačke.
+Niektoré psy zvládnu zmenu krmiva aj zo dňa na deň. Vopred však nevieš, či je tvoj pes medzi nimi. ==Týždeň je preto rozumný začiatok.== Ak by pes zvládol aj rýchlejšiu zmenu, stratíš len pár dní. Ak nie, predídeš hnačke.
 
 Prechod spomaľ, ak:
 
@@ -71,11 +72,11 @@ Prechod spomaľ, ak:
 
 Tempo určuje pes, nie kalendár. Ďalší krok urob, až keď má pes pevnú stolicu, chuť do jedla a správa sa ako vždy.
 
-[^dlzka]: Cornell (Riney Canine Health Center) uvádza 4-dňový prechod: 25 %, 50 %, 75 % a potom 100 % nového krmiva. Pri hnačke po zmene krmiva radí rozložiť prechod na 1–2 týždne. Deborah Linder, veterinárna špecialistka na výživu z Tufts Petfoodology (2019), odporúča aspoň 1 týždeň a pri niektorých zvieratách 4–6 týždňov. Tufts tiež píše, že niektoré zvieratá zvládnu zmenu krmiva z raňajok na večeru bez ťažkostí.
+[^dlzka]: Cornell (Riney Canine Health Center) uvádza 4-dňový prechod: 25 %, 50 %, 75 % a potom 100 % nového krmiva. Pri hnačke po zmene krmiva radí rozložiť prechod na 1–2 týždne. Deborah Linder, veterinárna špecialistka na výživu z Tufts Petfoodology (2019), odporúča aspoň 1 týždeň a pri niektorých zvieratách 4–6 týždňov. Tufts tiež píše, že niektoré zvieratá zvládnu zmenu krmiva aj zo dňa na deň bez ťažkostí.
 
 ## Koľko starých a koľko nových granúl dať v ktorý deň?
 
-**Pri 7-dňovom prechode dávaj psovi postupne 10, 25, 50, 50, 75, 90 a 100 % nových granúl.** Pomer platí pre celú dennú dávku a rozdelíš ho do všetkých jedál dňa.[^schema]
+**Pri 7-dňovom prechode dávaj psovi postupne 10, 25, 50, 50, 75, 90 a 100 % nových granúl.** Pomer platí pre celú dennú dávku. Ak pes je viackrát denne, dodrž ho v každom jedle.[^schema]
 
 ::: graf
 nazov: Koľko percent dennej dávky tvoria nové granule v jednotlivé dni
@@ -92,14 +93,14 @@ zvyraznit: 7. deň
 7. deň | 100
 :::
 
-==Percentá počítaj z gramov, nie z odmerky.== Nové granule majú inú energiu v 100 g ako staré. Denná dávka v gramoch sa preto často líši. Z dávky starých granúl vezmi podiel starého krmiva a z dávky nových granúl podiel nového.
+==Percentá počítaj z gramov, nie z odmerky.== Nové granule sú inak výdatné ako staré. Denná dávka v gramoch sa preto často líši. Z dávky starých granúl vezmi podiel starého krmiva a z dávky nových granúl podiel nového.
 
 Príklad: pes zje denne 300 g starých granúl. Jeho dávka nových granúl je 270 g.
 
 - 2. deň: 75 % zo 300 g je 225 g starých granúl, 25 % z 270 g je asi 68 g nových.
 - 5. deň: 75 g starých granúl a asi 203 g nových.
 
-Citlivému psovi môžeš každý krok z grafu nechať 2 dni. Prechod potom trvá 14 dní. Zodpovedá to odporúčaniu Cornellu dať citlivému tráveniu 1–2 týždne.
+Citlivému psovi môžeš každý krok z grafu predĺžiť na 2 dni. Prechod potom trvá 14 dní. Zodpovedá to odporúčaniu Cornellu rozložiť prechod na 1–2 týždne, ak mal pes po zmene krmiva hnačku.
 
 [^schema]: Schému uvádza Tufts Petfoodology (Linder, 2019) ako všeobecný návod, nie ako výsledok výskumu. Tufts tiež upozorňuje, že rovnaká odmerka dvoch krmív nemusí mať rovnaký počet kalórií.
 
@@ -116,7 +117,7 @@ odkaz: granule-na-mieru.html
 
 V jednej štúdii psom zmenili krmivo zo dňa na deň. Stolica im rýchlo zmäkla. ==Trávenie sa ustálilo približne po 6 dňoch.==[^lin]
 
-Súvislosť potvrdzujú aj záznamy z veterinárnych ambulancií. Psy, ktoré nedávno zmenili krmivo alebo zjedli niečo nevhodné, mali 3,5-krát vyššiu šancu na hnačku.[^stavisky] Pri psoch, ktorých priniesli k veterinárovi s náhlou hnačkou, bola zmena krmiva pravdepodobnou príčinou len v 4,58 % prípadov.[^oneill]
+Súvislosť potvrdzujú aj záznamy z veterinárnych ambulancií. Psy, ktoré nedávno zmenili krmivo alebo zjedli niečo nevhodné, mali 3,5-krát väčšie riziko hnačky.[^stavisky] Pri psoch, ktorých priniesli k veterinárovi s náhlou hnačkou, bola zmena krmiva pravdepodobnou príčinou len v 4,6 % prípadov.[^oneill]
 
 Žiadna štúdia neporovnala prechod na 4, 7 a 14 dní. Výhodu postupného prechodu teda štúdie ukazujú len nepriamo. Náhla zmena zmäkčuje stolicu a trávenie sa prispôsobuje niekoľko dní. Postupný prechod tieto dni rozloží na menšie kroky.
 
@@ -128,13 +129,13 @@ Súvislosť potvrdzujú aj záznamy z veterinárnych ambulancií. Psy, ktoré ne
 
 **Zisti dávku, priprav si zásobu, miešaj podľa gramov a sleduj stolicu.**
 
-1. **Zisti dennú dávku oboch krmív v gramoch.** Nové granule majú inú energiu v 100 g. Percentá preto počítaj z dávky každého krmiva zvlášť.
+1. **Zisti dennú dávku oboch krmív v gramoch.** Nové granule sú inak výdatné. Percentá preto počítaj z dávky každého krmiva zvlášť.
 2. **Kúp nové granule skôr, než ti dôjdu staré.** Počas 7-dňového prechodu minieš ešte asi 3 plné denné dávky starých granúl.
 3. **Odvažuj porcie na kuchynskej váhe.** Rovnaká odmerka dvoch krmív nemá rovnakú hmotnosť ani energiu.
 4. **Začni malým podielom.** Prvý deň daj asi 10 % nových granúl, druhý deň 25 %.
 5. **Pridávaj, len keď je stolica pevná.** Na 50 % zostaň 2 dni. Potom pokračuj na 75 %, 90 % a 100 %.
-6. **Nepridávaj nič nové.** ==Nové maškrty, zvyšky zo stola alebo doplnky by ti zakryli, čo spôsobilo mäkšiu stolicu.==
-7. **Sleduj stolicu, chuť do jedla a energiu psa.** Varovné znaky sú hnačka, zvracanie, veľa plynov, zápcha, bolesť a apatia.[^znaky]
+6. **Nepridávaj nič nové.** ==Pri nových maškrtách, zvyškoch zo stola alebo doplnkoch nespoznáš, čo spôsobilo mäkšiu stolicu.==
+7. **Sleduj stolicu, chuť do jedla a správanie psa.** Varovné znaky sú hnačka, zvracanie, veľa plynov, zápcha, bolesť a apatia.[^znaky]
 
 ![Majiteľka drží na kuchynskej váhe misku, v ktorej sú staré a nové granule zhruba napoly. Vedľa stojí miska s novými granulami a za stolom čaká zlatý retríver.](img/blog/ako-spravne-prejst-na-nove-granule/vazenie.webp "Porcie počas prechodu odvažuj. Odmerka pri dvoch rôznych krmivách nesedí. Ilustrácia vygenerovaná AI.")
 
@@ -154,9 +155,9 @@ K veterinárovi choď, ak:
 - je apatický, zdá sa, že ho niečo bolí, alebo dlho nechce jesť,
 - stolica je vodnatá.
 
-Šteňa, starší pes alebo pes s chronickou chorobou sa hnačkou vyčerpá rýchlejšie. Pri nich nečakaj. Ak má pes ochorenie tráviaceho traktu, napríklad zápal pankreasu, zmenu krmiva vopred dohodni s veterinárom.
+Šteňa, starší pes alebo pes s chronickou chorobou sa hnačkou vyčerpá rýchlejšie. Pri nich nečakaj a zavolaj veterinárovi hneď. Ak má pes ochorenie tráviaceho traktu, napríklad zápal pankreasu, zmenu krmiva vopred dohodni s veterinárom.
 
-Ak sa hnačka vracia pri každom pokuse o prechod, problém nemusí byť v rýchlosti. Psovi môže vadiť niektorá zložka nového krmiva. Porozprávaj sa s veterinárom o krmive s jedným zdrojom bielkovín alebo o eliminačnej diéte.
+Ak sa hnačka vracia pri každom pokuse o prechod, problém nemusí byť v rýchlosti. Psovi môže vadiť niektorá zložka nového krmiva. Porozprávaj sa s veterinárom o krmive s jedným druhom mäsa alebo o eliminačnej diéte.
 
 [^spomalit]: Tufts Petfoodology (2019) považuje trochu mäkšiu stolicu za bežnú a radí pokračovať až po ústupe ťažkostí. Cornell pri hnačke po zmene krmiva odporúča vrátiť sa k pôvodnému krmivu, kým sa stolica nespevní, a prechod potom zopakovať pomalšie. Varovné príznaky v zozname uvádzajú Cornell a Tufts.
 
