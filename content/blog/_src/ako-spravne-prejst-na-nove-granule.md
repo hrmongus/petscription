@@ -23,7 +23,7 @@ key_points:
   - "Staré a nové granule miešaj podľa gramov, nie podľa odmerky."
   - "Najčastejšia chyba: držať sa kalendára. Ďalší krok urob, až keď má pes pevnú stolicu."
 changelog:
-  - "2026-11-24: Nová, realistickejšia hlavná fotka a fotka presýpania granúl (ilustrácie vygenerované AI)"
+  - "2026-11-24: Nové, realistickejšie fotky: hlavná, presýpanie a váženie granúl (ilustrácie vygenerované AI)"
   - "2026-11-24: Štylistická korektúra: prirodzenejší slovosled a formulácie krokov"
   - "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)"
   - "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
