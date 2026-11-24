@@ -19,7 +19,7 @@ describe('refund až po vrátení tovaru', () => {
     expect(canRefund({ return_status: 'received' }).ok).toBe(true);
     expect(canRefund({ return_status: 'awaiting' }).ok).toBe(false);
     expect(canRefund({ return_status: 'not_returned' }).ok).toBe(false);
-    expect(canRefund({ return_status: null }).ok).toBe(true);
+    expect(canRefund({ return_status: null as never }).ok).toBe(true); // staršie riadky bez stavu
   });
   it('lehota z refund_due_at, zvýraznenie', () => {
     const due = dueOf({ refund_due_at: '2026-12-07T22:59:59.999Z', submitted_at: '2026-11-23T11:00:00Z' });
