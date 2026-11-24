@@ -27,7 +27,7 @@ key_points:
   - "Granule nemusia byť vinníkom. Veterinári zapísali zmenu krmiva ako možnú príčinu hnačky len pri 4,6 % psov."
   - "Najčastejšia chyba: zmeniť granule zo dňa na deň a pri hnačke hneď skúšať ďalšie nové krmivo."
 changelog:
-  - "2026-11-24: Nová, realistickejšia hlavná fotka (ilustrácia vygenerovaná AI)"
+  - "2026-11-24: Nové, realistickejšie fotky: hlavná a buldoček pri jedle (ilustrácie vygenerované AI)"
   - "2026-11-24: Štylistická korektúra: prirodzenejší slovosled a formulácie krokov"
   - "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)"
   - "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
@@ -57,7 +57,7 @@ sources:
 
 ==Od hnačky, ktorú spôsobila infekcia, parazity alebo niečo zjedené vonku, ju rozlíšiš podľa dvoch vecí: prišla krátko po zmene krmiva a pes sa napriek hnačke správa normálne, má chuť do jedla a pije.==
 
-![Francúzsky buldoček s chuťou je granule z misky na podlahe kuchyne, vedľa stojí miska s vodou a v pozadí sa naňho pozerá žena s hrnčekom](img/blog/hnacka-po-novych-granulach-co-robit/pes-je.webp "Pri hnačke zo zmeny krmiva sa pes zvyčajne správa normálne, má chuť do jedla a pije. Ilustrácia vygenerovaná AI.")
+![Francúzsky buldoček s chuťou je granule z misky na podlahe kuchyne, vedľa stojí kovová miska s vodou. V pozadí sa o linku opiera žena s hrnčekom.](img/blog/hnacka-po-novych-granulach-co-robit/pes-je.webp "Pri hnačke zo zmeny krmiva sa pes zvyčajne správa normálne, má chuť do jedla a pije. Ilustrácia vygenerovaná AI.")
 
 ## Prečo má pes po nových granulách hnačku?
 
