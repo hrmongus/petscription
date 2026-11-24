@@ -37,6 +37,14 @@ Najväčší problém prvých konceptov (review 2026-11-18): text znel ako doslo
 - **Kroky začínaj jednoduchým slovesom:** „Dodržuj diétu“, „Nasaď späť pôvodné krmivo“, nie „Krm len diétu“, „Vráť pôvodné krmivo“.
 - Pred odovzdaním urob **jazykovú korektúru celého článku** zvlášť od faktov: prirodzenosť, gramatika, zrozumiteľnosť.
 
+- **Zdroj pri prvej zmienke predstav jednou vložkou:** kto to je a prečo mu veriť. Ďalej v článku stačí krátky názov. Opis nesmie byť prehnaný, musí sedieť s tým, ako sa inštitúcia sama opisuje. Ustálené opisy (redakcia, 2026-11-24):
+  - Cornell → „veterinári z Cornellovej univerzity, jednej z najuznávanejších veterinárnych fakúlt v USA“
+  - PDSA → „PDSA, najväčšia veterinárna charita v Británii“
+  - Tufts (Petfoodology) → „veterinárni špecialisti na výživu z Tuftsovej univerzity v USA“
+  - FEDIAF → „FEDIAF, európske združenie výrobcov krmív pre zvieratá“ (vždy povedz, že ide o výrobcov)
+  - FDA → „americký úrad pre potraviny a liečivá (FDA)“
+  - štúdie → „britská štúdia z roku 2025“, „štúdia na psoch z roku 2022“; podrobnosti ostávajú v poznámke pod čiarou
+
 ## Tón a hlas
 
 - Tykanie, priateľsky a priamo, ako kamarát, ktorý rozumie psom a výžive. Odborne, ale ľudskými slovami. (zdroj: dizajn systém)
@@ -87,3 +95,4 @@ _Sem zapisuj všeobecný feedback v poradí, ako prišiel: dátum, čo používa
 - **2026-11-18, odpovede na otvorené otázky:** v článku o čerstvom mäse vyhodiť vetu o význame „čerstvé“ (stret so schváleným tvrdením); „je“ namiesto „žerie“; väčšinou „psa“, občas „psíka“; viditeľnú históriu zmien nevracať; v chate spomínať články názvom. → Tón a hlas, Čo nerobiť, Komunikácia.
 - **2026-11-18:** „Ten offer vždy potrebuje vizuál ako vrecko granúl alebo grafiku alebo niečo, čo zaujme.“ → predvolený vejár vreciek v builde, pravidlo v Obrázky, grafy, ponuky.
 - **2026-11-24, redakcia (sumár článku o hnačke):** veta „Ak je pes inak čulý, zvyčajne odznie za 1–3 dni.“ nedávala zmysel (nejasné, čo odznie; „inak čulý“ znie ako preklad). → „čulý“ nahradené v sekcii Jazyk, opravené vo všetkých konceptoch.
+- **2026-11-24, redakcia (článok o hnačke):** „Vždy vysvetliť v skratke ten zdroj, prečo je relevantný… nech to znie prirodzene a odborne.“ → pravidlo o predstavení zdroja v sekcii Jazyk, uplatnené vo všetkých konceptoch.

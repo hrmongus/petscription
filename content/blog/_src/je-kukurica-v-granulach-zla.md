@@ -11,7 +11,7 @@ hero: placeholder
 hero_alt: "Detail zadnej strany vreca granúl so zoznamom zloženia, v ktorom je zvýraznené slovo kukurica; vedľa vreca leží na drevenej doske hrsť granúl a niekoľko suchých kukuričných zŕn"
 hero_caption: "Nerozhoduje samotné slovo kukurica na obale, ale jej forma, množstvo a kvalita."
 published: 2026-11-18
-updated: 2026-11-20
+updated: 2026-11-24
 tldr: >
   Kukurica v granulách psovi zvyčajne neškodí. Varenú kukuricu pes dobre strávi.
   Škrob z nej strávi z viac ako 98 %. Problém nastáva, keď kukurica v granulách nahrádza mäso. Riziko je aj plesnivé
@@ -24,6 +24,7 @@ key_points:
   - "Plesnivá kukurica môže obsahovať aflatoxín. V USA po takom krmive zomrelo viac ako 110 zvierat."
   - "Najčastejší mýtus: kukurica je len plnáč. Problém je, keď nahrádza mäso alebo keď je zle skladovaná."
 changelog:
+  - "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
@@ -161,7 +162,7 @@ V našich granulách kukurica nie je. Škrob v nich pochádza podľa receptúry 
 
 ## Časté otázky
 
-**Môže pes jesť kukuricu z klasu?** Nie, klas psovi nedávaj. Psy často prehltnú veľké kusy klasu, ktoré môžu upchať črevo. Potom treba operáciu (Tufts Petfoodology, 2023).
+**Môže pes jesť kukuricu z klasu?** Nie, klas psovi nedávaj. Psy často prehltnú veľké kusy klasu, ktoré môžu upchať črevo. Potom treba operáciu, upozorňujú veterinárni špecialisti na výživu z Tuftsovej univerzity v USA.
 
 **Prečo vidím v stolici psa celé kukuričné zrná?** Celé zrná sladkej kukurice môžu prejsť črevom nestrávené, najmä ak ich pes nerozhryzie. V granulách je kukurica pomletá a uvarená, preto sa trávi oveľa lepšie.
 

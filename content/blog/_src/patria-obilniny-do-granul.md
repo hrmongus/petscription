@@ -11,7 +11,7 @@ hero: placeholder
 hero_alt: "Dve misky granúl vedľa seba na drevenom stole, pri jednej malá kôpka surovej ryže, pri druhej rozrezaný batát, za miskami sedí pes strednej veľkosti a pozerá na ne"
 hero_caption: "Ryža alebo batáty? Pre väčšinu psov je dôležitejší druh mäsa a celé zloženie ako to, či sú v granulách obilniny."
 published: 2026-11-18
-updated: 2026-11-20
+updated: 2026-11-24
 tldr: >
   Obilniny do granúl patriť môžu. Väčšina psov uvarený škrob z obilnín dobre strávi.
   Typický pes má 10 kópií génu na trávenie škrobu, vlk len 2. Granule bez obilia
@@ -25,6 +25,7 @@ key_points:
   - "Pri ochorení srdca sa podozrenie presunulo od chýbajúceho obilia k strukovinám, hlavne k hrachu a šošovici."
   - "Najčastejší mýtus: pes je mäsožravec ako vlk, a preto obilniny nestrávi."
 changelog:
+  - "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
@@ -83,7 +84,7 @@ Grónsky pes | 2,5
 
 ## Sú granule bez obilia zdravšie?
 
-**Pre zdravého psa nie. Žiadna štúdia zatiaľ nepreukázala, že by mu granule bez obilia zdravotne pomáhali.** Odborníci na výživu z Tufts ich označili za marketing, nie za riešenie zdravotných problémov.[^marketing]
+**Pre zdravého psa nie. Žiadna štúdia zatiaľ nepreukázala, že by mu granule bez obilia zdravotne pomáhali.** Veterinárni špecialisti na výživu z Tuftsovej univerzity v USA ich označili za marketing, nie za riešenie zdravotných problémov.[^marketing]
 
 Najčastejší dôvod, prečo ľudia kupujú granule bez obilia, je alergia. Údaje ho však nepodporujú. ==Psy s alergiou na krmivo reagujú častejšie na mäso a mliečne výrobky ako na obilniny.==[^alergeny]
 

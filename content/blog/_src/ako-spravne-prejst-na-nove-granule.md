@@ -23,6 +23,7 @@ key_points:
   - "Staré a nové granule miešaj podľa gramov, nie podľa odmerky."
   - "Najčastejšia chyba: držať sa kalendára. Ďalší krok urob, až keď má pes pevnú stolicu."
 changelog:
+  - "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
   - "2026-11-24: Jazyková korektúra (výdatnosť namiesto energie v 100 g, prirodzenejšie formulácie) a spresnenie odporúčania Cornellu na 1–2 týždne"
   - "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)"
   - "2026-11-23: Hlavná fotka a fotky do sekcií o prechode a o krokoch ako jedna séria (ilustrácie vygenerované AI)"
@@ -54,6 +55,8 @@ Postupne prechádzaj pri každej zmene: na inú značku, na inú receptúru tej 
 ## Ako dlho má trvať prechod na nové granule?
 
 **Väčšine zdravých dospelých psov stačí približne týždeň. Citlivý pes potrebuje 2 týždne aj viac.** Presný počet dní nestanovila žiadna štúdia. Ide o zaužívanú prax a veterinárne fakulty odporúčajú rôzne dĺžky.[^dlzka]
+
+Tabuľka ukazuje odporúčania dvoch amerických univerzít. Cornellova univerzita má jednu z najuznávanejších veterinárnych fakúlt v USA. Na Tuftsovej univerzite píšu rady o kŕmení veterinárni špecialisti na výživu.
 
 | Zdroj | Koľko dní | Pre koho |
 | --- | --- | --- |

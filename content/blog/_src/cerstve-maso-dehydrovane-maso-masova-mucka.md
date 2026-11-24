@@ -23,6 +23,7 @@ key_points:
   - "Kvalita mäsovej múčky kolíše. Z krmív s rôznymi múčkami psy strávili 62–82 % aminokyselín."
   - "Najčastejší omyl: čerstvé mäso na prvom mieste neznamená, že v granulách je najviac mäsa."
 changelog:
+  - "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
   - "2026-11-24: Vymazané vety o porovnaní s konzervou, zvýraznený krok 2 (porovnávaj len rovnakú formu)"
   - "2026-11-24: Popis fotky jahňacieho presne podľa zloženia, zdroj zoznamu receptúr: zloženie na webe"
   - "2026-11-24: Popis pod fotkou obalu bez zmienky o našej receptúre (obal na ilustrácii nie je náš)"
@@ -69,7 +70,7 @@ cta_button: "Nájdi granule pre svojho psa"
 
 Surové jahňacie a morčacie mäso je asi zo 75 % voda, mleté hovädzie zo 67 %.[^voda] Pri výrobe granúl sa väčšina tejto vody odparí. Čerstvé mäso teda môže byť v zozname prvé, hoci v hotovej granule z neho ostane len malá časť.
 
-Odborníci na výživu z Tufts uvádzajú príklad. Krmivo s kuracím mäsom na prvom mieste môže mať menej kuracieho ako krmivo s kuracou múčkou na druhom alebo treťom mieste. Upozorňujú aj na trik: niektorí výrobcovia pridajú presne toľko čerstvého mäsa, aby sa dostalo na prvé miesto.[^tufts]
+Veterinárni špecialisti na výživu z Tuftsovej univerzity v USA uvádzajú príklad. Krmivo s kuracím mäsom na prvom mieste môže mať menej kuracieho ako krmivo s kuracou múčkou na druhom alebo treťom mieste. Upozorňujú aj na trik: niektorí výrobcovia pridajú presne toľko čerstvého mäsa, aby sa dostalo na prvé miesto.[^tufts]
 
 ==Prvé miesto v zložení hovorí o hmotnosti pri miešaní, nie o tom, koľko mäsa je v miske tvojho psa.==
 

@@ -27,6 +27,7 @@ key_points:
   - "Granule nemusia byť vinníkom. Veterinári zapísali zmenu krmiva ako možnú príčinu hnačky len pri 4,6 % psov."
   - "Najčastejšia chyba: zmeniť granule zo dňa na deň a pri hnačke hneď skúšať ďalšie nové krmivo."
 changelog:
+  - "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
   - "2026-11-24: Spresnené, že 2–3 dni platia pre psa na ľahkej strave (overené v zdroji Cornell)"
   - "2026-11-24: Jazyková korektúra (prirodzenejšie formulácie, úvodná veta sekcie o veterinárovi, kroky, časté otázky), nová záverečná ponuka"
   - "2026-11-24: „Dávku odvažuj na gramy“ → „Dávku vždy odváž v gramoch“ (krok 6 a zhrnutie)"
@@ -57,7 +58,7 @@ sources:
 
 ## Prečo má pes po nových granulách hnačku?
 
-**Najčastejšie preto, že zmena prišla príliš rýchlo a črevné baktérie si na nové krmivo ešte nezvykli.** Veterinári z Cornellu aj britská charita PDSA uvádzajú príliš rýchly prechod medzi bežnými príčinami hnačky.
+**Najčastejšie preto, že zmena prišla príliš rýchlo a črevné baktérie si na nové krmivo ešte nezvykli.** Medzi bežné príčiny hnačky ho radia veterinári z Cornellovej univerzity, jednej z najuznávanejších veterinárnych fakúlt v USA. Rovnako to uvádza PDSA, najväčšia veterinárna charita v Británii.
 
 Nové granule majú iné zloženie bielkovín, tukov, vlákniny a sacharidov. V hrubom čreve spracúvajú rôzne zložky krmiva rôzne baktérie. Keď sa krmivo zmení zo dňa na deň, baktérie a tráviace enzýmy sa nestihnú prispôsobiť. Časť živín sa potom dostane do hrubého čreva nestrávená a stolica zmäkne.
 
