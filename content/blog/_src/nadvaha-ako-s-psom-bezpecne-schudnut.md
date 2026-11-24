@@ -11,7 +11,7 @@ hero: placeholder
 hero_alt: "Labrador s viditeľnou nadváhou (bez pása pri pohľade zhora) stojí na digitálnej váhe vo veterinárnej ambulancii, majiteľ sa skláňa a odčítava hmotnosť z displeja"
 hero_caption: "Chudnutie psa trvá mesiace. Pravidelné váženie ukáže, či ide správnym tempom."
 published: 2026-11-18
-updated: 2026-11-20
+updated: 2026-11-24
 tldr: >
   Pes s nadváhou má chudnúť pomaly, o 1–2 % hmotnosti týždenne. Pri 20 kg psovi
   je to 200–400 g. Dennú dávku počítaj z ideálnej hmotnosti, nie zo súčasnej.
@@ -23,6 +23,7 @@ key_points:
   - "V praxi psy chudnú pomalšie, v priemere o 0,9 % týždenne."
   - "Najčastejšia chyba: rátať dávku zo súčasnej hmotnosti alebo len ubrať granule a maškrty nechať tak."
 changelog:
+  - "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
@@ -52,7 +53,7 @@ Nadváha nie je len otázka vzhľadu. Obezita zaťažuje takmer každý orgán. 
 
 ==V dlhodobej štúdii s labradormi žili psy, ktoré jedli o 25 % menej, o 1,8 roka dlhšie.==[^kealy] Chronické choroby sa u nich objavili neskôr.
 
-Chudnutie je preto liečba, nie diéta na skúšku. Pes stráca tuk pomaly, takže rátaj s mesiacmi, nie s týždňami.
+Veterinári preto berú chudnutie ako liečbu, nie ako diétu na skúšku. Pes stráca tuk pomaly, takže rátaj s mesiacmi, nie s týždňami.
 
 ![Pohľad zhora na dvoch psov rovnakého plemena vedľa seba: vľavo štíhly pes s jasne viditeľným pásom za rebrami, vpravo pes s nadváhou s rovným chrbtom bez pása](placeholder "Pás za rebrami pri pohľade zhora je najrýchlejší domáci test postavy.")
 
@@ -77,7 +78,7 @@ Chudnutie je preto liečba, nie diéta na skúšku. Pes stráca tuk pomaly, tak�
 
 Nadváha je bežnejšia, ako si majitelia myslia. V jednej britskej štúdii malo nadváhu 38,9 % psov a ďalších 20,4 % bolo obéznych.[^vyskyt]
 
-Ideálne štíhly pes môže majiteľovi pripadať príliš chudý.[^wsava] Ak si nie si istý, nechaj postavu psa ohodnotiť pri najbližšej návšteve veterinára a zapíš si číslo.
+Ideálne štíhly pes môže majiteľovi pripadať príliš chudý.[^wsava] Vo veterinárnej ambulancii sa s tým stretávame často. Ak si nie si istý, nechaj postavu psa ohodnotiť pri najbližšej návšteve veterinára a zapíš si číslo.
 
 [^bcs]: Hodnotenie postavy (BCS) podľa WSAVA, 2011. Opis bodov v tabuľke podľa WSAVA Body Condition Score, 2013. Odhad nadváhy podľa pravidla Cornellovej univerzity, 2024.
 [^vyskyt]: Courcier a kol., 2010: 696 psov v 5 ambulanciách. Vo veterinárnych záznamoch je nadváha zapísaná len pri 7,1 % psov (Pegram a kol., 2021). Autori to vysvetľujú tým, že ju veterinári často nezapíšu.
@@ -184,7 +185,7 @@ Najlepšie výsledky prináša menšia dávka spolu s pohybom. Samotný pohyb be
 
 **Keď pes chudne pomalšie ako 1 % týždenne, uber z dennej dávky asi 10 %. Keď chudne rýchlejšie ako 2 % týždenne alebo sa mu pridajú ťažkosti, choď k veterinárovi.**[^uprava]
 
-Skôr ako dávku znížiš, hľadaj skryté kalórie. Maškrty od ostatných v rodine, jedlo z misky iného zvieraťa, niečo zjedené na prechádzke. ==Ak pes nechudne ani po úprave dávky a plán dodržiavaš, nechaj ho vyšetriť.== Veterinár môže vylúčiť napríklad slabšiu činnosť štítnej žľazy.[^stitna]
+Skôr ako dávku znížiš, hľadaj skryté kalórie. Pri kontrolách v ambulancii býva práve jedlo, o ktorom majiteľ nevie, častým dôvodom, prečo pes prestal chudnúť. Maškrty od ostatných v rodine, jedlo z misky iného zvieraťa, niečo zjedené na prechádzke. ==Ak pes nechudne ani po úprave dávky a plán dodržiavaš, nechaj ho vyšetriť.== Veterinár môže vylúčiť napríklad slabšiu činnosť štítnej žľazy.[^stitna]
 
 K veterinárovi choď, ak:
 

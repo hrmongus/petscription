@@ -11,7 +11,7 @@ hero: placeholder
 hero_alt: "Pes strednej veľkosti leží na koberci v obývačke a olizuje si prednú labku, medzi prstami je vidieť začervenanú kožu a srsť sfarbenú do hneda od slín"
 hero_caption: "Olizovanie labiek a škrabanie môže spôsobiť krmivo. Častejšie však za ním sú blchy alebo alergia na peľ a roztoče."
 published: 2026-11-18
-updated: 2026-11-20
+updated: 2026-11-24
 tldr: >
   Svrbenie a olizovanie labiek spôsobuje krmivo len zriedka. Medzi psami, ktorých trápi svrbenie,
   má alergiu na krmivo 9–40 %. Častejšie ho spôsobujú blchy alebo alergia na peľ a roztoče.
@@ -23,6 +23,7 @@ key_points:
   - "Eliminačná diéta trvá aspoň 8 týždňov. Kratšia nemusí nič ukázať."
   - "Najčastejší omyl: test zo srsti. V štúdii označil za „alergickú“ aj umelú kožušinu."
 changelog:
+  - "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok, jedna ponuka v texte"
   - "2026-11-18: Prvá verzia"
@@ -59,7 +60,7 @@ Koľko psov má alergiu na krmivo:[^prevalencia]
 - 9–40 % zo psov, ktorých trápi svrbenie,
 - 9–50 % zo psov s atopiou.
 
-==Ak psa začalo svrbieť, nemeň hneď granule. Najprv ho ošetri proti blchám a zájdi s ním k veterinárovi.== Veterinár vylúči infekciu a parazity. Krmivo príde na rad až potom.
+==Ak psa začalo svrbieť, nemeň hneď granule. Najprv ho ošetri proti blchám a zájdi s ním k veterinárovi.== Veterinár vylúči infekciu a parazity. Krmivo príde na rad až potom. Takéto poradie je vo veterinárnej praxi bežné.
 
 Blchy pritom nemusíš vôbec vidieť. Pes, ktorý je alergický na uhryznutie blchou, si ich pri čistení často vyhryzie skôr, ako ich nájdeš.[^blchy]
 
@@ -118,7 +119,7 @@ Ryža | 2
 
 Neznamená to, že hovädzie je samo osebe horšie. Psy ho jednoducho dlho a často jedia a alergia vzniká na to, čo pes už pozná. Jahňacie bolo kedysi „nové“ mäso. Dnes vadí 5 % alergických psov.
 
-==Pri alergickom psovi preto nerozhoduje, koľko druhov mäsa je v krmive, ale ktoré to sú.==
+==Pri alergickom psovi preto nerozhoduje, koľko druhov mäsa je v krmive, ale ktoré to sú.== Na otázku, na čo je konkrétny pes alergický, preto veterinár neodpovie podľa tabuľky. Spoľahlivú odpoveď dá až eliminačná diéta.
 
 [^alergeny]: Mueller, Olivry a Prélaud, BMC Veterinary Research, 2016. Údaje o 297 psoch s potvrdenou alergiou na krmivo: hovädzie 102 psov, mliečne výrobky 51, kuracie 45, pšenica 38. Autori upozorňujú, že poradie môže len odrážať, čo psy najčastejšie jedli.
 
@@ -128,7 +129,7 @@ Neznamená to, že hovädzie je samo osebe horšie. Psy ho jednoducho dlho a ča
 
 ==Medzinárodné smernice pre alergie psov to hovoria jasne: kožné ani krvné testy sa na zistenie alergie na krmivo nemajú používať.==
 
-Testy zo srsti a slín, ktoré si môžeš objednať domov, dopadli ešte horšie. V jednej štúdii označili za „alergické“ aj vzorky umelej kožušiny a obyčajného fyziologického roztoku.[^srst] Ak ti niekto ponúka „test intolerancií“ zo srsti, peniaze radšej daj za návštevu veterinára.
+Testy zo srsti a slín, ktoré si môžeš objednať domov, dopadli ešte horšie. V jednej štúdii označili za „alergické“ aj vzorky umelej kožušiny a obyčajného fyziologického roztoku.[^srst] Ak ti niekto ponúka „test intolerancií“ zo srsti, peniaze radšej daj za návštevu veterinára. Majitelia s výsledkom takého testu prichádzajú do ambulancie často a pes potom zbytočne drží prísnu diétu.
 
 ![Majiteľka drží v ruke obálku so vzorkou psej srsti a pozerá na výsledkový list s dlhým zoznamom potravín, pes sedí vedľa nej](placeholder "Testy zo srsti a slín označili za „alergickú“ aj umelú kožušinu.")
 

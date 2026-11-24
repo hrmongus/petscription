@@ -23,6 +23,7 @@ key_points:
   - "Kvalita mäsovej múčky kolíše. Z krmív s rôznymi múčkami psy strávili 62–82 % aminokyselín."
   - "Najčastejší omyl: čerstvé mäso na prvom mieste neznamená, že v granulách je najviac mäsa."
 changelog:
+  - "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)"
   - "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
   - "2026-11-24: Vymazané vety o porovnaní s konzervou, zvýraznený krok 2 (porovnávaj len rovnakú formu)"
   - "2026-11-24: Popis fotky jahňacieho presne podľa zloženia, zdroj zoznamu receptúr: zloženie na webe"
@@ -72,7 +73,7 @@ Surové jahňacie a morčacie mäso je asi zo 75 % voda, mleté hovädzie zo 67 
 
 Veterinárni špecialisti na výživu z Tuftsovej univerzity v USA uvádzajú príklad. Krmivo s kuracím mäsom na prvom mieste môže mať menej kuracieho ako krmivo s kuracou múčkou na druhom alebo treťom mieste. Upozorňujú aj na trik: niektorí výrobcovia pridajú presne toľko čerstvého mäsa, aby sa dostalo na prvé miesto.[^tufts]
 
-==Prvé miesto v zložení hovorí o hmotnosti pri miešaní, nie o tom, koľko mäsa je v miske tvojho psa.==
+==Prvé miesto v zložení hovorí o hmotnosti pri miešaní, nie o tom, koľko mäsa je v miske tvojho psa.== Veterinári preto pri hodnotení krmiva pozerajú na celé zloženie, nielen na prvú surovinu.
 
 ::: graf
 nazov: Koľko sušiny ostane zo 100 g suroviny
@@ -179,7 +180,7 @@ Takto vyzerá mäsová časť zloženia niektorých našich granúl, doslova pod
 4. **Pozor na rozdelené suroviny.** Mäso z jedného zvieraťa býva rozdelené na viac položiek, napríklad mäso, tuk a múčku.[^rozdelene] Percentá rôznych foriem nesčítavaj, nie sú porovnateľné.
 5. **Porovnaj bielkoviny v sušine.** Percento bielkovín vydeľ číslom (100 − vlhkosť) a vynásob 100. Pri 26 % bielkovín a 8 % vlhkosti vychádza 28,3 % bielkovín v sušine.
 
-Ak niečo na obale chýba, napríklad forma mäsa, spýtaj sa priamo výrobcu.
+Ak niečo na obale chýba, napríklad forma mäsa, spýtaj sa priamo výrobcu. Obal granúl pokojne vezmi aj na kontrolu k veterinárovi. Zloženie s majiteľmi v ambulancii prechádzame často.
 
 [^rozdelene]: Tufts Petfoodology, 2016. Tufts odporúča zisťovať chýbajúce informácie priamo od výrobcu.
 

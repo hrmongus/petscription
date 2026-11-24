@@ -23,6 +23,7 @@ key_points:
   - "Staré a nové granule miešaj podľa gramov, nie podľa odmerky."
   - "Najčastejšia chyba: držať sa kalendára. Ďalší krok urob, až keď má pes pevnú stolicu."
 changelog:
+  - "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)"
   - "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
   - "2026-11-24: Jazyková korektúra (výdatnosť namiesto energie v 100 g, prirodzenejšie formulácie) a spresnenie odporúčania Cornellu na 1–2 týždne"
   - "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)"
@@ -65,7 +66,7 @@ Tabuľka ukazuje odporúčania dvoch amerických univerzít. Cornellova univerzi
 | Cornell, Diarrhea | 1–2 týždne | pes, ktorý mal po zmene krmiva hnačku |
 | Tufts Petfoodology, 2019 | 4–6 týždňov | citlivé zvieratá |
 
-Niektoré psy zvládnu zmenu krmiva aj zo dňa na deň. Vopred však nevieš, či je tvoj pes medzi nimi. ==Týždeň je preto rozumný začiatok.== Ak by pes zvládol aj rýchlejšiu zmenu, stratíš len pár dní. Ak nie, predídeš hnačke.
+Niektoré psy zvládnu zmenu krmiva aj zo dňa na deň. Vopred však nevieš, či je tvoj pes medzi nimi. ==Týždeň je preto rozumný začiatok.== Majitelia sa veterinára často pýtajú, či môžu nové granule dať rovno. Odpoveď závisí od psa, ale týždeň je bezpečná voľba. Ak by pes zvládol aj rýchlejšiu zmenu, stratíš len pár dní. Ak nie, predídeš hnačke.
 
 Prechod spomaľ, ak:
 
@@ -158,7 +159,7 @@ K veterinárovi choď, ak:
 - je apatický, zdá sa, že ho niečo bolí, alebo dlho nechce jesť,
 - stolica je vodnatá.
 
-Šteňa, starší pes alebo pes s chronickou chorobou sa hnačkou vyčerpá rýchlejšie. Pri nich nečakaj a zavolaj veterinárovi hneď. Ak má pes ochorenie tráviaceho traktu, napríklad zápal pankreasu, zmenu krmiva vopred dohodni s veterinárom.
+Vo veterinárnej praxi platí, že šteňa, starší pes alebo pes s chronickou chorobou sa hnačkou vyčerpá rýchlejšie. Pri nich nečakaj a zavolaj veterinárovi hneď. Ak má pes ochorenie tráviaceho traktu, napríklad zápal pankreasu, zmenu krmiva vopred dohodni s veterinárom.
 
 Ak sa hnačka vracia pri každom pokuse o prechod, problém nemusí byť v rýchlosti. Psovi môže vadiť niektorá zložka nového krmiva. Porozprávaj sa s veterinárom o krmive s jedným druhom mäsa alebo o eliminačnej diéte.
 

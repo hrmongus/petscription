@@ -11,7 +11,7 @@ hero: placeholder
 hero_alt: "Majiteľ drží v ruke vrece granúl a číta zloženie na zadnej strane, prstom ukazuje na riadok so slovom kuracie, pri nohách mu sedí pes strednej veľkosti"
 hero_caption: "Pri kuracom mäse rozhoduje, či ho tvoj pes znáša a ako je napísané na obale."
 published: 2026-11-18
-updated: 2026-11-20
+updated: 2026-11-24
 tldr: >
   Kuracie mäso je pre väčšinu psov kvalitná a dobre stráviteľná bielkovina. Vyhnúť sa mu treba len
   vtedy, keď veterinár potvrdí alergiu na kuracie. Na kuracie reaguje 15 % psov s alergiou na krmivo,
@@ -22,6 +22,7 @@ key_points:
   - "Na nápis „s kuracím“ stačia v krmive 4 % kuracieho mäsa, na „bohaté na kuracie“ 14 %."
   - "Častý omyl: „hydina“ na obale môže znamenať aj kuracie."
 changelog:
+  - "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: upravený opis čerstvého mäsa v tabuľke"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
@@ -54,7 +55,7 @@ V jednej štúdii sa z kuracieho mäsa strávilo 73–76 % sušiny. Bielkoviny z
 
 Kuracie je bežne dostupné, ľahko sa spracúva a psy ho zvyčajne radi jedia. Psy ho však jedia aj veľmi často. Alergia vzniká na bielkovinu, ktorú pes už pozná. Ak je pes na alergie náchylný, môže ju preto dostať práve na kuracie. ==Neznamená to, že kuracie spôsobuje alergiu častejšie ako iné mäso.==
 
-Ak tvoj pes kuracie znáša, nemáš dôvod ho vyraďovať. Sleduj radšej, v akej forme je kuracie v zložení a na akom mieste.
+Z pohľadu veterinára platí: ak tvoj pes kuracie znáša, nemáš dôvod ho vyraďovať. Sleduj radšej, v akej forme je kuracie v zložení a na akom mieste.
 
 [^oba-maso]: Oba a kol., Journal of Animal Science, 2019. Surové, parené a sterilizované kuracie mäso: stráviteľnosť sušiny 73–76 %, organickej hmoty 78–81 %. Parené kuracie mäso malo skutočnú stráviteľnosť všetkých nevyhnutných aminokyselín nad 88 %. Štúdia testovala samostatné suroviny, nie hotové granule. Stráviteľnosť merala na kohútoch, čo je zaužívaný laboratórny model pre psy a mačky, ale nie priamo pes. Financoval ju výrobca krmív, autori konflikt záujmov neuvádzajú.
 
@@ -83,7 +84,7 @@ Ryža | 2
 
 ^ Jeden pes môže reagovať na viac surovín, preto je súčet vyšší ako 100 %.
 
-Percentá platia len pre psov, ktorí už alergiu na krmivo majú, nie pre všetkých psov. Alergia na krmivo je u psov pomerne zriedkavá. Spoľahlivo ju neurčí ani krvný test, ani test zo srsti. Potvrdí ju len eliminačná diéta u veterinára.
+Percentá platia len pre psov, ktorí už alergiu na krmivo majú, nie pre všetkých psov. Alergia na krmivo je u psov pomerne zriedkavá. Spoľahlivo ju neurčí ani krvný test, ani test zo srsti. Potvrdí ju len eliminačná diéta u veterinára. V ambulancii sa často stretávame so psami, ktorým majiteľ kuracie vyradil zbytočne, hoci svrbenie spôsobovalo niečo iné.
 
 ==Ak psa trápi svrbenie, kuracie nie je jediný ani najčastejší podozrivý.== Vyraď ho natrvalo až vtedy, keď veterinár potvrdí, že alergiu spôsobuje práve kuracie.
 

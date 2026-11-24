@@ -24,6 +24,7 @@ key_points:
   - "Plesnivá kukurica môže obsahovať aflatoxín. V USA po takom krmive zomrelo viac ako 110 zvierat."
   - "Najčastejší mýtus: kukurica je len plnáč. Problém je, keď nahrádza mäso alebo keď je zle skladovaná."
 changelog:
+  - "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)"
   - "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
@@ -111,7 +112,7 @@ Ryža | 2
 
 Kukurica patrí spolu s vajcami medzi menej časté spúšťače. Poradie čiastočne odráža, čo psy najčastejšie jedli. Alergia totiž vzniká na to, čo pes je roky. ==Kukurica teda nie je bezpečná pre každého psa. Ako alergén je však oveľa zriedkavejšia ako mäso.==
 
-Ak psa trápi svrbenie alebo má často problémy s trávením, samotné vyradenie kukurice väčšinou nepomôže.[^zriedka] S istotou príčinu zistí len eliminačná diéta pod dohľadom veterinára.
+Ak psa trápi svrbenie alebo má často problémy s trávením, samotné vyradenie kukurice väčšinou nepomôže.[^zriedka] S istotou príčinu zistí len eliminačná diéta pod dohľadom veterinára. Majitelia, ktorí prídu do ambulancie so psom, ktorého trápi svrbenie, majú často za sebou už niekoľko vriec granúl bez kukurice.
 
 [^alergeny]: Mueller, Olivry a Prélaud, BMC Veterinary Research, 2016. Údaje o 297 psoch, ktorým alergiu potvrdila eliminačná diéta a opätovné podanie suroviny: hovädzie 102 psov (34 %), mliečne výrobky 51 (17 %), kuracie 45 (15 %), pšenica 38 (13 %), kukurica 13 (4 %). Ide o malé a staršie štúdie.
 [^zriedka]: Tufts Petfoodology, 2023: kukurica sa ako príčina alergie u psov potvrdí len zriedka.
@@ -124,7 +125,7 @@ V USA v rokoch 2020 a 2021 zomrelo po krmive s kontaminovanou kukuricou viac ako
 
 Príznaky otravy aflatoxínom sú malátnosť, nechuť do jedla, zvracanie, hnačka a žltačka (žlté oči, ďasná alebo koža). Pečeň môže byť poškodená aj bez viditeľných príznakov. ==Ak pes po novom vreci granúl prestane jesť, zvracia alebo mu zožltnú ďasná, choď hneď k veterinárovi.== Vrece si odlož aj s číslom šarže.
 
-Riziko nie je v kukurici samotnej, ale v kvalite zrna a v tom, ako ho výrobca kontroluje. Doma skladuj granule v suchu, v uzavretom pôvodnom vreci. Ak sú vlhké, zapáchajú alebo majú povlak, nepoužívaj ich.
+Riziko nie je v kukurici samotnej, ale v kvalite zrna a v tom, ako ho výrobca kontroluje. Ak ideš s psom k veterinárovi pre podozrenie na otravu, vezmi so sebou aj vrece granúl. Doma skladuj granule v suchu, v uzavretom pôvodnom vreci. Ak sú vlhké, zapáchajú alebo majú povlak, nepoužívaj ich.
 
 [^fda]: FDA, 2021. Americký výrobca v decembri 2020 sťahoval krmivá po úmrtí najmenej 28 psov. V januári 2021 rozšíril sťahovanie na všetky krmivá s kukuricou z jedného svojho závodu. Čísla platia k 21. januáru 2021. Podľa FDA nie všetky prípady boli potvrdené ako otrava aflatoxínom a skutočný počet môže byť iný.
 [^limit]: Nariadenie Komisie (EÚ) č. 574/2011: aflatoxín B1 najviac 0,02 mg/kg v kŕmnych surovinách a 0,01 mg/kg v kompletných krmivách, pri vlhkosti 12 %. Aflatoxín tvorí pleseň *Aspergillus flavus*. Podľa prehľadu Leung a kol. (Journal of Agricultural and Food Chemistry, 2006) spôsobil aflatoxín u psov viacero hromadných otráv a v mnohých krajinách je jeho obsah v krmivách regulovaný.

@@ -25,6 +25,7 @@ key_points:
   - "Pri ochorení srdca sa podozrenie presunulo od chýbajúceho obilia k strukovinám, hlavne k hrachu a šošovici."
   - "Najčastejší mýtus: pes je mäsožravec ako vlk, a preto obilniny nestrávi."
 changelog:
+  - "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)"
   - "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
@@ -86,7 +87,7 @@ Grónsky pes | 2,5
 
 **Pre zdravého psa nie. Žiadna štúdia zatiaľ nepreukázala, že by mu granule bez obilia zdravotne pomáhali.** Veterinárni špecialisti na výživu z Tuftsovej univerzity v USA ich označili za marketing, nie za riešenie zdravotných problémov.[^marketing]
 
-Najčastejší dôvod, prečo ľudia kupujú granule bez obilia, je alergia. Údaje ho však nepodporujú. ==Psy s alergiou na krmivo reagujú častejšie na mäso a mliečne výrobky ako na obilniny.==[^alergeny]
+Najčastejší dôvod, prečo ľudia kupujú granule bez obilia, je alergia. S touto otázkou prichádzajú majitelia často aj k veterinárovi. Údaje ho však nepodporujú. ==Psy s alergiou na krmivo reagujú častejšie na mäso a mliečne výrobky ako na obilniny.==[^alergeny]
 
 ::: graf
 nazov: Koľko psov s alergiou na krmivo reagovalo na danú surovinu
@@ -153,7 +154,7 @@ Niektoré írske setre majú dedičné ochorenie čreva, ktoré zhoršuje lepok.
 
 Border teriéry môžu mať záchvaty mimovoľných pohybov, pri ktorých sú pri vedomí. Pri niektorých psoch súvisia s lepkom a pomáha im strava bez lepku. Ochorenie sa dnes volá paroxyzmálna dyskinéza citlivá na lepok.[^border]
 
-Pri podozrení na alergiu alebo citlivosť na lepok nemeň granule naslepo. Diétu nastav s veterinárom, aby výsledok niečo ukázal.
+Vo veterinárnej praxi platí: pri podozrení na alergiu alebo citlivosť na lepok nemeň granule naslepo. Diétu nastav s veterinárom, aby výsledok niečo ukázal.
 
 [^psenica]: Mueller a kol., 2016: pšenica u 38 z 297 psov, ryža u 5. Autori považujú pozitívny výsledok návratu k pôvodnému krmivu (provokácie) za jediný pevný dôkaz.
 [^setre]: Hall a Batt, Gut, 1992 (enteropatia citlivá na lepok).

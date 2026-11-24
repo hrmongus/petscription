@@ -27,6 +27,7 @@ key_points:
   - "Granule nemusia byť vinníkom. Veterinári zapísali zmenu krmiva ako možnú príčinu hnačky len pri 4,6 % psov."
   - "Najčastejšia chyba: zmeniť granule zo dňa na deň a pri hnačke hneď skúšať ďalšie nové krmivo."
 changelog:
+  - "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)"
   - "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
   - "2026-11-24: Spresnené, že 2–3 dni platia pre psa na ľahkej strave (overené v zdroji Cornell)"
   - "2026-11-24: Jazyková korektúra (prirodzenejšie formulácie, úvodná veta sekcie o veterinárovi, kroky, časté otázky), nová záverečná ponuka"
@@ -119,6 +120,8 @@ Ak hnačka prišla presne so zmenou granúl, súvislosť je pravdepodobná. Ak v
 
 ==Šteňa, starý pes, pes s iným ochorením alebo pes na liekoch patrí s hnačkou k veterinárovi vždy.== Platí to najmä pri protizápalových liekoch.[^pdsa] Ak máš podozrenie, že pes zjedol niečo jedovaté, volaj veterinára hneď.
 
+Keď zavoláš, veterinár sa zvyčajne spýta, ako dlho hnačka trvá, či pes zvracia, pije a ako sa správa. Všímaj si to preto už doma.
+
 ![Žena sedí na gauči a s ustaraným výrazom telefonuje, francúzsky buldoček leží pri jej nohách na deke](img/blog/hnacka-po-novych-granulach-co-robit/telefonat.webp "Pri krvi, zvracaní alebo apatii nečakaj, kým hnačka prejde sama. Zavolaj veterinárovi. Ilustrácia vygenerovaná AI.")
 
 [^cornell]: Cornell Riney Canine Health Center: Diarrhea (2024) a When to go to the ER (2025). Podľa druhého zdroja môže opakované zvracanie alebo hnačka počas 24 hodín, najmä s krvou, apatiou alebo odmietaním jedla, znamenať vážnejší problém.
@@ -139,13 +142,13 @@ Citlivému psovi môžeš každý krok prechodu predĺžiť o pár dní. ==Ak sa
 
 ## Časté otázky
 
-**Môžem psovi pri hnačke dať varenú ryžu s mäsom?** Áno, veterinári z Cornellu odporúčajú ľahkú stravu, napríklad varené kuracie alebo chudé hovädzie mäso s bielou ryžou. Na dlhodobé kŕmenie sa nehodí. Ak sa stolica na ľahkej strave do 2–3 dní nezlepší, choď so psom k veterinárovi.
+**Môžem psovi pri hnačke dať varenú ryžu s mäsom?** Áno, ľahká strava je pri miernej hnačke bežná rada vo veterinárnej praxi. Veterinári z Cornellu odporúčajú napríklad varené kuracie alebo chudé hovädzie mäso s bielou ryžou, nie však natrvalo. Ak sa stolica na ľahkej strave do 2–3 dní nezlepší, choď so psom k veterinárovi.
 
 **Mám psa pri hnačke nechať hladovať?** Veterinári z Cornellu pripúšťajú vynechať jedlo na 12–24 hodín a potom dávať ľahkú stravu. Pri šteňati, starom alebo chorom psovi sa najprv poraď s veterinárom. Vodu musí mať pes stále.
 
 **Pomôžu pri náhlej hnačke antibiotiká?** Pri nekomplikovanej hnačke väčšinou nie. Veľká britská štúdia nenašla rozdiel v zotavení psov s antibiotikami a bez nich.[^atb] Autori odporúčajú antibiotiká pri hnačke obmedziť.
 
-**Môžem psovi dať lieky na hnačku pre ľudí?** Bez porady s veterinárom nie. Psy potrebujú iné dávky a nie každý liek je pre ne vhodný.
+**Môžem psovi dať lieky na hnačku pre ľudí?** Bez porady s veterinárom nie. Vo veterinárnej ambulancii sa často stretávame so psami, ktorým majiteľ dal liek z domácej lekárničky. Psy potrebujú iné dávky a nie každý liek je pre ne vhodný.
 
 **Mám nové granule po hnačke úplne vyradiť?** Nie hneď, jedna hnačka po rýchlom prechode ešte neznamená, že pes krmivo neznáša. Často stačí pomalší prechod. Ak sa hnačka vracia aj pri pomalom prechode, poraď sa s veterinárom.
 
