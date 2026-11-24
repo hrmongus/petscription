@@ -27,6 +27,7 @@ key_points:
   - "Granule nemusia byť vinníkom. Veterinári zapísali zmenu krmiva ako možnú príčinu hnačky len pri 4,6 % psov."
   - "Najčastejšia chyba: zmeniť granule zo dňa na deň a pri hnačke hneď skúšať ďalšie nové krmivo."
 changelog:
+  - "2026-11-24: Spresnené, že 2–3 dni platia pre psa na ľahkej strave (overené v zdroji Cornell)"
   - "2026-11-24: Jazyková korektúra (prirodzenejšie formulácie, úvodná veta sekcie o veterinárovi, kroky, časté otázky), nová záverečná ponuka"
   - "2026-11-24: „Dávku odvažuj na gramy“ → „Dávku vždy odváž v gramoch“ (krok 6 a zhrnutie)"
   - "2026-11-24: „inak zdravý“ preštylizované v sekcii o tom, či je hnačka normálna"
@@ -137,7 +138,7 @@ Citlivému psovi môžeš každý krok prechodu predĺžiť o pár dní. ==Ak sa
 
 ## Časté otázky
 
-**Môžem psovi pri hnačke dať varenú ryžu s mäsom?** Áno, veterinári z Cornellu odporúčajú ľahkú stravu, napríklad varené kuracie alebo chudé hovädzie mäso s bielou ryžou. Na dlhodobé kŕmenie sa nehodí. Ak sa stolica do 2–3 dní nezlepší, choď so psom k veterinárovi.
+**Môžem psovi pri hnačke dať varenú ryžu s mäsom?** Áno, veterinári z Cornellu odporúčajú ľahkú stravu, napríklad varené kuracie alebo chudé hovädzie mäso s bielou ryžou. Na dlhodobé kŕmenie sa nehodí. Ak sa stolica na ľahkej strave do 2–3 dní nezlepší, choď so psom k veterinárovi.
 
 **Mám psa pri hnačke nechať hladovať?** Veterinári z Cornellu pripúšťajú vynechať jedlo na 12–24 hodín a potom dávať ľahkú stravu. Pri šteňati, starom alebo chorom psovi sa najprv poraď s veterinárom. Vodu musí mať pes stále.
 
