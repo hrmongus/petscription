@@ -11,7 +11,7 @@ hero: placeholder
 hero_alt: "Dospelý pes strednej veľkosti stojí nad plnou miskou nových granúl, ovoniava ich, ale neje; v pozadí kuchyňa, prirodzené denné svetlo"
 hero_caption: "Zdravý pes pri novom krmive často najprv len ovoniava a váha. Najmä v prvý deň je to bežné."
 published: 2026-11-18
-updated: 2026-11-20
+updated: 2026-11-24
 tldr: >
   Zdravý pes nové granule najčastejšie odmieta, lebo je opatrný voči neznámemu jedlu.
   Odborne sa to volá neofóbia. Druhou častou príčinou sú maškrty, ktoré ho naučili čakať
@@ -24,6 +24,7 @@ key_points:
   - "„Pravidlo 15 minút“ je praktický tip, nie veterinárna norma."
   - "Najčastejšia chyba: po odmietnutej miske dať psovi niečo lepšie. Tak sa naučí granule odmietať."
 changelog:
+  - "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: „žerie“ nahradené"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
@@ -147,7 +148,7 @@ Pes, ktorý granule vezme do papule a hneď ich pustí, často nie je vyberavý.
 | Kedy začne | hneď po zmene krmiva | postupne, po týždňoch maškŕt | náhle alebo aj bez zmeny krmiva |
 | Ako dlho trvá | pár dní, v štúdii do 8.–9. dňa | kým pes dostáva niečo lepšie | nezlepšuje sa, môže sa zhoršovať |
 | Maškrty a jedlo zo stola | často je opatrný aj pri nich | zje vždy a rád | odmieta aj obľúbené jedlo |
-| Ďalšie príznaky | žiadne | žiadne, pes je čulý a drží si váhu | zvracanie, hnačka, únava, chudnutie, bolesť |
+| Ďalšie príznaky | žiadne | žiadne, pes je aktívny a drží si váhu | zvracanie, hnačka, únava, chudnutie, bolesť |
 | Čo urobiť | trpezlivosť, postupné primiešavanie, pravidelný čas | menej maškŕt, pevný režim, žiadna náhrada | k veterinárovi, po 24 hodinách bez jedla hneď |
 
 Príčiny sa môžu prekrývať. Pes s boľavým zubom môže zároveň dostávať veľa maškŕt. Mäkké jedlo zo stola potom zje, ale tvrdé granule odmieta. ==Rozhoduje preto hlavne to, či má pes ďalšie príznaky a či neje dlhšie ako 24 hodín.==[^prekryv]
@@ -182,7 +183,7 @@ Prečo tip aj tak funguje:
 4. **Zdvihni misku po krátkom čase.** Po 15–20 minútach odnes, čo pes nezjedol. Ďalšie jedlo ponúkni až pri najbližšom kŕmení.
 5. **Nedávaj náhradu za odmietnutie.** Po odmietnutej miske žiadne mäso, syr ani maškrta. Ak chceš granule ochutiť, pridaj doplnok vopred.
 6. **Obmedz maškrty na 10 % energie.** Odváž dennú dávku granúl a maškrty z nej odpočítaj. Dohodni sa s rodinou, kto psovi čo dáva.
-7. **Sleduj váhu a stolicu.** Psa raz týždenne odváž. ==Ak drží váhu, je čulý a má normálnu stolicu, je všetko v poriadku, aj keď občas vynechá jedlo.==
+7. **Sleduj váhu a stolicu.** Psa raz týždenne odváž. ==Ak drží váhu, je aktívny a má normálnu stolicu, je všetko v poriadku, aj keď občas vynechá jedlo.==
 
 ![Majiteľ odváži dennú dávku granúl na kuchynskej váhe, vedľa stojí miska a malá kôpka maškŕt odložená bokom](placeholder "Maškrty odpočítaj z dennej dávky, aby pes prišiel k miske hladný.")
 

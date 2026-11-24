@@ -29,6 +29,7 @@ Najväčší problém prvých konceptov (review 2026-11-18): text znel ako doslo
   - „nebol lepší ako náhoda“ → „výsledky boli náhodné“
   - „po jednej“ (suroviny) → „jednu po druhej“
   - „kuracie vajcia“ → „slepačie vajcia“
+  - „čulý“, „inak čulý“ → „správa sa normálne“, „správa sa ako zvyčajne“ (keď ide o to, že pes nie je apatický); v tabuľkách a krátkych výpočtoch „aktívny“, prípadne „aktívny ako vždy“. Nezopakuj „normálne“ ani „zvyčajne“ v jednej vete. (redakcia, 2026-11-24)
   - „Zo všetkých psov u veterinára má kožnú alergiu na krmivo len 1 až 2 %, zo svrbiacich psov 9 až 40 %“ → nezrozumiteľné; rozdeľ: „Alergiu na krmivo má len 1–2 % psov, ktorých prinesú k veterinárovi. Medzi psami, ktorých trápi svrbenie, je to 9–40 %.“
 - **Správne slová:** labka → labky, labiek (nie „láp“). Pes → psy (nie „psi“ pri zvieratách, ak to nie je ustálené), nadpisy gramaticky: „Na aké krmivo sú psy najčastejšie alergické?“
 - **Žiadne zbytočné slová v nadpisoch** („Ako často je za svrbením psa…“ → „Ako často spôsobuje svrbenie alergia na krmivo?“).
@@ -85,3 +86,4 @@ _Sem zapisuj všeobecný feedback v poradí, ako prišiel: dátum, čo používa
 - **2026-11-18, review F6 (ručné poznámky v PDF + správa):** „Najväčší problém je, že to znie ako doslovný preklad z angličtiny, ťažko sa to číta, niektoré vety nedávajú zmysel. Treba to skorigovať v slovenčine.“ Ďalej: titulok je len pracovný názov z backlogu; „Krátka odpoveď“ → „Sumár“; „láp“ → „labiek“; kľúčové body zjednodušiť; percentá na začiatok, „až“ → pomlčka; technikálie do poznámok pod čiarou; zvýrazniť najdôležitejšie; ponuka bez názvov volieb dotazníka, štítok „Granule na mieru“; záverečná ponuka nad zdroje; história zmien zo stránky preč; dlhý článok s viacerými ponukami málokto dočíta. → sekcie Jazyk, Nadpis, Štruktúra, Obrázky/ponuky vyššie.
 - **2026-11-18, odpovede na otvorené otázky:** v článku o čerstvom mäse vyhodiť vetu o význame „čerstvé“ (stret so schváleným tvrdením); „je“ namiesto „žerie“; väčšinou „psa“, občas „psíka“; viditeľnú históriu zmien nevracať; v chate spomínať články názvom. → Tón a hlas, Čo nerobiť, Komunikácia.
 - **2026-11-18:** „Ten offer vždy potrebuje vizuál ako vrecko granúl alebo grafiku alebo niečo, čo zaujme.“ → predvolený vejár vreciek v builde, pravidlo v Obrázky, grafy, ponuky.
+- **2026-11-24, redakcia (sumár článku o hnačke):** veta „Ak je pes inak čulý, zvyčajne odznie za 1–3 dni.“ nedávala zmysel (nejasné, čo odznie; „inak čulý“ znie ako preklad). → „čulý“ nahradené v sekcii Jazyk, opravené vo všetkých konceptoch.

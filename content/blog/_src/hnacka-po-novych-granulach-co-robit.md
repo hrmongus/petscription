@@ -17,7 +17,7 @@ published: 2026-11-18
 updated: 2026-11-24
 tldr: >
   Hnačka po nových granulách vzniká najčastejšie pre príliš rýchlu zmenu krmiva.
-  Ak je pes čulý a má chuť do jedla, hnačka zvyčajne prejde za 1–3 dni. Vráť sa k starému
+  Ak sa pes správa normálne a má chuť do jedla, hnačka väčšinou prejde za 1–3 dni. Vráť sa k starému
   krmivu a daj psovi dosť vody. Nové granule potom zavádzaj pomalšie, počas 1–2 týždňov.
   K veterinárovi choď pri hnačke dlhšej ako 2 dni, pri krvi, zvracaní alebo apatii.
 key_points:
@@ -27,6 +27,7 @@ key_points:
   - "Granule nemusia byť vinníkom. Veterinári zapísali zmenu krmiva ako možnú príčinu hnačky len pri 4,6 % psov."
   - "Najčastejšia chyba: zmeniť granule zo dňa na deň a pri hnačke hneď skúšať ďalšie nové krmivo."
 changelog:
+  - "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)"
   - "2026-11-24: Zrozumiteľnejšia veta v sumári o tom, kedy hnačka prejde sama"
   - "2026-11-23: Hlavná fotka a fotky do sekcií (ilustrácie vygenerované AI)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
@@ -46,9 +47,9 @@ sources:
 
 **Hnačka po zmene krmiva je krátkodobá tráviaca porucha, ktorá vznikne, keď si črevo psa ešte nestihlo zvyknúť na nové granule.** Pes má mäkkú až vodnatú stolicu, kaká častejšie a niekedy má plyny.
 
-==Od hnačky z infekcie, parazitov alebo zjedeného odpadu ju rozlíšiš podľa dvoch vecí: prišla krátko po zmene krmiva a pes je napriek hnačke čulý, má chuť do jedla a pije.==
+==Od hnačky z infekcie, parazitov alebo zjedeného odpadu ju rozlíšiš podľa dvoch vecí: prišla krátko po zmene krmiva a pes sa napriek hnačke správa normálne, má chuť do jedla a pije.==
 
-![Francúzsky buldoček s chuťou je granule z misky na podlahe kuchyne, vedľa stojí miska s vodou a v pozadí sa naňho pozerá žena s hrnčekom](img/blog/hnacka-po-novych-granulach-co-robit/pes-je.webp "Pri hnačke zo zmeny krmiva býva pes čulý, má chuť do jedla a pije. Ilustrácia vygenerovaná AI.")
+![Francúzsky buldoček s chuťou je granule z misky na podlahe kuchyne, vedľa stojí miska s vodou a v pozadí sa naňho pozerá žena s hrnčekom](img/blog/hnacka-po-novych-granulach-co-robit/pes-je.webp "Pri hnačke zo zmeny krmiva sa pes zvyčajne správa normálne, má chuť do jedla a pije. Ilustrácia vygenerovaná AI.")
 
 ## Prečo má pes po nových granulách hnačku?
 
@@ -73,7 +74,7 @@ odkaz: granule-na-mieru.html
 
 **Mierna hnačka po zmene granúl je bežná. Ak je pes inak zdravý, zvyčajne prejde za 1–3 dni.** Väčšina psov sa podľa PDSA zotaví za 1–3 dni, často aj bez liečby. Akútna hnačka u psov trvá v 78 % prípadov najviac 2 dni.[^pegram]
 
-„Normálna“ je však len vtedy, keď je pes čulý, má chuť do jedla, pije, nezvracia a v stolici nie je krv ani hlien. Kašovitá stolica je pri prechode bežnejšia ako vodnatá. Ak sa stolica 1–2 dni po návrate k starému krmivu zlepšuje, ide to dobrým smerom.
+„Normálna“ je však len vtedy, keď je pes aktívny ako vždy, má chuť do jedla, pije, nezvracia a v stolici nie je krv ani hlien. Kašovitá stolica je pri prechode bežnejšia ako vodnatá. Ak sa stolica 1–2 dni po návrate k starému krmivu zlepšuje, ide to dobrým smerom.
 
 ==Za hnačku nemusia vždy môcť granule.== Veterinári zapísali zmenu krmiva ako možnú príčinu len pri 4,6 % psov s náhlou hnačkou. Častejšie pes zjedol niečo nevhodné. Pri 40,1 % psov príčinu nezapísali vôbec.[^oneill]
 
@@ -103,7 +104,7 @@ Ak hnačka prišla presne so zmenou granúl, súvislosť je pravdepodobná. Ak v
 
 | Situácia | Čo to znamená | Čo urobiť |
 | --- | --- | --- |
-| Kašovitá stolica 1–2 dni, pes je čulý, má chuť do jedla a pije | bežná reakcia na zmenu krmiva | vráť sa k starému krmivu a sleduj psa |
+| Kašovitá stolica 1–2 dni, pes je aktívny, má chuť do jedla a pije | bežná reakcia na zmenu krmiva | vráť sa k starému krmivu a sleduj psa |
 | Riedka stolica dlhšie ako 2 dni | stav sa nezlepšuje | zavolaj veterinárovi |
 | Čerstvá krv v stolici alebo čierna stolica ako decht | možné krvácanie v tráviacom trakte | k veterinárovi ešte v ten deň |
 | Hnačka a k tomu zvracanie | pes sa rýchlejšie odvodní | zavolaj veterinárovi |
@@ -126,7 +127,7 @@ Ak hnačka prišla presne so zmenou granúl, súvislosť je pravdepodobná. Ak v
 2. **Vráť sa k starému krmivu.** Dávaj ho, kým sa stolica nespevní. Ak staré granule nemáš, poraď sa s veterinárom.
 3. **Daj psovi stále čerstvú vodu.** Pri hnačke pes stráca tekutiny.
 4. **Vynechaj pamlsky a zvyšky zo stola.** Kým hnačka neprejde, nedávaj psovi pamlsky ani výdatné jedlo.
-5. **Sleduj stolicu a správanie 1–2 dni.** Všímaj si, či sa stolica zlepšuje a či má pes chuť do jedla a je čulý. Ak sa to do 2 dní nezlepší, zavolaj veterinárovi.
+5. **Sleduj stolicu a správanie 1–2 dni.** Všímaj si, či sa stolica zlepšuje a či má pes chuť do jedla a správa sa ako zvyčajne. Ak sa to do 2 dní nezlepší, zavolaj veterinárovi.
 6. **Začni nový prechod pomalšie.** Keď je stolica znova v poriadku, pridávaj nové granule k starým po menších krokoch počas 1–2 týždňov. Dávku odvažuj na gramy.
 
 Citlivému psovi môžeš každý podiel nového krmiva nechať o pár dní dlhšie. ==Ak sa hnačka vracia pri každom pokuse o zmenu alebo stolica nie je v poriadku ani na starom krmive, nejde o bežnú reakciu.== Vtedy to rieš s veterinárom.
@@ -147,7 +148,7 @@ Citlivému psovi môžeš každý podiel nového krmiva nechať o pár dní dlh�
 
 ## Zhrnutie
 
-- Hnačka po nových granulách vzniká najčastejšie pre príliš rýchlu zmenu. Ak je pes čulý, zvyčajne prejde za 1–3 dni.
+- Hnačka po nových granulách vzniká najčastejšie pre príliš rýchlu zmenu. Ak sa pes správa normálne, hnačka väčšinou prejde za 1–3 dni.
 - Doma: vráť sa k starému krmivu, daj psovi vodu, vynechaj pamlsky a 1–2 dni ho sleduj.
 - K veterinárovi: hnačka dlhšie ako 2 dni, krv alebo čierna stolica, zvracanie, apatia, odmietanie jedla. So šteňaťom, starým alebo chorým psom vždy.
 - Ďalší krok: keď sa stolica spevní, začni nový prechod pomalšie, počas 1–2 týždňov, s dávkou odváženou na gramy.

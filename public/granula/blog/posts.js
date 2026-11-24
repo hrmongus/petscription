@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-24 08:54",
+ "built": "2026-11-24 09:04",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -86,12 +86,12 @@ window.GRANULA_POSTS = {
    "wanted": "draft",
    "example": false,
    "published": "2026-11-18",
-   "updated": "2026-11-23",
+   "updated": "2026-11-24",
    "author": "MVDr. Marcela Glezgová",
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "img/blog/ako-spravne-prejst-na-nove-granule/hero.webp",
-   "words": 1117,
+   "words": 1118,
    "description": "Na nové granule prechádzaj postupne aspoň 7 dní. Nové krmivo pridávaj po krokoch 10, 25, 50, 75 a 90 %. Citlivý pes potrebuje 2 týždne aj viac.",
    "id": "F1",
    "category": "Problémy",
@@ -157,9 +157,9 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)",
       "2026-11-23: Hlavná fotka a fotky do sekcií o prechode a o krokoch ako jedna séria (ilustrácie vygenerované AI)",
-      "2026-11-20: Autorka MVDr. Marcela Glezgová",
-      "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
+      "2026-11-20: Autorka MVDr. Marcela Glezgová"
      ]
     },
     {
@@ -420,7 +420,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1117 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1118 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -500,7 +500,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Kedy prechod spomaliť a kedy ísť k veterinárovi?",
      "kind": "main",
-     "words": 174,
+     "words": 175,
      "numbers": 4,
      "question": true,
      "firstBold": true,
@@ -1941,7 +1941,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "img/blog/hnacka-po-novych-granulach-co-robit/hero.webp",
-   "words": 1058,
+   "words": 1066,
    "description": "Hnačka po nových granulách zvyčajne odznie za 1–3 dni. Vráť sa k starému krmivu a prechod spomaľ. K veterinárovi pri krvi, zvracaní, apatii alebo po 2 dňoch.",
    "id": "F2",
    "category": "Problémy",
@@ -2007,23 +2007,23 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)",
       "2026-11-24: Zrozumiteľnejšia veta v sumári o tom, kedy hnačka prejde sama",
-      "2026-11-23: Hlavná fotka a fotky do sekcií (ilustrácie vygenerované AI)",
-      "2026-11-20: Autorka MVDr. Marcela Glezgová"
+      "2026-11-23: Hlavná fotka a fotky do sekcií (ilustrácie vygenerované AI)"
      ]
     },
     {
      "id": "tldr",
      "level": "error",
      "ok": true,
-     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 58)",
+     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 59)",
      "details": []
     },
     {
      "id": "tldr-range",
      "level": "warn",
      "ok": true,
-     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 58)",
+     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 59)",
      "details": []
     },
     {
@@ -2270,7 +2270,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1058 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1066 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -2285,7 +2285,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo je hnačka po zmene krmiva?",
      "kind": "definition",
-     "words": 62,
+     "words": 63,
      "numbers": 0,
      "question": true,
      "firstBold": true,
@@ -2311,7 +2311,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Je hnačka po zmene granúl normálna a ako dlho trvá?",
      "kind": "main",
-     "words": 160,
+     "words": 162,
      "numbers": 10,
      "question": true,
      "firstBold": true,
@@ -2337,7 +2337,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo robiť, keď má pes po nových granulách hnačku: 6 krokov",
      "kind": "main",
-     "words": 183,
+     "words": 185,
      "numbers": 7,
      "question": false,
      "firstBold": true,
@@ -2363,7 +2363,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Zhrnutie",
      "kind": "summary",
-     "words": 75,
+     "words": 77,
      "numbers": 7,
      "question": false,
      "firstBold": false,
@@ -5278,7 +5278,7 @@ window.GRANULA_POSTS = {
    "wanted": "draft",
    "example": false,
    "published": "2026-11-18",
-   "updated": "2026-11-20",
+   "updated": "2026-11-24",
    "author": "MVDr. Marcela Glezgová",
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
@@ -5349,9 +5349,9 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)",
       "2026-11-20: Autorka MVDr. Marcela Glezgová",
-      "2026-11-18: „žerie“ nahradené",
-      "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
+      "2026-11-18: „žerie“ nahradené"
      ]
     },
     {

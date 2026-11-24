@@ -11,7 +11,7 @@ hero: img/blog/ako-spravne-prejst-na-nove-granule/hero.webp
 hero_alt: "Na kuchynskom stole stoja dve misky: v jednej sú nové svetlé trojuholníkové granule, druhá so starými tmavohnedými granulami stojí na kuchynskej váhe. Za stolom sa na ne pozerá zlatý retríver."
 hero_caption: "Pri prechode na nové granule pomáha hlavne trpezlivosť. Staré krmivo uberáš a nové pridávaš po malých krokoch. Ilustrácia vygenerovaná AI."
 published: 2026-11-18
-updated: 2026-11-23
+updated: 2026-11-24
 tldr: >
   Na nové granule prechádzaj postupne, zvyčajne aspoň 7 dní. Nové krmivo primiešavaj do starého
   a jeho podiel zvyšuj približne od 10 % cez 50 % až na 100 %. Citlivý pes môže potrebovať
@@ -23,6 +23,7 @@ key_points:
   - "Staré a nové granule miešaj podľa gramov, nie podľa odmerky."
   - "Najčastejšia chyba: držať sa kalendára. Ďalší krok urob, až keď má pes pevnú stolicu."
 changelog:
+  - "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)"
   - "2026-11-23: Hlavná fotka a fotky do sekcií o prechode a o krokoch ako jedna séria (ilustrácie vygenerované AI)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
@@ -143,7 +144,7 @@ Súvislosť potvrdzujú aj záznamy z veterinárnych ambulancií. Psy, ktoré ne
 
 **Pri trochu mäkšej stolici prechod spomaľ. K veterinárovi choď, keď hnačka trvá dlhšie ako 2 dni alebo sa pridajú ďalšie príznaky.** Trochu mäkšia stolica je počas zmeny krmiva bežná.[^spomalit]
 
-==Ak stolica zmäkne a pes je inak čulý, zostaň 1–2 dni na poslednom pomere, ktorý bol v poriadku.== Pokračuj, až keď sa stolica upraví. Pri hnačke sa môžeš vrátiť k starému krmivu. Keď sa stolica spevní, začni prechod znova a pomalšie.
+==Ak stolica zmäkne, ale pes sa správa ako zvyčajne, zostaň 1–2 dni na poslednom pomere, ktorý bol v poriadku.== Pokračuj, až keď sa stolica upraví. Pri hnačke sa môžeš vrátiť k starému krmivu. Keď sa stolica spevní, začni prechod znova a pomalšie.
 
 K veterinárovi choď, ak:
 
