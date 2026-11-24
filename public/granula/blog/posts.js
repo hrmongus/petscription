@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-24 12:24",
+ "built": "2026-11-24 12:56",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -655,7 +655,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "img/blog/cerstve-maso-dehydrovane-maso-masova-mucka/hero.webp",
-   "words": 1471,
+   "words": 1369,
    "description": "Surové mäso je zo 67–75 % voda, múčka z menej ako 10 %. Zloženie sa radí podľa hmotnosti pri miešaní, preto je čerstvé mäso na obale často prvé.",
    "id": "A4",
    "category": "Zloženie a suroviny",
@@ -721,9 +721,9 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-24: Jazyková korektúra, výpočet z tabuľky do poznámky, ponuky bez sľubu formy pri každom mäse, zoznam receptúr skrátený na 3 príklady",
       "2026-11-24: Hlavná fotka a fotka etikety so zložením (ilustrácie vygenerované AI, etiketa so skutočným zložením)",
-      "2026-11-20: Autorka MVDr. Marcela Glezgová",
-      "2026-11-18: odstránený výklad slova „čerstvé“"
+      "2026-11-20: Autorka MVDr. Marcela Glezgová"
      ]
     },
     {
@@ -943,7 +943,7 @@ window.GRANULA_POSTS = {
      "id": "atomic",
      "level": "info",
      "ok": true,
-     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 11)",
+     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 13)",
      "details": []
     },
     {
@@ -985,7 +985,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1471 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1369 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -1000,7 +1000,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo je čerstvé mäso, sušené mäso a mäsová múčka?",
      "kind": "definition",
-     "words": 131,
+     "words": 128,
      "numbers": 1,
      "question": true,
      "firstBold": true,
@@ -1026,11 +1026,11 @@ window.GRANULA_POSTS = {
     {
      "title": "Koľko mäsa ostane zo „70 % mäsa“ po sušení?",
      "kind": "main",
-     "words": 177,
-     "numbers": 33,
+     "words": 106,
+     "numbers": 7,
      "question": true,
      "firstBold": true,
-     "table": true,
+     "table": false,
      "steps": false,
      "images": 0,
      "charts": 1,
@@ -1039,7 +1039,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Je mäsová múčka horšia ako čerstvé mäso?",
      "kind": "main",
-     "words": 157,
+     "words": 159,
      "numbers": 3,
      "question": true,
      "firstBold": true,
@@ -1065,8 +1065,8 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo znamená „čerstvo spracované mäso v sušenom stave“ v zložení Granuly?",
      "kind": "main",
-     "words": 183,
-     "numbers": 9,
+     "words": 158,
+     "numbers": 10,
      "question": true,
      "firstBold": true,
      "table": false,
@@ -1078,7 +1078,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Ako čítať mäso v zložení granúl: 5 krokov",
      "kind": "main",
-     "words": 177,
+     "words": 171,
      "numbers": 9,
      "question": false,
      "firstBold": true,
@@ -1104,7 +1104,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Zhrnutie",
      "kind": "summary",
-     "words": 92,
+     "words": 93,
      "numbers": 3,
      "question": false,
      "firstBold": false,

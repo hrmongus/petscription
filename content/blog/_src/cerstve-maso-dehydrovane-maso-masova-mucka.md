@@ -23,6 +23,7 @@ key_points:
   - "Kvalita mäsovej múčky kolíše. Z krmív s rôznymi múčkami psy strávili 62–82 % aminokyselín."
   - "Najčastejší omyl: čerstvé mäso na prvom mieste neznamená, že v granulách je najviac mäsa."
 changelog:
+  - "2026-11-24: Jazyková korektúra, výpočet z tabuľky do poznámky, ponuky bez sľubu formy pri každom mäse, zoznam receptúr skrátený na 3 príklady"
   - "2026-11-24: Hlavná fotka a fotka etikety so zložením (ilustrácie vygenerované AI, etiketa so skutočným zložením)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: odstránený výklad slova „čerstvé“"
@@ -40,19 +41,19 @@ sources:
   - "Protein quality of various raw and rendered by-product meals commonly incorporated into companion animal diets (Cramer a kol.) – Journal of Animal Science, 2007 | https://pubmed.ncbi.nlm.nih.gov/17609474/"
   - "Raw and rendered animal by-products as ingredients in dog diets (Murray a kol.) – Journal of Animal Science, 1997 | https://pubmed.ncbi.nlm.nih.gov/9303468/"
 cta_title: "Granule, pri ktorých vieš, koľko mäsa v nich je"
-cta_text: "Povedz nám o svojom psovi. Odporučíme granule, dennú dávku spočítame na gramy a ukážeme ti celé zloženie. Pri každom mäse uvidíš druh, formu aj percento."
+cta_text: "Povedz nám o svojom psovi. Odporučíme granule, dennú dávku spočítame na gramy a ukážeme ti celé zloženie. Pri každom mäse uvidíš druh aj percento."
 cta_button: "Nájdi granule pre svojho psa"
 ---
 
 ## Čo je čerstvé mäso, sušené mäso a mäsová múčka?
 
-**Mäso v granulách je surovina, ktorá sa do zmesi pridáva v troch formách: čerstvé, sušené alebo ako mäsová múčka.** Formy sa líšia hlavne obsahom vody. Všetky dodávajú psovi najmä bielkoviny a tuk. Na obale ich však nájdeš na inom mieste a s inými percentami.
+**Mäso v granulách je surovina, ktorá sa do zmesi pridáva v troch formách: čerstvé, sušené alebo ako mäsová múčka.** Formy sa líšia hlavne obsahom vody. Všetky dodávajú psovi najmä bielkoviny a tuk. V zložení ich preto nájdeš na rôznych miestach a s rôznymi percentami.
 
-- **Čerstvé mäso** je surové mäso aj s vodou, ktoré ide do zmesi bez sušenia.[^cerstve]
+- **Čerstvé mäso** je surové mäso, ktoré ide do zmesi aj s vodou, bez sušenia.[^cerstve]
 - **Sušené (dehydrované) mäso** je mäso, z ktorého sa odstránila voda. Na obale musí byť jasne napísané, že je sušené.
 - **Mäsová múčka** vzniká tak, že sa surovina uvarí, oddelí sa z nej tuk a zvyšok sa vysuší a pomelie. Vody má menej ako 10 %.[^mucka]
 
-==Slovo „mäso“ znamená v pravidlách označovania len svalovinu.== Širší zákonný názov „mäso a živočíšne vedľajšie produkty“ zahŕňa všetky mäsité časti a aj to, čo vznikne pri spracovaní tiel zvierat.
+==Slovo „mäso“ znamená v pravidlách označovania len svalovinu.== Širší zákonný názov „mäso a živočíšne vedľajšie produkty“ zahŕňa všetky mäsité časti zvierat aj produkty z ich spracovania.
 
 ![Žena drží v kuchyni veľké papierové vrece granúl a číta etiketu, prvý riadok zloženia uvádza 60 % hovädzieho mäsa, z toho 40 % sušeného a 20 % čerstvo spracovaného](img/blog/cerstve-maso-dehydrovane-maso-masova-mucka/zlozenie.webp "Forma mäsa je v zložení napísaná pri názve suroviny. Na etikete je zloženie našej receptúry Hovädzie s ryžou. Ilustrácia vygenerovaná AI.")
 
@@ -91,14 +92,6 @@ Mäsová múčka (10 % vody) | 90
 
 Ide o ilustračný výpočet, nie o zloženie konkrétneho krmiva.[^vypocet]
 
-| Krok | 70 kg čerstvého mäsa | 70 kg sušeného mäsa |
-| --- | --- | --- |
-| Sušina z mäsa | 70 × 0,25 = 17,5 kg | 70 × 0,90 = 63 kg |
-| Sušina z ostatných 30 kg surovín | 30 × 0,90 = 27 kg | 30 × 0,90 = 27 kg |
-| Sušina spolu | 44,5 kg | 90 kg |
-| Granule s 8 % vody | asi 48 kg | asi 98 kg |
-| Podiel mäsa v sušine | 17,5 : 44,5 = 39 % | 63 : 90 = 70 % |
-
 Zo 100 kg zmesi s čerstvým mäsom vznikne asi 48 kg granúl, lebo väčšina vody sa odparí. Údaj „70 % čerstvého mäsa“ je napriek tomu na obale správny. Platí totiž pre surovinu pri miešaní, nie pre hotové granule.
 
 ==Percento mäsa preto porovnávaj len pri rovnakej forme: čerstvé s čerstvým, sušené so sušeným.== Ak výrobca formu neuvádza, nevieš, čo číslo znamená.
@@ -113,11 +106,11 @@ zvyraznit: 70 % čerstvého mäsa
 70 % sušeného mäsa | 70
 :::
 
-[^vypocet]: Predpoklady: čerstvé mäso so 75 % vody (orientačná hodnota kódexu FEDIAF, 2019), ostatné suroviny a sušené mäso s 10 % vody, hotové granule s 8 % vody. Kódex FEDIAF dovoľuje aj opačný prepočet: sušenú surovinu, z ktorej sa odstránila iba voda, smie výrobca prepočítať na „čerstvý ekvivalent“, ak uvedie aj skutočné množstvo sušenej suroviny. Mäsové múčky sú z tohto prepočtu výslovne vylúčené.
+[^vypocet]: Predpoklady: čerstvé mäso so 75 % vody (orientačná hodnota kódexu FEDIAF, 2019), ostatné suroviny a sušené mäso s 10 % vody, hotové granule s 8 % vody. Kódex FEDIAF dovoľuje aj opačný prepočet: sušenú surovinu, z ktorej sa odstránila iba voda, smie výrobca prepočítať na „čerstvý ekvivalent“, ak uvedie aj skutočné množstvo sušenej suroviny. Mäsové múčky sú z tohto prepočtu výslovne vylúčené. Výpočet pri čerstvom mäse: 70 kg × 0,25 = 17,5 kg sušiny z mäsa, ostatných 30 kg surovín × 0,90 = 27 kg, spolu 44,5 kg sušiny, teda asi 48 kg granúl s 8 % vody; mäso tvorí 17,5 : 44,5 = 39 % sušiny. Pri sušenom mäse: 70 kg × 0,90 = 63 kg, spolu 90 kg sušiny, asi 98 kg granúl; mäso tvorí 63 : 90 = 70 % sušiny.
 
 ::: ponuka
 nadpis: Chceš vedieť, koľko mäsa dostane tvoj pes?
-text: Odporučíme granule pre tvojho psa a ukážeme ti celé zloženie. Pri každom mäse uvidíš druh, formu aj percento. Dennú dávku spočítame na gramy.
+text: Odporučíme granule pre tvojho psa a ukážeme ti celé zloženie. Pri každom mäse uvidíš druh aj percento. Dennú dávku spočítame na gramy.
 tlacidlo: Nájdi granule pre svojho psa
 odkaz: granule-na-mieru.html
 :::
@@ -126,11 +119,11 @@ odkaz: granule-na-mieru.html
 
 **Mäsová múčka nie je automaticky zlá. Jej kvalita však kolíše viac ako pri čerstvom mäse a z obalu ju nespoznáš.** Rozhoduje, z akých častí zvierat vznikla a pri akej teplote sa spracovala.
 
-V EÚ sa do krmív pre psov smie použiť len najbezpečnejšia skupina vedľajších živočíšnych produktov.[^kat3] Sú to napríklad časti zvierat vhodné pre ľudí, ktoré sa ľuďom z obchodných dôvodov nepredajú. Patria sem aj časti bez príznakov choroby, napríklad krv, kože či nohy.
+V EÚ sa do krmív pre psov smie použiť len najbezpečnejšia skupina vedľajších živočíšnych produktov.[^kat3] Sú to napríklad časti zvierat vhodné pre ľudí, ktoré sa z obchodných dôvodov nepoužijú na potraviny. Patria sem aj časti bez príznakov choroby, napríklad krv, kože či nohy.
 
-Múčky sa od seba výrazne líšia. Niektoré majú veľa popola, teda minerálov, hlavne z kostí. V jednej štúdii psy strávili z krmív s rôznymi múčkami 62–82 % aminokyselín. Múčky s viac popolom sa pritom nestrávili vždy horšie. ==Múčka spracovaná pri nižšej teplote sa strávila lepšie ako tá istá múčka pri vysokej teplote.==[^johnson]
+Múčky sa od seba výrazne líšia. Niektoré majú veľa popola, teda minerálov, hlavne z kostí. V jednej štúdii psy strávili z krmív s rôznymi múčkami 62–82 % aminokyselín. Múčky s vyšším obsahom popola sa pritom nestrávili vždy horšie. ==Múčka spracovaná pri nižšej teplote sa strávila lepšie ako tá istá múčka pri vysokej teplote.==[^johnson]
 
-Iné štúdie našli rozdiel medzi surovým mäsom a múčkou. Výsledky však nie sú jednoznačné. Štúdie sú staršie a malé, ber ich preto ako smer, nie ako presné čísla pre konkrétne granule.[^dalsie]
+Iné štúdie našli rozdiel medzi surovým mäsom a múčkou. Výsledky však nie sú jednoznačné. Štúdie sú staršie a malé. Ber ich preto ako orientáciu, nie ako presné čísla pre konkrétne granule.[^dalsie]
 
 [^kat3]: Nariadenie (ES) č. 1069/2009, článok 10: materiál kategórie 3. Patria sem časti zvierat vhodné na ľudskú spotrebu, ktoré sa na ňu z obchodných dôvodov nepoužijú, a časti bez príznakov choroby prenosnej na ľudí alebo zvieratá, napríklad krv, kože či nohy.
 [^johnson]: Johnson a kol., Journal of Animal Science, 1998. Skúmali mäsokostné múčky s 24 alebo 34 % popola a hydinové múčky so 7 alebo 16 % popola. Psy strávili aminokyseliny z krmív s týmito múčkami v priemere na 62–82 %. Vyšší popol stráviteľnosť konzistentne neznížil.
@@ -150,7 +143,7 @@ Iné štúdie našli rozdiel medzi surovým mäsom a múčkou. Výsledky však n
 
 ==Najviac ti povie zloženie, ktoré pri každom mäse uvádza druh zvieraťa, formu a percento.==
 
-Kategória „mäso a živočíšne vedľajšie produkty“ je legálna. Pri krmivách pre psy a mačky ju výrobca smie napísať namiesto jednotlivých surovín. Vnútornosti ako pečeň, srdce či pľúca môžu byť výživné. Problém je skôr v tom, že z kategórie nevyčítaš, čo presne obsahuje.
+Kategória „mäso a živočíšne vedľajšie produkty“ je povolená. Pri krmivách pre psy a mačky ju výrobca smie napísať namiesto jednotlivých surovín. Vnútornosti ako pečeň, srdce či pľúca môžu byť výživné. Problém je skôr v tom, že z kategórie nevyčítaš, čo presne obsahuje.
 
 ## Čo znamená „čerstvo spracované mäso v sušenom stave“ v zložení Granuly?
 
@@ -160,12 +153,11 @@ Kategória „mäso a živočíšne vedľajšie produkty“ je legálna. Pri krm
 
 ![Tri surové jahňacie kotlety s kosťou na svetlom podklade](img/suroviny/jahnacie.webp "Jahňacie je jediný druh mäsa v granulách Jahňa s batátmi & čučoriedkami.")
 
-Takto vyzerá mäsová časť zloženia našich granúl, doslova podľa obalu:
+Takto vyzerá mäsová časť zloženia niektorých našich granúl, doslova podľa obalu:
 
 - **Jahňa s batátmi & čučoriedkami:** čerstvo spracované jahňacie mäso v sušenom stave 51 %.
-- **Jeleň & králik s batátmi:** čerstvo spracované jelenie mäso v sušenom stave 35 %, čerstvo spracované králičie mäso v sušenom stave 15 %.
 - **Morka, hus & kačica s tekvicou:** čerstvo spracované morčacie mäso v sušenom stave 25 %, sušené husacie mäso 15 %, sušené kačacie mäso 8 %, kuracia pečeň 3 %.
-- **Hovädzie s ryžou** a **Hovädzie, morka & jahňa s ryžou:** hovädzie mäso v dvoch formách, sušené a čerstvo spracované, každá s vlastným percentom.
+- **Hovädzie s ryžou:** 60 % hovädzie mäso (40 % sušené hovädzie mäso, 20 % čerstvo spracované hovädzie mäso).
 
 ==Pri každom mäse v našom zložení nájdeš druh zvieraťa aj percento.== Mäsovú múčku ani kategóriu „mäso a živočíšne vedľajšie produkty“ v našich granulách nenájdeš.
 
@@ -180,7 +172,7 @@ Takto vyzerá mäsová časť zloženia našich granúl, doslova podľa obalu:
 1. **Zisti formu mäsa.** Hľadaj slová „čerstvé“, „sušené“, „dehydrované“ alebo „múčka“. Sušená surovina musí byť na obale takto označená.
 2. **Porovnávaj percentá len pri rovnakej forme.** V 30 % čerstvého mäsa je pri 75 % vody len asi 7,5 % sušiny z mäsa. V 30 % sušeného mäsa je jej oveľa viac.
 3. **Pozri sa, či je pomenovaný druh zvieraťa.** „Sušené jahňacie mäso“ ti povie viac ako „mäso a živočíšne vedľajšie produkty“ alebo „hydinová múčka“.
-4. **Rozdelené suroviny sčítavaj opatrne.** Surovina z jedného zvieraťa býva rozdelená na viac položiek, napríklad mäso, tuk a múčku.[^rozdelene] Percentá rôznych foriem však nie sú to isté, preto ich nesčítavaj, akoby boli.
+4. **Pozor na rozdelené suroviny.** Mäso z jedného zvieraťa býva rozdelené na viac položiek, napríklad mäso, tuk a múčku.[^rozdelene] Percentá rôznych foriem nesčítavaj, nie sú porovnateľné.
 5. **Porovnaj bielkoviny v sušine.** Percento bielkovín vydeľ číslom (100 − vlhkosť) a vynásob 100. Pri 26 % bielkovín a 8 % vlhkosti vychádza 28,3 % bielkovín v sušine.
 
 ==Rovnaký prepočet na sušinu použi aj vtedy, keď porovnávaš granule s konzervou.== Konzerva má totiž oveľa viac vody. Ak niečo na obale chýba, napríklad forma mäsa, spýtaj sa priamo výrobcu.
@@ -201,7 +193,7 @@ Takto vyzerá mäsová časť zloženia našich granúl, doslova podľa obalu:
 
 ## Zhrnutie
 
-- Čerstvé mäso, sušené mäso a mäsová múčka sa líšia hlavne vodou. Surové mäso je asi zo 67–75 % voda, múčka z menej ako 10 %.
+- Čerstvé mäso, sušené mäso a mäsová múčka sa líšia hlavne obsahom vody. Surové mäso je asi zo 67–75 % voda, múčka z menej ako 10 %.
 - Zloženie sa radí podľa hmotnosti pri miešaní. Čerstvé mäso na prvom mieste preto nehovorí, koľko mäsa ostane v granulách.
 - Múčka nie je automaticky zlá. Ako dobre ju pes strávi, závisí od suroviny a spracovania. Z obalu to nespoznáš.
 - Najviac ti povie zloženie, ktoré pri každom mäse uvádza druh zvieraťa, formu a percento.
