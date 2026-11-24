@@ -27,7 +27,7 @@ key_points:
   - "Granule nemusia byť vinníkom. Veterinári zapísali zmenu krmiva ako možnú príčinu hnačky len pri 4,6 % psov."
   - "Najčastejšia chyba: zmeniť granule zo dňa na deň a pri hnačke hneď skúšať ďalšie nové krmivo."
 changelog:
-  - "2026-11-24: Nové, realistickejšie fotky: hlavná a buldoček pri jedle (ilustrácie vygenerované AI)"
+  - "2026-11-24: Nové, realistickejšie fotky: hlavná, buldoček pri jedle a telefonát veterinárovi (ilustrácie vygenerované AI)"
   - "2026-11-24: Štylistická korektúra: prirodzenejší slovosled a formulácie krokov"
   - "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)"
   - "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
@@ -124,7 +124,7 @@ Ak sa hnačka objavila hneď po zmene granúl, súvislosť je pravdepodobná. Ak
 
 Veterinár pri hnačke posudzuje hlavne to, ako dlho trvá, či pes zvracia, pije a ako sa správa. Všímaj si to preto už doma.
 
-![Žena sedí na gauči a s ustaraným výrazom telefonuje, francúzsky buldoček leží pri jej nohách na deke](img/blog/hnacka-po-novych-granulach-co-robit/telefonat.webp "Pri krvi, zvracaní alebo apatii nečakaj, kým hnačka prejde sama. Zavolaj veterinárovi. Ilustrácia vygenerovaná AI.")
+![Unavený francúzsky buldoček leží schúlený v pelechu v kuchyni. Žena kľačí pri ňom, jednou rukou ho hladí a druhou telefonuje.](img/blog/hnacka-po-novych-granulach-co-robit/telefonat.webp "Pri krvi, zvracaní alebo apatii nečakaj, kým hnačka prejde sama. Zavolaj veterinárovi. Ilustrácia vygenerovaná AI.")
 
 [^cornell]: Cornell Riney Canine Health Center: Diarrhea (2024) a When to go to the ER (2025). Podľa druhého zdroja môže opakované zvracanie alebo hnačka počas 24 hodín, najmä s krvou, apatiou alebo odmietaním jedla, znamenať vážnejší problém.
 [^pdsa]: PDSA, Diarrhoea after a change of food, 2019.
