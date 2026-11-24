@@ -591,6 +591,7 @@
     });
     order.querySelectorAll("[data-plan-kg]").forEach(function (e) { e.textContent = "za " + x.bag.label; });
     $("plan-note").textContent = "každých " + days(x.days) + " · zrušíš kedykoľvek";
+    $("pp-help-days").textContent = "pri tejto dávke každých " + days(x.days);
     order.querySelectorAll("[data-ship-price]:not([data-method])").forEach(function (e) { e.textContent = eur(ship); });
     $("s-pack").src = p.img;
     $("s-pack").alt = "Vrece Granula: " + p.name;
@@ -681,7 +682,9 @@
     theme: "flat",
     labels: "above",
     variables: {
-      fontFamily: "Montserrat, Arial, Helvetica, sans-serif", fontSizeBase: "15px", fontWeightNormal: "500",
+      fontFamily: "Montserrat, Arial, Helvetica, sans-serif",
+      // dotykové zariadenia 16 px: menšie písmo v poli karty iOS Safari po ťuknutí priblíži
+      fontSizeBase: window.matchMedia && window.matchMedia("(hover:none) and (pointer:coarse)").matches ? "16px" : "15px", fontWeightNormal: "500",
       colorText: "#000000", colorPrimary: "#0047BB", colorBackground: "#FFF7EE", colorDanger: "#B3261E",
       colorTextPlaceholder: "#8A8178", borderRadius: "0px", spacingUnit: "4px", gridRowSpacing: "12px", gridColumnSpacing: "12px"
     },
@@ -695,6 +698,13 @@
       ".Tab--selected": { border: "2px solid #0047BB", boxShadow: "none" }
     }
   };
+  // „i“ pri predplatnom: rozbalí vysvetlenie; tlačidlo je v karte (label), plán sa kliknutím nemení
+  $("pp-i").addEventListener("click", function (e) {
+    e.preventDefault(); e.stopPropagation();
+    var open = this.getAttribute("aria-expanded") !== "true";
+    this.setAttribute("aria-expanded", String(open));
+    $("pp-help").hidden = !open;
+  });
   var pay = null, paying = false; // pay = { key, clientSecret, publishableKey, delivery, checkout, express, element, ready }
   var paypage = $("paypage");
   // zmena doručenia alebo plánu po pripravení platby: stará Checkout Session neplatí, treba ju pripraviť znova

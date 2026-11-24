@@ -420,6 +420,18 @@
 .sum-lines{display:flex;flex-direction:column;gap:10px;padding-top:16px;border-top:1px solid #CDBFB0}
 .sum-lines > div{display:flex;justify-content:space-between;gap:12px;font-size:15px;font-weight:500}
 .sum-lines .disc{color:var(--k);font-weight:700}
+/* „i“ pri predplatnom: rozbalí vysvetlenie (štvorcová dlaždica s rámom, farba podľa karty) */
+.pp-i{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;margin-left:6px;vertical-align:2px;border:2px solid currentColor;background:transparent;color:inherit;font:italic 900 13px/1 Montserrat,sans-serif;cursor:pointer;padding:0}
+.pp-i:hover,.pp-i[aria-expanded="true"]{box-shadow:inset 0 0 0 2px currentColor}
+.pp-help{border-left:4px solid var(--n);background:var(--ml);padding:16px 18px;display:flex;flex-direction:column;gap:8px;font-size:15px;line-height:1.5}
+.pp-help b{font-weight:900;text-transform:uppercase;font-size:14px;letter-spacing:.04em}
+.pp-help ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+/* úzke displeje: súhrn a stĺpce nesmú pretiecť (pole zľavového kódu má inak minimálnu šírku) */
+.pay-sum,.pay-main,.pay-act,.sum-txt,.sum-lines > div{min-width:0}
+.sum-txt b{overflow-wrap:anywhere}
+.promo input{width:0}
+/* dotykové zariadenia: polia aspoň 16 px, inak iOS Safari po ťuknutí stránku priblíži a obsah vybieha */
+@media (hover:none) and (pointer:coarse){.pay .input,.pay .promo input,.input{font-size:16px}}
 .promo{gap:8px !important}
 .promo input{flex:1;height:42px;border:2px solid var(--n);background:var(--m);padding:0 12px;font:500 14px Montserrat,sans-serif;border-radius:0;min-width:0}
 .promo button{height:42px;border:2px solid var(--n);background:var(--m);padding:0 14px;font:800 13px Montserrat,sans-serif;text-transform:uppercase;cursor:pointer;color:var(--n)}
@@ -975,11 +987,21 @@
     <h2 class="pay-h2" id="t-plan">Ako chceš nakupovať?</h2>
     <div class="pp-opts" role="radiogroup" aria-labelledby="t-plan">
       <label class="pp"><input type="radio" name="plan" value="mesiac"><span class="pp-rec">Odporúčame</span><span class="pp-box" aria-hidden="true"></span>
-        <span class="pp-txt"><b>Predplatné</b><span id="plan-note">zrušíš kedykoľvek</span></span>
+        <span class="pp-txt"><b>Predplatné <button type="button" class="pp-i" id="pp-i" aria-expanded="false" aria-controls="pp-help" aria-label="Ako funguje predplatné?">i</button></b><span id="plan-note">zrušíš kedykoľvek</span></span>
         <span class="pp-pr"><b data-plan-price="mesiac"></b><span data-plan-kg></span></span></label>
       <label class="pp"><input type="radio" name="plan" value="raz"><span class="pp-box" aria-hidden="true"></span>
         <span class="pp-txt"><b>Jednorazovo</b><span>len toto vrece</span></span>
         <span class="pp-pr"><b data-plan-price="raz"></b><span data-plan-kg></span></span></label>
+    </div>
+    <div class="pp-help" id="pp-help" hidden>
+      <b>Ako funguje predplatné</b>
+      <ul>
+        <li>Ďalšie vrece príde samo, skôr ako sa to súčasné minie: <span id="pp-help-days">podľa dennej dávky tvojho psa</span>.</li>
+        <li>Platíš o 10&nbsp;% menej a doprava na výdajné miesto je zadarmo.</li>
+        <li>Pár dní pred každou platbou ti pošleme pripomienku.</li>
+        <li>V účte dodávku posunieš, preskočíš, zmeníš váhu psa či veľkosť vreca, alebo predplatné pozastavíš.</li>
+        <li>Žiadna viazanosť: zrušíš ho kedykoľvek, bez poplatku.</li>
+      </ul>
     </div>
   </div>
   <div class="pay-grid">
@@ -1178,7 +1200,7 @@
 <script src="compare.js"></script>
 <script src="doprava-config.js?v=20261123e"></script>
 <script src="doprava.js?v=20261123e"></script>
-<script src="kviz.js?v=20261123p7b"></script>
+<script src="kviz.js?v=20261124a"></script>
 <script src="reviews.js"></script>
 <script src="site.js"></script>
 <!-- Klaviyo onsite: vypnutý (type="text/plain"), cookies.js ho zapne až po súhlase s marketingovými cookies -->

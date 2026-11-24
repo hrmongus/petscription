@@ -473,3 +473,10 @@ Celé prihlásenie s 2FA som neprešiel: vytvoriť testovací admin účet v pro
 1. SPEC §10.25–33 na potvrdenie (hlavne prepínač parametrov v kontrole výpočtu, §10.32).
 2. Vercel: nový projekt + doména + env podľa `admin/README.md`.
 3. Merge do main po P7 (p7-analytics).
+
+---
+
+## Checkout na mobile (24. 11. 2026, pripomienky testera, SPEC §10.37)
+- iOS Safari priblížil stránku po ťuknutí do poľa (písmo < 16 px) → obsah vybiehal doprava v doručení aj platbe. Polia na dotykových zariadeniach 16 px (aj Stripe karta), počítač bez zmeny. Úzky displej 320 px: súhrn už nepreteká.
+- „i“ pri Predplatnom rozbalí vysvetlenie predplatného.
+- Overené lokálne (Playwright iPhone 13 a 320 px, šírka stránky = displej; všetky polia 16 px; mobilný nákup #73 OK), testy 205 ✅, build ✅. Súbory dotazníka `?v=20261124a`.
