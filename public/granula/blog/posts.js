@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-24 15:28",
+ "built": "2026-11-24 15:50",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -91,7 +91,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "img/blog/ako-spravne-prejst-na-nove-granule/hero.webp",
-   "words": 1172,
+   "words": 1170,
    "description": "Na nové granule prechádzaj postupne aspoň 7 dní. Nové krmivo pridávaj po krokoch 10, 25, 50, 75 a 90 %. Citlivý pes potrebuje 2 týždne aj viac.",
    "id": "F1",
    "category": "Problémy",
@@ -157,9 +157,9 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-24: Štylistická korektúra: prirodzenejší slovosled a formulácie krokov",
       "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)",
-      "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)",
-      "2026-11-24: Jazyková korektúra (výdatnosť namiesto energie v 100 g, prirodzenejšie formulácie) a spresnenie odporúčania Cornellu na 1–2 týždne"
+      "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
      ]
     },
     {
@@ -378,7 +378,7 @@ window.GRANULA_POSTS = {
      "id": "atomic",
      "level": "info",
      "ok": true,
-     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 22)",
+     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 21)",
      "details": []
     },
     {
@@ -420,7 +420,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1172 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1170 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -461,7 +461,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Koľko starých a koľko nových granúl dať v ktorý deň?",
      "kind": "main",
-     "words": 150,
+     "words": 148,
      "numbers": 24,
      "question": true,
      "firstBold": true,
@@ -474,7 +474,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Prečo má pes po náhlej zmene krmiva hnačku?",
      "kind": "main",
-     "words": 122,
+     "words": 124,
      "numbers": 6,
      "question": true,
      "firstBold": true,
@@ -500,7 +500,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Kedy prechod spomaliť a kedy ísť k veterinárovi?",
      "kind": "main",
-     "words": 184,
+     "words": 183,
      "numbers": 4,
      "question": true,
      "firstBold": true,
@@ -513,7 +513,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Časté otázky",
      "kind": "faq",
-     "words": 143,
+     "words": 142,
      "numbers": 0,
      "question": false,
      "firstBold": true,
@@ -655,7 +655,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "img/blog/cerstve-maso-dehydrovane-maso-masova-mucka/hero.webp",
-   "words": 1381,
+   "words": 1391,
    "description": "Surové mäso je zo 67–75 % voda, múčka z menej ako 10 %. Zloženie sa radí podľa hmotnosti pri miešaní, preto je čerstvé mäso na obale často prvé.",
    "id": "A4",
    "category": "Zloženie a suroviny",
@@ -721,23 +721,23 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-24: Štylistická korektúra: prirodzenejší slovosled a formulácie krokov",
       "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)",
-      "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)",
-      "2026-11-24: Vymazané vety o porovnaní s konzervou, zvýraznený krok 2 (porovnávaj len rovnakú formu)"
+      "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
      ]
     },
     {
      "id": "tldr",
      "level": "error",
      "ok": true,
-     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 52)",
+     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 54)",
      "details": []
     },
     {
      "id": "tldr-range",
      "level": "warn",
      "ok": true,
-     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 52)",
+     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 54)",
      "details": []
     },
     {
@@ -943,7 +943,7 @@ window.GRANULA_POSTS = {
      "id": "atomic",
      "level": "info",
      "ok": true,
-     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 13)",
+     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 12)",
      "details": []
     },
     {
@@ -985,7 +985,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1381 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1391 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -1013,7 +1013,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Prečo je čerstvé mäso v zložení granúl často na prvom mieste?",
      "kind": "main",
-     "words": 155,
+     "words": 156,
      "numbers": 2,
      "question": true,
      "firstBold": true,
@@ -1065,7 +1065,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo znamená „čerstvo spracované mäso v sušenom stave“ v zložení Granuly?",
      "kind": "main",
-     "words": 161,
+     "words": 162,
      "numbers": 10,
      "question": true,
      "firstBold": true,
@@ -1078,7 +1078,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Ako čítať mäso v zložení granúl: 5 krokov",
      "kind": "main",
-     "words": 163,
+     "words": 167,
      "numbers": 9,
      "question": false,
      "firstBold": true,
@@ -1104,7 +1104,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Zhrnutie",
      "kind": "summary",
-     "words": 93,
+     "words": 95,
      "numbers": 3,
      "question": false,
      "firstBold": false,
@@ -1942,7 +1942,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "img/blog/hnacka-po-novych-granulach-co-robit/hero.webp",
-   "words": 1121,
+   "words": 1143,
    "description": "Hnačka po nových granulách zvyčajne odznie za 1–3 dni. Vráť sa k starému krmivu a prechod spomaľ. K veterinárovi pri krvi, zvracaní, apatii alebo po 2 dňoch.",
    "id": "F2",
    "category": "Problémy",
@@ -2008,23 +2008,23 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-24: Štylistická korektúra: prirodzenejší slovosled a formulácie krokov",
       "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)",
-      "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)",
-      "2026-11-24: Spresnené, že 2–3 dni platia pre psa na ľahkej strave (overené v zdroji Cornell)"
+      "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
      ]
     },
     {
      "id": "tldr",
      "level": "error",
      "ok": true,
-     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 59)",
+     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 60)",
      "details": []
     },
     {
      "id": "tldr-range",
      "level": "warn",
      "ok": true,
-     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 59)",
+     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 60)",
      "details": []
     },
     {
@@ -2229,7 +2229,7 @@ window.GRANULA_POSTS = {
      "id": "atomic",
      "level": "info",
      "ok": true,
-     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 18)",
+     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 16)",
      "details": []
     },
     {
@@ -2271,7 +2271,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1121 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1143 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -2286,7 +2286,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo je hnačka po zmene krmiva?",
      "kind": "definition",
-     "words": 65,
+     "words": 67,
      "numbers": 0,
      "question": true,
      "firstBold": true,
@@ -2299,7 +2299,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Prečo má pes po nových granulách hnačku?",
      "kind": "main",
-     "words": 173,
+     "words": 177,
      "numbers": 1,
      "question": true,
      "firstBold": true,
@@ -2312,7 +2312,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Je hnačka po zmene granúl normálna a ako dlho trvá?",
      "kind": "main",
-     "words": 163,
+     "words": 164,
      "numbers": 10,
      "question": true,
      "firstBold": true,
@@ -2325,7 +2325,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Kedy ísť s hnačkou po zmene krmiva k veterinárovi?",
      "kind": "main",
-     "words": 217,
+     "words": 219,
      "numbers": 5,
      "question": true,
      "firstBold": true,
@@ -2338,8 +2338,8 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo robiť, keď má pes po nových granulách hnačku: 6 krokov",
      "kind": "main",
-     "words": 187,
-     "numbers": 7,
+     "words": 196,
+     "numbers": 5,
      "question": false,
      "firstBold": true,
      "table": false,
@@ -2351,7 +2351,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Časté otázky",
      "kind": "faq",
-     "words": 179,
+     "words": 184,
      "numbers": 4,
      "question": false,
      "firstBold": true,
@@ -2364,8 +2364,8 @@ window.GRANULA_POSTS = {
     {
      "title": "Zhrnutie",
      "kind": "summary",
-     "words": 78,
-     "numbers": 7,
+     "words": 76,
+     "numbers": 5,
      "question": false,
      "firstBold": false,
      "table": false,

@@ -35,6 +35,13 @@ Najväčší problém prvých konceptov (review 2026-11-18): text znel ako doslo
 - **Žiadne zbytočné slová v nadpisoch** („Ako často je za svrbením psa…“ → „Ako často spôsobuje svrbenie alergia na krmivo?“).
 - **Rozpätia s pomlčkou:** „1–2 %“, „9–40 %“, nie „1 až 2 %“. V zozname daj číslo na začiatok: „1–2 % zo všetkých psov…“.
 - **Kroky začínaj jednoduchým slovesom:** „Dodržuj diétu“, „Nasaď späť pôvodné krmivo“, nie „Krm len diétu“, „Vráť pôvodné krmivo“.
+- **Žiadna „slovenská maďarčina“:** kroky a rady nepíš strnulým rozkazom, ktorý znie ako preklad. Píš ich, ako by to povedal človek. Slovosled vždy podľa slovenskej gramatiky (redakcia, 2026-11-24):
+  - „Vráť sa k starému krmivu.“ → „Daj psovi znova staré krmivo.“
+  - „Daj psovi stále čerstvú vodu.“ → „Uisti sa, že má pes stále čerstvú vodu.“
+  - „Začni nový prechod pomalšie.“ → „Na nové granule prechádzaj pomaly.“
+  - „Ak pes je viackrát denne…“ → „Ak psa kŕmiš viackrát denne…“
+  - „Zloženie sa radí podľa hmotnosti.“ → „Suroviny sú v zložení zoradené podľa hmotnosti.“
+  - „Hnačka spolu so zvracaním psa odvodní rýchlejšie.“ → „Keď pes popri hnačke aj zvracia, rýchlejšie sa odvodní.“
 - Pred odovzdaním urob **jazykovú korektúru celého článku** zvlášť od faktov: prirodzenosť, gramatika, zrozumiteľnosť.
 
 - **Zdroj pri prvej zmienke predstav jednou vložkou:** kto to je a prečo mu veriť. Ďalej v článku stačí krátky názov. Opis nesmie byť prehnaný, musí sedieť s tým, ako sa inštitúcia sama opisuje. Ustálené opisy (redakcia, 2026-11-24):
@@ -100,3 +107,4 @@ _Sem zapisuj všeobecný feedback v poradí, ako prišiel: dátum, čo používa
 - **2026-11-24, redakcia (článok o hnačke):** „Vždy vysvetliť v skratke ten zdroj, prečo je relevantný… nech to znie prirodzene a odborne.“ → pravidlo o predstavení zdroja v sekcii Jazyk, uplatnené vo všetkých konceptoch.
 - **2026-11-24, redakcia:** „Autorom týchto blogov bude veterinárka, texty by mali obsahovať malé hinty, že to píše veterinárka.“ Redakcia povolila aj vety z pohľadu ambulancie s potvrdením autorky. → pravidlo v sekcii Tón a hlas, uplatnené v 9 konceptoch autorky.
 - **2026-11-24, redakcia:** hinty len všeobecné (typ A), aspoň 2 v každom článku; vety z pohľadu ambulancie (typ B) vymazať. → pravidlo v sekcii Tón a hlas upravené.
+- **2026-11-24, redakcia:** „Veľa viet vyznie strašne divne (pomaďarčene)… vyslovene sa drž slovenskej gramatiky.“ → pravidlo „Žiadna slovenská maďarčina“ v sekcii Jazyk; 37 opráv v troch článkoch.

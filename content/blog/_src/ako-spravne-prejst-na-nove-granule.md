@@ -23,6 +23,7 @@ key_points:
   - "Staré a nové granule miešaj podľa gramov, nie podľa odmerky."
   - "Najčastejšia chyba: držať sa kalendára. Ďalší krok urob, až keď má pes pevnú stolicu."
 changelog:
+  - "2026-11-24: Štylistická korektúra: prirodzenejší slovosled a formulácie krokov"
   - "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)"
   - "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
   - "2026-11-24: Jazyková korektúra (výdatnosť namiesto energie v 100 g, prirodzenejšie formulácie) a spresnenie odporúčania Cornellu na 1–2 týždne"
@@ -39,13 +40,13 @@ sources:
   - "A case–control study of pathogen and lifestyle risk factors for diarrhoea in dogs (Stavisky a kol.) – Preventive Veterinary Medicine, 2011 | https://pmc.ncbi.nlm.nih.gov/articles/PMC7132454/"
   - "Epidemiology and clinical management of acute diarrhoea in dogs under primary veterinary care in the UK (O’Neill a kol.) – PLOS ONE, 2025 | https://pmc.ncbi.nlm.nih.gov/articles/PMC12156985/"
 cta_title: "Nové granule v správnom množstve od prvého dňa"
-cta_text: "Dennú dávku granúl spočítame na gramy podľa hmotnosti, veku, aktivity a postavy tvojho psa. Pri citlivom trávení vyberáme granule s jedným druhom mäsa, ak tomu nebráni iná potreba psa."
+cta_text: "Dennú dávku granúl spočítame na gramy podľa hmotnosti, veku, aktivity a postavy tvojho psa. Psovi s citlivým trávením vyberieme granule s jedným druhom mäsa, ak to jeho ďalšie potreby dovolia."
 cta_button: "Nájdi granule pre svojho psa"
 ---
 
 ## Čo je prechod na nové granule?
 
-**Prechod na nové granule je postupná výmena krmiva, ktorá dá tráveniu psa čas zvyknúť si na nové zloženie.** Staré granule uberáš a nové pridávaš po malých krokoch. Nakoniec dostáva pes už len nové krmivo.
+**Prechod na nové granule je postupná výmena krmiva, ktorá dá tráveniu psa čas zvyknúť si na nové zloženie.** Staré granule uberáš a nové pridávaš po malých krokoch. Nakoniec pes dostáva už len nové krmivo.
 
 Nové granule majú iné zloženie bielkovín, tukov a vlákniny a sú inak výdatné. ==Črevo a baktérie v ňom potrebujú pár dní, aby si na nové zloženie zvykli.==
 
@@ -80,7 +81,7 @@ Tempo určuje pes, nie kalendár. Ďalší krok urob, až keď má pes pevnú st
 
 ## Koľko starých a koľko nových granúl dať v ktorý deň?
 
-**Pri 7-dňovom prechode dávaj psovi postupne 10, 25, 50, 50, 75, 90 a 100 % nových granúl.** Pomer platí pre celú dennú dávku. Ak pes je viackrát denne, dodrž ho v každom jedle.[^schema]
+**Pri 7-dňovom prechode dávaj psovi postupne 10, 25, 50, 50, 75, 90 a 100 % nových granúl.** Pomer platí pre celú dennú dávku. Ak psa kŕmiš viackrát denne, dodrž pomer v každej porcii.[^schema]
 
 ::: graf
 nazov: Koľko percent dennej dávky tvoria nové granule v jednotlivé dni
@@ -97,7 +98,7 @@ zvyraznit: 7. deň
 7. deň | 100
 :::
 
-==Percentá počítaj z gramov, nie z odmerky.== Nové granule sú inak výdatné ako staré. Denná dávka v gramoch sa preto často líši. Z dávky starých granúl vezmi podiel starého krmiva a z dávky nových granúl podiel nového.
+==Percentá počítaj z gramov, nie z odmerky.== Nové granule sú inak výdatné ako staré. Denná dávka v gramoch sa preto často líši. Podiel starých granúl počítaj z ich dennej dávky, podiel nových z dávky nových.
 
 Príklad: pes zje denne 300 g starých granúl. Jeho dávka nových granúl je 270 g.
 
@@ -121,9 +122,9 @@ odkaz: granule-na-mieru.html
 
 V jednej štúdii psom zmenili krmivo zo dňa na deň. Stolica im rýchlo zmäkla. ==Trávenie sa ustálilo približne po 6 dňoch.==[^lin]
 
-Súvislosť potvrdzujú aj záznamy z veterinárnych ambulancií. Psy, ktoré nedávno zmenili krmivo alebo zjedli niečo nevhodné, mali 3,5-krát väčšie riziko hnačky.[^stavisky] Pri psoch, ktorých priniesli k veterinárovi s náhlou hnačkou, bola zmena krmiva pravdepodobnou príčinou len v 4,6 % prípadov.[^oneill]
+Súvislosť potvrdzujú aj záznamy z veterinárnych ambulancií. Psy, ktoré nedávno zmenili krmivo alebo zjedli niečo nevhodné, mali 3,5-krát väčšie riziko hnačky.[^stavisky] U psov, s ktorými majitelia prišli k veterinárovi pre náhlu hnačku, bola zmena krmiva pravdepodobnou príčinou len v 4,6 % prípadov.[^oneill]
 
-Žiadna štúdia neporovnala prechod na 4, 7 a 14 dní. Výhodu postupného prechodu teda štúdie ukazujú len nepriamo. Náhla zmena zmäkčuje stolicu a trávenie sa prispôsobuje niekoľko dní. Postupný prechod tieto dni rozloží na menšie kroky.
+Žiadna štúdia neporovnala prechod na 4, 7 a 14 dní. Štúdie teda výhodu postupného prechodu ukazujú len nepriamo. Náhla zmena zmäkčuje stolicu a trávenie sa prispôsobuje niekoľko dní. Postupný prechod tieto dni rozloží na menšie kroky.
 
 [^lin]: Lin a kol., Animal Microbiome, 2022. Štúdia sledovala 12 zdravých dospelých bíglov. Stolica zmäkla pri oboch nových krmivách. Látky v stolici sa ustálili asi po 2 dňoch, črevný mikrobióm asi po 6 dňoch. Ide o malú štúdiu na jednom plemene a skúmala len náhlu zmenu, nie porovnanie s postupným prechodom. Čiastočne ju financoval výrobca krmiva.
 [^stavisky]: Stavisky a kol., Preventive Veterinary Medicine, 2011. Britská štúdia porovnala 86 psov s hnačkou a 167 psov bez hnačky.
@@ -149,7 +150,7 @@ Súvislosť potvrdzujú aj záznamy z veterinárnych ambulancií. Psy, ktoré ne
 
 **Pri trochu mäkšej stolici prechod spomaľ. K veterinárovi choď, keď hnačka trvá dlhšie ako 2 dni alebo sa pridajú ďalšie príznaky.** Trochu mäkšia stolica je počas zmeny krmiva bežná.[^spomalit]
 
-==Ak stolica zmäkne, ale pes sa správa ako zvyčajne, zostaň 1–2 dni na poslednom pomere, ktorý bol v poriadku.== Pokračuj, až keď sa stolica upraví. Pri hnačke sa môžeš vrátiť k starému krmivu. Keď sa stolica spevní, začni prechod znova a pomalšie.
+==Ak stolica zmäkne, ale pes sa správa ako zvyčajne, zostaň 1–2 dni na poslednom pomere, ktorý bol v poriadku.== Pokračuj, až keď sa stolica upraví. Pri hnačke daj psovi znova staré krmivo. Keď sa stolica spevní, začni prechod znova a pomalšie.
 
 K veterinárovi choď, ak:
 
@@ -169,7 +170,7 @@ Ak sa hnačka vracia pri každom pokuse o prechod, problém nemusí byť v rých
 
 **Môžem prejsť na nové granule zo dňa na deň?** Niektoré psy to zvládnu, ale vopred to nevieš. Po náhlej zmene stolica často zmäkne. Bezpečnejšie je rozložiť prechod aspoň na pár dní.
 
-**Čo mám robiť, keď mi staré granule dôjdu skôr?** Kúp čo najmenšie balenie starých granúl a prechod dokonči. Ak sa to nedá, dávaj nové krmivo v malých porciách rozdelených do viacerých jedál a sleduj stolicu.
+**Čo mám robiť, keď mi staré granule dôjdu skôr?** Kúp čo najmenšie balenie starých granúl a prechod dokonči. Ak sa to nedá, rozdeľ nové krmivo na viac menších porcií za deň a sleduj stolicu.
 
 **Musím postupne prechádzať aj pri inej príchuti tej istej značky?** Áno. Iná receptúra má iné mäso, tuky a vlákninu. Pre črevo je to rovnaká zmena ako iná značka.
 
