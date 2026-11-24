@@ -490,4 +490,4 @@ Celé prihlásenie s 2FA som neprešiel: vytvoriť testovací admin účet v pro
 - **#18 prepočet:** prvé obnovenie 30. 11. → 28. 11. (doručené 24. 11. + D 11 − LEAD 7), Stripe `trial_end` 28. 11. 06:00 sedí; `/ucet` „Doručené“ + lehota na odstúpenie do 8. 12. #18 email „Balík je na ceste“ nedostal: FHB ho prepol rovno na delivered (zámerne bez emailu, balík už má).
 - **Oprava:** cron hlásil pri každom behu zmenu trackingu #19 (jsonb preusporiada kľúče) → porovnanie bez ohľadu na poradie kľúčov.
 - ⚠️ **Migráciu `20261124120000_p1_customer_address_at_pickup` treba aplikovať v Supabase** (MCP v tejto session nemá právo zápisu, heslo k DB v prostredí nie je). Kým nie je, zmena NESMIE ísť do main (checkout by padal na `point_street`). Po aplikovaní: merge do main, `npm run e2e` (predplatné DPD, jednorazovo Packeta, kuriér).
-- Predošlá chyba typov v `admin/lib/withdrawals.test.ts` (null vs. enum) je z main, nie z tejto zmeny.
+- Build admina padal na main (TS chyba v `admin/lib/withdrawals.test.ts`, null vs. enum) → opravené a samostatne poslané do main (e345f25).
