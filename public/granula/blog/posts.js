@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-24 09:11",
+ "built": "2026-11-24 11:13",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -1941,7 +1941,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "img/blog/hnacka-po-novych-granulach-co-robit/hero.webp",
-   "words": 1067,
+   "words": 1069,
    "description": "Hnačka po nových granulách zvyčajne odznie za 1–3 dni. Vráť sa k starému krmivu a prechod spomaľ. K veterinárovi pri krvi, zvracaní, apatii alebo po 2 dňoch.",
    "id": "F2",
    "category": "Problémy",
@@ -2007,9 +2007,9 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-24: „Dávku odvažuj na gramy“ → „Dávku vždy odváž v gramoch“ (krok 6 a zhrnutie)",
       "2026-11-24: „inak zdravý“ preštylizované v sekcii o tom, či je hnačka normálna",
-      "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)",
-      "2026-11-24: Zrozumiteľnejšia veta v sumári o tom, kedy hnačka prejde sama"
+      "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)"
      ]
     },
     {
@@ -2270,7 +2270,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1067 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1069 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -2337,7 +2337,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo robiť, keď má pes po nových granulách hnačku: 6 krokov",
      "kind": "main",
-     "words": 185,
+     "words": 186,
      "numbers": 7,
      "question": false,
      "firstBold": true,
@@ -2363,7 +2363,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Zhrnutie",
      "kind": "summary",
-     "words": 77,
+     "words": 78,
      "numbers": 7,
      "question": false,
      "firstBold": false,

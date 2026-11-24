@@ -27,6 +27,7 @@ key_points:
   - "Granule nemusia byť vinníkom. Veterinári zapísali zmenu krmiva ako možnú príčinu hnačky len pri 4,6 % psov."
   - "Najčastejšia chyba: zmeniť granule zo dňa na deň a pri hnačke hneď skúšať ďalšie nové krmivo."
 changelog:
+  - "2026-11-24: „Dávku odvažuj na gramy“ → „Dávku vždy odváž v gramoch“ (krok 6 a zhrnutie)"
   - "2026-11-24: „inak zdravý“ preštylizované v sekcii o tom, či je hnačka normálna"
   - "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)"
   - "2026-11-24: Zrozumiteľnejšia veta v sumári o tom, kedy hnačka prejde sama"
@@ -129,7 +130,7 @@ Ak hnačka prišla presne so zmenou granúl, súvislosť je pravdepodobná. Ak v
 3. **Daj psovi stále čerstvú vodu.** Pri hnačke pes stráca tekutiny.
 4. **Vynechaj pamlsky a zvyšky zo stola.** Kým hnačka neprejde, nedávaj psovi pamlsky ani výdatné jedlo.
 5. **Sleduj stolicu a správanie 1–2 dni.** Všímaj si, či sa stolica zlepšuje a či má pes chuť do jedla a správa sa ako zvyčajne. Ak sa to do 2 dní nezlepší, zavolaj veterinárovi.
-6. **Začni nový prechod pomalšie.** Keď je stolica znova v poriadku, pridávaj nové granule k starým po menších krokoch počas 1–2 týždňov. Dávku odvažuj na gramy.
+6. **Začni nový prechod pomalšie.** Keď je stolica znova v poriadku, pridávaj nové granule k starým po menších krokoch počas 1–2 týždňov. Dávku vždy odváž v gramoch.
 
 Citlivému psovi môžeš každý podiel nového krmiva nechať o pár dní dlhšie. ==Ak sa hnačka vracia pri každom pokuse o zmenu alebo stolica nie je v poriadku ani na starom krmive, nejde o bežnú reakciu.== Vtedy to rieš s veterinárom.
 
@@ -152,4 +153,4 @@ Citlivému psovi môžeš každý podiel nového krmiva nechať o pár dní dlh�
 - Hnačka po nových granulách vzniká najčastejšie pre príliš rýchlu zmenu. Ak sa pes správa normálne, hnačka väčšinou prejde za 1–3 dni.
 - Doma: vráť sa k starému krmivu, daj psovi vodu, vynechaj pamlsky a 1–2 dni ho sleduj.
 - K veterinárovi: hnačka dlhšie ako 2 dni, krv alebo čierna stolica, zvracanie, apatia, odmietanie jedla. So šteňaťom, starým alebo chorým psom vždy.
-- Ďalší krok: keď sa stolica spevní, začni nový prechod pomalšie, počas 1–2 týždňov, s dávkou odváženou na gramy.
+- Ďalší krok: keď sa stolica spevní, začni nový prechod pomalšie, počas 1–2 týždňov, a dávku vždy odváž v gramoch.
