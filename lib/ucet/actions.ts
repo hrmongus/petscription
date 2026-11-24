@@ -1,6 +1,6 @@
 import type { Json, Tables, TablesInsert, TablesUpdate } from '../database.types';
 import { boxesAllowed, shippingPrice, type DeliveryMethod } from '../carriers';
-import { CheckoutError, type DeliveryInput } from '../checkout';
+import { addressRowOf, CheckoutError, type DeliveryInput } from '../checkout';
 import type { DeliveryPoint } from '../delivery-points';
 import type { Mail, Mailer } from '../email';
 import type { EmailDog } from '../emails';
@@ -303,19 +303,7 @@ export async function changeDelivery(deps: ActionDeps, customer: Customer, subId
     if (e instanceof CheckoutError) throw new ActionError(e.message);
     throw e;
   }
-  const pickup = s.delivery_method !== 'sps_courier';
-  const newAddress = await deps.store.insertAddress({
-    customer_id: customer.id,
-    name: s.name,
-    street: pickup ? point!.street : s.street!,
-    city: pickup ? point!.city : s.city!,
-    zip: pickup ? point!.zip : s.zip!,
-    country: 'SK',
-    carrier: s.delivery_method === 'packeta_point' ? 'packeta' : s.delivery_method === 'dpd_pickup' ? 'dpd' : 'sps',
-    delivery_method: s.delivery_method,
-    point_id: s.point_id ?? null,
-    point_label: s.point_label ?? null,
-  });
+  const newAddress = await deps.store.insertAddress(addressRowOf(customer.id, s));
   await deps.store.updateSubscription(sub.id, { address_id: newAddress.id });
   await deps.store.updateCustomer(customer.id, { name: s.name, phone: s.phone });
 

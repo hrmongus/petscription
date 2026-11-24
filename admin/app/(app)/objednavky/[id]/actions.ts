@@ -46,7 +46,7 @@ export const deliveryAction = adminAction(async (admin, fd) => {
       email: str(fd, 'email'),
       phone: str(fd, 'phone'),
       point: str(fd, 'point') ? { id: str(fd, 'point') } : null,
-      address: method === 'sps_courier' ? { street: str(fd, 'street'), zip: str(fd, 'zip'), city: str(fd, 'city') } : null,
+      address: { street: str(fd, 'street'), zip: str(fd, 'zip'), city: str(fd, 'city') }, // adresa zákazníka vždy (FHB 24. 11.)
     },
     bagOfItems(order.items),
   ).catch(userErr);

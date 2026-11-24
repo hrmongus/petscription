@@ -10,6 +10,8 @@ type Point = { id: string; label: string; kind: string };
 /*
  * Zmena doručenia (objednávka v pending alebo pred odoslaním do FHB, adresa predplatného). Výdajné miesto sa hľadá
  * v aktuálnom zozname FHB; server ho overí znova (resolveDelivery) a názov aj adresu berie z FHB.
+ * Adresa zákazníka je povinná pri každom spôsobe (FHB 24. 11. 2026: dopravcovia ju chcú aj pri výdajnom mieste),
+ * PSČ musí existovať (lib/psc.ts, overí server).
  */
 export function DeliveryForm({
   action,
@@ -120,7 +122,9 @@ export function DeliveryForm({
             </ul>
           ) : null}
         </>
-      ) : (
+      ) : null}
+      <p className="small">{pickup ? 'Adresa zákazníka (dopravca ju vyžaduje aj pri výdajnom mieste; balík ide na miesto vyššie)' : 'Adresa doručenia'}</p>
+      {
         <div className="row">
           <label>
             Ulica a číslo
@@ -135,7 +139,7 @@ export function DeliveryForm({
             <input name="city" defaultValue={initial.city ?? ''} required />
           </label>
         </div>
-      )}
+      }
     </ActionForm>
   );
 }

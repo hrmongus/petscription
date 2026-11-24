@@ -23,12 +23,12 @@
     dpd_pickup: {
       label: "DPD – odberné miesta a boxy", eta: "2–3 pracovné dni", etaEmail: "2–4",
       carrier: "dpd", logo: "img/dopravcovia/dpd.svg", pickup: true, maxKg: null,
-      fhbService: "dpd_sk"           // overené v sandboxe FHB: 3 961 miest SK, kód miesta = ID z mapy DPD (napr. SK21286)
+      fhbService: "dpd_sk"           // 3 961 miest SK, kód miesta = ID z mapy DPD (napr. SK21286). ⚠️ 24. 11.: DPD ešte nie je účtu pridelené (FHB ho žiada); objednávka prejde, ale ostane pending
     },
     sps_courier: {
       label: "SPS – kuriér na adresu", eta: "1–2 pracovné dni", etaEmail: "1–3",
       carrier: "sps", logo: "img/dopravcovia/sps.svg", pickup: false, maxKg: null,
-      fhbService: ""                 // ⚠️ kód zatiaľ nepoznáme (od FHB); prázdne = predvolená služba účtu vo FHB
+      fhbService: "sps"              // potvrdené FHB 24. 11. 2026 (GET /parcel-service: sps = SPS SK, kuriér na adresu)
     }
   };
 

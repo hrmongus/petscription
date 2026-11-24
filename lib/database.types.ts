@@ -27,8 +27,11 @@ export type Database = {
           id: string
           is_default: boolean
           name: string
+          point_city: string | null
           point_id: string | null
           point_label: string | null
+          point_street: string | null
+          point_zip: string | null
           street: string | null
           zip: string | null
         }
@@ -42,8 +45,11 @@ export type Database = {
           id?: string
           is_default?: boolean
           name: string
+          point_city?: string | null
           point_id?: string | null
           point_label?: string | null
+          point_street?: string | null
+          point_zip?: string | null
           street?: string | null
           zip?: string | null
         }
@@ -57,8 +63,11 @@ export type Database = {
           id?: string
           is_default?: boolean
           name?: string
+          point_city?: string | null
           point_id?: string | null
           point_label?: string | null
+          point_street?: string | null
+          point_zip?: string | null
           street?: string | null
           zip?: string | null
         }

@@ -121,6 +121,7 @@ export default async function SubscriptionDetail({ params }: { params: Promise<{
             <dt>Doručenie</dt>
             <dd>
               {methodLabel(address.delivery_method)}: {address.point_label ?? `${address.street}, ${address.zip} ${address.city}`}
+              {address.point_label ? <span className="muted"> · zákazník: {address.street ? `${address.street}, ${address.zip} ${address.city}` : 'adresa chýba'}</span> : null}
             </dd>
           </dl>
         </section>
@@ -177,7 +178,7 @@ export default async function SubscriptionDetail({ params }: { params: Promise<{
             <DeliveryForm
               action={addressAction}
               hidden={{ id: sub.id }}
-              initial={{ method: address.delivery_method, name: address.name, email: customer.email, phone: customer.phone ?? '', point_id: address.point_id, point_label: address.point_label, street: address.delivery_method === 'sps_courier' ? address.street : '', zip: address.delivery_method === 'sps_courier' ? address.zip : '', city: address.delivery_method === 'sps_courier' ? address.city : '' }}
+              initial={{ method: address.delivery_method, name: address.name, email: customer.email, phone: customer.phone ?? '', point_id: address.point_id, point_label: address.point_label, street: address.street, zip: address.zip, city: address.city }}
               methods={methodsFor(bag)}
               labels={Object.fromEntries(Object.entries(METHODS).map(([k, v]) => [k, v.label]))}
               boxes={Object.fromEntries(methodsFor(bag).map((m) => [m, boxesAllowed(m as DeliveryMethod, bag)]))}

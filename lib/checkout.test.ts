@@ -1,12 +1,12 @@
 import { describe, expect, test } from 'vitest';
-import { answersAt, birthDateFrom, CheckoutError, prepareCheckout, sessionParams } from './checkout';
+import { answersAt, birthDateFrom, CheckoutError, prepareCheckout, sessionParams, addressRowOf } from './checkout';
 import type { DeliveryPoint } from './delivery-points';
 
 const ANSWERS = { dogname: 'Bruno', sex: 'pes', breed: 'krizenec-stredny', kg: 17, years: '4', months: '0', weeks: '', activity: 'mesto', neutered: 'ano', body: 'akurat', focus: [], allergies: [] };
 const DPD_SHOP: DeliveryPoint = { id: 'SK21286', name: 'Pavel Lóška Cyklo-Šport', street: 'Mierová 17', city: 'Tornaľa', zip: '98201', country: 'SK', kind: 'shop' };
 const DPD_BOX: DeliveryPoint = { ...DPD_SHOP, id: 'SK23096', name: 'AlzaBox', kind: 'box' };
 const find = async (_s: string, id: string) => [DPD_SHOP, DPD_BOX].find((p) => p.id === id) ?? null;
-const DEL = { method: 'dpd_pickup', firstName: 'Ján', lastName: 'Novák', email: 'Jan.Novak@Example.sk', phone: '0905 123 456', point: { id: 'SK21286', name: 'podvrh', street: 'podvrh' } };
+const DEL = { method: 'dpd_pickup', firstName: 'Ján', lastName: 'Novák', email: 'Jan.Novak@Example.sk', phone: '0905 123 456', point: { id: 'SK21286', name: 'podvrh', street: 'podvrh' }, address: { street: 'Hlavná 5', zip: '040 01', city: 'Košice' } };
 const IN = { answers: ANSWERS, plan: 'mesiac', bag: '9', delivery: DEL };
 
 describe('prepareCheckout', () => {
@@ -17,7 +17,8 @@ describe('prepareCheckout', () => {
     expect(p.totalCents).toBe(6750);
     expect(p.items).toEqual([{ sku: `GRAN-${p.quote.productId}-9`, qty: 1 }]);
     expect(p.customer).toEqual({ email: 'jan.novak@example.sk', firstName: 'Ján', lastName: 'Novák', name: 'Ján Novák', phone: '+421905123456' });
-    expect(p.shipTo).toMatchObject({ delivery_method: 'dpd_pickup', point_id: 'SK21286', point_address: { street: 'Mierová 17', city: 'Tornaľa', zip: '98201' } });
+    // výdajné miesto: adresa miesta z FHB, adresa zákazníka zvlášť (do FHB recipient.address)
+    expect(p.shipTo).toMatchObject({ delivery_method: 'dpd_pickup', point_id: 'SK21286', point_address: { street: 'Mierová 17', city: 'Tornaľa', zip: '98201' }, street: 'Hlavná 5', city: 'Košice', zip: '04001' });
     expect(p.point?.name).toBe('Pavel Lóška Cyklo-Šport');
   });
   test('18 kg: sada GRAN-…-18, Packeta zamietnutá, DPD box zamietnutý', async () => {
@@ -30,8 +31,17 @@ describe('prepareCheckout', () => {
   test('miesto, ktoré FHB nepozná → chyba s výzvou vybrať iné', async () => {
     await expect(prepareCheckout({ ...IN, delivery: { ...DEL, point: { id: 'SK00000' } } }, { findPoint: find })).rejects.toThrow(/nie je dostupné/);
   });
+  test('výdajné miesto: adresa zákazníka povinná aj tu; neexistujúce PSČ zamietnuté pred platbou', async () => {
+    await expect(prepareCheckout({ ...IN, delivery: { ...DEL, address: null } }, { findPoint: find })).rejects.toThrow(/adresu/);
+    await expect(prepareCheckout({ ...IN, delivery: { ...DEL, address: { street: 'Hlavná 5', zip: '000 00', city: 'Košice' } } }, { findPoint: find })).rejects.toThrow(/neexistuje/);
+    await expect(prepareCheckout({ ...IN, delivery: { ...DEL, address: { street: 'Hlavná 5', zip: '04099', city: 'Košice' } } }, { findPoint: find })).rejects.toThrow(/neexistuje/);
+  });
+  test('addressRowOf: street/city/zip = zákazník, point_* = miesto', async () => {
+    const p = await prepareCheckout(IN, { findPoint: find });
+    expect(addressRowOf('c1', p.shipTo)).toMatchObject({ customer_id: 'c1', carrier: 'dpd', street: 'Hlavná 5', zip: '04001', city: 'Košice', point_id: 'SK21286', point_street: 'Mierová 17', point_zip: '98201', point_city: 'Tornaľa' });
+  });
   test('kuriér: adresa povinná, PSČ 5 číslic', async () => {
-    const c = { ...DEL, method: 'sps_courier', point: null };
+    const c = { ...DEL, method: 'sps_courier', point: null, address: null };
     await expect(prepareCheckout({ ...IN, delivery: c }, { findPoint: find })).rejects.toThrow(/adresu/);
     await expect(prepareCheckout({ ...IN, delivery: { ...c, address: { street: 'Hlavná 1', zip: '123', city: 'Košice' } } }, { findPoint: find })).rejects.toThrow(/PSČ/);
     const p = await prepareCheckout({ ...IN, delivery: { ...c, address: { street: 'Hlavná 1', zip: '040 01', city: 'Košice' } } }, { findPoint: find });

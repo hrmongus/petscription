@@ -480,3 +480,14 @@ Celé prihlásenie s 2FA som neprešiel: vytvoriť testovací admin účet v pro
 - iOS Safari priblížil stránku po ťuknutí do poľa (písmo < 16 px) → obsah vybiehal doprava v doručení aj platbe. Polia na dotykových zariadeniach 16 px (aj Stripe karta), počítač bez zmeny. Úzky displej 320 px: súhrn už nepreteká.
 - „i“ pri Predplatnom rozbalí vysvetlenie predplatného.
 - Overené lokálne (Playwright iPhone 13 a 320 px, šírka stránky = displej; všetky polia 16 px; mobilný nákup #73 OK), testy 205 ✅, build ✅. Súbory dotazníka `?v=20261124a`.
+
+## FHB odpoveď (24. 11. 2026, SPEC §10.38)
+- **Prepravcovia v sandboxe** (`GET /parcel-service`): `zasielkovna_sk` (Packeta SK), `sps_pudo` (SPS Balikovo), `sps` (SPS SK). **DPD nie je pridelené.** #63 (`dpd_sk`) je vo FHB `pending` a tak ostane; #68 nie je DPD, ale SPS kuriér a je `cancelled` (vo FHB nie je). Staršie DPD objednávky (#9–#49) prešli v sandboxe aj do `confirmed`/`delivered`, to robil FHB ručne.
+- **SPS kuriér = `sps`** v `doprava-config.js`.
+- **Adresa zákazníka aj pri výdajnom mieste:** dotazník (polia pod vybraným spôsobom, „Tvoja adresa“), server (`resolveDelivery` = checkout, `/ucet`, admin), DB (`addresses.point_*`, helper `addressRowOf`), FHB `recipient.address` = zákazník, `delivery_point` = miesto. `/ucet` predvyplní adresu a ukáže „Tvoja adresa“, admin ju ukazuje v detaile objednávky aj predplatného.
+- **PSČ pred platbou:** `public/granula/psc.js` (3 283 PSČ: Slovenská pošta + výdajné miesta FHB; 71 obcí podľa názvu), kontrola po opustení poľa aj pri odoslaní, server odmietne s „PSČ 040 99 na Slovensku neexistuje“.
+- **Notifikácie FHB** fungujú (existovali od kroku 2): 24. 11. 07:45 prišli `notify.sent`/`notify.delivered` (GET bez tela) → #18 `delivered` (delivered_at 24. 11. 08:42), #19 `sent` (tracking, email „Balík je na ceste“ odoslaný).
+- **#18 prepočet:** prvé obnovenie 30. 11. → 28. 11. (doručené 24. 11. + D 11 − LEAD 7), Stripe `trial_end` 28. 11. 06:00 sedí; `/ucet` „Doručené“ + lehota na odstúpenie do 8. 12. #18 email „Balík je na ceste“ nedostal: FHB ho prepol rovno na delivered (zámerne bez emailu, balík už má).
+- **Oprava:** cron hlásil pri každom behu zmenu trackingu #19 (jsonb preusporiada kľúče) → porovnanie bez ohľadu na poradie kľúčov.
+- ⚠️ **Migráciu `20261124120000_p1_customer_address_at_pickup` treba aplikovať v Supabase** (MCP v tejto session nemá právo zápisu, heslo k DB v prostredí nie je). Kým nie je, zmena NESMIE ísť do main (checkout by padal na `point_street`). Po aplikovaní: merge do main, `npm run e2e` (predplatné DPD, jednorazovo Packeta, kuriér).
+- Predošlá chyba typov v `admin/lib/withdrawals.test.ts` (null vs. enum) je z main, nie z tejto zmeny.

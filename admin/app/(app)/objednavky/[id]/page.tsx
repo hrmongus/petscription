@@ -109,6 +109,8 @@ export default async function OrderDetail({ params }: { params: Promise<{ id: st
                 <dd>
                   {ship.point_label} <code>{ship.point_id}</code>
                 </dd>
+                <dt>Adresa zákazníka</dt>
+                <dd>{ship.street ? `${ship.street}, ${ship.zip} ${ship.city}` : <span className="muted">chýba (staršia objednávka; do FHB ide adresa miesta)</span>}</dd>
               </>
             ) : (
               <>

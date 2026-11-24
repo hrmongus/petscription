@@ -37,7 +37,7 @@ function memStore() {
   };
   const c: Customer = { id: 'c1', email: 'jan@example.sk', name: 'Ján Novák', phone: '+421905123456', stripe_customer_id: 'cus_1', auth_user_id: null, created_at: '', updated_at: '' };
   const d: Dog = { id: 'd1', customer_id: 'c1', name: 'Bruno', answers: ANSWERS, weight_kg: 17, birth_date: '2022-12-01', created_at: '', updated_at: '' };
-  const a: Address = { id: 'a1', customer_id: 'c1', name: 'Ján Novák', street: 'Mierová 17', city: 'Tornaľa', zip: '98201', country: 'SK', carrier: 'dpd', delivery_method: 'dpd_pickup', point_id: 'SK21286', point_label: 'Pavel Lóška Cyklo-Šport', is_default: false, created_at: '' };
+  const a: Address = { id: 'a1', customer_id: 'c1', name: 'Ján Novák', street: 'Hlavná 5', city: 'Košice', zip: '04001', country: 'SK', carrier: 'dpd', delivery_method: 'dpd_pickup', point_id: 'SK21286', point_label: 'Pavel Lóška Cyklo-Šport', point_street: 'Mierová 17', point_city: 'Tornaľa', point_zip: '98201', is_default: false, created_at: '' };
   customers.set('c1', c); dogs.set('d1', d); addresses.set('a1', a);
   return { store, subs, orders, dogs, audits };
 }

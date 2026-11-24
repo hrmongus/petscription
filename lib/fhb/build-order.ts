@@ -68,7 +68,7 @@ export class FhbBuildError extends Error {
 /**
  * Kódy služieb FHB z public/granula/doprava-config.js (prepísateľné env FHB_SERVICE_*). Overené v sandboxe
  * (api-stage, 21. 11. 2026): Packeta `zasielkovna_sk`, DPD `dpd_sk`; delivery_point = `external_code` miesta
- * (číselné interné `id` FHB neprijme). SPS kuriér: kód zatiaľ nepoznáme → predvolená služba účtu.
+ * (číselné interné `id` FHB neprijme). SPS kuriér: `sps` (FHB, 24. 11. 2026).
  */
 export function parcelServicesFromEnv(env: Record<string, string | undefined> = process.env): ParcelServiceMap {
   return Object.fromEntries(DELIVERY_METHODS.map((m) => [m, fhbServiceFor(m, env)]));

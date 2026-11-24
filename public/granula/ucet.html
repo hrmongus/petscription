@@ -32,6 +32,7 @@
 .pf-hint{font-size:12px;line-height:1.4}
 .pf2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .pf2.zip{grid-template-columns:1fr 2fr}
+.u-muted{color:var(--k2,#5C5650);font-size:14px}
 .input{width:100%;font:500 16px/1.3 var(--font);color:var(--n);background:var(--m);border:2px solid var(--n);border-radius:0;padding:12px 14px}
 textarea.input{resize:vertical;min-height:84px}
 .input::placeholder{color:var(--n);opacity:.5}
@@ -247,8 +248,9 @@ textarea.input{resize:vertical;min-height:84px}
 
 <script src="icons.js"></script>
 <script src="site.js"></script>
-<script src="doprava-config.js?v=20261123e"></script>
-<script src="doprava.js?v=20261123e"></script>
+<script src="psc.js?v=20261124a"></script>
+<script src="doprava-config.js?v=20261124a"></script>
+<script src="doprava.js?v=20261124a"></script>
 <script>
 // Môj účet (SPEC P4): prihlásenie kódom z e-mailu, predplatné, objednávky. Všetky výpočty a zmeny robí server (/api/ucet/*).
 (function () {
@@ -358,7 +360,7 @@ textarea.input{resize:vertical;min-height:84px}
       "<dt>Balenie</dt><dd>" + esc(s.bagId) + " kg, vydrží " + s.daysPerBag + " dní (" + s.gramsPerDay + " g denne)</dd>" +
       (s.dog && s.dog.kg ? "<dt>Váha psa</dt><dd>" + String(s.dog.kg).replace(".", ",") + " kg</dd>" : "") +
       "<dt>Cena za dodávku</dt><dd>" + eur(s.unitAmountCents) + " + doprava " + ship(s.shippingCents) + "</dd>" +
-      "<dt>Doručenie</dt><dd>" + esc(s.delivery.label) + "<br>" + esc(s.delivery.address) + "</dd>" +
+      "<dt>Doručenie</dt><dd>" + esc(s.delivery.label) + "<br>" + esc(s.delivery.address) + (s.delivery.method !== "sps_courier" && s.delivery.customer ? '<br><span class="u-muted">Tvoja adresa: ' + esc(s.delivery.customer.text) + "</span>" : "") + "</dd>" +
       "</dl>" +
       (acts.length ? '<div class="u-actions">' + acts.map(function (a) { return '<button type="button" class="u-act' + (a[0] === "zrusit" ? " is-danger" : "") + '" data-act="' + a[0] + '" aria-expanded="false">' + a[1] + "</button>"; }).join("") + "</div>" : "") +
       '<div class="u-panel" hidden></div></article>';
@@ -545,10 +547,9 @@ textarea.input{resize:vertical;min-height:84px}
     } else window.GranulaDelivery.setBag(s.bagId);
     var r = $("order").querySelector('input[name="dmethod"][value="' + s.delivery.method + '"]');
     if (r && !r.checked) { r.checked = true; r.dispatchEvent(new Event("change")); }
-    if (s.delivery.method === "sps_courier") {
-      var m = /^(.*),\s*(\d{3}\s?\d{2})\s+(.+)$/.exec(s.delivery.address || "");
-      if (m) { $("street").value = m[1]; $("zip").value = m[2].replace(/\s/g, ""); $("city").value = m[3]; }
-    }
+    // adresa zákazníka (aj pri výdajnom mieste: dopravca ju potrebuje, FHB 24. 11.)
+    var own = s.delivery.customer;
+    if (own) { $("street").value = own.street; $("zip").value = own.zip; $("city").value = own.city; }
     prices();
     function prices() {
       $("order").querySelectorAll("[data-ship-price]").forEach(function (el) {

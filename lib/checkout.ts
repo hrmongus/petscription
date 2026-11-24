@@ -4,6 +4,8 @@ import { boxesAllowed, isMethodAllowed, METHODS, shippingPrice, type DeliveryMet
 import { findPoint, type DeliveryPoint, type PointService } from './delivery-points';
 import { quote, QuoteError, skuItems, type Answers, type BagId, type Quote } from './engine-server';
 import { normalizePhone, type ShipTo } from './fhb/build-order';
+import { isValidPsc } from './psc';
+import type { TablesInsert } from './database.types';
 import { APP_METADATA } from './stripe';
 
 /*
@@ -114,7 +116,8 @@ export type DeliveryInput = {
 /**
  * Doručenie → overený snapshot pre orders.ship_to a FHB (checkout, admin, zákaznícky portál): spôsob povolený pre balenie,
  * telefón +421, výdajné miesto z aktuálneho zoznamu FHB (názov a adresa z FHB, nie od klienta), box iba kde je povolený,
- * pri kuriérovi adresa s 5-miestnym PSČ.
+ * adresa zákazníka VŽDY (aj pri výdajnom mieste: FHB 24. 11. 2026, dopravcovia ju chcú v recipient.address) s platným
+ * slovenským PSČ (lib/psc.ts; FHB v produkcii neznáme PSČ odmietne).
  */
 export async function resolveDelivery(d: DeliveryInput, bagId: BagId, deps: { findPoint?: typeof findPoint } = {}): Promise<{ point: DeliveryPoint | null; shipTo: ShipTo }> {
   if (!isMethodAllowed(d.method, bagId)) throw new CheckoutError('Tento spôsob doručenia sa pri zvolenom balení neponúka.', 'delivery.method');
@@ -125,6 +128,14 @@ export async function resolveDelivery(d: DeliveryInput, bagId: BagId, deps: { fi
   if (!name) throw new CheckoutError('Doplň meno.', 'delivery.name');
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || email.length > 50) throw new CheckoutError('Skontroluj e-mail (najviac 50 znakov).', 'delivery.email');
 
+  // adresa zákazníka (pri každom spôsobe doručenia)
+  const a = d.address;
+  const zip = (a?.zip ?? '').replace(/\s/g, '');
+  if (!a || !a.street?.trim() || !a.city?.trim()) throw new CheckoutError('Doplň svoju adresu (ulica a číslo, PSČ, mesto).', 'delivery.address');
+  if (!/^\d{5}$/.test(zip)) throw new CheckoutError('PSČ má 5 číslic.', 'delivery.address');
+  if (!isValidPsc(zip, a.city)) throw new CheckoutError(`PSČ ${zip.slice(0, 3)} ${zip.slice(3)} na Slovensku neexistuje. Skontroluj ho prosím.`, 'delivery.address');
+  const own = { street: a.street.trim(), city: a.city.trim(), zip };
+
   const service = POINT_SERVICE[d.method];
   if (service) {
     if (!d.point?.id) throw new CheckoutError('Vyber výdajné miesto.', 'delivery.point');
@@ -134,16 +145,32 @@ export async function resolveDelivery(d: DeliveryInput, bagId: BagId, deps: { fi
     return {
       point,
       shipTo: {
-        name, email, phone, country: 'SK', delivery_method: d.method,
+        name, email, phone, country: 'SK', delivery_method: d.method, ...own,
         point_id: point.id, point_label: `${point.name}, ${point.street}, ${point.zip} ${point.city}`,
         point_address: { street: point.street, city: point.city, zip: point.zip },
       },
     };
   }
-  const a = d.address;
-  const zip = (a?.zip ?? '').replace(/\s/g, '');
-  if (!a || !a.street?.trim() || !a.city?.trim() || !/^\d{5}$/.test(zip)) throw new CheckoutError('Doplň adresu doručenia (PSČ má 5 číslic).', 'delivery.address');
-  return { point: null, shipTo: { name, email, phone, country: 'SK', delivery_method: d.method, street: a.street.trim(), city: a.city.trim(), zip } };
+  return { point: null, shipTo: { name, email, phone, country: 'SK', delivery_method: d.method, ...own } };
+}
+
+/** Riadok `addresses` z overeného doručenia (checkout, /ucet, admin): street/city/zip = adresa zákazníka, point_* = miesto. */
+export function addressRowOf(customerId: string, s: ShipTo): TablesInsert<'addresses'> {
+  return {
+    customer_id: customerId,
+    name: s.name,
+    street: s.street ?? null,
+    city: s.city ?? null,
+    zip: s.zip ?? null,
+    country: 'SK',
+    carrier: METHODS[s.delivery_method].carrier,
+    delivery_method: s.delivery_method,
+    point_id: s.point_id ?? null,
+    point_label: s.point_label ?? null,
+    point_street: s.point_address?.street ?? null,
+    point_city: s.point_address?.city ?? null,
+    point_zip: s.point_address?.zip ?? null,
+  };
 }
 
 /** Približný dátum narodenia z veku v odpovediach (na prepočet dávky pri obnovení, SPEC §1 šteňatá). */

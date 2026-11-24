@@ -44,6 +44,11 @@ describe('applyFhbOrder', () => {
     expect((m.mail.mock.calls[0] as unknown[])[0]).toMatchObject({ key: 'shipped:o1', to: 'jan@example.sk' });
     expect(m.audits.map((a) => a.action)).toEqual(['order.status.sent']);
   });
+  test('tracking z DB s iným poradím kľúčov (jsonb) = bez zmeny', async () => {
+    const m = mem();
+    const o = order({ status: 'sent', shipped_at: '2027-01-05T09:00:00.000Z', tracking: { links: ['https://t.example/123'], numbers: ['123'] } });
+    expect((await applyFhbOrder(o, { status: 'sent', shipped_at: '2027-01-05T10:00:00+0100', tracking_numbers: ['123'], tracking_links: ['https://t.example/123'] } as never, { ...m, cycle: CYCLE })).changed).toEqual([]);
+  });
   test('stav iba dopredu; zrušená objednávka sa nemení; bez zmeny nič nezapíše', async () => {
     const m = mem();
     expect((await applyFhbOrder(order({ status: 'delivered', delivered_at: '2027-01-06T10:00:00.000Z' }), { status: 'sent' } as never, { ...m, cycle: CYCLE })).changed).toEqual([]);

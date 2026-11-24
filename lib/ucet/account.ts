@@ -71,8 +71,10 @@ export function withdrawalInfo(order: Order, all: Order[], withdrawals: W[], now
 function deliveryText(a: Tables<'addresses'> | undefined) {
   if (!a) return { method: null, label: '', address: '' };
   const m = a.delivery_method as DeliveryMethod;
-  const address = m === 'sps_courier' ? `${a.street ?? ''}, ${a.zip ?? ''} ${a.city ?? ''}`.trim() : a.point_label || `${a.street ?? ''}, ${a.zip ?? ''} ${a.city ?? ''}`;
-  return { method: m, label: METHODS[m]?.label ?? m, address, pointId: a.point_id, name: a.name };
+  const own = a.street && a.zip && a.city ? `${a.street}, ${a.zip.slice(0, 3)} ${a.zip.slice(3)} ${a.city}` : '';
+  const address = m === 'sps_courier' ? own : a.point_label || own;
+  // customer = adresa zákazníka (aj pri výdajnom mieste, FHB 24. 11.); na predvyplnenie formulára zmeny doručenia
+  return { method: m, label: METHODS[m]?.label ?? m, address, pointId: a.point_id, name: a.name, customer: a.street ? { street: a.street, zip: a.zip ?? '', city: a.city ?? '', text: own } : null };
 }
 
 export function accountView(r: AccountRows, now = new Date()) {

@@ -119,3 +119,5 @@
   .so-wrap > .so > .so-txt{grid-area:txt}
   .so-wrap > .so > .so-pr{grid-area:pr}
 }
+/* adresa zákazníka pod vybraným spôsobom doručenia (aj pri výdajnom mieste, FHB 24. 11.) */
+#ship-opts-new > #addr-f .addr-t{margin:0 0 8px;font-weight:800;font-size:15px}

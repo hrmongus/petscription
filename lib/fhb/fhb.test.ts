@@ -144,14 +144,19 @@ describe('buildFhbOrder', () => {
     });
     expect(b.notification?.delivered).toBe(`https://granula.sk/api/fhb/notify/delivered/${ORDER.id}?t=tok123`);
   });
-  test('kuriér: vlastná adresa, bez výdajného miesta, bez parcel_service kým nie je nastavený', () => {
+  test('kuriér: vlastná adresa, bez výdajného miesta, parcel_service sps (FHB 24. 11.)', () => {
     const b = buildFhbOrder({ ...ORDER, shipTo: { ...SHIP, delivery_method: 'sps_courier', point_id: null, street: 'Hlavná 1', city: 'Košice', zip: '04001' } }, OPTS);
     expect(b.delivery_point).toBeUndefined();
-    expect(b.parcel_service).toBeUndefined();
+    expect(b.parcel_service).toBe('sps');
     expect(b.recipient.address.street).toBe('Hlavná 1');
     expect(b.validate).toBe(true);
     const off = buildFhbOrder({ ...ORDER, shipTo: { ...SHIP, delivery_method: 'sps_courier', point_id: null, street: 'Hlavná 1', city: 'Košice', zip: '04001' } }, { ...OPTS, validateAddress: false });
     expect(off.validate).toBe(false);
+  });
+  test('výdajné miesto s adresou zákazníka: recipient.address = zákazník, miesto v delivery_point', () => {
+    const b = buildFhbOrder({ ...ORDER, shipTo: { ...SHIP, delivery_method: 'packeta_point', point_id: '33711', point_address: { street: 'Mierová 17', city: 'Tornaľa', zip: '98201' }, street: 'Hlavná 5', city: 'Košice', zip: '04001' } }, OPTS);
+    expect(b).toMatchObject({ parcel_service: 'zasielkovna_sk', delivery_point: '33711', validate: false });
+    expect(b.recipient.address).toMatchObject({ street: 'Hlavná 5', city: 'Košice', zip: '04001' });
   });
   test('Packeta: kód zasielkovna_sk z konfigurácie; bez kódu služby chyba skôr, než sa volá FHB', () => {
     const b = buildFhbOrder({ ...ORDER, shipTo: { ...SHIP, delivery_method: 'packeta_point', point_id: '33711' } }, OPTS);

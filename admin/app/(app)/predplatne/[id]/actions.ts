@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import type { Json } from '@lib/database.types';
-import { CheckoutError, resolveDelivery } from '@lib/checkout';
+import { addressRowOf, CheckoutError, resolveDelivery } from '@lib/checkout';
 import { db } from '@lib/db';
 import type { BagId } from '@lib/engine-server';
 import { applyPlanChange, PlanChangeError, previewPlanChange, supabaseApplyStore, syncShipping } from '@lib/subscription-actions';
@@ -151,26 +151,10 @@ export const addressAction = adminAction(async (admin, fd) => {
   const c = await ctx(fd);
   const method = str(fd, 'method') as 'packeta_point' | 'dpd_pickup' | 'sps_courier';
   const { shipTo } = await resolveDelivery(
-    { method, name: str(fd, 'name'), email: c.customer.email, phone: str(fd, 'phone'), point: str(fd, 'point') ? { id: str(fd, 'point') } : null, address: method === 'sps_courier' ? { street: str(fd, 'street'), zip: str(fd, 'zip'), city: str(fd, 'city') } : null },
+    { method, name: str(fd, 'name'), email: c.customer.email, phone: str(fd, 'phone'), point: str(fd, 'point') ? { id: str(fd, 'point') } : null, address: { street: str(fd, 'street'), zip: str(fd, 'zip'), city: str(fd, 'city') } },
     c.sub.bag_id as BagId,
   ).catch(userErr);
-  const pickup = method !== 'sps_courier';
-  const { data: addr, error } = await db()
-    .from('addresses')
-    .insert({
-      customer_id: c.customer.id,
-      name: shipTo.name,
-      street: pickup ? shipTo.point_address?.street ?? null : shipTo.street ?? null,
-      city: pickup ? shipTo.point_address?.city ?? null : shipTo.city ?? null,
-      zip: pickup ? shipTo.point_address?.zip ?? null : shipTo.zip ?? null,
-      country: 'SK',
-      carrier: method === 'packeta_point' ? 'packeta' : method === 'dpd_pickup' ? 'dpd' : 'sps',
-      delivery_method: method,
-      point_id: shipTo.point_id ?? null,
-      point_label: shipTo.point_label ?? null,
-    })
-    .select('*')
-    .single();
+  const { data: addr, error } = await db().from('addresses').insert(addressRowOf(c.customer.id, shipTo)).select('*').single();
   if (error) throw new Error(error.message);
   const ship = await syncShipping(c.sub, method, stripe()).catch(userErr);
   await db().from('subscriptions').update({ address_id: addr.id }).eq('id', c.sub.id);

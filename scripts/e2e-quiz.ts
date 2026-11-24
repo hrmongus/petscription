@@ -49,12 +49,11 @@ export async function selectMethod(page: Page, method: Method) {
 
 export async function chooseDelivery(page: Page, method: Method, opts: { query?: string } = {}): Promise<string | null> {
   await selectMethod(page, method);
-  if (method === 'sps_courier') {
-    await page.fill('#street', 'Hlavná 1');
-    await page.fill('#zip', '040 01');
-    await page.fill('#city', 'Košice');
-    return null;
-  }
+  // adresa zákazníka pri každom spôsobe (FHB 24. 11. 2026: dopravca ju chce aj pri výdajnom mieste)
+  await page.fill('#street', 'Hlavná 1');
+  await page.fill('#zip', '040 01');
+  await page.fill('#city', 'Košice');
+  if (method === 'sps_courier') return null;
   const pick = page.locator(`.so-act[data-for="${method}"]`); // oranžové tlačidlo výberu miesta v karte dopravcu
   if (method === 'packeta_point' && (await pick.locator('[data-list="packeta"]').isVisible())) await pick.locator('[data-list="packeta"]').click();
   else await pick.locator('[data-pick]').click();

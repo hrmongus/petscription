@@ -76,7 +76,7 @@ async function emit(deps: Deps, name: keyof FulfillmentEvents, fn: (e: Fulfillme
   }
 }
 
-/** ship_to snapshot z adresy a zákazníka (pri výdajnom mieste sú ulica/PSČ/mesto adresou miesta) */
+/** ship_to snapshot z adresy a zákazníka: street/city/zip = adresa zákazníka (aj pri výdajnom mieste), point_* = miesto */
 export function shipToOf(c: Customer, a: Address): ShipTo {
   const pickup = a.delivery_method !== 'sps_courier';
   return {
@@ -85,9 +85,12 @@ export function shipToOf(c: Customer, a: Address): ShipTo {
     phone: c.phone ?? '',
     country: a.country,
     delivery_method: a.delivery_method as ShipTo['delivery_method'],
+    street: a.street,
+    city: a.city,
+    zip: a.zip,
     ...(pickup
-      ? { point_id: a.point_id, point_label: a.point_label, point_address: a.street && a.city && a.zip ? { street: a.street, city: a.city, zip: a.zip } : null }
-      : { street: a.street, city: a.city, zip: a.zip }),
+      ? { point_id: a.point_id, point_label: a.point_label, point_address: a.point_street && a.point_city && a.point_zip ? { street: a.point_street, city: a.point_city, zip: a.point_zip } : null }
+      : {}),
   };
 }
 

@@ -54,3 +54,8 @@ declare module '*/public/granula/doprava-config.js' {
   };
   export default config;
 }
+
+declare module '*/public/granula/psc.js' {
+  const psc: { valid(zip: string, city?: string): boolean; count: number };
+  export default psc;
+}

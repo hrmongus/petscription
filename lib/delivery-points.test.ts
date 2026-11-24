@@ -40,7 +40,7 @@ describe('dopravcovia podľa balenia (doprava-config.js)', () => {
   test('kódy FHB z konfigurácie, prepísateľné env', () => {
     expect(fhbServiceFor('packeta_point', {})).toBe('zasielkovna_sk');
     expect(fhbServiceFor('dpd_pickup', {})).toBe('dpd_sk');
-    expect(fhbServiceFor('sps_courier', {})).toBeUndefined();
+    expect(fhbServiceFor('sps_courier', {})).toBe('sps');
     expect(fhbServiceFor('dpd_pickup', { FHB_SERVICE_DPD: 'dpd_eu_pudo' })).toBe('dpd_eu_pudo');
   });
 });

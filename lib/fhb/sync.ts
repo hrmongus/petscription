@@ -63,7 +63,10 @@ export function targetStatus(f: FhbView): string | null {
   return null;
 }
 
-const sameJson = (a: unknown, b: unknown) => JSON.stringify(a ?? null) === JSON.stringify(b ?? null);
+/** porovnanie JSON bez ohľadu na poradie kľúčov (jsonb v Postgrese kľúče preusporiada: `links` pred `numbers`) */
+const canon = (v: unknown): unknown =>
+  Array.isArray(v) ? v.map(canon) : v && typeof v === 'object' ? Object.fromEntries(Object.keys(v as object).sort().map((k) => [k, canon((v as Record<string, unknown>)[k])])) : (v ?? null);
+const sameJson = (a: unknown, b: unknown) => JSON.stringify(canon(a)) === JSON.stringify(canon(b));
 const iso = (s: string | null | undefined) => (s ? new Date(s).toISOString() : null);
 const sameTime = (a: string | null | undefined, b: string | null | undefined) => iso(a) === iso(b);
 

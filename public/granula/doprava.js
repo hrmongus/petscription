@@ -35,7 +35,8 @@
   function fmtPhone(p) { return p.replace(/^(\+\d{3})(\d{3})(\d{3})(\d{3})$/, "$1 $2 $3 $4"); }
 
   /* ---------------- možnosti podľa balenia ---------------- */
-  // adresné polia kuriéra: pri novom toku stoja priamo pod kartou „SPS – kuriér na adresu“ (formulár ide zhora nadol)
+  // adresa zákazníka: pri KAŽDOM spôsobe doručenia (FHB 24. 11. 2026: dopravcovia ju chcú aj pri výdajnom mieste),
+  // stojí priamo pod vybranou kartou (pri výdajnom mieste pod vybraným miestom), formulár ide zhora nadol
   var addrF = null;
   function renderOptions() {
     var box = $("ship-opts-new"), list = C().methodsFor(bag), cur = method();
@@ -56,15 +57,26 @@
         (svc ? '<div class="dl-pick" data-for="' + m + '" hidden><div class="dl-chosen" hidden></div>' +
           '<button type="button" class="link-under" data-pick="' + svc + '" aria-haspopup="dialog">Zmeniť výdajné miesto</button></div>' : "");
     }).join("");
-    var sw = box.querySelector('.so-wrap[data-m="sps_courier"]');
-    if (sw) {
-      sw.parentNode.insertBefore(addrF, sw.nextSibling);
-      if (!addrF.querySelector(".addr-hint")) {
-        var h = document.createElement("small");
-        h.className = "pf-hint addr-hint";
-        h.textContent = "Doručujeme na Slovensko. Číslo bytu alebo poschodie napíš k ulici.";
-        addrF.appendChild(h);
-      }
+    box.appendChild(addrF); // paintMethod ho presunie pod vybraný spôsob
+    if (!addrF.querySelector(".addr-hint")) {
+      var t = document.createElement("p");
+      t.className = "addr-t";
+      addrF.insertBefore(t, addrF.firstChild);
+      var h = document.createElement("small");
+      h.className = "pf-hint addr-hint";
+      addrF.appendChild(h);
+      // PSČ: kontrola hneď po vyplnení (zoznam Slovenskej pošty, psc.js)
+      var zipIn = $("zip"), cityIn = $("city");
+      var checkZip = function () {
+        var z = zipIn.value.replace(/\s/g, "");
+        if (!z) return;
+        if (/^\d{5}$/.test(z)) zipIn.value = z.slice(0, 3) + " " + z.slice(3);
+        var ok = /^\d{5}$/.test(z) && (!window.GranulaPSC || GranulaPSC.valid(z, cityIn.value));
+        if (ok) zipIn.removeAttribute("aria-invalid"); else zipIn.setAttribute("aria-invalid", "true");
+        zipIn.title = ok ? "" : zipMsg(z);
+      };
+      zipIn.addEventListener("blur", checkZip);
+      cityIn.addEventListener("blur", function () { if (zipIn.getAttribute("aria-invalid")) checkZip(); });
     }
     box.querySelectorAll('input[name="dmethod"]').forEach(function (r) { r.addEventListener("change", function () { paintMethod(); onChange(); }); });
     box.querySelectorAll("[data-pick]").forEach(function (b) {
@@ -75,7 +87,18 @@
   }
   function paintMethod() {
     var m = method();
-    (addrF || $("addr-f")).hidden = m !== "sps_courier"; // adresa iba pre kuriéra (pri výdajnom mieste ju FHB doplní z miesta)
+    var af = addrF || $("addr-f"), box = $("ship-opts-new");
+    af.hidden = !m; // adresa pri každom spôsobe, kým nie je vybraný, nezavadzia
+    if (m && box && af.parentNode === box) {
+      var anchor = box.querySelector('.dl-pick[data-for="' + m + '"]') || box.querySelector('.so-wrap[data-m="' + m + '"]');
+      if (anchor && anchor.nextSibling !== af) box.insertBefore(af, anchor.nextSibling);
+      var pick = C().METHODS[m] && C().METHODS[m].pickup;
+      var t = af.querySelector(".addr-t"), h = af.querySelector(".addr-hint");
+      if (t) t.textContent = pick ? "Tvoja adresa" : "Adresa doručenia";
+      if (h) h.textContent = pick
+        ? "Dopravca ju potrebuje aj pri doručení na výdajné miesto. Balík príde na vybrané miesto."
+        : "Doručujeme na Slovensko. Číslo bytu alebo poschodie napíš k ulici.";
+    }
     paintChosen("packeta_point");
     paintChosen("dpd_pickup");
     // „Vyhľadať v zozname“ pri Packete iba popri oficiálnom widgete (bez kľúča je zoznam hlavné tlačidlo)
@@ -241,6 +264,8 @@
     closeDialog();
   }
 
+  function zipMsg(z) { return /^\d{5}$/.test(z) ? "PSČ " + z.slice(0, 3) + " " + z.slice(3) + " na Slovensku neexistuje. Skontroluj ho prosím." : "PSČ má 5 číslic."; }
+
   /* ---------------- validácia ---------------- */
   function validate() {
     var m = method(), bad = [], msg = [];
@@ -261,11 +286,14 @@
       point = chosen[m];
       if (!point) mark(form.querySelector('.so-act[data-for="' + m + '"] [data-pick]'), "Vyber výdajné miesto.");
       else if (point.kind === "box" && !C().boxes(m, bag)) mark(form.querySelector('.dl-pick[data-for="' + m + '"] [data-pick]'), "Pri balení " + bag + " kg vyber odberné miesto, nie box.");
-    } else {
+    }
+    if (m && C().allowed(m, bag)) { // adresa zákazníka pri každom spôsobe doručenia
       var st = $("street").value.trim(), zip = $("zip").value.replace(/\s/g, ""), city = $("city").value.trim();
-      if (!st) mark($("street"), "Doplň adresu doručenia.");
+      var what = M.pickup ? "Doplň svoju adresu." : "Doplň adresu doručenia.";
+      if (!st) mark($("street"), what);
       if (!/^\d{5}$/.test(zip)) mark($("zip"), "PSČ má 5 číslic.");
-      if (!city) mark($("city"), "Doplň adresu doručenia.");
+      else if (window.GranulaPSC && !GranulaPSC.valid(zip, city)) mark($("zip"), zipMsg(zip));
+      if (!city) mark($("city"), what);
       address = { street: st, zip: zip, city: city, country: "SK" };
     }
     if (bad.length) return { ok: false, message: msg.join(" "), focus: bad[0] };

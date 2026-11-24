@@ -1,5 +1,5 @@
 import { gateFromRequest } from '@/lib/checkout-gate';
-import { birthDateFrom, CheckoutError, prepareCheckout, productIdFor, SHIPPING_PRODUCT_ID, sessionParams } from '@/lib/checkout';
+import { addressRowOf, birthDateFrom, CheckoutError, prepareCheckout, productIdFor, SHIPPING_PRODUCT_ID, sessionParams } from '@/lib/checkout';
 import { skuItems, allSkus } from '@/lib/engine-server';
 import { insertAddress, insertDog, setStripeCustomer, upsertCustomer } from '@/lib/store';
 import { APP_METADATA, stripe, stripeConfigured } from '@/lib/stripe';
@@ -42,20 +42,8 @@ export async function POST(req: Request) {
       weight_kg: p.answers.kg,
       birth_date: birthDateFrom(p.answers),
     });
-    const pickup = p.shipTo.delivery_method !== 'sps_courier';
-    const address = await insertAddress({
-      customer_id: customer.id,
-      name: p.customer.name,
-      // pri výdajnom mieste ulica/PSČ/mesto = adresa miesta (do FHB recipient.address)
-      street: pickup ? p.point!.street : p.shipTo.street!,
-      city: pickup ? p.point!.city : p.shipTo.city!,
-      zip: pickup ? p.point!.zip : p.shipTo.zip!,
-      country: 'SK',
-      carrier: p.shipTo.delivery_method === 'packeta_point' ? 'packeta' : p.shipTo.delivery_method === 'dpd_pickup' ? 'dpd' : 'sps',
-      delivery_method: p.shipTo.delivery_method,
-      point_id: p.shipTo.point_id ?? null,
-      point_label: p.shipTo.point_label ?? null,
-    });
+    // adresa zákazníka vždy (aj pri výdajnom mieste, do FHB recipient.address), miesto v point_*
+    const address = await insertAddress(addressRowOf(customer.id, p.shipTo));
 
     // Stripe zákazník (jeden na e-mail)
     let stripeCustomerId = customer.stripe_customer_id;
