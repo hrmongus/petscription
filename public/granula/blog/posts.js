@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-24 11:13",
+ "built": "2026-11-24 11:30",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -1941,7 +1941,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "img/blog/hnacka-po-novych-granulach-co-robit/hero.webp",
-   "words": 1069,
+   "words": 1077,
    "description": "Hnačka po nových granulách zvyčajne odznie za 1–3 dni. Vráť sa k starému krmivu a prechod spomaľ. K veterinárovi pri krvi, zvracaní, apatii alebo po 2 dňoch.",
    "id": "F2",
    "category": "Problémy",
@@ -2007,9 +2007,9 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-24: Jazyková korektúra (prirodzenejšie formulácie, úvodná veta sekcie o veterinárovi, kroky, časté otázky), nová záverečná ponuka",
       "2026-11-24: „Dávku odvažuj na gramy“ → „Dávku vždy odváž v gramoch“ (krok 6 a zhrnutie)",
-      "2026-11-24: „inak zdravý“ preštylizované v sekcii o tom, či je hnačka normálna",
-      "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)"
+      "2026-11-24: „inak zdravý“ preštylizované v sekcii o tom, či je hnačka normálna"
      ]
     },
     {
@@ -2228,7 +2228,7 @@ window.GRANULA_POSTS = {
      "id": "atomic",
      "level": "info",
      "ok": true,
-     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 19)",
+     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 18)",
      "details": []
     },
     {
@@ -2270,7 +2270,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1069 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1077 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -2285,7 +2285,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo je hnačka po zmene krmiva?",
      "kind": "definition",
-     "words": 63,
+     "words": 65,
      "numbers": 0,
      "question": true,
      "firstBold": true,
@@ -2324,7 +2324,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Kedy ísť s hnačkou po zmene krmiva k veterinárovi?",
      "kind": "main",
-     "words": 190,
+     "words": 194,
      "numbers": 5,
      "question": true,
      "firstBold": true,
@@ -2337,7 +2337,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo robiť, keď má pes po nových granulách hnačku: 6 krokov",
      "kind": "main",
-     "words": 186,
+     "words": 187,
      "numbers": 7,
      "question": false,
      "firstBold": true,
@@ -2350,8 +2350,8 @@ window.GRANULA_POSTS = {
     {
      "title": "Časté otázky",
      "kind": "faq",
-     "words": 168,
-     "numbers": 5,
+     "words": 169,
+     "numbers": 4,
      "question": false,
      "firstBold": true,
      "table": false,
