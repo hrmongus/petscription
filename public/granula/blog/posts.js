@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-24 17:27",
+ "built": "2026-11-24 17:32",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -157,7 +157,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
-      "2026-11-24: Nové, realistickejšie fotky: hlavná, presýpanie a váženie granúl (ilustrácie vygenerované AI)",
+      "2026-11-24: Nové, realistickejšie fotky (ilustrácie vygenerované AI); hlavná fotka vygenerovaná nanovo",
       "2026-11-24: Štylistická korektúra: prirodzenejší slovosled a formulácie krokov",
       "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)"
      ]
