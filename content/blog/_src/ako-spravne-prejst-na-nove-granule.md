@@ -143,7 +143,7 @@ Súvislosť potvrdzujú aj záznamy z veterinárnych ambulancií. Psy, ktoré ne
 6. **Nepridávaj nič nové.** ==Pri nových maškrtách, zvyškoch zo stola alebo doplnkoch nespoznáš, čo spôsobilo mäkšiu stolicu.==
 7. **Sleduj stolicu, chuť do jedla a správanie psa.** Varovné znaky sú hnačka, zvracanie, veľa plynov, zápcha, bolesť a apatia.[^znaky]
 
-![Majiteľka drží na kuchynskej váhe misku, v ktorej sú staré a nové granule zhruba napoly. Vedľa stojí miska s novými granulami a za stolom čaká zlatý retríver.](img/blog/ako-spravne-prejst-na-nove-granule/vazenie.webp "Porcie počas prechodu odvažuj. Odmerka pri dvoch rôznych krmivách nesedí. Ilustrácia vygenerovaná AI.")
+![Ruky ukladajú na kuchynskú váhu modrú misku, v ktorej sú staré a nové granule zhruba napoly. Vedľa stojí zelená miska s novými granulami a spoza stola sa pozerá zlatý retríver.](img/blog/ako-spravne-prejst-na-nove-granule/vazenie.webp "Porcie počas prechodu odvažuj. Odmerka pri dvoch rôznych krmivách nesedí. Ilustrácia vygenerovaná AI.")
 
 [^znaky]: Varovné znaky podľa Tufts Petfoodology (2019).
 
