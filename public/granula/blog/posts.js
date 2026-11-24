@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-24 08:48",
+ "built": "2026-11-24 08:54",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -1936,12 +1936,12 @@ window.GRANULA_POSTS = {
    "wanted": "draft",
    "example": false,
    "published": "2026-11-18",
-   "updated": "2026-11-23",
+   "updated": "2026-11-24",
    "author": "MVDr. Marcela Glezgová",
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "img/blog/hnacka-po-novych-granulach-co-robit/hero.webp",
-   "words": 1059,
+   "words": 1067,
    "description": "Hnačka po nových granulách zvyčajne odznie za 1–3 dni. Vráť sa k starému krmivu a prechod spomaľ. K veterinárovi pri krvi, zvracaní, apatii alebo po 2 dňoch.",
    "id": "F2",
    "category": "Problémy",
@@ -2007,23 +2007,23 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-24: Zrozumiteľnejšia veta v sumári o tom, kedy hnačka prejde sama",
       "2026-11-23: Hlavná fotka a fotky do sekcií (ilustrácie vygenerované AI)",
-      "2026-11-20: Autorka MVDr. Marcela Glezgová",
-      "2026-11-18: „žerie“ nahradené"
+      "2026-11-20: Autorka MVDr. Marcela Glezgová"
      ]
     },
     {
      "id": "tldr",
      "level": "error",
      "ok": true,
-     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 60)",
+     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 67)",
      "details": []
     },
     {
      "id": "tldr-range",
      "level": "warn",
-     "ok": true,
-     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 60)",
+     "ok": false,
+     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 67)",
      "details": []
     },
     {
@@ -2270,7 +2270,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1059 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1067 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -2285,7 +2285,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo je hnačka po zmene krmiva?",
      "kind": "definition",
-     "words": 61,
+     "words": 62,
      "numbers": 0,
      "question": true,
      "firstBold": true,

@@ -14,10 +14,10 @@ cta_title: "Granule pre psa s citlivým trávením"
 cta_text: "Dennú dávku spočítame na gramy, aby pes pri prechode nezjedol viac, ako potrebuje. Pri citlivom trávení vyberáme granule s jedným druhom mäsa, ak tomu nebráni iná potreba psa."
 cta_button: "Nájdi granule pre svojho psa"
 published: 2026-11-18
-updated: 2026-11-23
+updated: 2026-11-24
 tldr: >
   Hnačka po nových granulách vzniká najčastejšie preto, že zmena krmiva prišla príliš rýchlo.
-  Ak je pes inak čulý, zvyčajne odznie za 1–3 dni. Vráť sa k starému krmivu a daj psovi dosť vody.
+  Ak je pes popri hnačke čulý a má chuť do jedla, hnačka zvyčajne prejde za 1–3 dni. Vráť sa k starému krmivu a daj psovi dosť vody.
   Nové granule potom zavádzaj pomalšie, počas 1–2 týždňov. K veterinárovi choď, ak hnačka trvá
   viac ako 2 dni, je v nej krv, pes zvracia alebo je apatický.
 key_points:
@@ -27,6 +27,7 @@ key_points:
   - "Granule nemusia byť vinníkom. Veterinári zapísali zmenu krmiva ako možnú príčinu hnačky len pri 4,6 % psov."
   - "Najčastejšia chyba: zmeniť granule zo dňa na deň a pri hnačke hneď skúšať ďalšie nové krmivo."
 changelog:
+  - "2026-11-24: Zrozumiteľnejšia veta v sumári o tom, kedy hnačka prejde sama"
   - "2026-11-23: Hlavná fotka a fotky do sekcií (ilustrácie vygenerované AI)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: „žerie“ nahradené"
@@ -45,9 +46,9 @@ sources:
 
 **Hnačka po zmene krmiva je krátkodobá tráviaca porucha, ktorá vznikne, keď si črevo psa ešte nestihlo zvyknúť na nové granule.** Pes má mäkkú až vodnatú stolicu, kaká častejšie a niekedy má plyny.
 
-==Od hnačky z infekcie, parazitov alebo zjedeného odpadu ju rozlíšiš podľa dvoch vecí: prišla krátko po zmene krmiva a pes je inak čulý, má chuť do jedla a pije.==
+==Od hnačky z infekcie, parazitov alebo zjedeného odpadu ju rozlíšiš podľa dvoch vecí: prišla krátko po zmene krmiva a pes je napriek hnačke čulý, má chuť do jedla a pije.==
 
-![Francúzsky buldoček s chuťou je granule z misky na podlahe kuchyne, vedľa stojí miska s vodou a v pozadí sa naňho pozerá žena s hrnčekom](img/blog/hnacka-po-novych-granulach-co-robit/pes-je.webp "Pes s hnačkou zo zmeny krmiva býva inak čulý, má chuť do jedla a pije. Ilustrácia vygenerovaná AI.")
+![Francúzsky buldoček s chuťou je granule z misky na podlahe kuchyne, vedľa stojí miska s vodou a v pozadí sa naňho pozerá žena s hrnčekom](img/blog/hnacka-po-novych-granulach-co-robit/pes-je.webp "Pri hnačke zo zmeny krmiva býva pes čulý, má chuť do jedla a pije. Ilustrácia vygenerovaná AI.")
 
 ## Prečo má pes po nových granulách hnačku?
 
