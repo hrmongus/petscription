@@ -23,7 +23,7 @@ key_points:
   - "Eliminačná diéta trvá aspoň 8 týždňov. Kratšia nemusí nič ukázať."
   - "Najčastejší omyl: test zo srsti. V štúdii označil za „alergickú“ aj umelú kožušinu."
 changelog:
-  - "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)"
+  - "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok, jedna ponuka v texte"
   - "2026-11-18: Prvá verzia"
@@ -129,7 +129,7 @@ Neznamená to, že hovädzie je samo osebe horšie. Psy ho jednoducho dlho a ča
 
 ==Medzinárodné smernice pre alergie psov to hovoria jasne: kožné ani krvné testy sa na zistenie alergie na krmivo nemajú používať.==
 
-Testy zo srsti a slín, ktoré si môžeš objednať domov, dopadli ešte horšie. V jednej štúdii označili za „alergické“ aj vzorky umelej kožušiny a obyčajného fyziologického roztoku.[^srst] Ak ti niekto ponúka „test intolerancií“ zo srsti, peniaze radšej daj za návštevu veterinára. Majitelia s výsledkom takého testu prichádzajú do ambulancie často a pes potom zbytočne drží prísnu diétu.
+Testy zo srsti a slín, ktoré si môžeš objednať domov, dopadli ešte horšie. V jednej štúdii označili za „alergické“ aj vzorky umelej kožušiny a obyčajného fyziologického roztoku.[^srst] Ak ti niekto ponúka „test intolerancií“ zo srsti, peniaze radšej daj za návštevu veterinára.
 
 ![Majiteľka drží v ruke obálku so vzorkou psej srsti a pozerá na výsledkový list s dlhým zoznamom potravín, pes sedí vedľa nej](placeholder "Testy zo srsti a slín označili za „alergickú“ aj umelú kožušinu.")
 

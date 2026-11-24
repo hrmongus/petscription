@@ -24,7 +24,7 @@ key_points:
   - "„Pravidlo 15 minút“ je praktický tip, nie veterinárna norma."
   - "Najčastejšia chyba: po odmietnutej miske dať psovi niečo lepšie. Tak sa naučí granule odmietať."
 changelog:
-  - "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)"
+  - "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)"
   - "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: „žerie“ nahradené"
@@ -82,7 +82,7 @@ Podľa čoho spoznáš naučenú vyberavosť:
 - je, keď pri ňom stojíš, prehováraš ho alebo ho kŕmiš z ruky,
 - problém trvá týždne, nielen prvé dni po zmene krmiva.
 
-Veterinár sa pri vyberavom psovi zvyčajne najprv spýta, čo všetko pes zje cez deň. Riešenie je totiž skôr na ľuďoch v domácnosti ako na psovi. Dohodnite sa, kto a koľko maškŕt dáva, a odpočítajte ich z dennej dávky.
+Veterinári preto pri zdravom vyberavom psovi riešia najprv maškrty a režim, nie krmivo. Riešenie je totiž skôr na ľuďoch v domácnosti ako na psovi. Dohodnite sa, kto a koľko maškŕt dáva, a odpočítajte ich z dennej dávky.
 
 [^tufts]: Petfoodology, Tufts University (Linder, 2017). Hranicu 10 % uvádza aj Kanadská akadémia veterinárnej výživy (VCA, 2025).
 [^pdsa]: PDSA, 2018.
@@ -132,7 +132,7 @@ Chuť do jedla môžu psovi vziať choroby zubov a ďasien, bolesť, infekcia s 
 - slintá, má červené alebo krvácajúce ďasná, chytá sa za papuľu alebo mu granule vypadávajú z papule,
 - pred chvíľou dostal nový liek.
 
-Pes, ktorý granule vezme do papule a hneď ich pustí, často nie je vyberavý. Môžu ho bolieť zuby. Pri takom psovi v ambulancii často nájdeme zubný kameň alebo zapálené ďasná. Takého psa nevychovávaj, ale objednaj ho na prehliadku.
+Pes, ktorý granule vezme do papule a hneď ich pustí, často nie je vyberavý. Môžu ho bolieť zuby. Choroby zubov a ďasien sú u psov časté a veterinár ich pri prehliadke ľahko odhalí. Takého psa nevychovávaj, ale objednaj ho na prehliadku.
 
 ![Veterinárka pri prehliadke pozerá psovi do papule na zuby a ďasná, pes sedí na vyšetrovacom stole](placeholder "Bolesť zubov je častý dôvod, prečo pes granule odmieta alebo ich púšťa z papule.")
 

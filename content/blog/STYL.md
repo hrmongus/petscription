@@ -52,10 +52,7 @@ Najväčší problém prvých konceptov (review 2026-11-18): text znel ako doslo
 - **„pes“ / „psík“:** väčšinou „pes“. „Psík“ občas smieš, keď to sedí (napr. „ak psíka začalo trápiť svrbenie“), nie v každej vete. Iné zdrobneniny nie (psíček, mňamka, papať). (používateľ, 2026-11-18)
 - **„jesť“, nie „žrať“:** pri psovi píš „je“, „zje“, „má chuť do jedla“, nikdy „žerie“. Keď by „je“ splývalo so slovesom byť, preformuluj („je čulý a má chuť do jedla“). (používateľ, 2026-11-18)
 
-- **Autorkou je veterinárka (MVDr. Marcela Glezgová).** V každom jej článku nechaj 2–3 krátke „hinty“ z veterinárnej praxe. Dva typy (redakcia, 2026-11-24):
-  - **všeobecná prax podložená zdrojom článku:** „vo veterinárnej praxi sa bežne odporúča…“, „veterinári preto…“;
-  - **pohľad z ambulancie** („v ambulancii sa často stretávame…“, „pri takom psovi často nájdeme…“): smieš, ale autorka ho musí potvrdiť pri schvaľovaní. Pri odovzdaní článku tieto vety vypíš redakcii.
-  - Nikdy nie vymyslené príbehy konkrétnych pacientov, citáty ani čísla z „našej praxe“.
+- **Autorkou je veterinárka (MVDr. Marcela Glezgová).** V každom jej článku nechaj aspoň 2 krátke „hinty“ z veterinárnej praxe, len **všeobecné a podložené zdrojom článku**: „vo veterinárnej praxi sa bežne odporúča…“, „veterinári preto…“, „veterinár pri tom posudzuje…“. Nepíš vety za autorku („v ambulancii sa stretávame“, „často nájdeme“), príbehy pacientov, citáty ani čísla z „našej praxe“. (redakcia, 2026-11-24)
 
 ## Slová a formulácie
 
@@ -102,3 +99,4 @@ _Sem zapisuj všeobecný feedback v poradí, ako prišiel: dátum, čo používa
 - **2026-11-24, redakcia (sumár článku o hnačke):** veta „Ak je pes inak čulý, zvyčajne odznie za 1–3 dni.“ nedávala zmysel (nejasné, čo odznie; „inak čulý“ znie ako preklad). → „čulý“ nahradené v sekcii Jazyk, opravené vo všetkých konceptoch.
 - **2026-11-24, redakcia (článok o hnačke):** „Vždy vysvetliť v skratke ten zdroj, prečo je relevantný… nech to znie prirodzene a odborne.“ → pravidlo o predstavení zdroja v sekcii Jazyk, uplatnené vo všetkých konceptoch.
 - **2026-11-24, redakcia:** „Autorom týchto blogov bude veterinárka, texty by mali obsahovať malé hinty, že to píše veterinárka.“ Redakcia povolila aj vety z pohľadu ambulancie s potvrdením autorky. → pravidlo v sekcii Tón a hlas, uplatnené v 9 konceptoch autorky.
+- **2026-11-24, redakcia:** hinty len všeobecné (typ A), aspoň 2 v každom článku; vety z pohľadu ambulancie (typ B) vymazať. → pravidlo v sekcii Tón a hlas upravené.

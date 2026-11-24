@@ -23,7 +23,7 @@ key_points:
   - "Staré a nové granule miešaj podľa gramov, nie podľa odmerky."
   - "Najčastejšia chyba: držať sa kalendára. Ďalší krok urob, až keď má pes pevnú stolicu."
 changelog:
-  - "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)"
+  - "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)"
   - "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
   - "2026-11-24: Jazyková korektúra (výdatnosť namiesto energie v 100 g, prirodzenejšie formulácie) a spresnenie odporúčania Cornellu na 1–2 týždne"
   - "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)"
@@ -66,7 +66,7 @@ Tabuľka ukazuje odporúčania dvoch amerických univerzít. Cornellova univerzi
 | Cornell, Diarrhea | 1–2 týždne | pes, ktorý mal po zmene krmiva hnačku |
 | Tufts Petfoodology, 2019 | 4–6 týždňov | citlivé zvieratá |
 
-Niektoré psy zvládnu zmenu krmiva aj zo dňa na deň. Vopred však nevieš, či je tvoj pes medzi nimi. ==Týždeň je preto rozumný začiatok.== Majitelia sa veterinára často pýtajú, či môžu nové granule dať rovno. Odpoveď závisí od psa, ale týždeň je bezpečná voľba. Ak by pes zvládol aj rýchlejšiu zmenu, stratíš len pár dní. Ak nie, predídeš hnačke.
+Niektoré psy zvládnu zmenu krmiva aj zo dňa na deň. Vopred však nevieš, či je tvoj pes medzi nimi. ==Týždeň je preto rozumný začiatok.== Ak by pes zvládol aj rýchlejšiu zmenu, stratíš len pár dní. Ak nie, predídeš hnačke.
 
 Prechod spomaľ, ak:
 
@@ -135,7 +135,7 @@ Súvislosť potvrdzujú aj záznamy z veterinárnych ambulancií. Psy, ktoré ne
 
 1. **Zisti dennú dávku oboch krmív v gramoch.** Nové granule sú inak výdatné. Percentá preto počítaj z dávky každého krmiva zvlášť.
 2. **Kúp nové granule skôr, než ti dôjdu staré.** Počas 7-dňového prechodu minieš ešte asi 3 plné denné dávky starých granúl.
-3. **Odvažuj porcie na kuchynskej váhe.** Rovnaká odmerka dvoch krmív nemá rovnakú hmotnosť ani energiu.
+3. **Odvažuj porcie na kuchynskej váhe.** Rovnaká odmerka dvoch krmív nemá rovnakú hmotnosť ani energiu. Veterinárni špecialisti na výživu preto radia krmivo vážiť, nie odmeriavať.
 4. **Začni malým podielom.** Prvý deň daj asi 10 % nových granúl, druhý deň 25 %.
 5. **Pridávaj, len keď je stolica pevná.** Na 50 % zostaň 2 dni. Potom pokračuj na 75 %, 90 % a 100 %.
 6. **Nepridávaj nič nové.** ==Pri nových maškrtách, zvyškoch zo stola alebo doplnkoch nespoznáš, čo spôsobilo mäkšiu stolicu.==

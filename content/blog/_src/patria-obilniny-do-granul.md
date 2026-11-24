@@ -25,7 +25,7 @@ key_points:
   - "Pri ochorení srdca sa podozrenie presunulo od chýbajúceho obilia k strukovinám, hlavne k hrachu a šošovici."
   - "Najčastejší mýtus: pes je mäsožravec ako vlk, a preto obilniny nestrávi."
 changelog:
-  - "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)"
+  - "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)"
   - "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
@@ -85,9 +85,9 @@ Grónsky pes | 2,5
 
 ## Sú granule bez obilia zdravšie?
 
-**Pre zdravého psa nie. Žiadna štúdia zatiaľ nepreukázala, že by mu granule bez obilia zdravotne pomáhali.** Veterinárni špecialisti na výživu z Tuftsovej univerzity v USA ich označili za marketing, nie za riešenie zdravotných problémov.[^marketing]
+**Pre zdravého psa nie. Žiadna štúdia zatiaľ nepreukázala, že by mu granule bez obilia zdravotne pomáhali.** Veterinárni špecialisti na výživu z Tuftsovej univerzity v USA ich označili za marketing, nie za riešenie zdravotných problémov. Veterinári preto zdravému psovi granule bez obilia bežne neodporúčajú.[^marketing]
 
-Najčastejší dôvod, prečo ľudia kupujú granule bez obilia, je alergia. S touto otázkou prichádzajú majitelia často aj k veterinárovi. Údaje ho však nepodporujú. ==Psy s alergiou na krmivo reagujú častejšie na mäso a mliečne výrobky ako na obilniny.==[^alergeny]
+Najčastejší dôvod, prečo ľudia kupujú granule bez obilia, je alergia. Údaje ho však nepodporujú. ==Psy s alergiou na krmivo reagujú častejšie na mäso a mliečne výrobky ako na obilniny.==[^alergeny]
 
 ::: graf
 nazov: Koľko psov s alergiou na krmivo reagovalo na danú surovinu

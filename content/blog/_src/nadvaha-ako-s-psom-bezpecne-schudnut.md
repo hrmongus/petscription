@@ -23,7 +23,7 @@ key_points:
   - "V praxi psy chudnú pomalšie, v priemere o 0,9 % týždenne."
   - "Najčastejšia chyba: rátať dávku zo súčasnej hmotnosti alebo len ubrať granule a maškrty nechať tak."
 changelog:
-  - "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)"
+  - "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
@@ -78,7 +78,7 @@ Veterinári preto berú chudnutie ako liečbu, nie ako diétu na skúšku. Pes s
 
 Nadváha je bežnejšia, ako si majitelia myslia. V jednej britskej štúdii malo nadváhu 38,9 % psov a ďalších 20,4 % bolo obéznych.[^vyskyt]
 
-Ideálne štíhly pes môže majiteľovi pripadať príliš chudý.[^wsava] Vo veterinárnej ambulancii sa s tým stretávame často. Ak si nie si istý, nechaj postavu psa ohodnotiť pri najbližšej návšteve veterinára a zapíš si číslo.
+Ideálne štíhly pes môže majiteľovi pripadať príliš chudý.[^wsava] Ak si nie si istý, nechaj postavu psa ohodnotiť pri najbližšej návšteve veterinára a zapíš si číslo.
 
 [^bcs]: Hodnotenie postavy (BCS) podľa WSAVA, 2011. Opis bodov v tabuľke podľa WSAVA Body Condition Score, 2013. Odhad nadváhy podľa pravidla Cornellovej univerzity, 2024.
 [^vyskyt]: Courcier a kol., 2010: 696 psov v 5 ambulanciách. Vo veterinárnych záznamoch je nadváha zapísaná len pri 7,1 % psov (Pegram a kol., 2021). Autori to vysvetľujú tým, že ju veterinári často nezapíšu.
@@ -173,7 +173,7 @@ Najlepšie výsledky prináša menšia dávka spolu s pohybom. Samotný pohyb be
 4. **Odvažuj granule na kuchynskej váhe.** Odmerka je nepresná a pri menšej dávke sa chyba prejaví rýchlo.
 5. **Zapisuj všetko, čo pes zje.** Maškrty drž pod 10 % dennej energie a odpočítaj ich z granúl.
 6. **Pridaj pravidelný pohyb.** Začni prechádzkami alebo plávaním a predlžuj ich postupne.
-7. **Váž psa aspoň každé 2 týždne.** Vždy na tej istej váhe.[^vazenie]
+7. **Váž psa aspoň každé 2 týždne.** Vždy na tej istej váhe. Pravidelné váženie je bežná súčasť veterinárneho plánu chudnutia.[^vazenie]
 8. **Uprav plán podľa tempa.** Cieľ je 1–2 % týždenne. Keď je tempo iné, uprav dávku alebo choď k veterinárovi.
 
 ![Majiteľ drží psa strednej veľkosti v náručí na osobnej váhe v kúpeľni a vedľa na papieri zapisuje dátum a hmotnosť do tabuľky](placeholder "Malého a stredného psa odvážiš doma: zváž sa s ním v náručí a odpočítaj svoju hmotnosť.")
@@ -185,7 +185,7 @@ Najlepšie výsledky prináša menšia dávka spolu s pohybom. Samotný pohyb be
 
 **Keď pes chudne pomalšie ako 1 % týždenne, uber z dennej dávky asi 10 %. Keď chudne rýchlejšie ako 2 % týždenne alebo sa mu pridajú ťažkosti, choď k veterinárovi.**[^uprava]
 
-Skôr ako dávku znížiš, hľadaj skryté kalórie. Pri kontrolách v ambulancii býva práve jedlo, o ktorom majiteľ nevie, častým dôvodom, prečo pes prestal chudnúť. Maškrty od ostatných v rodine, jedlo z misky iného zvieraťa, niečo zjedené na prechádzke. ==Ak pes nechudne ani po úprave dávky a plán dodržiavaš, nechaj ho vyšetriť.== Veterinár môže vylúčiť napríklad slabšiu činnosť štítnej žľazy.[^stitna]
+Skôr ako dávku znížiš, hľadaj skryté kalórie. Maškrty od ostatných v rodine, jedlo z misky iného zvieraťa, niečo zjedené na prechádzke. ==Ak pes nechudne ani po úprave dávky a plán dodržiavaš, nechaj ho vyšetriť.== Veterinár môže vylúčiť napríklad slabšiu činnosť štítnej žľazy.[^stitna]
 
 K veterinárovi choď, ak:
 

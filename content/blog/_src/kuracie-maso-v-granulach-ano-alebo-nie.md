@@ -22,7 +22,7 @@ key_points:
   - "Na nápis „s kuracím“ stačia v krmive 4 % kuracieho mäsa, na „bohaté na kuracie“ 14 %."
   - "Častý omyl: „hydina“ na obale môže znamenať aj kuracie."
 changelog:
-  - "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)"
+  - "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: upravený opis čerstvého mäsa v tabuľke"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
@@ -84,7 +84,7 @@ Ryža | 2
 
 ^ Jeden pes môže reagovať na viac surovín, preto je súčet vyšší ako 100 %.
 
-Percentá platia len pre psov, ktorí už alergiu na krmivo majú, nie pre všetkých psov. Alergia na krmivo je u psov pomerne zriedkavá. Spoľahlivo ju neurčí ani krvný test, ani test zo srsti. Potvrdí ju len eliminačná diéta u veterinára. V ambulancii sa často stretávame so psami, ktorým majiteľ kuracie vyradil zbytočne, hoci svrbenie spôsobovalo niečo iné.
+Percentá platia len pre psov, ktorí už alergiu na krmivo majú, nie pre všetkých psov. Alergia na krmivo je u psov pomerne zriedkavá. Spoľahlivo ju neurčí ani krvný test, ani test zo srsti. Potvrdí ju len eliminačná diéta u veterinára.
 
 ==Ak psa trápi svrbenie, kuracie nie je jediný ani najčastejší podozrivý.== Vyraď ho natrvalo až vtedy, keď veterinár potvrdí, že alergiu spôsobuje práve kuracie.
 
@@ -156,7 +156,7 @@ Koľko kuraťa musí byť v krmive podľa nápisu na obale:[^nazvy]
 
 **Kuracie vyraď len vtedy, keď veterinár potvrdí alergiu naň eliminačnou diétou.** Potom sa mu vyhýbaj dôsledne, vo všetkých formách.
 
-1. **Potvrď alergiu u veterinára.** Eliminačná diéta trvá aspoň 8 týždňov. Potom sa pes vráti ku kuraciemu a ukáže sa, či alergiu spôsobuje. Bez toho kuracie vyraďuješ zbytočne a skutočnú príčinu hľadáš dlhšie.
+1. **Potvrď alergiu u veterinára.** Vo veterinárnej praxi je eliminačná diéta jediný spoľahlivý spôsob, ako alergiu na krmivo potvrdiť. Trvá aspoň 8 týždňov. Potom sa pes vráti ku kuraciemu a ukáže sa, či alergiu spôsobuje. Bez toho kuracie vyraďuješ zbytočne a skutočnú príčinu hľadáš dlhšie.
 2. **Čítaj celé zloženie, nie názov.** Hľadaj slová kuracie, kurča, kuracia múčka, kuracia pečeň, kuracie srdcia, kurací vývar a hydrolyzovaná kuracia bielkovina.
 3. **Vyhni sa súhrnným názvom.** „Hydina“, „hydinová múčka“ aj „mäso a vedľajšie produkty živočíšneho pôvodu“ môžu obsahovať kuracie. Vyber krmivo, ktoré každé mäso pomenuje.
 4. **Spýtaj sa veterinára na kurací tuk a vajcia.** Alergiu spôsobuje bielkovina a tej má tuk málo. Dobré štúdie o tom, či kurací tuk alergickému psovi vadí, však nemáme. Slepačie vajcia majú iné bielkoviny ako kuracie mäso a pes ich môže znášať.

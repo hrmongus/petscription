@@ -27,7 +27,7 @@ key_points:
   - "Granule nemusia byť vinníkom. Veterinári zapísali zmenu krmiva ako možnú príčinu hnačky len pri 4,6 % psov."
   - "Najčastejšia chyba: zmeniť granule zo dňa na deň a pri hnačke hneď skúšať ďalšie nové krmivo."
 changelog:
-  - "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)"
+  - "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)"
   - "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
   - "2026-11-24: Spresnené, že 2–3 dni platia pre psa na ľahkej strave (overené v zdroji Cornell)"
   - "2026-11-24: Jazyková korektúra (prirodzenejšie formulácie, úvodná veta sekcie o veterinárovi, kroky, časté otázky), nová záverečná ponuka"
@@ -120,7 +120,7 @@ Ak hnačka prišla presne so zmenou granúl, súvislosť je pravdepodobná. Ak v
 
 ==Šteňa, starý pes, pes s iným ochorením alebo pes na liekoch patrí s hnačkou k veterinárovi vždy.== Platí to najmä pri protizápalových liekoch.[^pdsa] Ak máš podozrenie, že pes zjedol niečo jedovaté, volaj veterinára hneď.
 
-Keď zavoláš, veterinár sa zvyčajne spýta, ako dlho hnačka trvá, či pes zvracia, pije a ako sa správa. Všímaj si to preto už doma.
+Veterinár pri hnačke posudzuje hlavne to, ako dlho trvá, či pes zvracia, pije a ako sa správa. Všímaj si to preto už doma.
 
 ![Žena sedí na gauči a s ustaraným výrazom telefonuje, francúzsky buldoček leží pri jej nohách na deke](img/blog/hnacka-po-novych-granulach-co-robit/telefonat.webp "Pri krvi, zvracaní alebo apatii nečakaj, kým hnačka prejde sama. Zavolaj veterinárovi. Ilustrácia vygenerovaná AI.")
 
@@ -148,7 +148,7 @@ Citlivému psovi môžeš každý krok prechodu predĺžiť o pár dní. ==Ak sa
 
 **Pomôžu pri náhlej hnačke antibiotiká?** Pri nekomplikovanej hnačke väčšinou nie. Veľká britská štúdia nenašla rozdiel v zotavení psov s antibiotikami a bez nich.[^atb] Autori odporúčajú antibiotiká pri hnačke obmedziť.
 
-**Môžem psovi dať lieky na hnačku pre ľudí?** Bez porady s veterinárom nie. Vo veterinárnej ambulancii sa často stretávame so psami, ktorým majiteľ dal liek z domácej lekárničky. Psy potrebujú iné dávky a nie každý liek je pre ne vhodný.
+**Môžem psovi dať lieky na hnačku pre ľudí?** Bez porady s veterinárom nie. Psy potrebujú iné dávky a nie každý liek je pre ne vhodný.
 
 **Mám nové granule po hnačke úplne vyradiť?** Nie hneď, jedna hnačka po rýchlom prechode ešte neznamená, že pes krmivo neznáša. Často stačí pomalší prechod. Ak sa hnačka vracia aj pri pomalom prechode, poraď sa s veterinárom.
 

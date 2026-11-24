@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-24 15:22",
+ "built": "2026-11-24 15:28",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -91,7 +91,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "img/blog/ako-spravne-prejst-na-nove-granule/hero.webp",
-   "words": 1182,
+   "words": 1172,
    "description": "Na nové granule prechádzaj postupne aspoň 7 dní. Nové krmivo pridávaj po krokoch 10, 25, 50, 75 a 90 %. Citlivý pes potrebuje 2 týždne aj viac.",
    "id": "F1",
    "category": "Problémy",
@@ -157,7 +157,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
-      "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)",
+      "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)",
       "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)",
       "2026-11-24: Jazyková korektúra (výdatnosť namiesto energie v 100 g, prirodzenejšie formulácie) a spresnenie odporúčania Cornellu na 1–2 týždne"
      ]
@@ -420,7 +420,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1182 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1172 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -448,7 +448,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Ako dlho má trvať prechod na nové granule?",
      "kind": "main",
-     "words": 208,
+     "words": 188,
      "numbers": 9,
      "question": true,
      "firstBold": true,
@@ -487,7 +487,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Ako prejsť na nové granule: 7 krokov",
      "kind": "main",
-     "words": 137,
+     "words": 147,
      "numbers": 9,
      "question": false,
      "firstBold": true,
@@ -655,7 +655,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "img/blog/cerstve-maso-dehydrovane-maso-masova-mucka/hero.webp",
-   "words": 1387,
+   "words": 1381,
    "description": "Surové mäso je zo 67–75 % voda, múčka z menej ako 10 %. Zloženie sa radí podľa hmotnosti pri miešaní, preto je čerstvé mäso na obale často prvé.",
    "id": "A4",
    "category": "Zloženie a suroviny",
@@ -721,7 +721,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
-      "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)",
+      "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)",
       "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)",
       "2026-11-24: Vymazané vety o porovnaní s konzervou, zvýraznený krok 2 (porovnávaj len rovnakú formu)"
      ]
@@ -985,7 +985,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1387 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1381 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -1078,7 +1078,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Ako čítať mäso v zložení granúl: 5 krokov",
      "kind": "main",
-     "words": 169,
+     "words": 163,
      "numbers": 9,
      "question": false,
      "firstBold": true,
@@ -1942,7 +1942,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "img/blog/hnacka-po-novych-granulach-co-robit/hero.webp",
-   "words": 1137,
+   "words": 1121,
    "description": "Hnačka po nových granulách zvyčajne odznie za 1–3 dni. Vráť sa k starému krmivu a prechod spomaľ. K veterinárovi pri krvi, zvracaní, apatii alebo po 2 dňoch.",
    "id": "F2",
    "category": "Problémy",
@@ -2008,7 +2008,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
-      "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)",
+      "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)",
       "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)",
       "2026-11-24: Spresnené, že 2–3 dni platia pre psa na ľahkej strave (overené v zdroji Cornell)"
      ]
@@ -2271,7 +2271,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1137 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1121 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -2325,7 +2325,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Kedy ísť s hnačkou po zmene krmiva k veterinárovi?",
      "kind": "main",
-     "words": 218,
+     "words": 217,
      "numbers": 5,
      "question": true,
      "firstBold": true,
@@ -2351,7 +2351,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Časté otázky",
      "kind": "faq",
-     "words": 194,
+     "words": 179,
      "numbers": 4,
      "question": false,
      "firstBold": true,
@@ -2493,7 +2493,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "placeholder",
-   "words": 1276,
+   "words": 1269,
    "description": "Varenú kukuricu pes dobre strávi, škrob z nej z viac ako 98 %. Problém je, keď v granulách nahrádza mäso alebo keď je zrno plesnivé.",
    "id": "A2",
    "category": "Zloženie a suroviny",
@@ -2559,7 +2559,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
-      "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)",
+      "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)",
       "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)",
       "2026-11-20: Autorka MVDr. Marcela Glezgová"
      ]
@@ -2826,7 +2826,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1276 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1269 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -2880,7 +2880,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Sú psy často alergické na kukuricu?",
      "kind": "main",
-     "words": 107,
+     "words": 100,
      "numbers": 1,
      "question": true,
      "firstBold": true,
@@ -3282,7 +3282,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "placeholder",
-   "words": 1598,
+   "words": 1593,
    "description": "Kuracie mäso je pre väčšinu psov dobrá bielkovina. Vyhýbaj sa mu len pri potvrdenej alergii. Tá sa týka 15 % psov s alergiou na krmivo.",
    "id": "A3",
    "category": "Zloženie a suroviny",
@@ -3348,7 +3348,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
-      "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)",
+      "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)",
       "2026-11-20: Autorka MVDr. Marcela Glezgová",
       "2026-11-18: upravený opis čerstvého mäsa v tabuľke"
      ]
@@ -3573,7 +3573,7 @@ window.GRANULA_POSTS = {
      "id": "atomic",
      "level": "info",
      "ok": true,
-     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 8)",
+     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 7)",
      "details": []
     },
     {
@@ -3615,7 +3615,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1598 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1593 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -3656,7 +3656,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Ako často sú psy alergické na kuracie?",
      "kind": "main",
-     "words": 109,
+     "words": 92,
      "numbers": 2,
      "question": true,
      "firstBold": true,
@@ -3708,7 +3708,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Kedy sa kuraciemu mäsu vyhnúť: 5 krokov",
      "kind": "main",
-     "words": 184,
+     "words": 196,
      "numbers": 1,
      "question": false,
      "firstBold": true,
@@ -3954,7 +3954,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "placeholder",
-   "words": 1408,
+   "words": 1391,
    "description": "Pes s nadváhou má chudnúť o 1–2 % hmotnosti týždenne. Dávku počítaj z ideálnej hmotnosti, maškrty drž pod 10 % energie a psa váž každé 2 týždne.",
    "id": "F11",
    "category": "Problémy",
@@ -4020,7 +4020,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
-      "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)",
+      "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)",
       "2026-11-20: Autorka MVDr. Marcela Glezgová",
       "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
      ]
@@ -4287,7 +4287,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1408 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1391 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -4315,7 +4315,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Ako zistíš, či má pes nadváhu?",
      "kind": "main",
-     "words": 232,
+     "words": 224,
      "numbers": 23,
      "question": true,
      "firstBold": true,
@@ -4367,7 +4367,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Ako s psom schudnúť: 8 krokov",
      "kind": "main",
-     "words": 147,
+     "words": 155,
      "numbers": 7,
      "question": false,
      "firstBold": true,
@@ -4380,7 +4380,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo robiť, keď pes prestane chudnúť?",
      "kind": "main",
-     "words": 168,
+     "words": 151,
      "numbers": 6,
      "question": true,
      "firstBold": true,
@@ -4627,7 +4627,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
-      "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)",
+      "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)",
       "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)",
       "2026-11-20: Autorka MVDr. Marcela Glezgová"
      ]
@@ -5284,7 +5284,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "placeholder",
-   "words": 1544,
+   "words": 1546,
    "description": "Zdravý pes nové granule často odmieta zo strachu z neznámeho jedla. V štúdii to prešlo do 8–9 dní. Ak neje viac ako 24 hodín, patrí k veterinárovi.",
    "id": "F3",
    "category": "Problémy",
@@ -5350,7 +5350,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
-      "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)",
+      "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)",
       "2026-11-24: „čulý“ nahradené prirodzenejšími slovami (správa sa normálne, aktívny)",
       "2026-11-20: Autorka MVDr. Marcela Glezgová"
      ]
@@ -5620,7 +5620,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1544 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1546 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -5661,7 +5661,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Ako maškrty a jedlo zo stola naučia psa byť vyberavý?",
      "kind": "main",
-     "words": 191,
+     "words": 190,
      "numbers": 1,
      "question": true,
      "firstBold": true,
@@ -5687,7 +5687,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Kedy je nechuť do jedla zdravotný problém?",
      "kind": "main",
-     "words": 214,
+     "words": 217,
      "numbers": 3,
      "question": true,
      "firstBold": true,
@@ -5907,7 +5907,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "placeholder",
-   "words": 1116,
+   "words": 1100,
    "description": "Alergiu na krmivo má len 9–40 % psov, ktorých trápi svrbenie. Potvrdí ju eliminačná diéta aspoň 8 týždňov, nie test z krvi ani zo srsti.",
    "id": "F6",
    "category": "Problémy",
@@ -5973,7 +5973,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
-      "2026-11-24: Hinty z veterinárnej praxe (autorka ich potvrdí pri schvaľovaní)",
+      "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)",
       "2026-11-20: Autorka MVDr. Marcela Glezgová",
       "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok, jedna ponuka v texte"
      ]
@@ -6240,7 +6240,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1116 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1100 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -6307,7 +6307,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Odhalí alergiu na krmivo test z krvi alebo zo srsti?",
      "kind": "main",
-     "words": 112,
+     "words": 96,
      "numbers": 0,
      "question": true,
      "firstBold": true,
