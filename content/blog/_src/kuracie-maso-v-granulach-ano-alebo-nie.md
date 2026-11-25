@@ -11,7 +11,7 @@ hero: placeholder
 hero_alt: "Majiteľ drží v ruke vrece granúl a číta zloženie na zadnej strane, prstom ukazuje na riadok so slovom kuracie, pri nohách mu sedí pes strednej veľkosti"
 hero_caption: "Pri kuracom mäse rozhoduje, či ho tvoj pes znáša a ako je napísané na obale."
 published: 2026-11-18
-updated: 2026-11-20
+updated: 2026-11-24
 tldr: >
   Kuracie mäso je pre väčšinu psov kvalitná a dobre stráviteľná bielkovina. Vyhnúť sa mu treba len
   vtedy, keď veterinár potvrdí alergiu na kuracie. Na kuracie reaguje 15 % psov s alergiou na krmivo,
@@ -22,6 +22,7 @@ key_points:
   - "Na nápis „s kuracím“ stačia v krmive 4 % kuracieho mäsa, na „bohaté na kuracie“ 14 %."
   - "Častý omyl: „hydina“ na obale môže znamenať aj kuracie."
 changelog:
+  - "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: upravený opis čerstvého mäsa v tabuľke"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
@@ -54,7 +55,7 @@ V jednej štúdii sa z kuracieho mäsa strávilo 73–76 % sušiny. Bielkoviny z
 
 Kuracie je bežne dostupné, ľahko sa spracúva a psy ho zvyčajne radi jedia. Psy ho však jedia aj veľmi často. Alergia vzniká na bielkovinu, ktorú pes už pozná. Ak je pes na alergie náchylný, môže ju preto dostať práve na kuracie. ==Neznamená to, že kuracie spôsobuje alergiu častejšie ako iné mäso.==
 
-Ak tvoj pes kuracie znáša, nemáš dôvod ho vyraďovať. Sleduj radšej, v akej forme je kuracie v zložení a na akom mieste.
+Z pohľadu veterinára platí: ak tvoj pes kuracie znáša, nemáš dôvod ho vyraďovať. Sleduj radšej, v akej forme je kuracie v zložení a na akom mieste.
 
 [^oba-maso]: Oba a kol., Journal of Animal Science, 2019. Surové, parené a sterilizované kuracie mäso: stráviteľnosť sušiny 73–76 %, organickej hmoty 78–81 %. Parené kuracie mäso malo skutočnú stráviteľnosť všetkých nevyhnutných aminokyselín nad 88 %. Štúdia testovala samostatné suroviny, nie hotové granule. Stráviteľnosť merala na kohútoch, čo je zaužívaný laboratórny model pre psy a mačky, ale nie priamo pes. Financoval ju výrobca krmív, autori konflikt záujmov neuvádzajú.
 
@@ -155,7 +156,7 @@ Koľko kuraťa musí byť v krmive podľa nápisu na obale:[^nazvy]
 
 **Kuracie vyraď len vtedy, keď veterinár potvrdí alergiu naň eliminačnou diétou.** Potom sa mu vyhýbaj dôsledne, vo všetkých formách.
 
-1. **Potvrď alergiu u veterinára.** Eliminačná diéta trvá aspoň 8 týždňov. Potom sa pes vráti ku kuraciemu a ukáže sa, či alergiu spôsobuje. Bez toho kuracie vyraďuješ zbytočne a skutočnú príčinu hľadáš dlhšie.
+1. **Potvrď alergiu u veterinára.** Vo veterinárnej praxi je eliminačná diéta jediný spoľahlivý spôsob, ako alergiu na krmivo potvrdiť. Trvá aspoň 8 týždňov. Potom sa pes vráti ku kuraciemu a ukáže sa, či alergiu spôsobuje. Bez toho kuracie vyraďuješ zbytočne a skutočnú príčinu hľadáš dlhšie.
 2. **Čítaj celé zloženie, nie názov.** Hľadaj slová kuracie, kurča, kuracia múčka, kuracia pečeň, kuracie srdcia, kurací vývar a hydrolyzovaná kuracia bielkovina.
 3. **Vyhni sa súhrnným názvom.** „Hydina“, „hydinová múčka“ aj „mäso a vedľajšie produkty živočíšneho pôvodu“ môžu obsahovať kuracie. Vyber krmivo, ktoré každé mäso pomenuje.
 4. **Spýtaj sa veterinára na kurací tuk a vajcia.** Alergiu spôsobuje bielkovina a tej má tuk málo. Dobré štúdie o tom, či kurací tuk alergickému psovi vadí, však nemáme. Slepačie vajcia majú iné bielkoviny ako kuracie mäso a pes ich môže znášať.

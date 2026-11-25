@@ -12,7 +12,7 @@ hero: placeholder
 hero_alt: "Dve misky vedľa seba na kuchynskej linke: v jednej suché granule, v druhej varené jedlo s kúskami mäsa, mrkvy a šošovice. Bez obalov, log a nápisov, za miskami sedí pes strednej veľkosti."
 hero_caption: "Suché granule a varené jedlo z mrazničky. Líšia sa hlavne vodou, cenou a skladovaním."
 published: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-24
 tldr: >
   Granula a PsiBufet sa líšia hlavne formou. PsiBufet je varené jedlo v mrazených kapsičkách
   so 69–74 % vody, Granula sú suché granule. V príkladoch PsiBufetu stojí deň kŕmenia 3,35–4,65 €,
@@ -24,6 +24,7 @@ key_points:
   - "V príkladoch PsiBufetu stojí deň 3,35–4,65 €. Rovnaká energia z našich granúl vyjde na 0,96–1,83 €."
   - "Najčastejšia chyba: porovnávať cenu za kilogram. Čerstvé jedlo má asi 70 % vody, preto porovnávaj cenu za deň."
 changelog:
+  - "2026-11-24: Zdroje pri prvej zmienke predstavené (kto to je a prečo mu veriť)"
   - "2026-11-21: Prvá verzia"
 sources:
   - "Naše čerstvé jedlá (menu a odkazy na zloženie) – PsiBufet, stav k 21. 11. 2026 | https://psibufet.com/sk-sk/nasze-jedzenie/swieze-posilki"
@@ -101,7 +102,7 @@ Ak má tvoj pes potvrdenú alergiu na kuracie, vybrať si vieš pri oboch značk
 
 **Väčšine psov šošovica nevadí. Pri strukovinách vysoko v zložení sa však skúma súvislosť s ochorením srdca (DCM), ktorá zatiaľ nie je dokázaná.** Šošovica dodáva škrob, vlákninu a trochu bielkovín. PsiBufet ju v menu používa práve kvôli vláknine.
 
-Americký úrad FDA dostal do roku 2022 hlásenia o 1 382 psoch s DCM. Väčšina krmív z hlásení obsahovala hrach alebo šošovicu.[^fda] Príčinu úrad nepotvrdil. Veterinárna nutričná špecialistka Lisa M. Freeman z Tufts radí opatrnosť, keď sú strukoviny medzi prvými 10 zložkami alebo je ich v zložení viac druhov.[^tufts]
+Americký úrad FDA dostal do roku 2022 hlásenia o 1 382 psoch s DCM. Väčšina krmív z hlásení obsahovala hrach alebo šošovicu.[^fda] Príčinu úrad nepotvrdil. Lisa M. Freeman, veterinárna špecialistka na výživu z Tuftsovej univerzity v USA, radí opatrnosť, keď sú strukoviny medzi prvými 10 zložkami alebo je ich v zložení viac druhov.[^tufts]
 
 V PsiBufete je šošovica v 8 z 9 menu, vždy medzi prvými siedmimi zložkami. V 4 menu je spolu s hrachom alebo cícerom. Naše granule sú bez hrachu a strukovín. ==Zdravému psovi strukoviny meniť krmivo nenútia. Ak však má pes DCM alebo zmeny na srdci, krmivo vyber s veterinárom.==
 

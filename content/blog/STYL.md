@@ -35,7 +35,22 @@ Najväčší problém prvých konceptov (review 2026-11-18): text znel ako doslo
 - **Žiadne zbytočné slová v nadpisoch** („Ako často je za svrbením psa…“ → „Ako často spôsobuje svrbenie alergia na krmivo?“).
 - **Rozpätia s pomlčkou:** „1–2 %“, „9–40 %“, nie „1 až 2 %“. V zozname daj číslo na začiatok: „1–2 % zo všetkých psov…“.
 - **Kroky začínaj jednoduchým slovesom:** „Dodržuj diétu“, „Nasaď späť pôvodné krmivo“, nie „Krm len diétu“, „Vráť pôvodné krmivo“.
+- **Žiadna „slovenská maďarčina“:** kroky a rady nepíš strnulým rozkazom, ktorý znie ako preklad. Píš ich, ako by to povedal človek. Slovosled vždy podľa slovenskej gramatiky (redakcia, 2026-11-24):
+  - „Vráť sa k starému krmivu.“ → „Daj psovi znova staré krmivo.“
+  - „Daj psovi stále čerstvú vodu.“ → „Uisti sa, že má pes stále čerstvú vodu.“
+  - „Začni nový prechod pomalšie.“ → „Na nové granule prechádzaj pomaly.“
+  - „Ak pes je viackrát denne…“ → „Ak psa kŕmiš viackrát denne…“
+  - „Zloženie sa radí podľa hmotnosti.“ → „Suroviny sú v zložení zoradené podľa hmotnosti.“
+  - „Hnačka spolu so zvracaním psa odvodní rýchlejšie.“ → „Keď pes popri hnačke aj zvracia, rýchlejšie sa odvodní.“
 - Pred odovzdaním urob **jazykovú korektúru celého článku** zvlášť od faktov: prirodzenosť, gramatika, zrozumiteľnosť.
+
+- **Zdroj pri prvej zmienke predstav jednou vložkou:** kto to je a prečo mu veriť. Ďalej v článku stačí krátky názov. Opis nesmie byť prehnaný, musí sedieť s tým, ako sa inštitúcia sama opisuje. Ustálené opisy (redakcia, 2026-11-24):
+  - Cornell → „veterinári z Cornellovej univerzity, jednej z najuznávanejších veterinárnych fakúlt v USA“
+  - PDSA → „PDSA, najväčšia veterinárna charita v Británii“
+  - Tufts (Petfoodology) → „veterinárni špecialisti na výživu z Tuftsovej univerzity v USA“
+  - FEDIAF → „FEDIAF, európske združenie výrobcov krmív pre zvieratá“ (vždy povedz, že ide o výrobcov)
+  - FDA → „americký úrad pre potraviny a liečivá (FDA)“
+  - štúdie → „britská štúdia z roku 2025“, „štúdia na psoch z roku 2022“; podrobnosti ostávajú v poznámke pod čiarou
 
 ## Tón a hlas
 
@@ -43,6 +58,8 @@ Najväčší problém prvých konceptov (review 2026-11-18): text znel ako doslo
 - Kde sú dôkazy slabé alebo zmiešané, povedz to otvorene, ale jednou vetou, nie odsekom. (zoznam tém, 2026-11-17; review 2026-11-18)
 - **„pes“ / „psík“:** väčšinou „pes“. „Psík“ občas smieš, keď to sedí (napr. „ak psíka začalo trápiť svrbenie“), nie v každej vete. Iné zdrobneniny nie (psíček, mňamka, papať). (používateľ, 2026-11-18)
 - **„jesť“, nie „žrať“:** pri psovi píš „je“, „zje“, „má chuť do jedla“, nikdy „žerie“. Keď by „je“ splývalo so slovesom byť, preformuluj („je čulý a má chuť do jedla“). (používateľ, 2026-11-18)
+
+- **Autorkou je veterinárka (MVDr. Marcela Glezgová).** V každom jej článku nechaj aspoň 2 krátke „hinty“ z veterinárnej praxe, len **všeobecné a podložené zdrojom článku**: „vo veterinárnej praxi sa bežne odporúča…“, „veterinári preto…“, „veterinár pri tom posudzuje…“. Nepíš vety za autorku („v ambulancii sa stretávame“, „často nájdeme“), príbehy pacientov, citáty ani čísla z „našej praxe“. (redakcia, 2026-11-24)
 
 ## Slová a formulácie
 
@@ -87,3 +104,7 @@ _Sem zapisuj všeobecný feedback v poradí, ako prišiel: dátum, čo používa
 - **2026-11-18, odpovede na otvorené otázky:** v článku o čerstvom mäse vyhodiť vetu o význame „čerstvé“ (stret so schváleným tvrdením); „je“ namiesto „žerie“; väčšinou „psa“, občas „psíka“; viditeľnú históriu zmien nevracať; v chate spomínať články názvom. → Tón a hlas, Čo nerobiť, Komunikácia.
 - **2026-11-18:** „Ten offer vždy potrebuje vizuál ako vrecko granúl alebo grafiku alebo niečo, čo zaujme.“ → predvolený vejár vreciek v builde, pravidlo v Obrázky, grafy, ponuky.
 - **2026-11-24, redakcia (sumár článku o hnačke):** veta „Ak je pes inak čulý, zvyčajne odznie za 1–3 dni.“ nedávala zmysel (nejasné, čo odznie; „inak čulý“ znie ako preklad). → „čulý“ nahradené v sekcii Jazyk, opravené vo všetkých konceptoch.
+- **2026-11-24, redakcia (článok o hnačke):** „Vždy vysvetliť v skratke ten zdroj, prečo je relevantný… nech to znie prirodzene a odborne.“ → pravidlo o predstavení zdroja v sekcii Jazyk, uplatnené vo všetkých konceptoch.
+- **2026-11-24, redakcia:** „Autorom týchto blogov bude veterinárka, texty by mali obsahovať malé hinty, že to píše veterinárka.“ Redakcia povolila aj vety z pohľadu ambulancie s potvrdením autorky. → pravidlo v sekcii Tón a hlas, uplatnené v 9 konceptoch autorky.
+- **2026-11-24, redakcia:** hinty len všeobecné (typ A), aspoň 2 v každom článku; vety z pohľadu ambulancie (typ B) vymazať. → pravidlo v sekcii Tón a hlas upravené.
+- **2026-11-24, redakcia:** „Veľa viet vyznie strašne divne (pomaďarčene)… vyslovene sa drž slovenskej gramatiky.“ → pravidlo „Žiadna slovenská maďarčina“ v sekcii Jazyk; 37 opráv v troch článkoch.

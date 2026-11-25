@@ -11,7 +11,7 @@ hero: placeholder
 hero_alt: "Labrador s viditeľnou nadváhou (bez pása pri pohľade zhora) stojí na digitálnej váhe vo veterinárnej ambulancii, majiteľ sa skláňa a odčítava hmotnosť z displeja"
 hero_caption: "Chudnutie psa trvá mesiace. Pravidelné váženie ukáže, či ide správnym tempom."
 published: 2026-11-18
-updated: 2026-11-20
+updated: 2026-11-24
 tldr: >
   Pes s nadváhou má chudnúť pomaly, o 1–2 % hmotnosti týždenne. Pri 20 kg psovi
   je to 200–400 g. Dennú dávku počítaj z ideálnej hmotnosti, nie zo súčasnej.
@@ -23,6 +23,7 @@ key_points:
   - "V praxi psy chudnú pomalšie, v priemere o 0,9 % týždenne."
   - "Najčastejšia chyba: rátať dávku zo súčasnej hmotnosti alebo len ubrať granule a maškrty nechať tak."
 changelog:
+  - "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)"
   - "2026-11-20: Autorka MVDr. Marcela Glezgová"
   - "2026-11-18: Jazyková prerábka podľa review: nový titulok, prirodzenejšia slovenčina, kratšie vety, technické detaily do poznámok"
   - "2026-11-18: Prvá verzia"
@@ -52,7 +53,7 @@ Nadváha nie je len otázka vzhľadu. Obezita zaťažuje takmer každý orgán. 
 
 ==V dlhodobej štúdii s labradormi žili psy, ktoré jedli o 25 % menej, o 1,8 roka dlhšie.==[^kealy] Chronické choroby sa u nich objavili neskôr.
 
-Chudnutie je preto liečba, nie diéta na skúšku. Pes stráca tuk pomaly, takže rátaj s mesiacmi, nie s týždňami.
+Veterinári preto berú chudnutie ako liečbu, nie ako diétu na skúšku. Pes stráca tuk pomaly, takže rátaj s mesiacmi, nie s týždňami.
 
 ![Pohľad zhora na dvoch psov rovnakého plemena vedľa seba: vľavo štíhly pes s jasne viditeľným pásom za rebrami, vpravo pes s nadváhou s rovným chrbtom bez pása](placeholder "Pás za rebrami pri pohľade zhora je najrýchlejší domáci test postavy.")
 
@@ -172,7 +173,7 @@ Najlepšie výsledky prináša menšia dávka spolu s pohybom. Samotný pohyb be
 4. **Odvažuj granule na kuchynskej váhe.** Odmerka je nepresná a pri menšej dávke sa chyba prejaví rýchlo.
 5. **Zapisuj všetko, čo pes zje.** Maškrty drž pod 10 % dennej energie a odpočítaj ich z granúl.
 6. **Pridaj pravidelný pohyb.** Začni prechádzkami alebo plávaním a predlžuj ich postupne.
-7. **Váž psa aspoň každé 2 týždne.** Vždy na tej istej váhe.[^vazenie]
+7. **Váž psa aspoň každé 2 týždne.** Vždy na tej istej váhe. Pravidelné váženie je bežná súčasť veterinárneho plánu chudnutia.[^vazenie]
 8. **Uprav plán podľa tempa.** Cieľ je 1–2 % týždenne. Keď je tempo iné, uprav dávku alebo choď k veterinárovi.
 
 ![Majiteľ drží psa strednej veľkosti v náručí na osobnej váhe v kúpeľni a vedľa na papieri zapisuje dátum a hmotnosť do tabuľky](placeholder "Malého a stredného psa odvážiš doma: zváž sa s ním v náručí a odpočítaj svoju hmotnosť.")
