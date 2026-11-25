@@ -15,15 +15,15 @@ updated: 2026-11-25
 tldr: >
   Čerstvé a sušené mäso sa líšia len obsahom vody. Surové mäso je zo 67–75 % voda,
   múčka z menej ako 10 %. Suroviny sú v zložení zoradené podľa hmotnosti pri miešaní.
-  Čerstvé mäso je preto často prvé, hoci po vysušení z neho ostane štvrtina až tretina.
-  Mäsová múčka sú pomleté zvyšky po spracovaní mäsa a do kvalitných granúl nepatrí.
+  Čerstvé mäso je preto často prvé, hoci po vysušení ostane štvrtina až tretina.
+  Mäsová múčka sú pomleté zvyšky z bitúnkov a mäsového priemyslu a do kvalitných granúl nepatrí.
 key_points:
   - "Surové mäso je zo 67–75 % voda. Zo 100 g surového jahňacieho ostane po vysušení asi 26 g."
   - "Suroviny sú v zložení zoradené podľa hmotnosti pri miešaní. Sušené mäso sa váži už suché."
   - "Mäsová múčka sú pomleté vedľajšie živočíšne produkty, napríklad kosti a koža. Z obalu nezistíš, z ktorých častí je."
   - "Najčastejší omyl: čerstvé mäso na prvom mieste neznamená, že v granulách je najviac mäsa."
 changelog:
-  - "2026-11-25: Nový postoj k mäsovej múčke: pomleté vedľajšie živočíšne produkty, do kvalitných granúl nepatria"
+  - "2026-11-25: Nový postoj k mäsovej múčke: pomleté zvyšky z bitúnkov a mäsového priemyslu, do kvalitných granúl nepatria"
   - "2026-11-24: Nové, realistickejšie fotky: hlavná a čítanie etikety (ilustrácie vygenerované AI, etiketa so skutočným zložením)"
   - "2026-11-24: Štylistická korektúra: prirodzenejší slovosled a formulácie krokov"
   - "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)"
@@ -125,7 +125,7 @@ odkaz: granule-na-mieru.html
 
 ## Je mäsová múčka horšia ako čerstvé mäso?
 
-**Áno. Mäsová múčka sú pomleté zvyšky, ktoré ostanú pri spracovaní mäsa pre ľudí, a z obalu nikto nezistí, čo v nej naozaj je. Pre nás je to surovina najnižšej kvality, ktorá do kvalitných granúl nepatrí.**
+**Áno. Mäsová múčka sú pomleté zvyšky z bitúnkov a mäsového priemyslu a z obalu nikto nezistí, čo v nej naozaj je. Pre nás je to surovina najnižšej kvality, ktorá do kvalitných granúl nepatrí.**
 
 Múčka nevzniká z čistej svaloviny. Vyrába sa z vedľajších živočíšnych produktov, teda z častí zvierat, ktoré ľudia nejedia alebo sa na potraviny nepredali. Suroviny sa uvaria, oddelí sa z nich tuk a zvyšok sa vysuší a pomelie na prášok.
 
@@ -199,7 +199,7 @@ Ak niečo na obale chýba, napríklad forma mäsa, spýtaj sa priamo výrobcu.
 
 **Je dehydrované mäso to isté ako sušené mäso?** Áno, oba výrazy znamenajú mäso, z ktorého sa odstránila voda. Pravidlá pripúšťajú rôzne slová, ak z nich jasne vyplýva, že surovina je sušená.
 
-**Z čoho sa vyrába mäsová múčka?** Z pomletých zvyškov zvierat, ktoré ostanú pri spracovaní mäsa pre ľudí, napríklad z kostí, krvi, kože či nôh. V EÚ musia pochádzať zo zvierat bez príznakov choroby, ktoré časti to sú, však z obalu nikto nezistí.
+**Z čoho sa vyrába mäsová múčka?** Z pomletých zvyškov z bitúnkov a mäsového priemyslu, napríklad z kostí, krvi, kože či nôh. V EÚ musia pochádzať zo zvierat bez príznakov choroby, ktoré časti to sú, však z obalu nikto nezistí.
 
 **Má čerstvé mäso vyššiu výživovú hodnotu ako sušené?** Pri rovnakej hmotnosti nie. Sušené mäso má viac bielkovín, lebo v ňom nie je voda. Rozhoduje kvalita suroviny a spracovanie.
 

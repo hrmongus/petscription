@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-25 20:17",
+ "built": "2026-11-25 20:24",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -655,7 +655,7 @@ window.GRANULA_POSTS = {
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "img/blog/cerstve-maso-dehydrovane-maso-masova-mucka/hero.webp",
-   "words": 1478,
+   "words": 1473,
    "description": "Surové mäso je zo 67–75 % voda, múčka z menej ako 10 %. Zloženie sa radí podľa hmotnosti pri miešaní, preto je čerstvé mäso na obale často prvé.",
    "id": "A4",
    "category": "Zloženie a suroviny",
@@ -721,7 +721,7 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
-      "2026-11-25: Nový postoj k mäsovej múčke: pomleté vedľajšie živočíšne produkty, do kvalitných granúl nepatria",
+      "2026-11-25: Nový postoj k mäsovej múčke: pomleté zvyšky z bitúnkov a mäsového priemyslu, do kvalitných granúl nepatria",
       "2026-11-24: Nové, realistickejšie fotky: hlavná a čítanie etikety (ilustrácie vygenerované AI, etiketa so skutočným zložením)",
       "2026-11-24: Štylistická korektúra: prirodzenejší slovosled a formulácie krokov"
      ]
@@ -985,7 +985,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1478 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1473 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -1039,7 +1039,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Je mäsová múčka horšia ako čerstvé mäso?",
      "kind": "main",
-     "words": 220,
+     "words": 218,
      "numbers": 9,
      "question": true,
      "firstBold": true,
@@ -1091,7 +1091,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Časté otázky",
      "kind": "faq",
-     "words": 170,
+     "words": 167,
      "numbers": 0,
      "question": false,
      "firstBold": true,
