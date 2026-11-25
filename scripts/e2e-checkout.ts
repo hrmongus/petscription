@@ -1,6 +1,6 @@
 /*
  * Živý test nákupu cez skutočný dotazník na granula.sk s ?test=<CHECKOUT_TEST_TOKEN> (PROJEKT-1, krok 4 a 6).
- *   npx tsx scripts/e2e-checkout.ts <predplatne|jednorazovo|zamietnuta> [--site=https://www.granula.sk]
+ *   npx tsx scripts/e2e-checkout.ts <predplatne|jednorazovo|zamietnuta> [--site=https://www.granula.sk] [--method=packeta_point|sps_courier|dpd_pickup] [--bag=4|9|18]
  *
  *   predplatne  – 9 kg, predplatné, DPD odberné miesto (zoznam), karta 4242 → objednávka first + predplatné v DB → FHB
  *   jednorazovo – 4 kg, jednorazovo, Packeta (zoznam), karta 4242 → objednávka one_off v DB → FHB
@@ -54,7 +54,7 @@ async function main() {
   const stamp = Math.floor(Date.now() / 1000);
   const email = process.argv.find((a) => a.startsWith('--email='))?.split('=')[1] ?? `delivered+e2e-${scenario}-${stamp}@resend.dev`;
   const plan = scenario === 'jednorazovo' ? 'raz' : 'mesiac';
-  const bag = scenario === 'jednorazovo' ? '4' : '9';
+  const bag = process.argv.find((a) => a.startsWith('--bag='))?.split('=')[1] ?? (scenario === 'jednorazovo' ? '4' : '9'); // Packeta iba pri 4 kg
   const card = scenario === 'zamietnuta' ? CARDS.declined : scenario === '3ds' ? CARDS.threeDs : CARDS.ok;
   const MOBILE = process.argv.includes('--mobile');
   console.log(`scenár ${scenario} | ${SITE} | ${email} | plán ${plan} | ${bag} kg`);
@@ -77,7 +77,8 @@ async function main() {
     await fillContact(page, { email, firstName: 'Test', lastName: scenario });
 
     // doručenie
-    const method: Method = scenario === 'predplatne' || scenario === '3ds' ? 'dpd_pickup' : scenario === 'jednorazovo' ? 'packeta_point' : 'sps_courier';
+    const forced = process.argv.find((a) => a.startsWith('--method='))?.split('=')[1] as Method | undefined; // napr. --method=sps_courier (DPD bez pridelenia FHB vynechať)
+    const method: Method = forced ?? (scenario === 'predplatne' || scenario === '3ds' ? 'dpd_pickup' : scenario === 'jednorazovo' ? 'packeta_point' : 'sps_courier');
     await selectMethod(page, method);
     if (method !== 'sps_courier') check(await page.locator(`.so-act[data-for="${method}"] [data-pick]`).isVisible(), 'tlačidlo „Vybrať … miesto“ v karte dopravcu');
     const place = await chooseDelivery(page, method);
@@ -152,6 +153,12 @@ async function main() {
       check(hotovo.includes(String(order.number)), `stránka Hotovo ukazuje číslo objednávky ${order.number}`);
       check(sent.status === 'sent_to_fhb' && !!fhb && fhb.status === 'pending', 'objednávka je vo FHB sandboxe (pending)');
       check(fhb?.variable_symbol === String(order.number), 'FHB variable_symbol = číslo objednávky');
+      // FHB 24. 11.: recipient.address = adresa zákazníka aj pri výdajnom mieste, miesto v delivery_point
+      const ra = fhb?.recipient?.address;
+      check(ra?.street === 'Hlavná 1' && ra?.zip === '04001' && ra?.city === 'Košice', `FHB recipient.address = adresa zákazníka (${ra?.street}, ${ra?.zip} ${ra?.city})`);
+      const svc = { packeta_point: 'zasielkovna_sk', dpd_pickup: 'dpd_sk', sps_courier: 'sps' }[method];
+      check(fhb?.parcel_service === svc, `FHB parcel_service = ${svc}`);
+      check(method === 'sps_courier' ? !fhb?.delivery_point : !!fhb?.delivery_point, method === 'sps_courier' ? 'bez delivery_point (kuriér)' : `delivery_point = ${fhb?.delivery_point}`);
       if (plan === 'mesiac') {
         const sub = (await sb.from('subscriptions').select('*').eq('id', order.subscription_id!).single()).data!;
         const ss = await s.subscriptions.retrieve(sub.stripe_subscription_id!);
