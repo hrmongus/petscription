@@ -11,18 +11,19 @@ hero: img/blog/cerstve-maso-dehydrovane-maso-masova-mucka/hero.webp
 hero_alt: "Na kuchynskej linke stoja tri misky: v modrej kocky surového hovädzieho mäsa, v bielej kúsky sušeného mäsa, v sklenenej sivohnedá mäsová múčka. Za nimi stojí papierové vrece granúl s etiketou so zložením."
 hero_caption: "Čerstvé mäso, sušené mäso a mäsová múčka sa líšia hlavne obsahom vody. Preto ich v zložení nájdeš na rôznych miestach. Ilustrácia vygenerovaná AI."
 published: 2026-11-18
-updated: 2026-11-24
+updated: 2026-11-25
 tldr: >
-  Čerstvé mäso, sušené mäso a mäsová múčka sa líšia hlavne obsahom vody. Surové mäso je asi
-  zo 67–75 % voda, múčka z menej ako 10 %. Suroviny sú v zložení zoradené podľa hmotnosti pri miešaní.
-  Čerstvé mäso je preto často prvé, hoci po vysušení z neho ostane len štvrtina až tretina.
-  Kvalita múčky kolíše.
+  Čerstvé a sušené mäso sa líšia len obsahom vody. Surové mäso je zo 67–75 % voda,
+  múčka z menej ako 10 %. Suroviny sú v zložení zoradené podľa hmotnosti pri miešaní.
+  Čerstvé mäso je preto často prvé, hoci po vysušení z neho ostane štvrtina až tretina.
+  Mäsová múčka sú pomleté zvyšky po spracovaní mäsa a do kvalitných granúl nepatrí.
 key_points:
   - "Surové mäso je zo 67–75 % voda. Zo 100 g surového jahňacieho ostane po vysušení asi 26 g."
   - "Suroviny sú v zložení zoradené podľa hmotnosti pri miešaní. Sušené mäso sa váži už suché."
-  - "Kvalita mäsovej múčky kolíše. Z krmív s rôznymi múčkami psy strávili 62–82 % aminokyselín."
+  - "Mäsová múčka sú pomleté vedľajšie živočíšne produkty, napríklad kosti a koža. Z obalu nezistíš, z ktorých častí je."
   - "Najčastejší omyl: čerstvé mäso na prvom mieste neznamená, že v granulách je najviac mäsa."
 changelog:
+  - "2026-11-25: Nový postoj k mäsovej múčke: pomleté vedľajšie živočíšne produkty, do kvalitných granúl nepatria"
   - "2026-11-24: Nové, realistickejšie fotky: hlavná a čítanie etikety (ilustrácie vygenerované AI, etiketa so skutočným zložením)"
   - "2026-11-24: Štylistická korektúra: prirodzenejší slovosled a formulácie krokov"
   - "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)"
@@ -54,7 +55,7 @@ cta_button: "Nájdi granule pre svojho psa"
 
 ## Čo je čerstvé mäso, sušené mäso a mäsová múčka?
 
-**Mäso v granulách je surovina, ktorú výrobca pridáva v troch formách: ako čerstvé mäso, sušené mäso alebo mäsovú múčku.** Formy sa líšia hlavne obsahom vody. Všetky dodávajú psovi najmä bielkoviny a tuk. V zložení ich preto nájdeš na rôznych miestach a s rôznymi percentami.
+**Mäso v granulách je surovina, ktorú výrobca pridáva v troch formách: ako čerstvé mäso, sušené mäso alebo mäsovú múčku.** Formy sa líšia hlavne obsahom vody. V zložení ich preto nájdeš na rôznych miestach a s rôznymi percentami. Čerstvé a sušené mäso je to isté pomenované mäso, líši sa len obsahom vody. Mäsová múčka je iná surovina.
 
 - **Čerstvé mäso** je surové mäso, ktoré ide do zmesi aj s vodou, bez sušenia.[^cerstve]
 - **Sušené (dehydrované) mäso** je mäso, z ktorého sa odstránila voda. Na obale musí byť jasne napísané, že je sušené.
@@ -124,17 +125,25 @@ odkaz: granule-na-mieru.html
 
 ## Je mäsová múčka horšia ako čerstvé mäso?
 
-**Mäsová múčka nie je automaticky zlá. Jej kvalita však kolíše viac ako pri čerstvom mäse a z obalu ju nespoznáš.** Rozhoduje, z akých častí zvierat vznikla a pri akej teplote sa spracovala.
+**Áno. Mäsová múčka sú pomleté zvyšky, ktoré ostanú pri spracovaní mäsa pre ľudí, a z obalu nikto nezistí, čo v nej naozaj je. Pre nás je to surovina najnižšej kvality, ktorá do kvalitných granúl nepatrí.**
 
-V EÚ sa do krmív pre psov smie použiť len najbezpečnejšia skupina vedľajších živočíšnych produktov.[^kat3] Sú to napríklad časti zvierat vhodné pre ľudí, ktoré sa z obchodných dôvodov nepoužijú na potraviny. Patria sem aj krv, koža alebo nohy zvierat, ktoré nemali príznaky choroby.
+Múčka nevzniká z čistej svaloviny. Vyrába sa z vedľajších živočíšnych produktov, teda z častí zvierat, ktoré ľudia nejedia alebo sa na potraviny nepredali. Suroviny sa uvaria, oddelí sa z nich tuk a zvyšok sa vysuší a pomelie na prášok.
 
-Múčky sa od seba výrazne líšia. Niektoré majú veľa popola, teda minerálov, hlavne z kostí. V jednej štúdii psy z krmív s rôznymi múčkami strávili 62–82 % aminokyselín. Múčky s vyšším obsahom popola sa pritom nestrávili vždy horšie. ==Múčka spracovaná pri nižšej teplote sa strávila lepšie ako tá istá múčka pri vysokej teplote.==[^johnson]
+V EÚ sa do krmív pre psov smie použiť len najbezpečnejšia skupina vedľajších živočíšnych produktov.[^kat3] Bezpečná však neznamená kvalitná. Zákon do nej zaraďuje aj krv, kože, nohy či kosti zvierat, ktoré nemali príznaky choroby. V mäsokostnej múčke tvoria veľkú časť práve kosti.
 
-Iné štúdie našli rozdiel medzi surovým mäsom a múčkou. Výsledky však nie sú jednoznačné. Štúdie sú staršie a malé. Ber ich preto ako orientáciu, nie ako presné čísla pre konkrétne granule.[^dalsie]
+==Na obale nájdeš len „hydinová múčka“ alebo „mäsokostná múčka“. Z akých zvierat a z akých častí je, nezistíš.==
+
+Na kvalite to vidno aj v štúdiách:
+
+- Mäsokostné múčky obsahovali 24–34 % popola, teda minerálov hlavne z kostí.[^johnson] Čím viac popola, tým menej bielkovín zo svaloviny.
+- V štúdii na hydine sa z múčok strávilo 79–85 % aminokyselín, zo surového mäsa 90–96 %.[^dalsie]
+- Psy strávili z krmív s rôznymi múčkami len 62–82 % aminokyselín a výsledky sa medzi múčkami veľmi líšili.[^johnson]
+
+Veterinári preto pri hodnotení krmiva uprednostňujú pomenované mäso pred múčkou. My múčku do granúl nedávame. Pri každom mäse v našom zložení nájdeš druh zvieraťa aj percento.
 
 [^kat3]: Nariadenie (ES) č. 1069/2009, článok 10: materiál kategórie 3. Patria sem časti zvierat vhodné na ľudskú spotrebu, ktoré sa na ňu z obchodných dôvodov nepoužijú, a časti bez príznakov choroby prenosnej na ľudí alebo zvieratá, napríklad krv, kože či nohy.
-[^johnson]: Johnson a kol., Journal of Animal Science, 1998. Skúmali mäsokostné múčky s 24 alebo 34 % popola a hydinové múčky so 7 alebo 16 % popola. Psy strávili aminokyseliny z krmív s týmito múčkami v priemere na 62–82 %. Vyšší popol stráviteľnosť konzistentne neznížil.
-[^dalsie]: Cramer a kol., Journal of Animal Science, 2007, merali na kohútoch, nie na psoch: surové lyofilizované suroviny mali stráviteľnosť aminokyselín 90,3–95,5 %, kafilerické múčky 79,2–84,8 %. Jahňacia múčka mala najhoršiu kvalitu bielkovín zo všetkých. Murray a kol., Journal of Animal Science, 1997: kafilerické spracovanie hydiny mierne znížilo stráviteľnosť v tenkom čreve psov, pri hovädzom nie. Celková stráviteľnosť krmív s čerstvým mäsom a s múčkou bola podobná.
+[^johnson]: Johnson a kol., Journal of Animal Science, 1998. Skúmali mäsokostné múčky s 24 alebo 34 % popola a hydinové múčky so 7 alebo 16 % popola. Psy strávili aminokyseliny z krmív s týmito múčkami v priemere na 62–82 %.
+[^dalsie]: Cramer a kol., Journal of Animal Science, 2007, merali na kohútoch, nie na psoch: surové lyofilizované suroviny mali stráviteľnosť aminokyselín 90,3–95,5 %, kafilerické múčky 79,2–84,8 %. Jahňacia múčka mala najhoršiu kvalitu bielkovín zo všetkých.
 
 ## Čerstvé mäso, sušené mäso, múčka a vedľajšie produkty: porovnanie
 
@@ -146,11 +155,11 @@ Iné štúdie našli rozdiel medzi surovým mäsom a múčkou. Výsledky však n
 | Voda | asi 67–75 % (USDA) | málo, výrobca ju na obale neuvádza | menej ako 10 % (Tufts, 2016) | rôzne |
 | Miesto v zložení | vysoko, lebo obsahuje vodu | podľa hmotnosti po vysušení | podľa hmotnosti po vysušení | podľa hmotnosti celej kategórie |
 | Ako vyzerá na obale | „čerstvé kuracie mäso“ | „sušené jahňacie mäso“ | „hydinová múčka“, „mäsokostná múčka“ | „mäso a živočíšne vedľajšie produkty (z toho hovädzie 4 %)“ |
-| Čo z obalu nevyčítaš | koľko ostane po vysušení | presný obsah vody | z akých častí a pri akej teplote vznikla | druh zvieraťa a podiel jednotlivých častí |
+| Čo z obalu nevyčítaš | koľko ostane po vysušení | presný obsah vody | z akých zvierat a častí vznikla | druh zvieraťa a podiel jednotlivých častí |
 
 ==Najviac ti povie zloženie, ktoré pri každom mäse uvádza druh zvieraťa, formu a percento.==
 
-Kategória „mäso a živočíšne vedľajšie produkty“ je povolená. Pri krmivách pre psy a mačky ju výrobca smie napísať namiesto jednotlivých surovín. Vnútornosti ako pečeň, srdce či pľúca môžu byť výživné. Problém je skôr v tom, že z kategórie nevyčítaš, čo presne obsahuje.
+Kategória „mäso a živočíšne vedľajšie produkty“ je povolená, ale nič ti nepovie. Výrobca ňou môže nahradiť zoznam konkrétnych surovín a ty nevieš, či ide o pečeň, alebo o kože a kosti. Pomenované vnútornosti s percentom, napríklad kuracia pečeň, sú niečo iné: presne vieš, čo pes dostáva.
 
 ## Čo znamená „čerstvo spracované mäso v sušenom stave“ v zložení Granuly?
 
@@ -190,7 +199,7 @@ Ak niečo na obale chýba, napríklad forma mäsa, spýtaj sa priamo výrobcu.
 
 **Je dehydrované mäso to isté ako sušené mäso?** Áno, oba výrazy znamenajú mäso, z ktorého sa odstránila voda. Pravidlá pripúšťajú rôzne slová, ak z nich jasne vyplýva, že surovina je sušená.
 
-**Je múčka v granulách vždy z odpadu?** Nie. V EÚ smú ísť do krmív pre psov len časti zvierat bez príznakov choroby prenosnej na ľudí alebo zvieratá. Kvalita múčky však kolíše podľa použitých častí a teploty spracovania.
+**Z čoho sa vyrába mäsová múčka?** Z pomletých zvyškov zvierat, ktoré ostanú pri spracovaní mäsa pre ľudí, napríklad z kostí, krvi, kože či nôh. V EÚ musia pochádzať zo zvierat bez príznakov choroby, ktoré časti to sú, však z obalu nikto nezistí.
 
 **Má čerstvé mäso vyššiu výživovú hodnotu ako sušené?** Pri rovnakej hmotnosti nie. Sušené mäso má viac bielkovín, lebo v ňom nie je voda. Rozhoduje kvalita suroviny a spracovanie.
 
@@ -202,6 +211,6 @@ Ak niečo na obale chýba, napríklad forma mäsa, spýtaj sa priamo výrobcu.
 
 - Čerstvé mäso, sušené mäso a mäsová múčka sa líšia hlavne obsahom vody. Surové mäso je asi zo 67–75 % voda, múčka z menej ako 10 %.
 - Suroviny sú v zložení zoradené podľa hmotnosti pri miešaní. Čerstvé mäso na prvom mieste preto nehovorí, koľko mäsa ostane v granulách.
-- Múčka nie je automaticky zlá. Ako dobre ju pes strávi, závisí od suroviny a spracovania. Z obalu to nespoznáš.
+- Mäsová múčka sú pomleté vedľajšie živočíšne produkty a z obalu nikto nezistí, čo v nej naozaj je. Do kvalitných granúl nepatrí.
 - Najviac ti povie zloženie, ktoré pri každom mäse uvádza druh zvieraťa, formu a percento.
 - Ďalší krok: vezmi obal granúl svojho psa, nájdi formu mäsa a bielkoviny prepočítaj na sušinu.

@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-24 17:37",
+ "built": "2026-11-25 20:17",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
@@ -650,12 +650,12 @@ window.GRANULA_POSTS = {
    "wanted": "draft",
    "example": false,
    "published": "2026-11-18",
-   "updated": "2026-11-24",
+   "updated": "2026-11-25",
    "author": "MVDr. Marcela Glezgová",
    "authorId": "marcela-glezgova",
    "authorPhoto": "placeholder",
    "hero": "img/blog/cerstve-maso-dehydrovane-maso-masova-mucka/hero.webp",
-   "words": 1391,
+   "words": 1478,
    "description": "Surové mäso je zo 67–75 % voda, múčka z menej ako 10 %. Zloženie sa radí podľa hmotnosti pri miešaní, preto je čerstvé mäso na obale často prvé.",
    "id": "A4",
    "category": "Zloženie a suroviny",
@@ -721,23 +721,23 @@ window.GRANULA_POSTS = {
      "ok": true,
      "msg": "Viditeľný changelog: prvý záznam má dátum aktualizácie",
      "details": [
+      "2026-11-25: Nový postoj k mäsovej múčke: pomleté vedľajšie živočíšne produkty, do kvalitných granúl nepatria",
       "2026-11-24: Nové, realistickejšie fotky: hlavná a čítanie etikety (ilustrácie vygenerované AI, etiketa so skutočným zložením)",
-      "2026-11-24: Štylistická korektúra: prirodzenejší slovosled a formulácie krokov",
-      "2026-11-24: Hinty z veterinárnej praxe (len všeobecné, podložené zdrojmi)"
+      "2026-11-24: Štylistická korektúra: prirodzenejší slovosled a formulácie krokov"
      ]
     },
     {
      "id": "tldr",
      "level": "error",
      "ok": true,
-     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 54)",
+     "msg": "Krátka odpoveď (tldr) má 40–60 slov (má 59)",
      "details": []
     },
     {
      "id": "tldr-range",
      "level": "warn",
      "ok": true,
-     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 54)",
+     "msg": "Krátka odpoveď presne v rozsahu 40–60 slov (má 59)",
      "details": []
     },
     {
@@ -758,7 +758,7 @@ window.GRANULA_POSTS = {
      "id": "tldr-numbers",
      "level": "warn",
      "ok": true,
-     "msg": "Krátka odpoveď a kľúčové body obsahujú aspoň 3 čísla (majú 9)",
+     "msg": "Krátka odpoveď a kľúčové body obsahujú aspoň 3 čísla (majú 7)",
      "details": []
     },
     {
@@ -943,7 +943,7 @@ window.GRANULA_POSTS = {
      "id": "atomic",
      "level": "info",
      "ok": true,
-     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 12)",
+     "msg": "Atomické fakty: vety so 6–20 slovami a číslom (má 14)",
      "details": []
     },
     {
@@ -985,7 +985,7 @@ window.GRANULA_POSTS = {
      "id": "length",
      "level": "info",
      "ok": true,
-     "msg": "Dĺžka článku: 1391 slov (dĺžka nerozhoduje, hustota áno)",
+     "msg": "Dĺžka článku: 1478 slov (dĺžka nerozhoduje, hustota áno)",
      "details": []
     },
     {
@@ -1000,7 +1000,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Čo je čerstvé mäso, sušené mäso a mäsová múčka?",
      "kind": "definition",
-     "words": 128,
+     "words": 140,
      "numbers": 1,
      "question": true,
      "firstBold": true,
@@ -1039,8 +1039,8 @@ window.GRANULA_POSTS = {
     {
      "title": "Je mäsová múčka horšia ako čerstvé mäso?",
      "kind": "main",
-     "words": 159,
-     "numbers": 3,
+     "words": 220,
+     "numbers": 9,
      "question": true,
      "firstBold": true,
      "table": false,
@@ -1052,7 +1052,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Čerstvé mäso, sušené mäso, múčka a vedľajšie produkty: porovnanie",
      "kind": "main",
-     "words": 199,
+     "words": 201,
      "numbers": 5,
      "question": false,
      "firstBold": true,
@@ -1091,7 +1091,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Časté otázky",
      "kind": "faq",
-     "words": 165,
+     "words": 170,
      "numbers": 0,
      "question": false,
      "firstBold": true,
@@ -1104,7 +1104,7 @@ window.GRANULA_POSTS = {
     {
      "title": "Zhrnutie",
      "kind": "summary",
-     "words": 95,
+     "words": 97,
      "numbers": 3,
      "question": false,
      "firstBold": false,
