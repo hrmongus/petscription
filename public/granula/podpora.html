@@ -41,6 +41,7 @@
 .qa details{border-top:2px solid var(--n);padding:16px 0}
 .qa summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:24px;font-weight:800;font-size:17px;line-height:1.35}
 .qa summary::-webkit-details-marker{display:none}
+.qa summary{margin:-16px 0;padding:16px 0} /* celý riadok otázky je plocha na ťuknutie */
 .qa summary:hover{color:var(--k)}
 .qa summary i{font-style:normal;font-weight:900;font-size:26px;line-height:1;transition:transform .2s ease}
 .qa details[open] summary i{transform:rotate(45deg)}
@@ -169,6 +170,6 @@ document.querySelectorAll("[data-copy]").forEach(function (b) {
 </script>
 <!-- Klaviyo onsite: vypnutý (type="text/plain"), cookies.js ho zapne až po súhlase s marketingovými cookies -->
 <script type="text/plain" data-cookie-category="marketing" async src="https://static.klaviyo.com/onsite/js/Yf7K2A/klaviyo.js?company_id=Yf7K2A"></script>
-<script src="cookies.js"></script>
+<script src="cookies.js?v=20261126m"></script>
 </body>
 </html>

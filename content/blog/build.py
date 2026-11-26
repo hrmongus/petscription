@@ -618,7 +618,7 @@ def page(*, pre, title, description, canonical, body, noindex=False, jsonld=None
 </main>
 {relink(footer, pre)}
 <script type="text/plain" data-cookie-category="marketing" async src="https://static.klaviyo.com/onsite/js/Yf7K2A/klaviyo.js?company_id=Yf7K2A"></script>
-<script src="{pre}cookies.js"></script>
+<script src="{pre}cookies.js?v=20261126m"></script>
 </body>
 </html>
 """

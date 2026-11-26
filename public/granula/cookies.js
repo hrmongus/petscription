@@ -181,7 +181,7 @@
       e.preventDefault();
       var sec = document.getElementById("zapis");
       if (sec) { sec.scrollIntoView({ behavior: "smooth", block: "start" }); if (history.replaceState) history.replaceState(null, "", "#zapis"); }
-      else location.href = "/#zapis";
+      else location.href = "/granule-na-mieru"; // sekcia predregistrácie je od 26. 11. preč: dotazník (pri zatvorenom predaji je to predregistrácia)
       return;
     }
     // „Povoliť a zobraziť formulár“: súhlas iba s marketingovými cookies, analytická voľba ostáva

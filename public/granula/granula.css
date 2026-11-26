@@ -586,3 +586,7 @@ section[id]{scroll-margin-top:96px}
 .od-facts b{font-size:clamp(24px,2.4vw,32px);color:var(--l);line-height:1}
 .od-facts span{font-size:15px;font-weight:600}
 @media (max-width:960px){.od-grid{grid-template-columns:minmax(0,1fr);gap:28px}}
+
+/* mobil (audit 26. 11.): väčšie plochy na ťuknutie bez zmeny vzhľadu, polia 16 px (iOS nepribližuje) */
+.foot nav{gap:2px}.foot nav a{padding:4px 0}
+@media (hover:none) and (pointer:coarse){.pd-sel select,.pd-bs .bs-input{font-size:16px}}

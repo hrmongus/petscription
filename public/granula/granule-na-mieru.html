@@ -271,7 +271,7 @@
   .prof-m{grid-column:2;grid-row:1 / span 2;width:158px;height:118px;position:relative}
   .prof-m .prof{position:absolute;inset:0}
   .prof-m .radar{position:absolute;left:calc(50% - 6px);top:50%;width:182px;max-width:none;transform:translate(-50%,-50%)}
-  .prof-m .radar-lbl{width:auto;white-space:nowrap;font-size:7.5px;letter-spacing:.02em}
+  .prof-m .radar-lbl{width:auto;white-space:nowrap;font-size:8.5px;letter-spacing:.02em}
   .prof-m .rl-l{display:none}.prof-m .rl-s{display:inline}
   .prof-m .prof-i{top:-12px;right:-12px;width:20px;height:20px;font-size:11px;background:var(--m)}
   .split .progress{gap:8px;white-space:nowrap}
@@ -316,6 +316,8 @@
   font:italic 800 13px/1 Georgia,serif;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;z-index:2}
 .side-prof .prof-i{color:var(--m)}
 .prof-i:hover{background:var(--o);color:var(--n);border-color:var(--n)}
+.prof-i::after{content:"";position:absolute;inset:-12px} /* plocha na ťuknutie ~44 px */
+@media (max-width:340px){.split .topline .logo{font-size:16px;padding:3px 6px 2px}} /* 320 px: logo sa prekrývalo so štítkom grafu */
 .prof-help{margin:auto;inset:0;width:min(440px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;padding:22px 22px 18px;background:var(--ml);color:var(--n);border:2px solid var(--n);box-shadow:6px 6px 0 var(--n)}
 .prof-help::backdrop{background:rgba(0,0,0,.45)}
 .ph-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
@@ -1206,6 +1208,6 @@
 <script src="site.js"></script>
 <!-- Klaviyo onsite: vypnutý (type="text/plain"), cookies.js ho zapne až po súhlase s marketingovými cookies -->
 <script type="text/plain" data-cookie-category="marketing" async src="https://static.klaviyo.com/onsite/js/Yf7K2A/klaviyo.js?company_id=Yf7K2A"></script>
-<script src="cookies.js?v=20261123p7b"></script>
+<script src="cookies.js?v=20261126m"></script>
 </body>
 </html>
