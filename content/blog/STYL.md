@@ -86,6 +86,8 @@ Najväčší problém prvých konceptov (review 2026-11-18): text znel ako doslo
 
 ## Čo nerobiť
 
+- **Postoj značky k múčke (redakcia, 2026-11-25):** mäsová múčka a nepomenované „vedľajšie živočíšne produkty“ do kvalitných granúl nepatria (pomleté zvyšky, z obalu nikto nezistí, čo v nich je, pre nás surovina najnižšej kvality). Čerstvé a sušené mäso sú to isté pomenované mäso, líšia sa vodou. Píš to slušne, s dôvodmi a zdrojmi, nikdy nie o konkrétnej značke. Slovo „odpad“ nepíš ako fakt. Na pomenované vnútornosti s percentom (napr. kuracia pečeň) neútoč, sú v našich receptúrach.
+
 - Nepíš verejne nič, čo spochybňuje schválené tvrdenie o produkte (napr. výklad slova „čerstvé“ pri „Čerstvé mäso“). Rozpor nahlás používateľovi. (používateľ, 2026-11-18)
 
 - Nepíš o produkte nič, čo web reálne nerobí (napr. prechodový plán v zásielke, zákaznícka podpora), ani to, čo je len v pláne. (redakcia, 2026-11-18)
@@ -108,3 +110,4 @@ _Sem zapisuj všeobecný feedback v poradí, ako prišiel: dátum, čo používa
 - **2026-11-24, redakcia:** „Autorom týchto blogov bude veterinárka, texty by mali obsahovať malé hinty, že to píše veterinárka.“ Redakcia povolila aj vety z pohľadu ambulancie s potvrdením autorky. → pravidlo v sekcii Tón a hlas, uplatnené v 9 konceptoch autorky.
 - **2026-11-24, redakcia:** hinty len všeobecné (typ A), aspoň 2 v každom článku; vety z pohľadu ambulancie (typ B) vymazať. → pravidlo v sekcii Tón a hlas upravené.
 - **2026-11-24, redakcia:** „Veľa viet vyznie strašne divne (pomaďarčene)… vyslovene sa drž slovenskej gramatiky.“ → pravidlo „Žiadna slovenská maďarčina“ v sekcii Jazyk; 37 opráv v troch článkoch.
+- **2026-11-25, redakcia (článok o mäse):** cieľ článku: čerstvé a sušené mäso sú v poriadku a skoro to isté, múčka je nekvalitná a do dobrých granúl nepatrí; autorka je silno proti múčke a vedľajším produktom. → postoj značky v sekcii Čo nerobiť.
