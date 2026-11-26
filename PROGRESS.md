@@ -508,3 +508,4 @@ Celé prihlásenie s 2FA som neprešiel: vytvoriť testovací admin účet v pro
 - **Detail suroviny (26. 11.):** pri všetkých 38 surovinách odstránený blok „V recepte“ (percentá, „v X z 5 receptúr“, názov receptúry); ostáva „Prínos“. Dáta `r` v ingrediencie.js ostali (nezobrazujú sa). `ingrediencie.js?v=20261126`.
 - **Produktová galéria (26. 11.):** „Rozrež vrecko“ nahradené porovnaním „To je iná liga“ (`porovnanie-liga.webp`), stará koláž recenzií novou kolážou s psami zákazníkov z dávky recenzií (`recenzie-488-zakaznici.webp`); staré súbory zmazané.
 - **Foto recenzie (26. 11.):** nové fotky pre Roka, Sunny a Spottyho (`roko-2`, `sunny-2`, `spotty-2`.webp, staré zmazané), popisy upravené podľa fotiek. `reviews.js?v=20261126c`.
+- **Foto recenzie (26. 11.):** nové fotky pre Lolu a Bruna (`lola-2`, `bruno-2`.webp, staré zmazané). `reviews.js?v=20261126d`.

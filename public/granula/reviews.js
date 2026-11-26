@@ -10,8 +10,8 @@
   var PHOTOS = [
     // foto recenzie zákazníkov (26. 11. 2026, „Reviews pre Granulu“): fotka, pes, majiteľ, vrece na fotke
     { img: "img/recenzie/beny.webp", alt: "Maltézsky psík Beny vedľa vreca Granula Hovädzie, morka a jahňa s ryžou", bag: "hovadzie-morka-jahna-s-ryzou", dog: "Beny, maltézsky psík, 4 roky", by: "Matej K." },
-    { img: "img/recenzie/lola.webp", alt: "Šteňa border kólie Lola beží po tráve k vrecu Granula", bag: "hovadzie-morka-jahna-s-ryzou", dog: "Lola, border kólia, 4 mesiace", by: "Barbora L." },
-    { img: "img/recenzie/bruno.webp", alt: "Bernský salašnícky pes Bruno sedí v kufri auta pri vreci Granula Morka, hus a kačica", bag: "morka-hus-kacica-s-tekvicou", dog: "Bruno, bernský salašnícky pes, 7 rokov", by: "Robert H." },
+    { img: "img/recenzie/lola-2.webp", alt: "Border kólia Lola sa hrá s lanom na tráve pred vrecom Granula Hovädzie, morka a jahňa", bag: "hovadzie-morka-jahna-s-ryzou", dog: "Lola, border kólia, 4 mesiace", by: "Barbora L." },
+    { img: "img/recenzie/bruno-2.webp", alt: "Bernský salašnícky pes Bruno s vyplazeným jazykom sedí v kufri auta pri vreci Granula Morka, hus a kačica", bag: "morka-hus-kacica-s-tekvicou", dog: "Bruno, bernský salašnícky pes, 7 rokov", by: "Robert H." },
     { img: "img/recenzie/bady.webp", alt: "Yorkshirský teriér Bady leží na gauči, pred ním vrece Granula Jahňa s batátmi", bag: "jahna-s-batatmi-cucoriedkami", dog: "Bady, yorkshirský teriér, 12 rokov", by: "Martina F." },
     { img: "img/recenzie/riky.webp", alt: "Šteňa kokeršpaniela Riky nesie papuču, v pozadí vrece Granula Hovädzie s ryžou", bag: "hovadzie-s-ryzou", dog: "Riky, anglický kokeršpaniel, 6 mesiacov", by: "Michal S." },
     { img: "img/recenzie/sara.webp", alt: "Kríženka Sára leží v jesennom lístí s palicou, v pozadí vrece Granula", bag: "jahna-s-batatmi-cucoriedkami", dog: "Sára, veľký kríženec, 5 rokov", by: "Andrea M." },
