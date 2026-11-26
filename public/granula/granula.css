@@ -326,10 +326,8 @@ a.topbar-cta{display:inline-block;text-decoration:none}
 .cp-nm b{font-size:14px;font-weight:700;line-height:1.25}
 .cp-nm b .sh{display:none}
 .cp-nm small{font-size:12px;line-height:1.35}
-.cp-v{flex:none;font-weight:900;white-space:nowrap;font-size:15px}
-.cp-v.l{font-size:22px}.cp-v.m{font-size:18px}
+.cp-v{flex:none;font-weight:900;white-space:nowrap;font-size:18px} /* všetky percentá rovnako veľké (26. 11.) */
 .cp-good .cp-v{color:var(--k)}
-.cp-good .cp-v.l{font-size:22px}.cp-good .cp-v.m{font-size:18px}
 .cp-foot{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
 .cp-note{font-size:12px;line-height:1.4;max-width:600px}
 @media (max-width:1100px){
@@ -351,9 +349,7 @@ a.topbar-cta{display:inline-block;text-decoration:none}
   .cp-nm b{font-size:11.5px;line-height:1.2}
   .cp-nm b .lg,.cp-nm small{display:none}
   .cp-nm b .sh{display:inline}
-  .cp-v,.cp-good .cp-v{font-size:13px}
-  .cp-v.l,.cp-good .cp-v.l{font-size:17px}
-  .cp-v.m,.cp-good .cp-v.m{font-size:15px}
+  .cp-v,.cp-good .cp-v{font-size:15px}
   .cp-foot .btn{width:100%}
 }
 

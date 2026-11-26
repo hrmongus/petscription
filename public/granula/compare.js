@@ -100,9 +100,8 @@
 
   function row(it) {
     var nm = it[2] ? '<span class="lg">' + it[1] + '</span><span class="sh">' + it[2] + "</span>" : it[1];
-    var size = it[4] >= 15 ? " l" : it[4] >= 8 ? " m" : "";
     return '<li><img src="' + D + it[0] + '.webp" alt="" width="44" height="44" loading="lazy"><span class="cp-nm"><b>' + nm + "</b>" +
-      (it[3] ? "<small>" + it[3] + "</small>" : "") + '</span><span class="cp-v' + size + '">' + it[4] + " %</span></li>";
+      (it[3] ? "<small>" + it[3] + "</small>" : "") + '</span><span class="cp-v">' + it[4] + " %</span></li>";
   }
   function html(id) {
     var r = RECIPES[id] || RECIPES[DEFAULT];

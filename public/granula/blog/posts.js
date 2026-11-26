@@ -22,7 +22,7 @@ window.GRANULA_POSTS = {
    ]
   }
  ],
- "built": "2026-11-26 11:01",
+ "built": "2026-11-26 11:26",
  "base": "https://www.granula.sk",
  "problems": [],
  "posts": [
