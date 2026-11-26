@@ -12,13 +12,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,900&display=swap">
-<link rel="stylesheet" href="granula.css?v=20261126t">
+<link rel="stylesheet" href="granula.css?v=20261126u">
 <style>
 /* ---------- hero: polovica text (Mlieko), polovica fotka na celú výšku ---------- */
 .hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:clamp(560px,calc(100vh - 150px),760px);border-bottom:0}
 .hero-copy{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:30px;padding:56px clamp(24px,4vw,64px) 88px}
 .hero-badge{display:inline-flex;align-items:center;gap:10px;border:2px solid var(--n);background:var(--ml);padding:6px 12px 6px 6px;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
-.hero-badge .sk{width:26px;height:26px;display:flex;color:var(--ml)}
+.hero-badge .sk-flag{display:block;flex:none;width:36px;height:24px;outline:1px solid rgba(0,0,0,.15)}
 .hero-badge .sk svg{display:block}
 .hero h1{font-size:clamp(44px,5.4vw,84px);line-height:.98}
 .hero h1 span{color:var(--k)}
@@ -31,9 +31,10 @@
 .hero-stats span{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;line-height:1.35}
 .hero-pic{position:relative;background:var(--k);overflow:hidden;border-left:2px solid var(--n)}
 .hero-pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 55%}
-.hero-vet{position:absolute;left:6%;top:7%;background:var(--o);color:var(--n);font-weight:900;text-transform:uppercase;font-size:clamp(16px,1.6vw,22px);line-height:1;padding:10px 14px 9px;transform:rotate(-4deg)}
+.hero-vet{position:absolute;left:6%;top:7%;background:var(--l);color:var(--n);font-weight:900;text-transform:uppercase;font-size:clamp(16px,1.6vw,22px);line-height:1;padding:10px 14px 9px;transform:rotate(-4deg)}
 .hero-star{position:absolute;right:7%;bottom:16%;width:60px;height:60px;color:var(--m);transform:rotate(12deg)}
 .hero + .tape-solo{margin-top:-42px;padding:0}
+.hero{border-bottom:2px solid var(--n)} /* od 26. 11. bez pásky pod hlavičkou */
 @media (max-width:960px){
   .hero{grid-template-columns:minmax(0,1fr);min-height:0}
   .hero-copy{padding:40px 16px 48px;gap:24px}
@@ -113,7 +114,7 @@
 <!-- hero -->
 <section class="hero">
   <div class="hero-copy">
-    <span class="hero-badge"><span class="sk" aria-hidden="true" data-icon="slovensko" data-size="26" data-ink="#0047BB"></span>Vyrobené na Slovensku</span>
+    <span class="hero-badge"><svg class="sk-flag" viewBox="0 0 900 600" width="36" height="24" aria-hidden="true"><rect width="900" height="200" fill="#FFFFFF"/><rect y="200" width="900" height="200" fill="#0B4EA2"/><rect y="400" width="900" height="200" fill="#EE1C25"/><g transform="translate(130,120) scale(7.5) translate(-8,-4)"><path d="M8 4 H40 V26 C40 36 32 42 24 46 C16 42 8 36 8 26 Z" fill="#EE1C25" stroke="#FFFFFF" stroke-width="1.4"/><path d="M10 33 C12 29 16 28 19 31 C21 27 27 27 29 31 C32 28 36 29 38 33 C36 38 30 42 24 44 C18 42 12 38 10 33 Z" fill="#0B4EA2"/><path d="M22 8 H26 V13 H31 V16 H26 V20 H32 V23 H26 V32 H22 V23 H16 V20 H22 V16 H17 V13 H22 Z" fill="#FFFFFF"/></g></svg>Vyrobené na Slovensku</span>
     <span class="hero-flower"><svg viewBox="-52 -52 104 104" aria-hidden="true"><g fill="currentColor"><rect x="-50" y="-15" width="100" height="30" rx="15" transform="rotate(90)"/><rect x="-50" y="-15" width="100" height="30" rx="15" transform="rotate(30)"/><rect x="-50" y="-15" width="100" height="30" rx="15" transform="rotate(150)"/></g></svg></span>
     <h1 class="display">Kvalitné granule, <span>zdravý pes</span></h1>
     <a class="btn btn-o" href="granule-na-mieru.html">Granule na mieru →</a>
@@ -129,13 +130,6 @@
     <span class="hero-star"><svg viewBox="-52 -52 104 104" aria-hidden="true"><g fill="currentColor"><rect x="-50" y="-15" width="100" height="30" rx="15" transform="rotate(90)"/><rect x="-50" y="-15" width="100" height="30" rx="15" transform="rotate(30)"/><rect x="-50" y="-15" width="100" height="30" rx="15" transform="rotate(150)"/></g></svg></span>
   </div>
 </section>
-
-<div class="tape-solo" aria-hidden="true"><div class="tape"><div class="track">
-    <span>Čerstvé mäso</span><span class="star"></span><span>Bez pšenice</span><span class="star"></span><span>Zelenina</span><span class="star"></span><span>Vyrobené na Slovensku</span><span class="star"></span><span>Receptúry navrhnuté s veterinármi</span><span class="star"></span>
-    <span>Čerstvé mäso</span><span class="star"></span><span>Bez pšenice</span><span class="star"></span><span>Zelenina</span><span class="star"></span><span>Vyrobené na Slovensku</span><span class="star"></span><span>Receptúry navrhnuté s veterinármi</span><span class="star"></span>
-    <span>Čerstvé mäso</span><span class="star"></span><span>Bez pšenice</span><span class="star"></span><span>Zelenina</span><span class="star"></span><span>Vyrobené na Slovensku</span><span class="star"></span><span>Receptúry navrhnuté s veterinármi</span><span class="star"></span>
-    <span>Čerstvé mäso</span><span class="star"></span><span>Bez pšenice</span><span class="star"></span><span>Zelenina</span><span class="star"></span><span>Vyrobené na Slovensku</span><span class="star"></span><span>Receptúry navrhnuté s veterinármi</span><span class="star"></span>
-  </div></div></div>
 
 <!-- produkt -->
 <section id="produkt" class="sec pd" data-product>

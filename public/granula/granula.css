@@ -86,10 +86,10 @@ h1,h2,h3,p{margin:0}
 .link-under:hover{color:var(--n)}
 
 /* ---------- horná lišta a hlavička ---------- */
-.topbar{background:var(--o);color:var(--n);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+.topbar{background:var(--n);color:var(--m);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
   text-align:center;padding:9px 16px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 12px;border-bottom:2px solid var(--n)}
 .topbar .star{width:1.1em;height:1.1em}
-.topbar-cta{font:inherit;letter-spacing:inherit;text-transform:inherit;font-weight:900;color:var(--o);background:var(--n);border:0;padding:5px 10px;cursor:pointer;transition:background 150ms ease,color 150ms ease}
+.topbar-cta{font:inherit;letter-spacing:inherit;text-transform:inherit;font-weight:900;color:var(--n);background:var(--o);border:0;padding:5px 10px;cursor:pointer;transition:background 150ms ease,color 150ms ease}
 .topbar-cta:hover{background:var(--m);color:var(--n)}
 a.topbar-cta{display:inline-block;text-decoration:none}
 /* horný pruh: na počítači celý, na mobile skrátený (max. 2 riadky: text + tlačidlo, od ~375 px jeden riadok) */
