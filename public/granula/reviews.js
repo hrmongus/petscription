@@ -20,14 +20,7 @@
     { img: "img/recenzie/sunny.webp", alt: "Šteňa čivavy Sunny na koberci vedľa vreca Granula", bag: "hovadzie-morka-jahna-s-ryzou", dog: "Sunny, čivava, 4 mesiace", by: "Anastazia L." },
     { img: "img/recenzie/spotty.webp", alt: "Dalmatín Spotty sedí pred domom vedľa vreca Granula Morka, hus a kačica", bag: "morka-hus-kacica-s-tekvicou", dog: "Spotty, dalmatín, 10 rokov", by: "Albert S." },
     { img: "img/recenzie/emil.webp", alt: "Zlatý retríver Emil sedí pri Z-BOXe Packety vedľa vreca Granula", bag: "morka-hus-kacica-s-tekvicou", dog: "Emil, zlatý retríver, 1 rok", by: "Darina J." },
-    { img: "img/recenzie/lejdy.webp", alt: "Pudel Lejdy schádza po drevených schodoch k vrecu Granula Hovädzie s ryžou", bag: "hovadzie-s-ryzou", dog: "Lejdy, pudel, 4 roky", by: "Jaro A." },
-    { img: "img/recenzie/dievca-dalmatin.webp", alt: "Dalmatínka Zara so zlatým retrieverom na prechádzke v meste", bag: "morka-hus-kacica-s-tekvicou", dog: "Zara, dalmatín", by: "Juraj K." },
-    { img: "img/recenzie/pes-v-rukach.webp", alt: "Šteňa weimarského stavača Brix zdvihnuté v rukách proti modrej oblohe", bag: "jahna-s-batatmi-cucoriedkami", dog: "Brix, weimarský stavač", by: "Peter V." },
-    { img: "img/recenzie/pes-luka.webp", alt: "Austrálsky ovčiak Tobi beží cez rozkvitnutú lúku", bag: "hovadzie-s-ryzou", dog: "Tobi, austrálsky ovčiak", by: "Tomáš R." },
-    { img: "img/recenzie/pes-zlta-stena.webp", alt: "Kríženka Šuška sedí pred žltou drevenou stenou", bag: "jelen-kralik-s-batatmi", dog: "Šuška, kríženec z útulku", by: "Jakub F." },
-    { img: "img/recenzie/pes-banan.webp", alt: "Šteňa Bimbo hryzie banán z ruky majiteľa", bag: "morka-hus-kacica-s-tekvicou", dog: "Bimbo, kríženec", by: "Martin B." },
-    { img: "img/recenzie/border-kolia.webp", alt: "Border kólia Max s vyplazeným jazykom na lúke", bag: "jahna-s-batatmi-cucoriedkami", dog: "Max, border kólia", by: "Juraj H." },
-    { img: "img/recenzie/psi-nos.webp", alt: "Detail nosa a jazyka kríženca Badyho", bag: "jahna-s-batatmi-cucoriedkami", dog: "Bady, kríženec, 9 rokov", by: "Laura B." }
+    { img: "img/recenzie/lejdy.webp", alt: "Pudel Lejdy schádza po drevených schodoch k vrecu Granula Hovädzie s ryžou", bag: "hovadzie-s-ryzou", dog: "Lejdy, pudel, 4 roky", by: "Jaro A." }
   ];
   // poradie = priorita (prvé sa ukážu aj na menších obrazovkách)
   var TEXTS = [
