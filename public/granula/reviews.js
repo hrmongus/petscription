@@ -8,17 +8,26 @@
   "use strict";
   var P = "img/produkty/";
   var PHOTOS = [
+    // foto recenzie zákazníkov (26. 11. 2026, „Reviews pre Granulu“): fotka, pes, majiteľ, vrece na fotke
+    { img: "img/recenzie/beny.webp", alt: "Maltézsky psík Beny vedľa vreca Granula Hovädzie, morka a jahňa s ryžou", bag: "hovadzie-morka-jahna-s-ryzou", dog: "Beny, maltézsky psík, 4 roky", by: "Matej K." },
+    { img: "img/recenzie/lola.webp", alt: "Šteňa border kólie Lola beží po tráve k vrecu Granula", bag: "hovadzie-morka-jahna-s-ryzou", dog: "Lola, border kólia, 4 mesiace", by: "Barbora L." },
+    { img: "img/recenzie/bruno.webp", alt: "Bernský salašnícky pes Bruno sedí v kufri auta pri vreci Granula Morka, hus a kačica", bag: "morka-hus-kacica-s-tekvicou", dog: "Bruno, bernský salašnícky pes, 7 rokov", by: "Robert H." },
+    { img: "img/recenzie/bady.webp", alt: "Yorkshirský teriér Bady leží na gauči, pred ním vrece Granula Jahňa s batátmi", bag: "jahna-s-batatmi-cucoriedkami", dog: "Bady, yorkshirský teriér, 12 rokov", by: "Martina F." },
+    { img: "img/recenzie/riky.webp", alt: "Šteňa kokeršpaniela Riky nesie papuču, v pozadí vrece Granula Hovädzie s ryžou", bag: "hovadzie-s-ryzou", dog: "Riky, anglický kokeršpaniel, 6 mesiacov", by: "Michal S." },
+    { img: "img/recenzie/sara.webp", alt: "Kríženka Sára leží v jesennom lístí s palicou, v pozadí vrece Granula", bag: "jahna-s-batatmi-cucoriedkami", dog: "Sára, veľký kríženec, 5 rokov", by: "Andrea M." },
+    { img: "img/recenzie/ema.webp", alt: "Jazvečík Ema ovoniava vrece Granula Jeleň a králik pri dverách", bag: "jelen-kralik-s-batatmi", dog: "Ema, jazvečík, 4 roky", by: "Julia O." },
+    { img: "img/recenzie/roko.webp", alt: "Francúzsky buldog Roko si oblizuje papuľu pri otvorenom vreci Granula", bag: "jahna-s-batatmi-cucoriedkami", dog: "Roko, francúzsky buldog, 9 rokov", by: "Boris F." },
+    { img: "img/recenzie/sunny.webp", alt: "Šteňa čivavy Sunny na koberci vedľa vreca Granula", bag: "hovadzie-morka-jahna-s-ryzou", dog: "Sunny, čivava, 4 mesiace", by: "Anastazia L." },
+    { img: "img/recenzie/spotty.webp", alt: "Dalmatín Spotty sedí pred domom vedľa vreca Granula Morka, hus a kačica", bag: "morka-hus-kacica-s-tekvicou", dog: "Spotty, dalmatín, 10 rokov", by: "Albert S." },
+    { img: "img/recenzie/emil.webp", alt: "Zlatý retríver Emil sedí pri Z-BOXe Packety vedľa vreca Granula", bag: "morka-hus-kacica-s-tekvicou", dog: "Emil, zlatý retríver, 1 rok", by: "Darina J." },
+    { img: "img/recenzie/lejdy.webp", alt: "Pudel Lejdy schádza po drevených schodoch k vrecu Granula Hovädzie s ryžou", bag: "hovadzie-s-ryzou", dog: "Lejdy, pudel, 4 roky", by: "Jaro A." },
     { img: "img/recenzie/dievca-dalmatin.webp", alt: "Dalmatínka Zara so zlatým retrieverom na prechádzke v meste", bag: "morka-hus-kacica-s-tekvicou", dog: "Zara, dalmatín", by: "Juraj K." },
     { img: "img/recenzie/pes-v-rukach.webp", alt: "Šteňa weimarského stavača Brix zdvihnuté v rukách proti modrej oblohe", bag: "jahna-s-batatmi-cucoriedkami", dog: "Brix, weimarský stavač", by: "Peter V." },
     { img: "img/recenzie/pes-luka.webp", alt: "Austrálsky ovčiak Tobi beží cez rozkvitnutú lúku", bag: "hovadzie-s-ryzou", dog: "Tobi, austrálsky ovčiak", by: "Tomáš R." },
     { img: "img/recenzie/pes-zlta-stena.webp", alt: "Kríženka Šuška sedí pred žltou drevenou stenou", bag: "jelen-kralik-s-batatmi", dog: "Šuška, kríženec z útulku", by: "Jakub F." },
     { img: "img/recenzie/pes-banan.webp", alt: "Šteňa Bimbo hryzie banán z ruky majiteľa", bag: "morka-hus-kacica-s-tekvicou", dog: "Bimbo, kríženec", by: "Martin B." },
     { img: "img/recenzie/border-kolia.webp", alt: "Border kólia Max s vyplazeným jazykom na lúke", bag: "jahna-s-batatmi-cucoriedkami", dog: "Max, border kólia", by: "Juraj H." },
-    { img: "img/recenzie/psi-nos.webp", alt: "Detail nosa a jazyka kríženca Badyho", bag: "jahna-s-batatmi-cucoriedkami", dog: "Bady, kríženec, 9 rokov", by: "Laura B." },
-    // PLACEHOLDERY: nahradiť skutočnými foto recenziami (fotka, pes, majiteľ)
-    { img: "img/produkt/pes-granula.webp", alt: "Pes s granulou v papuli", bag: "hovadzie-s-ryzou", dog: "[Meno psa], [plemeno]", by: "[Majiteľ]", ph: true },
-    { img: "img/hero-jack-russell.jpg", alt: "Jack russell s tenisovými loptičkami", bag: "jelen-kralik-s-batatmi", dog: "[Meno psa], [plemeno]", by: "[Majiteľ]", ph: true },
-    { img: "img/kviz-lopticka.jpg", alt: "Pes beží za loptičkou", bag: "morka-hus-kacica-s-tekvicou", dog: "[Meno psa], [plemeno]", by: "[Majiteľ]", ph: true }
+    { img: "img/recenzie/psi-nos.webp", alt: "Detail nosa a jazyka kríženca Badyho", bag: "jahna-s-batatmi-cucoriedkami", dog: "Bady, kríženec, 9 rokov", by: "Laura B." }
   ];
   // poradie = priorita (prvé sa ukážu aj na menších obrazovkách)
   var TEXTS = [
