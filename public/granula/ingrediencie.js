@@ -1,6 +1,6 @@
 /* Granula — detail suroviny (pop-up po kliknutí na surovinu v sekcii surovín).
-   Texty: „Granula – texty k surovinám“ (21. 11. 2026). „V recepte“ je dopočítané zo zloženia receptúr v engine.js
-   (percento len tam, kde ho uvádza výrobca). Pôvod sa ukáže, keď sa doplní (pole o).
+   Texty: „Granula – texty k surovinám“ (21. 11. 2026). „V recepte“ (percentá a receptúry, pole r) sa od 26. 11. 2026
+   nezobrazuje (zadanie používateľa). Pôvod sa ukáže, keď sa doplní (pole o).
    Kľúč = názov obrázka v img/suroviny/. */
 (function () {
   "use strict";
@@ -10,14 +10,6 @@
 
   function slug(li) { var img = li.querySelector("img"); return img ? img.getAttribute("src").replace(/^.*\//, "").replace(/\.webp$/, "") : ""; }
   function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
-  function recipe(r) {
-    if (!r.length) return null;
-    var pcts = r.filter(function (x) { return x[1] != null; }).map(function (x) { return x[1]; });
-    var names = r.map(function (x) { return x[0]; }).join(", ");
-    if (r.length === 1) return pcts.length ? { v: pcts[0] + "\u00a0%", s: r[0][0], t: names } : { v: r[0][0], s: "", t: names };
-    var n = "v " + r.length + " z 5 receptúr";
-    return pcts.length ? { v: "až " + Math.max.apply(null, pcts) + "\u00a0%", s: n, t: names } : { v: n, s: "", t: names };
-  }
   function build() {
     dlg = document.createElement("dialog");
     dlg.className = "sd";
@@ -56,9 +48,8 @@
     q("#sd-name").textContent = d.n;
     q(".sd-sub").textContent = d.s;
     q(".sd-txt").innerHTML = d.p.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("");
-    var r = recipe(d.r), facts = [];
+    var facts = [];
     if (d.o) facts.push(["Pôvod", esc(d.o), ""]);
-    if (r) facts.push(["V recepte", esc(r.v), r.s ? "<small>" + esc(r.s) + "</small>" : "", r.t]);
     facts.push(["Prínos", esc(d.b), ""]);
     var dl = q(".sd-facts");
     dl.style.gridTemplateColumns = "repeat(" + facts.length + ",minmax(0,1fr))";
