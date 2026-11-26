@@ -425,6 +425,9 @@ section[id]{scroll-margin-top:96px}
 .fq-copy{display:flex;flex-direction:column;gap:10px}
 .fq h2{font-size:clamp(28px,3vw,40px);color:var(--m);line-height:1}
 .fq p{font-size:15px;line-height:1.5;max-width:400px}
+.fq .fq-who{display:flex;flex-direction:column;gap:1px;margin-top:4px;font-size:13px;line-height:1.35}
+.fq-who b{font-size:15px;font-weight:800}
+.fq-who span{opacity:.85}
 .fq-list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:20px 44px}
 .fq-list li{display:flex;align-items:center;gap:14px}
 .fq-ico{width:40px;height:40px;flex:none;background:var(--ml);color:var(--k);border:2px solid var(--n);display:flex;align-items:center;justify-content:center}
