@@ -163,8 +163,7 @@
       if (!form || form.children.length || w.querySelector(".kl-alt")) return;
       var alt = document.createElement("div");
       alt.className = "kl-alt";
-      alt.innerHTML = "<p><b>Zapíš sa vopred</b> a prvé vrecko dostaneš o 30&nbsp;% lacnejšie. Rezervácia je nezáväzná.</p>" +
-        '<p>Formulár sa tu nezobrazil. Napíš nám na <a href="mailto:podpora@granula.sk">podpora@granula.sk</a> a zapíšeme ťa.</p>';
+      alt.innerHTML = '<p>Formulár sa tu nezobrazil. Napíš nám na <a href="mailto:podpora@granula.sk">podpora@granula.sk</a>.</p>';
       w.appendChild(alt);
       // formulár sa vykreslil neskôr: náhradu odstránime
       if ("MutationObserver" in window) new MutationObserver(function (m, o) {
@@ -176,12 +175,12 @@
   document.addEventListener("click", function (e) {
     if (e.target.closest("[data-cookie-settings]")) { e.preventDefault(); show(); return; }
     var o = e.target.closest("[data-klaviyo-open]");
-    // vyskakovacie okná Klaviyo sa nepoužívajú: tlačidlá „Chcem byť prvý“ vedú na formulár v sekcii úvodnej stránky
+    // vyskakovacie okná Klaviyo sa nepoužívajú: staré tlačidlá s data-klaviyo-open vedú do dotazníka (predregistrácia je od 26. 11. preč)
     if (o) {
       e.preventDefault();
       var sec = document.getElementById("zapis");
       if (sec) { sec.scrollIntoView({ behavior: "smooth", block: "start" }); if (history.replaceState) history.replaceState(null, "", "#zapis"); }
-      else location.href = "/granule-na-mieru"; // sekcia predregistrácie je od 26. 11. preč: dotazník (pri zatvorenom predaji je to predregistrácia)
+      else location.href = "/granule-na-mieru";
       return;
     }
     // „Povoliť a zobraziť formulár“: súhlas iba s marketingovými cookies, analytická voľba ostáva

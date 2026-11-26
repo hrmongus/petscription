@@ -91,6 +91,7 @@ h1,h2,h3,p{margin:0}
 .topbar .star{width:1.1em;height:1.1em}
 .topbar-cta{font:inherit;letter-spacing:inherit;text-transform:inherit;font-weight:900;color:var(--o);background:var(--n);border:0;padding:5px 10px;cursor:pointer;transition:background 150ms ease,color 150ms ease}
 .topbar-cta:hover{background:var(--m);color:var(--n)}
+a.topbar-cta{display:inline-block;text-decoration:none}
 /* Klaviyo embed bez súhlasu */
 .kl-fallback{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
 .kl-fallback p{font-size:15px;line-height:1.45}

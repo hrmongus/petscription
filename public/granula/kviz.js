@@ -616,7 +616,7 @@
     var newFlow = window.GranulaDelivery && GranulaDelivery.active();
     btn.disabled = !CHECKOUT_OPEN;
     btn.setAttribute("aria-disabled", String(!CHECKOUT_OPEN));
-    btn.textContent = CHECKOUT_OPEN ? (total == null ? "Objednať" : "Zaplatiť " + eur(total)) : "Objednávky od 1. 12.";
+    btn.textContent = CHECKOUT_OPEN ? (total == null ? "Objednať" : "Zaplatiť " + eur(total)) : "Objednávky čoskoro";
     if (newFlow) { btn.textContent = paying ? "Pripravujem platbu…" : "Pokračovať k platbe"; btn.disabled = paying; $("s-next").disabled = paying; }
     $("s-ann").hidden = CHECKOUT_OPEN;
     order.querySelectorAll(".wallet").forEach(function (w) { w.disabled = !CHECKOUT_OPEN; });
