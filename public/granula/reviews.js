@@ -16,9 +16,9 @@
     { img: "img/recenzie/riky.webp", alt: "Šteňa kokeršpaniela Riky nesie papuču, v pozadí vrece Granula Hovädzie s ryžou", bag: "hovadzie-s-ryzou", dog: "Riky, anglický kokeršpaniel, 6 mesiacov", by: "Michal S." },
     { img: "img/recenzie/sara.webp", alt: "Kríženka Sára leží v jesennom lístí s palicou, v pozadí vrece Granula", bag: "jahna-s-batatmi-cucoriedkami", dog: "Sára, veľký kríženec, 5 rokov", by: "Andrea M." },
     { img: "img/recenzie/ema.webp", alt: "Jazvečík Ema ovoniava vrece Granula Jeleň a králik pri dverách", bag: "jelen-kralik-s-batatmi", dog: "Ema, jazvečík, 4 roky", by: "Julia O." },
-    { img: "img/recenzie/roko.webp", alt: "Francúzsky buldog Roko si oblizuje papuľu pri otvorenom vreci Granula", bag: "jahna-s-batatmi-cucoriedkami", dog: "Roko, francúzsky buldog, 9 rokov", by: "Boris F." },
-    { img: "img/recenzie/sunny.webp", alt: "Šteňa čivavy Sunny na koberci vedľa vreca Granula", bag: "hovadzie-morka-jahna-s-ryzou", dog: "Sunny, čivava, 4 mesiace", by: "Anastazia L." },
-    { img: "img/recenzie/spotty.webp", alt: "Dalmatín Spotty sedí pred domom vedľa vreca Granula Morka, hus a kačica", bag: "morka-hus-kacica-s-tekvicou", dog: "Spotty, dalmatín, 10 rokov", by: "Albert S." },
+    { img: "img/recenzie/roko-2.webp", alt: "Francúzsky buldog Roko je z misky v kuchyni vedľa vreca Granula Jahňa s batátmi", bag: "jahna-s-batatmi-cucoriedkami", dog: "Roko, francúzsky buldog, 9 rokov", by: "Boris F." },
+    { img: "img/recenzie/sunny-2.webp", alt: "Šteňa čivavy Sunny leží na chrbte na koberci a nechá sa škrabkať na brušku, vedľa vrece Granula Hovädzie, morka a jahňa", bag: "hovadzie-morka-jahna-s-ryzou", dog: "Sunny, čivava, 4 mesiace", by: "Anastazia L." },
+    { img: "img/recenzie/spotty-2.webp", alt: "Dalmatín Spotty leží na schodoch pred domom vedľa vreca Granula Morka, hus a kačica", bag: "morka-hus-kacica-s-tekvicou", dog: "Spotty, dalmatín, 10 rokov", by: "Albert S." },
     { img: "img/recenzie/emil.webp", alt: "Zlatý retríver Emil sedí pri Z-BOXe Packety vedľa vreca Granula", bag: "morka-hus-kacica-s-tekvicou", dog: "Emil, zlatý retríver, 1 rok", by: "Darina J." },
     { img: "img/recenzie/lejdy.webp", alt: "Pudel Lejdy schádza po drevených schodoch k vrecu Granula Hovädzie s ryžou", bag: "hovadzie-s-ryzou", dog: "Lejdy, pudel, 4 roky", by: "Jaro A." }
   ];
