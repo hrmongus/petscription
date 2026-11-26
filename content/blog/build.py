@@ -607,7 +607,7 @@ def page(*, pre, title, description, canonical, body, noindex=False, jsonld=None
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,900&display=swap">
-<link rel="stylesheet" href="{pre}granula.css">
+<link rel="stylesheet" href="{pre}granula.css?v=20261126t">
 <link rel="stylesheet" href="{pre}blog/blog.css">
 {head_ld}</head>
 <body>
